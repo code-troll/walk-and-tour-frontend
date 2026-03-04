@@ -3,16 +3,6 @@ export type NavLink = {
   href: string;
 };
 
-export type HeroContent = {
-  headingKey: "heading";
-  subheadingKey: "subheading";
-  ctaLabelKey: "ctaLabel";
-  ctaHref: string;
-  image: {
-    src: string;
-  };
-};
-
 export type TourId = "copenhagenFreeTour" | "rosenborgCastleTour" | "malmoExcursion";
 
 export type Tour = {
@@ -97,16 +87,6 @@ export const navLinks: NavLink[] = [
   {id: "blog", href: "#blog"},
   {id: "contact", href: "#contact"},
 ];
-
-export const heroContent: HeroContent = {
-  headingKey: "heading",
-  subheadingKey: "subheading",
-  ctaLabelKey: "ctaLabel",
-  ctaHref: "#tours",
-  image: {
-    src: "/walkandtour/hero.png",
-  },
-};
 
 export const tours: Tour[] = [
   {
