@@ -1,64 +1,86 @@
 export type NavLink = {
-  label: string;
+  id: "home" | "tours" | "about" | "companies" | "blog" | "contact";
   href: string;
 };
 
 export type HeroContent = {
-  heading: string;
-  subheading: string;
-  ctaLabel: string;
+  headingKey: "heading";
+  subheadingKey: "subheading";
+  ctaLabelKey: "ctaLabel";
   ctaHref: string;
   image: {
     src: string;
-    alt: string;
   };
 };
 
+export type TourId = "copenhagenFreeTour" | "rosenborgCastleTour" | "malmoExcursion";
+
 export type Tour = {
-  title: string;
-  duration: string;
-  location: string;
+  id: TourId;
   rating: string;
   reviews: string;
   price: string;
-  currency: string;
-  tag: string;
   image: {
     src: string;
-    alt: string;
   };
 };
 
 export type WhyChoose = {
-  heading: string;
-  description: string;
-  bullets: string[];
+  headingKey: "heading";
+  descriptionKey: "description";
+  bulletKeys: readonly [
+    "tipsBased",
+    "localKnowledge",
+    "smallGroups",
+    "friendlyGuides",
+    "greatForEveryone"
+  ];
 };
 
 export type PrivateTours = {
-  heading: string;
-  description: string[];
-  ctaLabel: string;
+  headingKey: "heading";
+  descriptionKeys: readonly ["description1", "description2"];
+  ctaLabelKey: "ctaLabel";
   ctaHref: string;
 };
 
+export type PartnerId =
+  | "donkeyRepublic"
+  | "kobenhavnsKommune"
+  | "getYourGuide"
+  | "civitatis"
+  | "embassyOfArgentina"
+  | "viator";
+
 export type Partner = {
-  name: string;
+  id: PartnerId;
   logo: string;
 };
 
 export type ContactInfo = {
-  heading: string;
-  subheading: string;
+  headingKey: "heading";
+  subheadingKey: "subheading";
+};
+
+export type FooterLink = {
+  id:
+    | "about"
+    | "companies"
+    | "workWithUs"
+    | "contact"
+    | "faqs"
+    | "privacyPolicy"
+    | "termsOfUse";
+  href: string;
 };
 
 export type FooterLinkSection = {
-  title: string;
-  links: { label: string; href: string }[];
+  id: "wt" | "support";
+  links: FooterLink[];
 };
 
 export type FooterContent = {
-  blurb: string;
+  blurbKey: "blurb";
   contact: {
     cvr: string;
     phone: string;
@@ -68,130 +90,110 @@ export type FooterContent = {
 };
 
 export const navLinks: NavLink[] = [
-  {label: "Home", href: "#home"},
-  {label: "Tours", href: "#tours"},
-  {label: "About Us", href: "#about"},
-  {label: "Companies", href: "#companies"},
-  {label: "Blog", href: "#blog"},
-  {label: "Contact", href: "#contact"},
+  {id: "home", href: "#home"},
+  {id: "tours", href: "#tours"},
+  {id: "about", href: "#about"},
+  {id: "companies", href: "#companies"},
+  {id: "blog", href: "#blog"},
+  {id: "contact", href: "#contact"},
 ];
 
 export const heroContent: HeroContent = {
-  heading: "Copenhagen Walking Tours & Unique Local Experiences",
-  subheading:
-    "Discover Copenhagen through stories, history and unforgettable local experiences led by passionate guides.",
-  ctaLabel: "Check our tours now!",
+  headingKey: "heading",
+  subheadingKey: "subheading",
+  ctaLabelKey: "ctaLabel",
   ctaHref: "#tours",
   image: {
     src: "/walkandtour/hero.png",
-    alt: "Copenhagen canal with colorful buildings",
   },
 };
 
 export const tours: Tour[] = [
   {
-    title: "Copenhagen Free Tour: Changing of the Guard & City Highlights",
-    duration: "2 hours",
-    location: "Copenhagen",
+    id: "copenhagenFreeTour",
     rating: "5.0",
     reviews: "1,756",
     price: "0",
-    currency: "kr",
-    tag: "Tip-Based",
     image: {
       src: "/walkandtour/tour-nyhavn.webp",
-      alt: "Nyhavn canal in Copenhagen",
     },
   },
   {
-    title: "Rosenborg Castle Guided Tour",
-    duration: "1.5 hours",
-    location: "Rosenborg Castle",
+    id: "rosenborgCastleTour",
     rating: "4.9",
     reviews: "386",
     price: "400",
-    currency: "kr",
-    tag: "Group Tour",
     image: {
       src: "/walkandtour/tour-rosenborg.webp",
-      alt: "Rosenborg Castle in Copenhagen",
     },
   },
   {
-    title: "Excursion to Malmo Sweden",
-    duration: "5 hours",
-    location: "Malmo",
+    id: "malmoExcursion",
     rating: "4.7",
     reviews: "560",
     price: "780",
-    currency: "kr",
-    tag: "Group Tour",
     image: {
       src: "/walkandtour/tour-malmo.webp",
-      alt: "Colorful buildings in Malmo",
     },
   },
 ];
 
 export const whyChoose: WhyChoose = {
-  heading: "Why Travelers Choose Walk & Tour",
-  description:
-    "At Walk and Tour, we believe the best way to truly experience Copenhagen is on foot and at a local pace.",
-  bullets: [
-    "Tips Based Tours - Pay what you want based on your experience.",
-    "Unique local knowledge and hidden gems in every tour.",
-    "Small groups for a more personal and comfortable experience.",
-    "Friendly, professional guides with a passion for Copenhagen.",
-    "Great for solo travelers, couples, families and small groups.",
+  headingKey: "heading",
+  descriptionKey: "description",
+  bulletKeys: [
+    "tipsBased",
+    "localKnowledge",
+    "smallGroups",
+    "friendlyGuides",
+    "greatForEveryone",
   ],
 };
 
 export const privateTours: PrivateTours = {
-  heading: "Private Tours & Corporate Experiences",
-  description: [
-    "Looking for a personalized experience in Copenhagen?",
-    "We offer private walking tours and corporate experiences tailored to your schedule and interests. Whether you want a historical deep dive, a food-focused adventure or a team-building activity, we create the perfect itinerary just for you."
+  headingKey: "heading",
+  descriptionKeys: [
+    "description1",
+    "description2",
   ],
-  ctaLabel: "Contact us to design your private Copenhagen experience",
+  ctaLabelKey: "ctaLabel",
   ctaHref: "#contact",
 };
 
 export const partners: Partner[] = [
   {
-    name: "Donkey Republic",
+    id: "donkeyRepublic",
     logo: "/walkandtour/partner-donkey-republic.png",
   },
   {
-    name: "Kobenhavns Kommune",
+    id: "kobenhavnsKommune",
     logo: "/walkandtour/partner-kobenhavn.jpeg",
   },
   {
-    name: "GetYourGuide",
+    id: "getYourGuide",
     logo: "/walkandtour/partner-getyourguide.jpg",
   },
   {
-    name: "Civitatis",
+    id: "civitatis",
     logo: "/walkandtour/partner-civitatis.png",
   },
   {
-    name: "Embassy of Argentina",
+    id: "embassyOfArgentina",
     logo: "/walkandtour/partner-embassy-argentina.png",
   },
   {
-    name: "Viator",
+    id: "viator",
     logo: "/walkandtour/partner-viator.png",
   },
 ];
 
 export const contactInfo: ContactInfo = {
-  heading: "Let's Plan Your Copenhagen Experience",
-  subheading:
-    "Contact us today and we will answer as soon as possible!",
+  headingKey: "heading",
+  subheadingKey: "subheading",
 };
 
 export const footerContent: FooterContent = {
-  blurb:
-    "Walk and Tour Copenhagen offers expertise, personalized tours, great value, and exceptional service for an unforgettable travel experiences.",
+  blurbKey: "blurb",
   contact: {
     cvr: "43268465",
     phone: "+45 71352453",
@@ -199,20 +201,20 @@ export const footerContent: FooterContent = {
   },
   linkSections: [
     {
-      title: "W&T",
+      id: "wt",
       links: [
-        {label: "About", href: "#about"},
-        {label: "Companies", href: "#companies"},
-        {label: "Work with us", href: "#contact"},
-        {label: "Contact", href: "#contact"},
+        {id: "about", href: "#about"},
+        {id: "companies", href: "#companies"},
+        {id: "workWithUs", href: "#contact"},
+        {id: "contact", href: "#contact"},
       ],
     },
     {
-      title: "Support",
+      id: "support",
       links: [
-        {label: "FAQs", href: "#contact"},
-        {label: "Privacy Policy", href: "#blog"},
-        {label: "Terms of Use", href: "#blog"},
+        {id: "faqs", href: "#contact"},
+        {id: "privacyPolicy", href: "#blog"},
+        {id: "termsOfUse", href: "#blog"},
       ],
     },
   ],

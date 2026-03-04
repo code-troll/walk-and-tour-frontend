@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "title": "Walk and Tour Copenhague | Tours a pie y experiencias locales",
+    "description": "Tours a pie en Copenhague y experiencias locales guiadas por guías apasionados. Tours gratuitos, visitas a castillos y excursiones de un día."
+  },
+  "header": {
+    "logoAlt": "Walk & Tour Copenhague",
+    "privateTours": "Tours privados",
+    "selectLanguage": "Seleccionar idioma",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "nav": {
+      "home": "Inicio",
+      "tours": "Tours",
+      "about": "Sobre nosotros",
+      "companies": "Empresas",
+      "blog": "Blog",
+      "contact": "Contacto"
+    },
+    "languages": {
+      "EN": "Inglés",
+      "ES": "Español",
+      "IT": "Italiano"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok"
+    }
+  },
+  "hero": {
+    "heading": "Experiencias Únicas & Tours Guiados en Copenhague",
+    "subheading": "Descubre Copenhague a través de historias, historia y experiencias locales inolvidables guiadas por guías apasionados.",
+    "ctaLabel": "¡Descubre nuestros tours ahora!"
+  },
+  "tours": {
+    "heading": "Elige el tour perfecto para tu visita",
+    "intro1": "Ya sea que te interese la historia, la arquitectura, la gastronomía, los palacios reales o las excursiones de un día, tenemos la experiencia perfecta para ti.",
+    "intro2": "Explora Copenhague a tu manera, con grupos pequeños, guías expertos y opciones flexibles diseñadas para cada viajero.",
+    "exploreAll": "Explora todos nuestros tours",
+    "card": {
+      "duration": "Duración",
+      "location": "Ubicación",
+      "price": "Precio",
+      "details": "Detalles",
+      "ratingOutOfFive": "/5",
+      "reviews": "reseñas",
+      "currency": "kr",
+      "items": {
+        "copenhagenFreeTour": {
+          "title": "Tour gratuito de Copenhague: Cambio de la Guardia y lugares destacados de la ciudad",
+          "location": "Copenhague",
+          "duration": "2 horas",
+          "tag": "Basado en propinas",
+          "imageAlt": "Canal de Nyhavn en Copenhague"
+        },
+        "rosenborgCastleTour": {
+          "title": "Tour guiado del Castillo de Rosenborg",
+          "location": "Castillo de Rosenborg",
+          "duration": "1,5 horas",
+          "tag": "Tour en grupo",
+          "imageAlt": "Castillo de Rosenborg en Copenhague"
+        },
+        "malmoExcursion": {
+          "title": "Excursión a Malmö, Suecia",
+          "location": "Malmö",
+          "duration": "5 horas",
+          "tag": "Tour en grupo",
+          "imageAlt": "Edificios coloridos en Malmö"
+        }
+      }
+    }
+  },
+  "whyChoose": {
+    "heading": "Por qué los viajeros eligen Walk & Tour",
+    "description": "En Walk and Tour, creemos que la mejor manera de vivir Copenhague de verdad es a pie y a ritmo local.",
+    "bullets": {
+      "tipsBased": "Tours basados en propinas: paga lo que quieras según tu experiencia.",
+      "localKnowledge": "Conocimiento local único y rincones escondidos en cada tour.",
+      "smallGroups": "Grupos pequeños para una experiencia más personal y cómoda.",
+      "friendlyGuides": "Guías amables y profesionales con pasión por Copenhague.",
+      "greatForEveryone": "Ideal para viajeros solos, parejas, familias y grupos pequeños."
+    }
+  },
+  "privateTours": {
+    "heading": "Tours privados y experiencias corporativas",
+    "description1": "¿Buscas una experiencia personalizada en Copenhague?",
+    "description2": "Ofrecemos tours a pie privados y experiencias corporativas adaptadas a tu horario e intereses. Ya sea que quieras una inmersión histórica, una aventura gastronómica o una actividad de team building, creamos el itinerario perfecto para ti.",
+    "ctaLabel": "Contáctanos para diseñar tu experiencia privada en Copenhague"
+  },
+  "partners": {
+    "heading": "Nuestros socios",
+    "items": {
+      "donkeyRepublic": "Donkey Republic",
+      "kobenhavnsKommune": "Kobenhavns Kommune",
+      "getYourGuide": "GetYourGuide",
+      "civitatis": "Civitatis",
+      "embassyOfArgentina": "Embajada de Argentina",
+      "viator": "Viator"
+    }
+  },
+  "contact": {
+    "heading": "Planifiquemos tu experiencia en Copenhague",
+    "subheading": "¡Contáctanos hoy y te responderemos lo antes posible!",
+    "namePlaceholder": "Tu nombre",
+    "phonePlaceholder": "Tu teléfono",
+    "emailPlaceholder": "Tu correo electrónico",
+    "messagePlaceholder": "Tu mensaje",
+    "sendMessage": "Enviar mensaje"
+  },
+  "footer": {
+    "brandName": "Walk and Tour",
+    "blurb": "Walk and Tour Copenhague ofrece experiencia, tours personalizados, gran valor y un servicio excepcional para una experiencia de viaje inolvidable.",
+    "labels": {
+      "cvr": "CVR",
+      "phone": "Teléfono",
+      "email": "Correo electrónico"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok"
+    },
+    "sections": {
+      "wt": {
+        "title": "W&T",
+        "links": {
+          "about": "Sobre nosotros",
+          "companies": "Empresas",
+          "workWithUs": "Trabaja con nosotros",
+          "contact": "Contacto"
+        }
+      },
+      "support": {
+        "title": "Soporte",
+        "links": {
+          "faqs": "Preguntas frecuentes",
+          "privacyPolicy": "Política de privacidad",
+          "termsOfUse": "Términos de uso"
+        }
+      }
+    },
+    "newsletter": {
+      "title": "Suscríbete",
+      "description": "Únete a nuestro boletín para recibir nuevos tours, consejos de viaje y actualizaciones.",
+      "emailPlaceholder": "Correo electrónico",
+      "consent": "Acepto recibir el boletín de Walk and Tour.",
+      "submit": "Enviar"
+    },
+    "copyright": "Copyright 2026 Walk and Tour Copenhague. Todos los derechos reservados.",
+    "legal": {
+      "privacyPolicy": "Política de privacidad",
+      "termsOfUse": "Términos de uso"
+    }
+  }
+}

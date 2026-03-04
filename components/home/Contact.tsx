@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import PhoneInput, { type Value } from "react-phone-number-input";
+import enPhoneLabels from "react-phone-number-input/locale/en.json";
 import { contactInfo } from "@/lib/landing-data";
 
 export default function Contact() {
+  const t = useTranslations("contact");
   const [phone, setPhone] = useState<Value | undefined>();
   const fieldClassName =
     "mt-2 w-full rounded-2xl border border-black/10 px-4 py-3 text-sm text-[#2a221a] placeholder:text-[#b5a695] focus:border-[#2a221a] focus:outline-none";
@@ -19,26 +22,28 @@ export default function Contact() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <h2 className="mt-3 text-3xl font-semibold text-teal sm:text-4xl">
-              { contactInfo.heading }
+              { t(contactInfo.headingKey) }
             </h2>
             <p className="mt-4 text-xl font-semibold">
-              { contactInfo.subheading }
+              { t(contactInfo.subheadingKey) }
             </p>
           </div>
           <form className="space-y-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/10">
             <div>
               <input
                 type="text"
-                placeholder="Your name"
+                placeholder={ t("namePlaceholder") }
                 className={ fieldClassName }
               />
             </div>
             <div>
               <PhoneInput
                 defaultCountry="DK"
-                placeholder="Your phone"
+                placeholder={ t("phonePlaceholder") }
                 value={ phone }
                 onChange={ setPhone }
+                labels={ enPhoneLabels }
+                locales="en"
                 className={ phoneWrapperClassName }
                 numberInputProps={{
                   className: phoneInputClassName,
@@ -48,14 +53,14 @@ export default function Contact() {
             <div>
               <input
                 type="email"
-                placeholder="Your email"
+                placeholder={ t("emailPlaceholder") }
                 className={ fieldClassName }
               />
             </div>
             <div>
               <textarea
                 rows={ 4 }
-                placeholder="Your message"
+                placeholder={ t("messagePlaceholder") }
                 className={ fieldClassName }
               />
             </div>
@@ -63,7 +68,7 @@ export default function Contact() {
               type="button"
               className="w-full btn-red-black px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-colors"
             >
-              Send message
+              { t("sendMessage") }
             </button>
           </form>
         </div>

@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState, type ComponentType, type SVGProps } from "react";
+import { useEffect, useRef, useState, type ComponentType } from "react";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { type AppLocale } from "@/i18n/routing";
 import { navLinks } from "@/lib/landing-data";
 import { CalendarCheckIcon, ChevronDown, Menu, X } from "lucide-react";
 import { ES, GB, IT } from "country-flag-icons/react/3x2";
@@ -12,54 +15,59 @@ type CountryCode = "GB" | "ES" | "IT";
 
 type LanguageOption = {
   code: LanguageCode;
-  label: string;
+  locale: AppLocale;
   countryCode: CountryCode;
 };
 
 const languageOptions: LanguageOption[] = [
-  {code: "EN", label: "English", countryCode: "GB"},
-  {code: "ES", label: "Español", countryCode: "ES"},
-  {code: "IT", label: "Italiano", countryCode: "IT"},
+  {code: "EN", locale: "en", countryCode: "GB"},
+  {code: "ES", locale: "es", countryCode: "ES"},
+  {code: "IT", locale: "it", countryCode: "IT"},
 ];
 
 const flagByCountryCode: Record<
   CountryCode,
-  ComponentType<SVGProps<SVGSVGElement>>
+  ComponentType<{ className?: string }>
 > = {
   GB,
   ES,
   IT,
 };
 
+type SocialLinkId = "instagram" | "facebook" | "linkedin" | "tiktok";
+
 const mobileSocialLinks = [
   {
+    id: "instagram" as SocialLinkId,
     href: "https://www.instagram.com/walkandtour.dk",
     icon: "/walkandtour/instagram-white.png",
-    label: "Instagram",
   },
   {
+    id: "facebook" as SocialLinkId,
     href: "https://www.facebook.com/walkandtour.dk",
     icon: "/walkandtour/facebook-white.png",
-    label: "Facebook",
   },
   {
+    id: "linkedin" as SocialLinkId,
     href: "https://www.linkedin.com/company/walk-and-tour",
     icon: "/walkandtour/linkedin-white.png",
-    label: "LinkedIn",
   },
   {
+    id: "tiktok" as SocialLinkId,
     href: "https://www.tiktok.com/@walkandtour.dk",
     icon: "/walkandtour/tiktok-white.png",
-    label: "TikTok",
   },
 ];
 
 export default function Header() {
+  const t = useTranslations("header");
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopLanguageMenuOpen, setIsDesktopLanguageMenuOpen] = useState(false);
   const [isMobileLanguageMenuOpen, setIsMobileLanguageMenuOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode>("EN");
   const [activeHash, setActiveHash] = useState("#home");
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
@@ -208,10 +216,16 @@ export default function Header() {
     setIsMobileLanguageMenuOpen(false);
   };
 
-  const selectLanguage = (code: LanguageCode) => {
-    setSelectedLanguage(code);
+  const selectLanguage = (nextLocale: AppLocale) => {
     setIsDesktopLanguageMenuOpen(false);
     setIsMobileLanguageMenuOpen(false);
+
+    if (locale === nextLocale) {
+      return;
+    }
+
+    const hash = window.location.hash;
+    router.replace(`${pathname}${hash}`, {locale: nextLocale, scroll: false});
   };
 
   const headerClassName = [
@@ -220,7 +234,7 @@ export default function Header() {
     isVisible ? "translate-y-0" : "-translate-y-full",
   ].join(" ");
   const selectedLanguageOption =
-    languageOptions.find((option) => option.code === selectedLanguage) ?? languageOptions[0];
+    languageOptions.find((option) => option.locale === locale) ?? languageOptions[0];
   const SelectedLanguageFlag = flagByCountryCode[selectedLanguageOption.countryCode];
 
   return (
@@ -230,7 +244,7 @@ export default function Header() {
           <a href="#home" className="flex items-center gap-3 mb-[var(--logo-mb)]">
             <Image
               src="/walkandtour/logo-formal.png"
-              alt="Walk & Tour Copenhagen"
+              alt={ t("logoAlt") }
               width={ 120 }
               height={ 84 }
               className="h-[var(--logo-h)] w-auto"
@@ -240,11 +254,11 @@ export default function Header() {
           <nav className="hidden items-center gap-6 text-xl font-semibold xl:flex">
             { navLinks.map((link) => (
               <a
-                key={ link.label }
+                key={ link.id }
                 href={ link.href }
                 className="site-link"
               >
-                { link.label }
+                { t(`nav.${link.id}`) }
               </a>
             )) }
           </nav>
@@ -254,7 +268,7 @@ export default function Header() {
               className="flex btn-red-black px-5 py-2 text-base font-semibold transition-colors uppercase"
             >
               <CalendarCheckIcon className="mr-2 h-6 w-6"/>
-              Private Tours
+              { t("privateTours") }
             </a>
           </div>
           <div className="flex items-center gap-[var(--ctrl-gap)]">
@@ -263,7 +277,7 @@ export default function Header() {
                 type="button"
                 aria-haspopup="menu"
                 aria-expanded={ isDesktopLanguageMenuOpen }
-                aria-label="Select language"
+                aria-label={ t("selectLanguage") }
                 onClick={ () => {
                   setIsDesktopLanguageMenuOpen((prev) => !prev);
                   setIsMobileLanguageMenuOpen(false);
@@ -294,10 +308,10 @@ export default function Header() {
                       key={ language.code }
                       type="button"
                       role="menuitem"
-                      onClick={ () => selectLanguage(language.code) }
+                      onClick={ () => selectLanguage(language.locale) }
                       className={ [
                         "flex w-full items-center gap-2 rounded-xl px-2 py-2 text-left text-sm font-semibold transition-colors",
-                        selectedLanguage === language.code
+                        selectedLanguageOption.locale === language.locale
                           ? "bg-[#f8f4ef] text-[#2a221a]"
                           : "text-[#3d3124] hover:bg-[#f8f4ef]",
                       ].join(" ") }
@@ -305,7 +319,7 @@ export default function Header() {
                       <LanguageFlag className="h-4 w-6 overflow-hidden rounded-xs"/>
                       <span>{ language.code }</span>
                       <span className="text-xs font-medium text-black/60">
-                        { language.label }
+                        { t(`languages.${language.code}`) }
                       </span>
                     </button>
                   );
@@ -314,7 +328,7 @@ export default function Header() {
             </div>
             <button
               type="button"
-              aria-label="Open menu"
+              aria-label={ t("openMenu") }
               aria-expanded={ isMobileMenuOpen }
               aria-controls="mobile-menu-overlay"
               onClick={ () => setIsMobileMenuOpen(true) }
@@ -337,17 +351,17 @@ export default function Header() {
           <div className="flex items-center gap-3">
             { mobileSocialLinks.map((link) => (
               <a
-                key={ link.label }
+                key={ link.id }
                 href={ link.href }
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={ isMobileMenuOpen ? 0 : -1 }
-                aria-label={ link.label }
+                aria-label={ t(`social.${link.id}`) }
                 className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-transparent transition-transform hover:scale-105"
               >
                 <Image
                   src={ link.icon }
-                  alt={ link.label }
+                  alt={ t(`social.${link.id}`) }
                   width={ 20 }
                   height={ 20 }
                   className="h-9 w-9 object-contain"
@@ -357,7 +371,7 @@ export default function Header() {
           </div>
           <button
             type="button"
-            aria-label="Close menu"
+            aria-label={ t("closeMenu") }
             onClick={ closeMobileMenu }
             tabIndex={ isMobileMenuOpen ? 0 : -1 }
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/70 transition-colors hover:bg-white hover:text-[#c24343] cursor-pointer"
@@ -369,7 +383,7 @@ export default function Header() {
           className="flex flex-1 flex-col items-center justify-center gap-8 text-center text-4xl font-semibold uppercase tracking-wide">
           { navLinks.map((link) => (
             <a
-              key={ link.label }
+              key={ link.id }
               href={ link.href }
               onClick={ () => {
                 setActiveHash(link.href);
@@ -381,7 +395,7 @@ export default function Header() {
                 activeHash === link.href ? "menu-link-active" : "",
               ].join(" ") }
             >
-              { link.label }
+              { t(`nav.${link.id}`) }
             </a>
           )) }
           <a
@@ -390,7 +404,7 @@ export default function Header() {
             tabIndex={ isMobileMenuOpen ? 0 : -1 }
             className="mt-3 rounded-full border border-white px-6 py-3 text-lg font-semibold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-[#c24343]"
           >
-            Private Tours
+            { t("privateTours") }
           </a>
         </nav>
       </div>

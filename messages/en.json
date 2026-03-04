@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "title": "Walk and Tour Copenhagen | Walking Tours & Local Experiences",
+    "description": "Copenhagen walking tours and local experiences led by passionate guides. Free tours, castle visits, and day trips."
+  },
+  "header": {
+    "logoAlt": "Walk & Tour Copenhagen",
+    "privateTours": "Private Tours",
+    "selectLanguage": "Select language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "nav": {
+      "home": "Home",
+      "tours": "Tours",
+      "about": "About Us",
+      "companies": "Companies",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "languages": {
+      "EN": "English",
+      "ES": "Español",
+      "IT": "Italiano"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok"
+    }
+  },
+  "hero": {
+    "heading": "Copenhagen Walking Tours & Unique Local Experiences",
+    "subheading": "Discover Copenhagen through stories, history and unforgettable local experiences led by passionate guides.",
+    "ctaLabel": "Check our tours now!"
+  },
+  "tours": {
+    "heading": "Choose the Perfect Tour for Your Visit",
+    "intro1": "Whether you are interested in history, architecture, food, royal palaces or day trips, we have the perfect experience waiting for you.",
+    "intro2": "Explore Copenhagen your way - with small groups, expert guides and flexible options designed for every traveler.",
+    "exploreAll": "Explore all our tours",
+    "card": {
+      "duration": "Duration",
+      "location": "Location",
+      "price": "Price",
+      "details": "Details",
+      "ratingOutOfFive": "/5",
+      "reviews": "reviews",
+      "currency": "kr",
+      "items": {
+        "copenhagenFreeTour": {
+          "title": "Copenhagen Free Tour: Changing of the Guard & City Highlights",
+          "location": "Copenhagen",
+          "duration": "2 hours",
+          "tag": "Tip-Based",
+          "imageAlt": "Nyhavn canal in Copenhagen"
+        },
+        "rosenborgCastleTour": {
+          "title": "Rosenborg Castle Guided Tour",
+          "location": "Rosenborg Castle",
+          "duration": "1.5 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Rosenborg Castle in Copenhagen"
+        },
+        "malmoExcursion": {
+          "title": "Excursion to Malmo Sweden",
+          "location": "Malmo",
+          "duration": "5 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Colorful buildings in Malmo"
+        }
+      }
+    }
+  },
+  "whyChoose": {
+    "heading": "Why Travelers Choose Walk & Tour",
+    "description": "At Walk and Tour, we believe the best way to truly experience Copenhagen is on foot and at a local pace.",
+    "bullets": {
+      "tipsBased": "Tips Based Tours - Pay what you want based on your experience.",
+      "localKnowledge": "Unique local knowledge and hidden gems in every tour.",
+      "smallGroups": "Small groups for a more personal and comfortable experience.",
+      "friendlyGuides": "Friendly, professional guides with a passion for Copenhagen.",
+      "greatForEveryone": "Great for solo travelers, couples, families and small groups."
+    }
+  },
+  "privateTours": {
+    "heading": "Private Tours & Corporate Experiences",
+    "description1": "Looking for a personalized experience in Copenhagen?",
+    "description2": "We offer private walking tours and corporate experiences tailored to your schedule and interests. Whether you want a historical deep dive, a food-focused adventure or a team-building activity, we create the perfect itinerary just for you.",
+    "ctaLabel": "Contact us to design your private Copenhagen experience"
+  },
+  "partners": {
+    "heading": "Our Partners",
+    "items": {
+      "donkeyRepublic": "Donkey Republic",
+      "kobenhavnsKommune": "Kobenhavns Kommune",
+      "getYourGuide": "GetYourGuide",
+      "civitatis": "Civitatis",
+      "embassyOfArgentina": "Embassy of Argentina",
+      "viator": "Viator"
+    }
+  },
+  "contact": {
+    "heading": "Let's Plan Your Copenhagen Experience",
+    "subheading": "Contact us today and we will answer as soon as possible!",
+    "namePlaceholder": "Your name",
+    "phonePlaceholder": "Your phone",
+    "emailPlaceholder": "Your email",
+    "messagePlaceholder": "Your message",
+    "sendMessage": "Send message"
+  },
+  "footer": {
+    "brandName": "Walk and Tour",
+    "blurb": "Walk and Tour Copenhagen offers expertise, personalized tours, great value, and exceptional service for an unforgettable travel experiences.",
+    "labels": {
+      "cvr": "CVR",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "tiktok": "TikTok"
+    },
+    "sections": {
+      "wt": {
+        "title": "W&T",
+        "links": {
+          "about": "About",
+          "companies": "Companies",
+          "workWithUs": "Work with us",
+          "contact": "Contact"
+        }
+      },
+      "support": {
+        "title": "Support",
+        "links": {
+          "faqs": "FAQs",
+          "privacyPolicy": "Privacy Policy",
+          "termsOfUse": "Terms of Use"
+        }
+      }
+    },
+    "newsletter": {
+      "title": "Subscribe",
+      "description": "Join our newsletter for new tours, travel tips, and updates.",
+      "emailPlaceholder": "Email",
+      "consent": "I agree to receive Walk and Tour newsletter.",
+      "submit": "Submit"
+    },
+    "copyright": "Copyright 2026 Walk and Tour Copenhagen. All rights reserved.",
+    "legal": {
+      "privacyPolicy": "Privacy Policy",
+      "termsOfUse": "Terms of Use"
+    }
+  }
+}
