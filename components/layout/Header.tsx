@@ -215,7 +215,7 @@ export default function Header() {
   };
 
   const headerClassName = [
-    "fixed inset-x-0 top-0 z-50 h-24 md:h-28 lg:h-32 border-b border-black/10 bg-white",
+    "fixed inset-x-0 top-0 z-50 h-[var(--header-h)] border-b border-black/10 bg-white",
     "transition-transform duration-500 ease-out motion-reduce:transition-none",
     isVisible ? "translate-y-0" : "-translate-y-full",
   ].join(" ");
@@ -226,14 +226,14 @@ export default function Header() {
   return (
     <>
       <header className={ headerClassName }>
-        <div className="flex h-full w-full items-center justify-between px-6 py-5 lg:px-12">
-          <a href="#home" className="flex items-center gap-3 mb-2 lg:mb-3">
+        <div className="flex h-full w-full items-center justify-between px-[var(--header-px)] py-[var(--header-py)]">
+          <a href="#home" className="flex items-center gap-3 mb-[var(--logo-mb)]">
             <Image
               src="/walkandtour/logo-formal.png"
               alt="Walk & Tour Copenhagen"
               width={ 120 }
               height={ 84 }
-              className="h-14 xl:h-16 w-auto"
+              className="h-[var(--logo-h)] w-auto"
               priority
             />
           </a>
@@ -257,7 +257,7 @@ export default function Header() {
               Private Tours
             </a>
           </div>
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-[var(--ctrl-gap)]">
             <div ref={ desktopLanguageMenuRef } className="relative">
               <button
                 type="button"
