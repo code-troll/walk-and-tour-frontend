@@ -9,9 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@meltdownjs/cn": "^1.2.1",
+    "lucide-react": "^0.576.0",
     "next": "16.1.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-phone-number-input": "^3.4.16"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
