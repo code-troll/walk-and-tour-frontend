@@ -1,11 +1,36 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ComponentType, type SVGProps } from "react";
 import Image from "next/image";
 import { navLinks } from "@/lib/landing-data";
-import { CalendarCheckIcon, Menu, X } from "lucide-react";
+import { CalendarCheckIcon, ChevronDown, Menu, X } from "lucide-react";
+import { ES, GB, IT } from "country-flag-icons/react/3x2";
 
 const SCROLL_THRESHOLD = 32;
+type LanguageCode = "EN" | "ES" | "IT";
+type CountryCode = "GB" | "ES" | "IT";
+
+type LanguageOption = {
+  code: LanguageCode;
+  label: string;
+  countryCode: CountryCode;
+};
+
+const languageOptions: LanguageOption[] = [
+  {code: "EN", label: "English", countryCode: "GB"},
+  {code: "ES", label: "Español", countryCode: "ES"},
+  {code: "IT", label: "Italiano", countryCode: "IT"},
+];
+
+const flagByCountryCode: Record<
+  CountryCode,
+  ComponentType<SVGProps<SVGSVGElement>>
+> = {
+  GB,
+  ES,
+  IT,
+};
+
 const mobileSocialLinks = [
   {
     href: "https://www.instagram.com/walkandtour.dk",
@@ -32,9 +57,14 @@ const mobileSocialLinks = [
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDesktopLanguageMenuOpen, setIsDesktopLanguageMenuOpen] = useState(false);
+  const [isMobileLanguageMenuOpen, setIsMobileLanguageMenuOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode>("EN");
   const [activeHash, setActiveHash] = useState("#home");
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+  const desktopLanguageMenuRef = useRef<HTMLDivElement>(null);
+  const mobileLanguageMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     lastScrollY.current = window.scrollY;
@@ -70,7 +100,7 @@ export default function Header() {
       });
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scroll", onScroll, {passive: true});
 
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -108,6 +138,7 @@ export default function Header() {
     const onResize = () => {
       if (window.innerWidth >= 1024) {
         setIsMobileMenuOpen(false);
+        setIsMobileLanguageMenuOpen(false);
       }
     };
 
@@ -119,12 +150,48 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!isMobileMenuOpen) {
-      return;
-    }
+    const onPointerDown = (event: MouseEvent) => {
+      const target = event.target as Node;
 
+      if (
+        desktopLanguageMenuRef.current &&
+        !desktopLanguageMenuRef.current.contains(target)
+      ) {
+        setIsDesktopLanguageMenuOpen(false);
+      }
+
+      if (
+        mobileLanguageMenuRef.current &&
+        !mobileLanguageMenuRef.current.contains(target)
+      ) {
+        setIsMobileLanguageMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+    };
+  }, []);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      if (isMobileLanguageMenuOpen) {
+        setIsMobileLanguageMenuOpen(false);
+        return;
+      }
+
+      if (isDesktopLanguageMenuOpen) {
+        setIsDesktopLanguageMenuOpen(false);
+        return;
+      }
+
+      if (isMobileMenuOpen) {
         setIsMobileMenuOpen(false);
       }
     };
@@ -134,33 +201,43 @@ export default function Header() {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [isMobileMenuOpen]);
+  }, [isDesktopLanguageMenuOpen, isMobileLanguageMenuOpen, isMobileMenuOpen]);
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+    setIsMobileLanguageMenuOpen(false);
+  };
+
+  const selectLanguage = (code: LanguageCode) => {
+    setSelectedLanguage(code);
+    setIsDesktopLanguageMenuOpen(false);
+    setIsMobileLanguageMenuOpen(false);
   };
 
   const headerClassName = [
-    "fixed inset-x-0 top-0 z-50 h-32 border-b border-black/10 bg-white",
+    "fixed inset-x-0 top-0 z-50 h-24 md:h-28 lg:h-32 border-b border-black/10 bg-white",
     "transition-transform duration-500 ease-out motion-reduce:transition-none",
     isVisible ? "translate-y-0" : "-translate-y-full",
   ].join(" ");
+  const selectedLanguageOption =
+    languageOptions.find((option) => option.code === selectedLanguage) ?? languageOptions[0];
+  const SelectedLanguageFlag = flagByCountryCode[selectedLanguageOption.countryCode];
 
   return (
     <>
       <header className={ headerClassName }>
-        <div className="flex h-full w-full items-center justify-between px-6 py-5  lg:px-12">
-          <a href="#home" className="flex items-center gap-3 mb-5">
+        <div className="flex h-full w-full items-center justify-between px-6 py-5 lg:px-12">
+          <a href="#home" className="flex items-center gap-3 mb-2 lg:mb-3">
             <Image
               src="/walkandtour/logo-formal.png"
               alt="Walk & Tour Copenhagen"
               width={ 120 }
               height={ 84 }
-              className="h-16 w-auto"
+              className="h-14 xl:h-16 w-auto"
               priority
             />
           </a>
-          <nav className="hidden items-center gap-6 text-xl font-semibold lg:flex">
+          <nav className="hidden items-center gap-6 text-xl font-semibold xl:flex">
             { navLinks.map((link) => (
               <a
                 key={ link.label }
@@ -171,32 +248,88 @@ export default function Header() {
               </a>
             )) }
           </nav>
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-3 xl:flex">
             <a
               href="#private"
               className="flex btn-red-black px-5 py-2 text-base font-semibold transition-colors uppercase"
             >
-              <CalendarCheckIcon className="mr-2 h-6 w-6" />
+              <CalendarCheckIcon className="mr-2 h-6 w-6"/>
               Private Tours
             </a>
           </div>
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={ isMobileMenuOpen }
-            aria-controls="mobile-menu-overlay"
-            onClick={ () => setIsMobileMenuOpen(true) }
-            className="btn-red-white-round inline-flex h-10 w-10 cursor-pointer items-center justify-center transition-colors lg:hidden"
-          >
-            <Menu className="h-5 w-5" aria-hidden="true" />
-          </button>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <div ref={ desktopLanguageMenuRef } className="relative">
+              <button
+                type="button"
+                aria-haspopup="menu"
+                aria-expanded={ isDesktopLanguageMenuOpen }
+                aria-label="Select language"
+                onClick={ () => {
+                  setIsDesktopLanguageMenuOpen((prev) => !prev);
+                  setIsMobileLanguageMenuOpen(false);
+                } }
+                className="inline-flex h-10 items-center gap-2 rounded-full border border-black/20 px-2 sm:px-3 text-sm font-semibold text-[#2a221a] transition-colors hover:border-[#2a221a] hover:bg-[#f8f4ef]"
+              >
+                <SelectedLanguageFlag className="h-4 w-6 overflow-hidden rounded-xs"/>
+                <span>{ selectedLanguageOption.code }</span>
+                <ChevronDown
+                  className={ [
+                    "h-4 w-4 transition-transform",
+                    isDesktopLanguageMenuOpen ? "rotate-180" : "",
+                  ].join(" ") }
+                />
+              </button>
+              <div
+                role="menu"
+                className={ [
+                  "absolute right-0 mt-2 w-44 rounded-2xl border border-black/10 bg-white p-2 shadow-lg transition-opacity",
+                  isDesktopLanguageMenuOpen ? "opacity-100" : "pointer-events-none opacity-0",
+                ].join(" ") }
+              >
+                { languageOptions.map((language) => {
+                  const LanguageFlag = flagByCountryCode[language.countryCode];
+
+                  return (
+                    <button
+                      key={ language.code }
+                      type="button"
+                      role="menuitem"
+                      onClick={ () => selectLanguage(language.code) }
+                      className={ [
+                        "flex w-full items-center gap-2 rounded-xl px-2 py-2 text-left text-sm font-semibold transition-colors",
+                        selectedLanguage === language.code
+                          ? "bg-[#f8f4ef] text-[#2a221a]"
+                          : "text-[#3d3124] hover:bg-[#f8f4ef]",
+                      ].join(" ") }
+                    >
+                      <LanguageFlag className="h-4 w-6 overflow-hidden rounded-xs"/>
+                      <span>{ language.code }</span>
+                      <span className="text-xs font-medium text-black/60">
+                        { language.label }
+                      </span>
+                    </button>
+                  );
+                }) }
+              </div>
+            </div>
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={ isMobileMenuOpen }
+              aria-controls="mobile-menu-overlay"
+              onClick={ () => setIsMobileMenuOpen(true) }
+              className="btn-red-white-round inline-flex h-10 w-10 cursor-pointer items-center justify-center transition-colors xl:hidden"
+            >
+              <Menu className="h-5 w-5" aria-hidden="true"/>
+            </button>
+          </div>
         </div>
       </header>
       <div
         id="mobile-menu-overlay"
         aria-hidden={ !isMobileMenuOpen }
         className={ [
-          "fixed inset-0 z-[9999] flex flex-col bg-[#c24343] px-6 pt-11 pb-6 text-white transition-transform duration-300 ease-in-out lg:hidden",
+          "fixed inset-0 z-9999 flex flex-col bg-[#c24343] px-6 pt-7 md:pt-9 lg:pt-11 pb-6 text-white transition-transform duration-300 ease-in-out lg:hidden",
           isMobileMenuOpen ? "translate-x-0" : "pointer-events-none translate-x-full",
         ].join(" ") }
       >
@@ -229,10 +362,11 @@ export default function Header() {
             tabIndex={ isMobileMenuOpen ? 0 : -1 }
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/70 transition-colors hover:bg-white hover:text-[#c24343] cursor-pointer"
           >
-            <X className="h-5 w-5" aria-hidden="true" />
+            <X className="h-5 w-5" aria-hidden="true"/>
           </button>
         </div>
-        <nav className="flex flex-1 flex-col items-center justify-center gap-8 text-center text-4xl font-semibold uppercase tracking-wide">
+        <nav
+          className="flex flex-1 flex-col items-center justify-center gap-8 text-center text-4xl font-semibold uppercase tracking-wide">
           { navLinks.map((link) => (
             <a
               key={ link.label }
