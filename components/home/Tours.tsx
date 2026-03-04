@@ -1,6 +1,8 @@
-import { tours } from "@/lib/landing-data";
 import { useTranslations } from "next-intl";
-import TourCard from "@/components/home/TourCard";
+
+import TourListingCard from "@/components/tours/TourListingCard";
+import { Link } from "@/i18n/navigation";
+import { homeTours } from "@/lib/landing-data";
 
 export default function Tours() {
   const t = useTranslations("tours");
@@ -19,18 +21,20 @@ export default function Tours() {
             { t("intro2") }
           </p>
         </div>
-        <div className="mt-10 grid gap-6 lg:grid-cols-3">
-          { tours.map((tour) => (
-            <TourCard key={ tour.id } tour={ tour }/>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          { homeTours.map((tour) => (
+            <TourListingCard key={ tour.id } tour={ tour }/>
           )) }
         </div>
+
         <div className="mt-10 flex justify-center">
-          <a
-            href="#tours"
+          <Link
+            href="/tours"
             className="rounded-full border border-[#2a221a] px-6 py-3 text-sm font-semibold uppercase tracking-wide text-[#2a221a] transition-colors hover:bg-[#2a221a] hover:text-white"
           >
             { t("exploreAll") }
-          </a>
+          </Link>
         </div>
       </div>
     </section>

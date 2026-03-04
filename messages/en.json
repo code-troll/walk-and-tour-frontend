@@ -30,9 +30,15 @@
     }
   },
   "hero": {
-    "heading": "Copenhagen Walking Tours & Unique Local Experiences",
-    "subheading": "Discover Copenhagen through stories, history and unforgettable local experiences led by passionate guides.",
-    "ctaLabel": "Check our tours now!"
+    "home": {
+      "heading": "Copenhagen Walking Tours & Unique Local Experiences",
+      "subheading": "Discover Copenhagen through stories, history and unforgettable local experiences led by passionate guides.",
+      "ctaLabel": "Check our tours now!"
+    },
+    "tours": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Tours & Experiences"
+    }
   },
   "tours": {
     "heading": "Choose the Perfect Tour for Your Visit",
@@ -53,24 +59,161 @@
           "location": "Copenhagen",
           "duration": "2 hours",
           "tag": "Tip-Based",
-          "imageAlt": "Nyhavn canal in Copenhagen"
+          "imageAlt": "Copenhagen Free Tour: Changing of the Guard & City Highlights"
         },
         "rosenborgCastleTour": {
           "title": "Rosenborg Castle Guided Tour",
           "location": "Rosenborg Castle",
           "duration": "1.5 hours",
           "tag": "Group Tour",
-          "imageAlt": "Rosenborg Castle in Copenhagen"
+          "imageAlt": "Rosenborg Castle Guided Tour"
         },
         "malmoExcursion": {
-          "title": "Excursion to Malmo Sweden",
-          "location": "Malmo",
+          "title": "Excursion to Malmö Sweden",
+          "location": "Malmö",
           "duration": "5 hours",
           "tag": "Group Tour",
-          "imageAlt": "Colorful buildings in Malmo"
+          "imageAlt": "Excursion to Malmö Sweden"
+        },
+        "amalienborgPalace": {
+          "title": "Amalienborg Palace",
+          "location": "Copenhagen",
+          "duration": "1.5 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Amalienborg Palace"
+        },
+        "christiansborgPalace": {
+          "title": "Christiansborg Palace",
+          "location": "Copenhagen",
+          "duration": "1.5 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Christiansborg Palace"
+        },
+        "copenhagenEssentials": {
+          "title": "Copenhagen Essentials: Old Town, Harbour Ferry & Royal Guards",
+          "location": "Copenhagen",
+          "duration": "2.5 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Copenhagen Essentials: Old Town, Harbour Ferry & Royal Guards"
+        },
+        "jewishQuarter": {
+          "title": "Jewish Quarter and Danish Jewish Museum Tour",
+          "location": "Copenhagen",
+          "duration": "3 hours",
+          "tag": "Private Tour",
+          "imageAlt": "Jewish Quarter and Danish Jewish Museum Tour"
+        },
+        "tivoliGardensEntry": {
+          "title": "Copenhagen Walking Tour + Tivoli Gardens Entry",
+          "location": "Copenhagen",
+          "duration": "2 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Copenhagen Walking Tour + Tivoli Gardens Entry"
+        },
+        "boatTour": {
+          "title": "Copenhagen Private Boat Tour: Hidden Gems & Hygge",
+          "location": "Copenhagen",
+          "duration": "2-5 hours",
+          "tag": "Private Tour",
+          "imageAlt": "Copenhagen Private Boat Tour: Hidden Gems & Hygge"
+        },
+        "royalDeerParkBikeTour": {
+          "title": "Hermitage Palace & Royal Deer Park Bike Tour",
+          "location": "Copenhagen",
+          "duration": "4 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Hermitage Palace & Royal Deer Park Bike Tour"
+        },
+        "harborArchitecture": {
+          "title": "Copenhagen: Harbor Architecture Private Walking Tour",
+          "location": "Copenhagen",
+          "duration": "2 hours",
+          "tag": "Private Tour",
+          "imageAlt": "Copenhagen: Harbor Architecture Private Walking Tour"
+        },
+        "rosenborgCastleCanalCruise": {
+          "title": "Skip the Line to Rosenborg Castle and Canal Cruise",
+          "location": "Copenhagen",
+          "duration": "2 hours",
+          "tag": "Private Tour",
+          "imageAlt": "Skip the Line to Rosenborg Castle and Canal Cruise"
+        },
+        "frederiksborgAndKronborgCastle": {
+          "title": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet",
+          "location": "Copenhagen",
+          "duration": "8 hours",
+          "tag": "Private Tour",
+          "imageAlt": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet"
+        },
+        "foodTours": {
+          "title": "Food Tours",
+          "location": "Copenhagen",
+          "duration": "3 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Food Tours"
+        },
+        "roskilde": {
+          "title": "Roskilde: Old Viking City",
+          "location": "Copenhagen",
+          "duration": "4 hours",
+          "tag": "Private Tour",
+          "imageAlt": "Roskilde: Old Viking City"
+        },
+        "nordhavnArchitecture": {
+          "title": "Nordhavn Architecture",
+          "location": "Copenhagen",
+          "duration": "1.5 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Nordhavn Architecture"
+        },
+        "christmasTour": {
+          "title": "Private 90-Min Ultimate Christmas: Tivoli & Hygge",
+          "location": "Copenhagen",
+          "duration": "1.5 hours",
+          "tag": "Private Tour",
+          "imageAlt": "Private 90-Min Ultimate Christmas: Tivoli & Hygge"
+        },
+        "panorama": {
+          "title": "Copenhagen Panorama: Private Shore-to-City Experience",
+          "location": "Copenhagen",
+          "duration": "5 hours",
+          "tag": "Private Tour",
+          "imageAlt": "Copenhagen Panorama: Private Shore-to-City Experience"
+        },
+        "shoreExcursion": {
+          "title": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City",
+          "location": "Copenhagen",
+          "duration": "4 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City"
+        },
+        "copenhagenCityToCoast": {
+          "title": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen",
+          "location": "Copenhagen",
+          "duration": "3 hours",
+          "tag": "Group Tour",
+          "imageAlt": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen"
         }
       }
-    }
+    },
+    "filters": {
+      "label": "Choose your tour",
+      "items": {
+        "architecture": "Architecture",
+        "bike": "Bike",
+        "boat": "Boat",
+        "cruise": "Cruise",
+        "dayTrip": "Day Trip",
+        "essential": "Essential",
+        "freeTour": "Free Tour",
+        "groupTour": "Group Tour",
+        "history": "History",
+        "privateTour": "Private Tour",
+        "royalPalaces": "Royal & Palaces"
+      }
+    },
+    "loadMore": "Load more",
+    "noResults": "No tours match the selected filters."
   },
   "whyChoose": {
     "heading": "Why Travelers Choose Walk & Tour",

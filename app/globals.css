@@ -26,6 +26,17 @@ body {
   font-family: "work-sans-v2", sans-serif;
 }
 
+@keyframes tour-card-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @layer utilities {
   .btn-red-white {
     border-radius: 8px;
@@ -82,8 +93,18 @@ body {
     text-underline-offset: 0.28em;
     text-decoration-color: currentColor;
   }
+  .tour-card-reveal {
+    animation: tour-card-reveal 660ms ease-out both;
+    will-change: transform, opacity;
+  }
 }
 
 * {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-card-reveal {
+    animation: none;
+  }
 }

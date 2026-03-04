@@ -2,9 +2,9 @@ import {getRequestConfig} from "next-intl/server";
 import {routing, type AppLocale} from "@/i18n/routing";
 
 const messageLoaders: Record<AppLocale, () => Promise<{default: Record<string, unknown>}>> = {
-  en: () => import("../messages/en.json"),
-  es: () => import("../messages/es.json"),
-  it: () => import("../messages/it.json"),
+  en: () => import("@/messages/en.json"),
+  es: () => import("@/messages/es.json"),
+  it: () => import("@/messages/it.json"),
 };
 
 const isValidLocale = (locale: string): locale is AppLocale =>

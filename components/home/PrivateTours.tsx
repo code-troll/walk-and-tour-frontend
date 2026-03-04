@@ -1,8 +1,11 @@
 import { privateTours } from "@/lib/landing-data";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { type AppLocale } from "@/i18n/routing";
+import { getInternalHref } from "@/lib/internal-paths";
 
 export default function PrivateTours() {
   const t = useTranslations("privateTours");
+  const locale = useLocale() as AppLocale;
 
   return (
     <section id="private" className="bg-[#fcfaf7] py-16">
@@ -18,7 +21,7 @@ export default function PrivateTours() {
           )) }
           <div>
             <a
-              href={ privateTours.ctaHref }
+              href={ getInternalHref({locale, target: privateTours.ctaTarget}) }
               className="inline-flex btn-red-black px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-colors"
             >
               { t(privateTours.ctaLabelKey) }

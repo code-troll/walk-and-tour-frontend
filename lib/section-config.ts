@@ -6,8 +6,9 @@ export type HeroSectionCtaConfig = {
 export type HeroSectionConfig = {
   id?: string;
   translationNamespace: string;
+  eyebrowKey?: string;
   titleKey: string;
-  descriptionKey: string;
+  descriptionKey?: string;
   imageSrc: string;
   cta?: HeroSectionCtaConfig;
   overlayClassName?: string;
@@ -16,12 +17,20 @@ export type HeroSectionConfig = {
 
 export const homeHeroConfig: HeroSectionConfig = {
   id: "home",
-  translationNamespace: "hero",
+  translationNamespace: "hero.home",
   titleKey: "heading",
   descriptionKey: "subheading",
   imageSrc: "/walkandtour/hero.png",
   cta: {
     labelKey: "ctaLabel",
-    href: "#tours",
+    href: "/tours",
   },
+};
+
+export const toursHeroConfig: HeroSectionConfig = {
+  id: "tours",
+  translationNamespace: "hero.tours",
+  eyebrowKey: "eyebrow",
+  titleKey: "heading",
+  imageSrc: "/walkandtour/private-tours.png",
 };

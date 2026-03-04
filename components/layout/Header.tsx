@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { type AppLocale } from "@/i18n/routing";
 import { navLinks } from "@/lib/landing-data";
+import { getHomeSectionHash, getInternalHref } from "@/lib/internal-paths";
 import { CalendarCheckIcon, ChevronDown, Menu, X } from "lucide-react";
 import { ES, GB, IT } from "country-flag-icons/react/3x2";
 
@@ -61,14 +62,14 @@ const mobileSocialLinks = [
 
 export default function Header() {
   const t = useTranslations("header");
-  const locale = useLocale();
+  const locale = useLocale() as AppLocale;
   const router = useRouter();
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopLanguageMenuOpen, setIsDesktopLanguageMenuOpen] = useState(false);
   const [isMobileLanguageMenuOpen, setIsMobileLanguageMenuOpen] = useState(false);
-  const [activeHash, setActiveHash] = useState("#home");
+  const [activeHash, setActiveHash] = useState("#");
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
   const desktopLanguageMenuRef = useRef<HTMLDivElement>(null);
@@ -130,7 +131,7 @@ export default function Header() {
 
   useEffect(() => {
     const updateActiveHash = () => {
-      const nextHash = window.location.hash || "#home";
+      const nextHash = window.location.hash || "#";
       setActiveHash(nextHash);
     };
 
@@ -233,6 +234,30 @@ export default function Header() {
     "transition-transform duration-500 ease-out motion-reduce:transition-none",
     isVisible ? "translate-y-0" : "-translate-y-full",
   ].join(" ");
+  const homeHref = getInternalHref({
+    locale,
+    target: {kind: "homeSection", section: "home"},
+  });
+  const privateToursHref = getInternalHref({
+    locale,
+    target: {kind: "homeSection", section: "private"},
+  });
+  const getNavHref = (linkId: (typeof navLinks)[number]["id"]) => {
+    const link = navLinks.find((item) => item.id === linkId);
+    if (!link) {
+      return homeHref;
+    }
+
+    return getInternalHref({locale, target: link.target});
+  };
+  const getNavHash = (linkId: (typeof navLinks)[number]["id"]) => {
+    const link = navLinks.find((item) => item.id === linkId);
+    if (!link || link.target.kind !== "homeSection") {
+      return "";
+    }
+
+    return getHomeSectionHash(link.target.section);
+  };
   const selectedLanguageOption =
     languageOptions.find((option) => option.locale === locale) ?? languageOptions[0];
   const SelectedLanguageFlag = flagByCountryCode[selectedLanguageOption.countryCode];
@@ -241,7 +266,7 @@ export default function Header() {
     <>
       <header className={ headerClassName }>
         <div className="flex h-full w-full items-center justify-between px-[var(--header-px)] py-[var(--header-py)]">
-          <a href="#home" className="flex items-center gap-3 mb-[var(--logo-mb)]">
+          <a href={ homeHref } className="mb-[var(--logo-mb)] flex items-center gap-3">
             <Image
               src="/walkandtour/logo-formal.png"
               alt={ t("logoAlt") }
@@ -255,7 +280,7 @@ export default function Header() {
             { navLinks.map((link) => (
               <a
                 key={ link.id }
-                href={ link.href }
+                href={ getNavHref(link.id) }
                 className="site-link"
               >
                 { t(`nav.${link.id}`) }
@@ -264,7 +289,7 @@ export default function Header() {
           </nav>
           <div className="hidden items-center gap-3 xl:flex">
             <a
-              href="#private"
+              href={ privateToursHref }
               className="flex btn-red-black px-5 py-2 text-base font-semibold transition-colors uppercase"
             >
               <CalendarCheckIcon className="mr-2 h-6 w-6"/>
@@ -384,22 +409,23 @@ export default function Header() {
           { navLinks.map((link) => (
             <a
               key={ link.id }
-              href={ link.href }
+              href={ getNavHref(link.id) }
               onClick={ () => {
-                setActiveHash(link.href);
+                const nextHash = getNavHash(link.id);
+                setActiveHash(nextHash);
                 closeMobileMenu();
               } }
               tabIndex={ isMobileMenuOpen ? 0 : -1 }
               className={ [
                 "text-white transition-opacity hover:opacity-80",
-                activeHash === link.href ? "menu-link-active" : "",
+                activeHash === getNavHash(link.id) ? "menu-link-active" : "",
               ].join(" ") }
             >
               { t(`nav.${link.id}`) }
             </a>
           )) }
           <a
-            href="#private"
+            href={ privateToursHref }
             onClick={ closeMobileMenu }
             tabIndex={ isMobileMenuOpen ? 0 : -1 }
             className="mt-3 rounded-full border border-white px-6 py-3 text-lg font-semibold uppercase tracking-wide text-white transition-colors hover:bg-white hover:text-[#c24343]"

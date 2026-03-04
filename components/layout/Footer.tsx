@@ -1,9 +1,16 @@
 import { footerContent } from "@/lib/landing-data";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { type AppLocale } from "@/i18n/routing";
+import { getInternalHref } from "@/lib/internal-paths";
 
 export default function Footer() {
   const t = useTranslations("footer");
+  const locale = useLocale() as AppLocale;
+  const blogHref = getInternalHref({
+    locale,
+    target: {kind: "homeSection", section: "blog"},
+  });
 
   return (
     <footer id="blog" className="bg-black py-16 text-[#f5f1ec]">
@@ -40,7 +47,10 @@ export default function Footer() {
               <ul className="space-y-2 text-sm text-[#e0d7ce]">
                 { section.links.map((link) => (
                   <li key={ link.id }>
-                    <a href={ link.href } className="hover:text-white">
+                    <a
+                      href={ getInternalHref({locale, target: link.target}) }
+                      className="hover:text-white"
+                    >
                       { t(`sections.${section.id}.links.${link.id}`) }
                     </a>
                   </li>
@@ -78,10 +88,10 @@ export default function Footer() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p>{ t("copyright") }</p>
             <div className="flex gap-6">
-              <a href="#blog" className="hover:text-white">
+              <a href={ blogHref } className="hover:text-white">
                 { t("legal.privacyPolicy") }
               </a>
-              <a href="#blog" className="hover:text-white">
+              <a href={ blogHref } className="hover:text-white">
                 { t("legal.termsOfUse") }
               </a>
             </div>
