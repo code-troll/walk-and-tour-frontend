@@ -1,10 +1,10 @@
-import Hero from "@/components/landing/Hero";
-import Tours from "@/components/landing/Tours";
-import WhyChoose from "@/components/landing/WhyChoose";
-import PrivateTours from "@/components/landing/PrivateTours";
-import Partners from "@/components/landing/Partners";
-import Contact from "@/components/landing/Contact";
-import Footer from "@/components/landing/Footer";
+import Hero from "@/components/home/Hero";
+import Tours from "@/components/home/Tours";
+import WhyChoose from "@/components/home/WhyChoose";
+import PrivateTours from "@/components/home/PrivateTours";
+import Partners from "@/components/home/Partners";
+import Contact from "@/components/home/Contact";
+import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (

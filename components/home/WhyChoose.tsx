@@ -1,5 +1,6 @@
 import { whyChoose } from "@/lib/landing-data";
 import { CheckIcon } from "lucide-react";
+import ElfsightReviews from "@/components/home/ElfsightReviews";
 
 export default function WhyChoose() {
   return (
@@ -22,8 +23,7 @@ export default function WhyChoose() {
           )) }
         </div>
         <div className="order-3 col-span-2">
-          <script src="https://elfsightcdn.com/platform.js" async></script>
-          <div className="elfsight-app-c976affe-b00e-4af3-b550-53dd2fb36e1b" data-elfsight-app-lazy></div>
+          <ElfsightReviews />
         </div>
       </div>
     </section>

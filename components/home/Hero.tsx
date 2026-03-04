@@ -3,7 +3,7 @@ import { heroContent } from "@/lib/landing-data";
 export default function Hero() {
   return (
     <section
-      id="top"
+      id="home"
       className="relative overflow-hidden bg-[#f8f4ef]"
       style={ {
         backgroundImage: `url(${ heroContent.image.src })`,

@@ -68,7 +68,7 @@ export type FooterContent = {
 };
 
 export const navLinks: NavLink[] = [
-  {label: "Home", href: "#"},
+  {label: "Home", href: "#home"},
   {label: "Tours", href: "#tours"},
   {label: "About Us", href: "#about"},
   {label: "Companies", href: "#companies"},

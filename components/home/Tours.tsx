@@ -1,5 +1,5 @@
 import { tours } from "@/lib/landing-data";
-import TourCard from "@/components/landing/TourCard";
+import TourCard from "@/components/home/TourCard";
 
 export default function Tours() {
   return (

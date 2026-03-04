@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { privateTours } from "@/lib/landing-data";
 
 export default function PrivateTours() {
