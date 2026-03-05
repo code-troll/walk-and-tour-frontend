@@ -37,6 +37,9 @@ export default function Footer() {
               <a href="https://www.tiktok.com/@walkandtour.dk" target="_blank" rel="noopener noreferrer">
                 <Image src="/walkandtour/tiktok.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
               </a>
+              <a href="https://www.tripadvisor.com/Attraction_Review-g189541-d33403499-Reviews-Walk_and_Tour-Copenhagen_Zealand.html" target="_blank" rel="noopener noreferrer">
+                <Image src="/walkandtour/tripadvisor.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
+              </a>
             </div>
           </div>
           { footerContent.linkSections.map((section) => (

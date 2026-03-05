@@ -126,7 +126,7 @@ export type FooterContent = {
 export const navLinks: NavLink[] = [
   {id: "home", target: {kind: "homeSection", section: "home"}},
   {id: "tours", target: {kind: "page", page: "/tours"}},
-  {id: "about", target: {kind: "homeSection", section: "about"}},
+  {id: "about", target: {kind: "page", page: "/about-us"}},
   {id: "companies", target: {kind: "homeSection", section: "companies"}},
   {id: "blog", target: {kind: "homeSection", section: "blog"}},
   {id: "contact", target: {kind: "homeSection", section: "contact"}},
@@ -508,7 +508,7 @@ export const footerContent: FooterContent = {
     {
       id: "wt",
       links: [
-        {id: "about", target: {kind: "homeSection", section: "about"}},
+        {id: "about", target: {kind: "page", page: "/about-us"}},
         {id: "companies", target: {kind: "homeSection", section: "companies"}},
         {id: "workWithUs", target: {kind: "homeSection", section: "contact"}},
         {id: "contact", target: {kind: "homeSection", section: "contact"}},

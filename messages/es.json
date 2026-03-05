@@ -38,6 +38,10 @@
     "tours": {
       "eyebrow": "Walk and Tour Copenhagen",
       "heading": "Tours & Experiencias"
+    },
+    "about": {
+      "eyebrow": "Agencia de tours con experiencia",
+      "heading": "Sobre Walk & Tour Copenhague"
     }
   },
   "tours": {
@@ -306,6 +310,77 @@
     "legal": {
       "privacyPolicy": "Política de privacidad",
       "termsOfUse": "Términos de uso"
+    }
+  },
+  "aboutUs": {
+    "intro": {
+      "eyebrow": "Walk and Tour",
+      "title": "Experiencias auténticas y cuidadosamente diseñadas",
+      "description": "En Walk and Tour Copenhague tenemos un compromiso firme con la excelencia y con ofrecer \"experiencias reales\". Diseñamos tours expertos, paquetes de viaje flexibles e itinerarios personalizados que se adaptan a las necesidades de cada viajero. Nuestro equipo de guías apasionados y con experiencia garantiza recorridos fluidos, desde visitas panorámicas impresionantes hasta exploraciones culturales inmersivas. Ya sea que quieras descubrir los lugares icónicos de Copenhague, vivir una aventura en Malmö o explorar los majestuosos castillos de Dinamarca, Walk and Tour Copenhague te ofrece un servicio excepcional, precios competitivos y recuerdos inolvidables.",
+      "imageAlt": "Hotel D'Angleterre con huéspedes de Walk and Tour",
+      "ratingValue": "5/5",
+      "ratingLabel": "Más de 400 reseñas",
+      "viewToursCta": "Ver tours",
+      "contactCta": "Contáctanos"
+    },
+    "advantages": {
+      "eyebrow": "Ventaja",
+      "title": "¿Por qué elegirnos?",
+      "items": {
+        "leadingAgency": {
+          "title": "Agencia líder de tours en Copenhague y Malmö",
+          "description": "Como agencia de referencia y altamente valorada, nos especializamos en ofrecer un servicio excepcional y experiencias de viaje inolvidables adaptadas a cada viajero."
+        },
+        "personalizedExperiences": {
+          "title": "Especialistas en experiencias personalizadas",
+          "description": "Con años de experiencia en el sector, ofrecemos tours fluidos y memorables con orientación experta y una experiencia sin estrés para cada visitante."
+        },
+        "flexiblePackages": {
+          "title": "Paquetes y reservas flexibles",
+          "description": "Ofrecemos viajes totalmente personalizables con paquetes flexibles y opciones de reserva sencillas, pensados para ajustarse a tus preferencias y crear una aventura a tu medida."
+        },
+        "bestPrices": {
+          "title": "Mejores precios y ofertas atractivas",
+          "description": "Aprovecha precios inmejorables y ofertas exclusivas para obtener el mejor valor y disfrutar de unas vacaciones inolvidables."
+        }
+      }
+    },
+    "team": {
+      "title": "Conoce a nuestro equipo",
+      "items": {
+        "ayelenSalazar": {
+          "name": "Ayelen Salazar",
+          "role": "Fundadora y directora",
+          "imageAlt": "Ayelen Salazar"
+        },
+        "mariaCarolinaFantozzi": {
+          "name": "Maria Carolina Fantozzi",
+          "role": "Alianzas",
+          "imageAlt": "Maria Carolina Fantozzi"
+        },
+        "danilaMollo": {
+          "name": "Danila Mollo",
+          "role": "Diseñadora gráfica y fotógrafa",
+          "imageAlt": "Danila Mollo"
+        }
+      }
+    },
+    "gallery": {
+      "items": {
+        "malmohusCastle": {
+          "imageAlt": "Castillo de Malmöhus"
+        },
+        "cityWaterfront": {
+          "imageAlt": "Frente marítimo de Copenhague"
+        },
+        "malmoCity": {
+          "imageAlt": "Casco antiguo de Malmö"
+        }
+      }
+    },
+    "testimonials": {
+      "eyebrow": "Testimonios",
+      "title": "¿Qué opinan nuestros viajeros?"
     }
   }
 }

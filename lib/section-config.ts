@@ -1,3 +1,5 @@
+import { aboutUsImages } from "@/lib/about-us-data";
+
 export type HeroSectionCtaConfig = {
   labelKey: string;
   href: string;
@@ -33,4 +35,14 @@ export const toursHeroConfig: HeroSectionConfig = {
   eyebrowKey: "eyebrow",
   titleKey: "heading",
   imageSrc: "/walkandtour/private-tours.png",
+};
+
+export const aboutHeroConfig: HeroSectionConfig = {
+  id: "about-us",
+  translationNamespace: "hero.about",
+  eyebrowKey: "eyebrow",
+  titleKey: "heading",
+  imageSrc: aboutUsImages.hero,
+  overlayClassName: "bg-[#2a221a]/52",
+  backgroundPosition: "center 58%",
 };
