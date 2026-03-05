@@ -18,9 +18,7 @@ import {
   getTourBySlug,
   getTourDetailBySlug,
   tourDetailSlugs,
-  type TourDetailCtaTarget,
 } from "@/lib/tour-details-data";
-import { getInternalHref } from "@/lib/internal-paths";
 
 type TourDetailPageProps = {
   params: Promise<{ locale: string; snug: string; }>;
@@ -30,18 +28,6 @@ type Translator = Awaited<ReturnType<typeof getTranslations>>;
 
 const isValidLocale = (locale: string): locale is AppLocale => (
   routing.locales.includes(locale as AppLocale)
-);
-
-const getCtaHref = ({
-                      locale,
-                      target,
-                    }: {
-  locale: AppLocale;
-  target: TourDetailCtaTarget;
-}) => (
-  target.kind === "external"
-    ? {href: target.href, isExternal: true}
-    : {href: getInternalHref({locale, target: target.target}), isExternal: false}
 );
 
 const getRawWithFallback = <T, >(
@@ -151,12 +137,6 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     ...itemFacts,
   };
 
-  const bookingDescription = getRawWithFallback<string>(
-    tourDetailT,
-    itemKey,
-    "bookingDescription",
-    "defaults.bookingDescription"
-  );
   const aboutTourDescription = getRawWithFallback<string>(
     tourDetailT,
     itemKey,
@@ -201,9 +181,6 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     ...tourDetail.galleryImageSrcs,
   ].filter((imageSrc) => Boolean(imageSrc))));
 
-  const bookingCta = getCtaHref({locale, target: tourDetail.bookingTarget});
-  const supportCta = getCtaHref({locale, target: tourDetail.supportTarget});
-
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
       <TourDetailHeroSection
@@ -224,15 +201,15 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
           highlights={ highlights }
         />
 
-      <TourDetailAboutSection
-        title={ tourDetailT("labels.aboutTour") }
-        description={ aboutTourDescription }
-      />
+        <TourDetailAboutSection
+          title={ tourDetailT("labels.aboutTour") }
+          description={ aboutTourDescription }
+        />
 
-      <TourDetailItinerarySection
-        title={ tourDetailT("labels.itinerary") }
-        description={ itineraryDescription }
-      />
+        <TourDetailItinerarySection
+          title={ tourDetailT("labels.itinerary") }
+          description={ itineraryDescription }
+        />
 
         <TourDetailIncludedSection
           title={ tourDetailT("labels.includedSection") }

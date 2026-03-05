@@ -14,7 +14,7 @@ export default function TourDetailItinerarySection({
 
   return (
     <section className="bg-white py-12">
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto lg:mx-12 w-full max-w-11/12 px-0">
         <div className="mx-auto rounded-3xl bg-[#fcfaf7] p-6 shadow-sm ring-1 ring-[#e8ddd2] sm:p-8">
           <h2 className="text-3xl font-semibold text-teal sm:text-4xl">{ title }</h2>
           <div className="mt-6 space-y-5 text-sm leading-7 text-[#3d3124] md:text-base">

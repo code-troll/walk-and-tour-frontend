@@ -11,11 +11,16 @@ export default function TourDetailContentWithSidebar({
 }: TourDetailContentWithSidebarProps) {
   return (
     <div className="w-full">
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-10">
-        <div>{ children }</div>
-        <aside className="lg:sticky lg:top-0 lg:self-start">
-          { sidebar }
+      <div className="relative w-full lg:[&>section>div]:pr-96">
+        { children }
+        <aside className="hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[24rem]">
+          <div className="lg:sticky lg:top-0">
+            { sidebar }
+          </div>
         </aside>
+      </div>
+      <div className="lg:hidden">
+        { sidebar }
       </div>
     </div>
   );
