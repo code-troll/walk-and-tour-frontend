@@ -36,7 +36,7 @@ export default function TourDetailQuickInfoSection({
                                                      items,
                                                    }: TourDetailQuickInfoSectionProps) {
   return (
-    <section className="bg-[#fcfaf7] pb-12">
+    <section className="bg-[#fcfaf7] pb-6">
       <div className="mx-auto w-full px-6 lg:px-12">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           { items.map((item) => {

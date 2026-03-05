@@ -19,6 +19,8 @@ import {
   getTourDetailBySlug,
   tourDetailSlugs,
 } from "@/lib/tour-details-data";
+import TourDetailCustomerSupportSection from "@/components/tour-detail/TourDetailCustomerSupportSection";
+import TourDetailElfsightReviewsSection from "@/components/tour-detail/TourDetailElfsightReviewsSection";
 
 type TourDetailPageProps = {
   params: Promise<{ locale: string; snug: string; }>;
@@ -143,6 +145,12 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     "aboutTourDescription",
     "defaults.aboutTourDescription"
   );
+  const customerSupportDescription = getRawWithFallback<string>(
+    tourDetailT,
+    itemKey,
+    "customerSupportDescription",
+    "defaults.customerSupportDescription"
+  );
 
   const quickInfoItems = [
     {
@@ -218,6 +226,15 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
           includedItems={ includedItems }
           notIncludedItems={ notIncludedItems }
         />
+
+        <TourDetailCustomerSupportSection
+          title={ tourDetailT("labels.customerSupport") }
+          description={ customerSupportDescription }
+          ctaLabel={ tourDetailT("labels.contactUs") }
+          ctaHref="/contact"
+        />
+
+        <TourDetailElfsightReviewsSection/>
       </TourDetailContentWithSidebar>
 
       <TourDetailRelatedToursSection

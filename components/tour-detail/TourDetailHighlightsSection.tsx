@@ -23,7 +23,7 @@ export default function TourDetailHighlightsSection({
   highlights,
 }: TourDetailHighlightsSectionProps) {
   return (
-    <section className="bg-white py-12">
+    <section className="bg-white py-6">
       <div className="mx-auto lg:mx-12 w-full max-w-11/12 px-0">
         <div className="mx-auto rounded-3xl bg-[#fcfaf7] p-6 shadow-sm ring-1 ring-[#e8ddd2] sm:p-8">
           <h2 className="text-3xl mb-10 font-semibold text-teal sm:text-4xl">{ title }</h2>

@@ -13,13 +13,13 @@ export default function TourDetailContentWithSidebar({
     <div className="w-full">
       <div className="relative w-full lg:[&>section>div]:pr-96">
         { children }
-        <aside className="hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[24rem]">
-          <div className="lg:sticky lg:top-0">
+        <aside className="hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[calc(25rem)]">
+          <div className="lg:sticky lg:top-6 my-6 lg:self-start">
             { sidebar }
           </div>
         </aside>
       </div>
-      <div className="lg:hidden">
+      <div className="lg:hidden my-12">
         { sidebar }
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function TourDetailRelatedToursSection({
   }
 
   return (
-    <section className="bg-white py-12">
+    <section className="bg-[#fcfaf7] lg:bg-white pt-6 pb-12">
       <div className="mx-auto w-full px-6 lg:px-12">
         <h2 className="text-3xl font-semibold text-teal sm:text-4xl">{ title }</h2>
         <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

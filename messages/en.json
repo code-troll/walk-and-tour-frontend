@@ -238,6 +238,8 @@
       "meetingPoint": "Meeting point",
       "endPoint": "End point",
       "languages": "Languages",
+      "customerSupport": "Customer Support",
+      "contactUs": "Contact us",
       "bookNow": "Book now",
       "needHelp": "Need help planning?",
       "contactTeam": "Contact our team",
@@ -287,7 +289,8 @@
         "cancellationType": "Free cancellation up to 24 hours before the tour",
         "languages": "English"
       },
-      "bookingDescription": "Choose your preferred date and secure your spot in minutes. If you are traveling with a larger group, we can help customize the experience."
+      "bookingDescription": "Choose your preferred date and secure your spot in minutes. If you are traveling with a larger group, we can help customize the experience.",
+      "customerSupportDescription": "We have a professional customer support team and always accompany you on every trip."
     },
     "items": {
       "copenhagenFreeTour": {
