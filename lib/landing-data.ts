@@ -40,8 +40,56 @@ export type TourId =
   | "shoreExcursion"
   | "copenhagenCityToCoast";
 
+export type TourSlug =
+  | "copenhagen-historic-center-free-tour"
+  | "rosenborg-castle-guided-tour"
+  | "excursion-to-malmo-sweden"
+  | "amalienborg-palace-tour"
+  | "christiansborg-palace-tour"
+  | "copenhagen-essentials-old-town-harbour-ferry-royal-guards"
+  | "jewish-quarter-and-danish-jewish-museum-tour"
+  | "copenhagen-walking-tour-tivoli-gardens-entry"
+  | "copenhagen-private-boat-tour-hidden-gems-hygge"
+  | "hermitage-palace-royal-deer-park-bike-tour"
+  | "copenhagen-harbor-architecture-private-walking-tour"
+  | "skip-the-line-rosenborg-castle-canal-cruise"
+  | "north-copenhagen-frederiksborg-kronborg-castle-hamlet"
+  | "copenhagen-food-tour"
+  | "roskilde-old-viking-city-tour"
+  | "nordhavn-architecture-tour"
+  | "private-ultimate-christmas-tivoli-hygge"
+  | "copenhagen-panorama-private-shore-to-city-experience"
+  | "copenhagen-walking-shore-excursion"
+  | "copenhagen-city-to-coast-black-diamond-canal-cruise-reffen";
+
+export const tourSlugById = {
+  copenhagenFreeTour: "copenhagen-historic-center-free-tour",
+  rosenborgCastleTour: "rosenborg-castle-guided-tour",
+  malmoExcursion: "excursion-to-malmo-sweden",
+  amalienborgPalace: "amalienborg-palace-tour",
+  christiansborgPalace: "christiansborg-palace-tour",
+  copenhagenEssentials: "copenhagen-essentials-old-town-harbour-ferry-royal-guards",
+  jewishQuarter: "jewish-quarter-and-danish-jewish-museum-tour",
+  tivoliGardensEntry: "copenhagen-walking-tour-tivoli-gardens-entry",
+  boatTour: "copenhagen-private-boat-tour-hidden-gems-hygge",
+  royalDeerParkBikeTour: "hermitage-palace-royal-deer-park-bike-tour",
+  harborArchitecture: "copenhagen-harbor-architecture-private-walking-tour",
+  rosenborgCastleCanalCruise: "skip-the-line-rosenborg-castle-canal-cruise",
+  frederiksborgAndKronborgCastle: "north-copenhagen-frederiksborg-kronborg-castle-hamlet",
+  foodTours: "copenhagen-food-tour",
+  roskilde: "roskilde-old-viking-city-tour",
+  nordhavnArchitecture: "nordhavn-architecture-tour",
+  christmasTour: "private-ultimate-christmas-tivoli-hygge",
+  panorama: "copenhagen-panorama-private-shore-to-city-experience",
+  shoreExcursion: "copenhagen-walking-shore-excursion",
+  copenhagenCityToCoast: "copenhagen-city-to-coast-black-diamond-canal-cruise-reffen",
+} as const satisfies Record<TourId, TourSlug>;
+
+export type TourSlugById = typeof tourSlugById;
+
 export type Tour = {
   id: TourId;
+  slug: TourSlug;
   rating: string;
   reviews: string;
   price: string;
@@ -149,6 +197,7 @@ export const tourCategories: TourCategoryId[] = [
 export const tours: Tour[] = [
   {
     id: "copenhagenFreeTour",
+    slug: "copenhagen-historic-center-free-tour",
     rating: "5.0",
     reviews: "1,756",
     price: "0",
@@ -163,6 +212,7 @@ export const tours: Tour[] = [
   },
   {
     id: "rosenborgCastleTour",
+    slug: "rosenborg-castle-guided-tour",
     rating: "4.9",
     reviews: "386",
     price: "400",
@@ -177,6 +227,7 @@ export const tours: Tour[] = [
   },
   {
     id: "malmoExcursion",
+    slug: "excursion-to-malmo-sweden",
     rating: "4.7",
     reviews: "560",
     price: "780",
@@ -191,6 +242,7 @@ export const tours: Tour[] = [
   },
   {
     id: "amalienborgPalace",
+    slug: "amalienborg-palace-tour",
     rating: "4.8",
     reviews: "609",
     price: "400",
@@ -205,6 +257,7 @@ export const tours: Tour[] = [
   },
   {
     id: "christiansborgPalace",
+    slug: "christiansborg-palace-tour",
     rating: "5.0",
     reviews: "1,497",
     price: "500",
@@ -219,6 +272,7 @@ export const tours: Tour[] = [
   },
   {
     id: "copenhagenEssentials",
+    slug: "copenhagen-essentials-old-town-harbour-ferry-royal-guards",
     rating: "4.9",
     reviews: "305",
     price: "400",
@@ -234,6 +288,7 @@ export const tours: Tour[] = [
   },
   {
     id: "jewishQuarter",
+    slug: "jewish-quarter-and-danish-jewish-museum-tour",
     rating: "4.8",
     reviews: "792",
     price: "1500",
@@ -248,6 +303,7 @@ export const tours: Tour[] = [
   },
   {
     id: "tivoliGardensEntry",
+    slug: "copenhagen-walking-tour-tivoli-gardens-entry",
     rating: "4.8",
     reviews: "462",
     price: "670",
@@ -261,6 +317,7 @@ export const tours: Tour[] = [
   },
   {
     id: "boatTour",
+    slug: "copenhagen-private-boat-tour-hidden-gems-hygge",
     rating: "4.9",
     reviews: "367",
     price: "8800",
@@ -274,6 +331,7 @@ export const tours: Tour[] = [
   },
   {
     id: "royalDeerParkBikeTour",
+    slug: "hermitage-palace-royal-deer-park-bike-tour",
     rating: "4.5",
     reviews: "150",
     price: "900",
@@ -289,6 +347,7 @@ export const tours: Tour[] = [
   },
   {
     id: "harborArchitecture",
+    slug: "copenhagen-harbor-architecture-private-walking-tour",
     rating: "4.8",
     reviews: "481",
     price: "1250",
@@ -303,6 +362,7 @@ export const tours: Tour[] = [
   },
   {
     id: "rosenborgCastleCanalCruise",
+    slug: "skip-the-line-rosenborg-castle-canal-cruise",
     rating: "4.5",
     reviews: "664",
     price: "1400",
@@ -316,6 +376,7 @@ export const tours: Tour[] = [
   },
   {
     id: "frederiksborgAndKronborgCastle",
+    slug: "north-copenhagen-frederiksborg-kronborg-castle-hamlet",
     rating: "4.9",
     reviews: "198",
     price: "3000",
@@ -329,6 +390,7 @@ export const tours: Tour[] = [
   },
   {
     id: "foodTours",
+    slug: "copenhagen-food-tour",
     rating: "4.8",
     reviews: "200",
     price: "1000",
@@ -343,6 +405,7 @@ export const tours: Tour[] = [
   },
   {
     id: "roskilde",
+    slug: "roskilde-old-viking-city-tour",
     rating: "4.8",
     reviews: "599",
     price: "1500",
@@ -356,6 +419,7 @@ export const tours: Tour[] = [
   },
   {
     id: "nordhavnArchitecture",
+    slug: "nordhavn-architecture-tour",
     rating: "5",
     reviews: "693",
     price: "400",
@@ -369,6 +433,7 @@ export const tours: Tour[] = [
   },
   {
     id: "christmasTour",
+    slug: "private-ultimate-christmas-tivoli-hygge",
     rating: "4.9",
     reviews: "250",
     price: "1250",
@@ -381,6 +446,7 @@ export const tours: Tour[] = [
   },
   {
     id: "panorama",
+    slug: "copenhagen-panorama-private-shore-to-city-experience",
     rating: "5",
     reviews: "408",
     price: "950",
@@ -395,6 +461,7 @@ export const tours: Tour[] = [
   },
   {
     id: "shoreExcursion",
+    slug: "copenhagen-walking-shore-excursion",
     rating: "4.9",
     reviews: "693",
     price: "690",
@@ -409,6 +476,7 @@ export const tours: Tour[] = [
   },
   {
     id: "copenhagenCityToCoast",
+    slug: "copenhagen-city-to-coast-black-diamond-canal-cruise-reffen",
     rating: "4.9",
     reviews: "204",
     price: "420",

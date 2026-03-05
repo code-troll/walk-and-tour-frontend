@@ -220,6 +220,126 @@
     "loadMore": "Carica altro",
     "noResults": "Nessun tour corrisponde ai filtri selezionati."
   },
+  "tourDetail": {
+    "labels": {
+      "about": "Informazioni sul tour",
+      "gallery": "Momenti del tour",
+      "highlights": "Punti salienti",
+      "aboutTour": "Sul tour",
+      "itinerary": "Itinerario",
+      "includedSection": "Cosa è incluso",
+      "included": "Incluso",
+      "notIncluded": "Non incluso",
+      "practicalInfo": "Informazioni pratiche",
+      "startFrom": "Partenza da",
+      "endAt": "Termina a",
+      "typeTour": "Tipo di tour",
+      "cancellationType": "Politica di cancellazione",
+      "meetingPoint": "Punto di incontro",
+      "endPoint": "Punto di arrivo",
+      "languages": "Lingue",
+      "bookNow": "Prenota ora",
+      "needHelp": "Hai bisogno di aiuto per organizzare?",
+      "contactTeam": "Contatta il nostro team",
+      "relatedTours": "Potrebbe interessarti anche",
+      "startingFrom": "A partire da"
+    },
+    "defaults": {
+      "about": [
+        "Le esperienze Walk and Tour uniscono storie locali, luoghi iconici e consigli pratici per scoprire Copenaghen con sicurezza.",
+        "Questo itinerario mantiene un ritmo rilassato per permetterti di fare domande, scoprire angoli nascosti e vivere la città da una prospettiva locale."
+      ],
+      "aboutTourDescription": "Partecipa a una delle nostre esperienze guidate a piedi e scopri Copenaghen con punti di vista locali, luoghi iconici e consigli pratici per il resto del tuo viaggio.",
+      "highlights": [
+        "Guide locali esperte che raccontano ogni tappa con contesto e chiarezza.",
+        "Percorso equilibrato tra attrazioni famose e zone locali meno affollate.",
+        "Perfetto sia per chi visita la città per la prima volta sia per chi ritorna.",
+        "Formato in piccoli gruppi per un'esperienza più personale e flessibile."
+      ],
+      "itinerary": [
+        {
+          "title": "Incontro con la guida",
+          "description": "Ritrovo al punto di incontro, breve introduzione al percorso e consigli utili prima della partenza."
+        },
+        {
+          "title": "Passeggiata storica",
+          "description": "Esploriamo strade, piazze e monumenti principali scoprendo storia, architettura e cultura locale."
+        },
+        {
+          "title": "Conclusione e consigli locali",
+          "description": "Terminiamo con suggerimenti su cibo, musei e quartieri da visitare dopo il tour."
+        }
+      ],
+      "itineraryDescription": "Ritrovo al punto di incontro, breve introduzione al percorso e consigli utili prima della partenza. Esploriamo strade, piazze e monumenti principali scoprendo storia, architettura e cultura locale. Terminiamo con suggerimenti su cibo, musei e quartieri da visitare dopo il tour.",
+      "included": [
+        "Esperienza guidata a piedi con guida locale esperta",
+        "Contesto storico e culturale durante le principali tappe",
+        "Consigli locali selezionati per il resto del soggiorno"
+      ],
+      "notIncluded": [
+        "Cibo e bevande",
+        "Spese personali",
+        "Biglietti di trasporto e ingressi opzionali"
+      ],
+      "facts": {
+        "meetingPoint": "Centro di Copenaghen",
+        "endPoint": "Centro storico",
+        "cancellationType": "Cancellazione gratuita fino a 24 ore prima del tour",
+        "languages": "Inglese"
+      },
+      "bookingDescription": "Scegli la data che preferisci e prenota in pochi minuti. Se viaggi in gruppo, possiamo personalizzare l'esperienza."
+    },
+    "items": {
+      "copenhagenFreeTour": {
+        "about": [
+          "Scopri il cuore storico di Copenaghen con una guida locale, da Nyhavn al quartiere reale.",
+          "Questo tour a offerta libera è ideale per una prima visita: contesto storico, consigli pratici e introduzione completa al centro città."
+        ],
+        "aboutTourDescription": "Cerchi un free walking tour a Copenaghen? Unisciti alle 10:30 per vedere il Cambio della Guardia al Palazzo di Amalienborg. Scopri Nyhavn e la storia della città con guide locali. Prenota ora il tuo posto gratuito.",
+        "highlights": [
+          "Passeggiata tra Nyhavn, Amalienborg e le vie più iconiche del centro.",
+          "Storie su cultura danese, vita quotidiana e trasformazione della città.",
+          "Contesto sulla zona del Cambio della Guardia e sulle tradizioni reali.",
+          "Consigli utili su cibo, trasporti e quartieri da esplorare dopo il tour."
+        ],
+        "itinerary": [
+          {
+            "time": "Inizio",
+            "title": "Benvenuto e introduzione",
+            "description": "Incontro con la guida e il gruppo, panoramica delle tappe principali e avvio del percorso."
+          },
+          {
+            "time": "Durante",
+            "title": "Centro storico e area reale",
+            "description": "Visita delle principali attrazioni con racconti, curiosità e spiegazioni storiche."
+          },
+          {
+            "time": "Fine",
+            "title": "Suggerimenti finali personalizzati",
+            "description": "Consigli su musei, canali, mercati e quartieri da vedere in base ai tuoi interessi."
+          }
+        ],
+        "itineraryDescription": "Incontro con la guida e il gruppo, panoramica delle tappe principali e avvio del percorso. Visita delle principali attrazioni con racconti, curiosità e spiegazioni storiche. Consigli su musei, canali, mercati e quartieri da vedere in base ai tuoi interessi.",
+        "included": [
+          "Tour a piedi a offerta libera con guida locale professionale",
+          "Orientamento in città e spiegazioni storico-culturali",
+          "Consigli locali in base al tuo stile di viaggio"
+        ],
+        "notIncluded": [
+          "Mancia alla guida (facoltativa)",
+          "Ingressi a musei o attrazioni",
+          "Cibo, bevande e trasporti"
+        ],
+        "facts": {
+          "meetingPoint": "Nyhavn (punto esatto dopo la prenotazione)",
+          "endPoint": "Centro storico / quartiere reale",
+          "cancellationType": "Cancellazione gratuita fino a 24 ore prima del tour",
+          "languages": "Inglese e spagnolo (in base alla partenza)"
+        },
+        "bookingDescription": "Prenota il tuo posto e partecipa a una delle migliori introduzioni al centro storico di Copenaghen. Formula a offerta libera e gruppi ridotti."
+      }
+    }
+  },
   "aboutWalkAndTour": {
     "eyebrow": "Su Walk and Tour",
     "title": "Tour a piedi a Copenaghen",

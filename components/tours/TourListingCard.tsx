@@ -2,8 +2,8 @@ import Image from "next/image";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
+import { getPathname } from "@/i18n/navigation";
 import { type AppLocale } from "@/i18n/routing";
-import { getInternalHref } from "@/lib/internal-paths";
 import type { Tour } from "@/lib/landing-data";
 
 type TourListingCardProps = {
@@ -29,10 +29,7 @@ export default function TourListingCard({
 }: TourListingCardProps) {
   const t = useTranslations("tours.card");
   const locale = useLocale() as AppLocale;
-  const detailsHref = getInternalHref({
-    locale,
-    target: {kind: "homeSection", section: "contact"},
-  });
+  const detailsHref = `${ getPathname({locale, href: "/tours"}) }/${ tour.slug }`;
 
   return (
     <article

@@ -220,6 +220,130 @@
     "loadMore": "Load more",
     "noResults": "No tours match the selected filters."
   },
+  "tourDetail": {
+    "labels": {
+      "about": "About this tour",
+      "gallery": "Photo highlights",
+      "highlights": "Tour highlights",
+      "aboutTour": "About the tour",
+      "itinerary": "Itinerary",
+      "includedSection": "What is included",
+      "included": "Included",
+      "notIncluded": "Not included",
+      "practicalInfo": "Practical information",
+      "startFrom": "Start from",
+      "endAt": "End at",
+      "typeTour": "Type tour",
+      "cancellationType": "Cancelation type",
+      "meetingPoint": "Meeting point",
+      "endPoint": "End point",
+      "languages": "Languages",
+      "bookNow": "Book now",
+      "needHelp": "Need help planning?",
+      "contactTeam": "Contact our team",
+      "relatedTours": "You may also like",
+      "startingFrom": "Starting from"
+    },
+    "defaults": {
+      "about": [
+        "Walk and Tour experiences are designed to combine local stories, iconic landmarks and practical tips for exploring Copenhagen with confidence.",
+        "This itinerary follows a relaxed pace and gives you space to ask questions, discover hidden corners and enjoy the city from a local perspective."
+      ],
+      "aboutTourDescription": "Join one of our guided walking experiences and discover Copenhagen with local insights, iconic landmarks and practical recommendations for the rest of your stay.",
+      "highlights": [
+        "Led by experienced local guides who bring each stop to life with stories and context.",
+        "Balanced route mixing top landmarks with less crowded local spots.",
+        "Great for first-time visitors and returning travelers looking for deeper context.",
+        "Small-group format designed for interaction and flexibility."
+      ],
+      "itinerary": [
+        {
+          "title": "Meet your guide",
+          "description": "Gather at the meeting point, get a quick overview of the route, and receive practical orientation before starting."
+        },
+        {
+          "title": "Historic city walk",
+          "description": "Explore key streets, squares and monuments while learning about Copenhagen's history, architecture and local culture."
+        },
+        {
+          "title": "Local recommendations and wrap-up",
+          "description": "Finish with practical city tips, food suggestions and recommendations for what to visit next."
+        }
+      ],
+      "itineraryDescription": "Gather at the meeting point, get a quick overview of the route, then explore key streets, squares and monuments while learning about Copenhagen's history, architecture and local culture. Finish with practical city tips, food suggestions and recommendations for what to visit next.",
+      "included": [
+        "Guided walking experience with an experienced local guide",
+        "Storytelling and historical context at every major stop",
+        "Curated local recommendations for the rest of your stay"
+      ],
+      "notIncluded": [
+        "Food and drinks",
+        "Personal expenses",
+        "Transport tickets and optional entrances"
+      ],
+      "facts": {
+        "meetingPoint": "Central Copenhagen",
+        "endPoint": "City center (walkable from main attractions)",
+        "cancellationType": "Free cancellation up to 24 hours before the tour",
+        "languages": "English"
+      },
+      "bookingDescription": "Choose your preferred date and secure your spot in minutes. If you are traveling with a larger group, we can help customize the experience."
+    },
+    "items": {
+      "copenhagenFreeTour": {
+        "about": [
+          "Discover Copenhagen's historic heart with a local guide while watching the city unfold from Nyhavn to the royal district.",
+          "This tip-based tour is perfect for first-time visitors who want context, local recommendations and an authentic introduction to the city center."
+        ],
+        "aboutTourDescription": "Looking for a Free Walking Tour in Copenhagen? Join us at 10:30 AM to see the Changing of the Guard at Amalienborg Palace. Discover Nyhavn and the city's history with local guides. Book your free spot now",
+        "highlights": [
+          "Free Tour of Copenhagen's Old Town: A 2-hour guided introduction in English.",
+          "Meet at City Hall Square: Your starting point for exploring the Danish capital.",
+          "Iconic Landmarks: See Christiansborg Palace, Nyhavn, and Amalienborg Palace.",
+          "Historic Charm: Discover medieval squares like Nytorv and Gammeltorv.",
+          "Architectural Highlights: Admire St. Nicholas Church and the Marble Church.",
+          "Royal Tradition: Witness the Changing of the Guard at Amalienborg Palace (10:30 am tour)."
+        ],
+        "itinerary": [
+          {
+            "time": "Start",
+            "title": "Welcome and route briefing",
+            "description": "Meet your guide, get to know the group and receive a short orientation of what you'll see during the walk."
+          },
+          {
+            "time": "Middle",
+            "title": "Historic center and royal highlights",
+            "description": "Walk through the old city and royal surroundings while learning about the events and people that shaped Copenhagen."
+          },
+          {
+            "time": "End",
+            "title": "Final tips and optional recommendations",
+            "description": "Finish with local advice for museums, canals, food markets and neighborhoods based on your interests."
+          }
+        ],
+        "itineraryDescription": "Our walking tour will take you from the imposing City Hall Square, the vibrant meeting point and enduring symbol of the city. From there, we'll journey to the medieval squares of Nytorv and Gammeltorv, where time seems to stand still amidst charming architecture and echoes of the past. You'll truly feel the power of Danish history as you gaze at Christiansborg Palace, the seat of Danish democracy and royalty for centuries. Marvel at the architectural beauty of St. Nicholas Church, a striking landmark with a unique history.\n\nAs we continue, we'll arrive at Kongens Nytorv, where elegance and urban life merge in a vibrant atmosphere, surrounded by grand buildings. Copenhagen's Royal Theatre invites you to immerse yourself in Denmark's rich culture, showcasing its artistic heritage. Next, Nyhavn, with its colorful facades and historic ships, offers the perfect postcard view of the city, a truly picturesque spot. The majesty of the Marble Church will take your breath away with its impressive dome and intricate details. And, for those joining our 10:30 am tour, you'll witness the solemn Changing of the Guard at Amalienborg Palace, a captivating tradition that beautifully captures the essence of Danish royalty.",
+        "included": [
+          "Professional English-speaking guide throughout the trip.",
+          "Our recommendation map.",
+          "Visit Copenhagen must-sees in 2 hours."
+        ],
+        "notIncluded": [
+          "Personal expenses such as souvenirs and extra meals.",
+          "Travel insurance for medical emergencies and trip cancellations.",
+          "Optional activities and services not mentioned in the itinerary.",
+          "Tips for guides.",
+          "Entrance tickets."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall Square",
+          "endPoint": "Amalienborg palace",
+          "cancellationType": "Cancel any time",
+          "languages": "English"
+        },
+        "bookingDescription": "Reserve your place now and join one of the most complete introductions to Copenhagen's historic center. Tip-based format, small groups and local insight included."
+      }
+    }
+  },
   "aboutWalkAndTour": {
     "eyebrow": "About Walk and Tour",
     "title": "Walking Tours in Copenhagen",
@@ -346,7 +470,6 @@
         }
       }
     },
-
     "team": {
       "title": "Meet our team",
       "items": {
