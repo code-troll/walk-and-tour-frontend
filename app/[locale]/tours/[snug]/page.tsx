@@ -4,12 +4,14 @@ import { notFound } from "next/navigation";
 
 import Footer from "@/components/layout/Footer";
 import TourDetailAboutSection from "@/components/tour-detail/TourDetailAboutSection";
+import TourDetailContentWithSidebar from "@/components/tour-detail/TourDetailContentWithSidebar";
 import TourDetailHeroSection from "@/components/tour-detail/TourDetailHeroSection";
 import TourDetailHighlightsSection from "@/components/tour-detail/TourDetailHighlightsSection";
 import TourDetailIncludedSection from "@/components/tour-detail/TourDetailIncludedSection";
 import TourDetailItinerarySection from "@/components/tour-detail/TourDetailItinerarySection";
 import TourDetailQuickInfoSection from "@/components/tour-detail/TourDetailQuickInfoSection";
 import TourDetailRelatedToursSection from "@/components/tour-detail/TourDetailRelatedToursSection";
+import TourDetailSidebarPlaceholder from "@/components/tour-detail/TourDetailSidebarPlaceholder";
 import { type AppLocale, routing } from "@/i18n/routing";
 import { toursCatalog } from "@/lib/landing-data";
 import {
@@ -216,10 +218,11 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
       <TourDetailQuickInfoSection items={ quickInfoItems }/>
 
-      <TourDetailHighlightsSection
-        title={ tourDetailT("labels.highlights") }
-        highlights={ highlights }
-      />
+      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder/> }>
+        <TourDetailHighlightsSection
+          title={ tourDetailT("labels.highlights") }
+          highlights={ highlights }
+        />
 
       <TourDetailAboutSection
         title={ tourDetailT("labels.aboutTour") }
@@ -231,13 +234,14 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
         description={ itineraryDescription }
       />
 
-      <TourDetailIncludedSection
-        title={ tourDetailT("labels.includedSection") }
-        includedTitle={ tourDetailT("labels.included") }
-        notIncludedTitle={ tourDetailT("labels.notIncluded") }
-        includedItems={ includedItems }
-        notIncludedItems={ notIncludedItems }
-      />
+        <TourDetailIncludedSection
+          title={ tourDetailT("labels.includedSection") }
+          includedTitle={ tourDetailT("labels.included") }
+          notIncludedTitle={ tourDetailT("labels.notIncluded") }
+          includedItems={ includedItems }
+          notIncludedItems={ notIncludedItems }
+        />
+      </TourDetailContentWithSidebar>
 
       <TourDetailRelatedToursSection
         title={ tourDetailT("labels.relatedTours") }
