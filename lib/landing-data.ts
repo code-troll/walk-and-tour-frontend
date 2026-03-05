@@ -51,6 +51,14 @@ export type Tour = {
   categories: TourCategoryId[];
 };
 
+export type AboutWalkAndTour = {
+  eyebrowKey: "eyebrow";
+  titleKey: "title";
+  descriptionsKey: "descriptions";
+  ctaLabelKey: "ctaLabel";
+  ctaTarget: InternalTarget;
+};
+
 export type WhyChoose = {
   headingKey: "heading";
   descriptionKey: "description";
@@ -426,6 +434,14 @@ export const homeTours: Tour[] = homeTourOrder
   .filter((tour): tour is Tour => Boolean(tour));
 
 export const toursCatalog: Tour[] = tours;
+
+export const aboutWalkAndTour: AboutWalkAndTour = {
+  eyebrowKey: "eyebrow",
+  titleKey: "title",
+  descriptionsKey: "descriptions",
+  ctaLabelKey: "ctaLabel",
+  ctaTarget: {kind: "page", page: "/about-us"},
+};
 
 export const whyChoose: WhyChoose = {
   headingKey: "heading",

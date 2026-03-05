@@ -213,7 +213,17 @@
       }
     },
     "loadMore": "Cargar más",
-    "noResults": "No hay tours que coincidan con los filtros seleccionados."
+    "noResults": "No hay tours que coincidan con los filtros seleccionados.",
+    "aboutWalkAndTour": "Sobre Walk and Tour"
+  },
+  "aboutWalkAndTour": {
+    "eyebrow": "Sobre Walk and Tour",
+    "title": "Tours a pie en Copenhague",
+    "descriptions": [
+      "Una ciudad cautivadora, con encanto atemporal y habitantes cálidos y amables, ofrece una aventura moderna para cada viajero.",
+      "Recorre sus calles en bicicleta para descubrir puertos vibrantes, impresionantes palacios reales y barrios históricos donde cada rincón cuenta una historia. Sumérgete en la innovadora escena de diseño de la ciudad, sus museos de primer nivel y su celebrada cocina nórdica contemporánea."
+    ],
+    "ctaLabel": "Conoce a nuestro equipo"
   },
   "whyChoose": {
     "heading": "Por qué los viajeros eligen Walk & Tour",

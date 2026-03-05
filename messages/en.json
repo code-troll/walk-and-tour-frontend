@@ -215,6 +215,15 @@
     "loadMore": "Load more",
     "noResults": "No tours match the selected filters."
   },
+  "aboutWalkAndTour": {
+    "eyebrow": "About Walk and Tour",
+    "title": "Walking Tours in Copenhagen",
+    "descriptions": [
+      "A captivating city of timeless charm and warm, friendly locals, offers a modern adventure for every traveler.",
+      "Cycle through the streets to explore vibrant harbors, stunning royal palaces, and historic neighborhoods where every corner tells a story. Immerse yourself in the city's innovative design scene, world-class museums, and celebrated New Nordic cuisine."
+    ],
+    "ctaLabel": "Know our team!"
+  },
   "whyChoose": {
     "heading": "Why Travelers Choose Walk & Tour",
     "description": "At Walk and Tour, we believe the best way to truly experience Copenhagen is on foot and at a local pace.",

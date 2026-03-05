@@ -1,7 +1,7 @@
 import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 
-export type InternalPage = "/" | "/tours";
+export type InternalPage = "/" | "/tours" | "/about-us";
 
 export type HomeSectionId =
   | "home"
@@ -12,21 +12,15 @@ export type HomeSectionId =
   | "private";
 
 export type InternalTarget =
-  | {
-    kind: "page";
-    page: InternalPage;
-  }
-  | {
-    kind: "homeSection";
-    section: HomeSectionId;
-  };
+  | { kind: "page"; page: InternalPage; }
+  | { kind: "homeSection"; section: HomeSectionId; };
 
 export const getHomeSectionHash = (section: HomeSectionId) => `#${ section }`;
 
 export const getInternalHref = ({
-  locale,
-  target,
-}: {
+                                  locale,
+                                  target,
+                                }: {
   locale: AppLocale;
   target: InternalTarget;
 }) => {
