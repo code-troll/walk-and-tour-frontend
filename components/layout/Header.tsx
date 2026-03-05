@@ -35,28 +35,33 @@ const flagByCountryCode: Record<
   IT,
 };
 
-type SocialLinkId = "instagram" | "facebook" | "linkedin" | "tiktok";
+type SocialLinkId = "instagram" | "facebook" | "linkedin" | "tiktok" | "tripadvisor";
 
 const mobileSocialLinks = [
   {
     id: "instagram" as SocialLinkId,
     href: "https://www.instagram.com/walkandtour.dk",
-    icon: "/walkandtour/instagram-white.png",
+    icon: "/walkandtour/social/white/instagram-white.png",
   },
   {
     id: "facebook" as SocialLinkId,
     href: "https://www.facebook.com/walkandtour.dk",
-    icon: "/walkandtour/facebook-white.png",
+    icon: "/walkandtour/social/white/facebook-white.png",
   },
   {
     id: "linkedin" as SocialLinkId,
     href: "https://www.linkedin.com/company/walk-and-tour",
-    icon: "/walkandtour/linkedin-white.png",
+    icon: "/walkandtour/social/white/linkedin-white.png",
   },
   {
     id: "tiktok" as SocialLinkId,
     href: "https://www.tiktok.com/@walkandtour.dk",
-    icon: "/walkandtour/tiktok-white.png",
+    icon: "/walkandtour/social/white/tiktok-white.png",
+  },
+  {
+    id: "tripadvisor" as SocialLinkId,
+    href: "https://www.tripadvisor.com/Attraction_Review-g189541-d33403499-Reviews-Walk_and_Tour-Copenhagen_Zealand.html",
+    icon: "/walkandtour/social/white/tripadvisor-white.png",
   },
 ];
 
@@ -268,7 +273,7 @@ export default function Header() {
         <div className="flex h-full w-full items-center justify-between px-[var(--header-px)] py-[var(--header-py)]">
           <a href={ homeHref } className="mb-[var(--logo-mb)] flex items-center gap-3">
             <Image
-              src="/walkandtour/logo-formal.png"
+              src="/walkandtour/branding/logo-formal.png"
               alt={ t("logoAlt") }
               width={ 120 }
               height={ 84 }

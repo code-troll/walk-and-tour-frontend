@@ -26,7 +26,8 @@
       "instagram": "Instagram",
       "facebook": "Facebook",
       "linkedin": "LinkedIn",
-      "tiktok": "TikTok"
+      "tiktok": "TikTok",
+      "tripadvisor": "TripAdvisor"
     }
   },
   "hero": {
@@ -217,8 +218,7 @@
       }
     },
     "loadMore": "Cargar más",
-    "noResults": "No hay tours que coincidan con los filtros seleccionados.",
-    "aboutWalkAndTour": "Sobre Walk and Tour"
+    "noResults": "No hay tours que coincidan con los filtros seleccionados."
   },
   "aboutWalkAndTour": {
     "eyebrow": "Sobre Walk and Tour",
@@ -278,7 +278,8 @@
       "instagram": "Instagram",
       "facebook": "Facebook",
       "linkedin": "LinkedIn",
-      "tiktok": "TikTok"
+      "tiktok": "TikTok",
+      "tripadvisor": "TripAdvisor"
     },
     "sections": {
       "wt": {

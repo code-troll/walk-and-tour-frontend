@@ -26,19 +26,19 @@ export default function Footer() {
             </div>
             <div className="flex gap-3">
               <a href="https://www.instagram.com/walkandtour.dk" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/instagram.png" alt={ t("social.instagram") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/instagram.png" alt={ t("social.instagram") } width={ 28 } height={ 28 }/>
               </a>
               <a href="https://www.facebook.com/walkandtour.dk" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/facebook.png" alt={ t("social.facebook") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/facebook.png" alt={ t("social.facebook") } width={ 28 } height={ 28 }/>
               </a>
               <a href="https://www.linkedin.com/company/walk-and-tour" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/linkedin.png" alt={ t("social.linkedin") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/linkedin.png" alt={ t("social.linkedin") } width={ 28 } height={ 28 }/>
               </a>
               <a href="https://www.tiktok.com/@walkandtour.dk" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/tiktok.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/tiktok.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
               </a>
               <a href="https://www.tripadvisor.com/Attraction_Review-g189541-d33403499-Reviews-Walk_and_Tour-Copenhagen_Zealand.html" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/tripadvisor.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/tripadvisor.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
               </a>
             </div>
           </div>

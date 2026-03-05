@@ -153,7 +153,7 @@ export const tours: Tour[] = [
     reviews: "1,756",
     price: "0",
     image: {
-      src: "/walkandtour/tour-nyhavn.png",
+      src: "/walkandtour/tours/tour-nyhavn.png",
     },
     categories: [
       "freeTour",
@@ -167,7 +167,7 @@ export const tours: Tour[] = [
     reviews: "386",
     price: "400",
     image: {
-      src: "/walkandtour/tour-rosenborg.png",
+      src: "/walkandtour/tours/tour-rosenborg.png",
     },
     categories: [
       "groupTour",
@@ -181,7 +181,7 @@ export const tours: Tour[] = [
     reviews: "560",
     price: "780",
     image: {
-      src: "/walkandtour/tour-malmo.png",
+      src: "/walkandtour/tours/tour-malmo.png",
     },
     categories: [
       "groupTour",
@@ -195,7 +195,7 @@ export const tours: Tour[] = [
     reviews: "609",
     price: "400",
     image: {
-      src: "/walkandtour/tour-amalienborg.png",
+      src: "/walkandtour/tours/tour-amalienborg.png",
     },
     categories: [
       "groupTour",
@@ -209,7 +209,7 @@ export const tours: Tour[] = [
     reviews: "1,497",
     price: "500",
     image: {
-      src: "/walkandtour/tour-christiansborg.png",
+      src: "/walkandtour/tours/tour-christiansborg.png",
     },
     categories: [
       "groupTour",
@@ -223,7 +223,7 @@ export const tours: Tour[] = [
     reviews: "305",
     price: "400",
     image: {
-      src: "/walkandtour/tour-copenhagen-essentials.png",
+      src: "/walkandtour/tours/tour-copenhagen-essentials.png",
     },
     categories: [
       "groupTour",
@@ -238,7 +238,7 @@ export const tours: Tour[] = [
     reviews: "792",
     price: "1500",
     image: {
-      src: "/walkandtour/round-tower.png",
+      src: "/walkandtour/tours/round-tower.png",
     },
     categories: [
       "history",
@@ -252,7 +252,7 @@ export const tours: Tour[] = [
     reviews: "462",
     price: "670",
     image: {
-      src: "/walkandtour/tivoli-garden.png",
+      src: "/walkandtour/tours/tivoli-garden.png",
     },
     categories: [
       "groupTour",
@@ -265,7 +265,7 @@ export const tours: Tour[] = [
     reviews: "367",
     price: "8800",
     image: {
-      src: "/walkandtour/boat-tour.png",
+      src: "/walkandtour/tours/boat-tour.png",
     },
     categories: [
       "privateTour",
@@ -278,7 +278,7 @@ export const tours: Tour[] = [
     reviews: "150",
     price: "900",
     image: {
-      src: "/walkandtour/royal-deer-park-bike-tour.png",
+      src: "/walkandtour/tours/royal-deer-park-bike-tour.png",
     },
     categories: [
       "dayTrip",
@@ -293,7 +293,7 @@ export const tours: Tour[] = [
     reviews: "481",
     price: "1250",
     image: {
-      src: "/walkandtour/harbor-architecture.png",
+      src: "/walkandtour/tours/harbor-architecture.png",
     },
     categories: [
       "privateTour",
@@ -307,7 +307,7 @@ export const tours: Tour[] = [
     reviews: "664",
     price: "1400",
     image: {
-      src: "/walkandtour/rosenborg-castle-canal-cruise.png",
+      src: "/walkandtour/tours/rosenborg-castle-canal-cruise.png",
     },
     categories: [
       "privateTour",
@@ -320,7 +320,7 @@ export const tours: Tour[] = [
     reviews: "198",
     price: "3000",
     image: {
-      src: "/walkandtour/frederiksborg-and-kronborg-castle.png",
+      src: "/walkandtour/tours/frederiksborg-and-kronborg-castle.png",
     },
     categories: [
       "dayTrip",
@@ -333,7 +333,7 @@ export const tours: Tour[] = [
     reviews: "200",
     price: "1000",
     image: {
-      src: "/walkandtour/food-tours.png",
+      src: "/walkandtour/tours/food-tours.png",
     },
     categories: [
       "groupTour",
@@ -347,7 +347,7 @@ export const tours: Tour[] = [
     reviews: "599",
     price: "1500",
     image: {
-      src: "/walkandtour/roskilde.png",
+      src: "/walkandtour/tours/roskilde.png",
     },
     categories: [
       "dayTrip",
@@ -360,7 +360,7 @@ export const tours: Tour[] = [
     reviews: "693",
     price: "400",
     image: {
-      src: "/walkandtour/nordhavn-architecture.png",
+      src: "/walkandtour/tours/nordhavn-architecture.png",
     },
     categories: [
       "groupTour",
@@ -373,7 +373,7 @@ export const tours: Tour[] = [
     reviews: "250",
     price: "1250",
     image: {
-      src: "/walkandtour/christmas-tour.png",
+      src: "/walkandtour/tours/christmas-tour.png",
     },
     categories: [
       "privateTour",
@@ -385,7 +385,7 @@ export const tours: Tour[] = [
     reviews: "408",
     price: "950",
     image: {
-      src: "/walkandtour/panorama.png",
+      src: "/walkandtour/tours/panorama.png",
     },
     categories: [
       "privateTour",
@@ -399,7 +399,7 @@ export const tours: Tour[] = [
     reviews: "693",
     price: "690",
     image: {
-      src: "/walkandtour/shore-excursion.png",
+      src: "/walkandtour/tours/shore-excursion.png",
     },
     categories: [
       "groupTour",
@@ -413,7 +413,7 @@ export const tours: Tour[] = [
     reviews: "204",
     price: "420",
     image: {
-      src: "/walkandtour/copenhagen-city-to-coast.png",
+      src: "/walkandtour/tours/copenhagen-city-to-coast.png",
     },
     categories: [
       "groupTour",
@@ -468,27 +468,27 @@ export const privateTours: PrivateTours = {
 export const partners: Partner[] = [
   {
     id: "donkeyRepublic",
-    logo: "/walkandtour/partner-donkey-republic.png",
+    logo: "/walkandtour/partners/partner-donkey-republic.png",
   },
   {
     id: "kobenhavnsKommune",
-    logo: "/walkandtour/partner-kobenhavn.png",
+    logo: "/walkandtour/partners/partner-kobenhavn.png",
   },
   {
     id: "getYourGuide",
-    logo: "/walkandtour/partner-getyourguide.png",
+    logo: "/walkandtour/partners/partner-getyourguide.png",
   },
   {
     id: "civitatis",
-    logo: "/walkandtour/partner-civitatis.png",
+    logo: "/walkandtour/partners/partner-civitatis.png",
   },
   {
     id: "embassyOfArgentina",
-    logo: "/walkandtour/partner-embassy-argentina.png",
+    logo: "/walkandtour/partners/partner-embassy-argentina.png",
   },
   {
     id: "viator",
-    logo: "/walkandtour/partner-viator.png",
+    logo: "/walkandtour/partners/partner-viator.png",
   },
 ];
 
