@@ -55,7 +55,6 @@ const tourDetailOverridesByTourId: TourDetailOverridesByTourId = {
       `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/4.png`,
       `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/5.png`,
       `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/6.png`,
-      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/7.png`,
     ],
     bookingTarget: {
       kind: "external",
