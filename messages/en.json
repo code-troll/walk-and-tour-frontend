@@ -54,7 +54,7 @@
       "duration": "Duration",
       "location": "Location",
       "price": "Price",
-      "details": "Details",
+      "book": "Book",
       "ratingOutOfFive": "/5",
       "reviews": "reviews",
       "currency": "kr",

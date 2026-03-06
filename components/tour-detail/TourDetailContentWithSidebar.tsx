@@ -14,7 +14,7 @@ export default function TourDetailContentWithSidebar({
       <div className="relative w-full lg:[&>section>div]:pr-96">
         { children }
         <aside className="hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[calc(25rem)]">
-          <div className="lg:sticky lg:top-22 my-22 lg:self-start">
+          <div className="lg:sticky lg:top-22 mt-22 mb-1 lg:self-start">
             { sidebar }
           </div>
         </aside>

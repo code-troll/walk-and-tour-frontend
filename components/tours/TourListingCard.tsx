@@ -29,7 +29,7 @@ export default function TourListingCard({
 }: TourListingCardProps) {
   const t = useTranslations("tours.card");
   const locale = useLocale() as AppLocale;
-  const detailsHref = `${ getPathname({locale, href: "/tours"}) }/${ tour.slug }`;
+  const bookHref = `${ getPathname({locale, href: "/tours"}) }/${ tour.slug }`;
 
   return (
     <article
@@ -70,10 +70,10 @@ export default function TourListingCard({
               { tour.price } { t("currency") }
             </p>
             <a
-              href={ detailsHref }
+              href={ bookHref }
               className="btn-red-black inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-colors"
             >
-              { t("details") }
+              { t("book") }
               <ArrowRight className="h-4 w-4"/>
             </a>
           </div>

@@ -29,10 +29,10 @@ export default function TourDetailHighlightsSection({
           <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#e75c3a]/15 text-[#e75c3a]">
             <Sparkles className="h-5 w-5" strokeWidth={ 1.5 }/>
           </span>
-          <h2 className="text-2xl font-semibold tracking-tight text-[#182619]">{ title }</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-[#2b666d]">{ title }</h2>
         </div>
-        <article className="relative overflow-hidden rounded-2xl border border-[#dfd6c9]/60 bg-[#fcf8f1] p-5">
-          <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#005211]/5"/>
+        <article className="relative overflow-hidden rounded-2xl border border-[#dfd6c9]/60 bg-white p-5">
+          <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#2b666d]/5"/>
           <ul className="relative space-y-4">
             { highlights.map((highlight, index) => {
               const {prefix, suffix} = splitHighlight(highlight);
@@ -41,7 +41,7 @@ export default function TourDetailHighlightsSection({
                 <li key={ `highlight-${ index }` } className="flex gap-4">
                   <ChevronRight
                     aria-hidden="true"
-                    className="mt-0.5 h-5 w-5 shrink-0 text-[#005211]"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-[#2b666d]"
                     strokeWidth={ 1.8 }
                   />
                   <p className="text-base leading-relaxed text-[#4b5a4b]">
