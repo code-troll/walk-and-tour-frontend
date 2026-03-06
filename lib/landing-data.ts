@@ -42,7 +42,7 @@ export type TourId =
 
 export type TourSlug =
   | "copenhagen-historic-center-free-tour"
-  | "rosenborg-castle-guided-tour"
+  | "rosenborg-castle-tour"
   | "excursion-to-malmo-sweden"
   | "amalienborg-palace-tour"
   | "christiansborg-palace-tour"
@@ -64,7 +64,7 @@ export type TourSlug =
 
 export const tourSlugById = {
   copenhagenFreeTour: "copenhagen-historic-center-free-tour",
-  rosenborgCastleTour: "rosenborg-castle-guided-tour",
+  rosenborgCastleTour: "rosenborg-castle-tour",
   malmoExcursion: "excursion-to-malmo-sweden",
   amalienborgPalace: "amalienborg-palace-tour",
   christiansborgPalace: "christiansborg-palace-tour",
@@ -85,7 +85,9 @@ export const tourSlugById = {
   copenhagenCityToCoast: "copenhagen-city-to-coast-black-diamond-canal-cruise-reffen",
 } as const satisfies Record<TourId, TourSlug>;
 
-export type TourSlugById = typeof tourSlugById;
+export type TourDetailCtaTarget =
+  | { kind: "internal"; target: InternalTarget; }
+  | { kind: "external"; href: string; };
 
 export type Tour = {
   id: TourId;
@@ -97,6 +99,17 @@ export type Tour = {
     src: string;
   };
   categories: TourCategoryId[];
+  heroImageSrc?: string;
+  galleryImageSrcs?: readonly string[];
+  bookingTarget?: TourDetailCtaTarget;
+  supportTarget?: TourDetailCtaTarget;
+};
+
+export type ResolvedTour = Tour & {
+  heroImageSrc: string;
+  galleryImageSrcs: readonly string[];
+  bookingTarget: TourDetailCtaTarget;
+  supportTarget: TourDetailCtaTarget;
 };
 
 export type AboutWalkAndTour = {
@@ -194,6 +207,18 @@ export const tourCategories: TourCategoryId[] = [
   "royalPalaces",
 ];
 
+const defaultBookingTarget: TourDetailCtaTarget = {
+  kind: "internal",
+  target: {kind: "homeSection", section: "contact"},
+};
+
+const defaultSupportTarget: TourDetailCtaTarget = {
+  kind: "internal",
+  target: {kind: "homeSection", section: "contact"},
+};
+
+export const tourTemplateMapHref = "https://maps.app.goo.gl/pWqY5GfNPPtoDK3x6";
+
 export const tours: Tour[] = [
   {
     id: "copenhagenFreeTour",
@@ -209,10 +234,18 @@ export const tours: Tour[] = [
       "groupTour",
       "essential",
     ],
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/6.jpg`,
+    ],
   },
   {
     id: "rosenborgCastleTour",
-    slug: "rosenborg-castle-guided-tour",
+    slug: "rosenborg-castle-tour",
     rating: "4.9",
     reviews: "386",
     price: "400",
@@ -223,6 +256,14 @@ export const tours: Tour[] = [
       "groupTour",
       "history",
       "royalPalaces",
+    ],
+    heroImageSrc: "/walkandtour/tours/rosenborg-castle-canal-cruise.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleTour }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleTour }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleTour }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleTour }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleTour }/5.jpg`,
     ],
   },
   {
@@ -239,6 +280,14 @@ export const tours: Tour[] = [
       "dayTrip",
       "essential",
     ],
+    heroImageSrc: "/walkandtour/tours/tour-malmo.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.malmoExcursion }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.malmoExcursion }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.malmoExcursion }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.malmoExcursion }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.malmoExcursion }/5.jpg`,
+    ],
   },
   {
     id: "amalienborgPalace",
@@ -253,6 +302,15 @@ export const tours: Tour[] = [
       "groupTour",
       "history",
       "royalPalaces",
+    ],
+    heroImageSrc: "/walkandtour/tours/tour-amalienborg.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/2.heic`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/3.heic`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/4.heic`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/6.jpg`,
     ],
   },
   {
@@ -491,6 +549,66 @@ export const tours: Tour[] = [
   },
 ];
 
+const resolveTour = (tour: Tour): ResolvedTour => ({
+  ...tour,
+  heroImageSrc: tour.heroImageSrc ?? tour.image.src,
+  galleryImageSrcs: tour.galleryImageSrcs && tour.galleryImageSrcs.length > 0
+    ? tour.galleryImageSrcs
+    : [tour.image.src],
+  bookingTarget: tour.bookingTarget ?? defaultBookingTarget,
+  supportTarget: tour.supportTarget ?? defaultSupportTarget,
+});
+
+const shuffle = <T, >(items: readonly T[]): T[] => {
+  const shuffledItems = [...items];
+
+  for (let index = shuffledItems.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffledItems[index], shuffledItems[randomIndex]] = [
+      shuffledItems[randomIndex],
+      shuffledItems[index],
+    ];
+  }
+
+  return shuffledItems;
+};
+
+export const toursCatalog: Tour[] = tours;
+export const tourSlugs: TourSlug[] = toursCatalog.map((tour) => tour.slug);
+
+export const getTourBySlug = (snug: string): Tour | undefined => (
+  toursCatalog.find((tour) => tour.slug === snug)
+);
+
+export const getResolvedTourBySlug = (snug: string): ResolvedTour | undefined => {
+  const tour = getTourBySlug(snug);
+
+  return tour ? resolveTour(tour) : undefined;
+};
+
+export const getRelatedToursByTour = (tour: Tour, limit = 3): Tour[] => {
+  if (limit <= 0) {
+    return [];
+  }
+
+  const otherTours = toursCatalog.filter((item) => item.id !== tour.id);
+  const matchingTours = otherTours.filter((item) => (
+    item.categories.some((category) => tour.categories.includes(category))
+  ));
+  const randomMatchingTours = shuffle(matchingTours).slice(0, limit);
+
+  if (randomMatchingTours.length >= limit) {
+    return randomMatchingTours;
+  }
+
+  const selectedTourIds = new Set(randomMatchingTours.map((item) => item.id));
+  const randomFallbackTours = shuffle(
+    otherTours.filter((item) => !selectedTourIds.has(item.id))
+  ).slice(0, limit - randomMatchingTours.length);
+
+  return [...randomMatchingTours, ...randomFallbackTours];
+};
+
 const homeTourOrder: TourId[] = [
   "copenhagenFreeTour",
   "rosenborgCastleTour",
@@ -500,8 +618,6 @@ const homeTourOrder: TourId[] = [
 export const homeTours: Tour[] = homeTourOrder
   .map((tourId) => tours.find((tour) => tour.id === tourId))
   .filter((tour): tour is Tour => Boolean(tour));
-
-export const toursCatalog: Tour[] = tours;
 
 export const aboutWalkAndTour: AboutWalkAndTour = {
   eyebrowKey: "eyebrow",

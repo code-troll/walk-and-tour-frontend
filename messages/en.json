@@ -294,11 +294,7 @@
     },
     "items": {
       "copenhagenFreeTour": {
-        "about": [
-          "Discover Copenhagen's historic heart with a local guide while watching the city unfold from Nyhavn to the royal district.",
-          "This tip-based tour is perfect for first-time visitors who want context, local recommendations and an authentic introduction to the city center."
-        ],
-        "aboutTourDescription": "Looking for a Free Walking Tour in Copenhagen? Join us at 10:30 AM to see the Changing of the Guard at Amalienborg Palace. Discover Nyhavn and the city's history with local guides. Book your free spot now",
+        "aboutTourDescription": "Looking for a Free Walking Tour in Copenhagen? Join us at 10:30 AM to see the Changing of the Guard at Amalienborg Palace. Discover Nyhavn and the city's history with local guides. Book your free spot now.",
         "highlights": [
           "Free Tour of Copenhagen's Old Town: A 2-hour guided introduction in English.",
           "Meet at City Hall Square: Your starting point for exploring the Danish capital.",
@@ -306,23 +302,6 @@
           "Historic Charm: Discover medieval squares like Nytorv and Gammeltorv.",
           "Architectural Highlights: Admire St. Nicholas Church and the Marble Church.",
           "Royal Tradition: Witness the Changing of the Guard at Amalienborg Palace (10:30 am tour)."
-        ],
-        "itinerary": [
-          {
-            "time": "Start",
-            "title": "Welcome and route briefing",
-            "description": "Meet your guide, get to know the group and receive a short orientation of what you'll see during the walk."
-          },
-          {
-            "time": "Middle",
-            "title": "Historic center and royal highlights",
-            "description": "Walk through the old city and royal surroundings while learning about the events and people that shaped Copenhagen."
-          },
-          {
-            "time": "End",
-            "title": "Final tips and optional recommendations",
-            "description": "Finish with local advice for museums, canals, food markets and neighborhoods based on your interests."
-          }
         ],
         "itineraryDescription": "Our walking tour will take you from the imposing City Hall Square, the vibrant meeting point and enduring symbol of the city. From there, we'll journey to the medieval squares of Nytorv and Gammeltorv, where time seems to stand still amidst charming architecture and echoes of the past. You'll truly feel the power of Danish history as you gaze at Christiansborg Palace, the seat of Danish democracy and royalty for centuries. Marvel at the architectural beauty of St. Nicholas Church, a striking landmark with a unique history.\n\nAs we continue, we'll arrive at Kongens Nytorv, where elegance and urban life merge in a vibrant atmosphere, surrounded by grand buildings. Copenhagen's Royal Theatre invites you to immerse yourself in Denmark's rich culture, showcasing its artistic heritage. Next, Nyhavn, with its colorful facades and historic ships, offers the perfect postcard view of the city, a truly picturesque spot. The majesty of the Marble Church will take your breath away with its impressive dome and intricate details. And, for those joining our 10:30 am tour, you'll witness the solemn Changing of the Guard at Amalienborg Palace, a captivating tradition that beautifully captures the essence of Danish royalty.",
         "included": [
@@ -341,9 +320,104 @@
           "meetingPoint": "City Hall Square",
           "endPoint": "Amalienborg palace",
           "cancellationType": "Cancel any time",
+          "typeTour": "Free Tour",
           "languages": "English"
-        },
-        "bookingDescription": "Reserve your place now and join one of the most complete introductions to Copenhagen's historic center. Tip-based format, small groups and local insight included."
+        }
+      },
+      "rosenborgCastleTour": {
+        "aboutTourDescription": "Embark on a magical journey through the heart of Danish royal legacy with our exclusive 2-hour tour of the majestic Rosenborg Palace in Copenhagen. This experience is designed to immerse you in the rich history of this Renaissance jewel, once the cherished royal residence of the beloved King Christian IV. Our tour promises an exceptional cultural immersion into the unique narrative of Danish royalty.",
+        "highlights": [
+          "Exclusive Journey: Enjoy a group tour of Rosenborg Palace.",
+          "Explore Renaissance Majesty: Immerse yourself in the rich history of King Christian IV's former royal residence.",
+          "Discover Crown Jewels: Uncover the secrets and captivating stories behind Denmark's royal treasures.",
+          "Wander Lush Gardens: Stroll through the beautiful gardens surrounding this iconic landmark.",
+          "Intimate Castle Interiors: Journey through the King's masterpiece with a detailed interior tour.",
+          "Expert Guidance: Be led by knowledgeable guides revealing royal secrets and narratives."
+        ],
+        "itineraryDescription": "Our tour begins at our convenient meeting point: Øster Voldgade 4A, 1350 København, where you'll easily spot our guide with a distinctive red umbrella at the entrance.\n\nAccompanied by our expert guides, you will discover the secrets of the Danish Crown Jewels, each piece laden with captivating stories and royal secrets. We'll then stroll through the lush gardens that beautifully surround this emblematic palace, offering serene views and a glimpse into royal leisure.\n\nNext, delve into the masterpiece of King Christian IV with an intimate tour through the impressive interiors of the castle. You'll explore fascinating collections and chambers, each revealing more about Denmark's royal past. This private journey allows you to fully immerse yourself in the unique narrative of Danish royalty, providing a truly exceptional and personalized cultural experience.",
+        "included": [
+          "Professional English-speaking Expert Tour Guide.",
+          "Admission to Rosenborg Palace (including access to the Crown Jewels and castle interiors).",
+          "Guided walk through the Rosenborg Castle Gardens."
+        ],
+        "notIncluded": [
+          "Meals and beverages.",
+          "Gratuities for the guide.",
+          "Personal expenses.",
+          "Travel insurance.",
+          "Transportation to/from the meeting point (unless specified otherwise)."
+        ],
+        "facts": {
+          "meetingPoint": "Rosenborg Castle",
+          "endPoint": "Rosenborg Castle",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        }
+      },
+      "malmoExcursion": {
+        "aboutTourDescription": "Discover the fascinating city of Malmö, Sweden's third largest city, on an exciting tour designed to immerse you in its charming streets and rich history! This guided experience offers a comprehensive exploration of Malmö's highlights, from its historic center to iconic landmarks like the Slottsmöllan (Dutch Windmill). You'll admire the impressive architecture of Malmö Town Hall and Malmöhus Castle, and truly immerse yourself in the local culture as we stroll through its historic squares and visit the venerable St. Peter's Church. Join us on this journey filled with nature, captivating architecture, and fascinating stories, providing a unique perspective on Malmö's heritage and modern life.",
+        "highlights": [
+          "Cross the Iconic Øresund Bridge: Experience the impressive journey by train from Copenhagen to Malmö.",
+          "Explore Historic Malmöhus Castle: Delve into the rich past of this ancient fortress.",
+          "Visit St. Peter's Church: Discover one of Malmö's oldest and most significant churches.",
+          "Admire Malmö Town Hall: Witness the imposing architecture of the city's civic heart.",
+          "See Slottsmöllan (Dutch Windmill): Capture photos of this famous symbol of Malmö's heritage.",
+          "Stroll Through the Charming Old Town: Wander cobbled streets and vibrant, colorful houses."
+        ],
+        "itineraryDescription": "Our adventure begins as we cross the iconic Øresund Bridge by train, offering breathtaking views as we make our way to Sweden. Once in Malmö, we'll immediately immerse ourselves in the city's rich history.\n\nOur journey takes us to the heart of Malmö, where Malmöhus Castle awaits. This ancient fort holds fascinating stories from centuries past, which our guide will bring to life. We'll then walk through history at St. Peter's Church, one of the oldest and most significant churches in the city, admiring its imposing architecture. Next, we'll marvel at the grandeur of Malmö Town Hall, a central piece of the city's historical landscape.\n\nDon't miss the chance to see the famous Dutch windmill, Slottsmöllan, a picturesque symbol of Malmö's enduring heritage. We'll then stroll through the charming old town, with its cobblestone streets and colorful houses, where time seems to stand still amidst its captivating beauty.\n\nOur tour also includes a visit to Malmö Library, a magical place that houses a small castle from 1901, and we'll explore its charming interiors. In addition to immersing ourselves in Malmö's rich history and architecture, you'll have free time to savor the local cuisine during lunch, allowing you to experience the city at your own pace.",
+        "included": [
+          "Professional English-speaking Tour Guide.",
+          "Interactive Map (digital access) for easy navigation.",
+          "24-hour Public Transport Ticket for seamless travel between Copenhagen and Malmö, and within Malmö.",
+          "Admission tickets to St. Peter's Church and Malmö Library."
+        ],
+        "notIncluded": [
+          "Meals and beverages.",
+          "Gratuities for the guide.",
+          "Entrance fees to other attractions (unless specified).",
+          "Personal expenses.",
+          "Travel insurance."
+        ],
+        "facts": {
+          "meetingPoint": "Copenhagen Central Station",
+          "endPoint": "Copenhagen Central Station",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        }
+      },
+      "amalienborgPalace": {
+        "aboutTourDescription": "Discover the fascinating city of Malmö, Sweden's third largest city, on an exciting tour designed to immerse you in its charming streets and rich history! This guided experience offers a comprehensive exploration of Malmö's highlights, from its historic center to iconic landmarks like the Slottsmöllan (Dutch Windmill). You'll admire the impressive architecture of Malmö Town Hall and Malmöhus Castle, and truly immerse yourself in the local culture as we stroll through its historic squares and visit the venerable St. Peter's Church. Join us on this journey filled with nature, captivating architecture, and fascinating stories, providing a unique perspective on Malmö's heritage and modern life.",
+        "highlights": [
+          "Cross the Iconic Øresund Bridge: Experience the impressive journey by train from Copenhagen to Malmö.",
+          "Explore Historic Malmöhus Castle: Delve into the rich past of this ancient fortress.",
+          "Visit St. Peter's Church: Discover one of Malmö's oldest and most significant churches.",
+          "Admire Malmö Town Hall: Witness the imposing architecture of the city's civic heart.",
+          "See Slottsmöllan (Dutch Windmill): Capture photos of this famous symbol of Malmö's heritage.",
+          "Stroll Through the Charming Old Town: Wander cobbled streets and vibrant, colorful houses."
+        ],
+        "itineraryDescription": "Our adventure begins as we cross the iconic Øresund Bridge by train, offering breathtaking views as we make our way to Sweden. Once in Malmö, we'll immediately immerse ourselves in the city's rich history.\n\nOur journey takes us to the heart of Malmö, where Malmöhus Castle awaits. This ancient fort holds fascinating stories from centuries past, which our guide will bring to life. We'll then walk through history at St. Peter's Church, one of the oldest and most significant churches in the city, admiring its imposing architecture. Next, we'll marvel at the grandeur of Malmö Town Hall, a central piece of the city's historical landscape.\n\nDon't miss the chance to see the famous Dutch windmill, Slottsmöllan, a picturesque symbol of Malmö's enduring heritage. We'll then stroll through the charming old town, with its cobblestone streets and colorful houses, where time seems to stand still amidst its captivating beauty.\n\nOur tour also includes a visit to Malmö Library, a magical place that houses a small castle from 1901, and we'll explore its charming interiors. In addition to immersing ourselves in Malmö's rich history and architecture, you'll have free time to savor the local cuisine during lunch, allowing you to experience the city at your own pace.",
+        "included": [
+          "Professional English-speaking Tour Guide.",
+          "Interactive Map (digital access) for easy navigation.",
+          "24-hour Public Transport Ticket for seamless travel between Copenhagen and Malmö, and within Malmö.",
+          "Admission tickets to St. Peter's Church and Malmö Library."
+        ],
+        "notIncluded": [
+          "Meals and beverages.",
+          "Gratuities for the guide.",
+          "Entrance fees to other attractions (unless specified).",
+          "Personal expenses.",
+          "Travel insurance."
+        ],
+        "facts": {
+          "meetingPoint": "Copenhagen Central Station",
+          "endPoint": "Copenhagen Central Station",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        }
       }
     }
   },

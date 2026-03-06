@@ -23,10 +23,10 @@ const StarIcon = () => (
 );
 
 export default function TourListingCard({
-  tour,
-  isNewlyRevealed = false,
-  revealDelayMs = 0,
-}: TourListingCardProps) {
+                                          tour,
+                                          isNewlyRevealed = false,
+                                          revealDelayMs = 0,
+                                        }: TourListingCardProps) {
   const t = useTranslations("tours.card");
   const locale = useLocale() as AppLocale;
   const bookHref = `${ getPathname({locale, href: "/tours"}) }/${ tour.slug }`;
@@ -36,21 +36,24 @@ export default function TourListingCard({
       className={ `flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-[0_12px_28px_-24px_rgba(0,0,0,0.9)] ring-1 ring-[#e3d8cc] ${ isNewlyRevealed ? "tour-card-reveal" : "" }` }
       style={ isNewlyRevealed ? {animationDelay: `${ revealDelayMs }ms`} : undefined }
     >
-      <div className="relative">
-        <Image
-          src={ tour.image.src }
-          alt={ t(`items.${tour.id}.imageAlt`) }
-          width={ 800 }
-          height={ 600 }
-          className="h-52 w-full object-cover"
-        />
-        <span className="absolute left-4 top-4 rounded-full bg-[#f8f4ef]/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#5b4d3c]">
-          { t(`items.${tour.id}.tag`) }
-        </span>
+      <div className="group relative overflow-hidden">
+        <a href={ bookHref }>
+          <Image
+            src={ tour.image.src }
+            alt={ t(`items.${ tour.id }.imageAlt`) }
+            width={ 800 }
+            height={ 600 }
+            className="h-52 w-full object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] group-hover:brightness-[1.04]"
+          />
+        </a>
+        <span
+          className="absolute left-4 top-4 rounded-full bg-[#f8f4ef]/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#5b4d3c]">
+            { t(`items.${ tour.id }.tag`) }
+          </span>
       </div>
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-xl font-semibold leading-tight text-[#2a221a]">
-          { t(`items.${tour.id}.title`) }
+          { t(`items.${ tour.id }.title`) }
         </h3>
 
         <div className="mt-auto">
@@ -81,11 +84,11 @@ export default function TourListingCard({
           <div className="mt-4 grid grid-cols-1 gap-3 text-sm text-[#5b4d3c] sm:grid-cols-2">
             <div className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ t(`items.${tour.id}.duration`) }</span>
+              <span>{ t(`items.${ tour.id }.duration`) }</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ t(`items.${tour.id}.location`) }</span>
+              <span>{ t(`items.${ tour.id }.location`) }</span>
             </div>
           </div>
         </div>

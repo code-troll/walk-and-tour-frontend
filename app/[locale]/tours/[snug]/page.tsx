@@ -13,12 +13,12 @@ import TourDetailQuickInfoSection from "@/components/tour-detail/TourDetailQuick
 import TourDetailRelatedToursSection from "@/components/tour-detail/TourDetailRelatedToursSection";
 import TourDetailSidebarPlaceholder from "@/components/tour-detail/TourDetailSidebarPlaceholder";
 import { type AppLocale, routing } from "@/i18n/routing";
-import { toursCatalog } from "@/lib/landing-data";
 import {
-  getTourBySlug,
-  getTourDetailBySlug,
-  tourDetailSlugs,
-} from "@/lib/tour-details-data";
+  getRelatedToursByTour,
+  getResolvedTourBySlug,
+  tourSlugs,
+  tourTemplateMapHref,
+} from "@/lib/landing-data";
 import TourDetailCustomerSupportSection from "@/components/tour-detail/TourDetailCustomerSupportSection";
 import TourDetailElfsightReviewsSection from "@/components/tour-detail/TourDetailElfsightReviewsSection";
 
@@ -48,7 +48,7 @@ const getRawWithFallback = <T, >(
 };
 
 export function generateStaticParams() {
-  return tourDetailSlugs.map((snug) => ({snug}));
+  return tourSlugs.map((snug) => ({snug}));
 }
 
 export async function generateMetadata({
@@ -60,10 +60,9 @@ export async function generateMetadata({
     notFound();
   }
 
-  const tourDetail = getTourDetailBySlug(snug);
-  const tour = getTourBySlug(snug);
+  const tour = getResolvedTourBySlug(snug);
 
-  if (!tourDetail || !tour) {
+  if (!tour) {
     return {};
   }
 
@@ -91,10 +90,9 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     notFound();
   }
 
-  const tourDetail = getTourDetailBySlug(snug);
-  const tour = getTourBySlug(snug);
+  const tour = getResolvedTourBySlug(snug);
 
-  if (!tourDetail || !tour) {
+  if (!tour) {
     notFound();
   }
 
@@ -166,7 +164,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     {
       id: "typeTour" as const,
       label: tourDetailT("labels.typeTour"),
-      value: tourCardT(`items.${ tour.id }.tag`),
+      value: facts.typeTour,
     },
     {
       id: "cancellationType" as const,
@@ -180,13 +178,11 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     },
   ];
 
-  const relatedTours = tourDetail.relatedTourIds
-    .map((tourId) => toursCatalog.find((item) => item.id === tourId))
-    .filter((item): item is (typeof toursCatalog)[number] => Boolean(item));
+  const relatedTours = getRelatedToursByTour(tour, 3);
 
   const heroTourImages = Array.from(new Set([
-    tourDetail.heroImageSrc,
-    ...tourDetail.galleryImageSrcs,
+    tour.heroImageSrc,
+    ...tour.galleryImageSrcs,
   ].filter((imageSrc) => Boolean(imageSrc))));
 
   return (
@@ -203,7 +199,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
       <TourDetailQuickInfoSection items={ quickInfoItems }/>
 
-      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder/> }>
+      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder mapHref={ tourTemplateMapHref }/> }>
         <TourDetailHighlightsSection
           title={ tourDetailT("labels.highlights") }
           highlights={ highlights }

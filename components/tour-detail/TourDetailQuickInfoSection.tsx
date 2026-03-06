@@ -3,7 +3,7 @@ import {
   Languages,
   MapPin,
   ShieldCheck,
-  Tag,
+  Footprints,
   type LucideIcon,
 } from "lucide-react";
 
@@ -27,7 +27,7 @@ type TourDetailQuickInfoSectionProps = {
 const iconById: Record<TourDetailQuickInfoId, LucideIcon> = {
   startFrom: MapPin,
   endAt: Flag,
-  typeTour: Tag,
+  typeTour: Footprints,
   cancellationType: ShieldCheck,
   languages: Languages,
 };
