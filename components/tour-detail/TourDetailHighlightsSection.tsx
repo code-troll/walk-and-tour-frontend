@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react";
+import { ChevronRight, Sparkles } from "lucide-react";
 
 type TourDetailHighlightsSectionProps = {
   title: string;
@@ -31,30 +31,29 @@ export default function TourDetailHighlightsSection({
           </span>
           <h2 className="text-2xl font-semibold tracking-tight text-[#182619]">{ title }</h2>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          { highlights.map((highlight, index) => {
-            const {prefix, suffix} = splitHighlight(highlight);
+        <article className="relative overflow-hidden rounded-2xl border border-[#dfd6c9]/60 bg-[#fcf8f1] p-5">
+          <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#005211]/5"/>
+          <ul className="relative space-y-4">
+            { highlights.map((highlight, index) => {
+              const {prefix, suffix} = splitHighlight(highlight);
 
-            return (
-              <article
-                key={ `highlight-${ index }` }
-                className="group relative overflow-hidden rounded-2xl border border-[#dfd6c9]/60 bg-[#fcf8f1] p-5 transition-all duration-300 hover:border-[#005211]/30 hover:shadow-md"
-              >
-                <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#005211]/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"/>
-                <div className="relative flex gap-4">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#005211]/10 text-xs font-bold text-[#005211]">
-                    { index + 1 }
-                  </span>
-                  <p className="text-sm leading-relaxed text-[#4b5a4b]">
+              return (
+                <li key={ `highlight-${ index }` } className="flex gap-4">
+                  <ChevronRight
+                    aria-hidden="true"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-[#005211]"
+                    strokeWidth={ 1.8 }
+                  />
+                  <p className="text-base leading-relaxed text-[#4b5a4b]">
                     { prefix ? <span className="font-semibold text-[#182619]">{ prefix }</span> : null }
                     { prefix ? " " : "" }
                     { suffix }
                   </p>
-                </div>
-              </article>
-            );
-          }) }
-        </div>
+                </li>
+              );
+            }) }
+          </ul>
+        </article>
       </div>
     </section>
   );

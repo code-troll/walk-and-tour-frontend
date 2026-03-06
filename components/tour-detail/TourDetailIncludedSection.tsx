@@ -33,7 +33,7 @@ export default function TourDetailIncludedSection({
                 <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#005211] text-[#fcf8f1]">
                   <Check className="h-4 w-4" strokeWidth={ 2.5 }/>
                 </span>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-[#005211]">{ includedTitle }</h3>
+                <h3 className="text-base font-bold uppercase tracking-wider text-[#005211]">{ includedTitle }</h3>
               </div>
               <ul className="space-y-4">
                 { includedItems.map((item, index) => (
@@ -41,7 +41,7 @@ export default function TourDetailIncludedSection({
                     <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#005211]/20">
                       <Check className="h-3 w-3 text-[#005211]" strokeWidth={ 2.5 }/>
                     </span>
-                    <span className="text-sm leading-relaxed text-[#182619]/90">{ item }</span>
+                    <span className="text-base leading-relaxed text-[#182619]/90">{ item }</span>
                   </li>
                 )) }
               </ul>
@@ -55,7 +55,7 @@ export default function TourDetailIncludedSection({
                 <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#4b5a4b]/20 text-[#4b5a4b]">
                   <CircleAlert className="h-4 w-4" strokeWidth={ 2 }/>
                 </span>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-[#4b5a4b]">{ notIncludedTitle }</h3>
+                <h3 className="text-base font-bold uppercase tracking-wider text-[#4b5a4b]">{ notIncludedTitle }</h3>
               </div>
               <ul className="space-y-4">
                 { notIncludedItems.map((item, index) => (
@@ -63,7 +63,7 @@ export default function TourDetailIncludedSection({
                     <span className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#4b5a4b]/10">
                       <X className="h-3 w-3 text-[#4b5a4b]" strokeWidth={ 2.5 }/>
                     </span>
-                    <span className="text-sm leading-relaxed text-[#4b5a4b]">{ item }</span>
+                    <span className="text-base leading-relaxed text-[#4b5a4b]">{ item }</span>
                   </li>
                 )) }
               </ul>

@@ -197,7 +197,7 @@ export default function TourDetailHeroSection({
     : `${ boundedRating.toFixed(1) }/5`;
 
   return (
-    <section className="bg-[#fcfaf7] pt-12 pb-6 md:pt-16 md:pb-6">
+    <section className="bg-[#fcfaf7] pt-12 pb-6 md:pt-16">
       <div className="mx-auto w-full px-6 lg:px-12">
         <div className="space-y-5">
           <h1 className="text-3xl font-semibold leading-tight text-teal sm:text-4xl">{ title }</h1>

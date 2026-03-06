@@ -22,7 +22,7 @@ export default function TourDetailAboutSection({
         <div className="relative overflow-hidden rounded-3xl border border-[#dfd6c9]/60 bg-[#fcf8f1]">
           <div className="absolute left-0 top-0 h-full w-1 bg-[#005211]/40"/>
           <div className="p-6 pl-8 sm:p-8 sm:pl-10">
-            <p className="text-base leading-[1.8] text-[#4b5a4b] md:text-lg">
+            <p className="text-base leading-[1.8] text-[#4b5a4b]">
               { description }
             </p>
           </div>

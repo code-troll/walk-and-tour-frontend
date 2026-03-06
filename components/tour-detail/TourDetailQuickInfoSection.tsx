@@ -44,7 +44,7 @@ export default function TourDetailQuickInfoSection({
   ];
 
   return (
-    <section className="bg-[#fcfaf7] py-6 lg:py-10">
+    <section className="bg-[#fcfaf7] py-6">
       <div className="mx-auto w-full px-5 lg:px-10">
         <div className="relative overflow-hidden rounded-4xl bg-[#fcf8f1]/80 backdrop-blur-sm">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,100,68,0.08),transparent_50%)]"/>
@@ -56,13 +56,13 @@ export default function TourDetailQuickInfoSection({
               return (
                 <article
                   key={ item.id }
-                  className={ `group relative flex flex-col items-center gap-3 px-4 py-6 text-center transition-all duration-300 hover:bg-[#005211]/5 lg:py-8 ${ itemBorderClass }` }
+                  className={ `group relative flex justify-center items-center gap-3 px-4 py-4 transition-all duration-300 hover:bg-[#005211]/5 lg:py-5 ${ itemBorderClass }` }
                 >
                   <span
                     className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#005211]/10 text-[#005211] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#005211] group-hover:text-[#fcf8f1] group-hover:shadow-lg">
                     <Icon className="h-5 w-5" strokeWidth={ 1.5 }/>
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-[11px] font-medium uppercase tracking-widest text-[#4b5a4b]/70">
                       { item.label }
                     </p>
