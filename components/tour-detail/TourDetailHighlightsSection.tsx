@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 type TourDetailHighlightsSectionProps = {
   title: string;
@@ -23,29 +23,37 @@ export default function TourDetailHighlightsSection({
   highlights,
 }: TourDetailHighlightsSectionProps) {
   return (
-    <section className="bg-white py-6">
+    <section className="relative bg-[#fcfaf7] py-6">
       <div className="mx-auto lg:mx-12 w-full max-w-11/12 px-0">
-        <div className="mx-auto rounded-3xl bg-[#fcfaf7] p-6 shadow-sm ring-1 ring-[#e8ddd2] sm:p-8">
-          <h2 className="text-3xl mb-10 font-semibold text-teal sm:text-4xl">{ title }</h2>
-          <ul className="space-y-4">
-            { highlights.map((highlight, index) => {
-              const {prefix, suffix} = splitHighlight(highlight);
+        <div className="mb-6 flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#e75c3a]/15 text-[#e75c3a]">
+            <Sparkles className="h-5 w-5" strokeWidth={ 1.5 }/>
+          </span>
+          <h2 className="text-2xl font-semibold tracking-tight text-[#182619]">{ title }</h2>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          { highlights.map((highlight, index) => {
+            const {prefix, suffix} = splitHighlight(highlight);
 
-              return (
-                <li
-                  key={ `highlight-${ index }` }
-                  className="flex items-start gap-3 text-base leading-7 text-[#3d3124]"
-                >
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#2b666d]"/>
-                  <span>
-                    { prefix ? <strong className="font-semibold text-[#2a221a]">{ prefix }</strong> : null }
+            return (
+              <article
+                key={ `highlight-${ index }` }
+                className="group relative overflow-hidden rounded-2xl border border-[#dfd6c9]/60 bg-[#fcf8f1] p-5 transition-all duration-300 hover:border-[#005211]/30 hover:shadow-md"
+              >
+                <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#005211]/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"/>
+                <div className="relative flex gap-4">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#005211]/10 text-xs font-bold text-[#005211]">
+                    { index + 1 }
+                  </span>
+                  <p className="text-sm leading-relaxed text-[#4b5a4b]">
+                    { prefix ? <span className="font-semibold text-[#182619]">{ prefix }</span> : null }
                     { prefix ? " " : "" }
                     { suffix }
-                  </span>
-                </li>
-              );
-            }) }
-          </ul>
+                  </p>
+                </div>
+              </article>
+            );
+          }) }
         </div>
       </div>
     </section>

@@ -233,22 +233,33 @@ export default function TourDetailHeroSection({
         </div>
         <div className="mt-7">
           <div
-            className="overflow-hidden rounded-[1.75rem] bg-white shadow-[0_18px_40px_-28px_rgba(0,0,0,0.85)] ring-1 ring-[#e3d8cc]">
+            className="overflow-hidden rounded-[1.75rem] bg-[#fcfaf7]">
             <div
               ref={ albumContainerRef }
-              className="max-h-105 overflow-hidden rounded-[1.25rem] md:max-h-140"
+              className="max-overflow-hidden rounded-[1.25rem] bg-[#fcfaf7]"
             >
               { isLoadingPhotos ? (
-                <div className="h-105 w-full animate-pulse rounded-[1.25rem] bg-[#efe8de] md:h-140"/>
+                <div className="w-full animate-pulse rounded-[1.25rem] bg-[#efe8de]"/>
               ) : photos.length > 0 ? (
                 <RowsPhotoAlbum
                   photos={ photos }
                   spacing={ ALBUM_SPACING }
                   targetRowHeight={ targetRowHeight }
                   defaultContainerWidth={ albumContainerWidth }
+                  componentsProps={ {
+                    container: {
+                      className: "bg-[#fcfaf7]",
+                    },
+                    wrapper: {
+                      className: "group overflow-hidden rounded-[0.85rem]",
+                    },
+                    image: {
+                      className: "transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] group-hover:brightness-[1.04]",
+                    },
+                  } }
                 />
               ) : (
-                <div className="h-105 w-full rounded-[1.25rem] bg-[#efe8de] md:h-140"/>
+                <div className="w-full rounded-[1.25rem] bg-[#efe8de]"/>
               ) }
             </div>
           </div>
