@@ -388,32 +388,29 @@
         }
       },
       "amalienborgPalace": {
-        "aboutTourDescription": "Discover the fascinating city of Malmö, Sweden's third largest city, on an exciting tour designed to immerse you in its charming streets and rich history! This guided experience offers a comprehensive exploration of Malmö's highlights, from its historic center to iconic landmarks like the Slottsmöllan (Dutch Windmill). You'll admire the impressive architecture of Malmö Town Hall and Malmöhus Castle, and truly immerse yourself in the local culture as we stroll through its historic squares and visit the venerable St. Peter's Church. Join us on this journey filled with nature, captivating architecture, and fascinating stories, providing a unique perspective on Malmö's heritage and modern life.",
+        "aboutTourDescription": "Prepare to step inside the actual home of the Danish monarchy. Amalienborg is not just a museum; it is the active winter residence of the Royal Family. On this tour, we will take you beyond the Rococo façade to discover how the kings and queens of Denmark have lived for over 250 years.",
         "highlights": [
-          "Cross the Iconic Øresund Bridge: Experience the impressive journey by train from Copenhagen to Malmö.",
-          "Explore Historic Malmöhus Castle: Delve into the rich past of this ancient fortress.",
-          "Visit St. Peter's Church: Discover one of Malmö's oldest and most significant churches.",
-          "Admire Malmö Town Hall: Witness the imposing architecture of the city's civic heart.",
-          "See Slottsmöllan (Dutch Windmill): Capture photos of this famous symbol of Malmö's heritage.",
-          "Stroll Through the Charming Old Town: Wander cobbled streets and vibrant, colorful houses."
+          "Imperial Treasures: Access to the fascinating Fabergé Chamber, featuring one of the world's most significant collections of Russian jewelry.",
+          "Royal Life: A walk through the private and state rooms of former kings and queens.",
+          "Living History: Discover the secrets of the Rococo complex, which has been home to Danish royalty for over 250 years.",
+          "Royal Ceremony: Opportunity to witness the famous Changing of the Royal Guard (if the tour coincides with the 12:00 PM schedule)."
         ],
-        "itineraryDescription": "Our adventure begins as we cross the iconic Øresund Bridge by train, offering breathtaking views as we make our way to Sweden. Once in Malmö, we'll immediately immerse ourselves in the city's rich history.\n\nOur journey takes us to the heart of Malmö, where Malmöhus Castle awaits. This ancient fort holds fascinating stories from centuries past, which our guide will bring to life. We'll then walk through history at St. Peter's Church, one of the oldest and most significant churches in the city, admiring its imposing architecture. Next, we'll marvel at the grandeur of Malmö Town Hall, a central piece of the city's historical landscape.\n\nDon't miss the chance to see the famous Dutch windmill, Slottsmöllan, a picturesque symbol of Malmö's enduring heritage. We'll then stroll through the charming old town, with its cobblestone streets and colorful houses, where time seems to stand still amidst its captivating beauty.\n\nOur tour also includes a visit to Malmö Library, a magical place that houses a small castle from 1901, and we'll explore its charming interiors. In addition to immersing ourselves in Malmö's rich history and architecture, you'll have free time to savor the local cuisine during lunch, allowing you to experience the city at your own pace.",
+        "itineraryDescription": "Our adventure begins in the grand Octagonal Square, the heart of Amalienborg. As we admire the symmetry of the four twin palaces, your expert guide will share how a tragic fire forced the Royal Family to convert this complex of noble homes into their permanent residence.\n\nWith your entry ticket already included, we will proceed directly into the Amalienborg Museum (housed in Christian VIII's Palace). Once inside, we embark on a journey through time, exploring the preserved rooms, from the private offices of former monarchs to the grand reception spaces. You will see firsthand what royal life was like, with intact furniture, personal items, and historical decorations.\n\nWe will continue through the most significant rooms, such as the majestic Pompeii Room and the elegant Queen Louise's Salon. We will conclude the visit in the spectacular Fabergé Chamber, where wealth and history meet in the form of exquisite Russian imperial goldsmithing, linked by family ties to the Danish crown.\n\nAfter approximately an hour and a half, the tour concludes inside the palace, leaving you with a personal understanding of this enduring European dynasty.",
         "included": [
-          "Professional English-speaking Tour Guide.",
-          "Interactive Map (digital access) for easy navigation.",
-          "24-hour Public Transport Ticket for seamless travel between Copenhagen and Malmö, and within Malmö.",
-          "Admission tickets to St. Peter's Church and Malmö Library."
+          "Expert English-speaking guide.",
+          "Entrance ticket to the Amalienborg Museum (Christian VIII's Palace).",
+          "Access to the historical rooms and the Fabergé Chamber.",
+          "Small group experience."
         ],
         "notIncluded": [
-          "Meals and beverages.",
-          "Gratuities for the guide.",
-          "Entrance fees to other attractions (unless specified).",
-          "Personal expenses.",
-          "Travel insurance."
+          "Public transportation (the tour is on foot).",
+          "Food or beverages.",
+          "Entrance to the other three palaces (private use).",
+          "Gratuities (optional)."
         ],
         "facts": {
-          "meetingPoint": "Copenhagen Central Station",
-          "endPoint": "Copenhagen Central Station",
+          "meetingPoint": "Amalienborg Palace",
+          "endPoint": "Amalienborg Palace",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
           "languages": "English"

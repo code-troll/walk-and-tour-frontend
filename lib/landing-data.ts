@@ -306,9 +306,9 @@ export const tours: Tour[] = [
     heroImageSrc: "/walkandtour/tours/tour-amalienborg.jpg",
     galleryImageSrcs: [
       `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/1.jpg`,
-      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/2.heic`,
-      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/3.heic`,
-      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/4.heic`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/6.jpg`,
     ],
