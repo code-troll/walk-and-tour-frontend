@@ -202,7 +202,7 @@ export const tours: Tour[] = [
     reviews: "1,756",
     price: "0",
     image: {
-      src: "/walkandtour/tours/tour-nyhavn.png",
+      src: "/walkandtour/tours/tour-nyhavn.jpg",
     },
     categories: [
       "freeTour",
@@ -217,7 +217,7 @@ export const tours: Tour[] = [
     reviews: "386",
     price: "400",
     image: {
-      src: "/walkandtour/tours/tour-rosenborg.png",
+      src: "/walkandtour/tours/tour-rosenborg.jpg",
     },
     categories: [
       "groupTour",
@@ -232,7 +232,7 @@ export const tours: Tour[] = [
     reviews: "560",
     price: "780",
     image: {
-      src: "/walkandtour/tours/tour-malmo.png",
+      src: "/walkandtour/tours/tour-malmo.jpg",
     },
     categories: [
       "groupTour",
@@ -247,7 +247,7 @@ export const tours: Tour[] = [
     reviews: "609",
     price: "400",
     image: {
-      src: "/walkandtour/tours/tour-amalienborg.png",
+      src: "/walkandtour/tours/tour-amalienborg.jpg",
     },
     categories: [
       "groupTour",
@@ -262,7 +262,7 @@ export const tours: Tour[] = [
     reviews: "1,497",
     price: "500",
     image: {
-      src: "/walkandtour/tours/tour-christiansborg.png",
+      src: "/walkandtour/tours/tour-christiansborg.jpg",
     },
     categories: [
       "groupTour",
@@ -277,7 +277,7 @@ export const tours: Tour[] = [
     reviews: "305",
     price: "400",
     image: {
-      src: "/walkandtour/tours/tour-copenhagen-essentials.png",
+      src: "/walkandtour/tours/tour-copenhagen-essentials.jpg",
     },
     categories: [
       "groupTour",
@@ -293,7 +293,7 @@ export const tours: Tour[] = [
     reviews: "792",
     price: "1500",
     image: {
-      src: "/walkandtour/tours/round-tower.png",
+      src: "/walkandtour/tours/round-tower.jpg",
     },
     categories: [
       "history",
@@ -308,7 +308,7 @@ export const tours: Tour[] = [
     reviews: "462",
     price: "670",
     image: {
-      src: "/walkandtour/tours/tivoli-garden.png",
+      src: "/walkandtour/tours/tivoli-garden.jpg",
     },
     categories: [
       "groupTour",
@@ -322,7 +322,7 @@ export const tours: Tour[] = [
     reviews: "367",
     price: "8800",
     image: {
-      src: "/walkandtour/tours/boat-tour.png",
+      src: "/walkandtour/tours/boat-tour.jpg",
     },
     categories: [
       "privateTour",
@@ -336,7 +336,7 @@ export const tours: Tour[] = [
     reviews: "150",
     price: "900",
     image: {
-      src: "/walkandtour/tours/royal-deer-park-bike-tour.png",
+      src: "/walkandtour/tours/royal-deer-park-bike-tour.jpg",
     },
     categories: [
       "dayTrip",
@@ -352,7 +352,7 @@ export const tours: Tour[] = [
     reviews: "481",
     price: "1250",
     image: {
-      src: "/walkandtour/tours/harbor-architecture.png",
+      src: "/walkandtour/tours/harbor-architecture.jpg",
     },
     categories: [
       "privateTour",
@@ -367,7 +367,7 @@ export const tours: Tour[] = [
     reviews: "664",
     price: "1400",
     image: {
-      src: "/walkandtour/tours/rosenborg-castle-canal-cruise.png",
+      src: "/walkandtour/tours/rosenborg-castle-canal-cruise.jpg",
     },
     categories: [
       "privateTour",
@@ -381,7 +381,7 @@ export const tours: Tour[] = [
     reviews: "198",
     price: "3000",
     image: {
-      src: "/walkandtour/tours/frederiksborg-and-kronborg-castle.png",
+      src: "/walkandtour/tours/frederiksborg-and-kronborg-castle.jpg",
     },
     categories: [
       "dayTrip",
@@ -395,7 +395,7 @@ export const tours: Tour[] = [
     reviews: "200",
     price: "1000",
     image: {
-      src: "/walkandtour/tours/food-tours.png",
+      src: "/walkandtour/tours/food-tours.jpg",
     },
     categories: [
       "groupTour",
@@ -410,7 +410,7 @@ export const tours: Tour[] = [
     reviews: "599",
     price: "1500",
     image: {
-      src: "/walkandtour/tours/roskilde.png",
+      src: "/walkandtour/tours/roskilde.jpg",
     },
     categories: [
       "dayTrip",
@@ -424,7 +424,7 @@ export const tours: Tour[] = [
     reviews: "693",
     price: "400",
     image: {
-      src: "/walkandtour/tours/nordhavn-architecture.png",
+      src: "/walkandtour/tours/nordhavn-architecture.jpg",
     },
     categories: [
       "groupTour",
@@ -438,7 +438,7 @@ export const tours: Tour[] = [
     reviews: "250",
     price: "1250",
     image: {
-      src: "/walkandtour/tours/christmas-tour.png",
+      src: "/walkandtour/tours/christmas-tour.jpg",
     },
     categories: [
       "privateTour",
@@ -451,7 +451,7 @@ export const tours: Tour[] = [
     reviews: "408",
     price: "950",
     image: {
-      src: "/walkandtour/tours/panorama.png",
+      src: "/walkandtour/tours/panorama.jpg",
     },
     categories: [
       "privateTour",
@@ -466,7 +466,7 @@ export const tours: Tour[] = [
     reviews: "693",
     price: "690",
     image: {
-      src: "/walkandtour/tours/shore-excursion.png",
+      src: "/walkandtour/tours/shore-excursion.jpg",
     },
     categories: [
       "groupTour",
@@ -481,7 +481,7 @@ export const tours: Tour[] = [
     reviews: "204",
     price: "420",
     image: {
-      src: "/walkandtour/tours/copenhagen-city-to-coast.png",
+      src: "/walkandtour/tours/copenhagen-city-to-coast.jpg",
     },
     categories: [
       "groupTour",
@@ -536,7 +536,7 @@ export const privateTours: PrivateTours = {
 export const partners: Partner[] = [
   {
     id: "donkeyRepublic",
-    logo: "/walkandtour/partners/partner-donkey-republic.png",
+    logo: "/walkandtour/partners/partner-donkey-republic.jpg",
   },
   {
     id: "kobenhavnsKommune",

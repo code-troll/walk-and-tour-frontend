@@ -22,7 +22,7 @@ export const homeHeroConfig: HeroSectionConfig = {
   translationNamespace: "hero.home",
   titleKey: "heading",
   descriptionKey: "subheading",
-  imageSrc: "/walkandtour/heroes/hero.png",
+  imageSrc: "/walkandtour/heroes/hero.jpg",
   cta: {
     labelKey: "ctaLabel",
     href: "/tours",
@@ -34,7 +34,7 @@ export const toursHeroConfig: HeroSectionConfig = {
   translationNamespace: "hero.tours",
   eyebrowKey: "eyebrow",
   titleKey: "heading",
-  imageSrc: "/walkandtour/heroes/private-tours.png",
+  imageSrc: "/walkandtour/heroes/private-tours.jpg",
 };
 
 export const aboutHeroConfig: HeroSectionConfig = {

@@ -49,12 +49,12 @@ const tourDetailOverridesByTourId: TourDetailOverridesByTourId = {
   copenhagenFreeTour: {
     slug: tourSlugById.copenhagenFreeTour,
     galleryImageSrcs: [
-      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/1.png`,
-      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/2.png`,
-      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/3.png`,
-      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/4.png`,
-      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/5.png`,
-      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/6.png`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/6.jpg`,
     ],
     bookingTarget: {
       kind: "external",

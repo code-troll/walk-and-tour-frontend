@@ -23,7 +23,7 @@ export default function AboutWalkAndTourSection() {
           <div
             className="relative overflow-hidden rounded-[1.75rem] bg-white shadow-[0_18px_40px_-28px_rgba(0,0,0,0.85)] ring-1 ring-[#e3d8cc]">
             <Image
-              src="/walkandtour/tours/about-section/know-the-team.png"
+              src="/walkandtour/tours/about-section/know-the-team.jpg"
               alt={ aboutWalkAndTourT(aboutWalkAndTour.titleKey) }
               width={ 1280 }
               height={ 860 }

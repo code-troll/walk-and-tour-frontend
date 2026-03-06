@@ -8,7 +8,7 @@ export default function Partners() {
   return (
     <section
       id="companies"
-      className="relative bg-[url('/walkandtour/heroes/private-tours.png')] bg-cover bg-position-[50%_30%] py-16"
+      className="relative bg-[url('/walkandtour/heroes/private-tours.jpg')] bg-cover bg-position-[50%_30%] py-16"
     >
       <div className="absolute inset-0 bg-black/35" aria-hidden="true"/>
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 lg:px-12">
