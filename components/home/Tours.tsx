@@ -9,7 +9,7 @@ export default function Tours() {
 
   return (
     <section id="tours" className="bg-[#fcfaf7] py-16">
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="flex flex-col gap-4 text-center">
           <h2 className="text-3xl font-extrabold text-teal sm:text-4xl">
             { t("heading") }

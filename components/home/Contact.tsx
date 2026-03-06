@@ -18,7 +18,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="bg-[#fcfaf7] py-16">
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <h2 className="mt-3 text-3xl font-semibold text-teal sm:text-4xl">

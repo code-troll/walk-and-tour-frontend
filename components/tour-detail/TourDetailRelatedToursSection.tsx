@@ -18,7 +18,7 @@ export default function TourDetailRelatedToursSection({
 
   return (
     <section className="relative bg-[#fcfaf7] pt-6 pb-12">
-      <div className="mx-auto w-full px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="mb-6 flex items-center gap-3">
           <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2b666d]/10 text-[#2b666d]">
             <ShoppingBag className="h-7 w-7" strokeWidth={ 1.5 }/>

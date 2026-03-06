@@ -15,7 +15,7 @@ export default function AboutUsIntroSection() {
 
   return (
     <section className="bg-[#fcfaf7] py-16">
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:px-12">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:px-12">
         <div className="relative">
           <div className="overflow-hidden rounded-[1.75rem] bg-white shadow-[0_18px_40px_-28px_rgba(0,0,0,0.85)] ring-1 ring-[#e3d8cc]">
             <Image

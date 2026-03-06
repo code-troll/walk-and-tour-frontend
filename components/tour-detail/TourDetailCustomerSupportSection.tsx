@@ -17,7 +17,7 @@ export default function TourDetailCustomerSupportSection({
   return (
     <section className="bg-[#fcfaf7] py-6">
       <div className="mx-auto lg:mx-12 w-full max-w-11/12 px-0">
-        <div className="relative overflow-hidden rounded-[2rem] bg-[#c24343]">
+        <div className="relative overflow-hidden rounded-4xl bg-[#c24343]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.15),transparent_50%)]"/>
           <div className="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-white/5"/>
           <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/10"/>

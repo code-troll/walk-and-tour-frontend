@@ -8,7 +8,7 @@ export default function AboutUsTeamSection() {
 
   return (
     <section className="bg-[#fcfaf7] py-16">
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <h2 className="text-center text-3xl font-semibold text-teal sm:text-4xl">
           { t("title") }
         </h2>

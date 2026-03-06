@@ -8,7 +8,7 @@ export default function WhyChoose() {
 
   return (
     <section id="about" className="bg-[#f8f4ef] py-16">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 xl:grid-cols-[1.1fr_0.9fr] lg:px-12">
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 xl:grid-cols-[1.1fr_0.9fr] lg:px-12">
         <div className="order-1 col-span-2 sm:col-span-1 text-center sm:text-left">
           <h2 className="mt-3 text-3xl font-semibold text-teal sm:text-4xl">
             { t(whyChoose.headingKey) }

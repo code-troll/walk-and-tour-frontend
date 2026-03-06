@@ -28,7 +28,7 @@ export default function HeroSection({
       } }
     >
       <div className={ `absolute inset-0 ${ overlayClassName }` } aria-hidden="true"/>
-      <div className="relative mx-auto flex w-full max-w-6xl items-center justify-center px-6 py-20 lg:px-12 lg:py-28">
+      <div className="relative mx-auto flex w-full max-w-7xl items-center justify-center px-6 py-20 lg:px-12 lg:py-28">
         <div className="max-w-6xl rounded-[2.5rem] p-8 text-center sm:p-10">
           { eyebrowKey && (
             <p className="text-xl md:text-1xl text-white/90">

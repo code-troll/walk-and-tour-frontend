@@ -536,7 +536,7 @@ export const privateTours: PrivateTours = {
 export const partners: Partner[] = [
   {
     id: "donkeyRepublic",
-    logo: "/walkandtour/partners/partner-donkey-republic.jpg",
+    logo: "/walkandtour/partners/partner-donkey-republic.png",
   },
   {
     id: "kobenhavnsKommune",

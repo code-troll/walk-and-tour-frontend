@@ -87,7 +87,7 @@ export default function ToursCatalog() {
 
   return (
     <section id="tours" className="bg-[#fcfaf7] py-16">
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <TourFilters
           label={ t("filters.label") }
           options={ filterOptions }

@@ -18,7 +18,7 @@ export default function AboutWalkAndTourSection() {
   return (
     <section className="bg-[#fcfaf7] py-16">
       <div
-        className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-12 lg:px-12">
+        className="mx-auto grid w-full max-w-7xl items-center gap-10 px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-12 lg:px-12">
         <div className="relative">
           <div
             className="relative overflow-hidden rounded-[1.75rem] bg-white shadow-[0_18px_40px_-28px_rgba(0,0,0,0.85)] ring-1 ring-[#e3d8cc]">

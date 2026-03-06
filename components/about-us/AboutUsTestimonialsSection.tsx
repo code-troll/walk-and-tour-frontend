@@ -6,7 +6,7 @@ export default function AboutUsTestimonialsSection() {
 
   return (
     <section className="bg-[#fcfaf7] py-16">
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8a7562]">
             { t("eyebrow") }

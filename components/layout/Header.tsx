@@ -281,26 +281,24 @@ export default function Header() {
               priority
             />
           </a>
-          <nav className="hidden items-center gap-6 text-xl font-semibold xl:flex">
+          <nav className="hidden items-center gap-6 xl:flex">
             { navLinks.map((link) => (
               <a
                 key={ link.id }
                 href={ getNavHref(link.id) }
-                className="site-link"
+                className="site-link text-xl font-semibold"
               >
                 { t(`nav.${link.id}`) }
               </a>
             )) }
-          </nav>
-          <div className="hidden items-center gap-3 xl:flex">
             <a
               href={ privateToursHref }
-              className="flex btn-red-black px-5 py-2 text-base font-semibold transition-colors uppercase"
+              className="flex btn-red-black items-center px-5 py-2 text-base font-semibold uppercase transition-colors"
             >
               <CalendarCheckIcon className="mr-2 h-6 w-6"/>
               { t("privateTours") }
             </a>
-          </div>
+          </nav>
           <div className="flex items-center gap-[var(--ctrl-gap)]">
             <div ref={ desktopLanguageMenuRef } className="relative">
               <button

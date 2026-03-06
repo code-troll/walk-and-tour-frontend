@@ -8,7 +8,7 @@ export default function AboutUsGallerySection() {
 
   return (
     <section className="bg-white py-16">
-      <div className="mx-auto w-full max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="grid gap-4 md:grid-cols-3">
           { aboutUsGalleryImages.map((item) => (
             <figure

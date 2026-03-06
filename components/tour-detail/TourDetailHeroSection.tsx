@@ -198,7 +198,7 @@ export default function TourDetailHeroSection({
 
   return (
     <section className="bg-[#fcfaf7] pt-12 pb-3 md:pt-16">
-      <div className="mx-auto w-full px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
         <div className="space-y-5">
           <h1 className="text-3xl font-semibold leading-tight text-teal sm:text-4xl">{ title }</h1>
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
