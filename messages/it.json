@@ -105,30 +105,12 @@
       "startingFrom": "A partire da"
     },
     "defaults": {
-      "about": [
-        "Le esperienze Walk and Tour uniscono storie locali, luoghi iconici e consigli pratici per scoprire Copenaghen con sicurezza.",
-        "Questo itinerario mantiene un ritmo rilassato per permetterti di fare domande, scoprire angoli nascosti e vivere la città da una prospettiva locale."
-      ],
       "aboutTourDescription": "Partecipa a una delle nostre esperienze guidate a piedi e scopri Copenaghen con punti di vista locali, luoghi iconici e consigli pratici per il resto del tuo viaggio.",
       "highlights": [
         "Guide locali esperte che raccontano ogni tappa con contesto e chiarezza.",
         "Percorso equilibrato tra attrazioni famose e zone locali meno affollate.",
         "Perfetto sia per chi visita la città per la prima volta sia per chi ritorna.",
         "Formato in piccoli gruppi per un'esperienza più personale e flessibile."
-      ],
-      "itinerary": [
-        {
-          "title": "Incontro con la guida",
-          "description": "Ritrovo al punto di incontro, breve introduzione al percorso e consigli utili prima della partenza."
-        },
-        {
-          "title": "Passeggiata storica",
-          "description": "Esploriamo strade, piazze e monumenti principali scoprendo storia, architettura e cultura locale."
-        },
-        {
-          "title": "Conclusione e consigli locali",
-          "description": "Terminiamo con suggerimenti su cibo, musei e quartieri da visitare dopo il tour."
-        }
       ],
       "itineraryDescription": "Ritrovo al punto di incontro, breve introduzione al percorso e consigli utili prima della partenza. Esploriamo strade, piazze e monumenti principali scoprendo storia, architettura e cultura locale. Terminiamo con suggerimenti su cibo, musei e quartieri da visitare dopo il tour.",
       "included": [
@@ -147,7 +129,6 @@
         "cancellationType": "Cancellazione gratuita fino a 24 ore prima del tour",
         "languages": "Inglese"
       },
-      "bookingDescription": "Scegli la data che preferisci e prenota in pochi minuti. Se viaggi in gruppo, possiamo personalizzare l'esperienza.",
       "customerSupportDescription": "Abbiamo un team professionale di assistenza clienti e ti accompagniamo in ogni viaggio."
     },
     "items": {

@@ -105,30 +105,12 @@
       "startingFrom": "Starting from"
     },
     "defaults": {
-      "about": [
-        "Walk and Tour experiences are designed to combine local stories, iconic landmarks and practical tips for exploring Copenhagen with confidence.",
-        "This itinerary follows a relaxed pace and gives you space to ask questions, discover hidden corners and enjoy the city from a local perspective."
-      ],
       "aboutTourDescription": "Join one of our guided walking experiences and discover Copenhagen with local insights, iconic landmarks and practical recommendations for the rest of your stay.",
       "highlights": [
         "Led by experienced local guides who bring each stop to life with stories and context.",
         "Balanced route mixing top landmarks with less crowded local spots.",
         "Great for first-time visitors and returning travelers looking for deeper context.",
         "Small-group format designed for interaction and flexibility."
-      ],
-      "itinerary": [
-        {
-          "title": "Meet your guide",
-          "description": "Gather at the meeting point, get a quick overview of the route, and receive practical orientation before starting."
-        },
-        {
-          "title": "Historic city walk",
-          "description": "Explore key streets, squares and monuments while learning about Copenhagen's history, architecture and local culture."
-        },
-        {
-          "title": "Local recommendations and wrap-up",
-          "description": "Finish with practical city tips, food suggestions and recommendations for what to visit next."
-        }
       ],
       "itineraryDescription": "Gather at the meeting point, get a quick overview of the route, then explore key streets, squares and monuments while learning about Copenhagen's history, architecture and local culture. Finish with practical city tips, food suggestions and recommendations for what to visit next.",
       "included": [
@@ -147,7 +129,6 @@
         "cancellationType": "Free cancellation up to 24 hours before the tour",
         "languages": "English"
       },
-      "bookingDescription": "Choose your preferred date and secure your spot in minutes. If you are traveling with a larger group, we can help customize the experience.",
       "customerSupportDescription": "We have a professional customer support team and always accompany you on every trip."
     },
     "items": {

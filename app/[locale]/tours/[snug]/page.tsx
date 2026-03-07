@@ -74,7 +74,7 @@ export async function generateMetadata({
     tourDetailT,
     itemKey,
     "about",
-    "defaults.about"
+    "defaults.aboutTourDescription"
   );
 
   return {

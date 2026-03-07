@@ -128,37 +128,17 @@
         "endPoint": "Centro histórico",
         "cancellationType": "Cancelación gratuita 24 horas",
         "languages": "Inglés"
-      }
+      },
+      "customerSupportDescription": "Contamos con un equipo profesional de atención al cliente y te acompañamos siempre en cada viaje."
     },
     "items": {
       "copenhagenFreeTour": {
-        "about": [
-          "Descubre el corazón histórico de Copenhague con un guía local, desde Nyhavn hasta la zona real de la ciudad.",
-          "Este tour basado en propinas es ideal para una primera visita: contexto histórico, recomendaciones locales y una ruta completa por el centro."
-        ],
         "aboutTourDescription": "¿Buscas un free walking tour en Copenhague? Únete a las 10:30 para ver el Cambio de Guardia en el Palacio de Amalienborg. Descubre Nyhavn y la historia de la ciudad con guías locales. Reserva tu plaza gratis ahora.",
         "highlights": [
           "Recorrido por Nyhavn, Amalienborg y las calles más emblemáticas del centro.",
           "Historias claras sobre cultura danesa, vida local y evolución de la ciudad.",
           "Contexto sobre la zona del Cambio de Guardia y la tradición real.",
           "Consejos prácticos de comida, transporte y barrios para seguir explorando."
-        ],
-        "itinerary": [
-          {
-            "time": "Inicio",
-            "title": "Bienvenida y presentación de la ruta",
-            "description": "Conoce al guía y al grupo, y recibe una introducción de los puntos clave del recorrido."
-          },
-          {
-            "time": "Durante",
-            "title": "Centro histórico y zona real",
-            "description": "Caminata por los lugares principales mientras descubrimos hechos y anécdotas de Copenhague."
-          },
-          {
-            "time": "Final",
-            "title": "Recomendaciones para continuar",
-            "description": "Cierre con sugerencias personalizadas de museos, canales, mercados y barrios."
-          }
         ],
         "itineraryDescription": "Conoce al guía y al grupo, y recibe una introducción de los puntos clave del recorrido. Caminata por los lugares principales mientras descubrimos hechos y anécdotas de Copenhague. Cierre con sugerencias personalizadas de museos, canales, mercados y barrios.",
         "included": [
@@ -176,13 +156,7 @@
           "endPoint": "Centro histórico / distrito real",
           "cancellationType": "Cancelación gratuita 24 horas",
           "languages": "Inglés y español (según salida)"
-        },
-        "bookingDescription": "Reserva tu plaza y únete a una de las mejores introducciones al centro histórico de Copenhague. Formato basado en propinas y grupos reducidos.",
-        "title": "Tour gratuito de Copenhague: Cambio de la Guardia y lugares destacados de la ciudad",
-        "location": "Copenhague",
-        "duration": "2 horas",
-        "tag": "Basado en propinas",
-        "imageAlt": "Tour gratuito de Copenhague: Cambio de la Guardia y lugares destacados de la ciudad"
+        }
       },
       "rosenborgCastleTour": {
         "aboutTourDescription": "Embárcate en un viaje mágico por el legado real danés con nuestro exclusivo tour de 2 horas por el majestuoso Palacio de Rosenborg en Copenhague. Esta experiencia está diseñada para sumergirte en la rica historia de esta joya renacentista, antigua residencia real del querido rey Christian IV. Nuestro recorrido ofrece una inmersión cultural excepcional en la narrativa única de la realeza danesa.",
