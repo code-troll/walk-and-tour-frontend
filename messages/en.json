@@ -576,6 +576,35 @@
         "imageAlt": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet"
       },
       "foodTours": {
+        "aboutTourDescription": "Discover Copenhagen through its flavors on this carefully curated 3-hour food tour. Starting in Nyhavn and ending near Nørreport, the experience takes guests through some of the city’s most loved food stops, combining iconic Danish dishes with the stories, traditions, and local culture behind them. Along the way, guests taste five food and drink pairings, including a gourmet cinnamon bun from a bakery founded by a former Noma baker, an award-winning Danish hot dog, classic smørrebrød with a paired drink, traditional frikadelle, and a sweet flødeboller to finish. The tour offers a guided introduction to Danish cuisine in the heart of Copenhagen.",
+        "highlights": [
+          "A Taste of Noma: Begin your tour with an exquisite croissant from a renowned bakery founded by a former Noma baker.",
+          "Award-Winning Hot Dog: Savor a true culinary delight at DØP Ristet Hotdog, a spot that has been awarded \"Best Restaurant\" and features a gold medal-winning sausage.",
+          "Historic Smørrebrød: Enjoy an authentic Danish lunch of traditional Smørrebrød in a one-of-a-kind setting—a former church.",
+          "Local Favorite Frikadelle: Experience a genuine local flavor by trying frikadelle at a market, a dish praised by Danes as the best."
+        ],
+        "itineraryDescription": "Try 5 food and drink combinations at different traditional Copenhagen restaurants. Try dishes like Ristepølse and Smørrebrod with beers, plus a typical Danish dessert.\n\n\nEmbark on a delicious culinary journey through Copenhagen with our exclusive Local Flavors Tour! We'll start at a renowned bakery founded by a former Noma baker, to delight in the exquisite croissant.\n\n\nThen, we'll head to DØP Ristet Hotdog, awarded Best Restaurant in 2010, for a unique experience with the famous sausage, awarded a gold medal for organic food. This hot dog is a true culinary delight.\n\n\nWe'll continue our journey into the world of Smørrebrød, a typical Danish dish, in a former church where we'll explore the history of this Danish dish. Drinks are included.\n\n\nAfterwards, we'll head to one of the markets. We'll try the classic frikadelle, accompanied by remoulade and rugbrød. Praised as the best by Danes, this dish will provide an authentic and delicious experience.\n\n\nWe'll conclude our tour with a sweet treat: flødeboller, a chocolate marshmallow-filled dessert. A luxurious dessert made with the highest-quality organic ingredients.\n\n\nDiscover the rich history and unique flavors of Danish cuisine on this carefully curated food tour. Book now and let your taste buds savor the culinary essence of Copenhagen!",
+        "included": [
+          "A private, English-speaking guide to lead your culinary journey.",
+          "A gourmet croissant from a renowned bakery.",
+          "An award-winning Danish hot dog (Ristepølse).",
+          "A traditional Smørrebrød (open-faced sandwich), served with a paired drink.",
+          "A classic Frikadelle (Danish meatball) with remoulade and rugbrød.",
+          "A Flødeboller, a traditional Danish dessert."
+        ],
+        "notIncluded": [
+          "Gratuities for the guide",
+          "Personal expenses",
+          "Travel insurance",
+          "Transportation to/from the meeting point (unless specified otherwise)"
+        ],
+        "facts": {
+          "meetingPoint": "Nyhavn",
+          "endPoint": "Nørreport",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        },
         "title": "Food Tours",
         "location": "Copenhagen",
         "duration": "3 hours",
@@ -583,6 +612,31 @@
         "imageAlt": "Food Tours"
       },
       "roskilde": {
+        "aboutTourDescription": "Explore the original Viking capital of Denmark on this essential private excursion, located just a short, scenic train ride from Copenhagen. Unlike standard tours, your experience is entirely managed by an expert local guide, ensuring a relaxed and enriching day that caters exclusively to your group's pace and interests.\n\nWe will immerse you in the rich Viking history at the famous Viking Ship Museum, where children (and adults!) can have fun dressing up and boarding authentic Viking ships. Afterward, your guide will lead you through the impressive Roskilde Cathedral, where we explore the burial site of Danish kings and queens, providing deep insight into the country's royal lineage. This private tour is the perfect combination of culture, entertainment, and learning, guaranteeing an unforgettable day trip.",
+        "highlights": [
+          "Viking Ship Immersion: Explore the five original Viking ships from the 11th century and engage in family-friendly games and interactive exhibits at the museum.",
+          "Royal Grandeur: Discover the breathtaking Roskilde Cathedral—a UNESCO World Heritage Site—and trace the fascinating history of the Danish monarchy by visiting the royal tombs.",
+          "Seamless Logistics: Enjoy a completely private, all-inclusive experience where your guide manages all transport and ticket entry, maximizing your time for exploration."
+        ],
+        "itineraryDescription": "Meet your private guide at the main entrance of Copenhagen Central Station. Enjoy a comfortable, direct train journey (tickets included) to the historic city of Roskilde.\n\nViking ImmersionViking Ship Museum: Your guide facilitates quick entry (tickets included). Explore the five original 11th-century ships and have plenty of time for interactive, family-friendly activities and learning about Norse maritime life.\n\nLunch BreakFree Time: Enjoy a leisurely break for lunch or a quick coffee in the charming harbor area of Roskilde (meals not included).\n\nDanish RoyaltyRoskilde Cathedral (UNESCO): Guided visit (ticket included) to the magnificent brick Cathedral. Your expert will detail the history of the Danish monarchy and the elaborate royal tombs housed within.\n\nReturn to CopenhagenA brief, scenic walk through Roskilde's historic center before boarding the regional train back to Copenhagen Central Station, where the tour concludes.",
+        "included": [
+          "Private Expert Guide for the full 4 hours.",
+          "All Train Tickets (Round trip to Roskilde from Copenhagen).",
+          "Entrance Ticket to the Viking Ship Museum.",
+          "Entrance Ticket to Roskilde Cathedral."
+        ],
+        "notIncluded": [
+          "Lunch, snacks, and personal beverages.",
+          "Gratuity or tips for the guide.",
+          "Any extra purchases or souvenirs."
+        ],
+        "facts": {
+          "meetingPoint": "Central Station",
+          "endPoint": "Central Station",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Private Tour",
+          "languages": "English"
+        },
         "title": "Roskilde: Old Viking City",
         "location": "Copenhagen",
         "duration": "4 hours",

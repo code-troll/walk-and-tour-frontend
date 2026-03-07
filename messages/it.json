@@ -571,6 +571,35 @@
         "imageAlt": "Nord di Copenaghen: castelli di Frederiksborg e Kronborg - Amleto"
       },
       "foodTours": {
+        "aboutTourDescription": "Scopri Copenaghen attraverso i suoi sapori in questo tour gastronomico di 3 ore accuratamente curato. Partendo da Nyhavn e terminando vicino a Nørreport, l'esperienza ti porta in alcune delle tappe culinarie più amate della città, combinando piatti danesi iconici con storie, tradizioni e cultura locale. Lungo il percorso assaggerai cinque abbinamenti tra cibo e bevande, tra cui una girella alla cannella gourmet di una panetteria fondata da un ex fornaio di Noma, un hot dog danese premiato, smørrebrød classico con bevanda in abbinamento, frikadelle tradizionale e un dolce flødeboller per concludere. Il tour offre un'introduzione guidata alla cucina danese nel cuore di Copenaghen.",
+        "highlights": [
+          "Un assaggio di Noma: Inizia il tour con un croissant squisito di una rinomata panetteria fondata da un ex fornaio di Noma.",
+          "Hot dog premiato: Gusta una vera delizia culinaria da DØP Ristet Hotdog, locale premiato come \"Miglior ristorante\" e famoso per una salsiccia vincitrice della medaglia d'oro.",
+          "Smørrebrød storico: Assapora un autentico pranzo danese con smørrebrød tradizionale in una location unica: una ex chiesa.",
+          "Frikadelle preferito dai locali: Vivi un sapore autentico provando il frikadelle al mercato, un piatto considerato tra i migliori dai danesi."
+        ],
+        "itineraryDescription": "Prova 5 combinazioni di cibo e bevande in diversi ristoranti tradizionali di Copenaghen. Assaggia piatti come ristepølse e smørrebrød con birra, oltre a un tipico dessert danese.\n\nIntraprendi un delizioso viaggio culinario attraverso Copenaghen con il nostro esclusivo tour dei sapori locali. Inizieremo in una rinomata panetteria fondata da un ex fornaio di Noma, per gustare un croissant squisito.\n\nPoi ci dirigeremo da DØP Risted Hotdog, premiato come miglior ristorante nel 2010, per un'esperienza unica con la famosa salsiccia, insignita della medaglia d'oro per il cibo biologico. Questo hot dog è una vera delizia culinaria.\n\nProseguiremo nel mondo dello smørrebrød, un piatto tipico danese, in una ex chiesa dove scopriremo la storia di questa specialità. Le bevande sono incluse.\n\nSuccessivamente andremo in uno dei mercati. Proveremo il classico frikadelle, accompagnato da remoulade e rugbrød. Considerato tra i migliori dai danesi, questo piatto offrirà un'esperienza autentica e gustosa.\n\nConcluderemo il tour con un tocco dolce: il flødeboller, dessert al marshmallow ricoperto di cioccolato. Un dessert raffinato preparato con ingredienti biologici di altissima qualità.\n\nScopri la ricca storia e i sapori unici della cucina danese in questo tour gastronomico accuratamente curato. Prenota ora e lascia che il tuo palato assapori l'essenza culinaria di Copenaghen.",
+        "included": [
+          "Guida privata di lingua inglese per accompagnare il percorso culinario.",
+          "Croissant gourmet di una rinomata panetteria.",
+          "Hot dog danese premiato (ristepølse).",
+          "Smørrebrød tradizionale (panino aperto), servito con bevanda in abbinamento.",
+          "Frikadelle classico (polpetta danese) con remoulade e rugbrød.",
+          "Un flødeboller, dessert tradizionale danese."
+        ],
+        "notIncluded": [
+          "Mance per la guida",
+          "Spese personali",
+          "Assicurazione di viaggio",
+          "Trasporto da/per il punto di incontro (se non diversamente specificato)"
+        ],
+        "facts": {
+          "meetingPoint": "Nyhavn",
+          "endPoint": "Nørreport",
+          "cancellationType": "Cancellazione gratuita entro 24 ore",
+          "typeTour": "Tour a pagamento",
+          "languages": "Inglese"
+        },
         "title": "Tour gastronomici",
         "location": "Copenaghen",
         "duration": "3 ore",
@@ -578,6 +607,31 @@
         "imageAlt": "Tour gastronomici"
       },
       "roskilde": {
+        "aboutTourDescription": "Esplora l'originale capitale vichinga della Danimarca con questa escursione privata imperdibile, situata a breve e panoramico viaggio in treno da Copenaghen. A differenza dei tour standard, la tua esperienza è completamente gestita da una guida locale esperta, garantendo una giornata rilassata e ricca, pensata esclusivamente per il ritmo e gli interessi del tuo gruppo.\n\nTi immergeremo nella ricca storia vichinga al celebre Museo delle Navi Vichinghe, dove bambini (e adulti!) possono divertirsi indossando costumi e salendo a bordo di autentiche navi vichinghe. Successivamente, la guida ti accompagnerà nella maestosa Cattedrale di Roskilde, dove esploreremo il luogo di sepoltura di re e regine danesi, offrendo una visione profonda della dinastia reale del paese. Questo tour privato è la combinazione perfetta di cultura, intrattenimento e apprendimento, e garantisce una gita indimenticabile.",
+        "highlights": [
+          "Immersione vichinga: Esplora le cinque navi vichinghe originali dell'XI secolo e partecipa ad attività interattive adatte alle famiglie nel museo.",
+          "Grandezza reale: Scopri la straordinaria Cattedrale di Roskilde, sito UNESCO Patrimonio dell'Umanità, e ripercorri l'affascinante storia della monarchia danese visitando le tombe reali.",
+          "Logistica senza pensieri: Goditi un'esperienza completamente privata e all-inclusive, con guida che gestisce trasporti e ingressi per massimizzare il tempo di visita."
+        ],
+        "itineraryDescription": "Incontra la tua guida privata all'ingresso principale della Stazione Centrale di Copenaghen. Goditi un comodo viaggio diretto in treno (biglietti inclusi) verso la storica città di Roskilde.\n\nImmersione vichinga - Museo delle Navi Vichinghe: La guida faciliterà un ingresso rapido (biglietti inclusi). Esplora le cinque navi originali dell'XI secolo e dedica tempo ad attività interattive per famiglie e all'apprendimento della vita marittima norrena.\n\nPausa pranzo - Tempo libero: Concediti una pausa rilassata per pranzo o un caffè nella suggestiva area del porto di Roskilde (pasti non inclusi).\n\nMonarchia danese - Cattedrale di Roskilde (UNESCO): Visita guidata (biglietto incluso) alla magnifica cattedrale in mattoni. La tua guida esperta illustrerà la storia della monarchia danese e le elaborate tombe reali custodite al suo interno.\n\nRientro a Copenaghen: Breve passeggiata panoramica nel centro storico di Roskilde prima di salire sul treno regionale di ritorno alla Stazione Centrale di Copenaghen, dove il tour si conclude.",
+        "included": [
+          "Guida esperta privata per tutte le 4 ore.",
+          "Tutti i biglietti del treno (andata e ritorno per Roskilde da Copenaghen).",
+          "Biglietto d'ingresso al Museo delle Navi Vichinghe.",
+          "Biglietto d'ingresso alla Cattedrale di Roskilde."
+        ],
+        "notIncluded": [
+          "Pranzo, snack e bevande personali.",
+          "Mance per la guida.",
+          "Eventuali acquisti extra o souvenir."
+        ],
+        "facts": {
+          "meetingPoint": "Stazione Centrale",
+          "endPoint": "Stazione Centrale",
+          "cancellationType": "Cancellazione gratuita entro 24 ore",
+          "typeTour": "Tour privato",
+          "languages": "Inglese"
+        },
         "title": "Roskilde: antica citta vichinga",
         "location": "Copenaghen",
         "duration": "4 ore",

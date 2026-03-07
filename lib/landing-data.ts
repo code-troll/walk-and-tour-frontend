@@ -524,7 +524,6 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/6.jpg`,
       `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/7.jpg`,
-      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/8.jpg`,
     ],
   },
   {
@@ -541,6 +540,14 @@ export const tours: Tour[] = [
       "history",
       "essential",
     ],
+    heroImageSrc: "/walkandtour/tours/food-tours.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.foodTours }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.foodTours }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.foodTours }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.foodTours }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.foodTours }/5.jpg`,
+    ],
   },
   {
     id: "roskilde",
@@ -554,6 +561,15 @@ export const tours: Tour[] = [
     categories: [
       "dayTrip",
       "privateTour",
+    ],
+    heroImageSrc: "/walkandtour/tours/roskilde.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.roskilde }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.roskilde }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.roskilde }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.roskilde }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.roskilde }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.roskilde }/6.jpg`,
     ],
   },
   {
