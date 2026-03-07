@@ -519,6 +519,39 @@
           "typeTour": "Tour en grupo",
           "languages": "Inglés"
         }
+      },
+      "boatTour": {
+        "aboutTourDescription": "¿Quieres descubrir el impresionante puerto de Copenhague de una forma realmente única? Nuestros tours en barco de lujo son la opción perfecta. Deslízate por el agua en completo silencio, dejando atrás el bullicio de la ciudad mientras disfrutas del majestuoso paisaje portuario. Nuestros barcos eléctricos ecológicos son ideales para explorar durante todo el año. Relájate en la cubierta amplia y cómoda, equipada con sofás y mesas, mientras tu capitán experto te guía en un recorrido inolvidable. Este tour está diseñado para ofrecer una exploración tranquila y cautivadora del encanto acuático de Copenhague.",
+        "highlights": [
+          "Barcos eléctricos ecológicos: Navega en silencio por las aguas de Copenhague en embarcaciones modernas y sostenibles.",
+          "Escapa del bullicio urbano: Vive una tranquilidad total sobre el agua, lejos del ruido de la ciudad.",
+          "Comodidad y estilo: Relájate en cubiertas espaciosas con sofás y mesas confortables.",
+          "Capitán experto: Disfruta de un recorrido inolvidable guiado por un profesional con experiencia.",
+          "Lugares icónicos: Contempla La Sirenita, la Ópera, el Diamante Negro y el puente Cirkelbroen desde una perspectiva única.",
+          "Experiencias a medida: Perfecto para escapadas románticas, celebraciones o eventos corporativos exclusivos."
+        ],
+        "itineraryDescription": "Nuestra aventura comienza y termina en el muelle de Gammel Strand, ubicado en el vibrante distrito portuario de Copenhague. Desde allí, tu patrón experto te llevará en un crucero de 2 horas, alejándose de las rutas turísticas habituales para descubrir joyas ocultas en ensenadas secretas y canales encantadores.\n\nVivirás la ciudad desde una perspectiva única sobre el agua, visitando lugares emblemáticos como La Sirenita, la impresionante Ópera de Copenhague, el llamativo Diamante Negro (Biblioteca Real Danesa) y el innovador puente Cirkelbroen. ¡Casi todo es posible! Tanto si buscas una escapada romántica, una celebración especial o un evento corporativo diferente, nuestros paseos en barco pueden adaptarse a tus necesidades. Además, siempre puedes ampliar la duración para disfrutar de una experiencia aún más larga y personalizada.",
+        "included": [
+          "Alquiler privado de barco eléctrico de lujo durante un mínimo de 2 horas.",
+          "Capitán/patrón experimentado y con amplio conocimiento.",
+          "Asientos cómodos con sofás y mesas en cubierta.",
+          "Experiencia de navegación silenciosa y ecológica.",
+          "Posibilidad de personalizar la ruta (hasta 5 horas)."
+        ],
+        "notIncluded": [
+          "Comidas y bebidas (puedes traer las tuyas o consultar opciones de catering).",
+          "Propinas para el capitán.",
+          "Entradas a atracciones (al ser un tour panorámico desde el agua).",
+          "Gastos personales.",
+          "Seguro de viaje."
+        ],
+        "facts": {
+          "meetingPoint": "Gammel Strand",
+          "endPoint": "Gammel Strand",
+          "cancellationType": "Cancelación gratuita 48 horas",
+          "typeTour": "Grupo reducido hasta 10 adultos",
+          "languages": "Inglés"
+        }
       }
     }
   },

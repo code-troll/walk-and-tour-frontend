@@ -517,6 +517,39 @@
           "typeTour": "Tour di gruppo",
           "languages": "Inglese"
         }
+      },
+      "boatTour": {
+        "aboutTourDescription": "Vuoi vivere lo splendido porto di Copenaghen in un modo davvero unico? I nostri tour in barca di lusso sono la scelta perfetta. Scivola sull’acqua in completo silenzio, lasciando alle spalle il caos della città mentre ammiri il maestoso panorama del porto. Le nostre barche elettriche ecologiche sono ideali per esplorare tutto l’anno. Rilassati sul ponte ampio e confortevole, arredato con comodi divani e tavoli, mentre il tuo capitano esperto ti guida in un viaggio indimenticabile. Questo tour è pensato per offrirti un’esplorazione tranquilla ma coinvolgente del fascino acquatico di Copenaghen.",
+        "highlights": [
+          "Barche elettriche eco-friendly: Naviga in silenzio nelle acque di Copenaghen su imbarcazioni moderne e sostenibili.",
+          "Lontano dal caos cittadino: Vivi una serenità totale sull’acqua, lasciando il rumore urbano alle spalle.",
+          "Comfort e stile: Rilassati su ponti spaziosi con divani e tavoli confortevoli.",
+          "Capitano esperto: Goditi un viaggio indimenticabile guidato da un professionista qualificato.",
+          "Luoghi iconici: Ammira la Sirenetta, l’Opera House, il Black Diamond e il ponte Cirkelbroen da una prospettiva unica.",
+          "Esperienze su misura: Perfetto per fughe romantiche, celebrazioni o eventi aziendali originali."
+        ],
+        "itineraryDescription": "La nostra avventura inizia e termina al molo di Gammel Strand, nel vivace quartiere portuale di Copenaghen. Da lì, il tuo skipper esperto ti accompagnerà in una crociera di 2 ore, lontano dai percorsi turistici più battuti, per scoprire gemme nascoste tra insenature segrete e canali suggestivi.\n\nVivrai la città da una prospettiva unica sull’acqua, visitando luoghi iconici come la Sirenetta, l’imponente Opera House di Copenaghen, il suggestivo Black Diamond (Biblioteca Reale Danese) e l’innovativo ponte Cirkelbroen. Quasi tutto è possibile! Che tu stia cercando una fuga romantica, una celebrazione speciale o un evento aziendale originale, i nostri tour in barca possono essere personalizzati in base alle tue esigenze. E puoi sempre estendere la durata per un’esperienza ancora più lunga e personalizzata.",
+        "included": [
+          "Noleggio privato di barca elettrica di lusso per almeno 2 ore.",
+          "Capitano/skipper esperto e preparato.",
+          "Posti comodi con divani e tavoli sul ponte.",
+          "Esperienza di navigazione silenziosa ed ecologica.",
+          "Possibilità di personalizzare il percorso (fino a 5 ore)."
+        ],
+        "notIncluded": [
+          "Pasti e bevande (puoi portare i tuoi oppure richiedere opzioni catering).",
+          "Mance per il capitano.",
+          "Biglietti d’ingresso alle attrazioni (trattandosi di un tour panoramico dall’acqua).",
+          "Spese personali.",
+          "Assicurazione di viaggio."
+        ],
+        "facts": {
+          "meetingPoint": "Gammel Strand",
+          "endPoint": "Gammel Strand",
+          "cancellationType": "Cancellazione gratuita entro 48 ore",
+          "typeTour": "Piccolo gruppo fino a 10 adulti",
+          "languages": "Inglese"
+        }
       }
     }
   },

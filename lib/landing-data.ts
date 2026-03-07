@@ -49,8 +49,8 @@ export type TourSlug =
   | "copenhagen-essentials"
   | "jewish-quarter-and-danish-jewish-museum-tour"
   | "copenhagen-walking-tour-tivoli-gardens-entry"
-  | "copenhagen-private-boat-tour-hidden-gems-hygge"
-  | "hermitage-palace-royal-deer-park-bike-tour"
+  | "boat-tour-gateway"
+  | "bike-tour-deer-park"
   | "copenhagen-harbor-architecture-private-walking-tour"
   | "skip-the-line-rosenborg-castle-canal-cruise"
   | "north-copenhagen-frederiksborg-kronborg-castle-hamlet"
@@ -71,8 +71,8 @@ export const tourSlugById = {
   copenhagenEssentials: "copenhagen-essentials",
   jewishQuarter: "jewish-quarter-and-danish-jewish-museum-tour",
   tivoliGardensEntry: "copenhagen-walking-tour-tivoli-gardens-entry",
-  boatTour: "copenhagen-private-boat-tour-hidden-gems-hygge",
-  royalDeerParkBikeTour: "hermitage-palace-royal-deer-park-bike-tour",
+  boatTour: "boat-tour-gateway",
+  royalDeerParkBikeTour: "bike-tour-deer-park",
   harborArchitecture: "copenhagen-harbor-architecture-private-walking-tour",
   rosenborgCastleCanalCruise: "skip-the-line-rosenborg-castle-canal-cruise",
   frederiksborgAndKronborgCastle: "north-copenhagen-frederiksborg-kronborg-castle-hamlet",
@@ -409,7 +409,7 @@ export const tours: Tour[] = [
   },
   {
     id: "boatTour",
-    slug: "copenhagen-private-boat-tour-hidden-gems-hygge",
+    slug: "boat-tour-gateway",
     rating: "4.9",
     reviews: "367",
     price: "8800",
@@ -420,10 +420,19 @@ export const tours: Tour[] = [
       "privateTour",
       "boat",
     ],
+    heroImageSrc: "/walkandtour/tours/boat-tour.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.boatTour }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.boatTour }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.boatTour }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.boatTour }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.boatTour }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.boatTour }/6.jpg`,
+    ],
   },
   {
     id: "royalDeerParkBikeTour",
-    slug: "hermitage-palace-royal-deer-park-bike-tour",
+    slug: "bike-tour-deer-park",
     rating: "4.5",
     reviews: "150",
     price: "900",

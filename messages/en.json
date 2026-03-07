@@ -522,6 +522,39 @@
           "typeTour": "Group Tour",
           "languages": "English"
         }
+      },
+      "boatTour": {
+        "aboutTourDescription": "Want to experience Copenhagen's stunning harbor in a truly unique way? Our luxury boat tours are just the ticket! Glide across the water in complete silence, leaving the hustle and bustle of the city behind as you soak up the majestic harbor scenery. Our eco-friendly electric boats are perfect for exploring year-round. Relax on the spacious, comfortable deck, furnished with cozy sofas and tables, while your expert captain guides you on an unforgettable journey. This tour is designed to offer a tranquil yet captivating exploration of Copenhagen's aquatic charm.",
+        "highlights": [
+          "Eco-Friendly Electric Boats: Glide silently through Copenhagen's waters on modern, sustainable vessels.",
+          "Escape the City Bustle: Experience serene tranquility on the water, leaving urban noise behind.",
+          "Comfort & Style: Relax on spacious decks with cozy sofas and tables.",
+          "Expert Captain: Enjoy an unforgettable journey guided by a knowledgeable professional.",
+          "Iconic Landmarks: See the Little Mermaid, Opera House, Black Diamond, and Cirkelbroen Bridge from a unique perspective.",
+          "Tailored Experiences: Perfect for romantic escapes, celebrations, or unique corporate events."
+        ],
+        "itineraryDescription": "Our adventure begins and ends at the Gammel Strand pier, located in Copenhagen's vibrant harbor district. From there, your expert skipper will take you on a 2 hours cruise, venturing off the beaten tourist trail to discover hidden gems in secret coves and enchanting canals.\n\nYou'll experience the city from a unique water perspective, visiting iconic landmarks such as The Little Mermaid, the impressive Copenhagen Opera House, the striking Black Diamond (Royal Danish Library), and the innovative Cirkelbroen Bridge. Almost anything is possible! Whether you're looking for a romantic escape, an exciting celebration, or a unique corporate event, our boat trips can be tailored to your specific needs. And you can always extend the duration for an even longer, more personalized experience!",
+        "included": [
+          "Private luxury electric boat rental for minimum 2 hours.",
+          "Experienced and knowledgeable Captain/Skipper.",
+          "Comfortable seating with sofas and tables on deck.",
+          "Eco-friendly and silent cruising experience.",
+          "Opportunity to customize the route (up to the 5 hours)."
+        ],
+        "notIncluded": [
+          "Meals and beverages (feel free to bring your own or inquire about catering options).",
+          "Gratuities for the Captain.",
+          "Entrance fees to attractions (as this is a sightseeing tour from the water).",
+          "Personal expenses.",
+          "Travel insurance."
+        ],
+        "facts": {
+          "meetingPoint": "Gammel Strand",
+          "endPoint": "Gammel Strand",
+          "cancellationType": "48h Free Cancellation",
+          "typeTour": "Small group up to 10 adults",
+          "languages": "English"
+        }
       }
     }
   },
