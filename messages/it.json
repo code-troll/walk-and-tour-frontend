@@ -550,6 +550,38 @@
           "typeTour": "Piccolo gruppo fino a 10 adulti",
           "languages": "Inglese"
         }
+      },
+      "royalDeerParkBikeTour": {
+        "aboutTourDescription": "Parti per un viaggio davvero magico attraverso Dyrehaven, il Parco Reale dei Cervi, a breve distanza da Copenaghen. Questo tour è pensato per immergerti nella tranquillità della natura e nella grandezza della storia danese. Pedalerai lungo sentieri nascosti su comode e-bike, incontrando eleganti cervi e paesaggi mozzafiato. La nostra guida esperta ti svelerà gli angoli più affascinanti del parco, dai suoi tranquilli abitanti fino allo storico padiglione di caccia Hermitage, per offrirti un’esperienza indimenticabile che unisce avventura all’aria aperta e patrimonio reale.",
+        "highlights": [
+          "Avventura in e-bike: Esplora i sentieri segreti di Dyrehaven in un emozionante tour di 2 ore in bici elettrica.",
+          "Incontra i cervi selvatici: Pedala tra foreste antiche accanto a cervi che pascolano in libertà.",
+          "Scopri il padiglione di caccia Hermitage: Esplora gli angoli più incantevoli del parco reale con la tua guida esperta.",
+          "Ammira la torre di salvataggio di Arne Jacobsen: Visita questo iconico capolavoro architettonico.",
+          "Spostamenti senza pensieri: Goditi un comodo viaggio in treno di 30 minuti da e verso Klampenborg.",
+          "Natura e storia: Immergiti in paesaggi da sogno e nella straordinaria storia della monarchia danese."
+        ],
+        "itineraryDescription": "La nostra avventura inizia incontrando la guida alla Stazione Centrale di Copenaghen. In soli 30 minuti di treno raggiungeremo la tranquillità di Klampenborg, porta d’accesso a Dyrehaven.\n\nAll’arrivo troveremo le nostre e-bike pronte per un entusiasmante tour di 2 ore lungo i sentieri segreti di Dyrehaven. Immagina di pedalare tra foreste secolari circondato da cervi al pascolo: un’esperienza davvero serena. La nostra guida esperta ti mostrerà gli angoli più suggestivi del parco, dalle aree preferite dai cervi fino al maestoso padiglione di caccia Hermitage.\n\nDopo il giro in bici avrai tempo libero per gustare un pranzo (non incluso) o visitare l’iconica torre di salvataggio progettata da Arne Jacobsen, un’opera architettonica capace di trasportarti in un’altra epoca.\n\nPer concludere questa giornata perfetta, torneremo a Copenaghen in treno, rigenerati e con ricordi indelebili della bellezza naturale e del fascino reale di Dyrehaven.",
+        "included": [
+          "Guida professionale.",
+          "Noleggio e-bike per il tour di 2 ore nel parco.",
+          "Tutti i biglietti del treno andata e ritorno tra la Stazione Centrale di Copenaghen e Klampenborg.",
+          "Accesso al Parco Reale dei Cervi di Dyrehaven."
+        ],
+        "notIncluded": [
+          "Pasti e bevande.",
+          "Mance per la guida.",
+          "Ingressi alle attrazioni (salvo diversa indicazione esplicita).",
+          "Spese personali.",
+          "Assicurazione di viaggio."
+        ],
+        "facts": {
+          "meetingPoint": "Stazione Centrale di Copenaghen",
+          "endPoint": "Stazione Centrale di Copenaghen",
+          "cancellationType": "Cancellazione gratuita entro 24 ore",
+          "typeTour": "Tour a pagamento",
+          "languages": "Inglese"
+        }
       }
     }
   },

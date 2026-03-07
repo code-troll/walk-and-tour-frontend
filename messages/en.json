@@ -555,6 +555,38 @@
           "typeTour": "Small group up to 10 adults",
           "languages": "English"
         }
+      },
+      "royalDeerParkBikeTour": {
+        "aboutTourDescription": "Embark on a truly magical journey through Dyrehaven, the Royal Deer Park, just a short ride from Copenhagen. This tour is designed to immerse you in the tranquility of nature and the grandeur of Danish history. You'll glide along hidden paths on comfortable e-bikes, encountering graceful deer and breathtaking landscapes. Our expert guide will reveal the park's most enchanting corners, from its peaceful inhabitants to the historic Hermitage Hunting Lodge, ensuring an unforgettable experience that blends outdoor adventure with royal heritage.",
+        "highlights": [
+          "E-Bike Adventure: Explore Dyrehaven's secret trails on an exciting 2-hour e-bike tour.",
+          "Encounter Wild Deer: Pedal through ancient forests alongside gracefully grazing deer.",
+          "Discover The Hermitage Hunting Lodge: Uncover the enchanting corners of the royal park with your expert guide.",
+          "Admire Arne Jacobsen's Lifeguard Tower: Visit this iconic architectural masterpiece.",
+          "Seamless Travel: Enjoy a comfortable 30-minute train journey to Klampenborg and back.",
+          "Nature & History Blend: Immerse yourself in dreamlike landscapes and fascinating royal history."
+        ],
+        "itineraryDescription": "Our adventure begins as we meet our guide at Copenhagen Central Station. In just 30 minutes by train, we'll be immersed in the tranquility of Klampenborg, the gateway to Dyrehaven.\n\nUpon arrival, our e-bikes will be waiting, ready to take us on an exciting 2-hour tour through the secret trails of Dyrehaven. Imagine pedaling through ancient forests, surrounded by peacefully grazing deer, a truly serene experience. Our expert guide will reveal the park's most enchanting corners, from the deer's favorite spots to the majestic Hermitage Hunting Lodge, making it an unforgettable journey.\n\nAfter our cycling adventure, you'll have free time to enjoy a delicious lunch (not included) or even visit the iconic Lifeguard Tower designed by Arne Jacobsen, an architectural work of art that will transport us to another era.\n\nTo end this perfect day, we'll return to Copenhagen by train, recharged and with lasting memories of Dyrehaven's natural beauty and royal charm.",
+        "included": [
+          "Professional  Tour Guide.",
+          "E-bike rental for the 2-hour park tour.",
+          "All train tickets for round-trip travel between Copenhagen Central Station and Klampenborg.",
+          "Access to Dyrehaven Royal Deer Park."
+        ],
+        "notIncluded": [
+          "Meals and beverages.",
+          "Gratuities for the guide.",
+          "Entrance fees to attractions (unless explicitly specified).",
+          "Personal expenses.",
+          "Travel insurance."
+        ],
+        "facts": {
+          "meetingPoint": "Copenhagen Central Station",
+          "endPoint": "Copenhagen Central Station",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        }
       }
     }
   },

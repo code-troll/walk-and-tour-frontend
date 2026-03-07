@@ -552,6 +552,38 @@
           "typeTour": "Grupo reducido hasta 10 adultos",
           "languages": "Inglés"
         }
+      },
+      "royalDeerParkBikeTour": {
+        "aboutTourDescription": "Embárcate en un viaje realmente mágico por Dyrehaven, el Parque Real de los Ciervos, a pocos minutos de Copenhague. Este tour está diseñado para sumergirte en la tranquilidad de la naturaleza y en la grandeza de la historia danesa. Recorrerás senderos ocultos en cómodas bicicletas eléctricas, encontrando ciervos y paisajes impresionantes. Nuestro guía experto te mostrará los rincones más encantadores del parque, desde sus habitantes más tranquilos hasta el histórico pabellón de caza Hermitage, para que vivas una experiencia inolvidable que combina aventura al aire libre y herencia real.",
+        "highlights": [
+          "Aventura en e-bike: Explora los senderos secretos de Dyrehaven en un emocionante tour de 2 horas en bicicleta eléctrica.",
+          "Encuentro con ciervos salvajes: Pedalea por bosques antiguos junto a ciervos pastando en libertad.",
+          "Descubre el pabellón de caza Hermitage: Conoce los rincones más especiales del parque real con tu guía experto.",
+          "Admira la torre de salvamento de Arne Jacobsen: Visita esta obra maestra de la arquitectura.",
+          "Traslado sin complicaciones: Disfruta de un cómodo trayecto en tren de 30 minutos hasta Klampenborg y regreso.",
+          "Naturaleza e historia: Sumérgete en paisajes de ensueño y en la fascinante historia de la realeza danesa."
+        ],
+        "itineraryDescription": "Nuestra aventura comienza al reunirnos con el guía en la Estación Central de Copenhague. En solo 30 minutos de tren llegaremos a la tranquilidad de Klampenborg, puerta de entrada a Dyrehaven.\n\nAl llegar, nos esperan las bicicletas eléctricas para iniciar un emocionante recorrido de 2 horas por los senderos secretos de Dyrehaven. Imagina pedalear por bosques centenarios, rodeado de ciervos pastando en calma: una experiencia verdaderamente serena. Nuestro guía experto te mostrará los rincones más encantadores del parque, desde las zonas favoritas de los ciervos hasta el majestuoso pabellón de caza Hermitage.\n\nDespués de la ruta en bicicleta, tendrás tiempo libre para disfrutar de un almuerzo delicioso (no incluido) o incluso visitar la icónica torre de salvamento diseñada por Arne Jacobsen, una obra arquitectónica que te transportará a otra época.\n\nPara cerrar este día perfecto, regresaremos a Copenhague en tren, renovados y con recuerdos imborrables de la belleza natural y el encanto real de Dyrehaven.",
+        "included": [
+          "Guía profesional.",
+          "Alquiler de bicicleta eléctrica para el tour de 2 horas por el parque.",
+          "Todos los billetes de tren de ida y vuelta entre la Estación Central de Copenhague y Klampenborg.",
+          "Acceso al Parque Real de los Ciervos de Dyrehaven."
+        ],
+        "notIncluded": [
+          "Comidas y bebidas.",
+          "Propinas para el guía.",
+          "Entradas a atracciones (salvo que se especifique expresamente).",
+          "Gastos personales.",
+          "Seguro de viaje."
+        ],
+        "facts": {
+          "meetingPoint": "Estación Central de Copenhague",
+          "endPoint": "Estación Central de Copenhague",
+          "cancellationType": "Cancelación gratuita 24 horas",
+          "typeTour": "Tour de pago",
+          "languages": "Inglés"
+        }
       }
     }
   },

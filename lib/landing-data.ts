@@ -445,6 +445,15 @@ export const tours: Tour[] = [
       "royalPalaces",
       "bike",
     ],
+    heroImageSrc: "/walkandtour/tours/royal-deer-park-bike-tour.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/6.jpg`,
+    ],
   },
   {
     id: "harborArchitecture",
