@@ -33,13 +33,14 @@ const iconById: Record<TourDetailQuickInfoId, LucideIcon> = {
 };
 
 export default function TourDetailQuickInfoSection({
-  items,
-}: TourDetailQuickInfoSectionProps) {
+                                                     items,
+                                                   }: TourDetailQuickInfoSectionProps) {
   return (
     <section className="bg-[#fcfaf7] pb-6 pt-3">
       <div className="mx-auto w-full max-w-7xl px-5 lg:px-10">
         <div className="relative overflow-hidden rounded-4xl bg-[#fcf8f1]/80 backdrop-blur-sm">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(43,102,109,0.08),transparent_50%)]"/>
+          <div
+            className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(43,102,109,0.08),transparent_50%)]"/>
           <div className="relative grid grid-cols-2 divide-x divide-[#dfd6c9]/50 sm:grid-cols-6 lg:grid-cols-5">
             { items.map((item, index) => {
               const Icon = iconById[item.id];
@@ -69,7 +70,7 @@ export default function TourDetailQuickInfoSection({
                   className={ `group relative flex justify-center items-center gap-3 px-4 py-4 transition-all duration-300 hover:bg-[#2b666d]/5 lg:py-5 ${ spanClass } ${ rowBorderClass }` }
                 >
                   <span
-                    className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2b666d]/10 text-[#2b666d] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#2b666d] group-hover:text-[#fcf8f1] group-hover:shadow-lg">
+                    className="flex h-11 w-11 min-w-11 items-center justify-center rounded-2xl bg-[#2b666d]/10 text-[#2b666d] transition-all duration-300 group-hover:scale-110 group-hover:bg-[#2b666d] group-hover:text-[#fcf8f1] group-hover:shadow-lg">
                     <Icon className="h-5 w-5" strokeWidth={ 1.5 }/>
                   </span>
                   <div className="min-w-0">
