@@ -584,6 +584,31 @@
           "typeTour": "Tour de pago",
           "languages": "Inglés"
         }
+      },
+      "harborArchitecture": {
+        "aboutTourDescription": "Descubre la arquitectura de Copenhague en un tour guiado de 2 horas. Observa las coloridas casas de Nyhavn y el innovador diseño de Cirkelbroen, y explora Papiroen y el singular edificio de la Ópera junto al agua.",
+        "highlights": [
+          "Explora la impresionante arquitectura del puerto de Copenhague en este tour de 2 horas.",
+          "Descubre por qué Copenhague fue Capital Mundial de la Arquitectura 2023.",
+          "No te pierdas la oportunidad de vivir los increíbles frentes marítimos de Copenhague."
+        ],
+        "itineraryDescription": "Embárcate en un fascinante tour privado de arquitectura de 2 horas por la vibrante zona portuaria de Copenhague y explora la arquitectura única de Nyhavn, Papiroen, Operaen, Cirkelbroen y DAC. Este recorrido es perfecto para quienes quieren conocer mejor la nueva arquitectura de Copenhague y experimentar sus desarrollos modernos.\n\nComienza tu tour en Ofelia Plads, cerca del icónico Nyhavn, un distrito portuario del siglo XVII lleno de casas coloridas y restaurantes animados. Tu guía te llevará en un paseo tranquilo por los canales, compartiendo detalles sobre la historia y la arquitectura de la zona. Conocerás los orígenes del distrito como puerto comercial y escucharás historias sobre los artistas y escritores famosos que alguna vez vivieron en Nyhavn.\n\nA continuación, dirígete al nuevo barrio de Papiroen, que antiguamente fue una fábrica de papel y hoy se ha transformado en un oasis urbano. Admira la arquitectura singular de sus edificios y las vistas al puerto. Aprenderás sobre el desarrollo del área y los esfuerzos por conservar su herencia industrial mientras se construía un espacio urbano contemporáneo.\n\nDisfruta de la vista de Operaen, un edificio moderno situado frente al agua con un diseño distintivo. Se inauguró en 2005 y se convirtió rápidamente en un icono cultural de Copenhague. Tu guía compartirá la historia de su arquitectura, inspirada en el puerto y en la herencia cultural danesa.\n\nDespués, llegarás a Cirkelbroen, un puente peatonal con un diseño innovador inspirado en los círculos de la vida. Este puente es funcional y bello, conecta ambos lados del puerto y crea una experiencia arquitectónica única.\n\nDurante todo el tour, tu guía te ofrecerá información fascinante sobre la historia, la cultura y la arquitectura del puerto de Copenhague. También tendrás muchas oportunidades para tomar fotografías increíbles y disfrutar de la belleza de esta ciudad dinámica.\n\nEste tour de arquitectura de 2 horas es una excelente forma de descubrir la riqueza cultural de Copenhague y sus espectaculares vistas al agua. Tanto si te apasiona la historia como si te interesan los desarrollos urbanos modernos, este recorrido te dejará una nueva apreciación por la arquitectura y el paisaje urbano de la ciudad.",
+        "included": [
+          "Guía.",
+          "Tour a pie."
+        ],
+        "notIncluded": [
+          "Recogida y regreso al hotel.",
+          "Comida y bebidas.",
+          "Propinas."
+        ],
+        "facts": {
+          "meetingPoint": "Ofelia Plads",
+          "endPoint": "Centro Danés de Arquitectura",
+          "cancellationType": "Cancelación gratuita 24 horas",
+          "typeTour": "Tour privado",
+          "languages": "Inglés"
+        }
       }
     }
   },

@@ -568,7 +568,7 @@
         ],
         "itineraryDescription": "Our adventure begins as we meet our guide at Copenhagen Central Station. In just 30 minutes by train, we'll be immersed in the tranquility of Klampenborg, the gateway to Dyrehaven.\n\nUpon arrival, our e-bikes will be waiting, ready to take us on an exciting 2-hour tour through the secret trails of Dyrehaven. Imagine pedaling through ancient forests, surrounded by peacefully grazing deer, a truly serene experience. Our expert guide will reveal the park's most enchanting corners, from the deer's favorite spots to the majestic Hermitage Hunting Lodge, making it an unforgettable journey.\n\nAfter our cycling adventure, you'll have free time to enjoy a delicious lunch (not included) or even visit the iconic Lifeguard Tower designed by Arne Jacobsen, an architectural work of art that will transport us to another era.\n\nTo end this perfect day, we'll return to Copenhagen by train, recharged and with lasting memories of Dyrehaven's natural beauty and royal charm.",
         "included": [
-          "Professional  Tour Guide.",
+          "Professional Tour Guide.",
           "E-bike rental for the 2-hour park tour.",
           "All train tickets for round-trip travel between Copenhagen Central Station and Klampenborg.",
           "Access to Dyrehaven Royal Deer Park."
@@ -585,6 +585,31 @@
           "endPoint": "Copenhagen Central Station",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
+          "languages": "English"
+        }
+      },
+      "harborArchitecture": {
+        "aboutTourDescription": "Discover Copenhagen's architecture on a 2-hour guided tour. See Nyhavn's colorful houses and Cirkelbroen's innovative design and explore the Papiroen and the unique Operaen building on the waterfront.",
+        "highlights": [
+          "Explore the stunning architecture of Copenhagen's harbor in this 2-hour tour.",
+          "Discover why Copenhagen was World Capital of Architecture 2023.",
+          "Don't miss this chance to experience Copenhagen stunning waterfronts"
+        ],
+        "itineraryDescription": "Embark on a fascinating 2-hour Private architecture tour of Copenhagen's vibrant harbor area, and explore the unique architecture of Nyhavn, Papiroen, Operaen, Cirkelbroen and Dac. This tour is perfect for those looking to learn more about the rich new arquitecture of Copenhagen and experience its modern developments.\n\nBegin your tour at Ofelia Plads close to the iconic Nyhavn, a 17th-century waterfront district filled with colorful houses and lively restaurants. Your guide will lead you on a leisurely stroll along the canals, sharing insights into the area's history and architecture. You'll learn about the district's origins as a bustling port and hear stories about the famous artists and writers who once called Nyhavn home.\n\nNext, head to the new neighborhood of Papiroen, which was once a paper mill but has since been transformed into a vibrant oasis. Admire the unique architecture of the market's buildings and the stunning views of the harbor. You'll learn about the development of the area and the efforts to preserve its industrial heritage while creating a modern urban space.\n\nEnjoy the view of Operaen, a modern building located on the waterfront that boasts a distinctive design. The building was completed in 2005 and has quickly become a landmark of Copenhagen's cultural scene. Your guide will share the story of the building's architecture, which was inspired by the surrounding harbor and the cultural heritage of Denmark.\n\nNext, make your way to Cirkelbroen, a pedestrian bridge that features an innovative design inspired by the circles of life. This bridge is both functional and beautiful, connecting the harbor's two sides while creating a unique architectural experience.\n\nThroughout the tour, your guide will provide you with fascinating insights into the history, culture, and architecture of Copenhagen's harbor. You'll also have plenty of opportunities to take stunning photos and soak in the beauty of this dynamic city.\n\nThis 2-hour architecture tour is an excellent way to experience Copenhagen's rich cultural heritage and stunning waterfront views. Whether you're a history buff or simply interested in the city's modern developments, this tour is sure to leave you with a new appreciation for Copenhagen's unique architecture and urban landscape.",
+        "included": [
+          "Guide.",
+          "Walking tour."
+        ],
+        "notIncluded": [
+          "Hotel pickup and drop-off.",
+          "Food and drinks.",
+          "Gratuities."
+        ],
+        "facts": {
+          "meetingPoint": "Ofelia Plads",
+          "endPoint": "Danish Architecture Center",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Private Tour",
           "languages": "English"
         }
       }

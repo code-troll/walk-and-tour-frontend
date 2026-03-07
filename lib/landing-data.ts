@@ -51,7 +51,7 @@ export type TourSlug =
   | "copenhagen-walking-tour-tivoli-gardens-entry"
   | "boat-tour-gateway"
   | "bike-tour-deer-park"
-  | "copenhagen-harbor-architecture-private-walking-tour"
+  | "copenhagen-harbor-architecture"
   | "skip-the-line-rosenborg-castle-canal-cruise"
   | "north-copenhagen-frederiksborg-kronborg-castle-hamlet"
   | "copenhagen-food-tour"
@@ -73,7 +73,7 @@ export const tourSlugById = {
   tivoliGardensEntry: "copenhagen-walking-tour-tivoli-gardens-entry",
   boatTour: "boat-tour-gateway",
   royalDeerParkBikeTour: "bike-tour-deer-park",
-  harborArchitecture: "copenhagen-harbor-architecture-private-walking-tour",
+  harborArchitecture: "copenhagen-harbor-architecture",
   rosenborgCastleCanalCruise: "skip-the-line-rosenborg-castle-canal-cruise",
   frederiksborgAndKronborgCastle: "north-copenhagen-frederiksborg-kronborg-castle-hamlet",
   foodTours: "copenhagen-food-tour",
@@ -457,7 +457,7 @@ export const tours: Tour[] = [
   },
   {
     id: "harborArchitecture",
-    slug: "copenhagen-harbor-architecture-private-walking-tour",
+    slug: "copenhagen-harbor-architecture",
     rating: "4.8",
     reviews: "481",
     price: "1250",
@@ -468,6 +468,15 @@ export const tours: Tour[] = [
       "privateTour",
       "architecture",
       "essential",
+    ],
+    heroImageSrc: "/walkandtour/tours/harbor-architecture.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.harborArchitecture }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.harborArchitecture }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.harborArchitecture }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.harborArchitecture }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.harborArchitecture }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.harborArchitecture }/6.jpg`,
     ],
   },
   {
