@@ -522,6 +522,36 @@
         "imageAlt": "Copenaghen: tour privato a piedi dell'architettura del porto"
       },
       "rosenborgCastleCanalCruise": {
+        "aboutTourDescription": "Intraprendi un viaggio magico nel cuore dell'eredità reale danese con il nostro esclusivo tour di 2 ore del maestoso Palazzo di Rosenborg a Copenaghen. Questa esperienza privata è pensata per immergerti nella ricca storia di questo gioiello rinascimentale, un tempo amata residenza reale del caro re Cristiano IV. Il nostro tour promette un'immersione culturale eccezionale e personalizzata nella narrazione unica della monarchia danese.",
+        "highlights": [
+          "Viaggio esclusivo: Goditi un tour intimo e personalizzato del Palazzo di Rosenborg.",
+          "Esplora la maestosità rinascimentale: Immergiti nella ricca storia dell'antica residenza reale di re Cristiano IV.",
+          "Scopri i Gioielli della Corona: Svela i segreti e le storie affascinanti dietro i tesori reali della Danimarca.",
+          "Passeggia nei giardini rigogliosi: Cammina nei bellissimi giardini che circondano questo luogo iconico.",
+          "Interni intimi del castello: Attraversa il capolavoro del re con una visita dettagliata degli interni.",
+          "Guida esperta: Lasciati accompagnare da guide esperte che rivelano segreti e racconti reali."
+        ],
+        "itineraryDescription": "Il nostro tour inizia dal nostro comodo punto di incontro: Øster Voldgade 4A, 1350 København, dove riconoscerai facilmente la nostra guida con un caratteristico ombrello rosso all'ingresso.\n\nAccompagnato dalle nostre guide esperte, scoprirai i segreti dei Gioielli della Corona danese, ogni pezzo ricco di storie affascinanti e segreti reali. Poi passeggeremo nei rigogliosi giardini che circondano questo palazzo emblematico, offrendo viste serene e uno sguardo al tempo libero della famiglia reale.\n\nSuccessivamente, immergiti nel capolavoro di re Cristiano IV con una visita intima agli impressionanti interni del castello. Esplorerai collezioni e sale affascinanti, ognuna delle quali rivela qualcosa in più sul passato reale della Danimarca. Questo viaggio privato ti consente di immergerti completamente nella narrazione unica della monarchia danese, offrendo un'esperienza culturale davvero eccezionale e personalizzata.\n\nConcluderemo il tour a Nyhavn, con il biglietto per il tour dei canali.",
+        "included": [
+          "Guida turistica professionale esperta di lingua inglese.",
+          "Ingresso al Palazzo di Rosenborg (incluso accesso ai Gioielli della Corona e agli interni del castello).",
+          "Passeggiata guidata nei giardini del Castello di Rosenborg.",
+          "Crociera sui canali di 1 ora inclusa da Nyhavn."
+        ],
+        "notIncluded": [
+          "Pasti e bevande",
+          "Mance per la guida",
+          "Spese personali",
+          "Assicurazione di viaggio",
+          "Trasporto da/per il punto di incontro (se non diversamente specificato)"
+        ],
+        "facts": {
+          "meetingPoint": "Øster Voldgade 4A",
+          "endPoint": "Nyhavn",
+          "cancellationType": "Cancellazione gratuita entro 24 ore",
+          "typeTour": "Tour a pagamento",
+          "languages": "Inglese"
+        },
         "title": "Salta la fila al Castello di Rosenborg e crociera sui canali",
         "location": "Copenaghen",
         "duration": "2 ore",
@@ -529,6 +559,30 @@
         "imageAlt": "Salta la fila al Castello di Rosenborg e crociera sui canali"
       },
       "frederiksborgAndKronborgCastle": {
+        "aboutTourDescription": "Goditi un'escursione completa e panoramica di 8 ore con partenza e arrivo a Copenaghen. Questo tour offre un'immersione profonda nella storia reale danese e nella sua grandiosità architettonica. Attraverserai i pittoreschi paesaggi della Selandia del Nord per esplorare due dei siti storici più importanti della Danimarca. Il percorso ti collega alla storia letteraria nel luogo di Amleto (Helsingør) e ti introduce alla splendida architettura rinascimentale e agli interni sontuosi del Castello di Frederiksborg.",
+        "highlights": [
+          "Castello di Kronborg (Helsingør): Entra nella magnifica ambientazione della grande tragedia di Shakespeare, Amleto. Esplora la possente fortezza costiera che proteggeva le rotte commerciali danesi.",
+          "Castello di Frederiksborg (Hillerød): Visita uno dei palazzi rinascimentali danesi più rappresentativi e impressionanti, spesso chiamato la \"Versailles del Nord\".",
+          "Percorso panoramico nella Selandia del Nord: Goditi un bellissimo e rilassante tragitto tra boschi scenografici ed eleganti cittadine costiere a nord di Copenaghen."
+        ],
+        "itineraryDescription": "Incontra la tua guida alla stazione di Nørreport.\n\nPrenderemo il treno per un suggestivo viaggio di 50 minuti fino a Hillerød, la cittadina che ospita la nostra prima destinazione reale.\n\nVisita guidata: Inizieremo la giornata dal magnifico Castello di Frederiksborg (biglietto incluso). Esploreremo la sontuosa cappella, la Grande Sala e gli appartamenti reali di questo iconico castello rinascimentale, spesso chiamato la “Versailles del Nord”.\n\nTrasferimento verso la costa\nViaggio: Prenderemo il treno per un breve trasferimento di 35 minuti fino alla cittadina costiera di Helsingør, dove ci aspetta il leggendario Castello di Kronborg.\n\nTempo libero: Pausa pranzo nell’affascinante cittadina portuale medievale di Helsingør. La tua guida ti consiglierà alcuni posti locali per un pranzo veloce e piacevole o una pausa caffè vicino all’acqua.\n\nCastello di Kronborg (Amleto)\nVisita guidata: Entreremo nell’imponente Castello di Kronborg, sito patrimonio mondiale dell’UNESCO (biglietto incluso). Approfondiremo la sua storia marittima strategica e la leggenda che lega questa fortezza all’Amleto di Shakespeare, esplorando gli Appartamenti Reali e le celebri Casematte.\n\nVista costiera e tempo cuscinetto\nTempo libero (15 min): Breve momento per scattare foto dell’Øresund, lo stretto che separa la Danimarca dalla Svezia, prima di tornare alla stazione.\n\nPartenza per Copenaghen\nViaggio: Prenderemo il treno regionale diretto per tornare a Copenaghen. Il viaggio dura circa 50-60 minuti.\n\nArrivo di nuovo a Nørreport.",
+        "included": [
+          "Tutti i biglietti di trasporto per il viaggio panoramico andata e ritorno da Copenaghen (trasporto pubblico incluso).",
+          "Biglietti d'ingresso per entrambi i castelli (Frederiksborg e Kronborg).",
+          "Guida turistica locale."
+        ],
+        "notIncluded": [
+          "Pranzo e bevande.",
+          "Mance per la guida.",
+          "Eventuali acquisti extra durante le soste (ad esempio souvenir)."
+        ],
+        "facts": {
+          "meetingPoint": "Nørreport Station",
+          "endPoint": "Nørreport Station",
+          "cancellationType": "Cancellazione gratuita entro 48 ore",
+          "typeTour": "Tour privato",
+          "languages": "Inglese"
+        },
         "title": "Nord di Copenaghen: castelli di Frederiksborg e Kronborg - Amleto",
         "location": "Copenaghen",
         "duration": "8 ore",

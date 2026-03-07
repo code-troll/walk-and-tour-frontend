@@ -52,8 +52,8 @@ export type TourSlug =
   | "boat-tour-gateway"
   | "bike-tour-deer-park"
   | "copenhagen-harbor-architecture"
-  | "skip-the-line-rosenborg-castle-canal-cruise"
-  | "north-copenhagen-frederiksborg-kronborg-castle-hamlet"
+  | "rosenborg-castle-and-canal-cruise"
+  | "frederiksborg-and-kronborg-castle"
   | "copenhagen-food-tour"
   | "roskilde-old-viking-city-tour"
   | "nordhavn-architecture-tour"
@@ -74,8 +74,8 @@ export const tourSlugById = {
   boatTour: "boat-tour-gateway",
   royalDeerParkBikeTour: "bike-tour-deer-park",
   harborArchitecture: "copenhagen-harbor-architecture",
-  rosenborgCastleCanalCruise: "skip-the-line-rosenborg-castle-canal-cruise",
-  frederiksborgAndKronborgCastle: "north-copenhagen-frederiksborg-kronborg-castle-hamlet",
+  rosenborgCastleCanalCruise: "rosenborg-castle-and-canal-cruise",
+  frederiksborgAndKronborgCastle: "frederiksborg-and-kronborg-castle",
   foodTours: "copenhagen-food-tour",
   roskilde: "roskilde-old-viking-city-tour",
   nordhavnArchitecture: "nordhavn-architecture-tour",
@@ -481,7 +481,7 @@ export const tours: Tour[] = [
   },
   {
     id: "rosenborgCastleCanalCruise",
-    slug: "skip-the-line-rosenborg-castle-canal-cruise",
+    slug: "rosenborg-castle-and-canal-cruise",
     rating: "4.5",
     reviews: "664",
     price: "1400",
@@ -492,10 +492,19 @@ export const tours: Tour[] = [
       "privateTour",
       "royalPalaces",
     ],
+    heroImageSrc: "/walkandtour/tours/rosenborg-castle-canal-cruise.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/6.jpg`,
+    ],
   },
   {
     id: "frederiksborgAndKronborgCastle",
-    slug: "north-copenhagen-frederiksborg-kronborg-castle-hamlet",
+    slug: "frederiksborg-and-kronborg-castle",
     rating: "4.9",
     reviews: "198",
     price: "3000",
@@ -505,6 +514,17 @@ export const tours: Tour[] = [
     categories: [
       "dayTrip",
       "privateTour",
+    ],
+    heroImageSrc: "/walkandtour/tours/frederiksborg-and-kronborg-castle.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/6.jpg`,
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/7.jpg`,
+      `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/8.jpg`,
     ],
   },
   {
