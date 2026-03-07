@@ -46,7 +46,7 @@ export type TourSlug =
   | "excursion-to-malmo-sweden"
   | "amalienborg-palace-tour"
   | "christiansborg-palace-tour"
-  | "copenhagen-essentials-old-town-harbour-ferry-royal-guards"
+  | "copenhagen-essentials"
   | "jewish-quarter-and-danish-jewish-museum-tour"
   | "copenhagen-walking-tour-tivoli-gardens-entry"
   | "copenhagen-private-boat-tour-hidden-gems-hygge"
@@ -68,7 +68,7 @@ export const tourSlugById = {
   malmoExcursion: "excursion-to-malmo-sweden",
   amalienborgPalace: "amalienborg-palace-tour",
   christiansborgPalace: "christiansborg-palace-tour",
-  copenhagenEssentials: "copenhagen-essentials-old-town-harbour-ferry-royal-guards",
+  copenhagenEssentials: "copenhagen-essentials",
   jewishQuarter: "jewish-quarter-and-danish-jewish-museum-tour",
   tivoliGardensEntry: "copenhagen-walking-tour-tivoli-gardens-entry",
   boatTour: "copenhagen-private-boat-tour-hidden-gems-hygge",
@@ -339,7 +339,7 @@ export const tours: Tour[] = [
   },
   {
     id: "copenhagenEssentials",
-    slug: "copenhagen-essentials-old-town-harbour-ferry-royal-guards",
+    slug: "copenhagen-essentials",
     rating: "4.9",
     reviews: "305",
     price: "400",
@@ -351,6 +351,14 @@ export const tours: Tour[] = [
       "essential",
       "history",
       "boat",
+    ],
+    heroImageSrc: "/walkandtour/tours/tour-copenhagen-essentials.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.copenhagenEssentials }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenEssentials }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenEssentials }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenEssentials }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenEssentials }/5.jpg`,
     ],
   },
   {

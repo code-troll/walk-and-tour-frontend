@@ -458,6 +458,31 @@
           "typeTour": "Tour en grupo",
           "languages": "Inglés"
         }
+      },
+      "copenhagenEssentials": {
+        "aboutTourDescription": "Discover the heart of Copenhagen in 2.5 hours. This tour combines a historic walk through the city center with a ride on the local electric ferry. From the secrets of the Carlsberg family to iconic landmarks like The Little Mermaid and Nyhavn, we explore the city authentically. We’ll finish at Amalienborg Palace to witness the traditional Changing of the Guards ceremony.",
+        "highlights": [
+          "Copenhagen’s Top Icons: Explore the city’s must-sees, from the colorful waterfront of Nyhavn and The Little Mermaid to the historic Kastellet fortress.",
+          "Electric Ferry: Cross the harbor like a local on a sustainable boat and discover unique tales of the Carlsberg legacy.",
+          "Royal Guard Finale: Enjoy a dynamic 2.5-hour route that culminates with the traditional Changing of the Guards ceremony at Amalienborg Palace."
+        ],
+        "itineraryDescription": "Our adventure begins at the vibrant City Hall Square, right next to the iconic Dragon Fountain, the beating heart of Copenhagen. From there, we’ll make our way towards the Glyptotek area to uncover the fascinating history of the Carlsberg family and also the unique Dante Plads square. After exploring the Old Town and admiring the majesty of Christiansborg Palace and the historic Old Library, we’ll head to the water. We’ll board a local electric ferry for a scenic harbour crossing, enjoying privileged views of the Black Diamond library, the Opera House, and the colourful Nyhavn waterfront from the sea. Once we reach the northern shore, we’ll stroll through the star-shaped Kastellet fortress to meet the legendary Little Mermaid. Finally, we’ll walk to Amalienborg Palace square, arriving just in time to experience the excitement of the Changing of the Guards ceremony—the perfect grand finale to our journey.",
+        "included": [
+          "Professional guide in English.",
+          "Ticket for the local electric harbour ferry."
+        ],
+        "notIncluded": [
+          "Food or drinks.",
+          "Entrance tickets to palace or museum interiors.",
+          "Hotel pickup or drop-off."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall Square",
+          "endPoint": "Amalienborg Palace",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        }
       }
     }
   },
