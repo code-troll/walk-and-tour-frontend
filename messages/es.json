@@ -634,6 +634,28 @@
         "imageAlt": "Roskilde: antigua ciudad vikinga"
       },
       "nordhavnArchitecture": {
+        "aboutTourDescription": "Este tour a pie de 90 minutos por el innovador distrito de Nordhavn se centra en su transformación urbana sostenible. Explora la audaz combinación entre arquitectura industrial restaurada y nuevos edificios de lujo minimalista junto al agua, con vistas panorámicas únicas de la ciudad. Descubre cómo los daneses integran diseño y funcionalidad en su vida cotidiana, transformando un antiguo puerto en una comunidad vibrante y pionera.",
+        "highlights": [
+          "Diseño de vanguardia: Observa la mezcla audaz de arquitectura industrial restaurada y nuevos edificios minimalistas de lujo a orillas del agua.",
+          "Vistas panorámicas: Disfruta de perspectivas únicas del puerto y del perfil urbano de Copenhague desde puntos poco habituales.",
+          "Vida urbana danesa: Comprende cómo los daneses integran diseño, funcionalidad y comunidad en su día a día dentro de este barrio pionero."
+        ],
+        "itineraryDescription": "Nuestra ruta de 90 minutos se centra en la primera fase del desarrollo de Nordhavn, destacando su transformación:\n\n\nBarrio de Århusgade\n\n\nEl corazón de Nordhavn. Exploramos los primeros edificios residenciales terminados, comprendiendo el concepto de \"islas\" urbanas y la reutilización creativa de estructuras de almacenes.\n\n\nFrihavnstårnet (la Torre del Puerto Libre)\n\n\nAntiguos silos de grano reconvertidos en impresionantes apartamentos modernos frente al mar. Un ejemplo icónico de reutilización arquitectónica adaptativa.\n\n\nKonditaget Lüders (la azotea deportiva)\n\n\nVisitamos este parque público único ubicado sobre el techo de un aparcamiento de varias plantas. Un brillante ejemplo de espacio funcional, con zona de juegos, equipamiento deportivo y vistas panorámicas.\n\n\nGötenborg Plads\n\n\nUna de las plazas centrales y más vibrantes del distrito, donde analizamos la arquitectura del entorno y la vida comunitaria.\n\n\nBaño del puerto (Havnebadet)\n\n\nObservamos las nuevas zonas públicas de baño y los accesos al agua, un elemento esencial del estilo de vida costero de Copenhague.",
+        "included": [
+          "Guía experto de habla inglesa."
+        ],
+        "notIncluded": [
+          "Transporte: el tour se realiza completamente a pie.",
+          "Refrigerios: comida, bebidas o snacks.",
+          "Entradas: acceso a edificios privados."
+        ],
+        "facts": {
+          "meetingPoint": "Orientkaj",
+          "endPoint": "Nordhavn",
+          "cancellationType": "Cancelación gratuita 24 horas",
+          "typeTour": "Tour de pago",
+          "languages": "Inglés"
+        },
         "title": "Arquitectura de Nordhavn",
         "location": "Copenhague",
         "duration": "1,5 horas",

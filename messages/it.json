@@ -639,6 +639,28 @@
         "imageAlt": "Roskilde: antica citta vichinga"
       },
       "nordhavnArchitecture": {
+        "aboutTourDescription": "Questo tour a piedi di 90 minuti nel quartiere innovativo di Nordhavn si concentra sulla sua trasformazione urbana sostenibile. Esplora l'audace combinazione di architettura industriale restaurata e nuovi edifici di lusso minimalista sul lungomare, con viste panoramiche uniche sulla città. Scopri come i danesi integrano design e funzionalità nella vita quotidiana, trasformando un ex porto in una comunità vivace e all'avanguardia.",
+        "highlights": [
+          "Design d'avanguardia: Ammira la fusione audace tra architettura industriale restaurata e nuovi edifici minimalisti di lusso affacciati sull'acqua.",
+          "Viste panoramiche: Goditi prospettive uniche del porto e dello skyline di Copenaghen da punti di osservazione insoliti.",
+          "Vita urbana danese: Comprendi come i danesi integrano design, funzionalità e senso di comunità nella vita quotidiana in questo nuovo quartiere pionieristico."
+        ],
+        "itineraryDescription": "Il nostro percorso di 90 minuti si concentra sulla prima fase dello sviluppo di Nordhavn, evidenziandone la trasformazione:\n\n\nQuartiere di Århusgade\n\n\nIl cuore di Nordhavn. Esploriamo i primi edifici residenziali completati, comprendendo il concetto di \"isole\" urbane e il riuso creativo delle strutture dei magazzini.\n\n\nFrihavnstårnet (la Torre del Porto Franco)\n\n\nEx silos per cereali convertiti in splendidi appartamenti moderni sul lungomare. Un esempio iconico di riuso architettonico adattivo.\n\n\nKonditaget Lüders (il tetto fitness)\n\n\nVisitiamo questo parco pubblico unico situato sul tetto di un parcheggio multipiano. Un brillante esempio di spazio funzionale, con area giochi, attrezzature fitness e viste panoramiche.\n\n\nGötenborg Plads\n\n\nUna delle piazze centrali e più vivaci del distretto, dove osserviamo l'architettura circostante e la vita comunitaria.\n\n\nBagno del porto (Havnebadet)\n\n\nOsserviamo le nuove aree pubbliche per il nuoto e i punti di accesso all'acqua, un elemento essenziale dello stile di vita costiero di Copenaghen.",
+        "included": [
+          "Guida turistica esperta in lingua inglese."
+        ],
+        "notIncluded": [
+          "Trasporto: il tour si svolge interamente a piedi.",
+          "Rinfreschi: cibo, bevande o snack.",
+          "Ingressi: accesso a edifici privati."
+        ],
+        "facts": {
+          "meetingPoint": "Orientkaj",
+          "endPoint": "Nordhavn",
+          "cancellationType": "Cancellazione gratuita entro 24 ore",
+          "typeTour": "Tour a pagamento",
+          "languages": "Inglese"
+        },
         "title": "Architettura di Nordhavn",
         "location": "Copenaghen",
         "duration": "1,5 ore",

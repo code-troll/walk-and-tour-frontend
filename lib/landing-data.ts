@@ -585,6 +585,14 @@ export const tours: Tour[] = [
       "groupTour",
       "architecture",
     ],
+    heroImageSrc: "/walkandtour/tours/nordhavn-architecture.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.nordhavnArchitecture }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.nordhavnArchitecture }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.nordhavnArchitecture }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.nordhavnArchitecture }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.nordhavnArchitecture }/5.jpg`,
+    ],
   },
   {
     id: "christmasTour",

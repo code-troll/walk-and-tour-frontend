@@ -644,6 +644,28 @@
         "imageAlt": "Roskilde: Old Viking City"
       },
       "nordhavnArchitecture": {
+        "aboutTourDescription": "This 90-minute walking tour of the innovative Nordhavn district focuses on sustainable urban transformation. Explore the bold blend of restored industrial architecture and new, minimalist luxury buildings right on the water's edge, offering unique panoramic vistas of the city. Discover how Danes integrate design and functionality into their daily lives, transforming a former port into a vibrant, pioneering community.",
+        "highlights": [
+          "Vanguard Design: See the bold blend of restored industrial architecture and new, minimalist luxury buildings right on the water's edge.",
+          "Panoramic Vistas: Enjoy unique views of the harbor and the Copenhagen skyline from unusual vantage points.",
+          "Danish Urban Life: Understand how Danes integrate design, functionality, and community in their daily lives in this pioneering new neighborhood."
+        ],
+        "itineraryDescription": "Our 90-minute route focuses on the first phase of Nordhavn's development, highlighting its transformation:\n\n\nÅrhusgade Quarter\n\n\nThe heart of Nordhavn. We explore the first completed residential buildings, understanding the concept of urban \"islands\" and the creative reuse of warehouse structures.\n\n\nFrihavnstårnet (The Free Port Tower)\n\n\nFormer grain silos converted into stunning, modern waterfront apartments. An iconic example of architectural adaptive reuse.\n\n\nKonditaget Lüders (The Fitness Rooftop)\n\n\nWe visit this unique public park located on the roof of a multi-story car park. A brilliant example of functional space, offering a playground, fitness equipment, and panoramic views.\n\n\nGötenborg Plads\n\n\nOne of the district's central and most vibrant squares, examining the surrounding architecture and community life.\n\n\nHarbour Bath (Havnebadet)\n\n\nWe observe the new public swimming areas and water access points, an essential element of Copenhagen's coastal lifestyle.",
+        "included": [
+          "Expert English Tour Guide."
+        ],
+        "notIncluded": [
+          "Transportation: The tour is conducted entirely on foot.",
+          "Refreshments: Food, drinks, or snacks.",
+          "Entry: Admission to private buildings."
+        ],
+        "facts": {
+          "meetingPoint": "Orientkaj",
+          "endPoint": "Nordhavn",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        },
         "title": "Nordhavn Architecture",
         "location": "Copenhagen",
         "duration": "1.5 hours",
