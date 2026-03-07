@@ -699,6 +699,34 @@
         "imageAlt": "Tour privado definitivo de Navidad de 90 min: Tivoli y hygge"
       },
       "panorama": {
+        "aboutTourDescription": "Vive Copenhague con la exclusividad y comodidad que mereces. Diseñada específicamente para grupos de cruceristas de hasta diez personas, esta excursión privada de 4 o 5 horas elimina el estrés de las multitudes y del transporte público. Desde el momento en que bajas del barco, eres nuestro invitado de honor. Con un vehículo privado y un guía experto dedicado, descubrirás el legado real y el encanto moderno de la ciudad a tu propio ritmo, con un regreso al puerto fluido y puntual.",
+        "highlights": [
+          "Recogida y regreso privados en la pasarela de tu barco, sin caminatas para comenzar el día.",
+          "Miniván privado y guía profesional dedicado exclusivamente a tu grupo de hasta 10 personas.",
+          "Paradas perfectas para fotos en La Sirenita, Nyhavn y el Castillo de Rosenborg.",
+          "Logística planificada por expertos para garantizar que regreses al barco con tiempo de sobra."
+        ],
+        "itineraryDescription": "Tu tour comienza a las 10:30 con una bienvenida privada en la terminal de cruceros. Desde el puerto, tu chófer te llevará al paseo marítimo norte para visitar la poética Sirenita y la imponente Fuente de Gefion. El recorrido continúa hacia el Barrio Real, donde explorarás el majestuoso patio del Palacio de Amalienborg y la imponente Iglesia de Mármol.\n\nDespués disfrutarás de un paseo por el colorido puerto del siglo XVII de Nyhavn. El tour continúa con un recorrido panorámico junto al Parlamento en el Palacio de Christiansborg. La última parada cultural te lleva a las puertas del Castillo de Rosenborg, de estilo renacentista neerlandés, ubicado en los frondosos Jardines del Rey. La tarde concluye con un regreso panorámico por el centro histórico de la ciudad, asegurando que estés cómodamente de vuelta en tu terminal a las 15:30.",
+        "included": [
+          "Guía profesional de habla inglesa durante toda la experiencia de cuatro o cinco horas.",
+          "Miniván privado premium y chófer profesional.",
+          "Recogida y regreso directos en el puerto de cruceros.",
+          "Todo el combustible, tarifas de aparcamiento e impuestos locales.",
+          "Nuestra garantía oficial de regreso al barco a tiempo."
+        ],
+        "notIncluded": [
+          "Almuerzo, snacks y bebidas.",
+          "Entradas para visitas interiores a museos.",
+          "Propinas opcionales para el guía y el chófer.",
+          "Compras o gastos personales."
+        ],
+        "facts": {
+          "meetingPoint": "Puerto de cruceros de Copenhague",
+          "endPoint": "Puerto de cruceros de Copenhague",
+          "cancellationType": "Cancelación gratuita 72 horas",
+          "typeTour": "Grupo reducido hasta 10 adultos",
+          "languages": "Inglés"
+        },
         "title": "Panorama de Copenhague: experiencia privada del puerto al centro",
         "location": "Copenhague",
         "duration": "5 horas",

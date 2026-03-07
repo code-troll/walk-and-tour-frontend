@@ -629,6 +629,14 @@ export const tours: Tour[] = [
       "cruise",
       "history",
     ],
+    heroImageSrc: "/walkandtour/tours/panorama.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.panorama }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.panorama }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.panorama }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.panorama }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.panorama }/5.jpg`,
+    ],
   },
   {
     id: "shoreExcursion",

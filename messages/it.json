@@ -704,6 +704,34 @@
         "imageAlt": "Tour privato natalizio definitivo da 90 min: Tivoli e hygge"
       },
       "panorama": {
+        "aboutTourDescription": "Vivi Copenaghen con l'esclusività e il comfort che meriti. Pensata specificamente per gruppi di crocieristi fino a dieci persone, questa escursione privata di 4 o 5 ore elimina lo stress della folla e dei mezzi pubblici. Dal momento in cui scendi dalla nave, sei il nostro ospite d'onore. Con un veicolo privato e una guida esperta dedicata, scoprirai il patrimonio reale e il fascino moderno della città al tuo ritmo, con un rientro al molo fluido e puntuale.",
+        "highlights": [
+          "Prelievo e rientro privati direttamente alla passerella della nave, senza camminate per iniziare la giornata.",
+          "Minivan privato e guida professionale dedicati esclusivamente al tuo gruppo fino a 10 ospiti.",
+          "Perfette opportunità fotografiche alla Sirenetta, Nyhavn e al Castello di Rosenborg.",
+          "Logistica pianificata da esperti per garantirti il rientro a bordo con largo anticipo."
+        ],
+        "itineraryDescription": "Il tour inizia alle 10:30 con un'accoglienza privata al terminal crociere. Dal molo, il tuo autista ti accompagnerà verso il lungomare nord per visitare la poetica Sirenetta e la maestosa Fontana di Gefion. Il viaggio prosegue nel Quartiere Reale, dove esplorerai il magnifico cortile del Palazzo di Amalienborg e l'imponente Chiesa di Marmo.\n\nPoi ti godrai una passeggiata nel colorato porto seicentesco di Nyhavn. Il tour continua con un percorso panoramico passando davanti al Parlamento presso il Palazzo di Christiansborg. L'ultima tappa culturale ti porta ai cancelli del Castello di Rosenborg, in stile rinascimento olandese, immerso nei rigogliosi Giardini del Re. Il pomeriggio si conclude con un rientro panoramico attraverso il centro storico della città, assicurandoti di tornare comodamente al terminal entro le 15:30.",
+        "included": [
+          "Guida professionale di lingua inglese per l'intera durata di quattro o cinque ore.",
+          "Minivan privato premium e autista professionale.",
+          "Prelievo e rientro diretti al molo crociere.",
+          "Carburante, parcheggi e tasse locali inclusi.",
+          "La nostra garanzia ufficiale di rientro in nave nei tempi previsti."
+        ],
+        "notIncluded": [
+          "Pranzo, snack e bevande.",
+          "Biglietti d'ingresso per visite interne ai musei.",
+          "Mance facoltative per guida e autista.",
+          "Shopping personale o spese personali."
+        ],
+        "facts": {
+          "meetingPoint": "Porto crocieristico di Copenaghen",
+          "endPoint": "Porto crocieristico di Copenaghen",
+          "cancellationType": "Cancellazione gratuita entro 72 ore",
+          "typeTour": "Piccolo gruppo fino a 10 adulti",
+          "languages": "Inglese"
+        },
         "title": "Panorama di Copenaghen: esperienza privata dal porto al centro",
         "location": "Copenaghen",
         "duration": "5 ore",

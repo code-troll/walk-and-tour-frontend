@@ -709,6 +709,34 @@
         "imageAlt": "Private 90-Min Ultimate Christmas: Tivoli & Hygge"
       },
       "panorama": {
+        "aboutTourDescription": "Experience Copenhagen with the exclusivity and comfort you deserve. Designed specifically for cruise travelers group up to ten, this 4 or 5-hour private excursion eliminates the stress of crowds and public transport. From the moment you step off your ship, you are our guest of honor. With a private vehicle and a dedicated expert guide, you will discover the city’s royal legacy and modern charm at your own pace, ensuring a seamless and punctual return to the pier.",
+        "highlights": [
+          "Private pick-up and drop-off at your ship’s gangway—no walking required to start your day.",
+          "A private minivan and a professional guide dedicated solely to your group of up to 10 guests.",
+          "Perfect photo opportunities at The Little Mermaid, Nyhavn, and Rosenborg Castle.",
+          "Expertly timed logistics to ensure you are back on board with time to spare."
+        ],
+        "itineraryDescription": "Your tour begins at 10:30 AM with a private greeting at the cruise terminal. From the pier, your chauffeur will escort you to the northern waterfront to visit the poetic Little Mermaid and the grand Gefion Fountain. The journey continues into the Royal Quarter, where you will explore the majestic courtyard of Amalienborg Palace and the imposing Marble Church. \n\nThen you will enjoy a stroll through the colorful 17th-century harbor of Nyhavn. The tour then transitions into a panoramic drive past the Parliament at Christiansborg Palace. Your final cultural stop brings you to the gates of the Dutch Renaissance Rosenborg Castle, set within the lush King’s Gardens. The afternoon concludes with a scenic drive back through the city's historic center, ensuring you are comfortably settled back at your terminal by 3:30 PM.",
+        "included": [
+          "Professional English-speaking guide for the full four or five-hour duration.",
+          "Private premium minivan and professional chauffeur.",
+          "Direct pick-up and drop-off at the cruise pier.",
+          "All fuel, parking fees, and local taxes.",
+          "Our official Back-to-Ship timing guarantee."
+        ],
+        "notIncluded": [
+          "Lunch, snacks, and beverages.",
+          "Entrance tickets for interior museum visits.",
+          "Optional gratuities for the guide and chauffeur.",
+          "Personal shopping or expenses."
+        ],
+        "facts": {
+          "meetingPoint": "Copenhagen Cruise Port",
+          "endPoint": "Copenhagen Cruise Port",
+          "cancellationType": "72h Free Cancellation",
+          "typeTour": "Small group up to 10 adults",
+          "languages": "English"
+        },
         "title": "Copenhagen Panorama: Private Shore-to-City Experience",
         "location": "Copenhagen",
         "duration": "5 hours",
