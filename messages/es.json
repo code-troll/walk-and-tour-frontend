@@ -663,6 +663,35 @@
         "imageAlt": "Arquitectura de Nordhavn"
       },
       "christmasTour": {
+        "aboutTourDescription": "Vive la magia de la Navidad en Copenhague con este acogedor tour privado de 90 minutos lleno de luces festivas, tradiciones danesas y sabores de temporada. Comenzando en la Plaza del Ayuntamiento, explorarás algunos de los mercados navideños más encantadores de la ciudad con un guía local, mientras descubres las historias y costumbres que hacen tan especial la Navidad danesa. Durante el recorrido, disfrutarás de clásicos navideños como æbleskiver y gløgg, probarás una julebryg tradicional e incluso crearás tu propio corazón de papel de Hans Christian Andersen como recuerdo. La experiencia termina con entrada incluida a los Jardines de Tivoli, para que sigas disfrutando a tu ritmo de uno de los escenarios navideños más icónicos de Copenhague.",
+        "highlights": [
+          "Sumérgete en la cálida y acogedora atmósfera navideña danesa del \"hygge\".",
+          "Da rienda suelta a tu creatividad elaborando los icónicos \"corazones de Hans Christian Andersen\".",
+          "Prueba los deliciosos æbleskiver y gløgg.",
+          "Descubre los principales mercados navideños de la ciudad.",
+          "¡Entrada a Tivoli INCLUIDA!"
+        ],
+        "itineraryDescription": "Únete a nuestro guía experto en un tour de 1,5 horas lleno de magia festiva, deliciosas degustaciones e inmersión en las tradiciones navideñas danesas. Descubre las encantadoras calles de Copenhague mientras cobran vida con decoraciones navideñas y luces brillantes, al tiempo que disfrutas de los sabores de la temporada.\n\nExplora la encantadora escena navideña de Copenhague. Escucha historias cautivadoras sobre el legado y las tradiciones navideñas de la ciudad.\n\nDeleita tu paladar con clásicos navideños daneses. Prueba \"æbleskiver\", unas deliciosas tortitas esféricas, y entra en calor con una taza de aromático \"gløgg\", o elige un reconfortante chocolate caliente. Es una experiencia sensorial que captura la esencia de la Navidad danesa.\n\nDa rienda suelta a tu creatividad con los \"corazones de Hans Christian Andersen\". Estos elaborados corazones de papel son una tradición danesa muy querida, y aprenderás a hacer el tuyo para llevarte un recuerdo o regalarlo a tus seres queridos.\n\nEl tour culmina con entrada garantizada sin colas a los mundialmente famosos Jardines de Tivoli. Tu entrada está cómodamente incluida en el precio del tour. Esto te permite quedarte y disfrutar de la magia iluminada de Tivoli a tu propio ritmo durante el tiempo que desees.\n\nReserva esta experiencia privada para vivir la forma más rápida, exclusiva y completa de descubrir el verdadero significado del hygge en una Navidad en Copenhague.",
+        "included": [
+          "Guía local.",
+          "Una julebryg (cerveza navideña).",
+          "Æbleskiver y gløgg.",
+          "Creación de los icónicos \"corazones de Hans Christian Andersen\".",
+          "Entrada a los Jardines de Tivoli (solo entrada, juegos no incluidos)."
+        ],
+        "notIncluded": [
+          "Comida y bebidas adicionales o compras realizadas en el mercado navideño.",
+          "Souvenirs.",
+          "Propinas.",
+          "Recogida y regreso al hotel."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall Square",
+          "endPoint": "Nyhavn",
+          "cancellationType": "Cancelación gratuita 24 horas",
+          "typeTour": "Tour de pago",
+          "languages": "Inglés"
+        },
         "title": "Tour privado definitivo de Navidad de 90 min: Tivoli y hygge",
         "location": "Copenhague",
         "duration": "1,5 horas",

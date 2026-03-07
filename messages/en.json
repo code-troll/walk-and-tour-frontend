@@ -673,6 +673,35 @@
         "imageAlt": "Nordhavn Architecture"
       },
       "christmasTour": {
+        "aboutTourDescription": "Experience the magic of Christmas in Copenhagen on this cozy 90-minute private tour filled with festive lights, Danish traditions, and seasonal flavors. Starting at City Hall Square, you’ll explore some of the city’s most charming Christmas markets with a local guide, while discovering the stories and customs that make Danish Christmas so special. Along the way, you’ll enjoy classic holiday treats like æbleskiver and gløgg, taste a traditional julebryg, and even create your own Hans Christian Andersen paper heart as a memorable keepsake. The experience ends with included entry to Tivoli Gardens, so you can continue enjoying one of Copenhagen’s most iconic Christmas settings at your own pace.",
+        "highlights": [
+          "Immerse yourself in the warm and welcoming Danish Christmas \"hygge\" atmosphere",
+          "Unleash your creativity by crafting the iconic \"Hans Christian Andersen hearts\"",
+          "Taste the delicious Æbleskiver and Gløgg.",
+          "Discover the main Christmas Markets in the city.",
+          "Tivoli Ticket INCLUDED!"
+        ],
+        "itineraryDescription": "Join our expert guide for a 1.5-hour tour filled with festive magic, delicious tastings, and an immersion into Danish Christmas traditions. Discover the enchanting streets of Copenhagen as they come alive with holiday decorations and glittering lights, all while indulging in the flavors of the season.\n\n\nExplore Copenhagen's enchanting Christmas scene. Hear captivating stories about the city's Christmas heritage and traditions.\n\n\nSatisfy your taste buds with Danish holiday classics. Sample \"æbleskiver,\" delightful spherical pancakes, and warm up with a cup of aromatic \"gløgg,\" or choose a comforting hot chocolate. It's a sensory delight that captures the essence of Danish Christmas.\n\n\nUnleash your creativity with \"Hans Christian Andersen hearts.\" These intricate paper hearts are a cherished Danish tradition, and you'll learn to make your own as a keepsake or gift for loved ones.\n\n\nThe tour culminates with guaranteed, skip-the-line entrance to the world-famous Tivoli Gardens. Your admission ticket is conveniently included in the tour price. This allows you to stay and enjoy the illuminated magic of Tivoli at your own pace for as long as you wish.\n\n\nBook this private experience for the fastest, most exclusive, and comprehensive way to unlock the true meaning of hygge in a Copenhagen Christmas.",
+        "included": [
+          "Local  guide.",
+          "A Julebryg (Christmas beer).",
+          "Æbleskiver and Gløgg.",
+          "Crafting the iconic \"Hans Christian Andersen hearts\"",
+          "Entrance to Tivoli Garden. ( Entrance only, games not included)."
+        ],
+        "notIncluded": [
+          "Additional food and drinks or Purchases made at the Christmas market.",
+          "Souvenirs.",
+          "Tips/gratuities.",
+          "Hotel pickup and drop-off."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall Square",
+          "endPoint": "Nyhavn",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Paid Tour",
+          "languages": "English"
+        },
         "title": "Private 90-Min Ultimate Christmas: Tivoli & Hygge",
         "location": "Copenhagen",
         "duration": "1.5 hours",

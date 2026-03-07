@@ -606,6 +606,14 @@ export const tours: Tour[] = [
     categories: [
       "privateTour",
     ],
+    heroImageSrc: "/walkandtour/tours/christmas-tour.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.christmasTour }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christmasTour }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christmasTour }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christmasTour }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christmasTour }/5.jpg`,
+    ],
   },
   {
     id: "panorama",
