@@ -66,7 +66,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const tourCardT = await getTranslations({locale, namespace: "tours.card"});
+  const tourItemT = await getTranslations({locale, namespace: "tourDetail.items"});
   const tourDetailT = await getTranslations({locale, namespace: "tourDetail"});
 
   const itemKey = `items.${ tour.id }`;
@@ -78,8 +78,8 @@ export async function generateMetadata({
   );
 
   return {
-    title: `${ tourCardT(`items.${ tour.id }.title`) } | Walk and Tour Copenhagen`,
-    description: aboutParagraphs[0] ?? tourCardT(`items.${ tour.id }.title`),
+    title: `${ tourItemT(`${ tour.id }.title`) } | Walk and Tour Copenhagen`,
+    description: aboutParagraphs[0] ?? tourItemT(`${ tour.id }.title`),
   };
 }
 
@@ -96,7 +96,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     notFound();
   }
 
-  const tourCardT = await getTranslations({locale, namespace: "tours.card"});
+  const tourItemT = await getTranslations({locale, namespace: "tourDetail.items"});
   const tourDetailT = await getTranslations({locale, namespace: "tourDetail"});
   const headerT = await getTranslations({locale, namespace: "header"});
 
@@ -194,12 +194,12 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
       <TourDetailHeroSection
-        title={ tourCardT(`items.${ tour.id }.title`) }
-        tag={ tourCardT(`items.${ tour.id }.tag`) }
+        title={ tourItemT(`${ tour.id }.title`) }
+        tag={ tourItemT(`${ tour.id }.tag`) }
         rating={ tour.rating }
         reviews={ tour.reviews }
-        duration={ tourCardT(`items.${ tour.id }.duration`) }
-        location={ tourCardT(`items.${ tour.id }.location`) }
+        duration={ tourItemT(`${ tour.id }.duration`) }
+        location={ tourItemT(`${ tour.id }.location`) }
         tourImages={ heroTourImages }
       />
 

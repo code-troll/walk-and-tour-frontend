@@ -57,149 +57,7 @@
       "book": "Prenotare",
       "ratingOutOfFive": "/5",
       "reviews": "recensioni",
-      "currency": "kr",
-      "items": {
-        "copenhagenFreeTour": {
-          "title": "Tour gratuito di Copenaghen: Cambio della Guardia e principali attrazioni della citta",
-          "location": "Copenaghen",
-          "duration": "2 ore",
-          "tag": "A offerta libera",
-          "imageAlt": "Tour gratuito di Copenaghen: Cambio della Guardia e principali attrazioni della citta"
-        },
-        "rosenborgCastleTour": {
-          "title": "Tour guidato del Castello di Rosenborg",
-          "location": "Castello di Rosenborg",
-          "duration": "1,5 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Tour guidato del Castello di Rosenborg"
-        },
-        "malmoExcursion": {
-          "title": "Escursione a Malmo, Svezia",
-          "location": "Malmo",
-          "duration": "5 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Escursione a Malmo, Svezia"
-        },
-        "amalienborgPalace": {
-          "title": "Palazzo di Amalienborg",
-          "location": "Copenaghen",
-          "duration": "1,5 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Palazzo di Amalienborg"
-        },
-        "christiansborgPalace": {
-          "title": "Palazzo di Christiansborg",
-          "location": "Copenaghen",
-          "duration": "1,5 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Palazzo di Christiansborg"
-        },
-        "copenhagenEssentials": {
-          "title": "Copenaghen Essentials: centro storico, traghetto del porto e guardie reali",
-          "location": "Copenaghen",
-          "duration": "2,5 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Copenaghen Essentials: centro storico, traghetto del porto e guardie reali"
-        },
-        "jewishQuarter": {
-          "title": "Tour del Quartiere Ebraico e del Museo Ebraico Danese",
-          "location": "Copenaghen",
-          "duration": "3 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Tour del Quartiere Ebraico e del Museo Ebraico Danese"
-        },
-        "tivoliGardensEntry": {
-          "title": "Tour a piedi di Copenaghen + ingresso ai Giardini di Tivoli",
-          "location": "Copenaghen",
-          "duration": "2 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Tour a piedi di Copenaghen + ingresso ai Giardini di Tivoli"
-        },
-        "boatTour": {
-          "title": "Tour privato in barca a Copenaghen: gemme nascoste e hygge",
-          "location": "Copenaghen",
-          "duration": "2-5 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Tour privato in barca a Copenaghen: gemme nascoste e hygge"
-        },
-        "royalDeerParkBikeTour": {
-          "title": "Tour in bici al Palazzo dell'Hermitage e al Parco Reale dei Cervi",
-          "location": "Copenaghen",
-          "duration": "4 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Tour in bici al Palazzo dell'Hermitage e al Parco Reale dei Cervi"
-        },
-        "harborArchitecture": {
-          "title": "Copenaghen: tour privato a piedi dell'architettura del porto",
-          "location": "Copenaghen",
-          "duration": "2 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Copenaghen: tour privato a piedi dell'architettura del porto"
-        },
-        "rosenborgCastleCanalCruise": {
-          "title": "Salta la fila al Castello di Rosenborg e crociera sui canali",
-          "location": "Copenaghen",
-          "duration": "2 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Salta la fila al Castello di Rosenborg e crociera sui canali"
-        },
-        "frederiksborgAndKronborgCastle": {
-          "title": "Nord di Copenaghen: castelli di Frederiksborg e Kronborg - Amleto",
-          "location": "Copenaghen",
-          "duration": "8 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Nord di Copenaghen: castelli di Frederiksborg e Kronborg - Amleto"
-        },
-        "foodTours": {
-          "title": "Tour gastronomici",
-          "location": "Copenaghen",
-          "duration": "3 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Tour gastronomici"
-        },
-        "roskilde": {
-          "title": "Roskilde: antica citta vichinga",
-          "location": "Copenaghen",
-          "duration": "4 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Roskilde: antica citta vichinga"
-        },
-        "nordhavnArchitecture": {
-          "title": "Architettura di Nordhavn",
-          "location": "Copenaghen",
-          "duration": "1,5 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Architettura di Nordhavn"
-        },
-        "christmasTour": {
-          "title": "Tour privato natalizio definitivo da 90 min: Tivoli e hygge",
-          "location": "Copenaghen",
-          "duration": "1,5 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Tour privato natalizio definitivo da 90 min: Tivoli e hygge"
-        },
-        "panorama": {
-          "title": "Panorama di Copenaghen: esperienza privata dal porto al centro",
-          "location": "Copenaghen",
-          "duration": "5 ore",
-          "tag": "Tour privato",
-          "imageAlt": "Panorama di Copenaghen: esperienza privata dal porto al centro"
-        },
-        "shoreExcursion": {
-          "title": "Escursione a piedi a Copenaghen per crocieristi: dalla metro Orientkaj al cuore della citta",
-          "location": "Copenaghen",
-          "duration": "4 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Escursione a piedi a Copenaghen per crocieristi: dalla metro Orientkaj al cuore della citta"
-        },
-        "copenhagenCityToCoast": {
-          "title": "Copenaghen dalla citta alla costa: Diamante Nero, crociera sui canali e Reffen",
-          "location": "Copenaghen",
-          "duration": "3 ore",
-          "tag": "Tour di gruppo",
-          "imageAlt": "Copenaghen dalla citta alla costa: Diamante Nero, crociera sui canali e Reffen"
-        }
-      }
+      "currency": "kr"
     },
     "filters": {
       "label": "Scegli il tuo tour",
@@ -317,7 +175,12 @@
           "endPoint": "Centro storico / quartiere reale",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "languages": "Inglese e spagnolo (in base alla partenza)"
-        }
+        },
+        "title": "Tour gratuito di Copenaghen: Cambio della Guardia e principali attrazioni della citta",
+        "location": "Copenaghen",
+        "duration": "2 ore",
+        "tag": "A offerta libera",
+        "imageAlt": "Tour gratuito di Copenaghen: Cambio della Guardia e principali attrazioni della citta"
       },
       "rosenborgCastleTour": {
         "aboutTourDescription": "Intraprendi un viaggio magico nel cuore dell’eredità reale danese con il nostro esclusivo tour di 2 ore al maestoso Castello di Rosenborg a Copenaghen. Questa esperienza è pensata per immergerti nella ricca storia di questo gioiello rinascimentale, un tempo amata residenza reale del re Christian IV. Il tour offre un’immersione culturale eccezionale nella narrazione unica della monarchia danese.",
@@ -348,7 +211,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
           "languages": "Inglese"
-        }
+        },
+        "title": "Tour guidato del Castello di Rosenborg",
+        "location": "Castello di Rosenborg",
+        "duration": "1,5 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Tour guidato del Castello di Rosenborg"
       },
       "malmoExcursion": {
         "aboutTourDescription": "Scopri l’affascinante città di Malmö, la terza più grande della Svezia, con un tour emozionante pensato per immergerti nelle sue strade suggestive e nella sua ricca storia. Questa esperienza guidata offre un’esplorazione completa dei punti salienti di Malmö, dal centro storico ai luoghi iconici come Slottsmöllan (mulino olandese). Ammirerai l’architettura del Municipio di Malmö e del Castello di Malmöhus, vivendo da vicino la cultura locale tra piazze storiche e la visita alla chiesa di San Pietro.",
@@ -380,7 +248,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
           "languages": "Inglese"
-        }
+        },
+        "title": "Escursione a Malmo, Svezia",
+        "location": "Malmo",
+        "duration": "5 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Escursione a Malmo, Svezia"
       },
       "amalienborgPalace": {
         "aboutTourDescription": "Preparati a entrare nella vera casa della monarchia danese. Amalienborg non è solo un museo: è la residenza invernale attiva della Famiglia Reale. In questo tour andremo oltre la facciata rococò per scoprire come hanno vissuto re e regine di Danimarca per oltre 250 anni.",
@@ -409,7 +282,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
           "languages": "Inglese"
-        }
+        },
+        "title": "Palazzo di Amalienborg",
+        "location": "Copenaghen",
+        "duration": "1,5 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Palazzo di Amalienborg"
       },
       "christiansborgPalace": {
         "aboutTourDescription": "Scopri l’imponente Palazzo di Christiansborg, pilastro della storia danese e sede simbolica del potere a Copenaghen. Questo tour guidato di 1,5 ore approfondisce il duplice ruolo del palazzo: motore della moderna democrazia danese e scenario della monarchia. Esplorerai le maestose Sale di Ricevimento Reali, ancora utilizzate per funzioni di Stato, e la storica Sala del Trono. Il fulcro della visita è la straordinaria Sala degli Arazzi, dove opere monumentali raccontano visivamente la storia della Danimarca.",
@@ -435,7 +313,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour di gruppo",
           "languages": "Inglese"
-        }
+        },
+        "title": "Palazzo di Christiansborg",
+        "location": "Copenaghen",
+        "duration": "1,5 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Palazzo di Christiansborg"
       },
       "copenhagenEssentials": {
         "aboutTourDescription": "Scopri il cuore di Copenaghen in 2,5 ore. Questo tour combina una passeggiata storica nel centro città con un tragitto sul ferry elettrico locale. Dai segreti della famiglia Carlsberg a luoghi iconici come la Sirenetta e Nyhavn, esploriamo la città in modo autentico. Concluderemo al Palazzo di Amalienborg per assistere alla tradizionale cerimonia del Cambio della Guardia.",
@@ -460,7 +343,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
           "languages": "Inglese"
-        }
+        },
+        "title": "Copenaghen Essentials: centro storico, traghetto del porto e guardie reali",
+        "location": "Copenaghen",
+        "duration": "2,5 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Copenaghen Essentials: centro storico, traghetto del porto e guardie reali"
       },
       "jewishQuarter": {
         "aboutTourDescription": "Questo tour privato a piedi di 3 ore è un’esplorazione approfondita della storia unica, e spesso piena di speranza, della comunità ebraica di Copenaghen. Sebbene l’esperienza ebraica in Europa sia stata turbolenta, la Danimarca si distingue per la sua straordinaria unità durante la Seconda guerra mondiale.\n\nGuidato da un esperto, attraverserai il centro storico ripercorrendo il quartiere ebraico, l’area della Grande Sinagoga e i luoghi simbolo legati al salvataggio del 1943, un momento decisivo della resistenza nazionale. Il tour si conclude con l’accesso salta-fila e una visita mirata al Museo Ebraico Danese, collegando le storie della città agli oggetti e all’architettura del museo. È un percorso rispettoso e intimo, pensato per comprendere a fondo l’eredità della comunità e il capitolo noto come La Grande Fuga.",
@@ -488,7 +376,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour privato",
           "languages": "Inglese"
-        }
+        },
+        "title": "Tour del Quartiere Ebraico e del Museo Ebraico Danese",
+        "location": "Copenaghen",
+        "duration": "3 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Tour del Quartiere Ebraico e del Museo Ebraico Danese"
       },
       "tivoliGardensEntry": {
         "aboutTourDescription": "Sfrutta al meglio il tuo soggiorno nella capitale danese con questo tour guidato a piedi di 2 ore seguito da una visita ai famosissimi Giardini di Tivoli. Dalle radici medievali della città al suo splendore reale, scoprirai i luoghi che rendono unica Copenaghen, concludendo con accesso salta-fila a uno dei parchi divertimento più antichi del mondo.",
@@ -516,7 +409,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour di gruppo",
           "languages": "Inglese"
-        }
+        },
+        "title": "Tour a piedi di Copenaghen + ingresso ai Giardini di Tivoli",
+        "location": "Copenaghen",
+        "duration": "2 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Tour a piedi di Copenaghen + ingresso ai Giardini di Tivoli"
       },
       "boatTour": {
         "aboutTourDescription": "Vuoi vivere lo splendido porto di Copenaghen in un modo davvero unico? I nostri tour in barca di lusso sono la scelta perfetta. Scivola sull’acqua in completo silenzio, lasciando alle spalle il caos della città mentre ammiri il maestoso panorama del porto. Le nostre barche elettriche ecologiche sono ideali per esplorare tutto l’anno. Rilassati sul ponte ampio e confortevole, arredato con comodi divani e tavoli, mentre il tuo capitano esperto ti guida in un viaggio indimenticabile. Questo tour è pensato per offrirti un’esplorazione tranquilla ma coinvolgente del fascino acquatico di Copenaghen.",
@@ -549,7 +447,12 @@
           "cancellationType": "Cancellazione gratuita entro 48 ore",
           "typeTour": "Piccolo gruppo fino a 10 adulti",
           "languages": "Inglese"
-        }
+        },
+        "title": "Tour privato in barca a Copenaghen: gemme nascoste e hygge",
+        "location": "Copenaghen",
+        "duration": "2-5 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Tour privato in barca a Copenaghen: gemme nascoste e hygge"
       },
       "royalDeerParkBikeTour": {
         "aboutTourDescription": "Parti per un viaggio davvero magico attraverso Dyrehaven, il Parco Reale dei Cervi, a breve distanza da Copenaghen. Questo tour è pensato per immergerti nella tranquillità della natura e nella grandezza della storia danese. Pedalerai lungo sentieri nascosti su comode e-bike, incontrando eleganti cervi e paesaggi mozzafiato. La nostra guida esperta ti svelerà gli angoli più affascinanti del parco, dai suoi tranquilli abitanti fino allo storico padiglione di caccia Hermitage, per offrirti un’esperienza indimenticabile che unisce avventura all’aria aperta e patrimonio reale.",
@@ -581,7 +484,12 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
           "languages": "Inglese"
-        }
+        },
+        "title": "Tour in bici al Palazzo dell'Hermitage e al Parco Reale dei Cervi",
+        "location": "Copenaghen",
+        "duration": "4 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Tour in bici al Palazzo dell'Hermitage e al Parco Reale dei Cervi"
       },
       "harborArchitecture": {
         "aboutTourDescription": "Scopri l’architettura di Copenaghen con un tour guidato di 2 ore. Ammira le colorate case di Nyhavn e il design innovativo di Cirkelbroen, ed esplora Papiroen e il particolare edificio dell’Opera sul lungomare.",
@@ -606,7 +514,75 @@
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour privato",
           "languages": "Inglese"
-        }
+        },
+        "title": "Copenaghen: tour privato a piedi dell'architettura del porto",
+        "location": "Copenaghen",
+        "duration": "2 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Copenaghen: tour privato a piedi dell'architettura del porto"
+      },
+      "rosenborgCastleCanalCruise": {
+        "title": "Salta la fila al Castello di Rosenborg e crociera sui canali",
+        "location": "Copenaghen",
+        "duration": "2 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Salta la fila al Castello di Rosenborg e crociera sui canali"
+      },
+      "frederiksborgAndKronborgCastle": {
+        "title": "Nord di Copenaghen: castelli di Frederiksborg e Kronborg - Amleto",
+        "location": "Copenaghen",
+        "duration": "8 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Nord di Copenaghen: castelli di Frederiksborg e Kronborg - Amleto"
+      },
+      "foodTours": {
+        "title": "Tour gastronomici",
+        "location": "Copenaghen",
+        "duration": "3 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Tour gastronomici"
+      },
+      "roskilde": {
+        "title": "Roskilde: antica citta vichinga",
+        "location": "Copenaghen",
+        "duration": "4 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Roskilde: antica citta vichinga"
+      },
+      "nordhavnArchitecture": {
+        "title": "Architettura di Nordhavn",
+        "location": "Copenaghen",
+        "duration": "1,5 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Architettura di Nordhavn"
+      },
+      "christmasTour": {
+        "title": "Tour privato natalizio definitivo da 90 min: Tivoli e hygge",
+        "location": "Copenaghen",
+        "duration": "1,5 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Tour privato natalizio definitivo da 90 min: Tivoli e hygge"
+      },
+      "panorama": {
+        "title": "Panorama di Copenaghen: esperienza privata dal porto al centro",
+        "location": "Copenaghen",
+        "duration": "5 ore",
+        "tag": "Tour privato",
+        "imageAlt": "Panorama di Copenaghen: esperienza privata dal porto al centro"
+      },
+      "shoreExcursion": {
+        "title": "Escursione a piedi a Copenaghen per crocieristi: dalla metro Orientkaj al cuore della citta",
+        "location": "Copenaghen",
+        "duration": "4 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Escursione a piedi a Copenaghen per crocieristi: dalla metro Orientkaj al cuore della citta"
+      },
+      "copenhagenCityToCoast": {
+        "title": "Copenaghen dalla citta alla costa: Diamante Nero, crociera sui canali e Reffen",
+        "location": "Copenaghen",
+        "duration": "3 ore",
+        "tag": "Tour di gruppo",
+        "imageAlt": "Copenaghen dalla citta alla costa: Diamante Nero, crociera sui canali e Reffen"
       }
     }
   },

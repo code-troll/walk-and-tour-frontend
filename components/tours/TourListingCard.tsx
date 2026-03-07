@@ -28,6 +28,7 @@ export default function TourListingCard({
                                           revealDelayMs = 0,
                                         }: TourListingCardProps) {
   const t = useTranslations("tours.card");
+  const tourItemT = useTranslations("tourDetail.items");
   const locale = useLocale() as AppLocale;
   const bookHref = `${ getPathname({locale, href: "/tours"}) }/${ tour.slug }`;
 
@@ -40,7 +41,7 @@ export default function TourListingCard({
         <a href={ bookHref }>
           <Image
             src={ tour.image.src }
-            alt={ t(`items.${ tour.id }.imageAlt`) }
+            alt={ tourItemT(`${ tour.id }.imageAlt`) }
             width={ 800 }
             height={ 600 }
             className="h-52 w-full object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] group-hover:brightness-[1.04]"
@@ -48,12 +49,12 @@ export default function TourListingCard({
         </a>
         <span
           className="absolute left-4 top-4 rounded-full bg-[#f8f4ef]/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#5b4d3c]">
-            { t(`items.${ tour.id }.tag`) }
+            { tourItemT(`${ tour.id }.tag`) }
           </span>
       </div>
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-xl font-semibold leading-tight text-[#2a221a]">
-          { t(`items.${ tour.id }.title`) }
+          { tourItemT(`${ tour.id }.title`) }
         </h3>
 
         <div className="mt-auto">
@@ -84,11 +85,11 @@ export default function TourListingCard({
           <div className="mt-4 grid grid-cols-1 gap-3 text-sm text-[#5b4d3c] sm:grid-cols-2">
             <div className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ t(`items.${ tour.id }.duration`) }</span>
+              <span>{ tourItemT(`${ tour.id }.duration`) }</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ t(`items.${ tour.id }.location`) }</span>
+              <span>{ tourItemT(`${ tour.id }.location`) }</span>
             </div>
           </div>
         </div>

@@ -57,149 +57,7 @@
       "book": "Book",
       "ratingOutOfFive": "/5",
       "reviews": "reviews",
-      "currency": "kr",
-      "items": {
-        "copenhagenFreeTour": {
-          "title": "Copenhagen Free Tour: Changing of the Guard & City Highlights",
-          "location": "Copenhagen",
-          "duration": "2 hours",
-          "tag": "Tip-Based",
-          "imageAlt": "Copenhagen Free Tour: Changing of the Guard & City Highlights"
-        },
-        "rosenborgCastleTour": {
-          "title": "Rosenborg Castle Guided Tour",
-          "location": "Rosenborg Castle",
-          "duration": "1.5 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Rosenborg Castle Guided Tour"
-        },
-        "malmoExcursion": {
-          "title": "Excursion to Malmö Sweden",
-          "location": "Malmö",
-          "duration": "5 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Excursion to Malmö Sweden"
-        },
-        "amalienborgPalace": {
-          "title": "Amalienborg Palace",
-          "location": "Copenhagen",
-          "duration": "1.5 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Amalienborg Palace"
-        },
-        "christiansborgPalace": {
-          "title": "Christiansborg Palace",
-          "location": "Copenhagen",
-          "duration": "1.5 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Christiansborg Palace"
-        },
-        "copenhagenEssentials": {
-          "title": "Copenhagen Essentials: Old Town, Harbour Ferry & Royal Guards",
-          "location": "Copenhagen",
-          "duration": "2.5 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Copenhagen Essentials: Old Town, Harbour Ferry & Royal Guards"
-        },
-        "jewishQuarter": {
-          "title": "Jewish Quarter and Danish Jewish Museum Tour",
-          "location": "Copenhagen",
-          "duration": "3 hours",
-          "tag": "Private Tour",
-          "imageAlt": "Jewish Quarter and Danish Jewish Museum Tour"
-        },
-        "tivoliGardensEntry": {
-          "title": "Copenhagen Walking Tour + Tivoli Gardens Entry",
-          "location": "Copenhagen",
-          "duration": "2 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Copenhagen Walking Tour + Tivoli Gardens Entry"
-        },
-        "boatTour": {
-          "title": "Copenhagen Private Boat Tour: Hidden Gems & Hygge",
-          "location": "Copenhagen",
-          "duration": "2-5 hours",
-          "tag": "Private Tour",
-          "imageAlt": "Copenhagen Private Boat Tour: Hidden Gems & Hygge"
-        },
-        "royalDeerParkBikeTour": {
-          "title": "Hermitage Palace & Royal Deer Park Bike Tour",
-          "location": "Copenhagen",
-          "duration": "4 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Hermitage Palace & Royal Deer Park Bike Tour"
-        },
-        "harborArchitecture": {
-          "title": "Copenhagen: Harbor Architecture Private Walking Tour",
-          "location": "Copenhagen",
-          "duration": "2 hours",
-          "tag": "Private Tour",
-          "imageAlt": "Copenhagen: Harbor Architecture Private Walking Tour"
-        },
-        "rosenborgCastleCanalCruise": {
-          "title": "Skip the Line to Rosenborg Castle and Canal Cruise",
-          "location": "Copenhagen",
-          "duration": "2 hours",
-          "tag": "Private Tour",
-          "imageAlt": "Skip the Line to Rosenborg Castle and Canal Cruise"
-        },
-        "frederiksborgAndKronborgCastle": {
-          "title": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet",
-          "location": "Copenhagen",
-          "duration": "8 hours",
-          "tag": "Private Tour",
-          "imageAlt": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet"
-        },
-        "foodTours": {
-          "title": "Food Tours",
-          "location": "Copenhagen",
-          "duration": "3 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Food Tours"
-        },
-        "roskilde": {
-          "title": "Roskilde: Old Viking City",
-          "location": "Copenhagen",
-          "duration": "4 hours",
-          "tag": "Private Tour",
-          "imageAlt": "Roskilde: Old Viking City"
-        },
-        "nordhavnArchitecture": {
-          "title": "Nordhavn Architecture",
-          "location": "Copenhagen",
-          "duration": "1.5 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Nordhavn Architecture"
-        },
-        "christmasTour": {
-          "title": "Private 90-Min Ultimate Christmas: Tivoli & Hygge",
-          "location": "Copenhagen",
-          "duration": "1.5 hours",
-          "tag": "Private Tour",
-          "imageAlt": "Private 90-Min Ultimate Christmas: Tivoli & Hygge"
-        },
-        "panorama": {
-          "title": "Copenhagen Panorama: Private Shore-to-City Experience",
-          "location": "Copenhagen",
-          "duration": "5 hours",
-          "tag": "Private Tour",
-          "imageAlt": "Copenhagen Panorama: Private Shore-to-City Experience"
-        },
-        "shoreExcursion": {
-          "title": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City",
-          "location": "Copenhagen",
-          "duration": "4 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City"
-        },
-        "copenhagenCityToCoast": {
-          "title": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen",
-          "location": "Copenhagen",
-          "duration": "3 hours",
-          "tag": "Group Tour",
-          "imageAlt": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen"
-        }
-      }
+      "currency": "kr"
     },
     "filters": {
       "label": "Choose your tour",
@@ -322,7 +180,12 @@
           "cancellationType": "Cancel any time",
           "typeTour": "Free Tour",
           "languages": "English"
-        }
+        },
+        "title": "Copenhagen Free Tour: Changing of the Guard & City Highlights",
+        "location": "Copenhagen",
+        "duration": "2 hours",
+        "tag": "Tip-Based",
+        "imageAlt": "Copenhagen Free Tour: Changing of the Guard & City Highlights"
       },
       "rosenborgCastleTour": {
         "aboutTourDescription": "Embark on a magical journey through the heart of Danish royal legacy with our exclusive 2-hour tour of the majestic Rosenborg Palace in Copenhagen. This experience is designed to immerse you in the rich history of this Renaissance jewel, once the cherished royal residence of the beloved King Christian IV. Our tour promises an exceptional cultural immersion into the unique narrative of Danish royalty.",
@@ -353,7 +216,12 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
           "languages": "English"
-        }
+        },
+        "title": "Rosenborg Castle Guided Tour",
+        "location": "Rosenborg Castle",
+        "duration": "1.5 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Rosenborg Castle Guided Tour"
       },
       "malmoExcursion": {
         "aboutTourDescription": "Discover the fascinating city of Malmö, Sweden's third largest city, on an exciting tour designed to immerse you in its charming streets and rich history! This guided experience offers a comprehensive exploration of Malmö's highlights, from its historic center to iconic landmarks like the Slottsmöllan (Dutch Windmill). You'll admire the impressive architecture of Malmö Town Hall and Malmöhus Castle, and truly immerse yourself in the local culture as we stroll through its historic squares and visit the venerable St. Peter's Church. Join us on this journey filled with nature, captivating architecture, and fascinating stories, providing a unique perspective on Malmö's heritage and modern life.",
@@ -385,7 +253,12 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
           "languages": "English"
-        }
+        },
+        "title": "Excursion to Malmö Sweden",
+        "location": "Malmö",
+        "duration": "5 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Excursion to Malmö Sweden"
       },
       "amalienborgPalace": {
         "aboutTourDescription": "Prepare to step inside the actual home of the Danish monarchy. Amalienborg is not just a museum; it is the active winter residence of the Royal Family. On this tour, we will take you beyond the Rococo façade to discover how the kings and queens of Denmark have lived for over 250 years.",
@@ -414,7 +287,12 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
           "languages": "English"
-        }
+        },
+        "title": "Amalienborg Palace",
+        "location": "Copenhagen",
+        "duration": "1.5 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Amalienborg Palace"
       },
       "christiansborgPalace": {
         "aboutTourDescription": "Discover the imposing Christiansborg Palace, a cornerstone of Danish history and the symbolic seat of power in Copenhagen. This 1.5-hour guided  tour is a deep dive into the dual role of the palace as both the engine of modern Danish democracy and the opulent stage for the monarchy. You will explore the majestic Royal Reception Rooms, still used for state functions, and stand in the historic Throne Room. The tour’s centerpiece is the impressive Great Tapestry Hall, where monumental tapestries visually narrate Denmark’s history. This experience offers a perfect, concentrated blend of luxury, history, and political insight, designed for travelers who seek a deep, efficient understanding of the Danish state.",
@@ -440,7 +318,12 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Group Tour",
           "languages": "English"
-        }
+        },
+        "title": "Christiansborg Palace",
+        "location": "Copenhagen",
+        "duration": "1.5 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Christiansborg Palace"
       },
       "copenhagenEssentials": {
         "aboutTourDescription": "Discover the heart of Copenhagen in 2.5 hours. This tour combines a historic walk through the city center with a ride on the local electric ferry. From the secrets of the Carlsberg family to iconic landmarks like The Little Mermaid and Nyhavn, we explore the city authentically. We’ll finish at Amalienborg Palace to witness the traditional Changing of the Guards ceremony.",
@@ -465,7 +348,12 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
           "languages": "English"
-        }
+        },
+        "title": "Copenhagen Essentials: Old Town, Harbour Ferry & Royal Guards",
+        "location": "Copenhagen",
+        "duration": "2.5 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Copenhagen Essentials: Old Town, Harbour Ferry & Royal Guards"
       },
       "jewishQuarter": {
         "aboutTourDescription": "This private 3-hour walking tour is an in-depth exploration of the unique and often hopeful history of the Jewish community in Copenhagen. While the Jewish experience across Europe has been turbulent, Denmark stands out for its extraordinary unity during World War II.\n\nLed by your expert guide, you will walk through the Old Town, tracing the historic Jewish Quarter, the area around the Great Synagogue, and past key landmarks associated with the 1943 rescue—a defining moment of national resistance. The tour culminates with skip-the-line admission and a focused visit to the Danish Jewish Museum, allowing you to seamlessly connect the stories from the street with the artifacts and architecture inside. This is a respectful, intimate journey designed for a deep, personalized understanding of the community's heritage and the remarkable chapter known as The Golden Escape.",
@@ -493,7 +381,12 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Private Tour",
           "languages": "English"
-        }
+        },
+        "title": "Jewish Quarter and Danish Jewish Museum Tour",
+        "location": "Copenhagen",
+        "duration": "3 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Jewish Quarter and Danish Jewish Museum Tour"
       },
       "tivoliGardensEntry": {
         "aboutTourDescription": "Make the most of your stay in the Danish capital with this 2-hour guided walking tour followed by a visit to the world-famous Tivoli Gardens. From the city’s medieval roots to its royal splendor, you’ll discover the landmarks that make Copenhagen unique, ending with skip-the-line access to one of the oldest amusement parks in the world.",
@@ -521,7 +414,12 @@
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Group Tour",
           "languages": "English"
-        }
+        },
+        "title": "Copenhagen Walking Tour + Tivoli Gardens Entry",
+        "location": "Copenhagen",
+        "duration": "2 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Copenhagen Walking Tour + Tivoli Gardens Entry"
       },
       "boatTour": {
         "aboutTourDescription": "Want to experience Copenhagen's stunning harbor in a truly unique way? Our luxury boat tours are just the ticket! Glide across the water in complete silence, leaving the hustle and bustle of the city behind as you soak up the majestic harbor scenery. Our eco-friendly electric boats are perfect for exploring year-round. Relax on the spacious, comfortable deck, furnished with cozy sofas and tables, while your expert captain guides you on an unforgettable journey. This tour is designed to offer a tranquil yet captivating exploration of Copenhagen's aquatic charm.",
@@ -554,7 +452,12 @@
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Small group up to 10 adults",
           "languages": "English"
-        }
+        },
+        "title": "Copenhagen Private Boat Tour: Hidden Gems & Hygge",
+        "location": "Copenhagen",
+        "duration": "2-5 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Copenhagen Private Boat Tour: Hidden Gems & Hygge"
       },
       "royalDeerParkBikeTour": {
         "aboutTourDescription": "Embark on a truly magical journey through Dyrehaven, the Royal Deer Park, just a short ride from Copenhagen. This tour is designed to immerse you in the tranquility of nature and the grandeur of Danish history. You'll glide along hidden paths on comfortable e-bikes, encountering graceful deer and breathtaking landscapes. Our expert guide will reveal the park's most enchanting corners, from its peaceful inhabitants to the historic Hermitage Hunting Lodge, ensuring an unforgettable experience that blends outdoor adventure with royal heritage.",
@@ -586,7 +489,12 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
           "languages": "English"
-        }
+        },
+        "title": "Hermitage Palace & Royal Deer Park Bike Tour",
+        "location": "Copenhagen",
+        "duration": "4 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Hermitage Palace & Royal Deer Park Bike Tour"
       },
       "harborArchitecture": {
         "aboutTourDescription": "Discover Copenhagen's architecture on a 2-hour guided tour. See Nyhavn's colorful houses and Cirkelbroen's innovative design and explore the Papiroen and the unique Operaen building on the waterfront.",
@@ -611,7 +519,75 @@
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Private Tour",
           "languages": "English"
-        }
+        },
+        "title": "Copenhagen: Harbor Architecture Private Walking Tour",
+        "location": "Copenhagen",
+        "duration": "2 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Copenhagen: Harbor Architecture Private Walking Tour"
+      },
+      "rosenborgCastleCanalCruise": {
+        "title": "Skip the Line to Rosenborg Castle and Canal Cruise",
+        "location": "Copenhagen",
+        "duration": "2 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Skip the Line to Rosenborg Castle and Canal Cruise"
+      },
+      "frederiksborgAndKronborgCastle": {
+        "title": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet",
+        "location": "Copenhagen",
+        "duration": "8 hours",
+        "tag": "Private Tour",
+        "imageAlt": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet"
+      },
+      "foodTours": {
+        "title": "Food Tours",
+        "location": "Copenhagen",
+        "duration": "3 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Food Tours"
+      },
+      "roskilde": {
+        "title": "Roskilde: Old Viking City",
+        "location": "Copenhagen",
+        "duration": "4 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Roskilde: Old Viking City"
+      },
+      "nordhavnArchitecture": {
+        "title": "Nordhavn Architecture",
+        "location": "Copenhagen",
+        "duration": "1.5 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Nordhavn Architecture"
+      },
+      "christmasTour": {
+        "title": "Private 90-Min Ultimate Christmas: Tivoli & Hygge",
+        "location": "Copenhagen",
+        "duration": "1.5 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Private 90-Min Ultimate Christmas: Tivoli & Hygge"
+      },
+      "panorama": {
+        "title": "Copenhagen Panorama: Private Shore-to-City Experience",
+        "location": "Copenhagen",
+        "duration": "5 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Copenhagen Panorama: Private Shore-to-City Experience"
+      },
+      "shoreExcursion": {
+        "title": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City",
+        "location": "Copenhagen",
+        "duration": "4 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City"
+      },
+      "copenhagenCityToCoast": {
+        "title": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen",
+        "location": "Copenhagen",
+        "duration": "3 hours",
+        "tag": "Group Tour",
+        "imageAlt": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen"
       }
     }
   },
