@@ -468,7 +468,7 @@
         }
       },
       "jewishQuarter": {
-        "aboutTourDescription": "This private 3-hour walking tour is an in-depth exploration of the unique and often hopeful history of the Jewish community in Copenhagen. While the Jewish experience across Europe has been turbulent, Denmark stands out for its extraordinary unity during World War II.\n\nLed by your expert guide, you will walk through the Old Town, tracing the historic Jewish Quarter, the area around the Great Synagogue, and past key landmarks associated with the 1943 rescue—a defining moment of national resistance. The tour culminates with skip-the-line admission and a focused visit to the Danish Jewish Museum, allowing you to seamlessly connect the stories from the street with the artifacts and architecture inside. This is a respectful, intimate journey designed for a deep, personalized understanding of the community's heritage and the remarkable chapter known as The Golden Escape.\n\n",
+        "aboutTourDescription": "This private 3-hour walking tour is an in-depth exploration of the unique and often hopeful history of the Jewish community in Copenhagen. While the Jewish experience across Europe has been turbulent, Denmark stands out for its extraordinary unity during World War II.\n\nLed by your expert guide, you will walk through the Old Town, tracing the historic Jewish Quarter, the area around the Great Synagogue, and past key landmarks associated with the 1943 rescue—a defining moment of national resistance. The tour culminates with skip-the-line admission and a focused visit to the Danish Jewish Museum, allowing you to seamlessly connect the stories from the street with the artifacts and architecture inside. This is a respectful, intimate journey designed for a deep, personalized understanding of the community's heritage and the remarkable chapter known as The Golden Escape.",
         "highlights": [
           "Architectural Heritage: Explore the historic Jewish Quarter and admire the distinct, Moorish-revival exterior of the Great Synagogue.",
           "Museum Deep Dive: Gain immediate skip-the-line access to the renowned Danish Jewish Museum for a focused, guided visit through its unique collection.",
@@ -492,6 +492,34 @@
           "endPoint": "Jewish Museum",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Private Tour",
+          "languages": "English"
+        }
+      },
+      "tivoliGardensEntry": {
+        "aboutTourDescription": "Make the most of your stay in the Danish capital with this 2-hour guided walking tour followed by a visit to the world-famous Tivoli Gardens. From the city’s medieval roots to its royal splendor, you’ll discover the landmarks that make Copenhagen unique, ending with skip-the-line access to one of the oldest amusement parks in the world.",
+        "highlights": [
+          "Enjoy the best of the Old Town in 2 hours.",
+          "Start at the historic harbor Nyhavn and finish exactly at the gates of Tivoli Gardens with your skip-the-line tickets in hand.",
+          "Discover the impressive exterior and courtyards of Christiansborg Palace, the seat of the Danish Parliament."
+        ],
+        "itineraryDescription": "Our tour begins at the world-famous Nyhavn, the vibrant 17th-century waterfront. After admiring the historic ships and townhouses, we’ll take a short walk to Amalienborg Palace (the Royal residence) and the magnificent Marble Church.\n\nNext, we’ll head towards the grand Kongens Nytorv square and the Royal Theatre, moving into the heart of the city to see the historic Bourse (Stock Exchange) and the majestic Christiansborg Palace, home to the Danish Parliament.\n\nThe journey concludes at the City Hall Square (Rådhuspladsen). Located just steps away from the main entrance of Tivoli Gardens, your guide will hand over your admission tickets so you can explore the park’s magic at your own pace.",
+        "included": [
+          "Expert Tour Guide for the dedicated 2-hour interactive walking tour.",
+          "Skip-the-Line Admission to Tivoli Gardens (valid for all-day use after the tour concludes).",
+          "A custom-designed walking route covering Copenhagen’s most iconic, family-friendly landmarks."
+        ],
+        "notIncluded": [
+          "Rides, Games, or Food inside Tivoli Gardens (only the admission ticket is included).",
+          "Meals, snacks, or beverages during the 2-hour walking tour.",
+          "Entry into any buildings along the walking route (e.g., inside the Round Tower or Palaces).",
+          "Public transportation tickets (this is a walking tour).",
+          "Gratuities or tips for your tour guide."
+        ],
+        "facts": {
+          "meetingPoint": "Nyhavn",
+          "endPoint": "City Hall",
+          "cancellationType": "48h Free Cancellation",
+          "typeTour": "Group Tour",
           "languages": "English"
         }
       }

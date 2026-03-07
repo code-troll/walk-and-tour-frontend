@@ -397,6 +397,15 @@ export const tours: Tour[] = [
       "groupTour",
       "history",
     ],
+    heroImageSrc: "/walkandtour/tours/tivoli-garden.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/6.jpg`,
+    ],
   },
   {
     id: "boatTour",

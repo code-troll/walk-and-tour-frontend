@@ -247,30 +247,12 @@
       "startingFrom": "Desde"
     },
     "defaults": {
-      "about": [
-        "Las experiencias de Walk and Tour combinan historias locales, lugares icónicos y recomendaciones prácticas para descubrir Copenhague a tu ritmo.",
-        "Este recorrido mantiene un ritmo cómodo para que puedas hacer preguntas, conocer rincones menos turísticos y vivir la ciudad con contexto local."
-      ],
       "aboutTourDescription": "Únete a una de nuestras experiencias guiadas a pie y descubre Copenhague con perspectiva local, lugares icónicos y recomendaciones prácticas para el resto de tu viaje.",
       "highlights": [
         "Guías locales con experiencia que explican cada parada con claridad y contexto.",
         "Ruta equilibrada entre lugares emblemáticos y zonas locales con menos gente.",
         "Ideal para quienes visitan la ciudad por primera vez y también para viajeros frecuentes.",
         "Formato de grupo pequeño para una experiencia más cercana y flexible."
-      ],
-      "itinerary": [
-        {
-          "title": "Encuentro con el guía",
-          "description": "Nos reunimos en el punto de encuentro, explicamos la ruta y compartimos recomendaciones rápidas antes de comenzar."
-        },
-        {
-          "title": "Recorrido histórico",
-          "description": "Visitamos calles, plazas y monumentos clave mientras conocemos la historia, arquitectura y cultura local."
-        },
-        {
-          "title": "Cierre y recomendaciones",
-          "description": "Terminamos con sugerencias locales de comida, museos y zonas para seguir explorando."
-        }
       ],
       "itineraryDescription": "Nos reunimos en el punto de encuentro, explicamos la ruta y compartimos recomendaciones rápidas antes de comenzar. Visitamos calles, plazas y monumentos clave mientras conocemos la historia, arquitectura y cultura local. Terminamos con sugerencias locales de comida, museos y zonas para seguir explorando.",
       "included": [
@@ -286,11 +268,9 @@
       "facts": {
         "meetingPoint": "Centro de Copenhague",
         "endPoint": "Centro histórico",
-        "cancellationType": "Cancelación gratuita hasta 24 horas antes del tour",
+        "cancellationType": "Cancelación gratuita 24 horas",
         "languages": "Inglés"
-      },
-      "bookingDescription": "Elige tu fecha preferida y reserva en pocos minutos. Si viajas en grupo, podemos adaptar la experiencia.",
-      "customerSupportDescription": "Contamos con un equipo profesional de atención al cliente y te acompañamos en cada viaje."
+      }
     },
     "items": {
       "copenhagenFreeTour": {
@@ -336,7 +316,7 @@
         "facts": {
           "meetingPoint": "Nyhavn (punto exacto tras reservar)",
           "endPoint": "Centro histórico / distrito real",
-          "cancellationType": "Cancelación gratuita hasta 24 horas antes del tour",
+          "cancellationType": "Cancelación gratuita 24 horas",
           "languages": "Inglés y español (según salida)"
         },
         "bookingDescription": "Reserva tu plaza y únete a una de las mejores introducciones al centro histórico de Copenhague. Formato basado en propinas y grupos reducidos."
@@ -367,7 +347,7 @@
         "facts": {
           "meetingPoint": "Castillo de Rosenborg",
           "endPoint": "Castillo de Rosenborg",
-          "cancellationType": "Cancelación gratuita 24h",
+          "cancellationType": "Cancelación gratuita 24 horas",
           "typeTour": "Tour de pago",
           "languages": "Inglés"
         }
@@ -399,7 +379,7 @@
         "facts": {
           "meetingPoint": "Estación Central de Copenhague",
           "endPoint": "Estación Central de Copenhague",
-          "cancellationType": "Cancelación gratuita 24h",
+          "cancellationType": "Cancelación gratuita 24 horas",
           "typeTour": "Tour de pago",
           "languages": "Inglés"
         }
@@ -428,7 +408,7 @@
         "facts": {
           "meetingPoint": "Palacio de Amalienborg",
           "endPoint": "Palacio de Amalienborg",
-          "cancellationType": "Cancelación gratuita 24h",
+          "cancellationType": "Cancelación gratuita 24 horas",
           "typeTour": "Tour de pago",
           "languages": "Inglés"
         }
@@ -454,62 +434,90 @@
         "facts": {
           "meetingPoint": "Palacio de Christiansborg",
           "endPoint": "Palacio de Christiansborg",
-          "cancellationType": "Cancelación gratuita 24h",
+          "cancellationType": "Cancelación gratuita 24 horas",
           "typeTour": "Tour en grupo",
           "languages": "Inglés"
         }
       },
       "copenhagenEssentials": {
-        "aboutTourDescription": "Discover the heart of Copenhagen in 2.5 hours. This tour combines a historic walk through the city center with a ride on the local electric ferry. From the secrets of the Carlsberg family to iconic landmarks like The Little Mermaid and Nyhavn, we explore the city authentically. We’ll finish at Amalienborg Palace to witness the traditional Changing of the Guards ceremony.",
+        "aboutTourDescription": "Descubre el corazón de Copenhague en 2,5 horas. Este tour combina un paseo histórico por el centro de la ciudad con un trayecto en el ferry eléctrico local. Desde los secretos de la familia Carlsberg hasta iconos como La Sirenita y Nyhavn, exploramos la ciudad de forma auténtica. Terminaremos en el Palacio de Amalienborg para presenciar la tradicional ceremonia del Cambio de Guardia.",
         "highlights": [
-          "Copenhagen’s Top Icons: Explore the city’s must-sees, from the colorful waterfront of Nyhavn and The Little Mermaid to the historic Kastellet fortress.",
-          "Electric Ferry: Cross the harbor like a local on a sustainable boat and discover unique tales of the Carlsberg legacy.",
-          "Royal Guard Finale: Enjoy a dynamic 2.5-hour route that culminates with the traditional Changing of the Guards ceremony at Amalienborg Palace."
+          "Iconos imprescindibles de Copenhague: Recorre los lugares más emblemáticos de la ciudad, desde el colorido frente marítimo de Nyhavn y La Sirenita hasta la histórica fortaleza de Kastellet.",
+          "Ferry eléctrico: Cruza el puerto como un local en una embarcación sostenible y descubre historias únicas del legado Carlsberg.",
+          "Final real con guardias: Disfruta de una ruta dinámica de 2,5 horas que culmina con la tradicional ceremonia del Cambio de Guardia en el Palacio de Amalienborg."
         ],
-        "itineraryDescription": "Our adventure begins at the vibrant City Hall Square, right next to the iconic Dragon Fountain, the beating heart of Copenhagen. From there, we’ll make our way towards the Glyptotek area to uncover the fascinating history of the Carlsberg family and also the unique Dante Plads square. After exploring the Old Town and admiring the majesty of Christiansborg Palace and the historic Old Library, we’ll head to the water. We’ll board a local electric ferry for a scenic harbour crossing, enjoying privileged views of the Black Diamond library, the Opera House, and the colourful Nyhavn waterfront from the sea. Once we reach the northern shore, we’ll stroll through the star-shaped Kastellet fortress to meet the legendary Little Mermaid. Finally, we’ll walk to Amalienborg Palace square, arriving just in time to experience the excitement of the Changing of the Guards ceremony—the perfect grand finale to our journey.",
+        "itineraryDescription": "Nuestra aventura comienza en la vibrante Plaza del Ayuntamiento, junto a la icónica Fuente del Dragón, el corazón de Copenhague. Desde allí nos dirigiremos hacia la zona de la Glyptotek para descubrir la fascinante historia de la familia Carlsberg y también la singular plaza Dante Plads. Tras recorrer el casco antiguo y admirar la majestuosidad del Palacio de Christiansborg y la histórica Biblioteca Antigua, iremos hacia el agua. Subiremos a un ferry eléctrico local para cruzar el puerto con vistas privilegiadas de la Biblioteca Diamante Negro, la Ópera y el colorido frente marítimo de Nyhavn desde el mar. Una vez en la orilla norte, pasearemos por la fortaleza estrellada de Kastellet hasta encontrarnos con la legendaria Sirenita. Finalmente, caminaremos hasta la plaza del Palacio de Amalienborg, llegando justo a tiempo para vivir la emoción del Cambio de Guardia: el gran final perfecto para nuestro recorrido.",
         "included": [
-          "Professional guide in English.",
-          "Ticket for the local electric harbour ferry."
+          "Guía profesional en inglés.",
+          "Billete para el ferry eléctrico local del puerto."
         ],
         "notIncluded": [
-          "Food or drinks.",
-          "Entrance tickets to palace or museum interiors.",
-          "Hotel pickup or drop-off."
+          "Comida o bebidas.",
+          "Entradas a interiores de palacios o museos.",
+          "Recogida o regreso al hotel."
         ],
         "facts": {
-          "meetingPoint": "City Hall Square",
-          "endPoint": "Amalienborg Palace",
-          "cancellationType": "24h Free Cancellation",
-          "typeTour": "Paid Tour",
-          "languages": "English"
+          "meetingPoint": "Plaza del Ayuntamiento",
+          "endPoint": "Palacio de Amalienborg",
+          "cancellationType": "Cancelación gratuita 24 horas",
+          "typeTour": "Tour de pago",
+          "languages": "Inglés"
         }
       },
       "jewishQuarter": {
-        "aboutTourDescription": "This private 3-hour walking tour is an in-depth exploration of the unique and often hopeful history of the Jewish community in Copenhagen. While the Jewish experience across Europe has been turbulent, Denmark stands out for its extraordinary unity during World War II.\n\nLed by your expert guide, you will walk through the Old Town, tracing the historic Jewish Quarter, the area around the Great Synagogue, and past key landmarks associated with the 1943 rescue—a defining moment of national resistance. The tour culminates with skip-the-line admission and a focused visit to the Danish Jewish Museum, allowing you to seamlessly connect the stories from the street with the artifacts and architecture inside. This is a respectful, intimate journey designed for a deep, personalized understanding of the community's heritage and the remarkable chapter known as The Golden Escape.",
+        "aboutTourDescription": "Este tour privado a pie de 3 horas es una exploración profunda de la historia singular —y a menudo esperanzadora— de la comunidad judía en Copenhague. Aunque la experiencia judía en Europa ha sido turbulenta, Dinamarca destaca por su extraordinaria unidad durante la Segunda Guerra Mundial.\n\nGuiado por un experto, recorrerás el casco antiguo siguiendo el histórico barrio judío, la zona de la Gran Sinagoga y puntos clave vinculados al rescate de 1943, un momento decisivo de resistencia nacional. El tour culmina con acceso sin colas y una visita enfocada al Museo Judío Danés, conectando las historias de la calle con las piezas y la arquitectura del interior. Es un recorrido respetuoso e íntimo, pensado para comprender en profundidad el legado de esta comunidad y el capítulo conocido como La Gran Evasión.",
         "highlights": [
-          "Architectural Heritage: Explore the historic Jewish Quarter and admire the distinct, Moorish-revival exterior of the Great Synagogue.",
-          "Museum Deep Dive: Gain immediate skip-the-line access to the renowned Danish Jewish Museum for a focused, guided visit through its unique collection.",
-          "Bespoke Insights: Understand the unique moral courage of the Danish population that sets this chapter of European Jewish history apart."
+          "Patrimonio arquitectónico: Explora el histórico barrio judío y admira el singular exterior neomudéjar de la Gran Sinagoga.",
+          "Inmersión en museo: Accede sin colas al reconocido Museo Judío Danés para una visita guiada y enfocada en su colección única.",
+          "Perspectiva a medida: Comprende el valor moral excepcional de la población danesa que distingue este capítulo de la historia judía europea."
         ],
-        "itineraryDescription": "Explore the rich history of the Jewish Quarter in Copenhagen on this private walking tour. Begin your journey at Kongens Nytorv close to Nyhavn. Then admire the Great Synagogue with its striking Moorish-revival design, then stroll through the Old Town to uncover the story of Jewish migration and the bravery of the Danish community during WWII. Visit the Danish Jewish Museum with skip-the-line access, where your expert guide will share insights on the architecture and significant artifacts. Conclude with a personalized Q&A session, receiving recommendations for kosher dining and shops to enhance your experience in Jewish Copenhagen. - Private tour lasting 3 hours with an expert guide - Skip-the-Line entry to the Danish Jewish Museum included - Focused exploration of the Jewish Quarter and key historical sites.",
+        "itineraryDescription": "Explora la rica historia del barrio judío de Copenhague en este tour privado a pie. Comienza tu recorrido en Kongens Nytorv, cerca de Nyhavn. Después, admira la Gran Sinagoga con su llamativo diseño neomudéjar y continúa por el casco antiguo para descubrir la historia de la migración judía y la valentía de la comunidad danesa durante la Segunda Guerra Mundial. Visita el Museo Judío Danés con acceso sin colas, donde tu guía experto compartirá claves sobre la arquitectura y las piezas más relevantes. Finaliza con una sesión personalizada de preguntas y respuestas, además de recomendaciones de restaurantes kosher y tiendas para completar tu experiencia en la Copenhague judía. - Tour privado de 3 horas con guía experto - Entrada sin colas al Museo Judío Danés incluida - Recorrido enfocado por el barrio judío y lugares históricos clave.",
         "included": [
-          "Private Expert Guide for the entire 3-hour duration.",
-          "Skip-the-Line Entry/Admission to the Danish Jewish Museum (Tickets are fully covered in the price).",
-          "A focused, guided walking tour through the historic Jewish Quarter and Old Town landmarks.",
-          "Personalized recommendations for the best of Jewish Copenhagen, including tips on shops and kosher dining."
+          "Guía experto privado durante las 3 horas completas.",
+          "Entrada sin colas al Museo Judío Danés (los tickets están totalmente incluidos en el precio).",
+          "Recorrido guiado y enfocado por el histórico barrio judío y los principales puntos del casco antiguo.",
+          "Recomendaciones personalizadas para disfrutar lo mejor de la Copenhague judía, incluidas tiendas y opciones kosher."
         ],
         "notIncluded": [
-          "Entry to the Great Synagogue (due to security requirements, access is not permitted on this tour).",
-          "Any costs for food, beverages, or personal shopping (unless a coffee/pastry break is specifically negotiated and included in the price).",
-          "Public transportation tickets (this is a walking tour).",
-          "Gratuities or tips for your private guide."
+          "Entrada a la Gran Sinagoga (por requisitos de seguridad, el acceso no está permitido en este tour).",
+          "Cualquier gasto en comida, bebidas o compras personales (salvo que se acuerde e incluya una pausa de café/pastelería en el precio).",
+          "Billetes de transporte público (es un tour a pie).",
+          "Propinas para el guía privado."
         ],
         "facts": {
           "meetingPoint": "Kongens Nytorv",
-          "endPoint": "Jewish Museum",
-          "cancellationType": "24h Free Cancellation",
-          "typeTour": "Private Tour",
-          "languages": "English"
+          "endPoint": "Museo Judío Danés",
+          "cancellationType": "Cancelación gratuita 24 h",
+          "typeTour": "Tour privado",
+          "languages": "Inglés"
+        }
+      },
+      "tivoliGardensEntry": {
+        "aboutTourDescription": "Aprovecha al máximo tu estancia en la capital danesa con este tour guiado a pie de 2 horas seguido de una visita a los mundialmente famosos Jardines de Tivoli. Desde las raíces medievales de la ciudad hasta su esplendor real, descubrirás los lugares que hacen única a Copenhague y terminarás con acceso sin colas a uno de los parques de atracciones más antiguos del mundo.",
+        "highlights": [
+          "Disfruta lo mejor del casco antiguo en 2 horas.",
+          "Empieza en el histórico puerto de Nyhavn y termina justo en las puertas de los Jardines de Tivoli con tus entradas sin colas en la mano.",
+          "Descubre el impresionante exterior y los patios del Palacio de Christiansborg, sede del Parlamento danés."
+        ],
+        "itineraryDescription": "Nuestro tour comienza en el mundialmente famoso Nyhavn, el vibrante frente marítimo del siglo XVII. Tras admirar sus barcos históricos y casas tradicionales, daremos un breve paseo hasta el Palacio de Amalienborg (residencia real) y la magnífica Iglesia de Mármol.\n\nA continuación, nos dirigiremos a la gran plaza de Kongens Nytorv y al Teatro Real, avanzando hacia el corazón de la ciudad para ver la histórica Bolsa y el majestuoso Palacio de Christiansborg, sede del Parlamento danés.\n\nEl recorrido concluye en la Plaza del Ayuntamiento (Rådhuspladsen). Ubicada a pocos pasos de la entrada principal de los Jardines de Tivoli, tu guía te entregará las entradas para que puedas explorar la magia del parque a tu propio ritmo.",
+        "included": [
+          "Guía experto durante el tour interactivo a pie de 2 horas.",
+          "Entrada sin colas a los Jardines de Tivoli (válida para uso durante todo el día después del tour).",
+          "Ruta a pie diseñada a medida que cubre los lugares más icónicos y aptos para familias de Copenhague."
+        ],
+        "notIncluded": [
+          "Atracciones, juegos o comida dentro de los Jardines de Tivoli (solo se incluye la entrada).",
+          "Comidas, snacks o bebidas durante el tour a pie de 2 horas.",
+          "Entrada al interior de edificios en la ruta (por ejemplo, interior de la Torre Redonda o de los palacios).",
+          "Billetes de transporte público (es un tour a pie).",
+          "Propinas para el guía."
+        ],
+        "facts": {
+          "meetingPoint": "Nyhavn",
+          "endPoint": "Ayuntamiento",
+          "cancellationType": "Cancelación gratuita 48 horas",
+          "typeTour": "Tour en grupo",
+          "languages": "Inglés"
         }
       }
     }
