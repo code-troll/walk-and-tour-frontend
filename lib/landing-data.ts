@@ -375,6 +375,14 @@ export const tours: Tour[] = [
       "privateTour",
       "essential",
     ],
+    heroImageSrc: "/walkandtour/tours/round-tower.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.jewishQuarter }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.jewishQuarter }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.jewishQuarter }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.jewishQuarter }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.jewishQuarter }/5.jpg`,
+    ],
   },
   {
     id: "tivoliGardensEntry",

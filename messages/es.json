@@ -483,6 +483,34 @@
           "typeTour": "Paid Tour",
           "languages": "English"
         }
+      },
+      "jewishQuarter": {
+        "aboutTourDescription": "This private 3-hour walking tour is an in-depth exploration of the unique and often hopeful history of the Jewish community in Copenhagen. While the Jewish experience across Europe has been turbulent, Denmark stands out for its extraordinary unity during World War II.\n\nLed by your expert guide, you will walk through the Old Town, tracing the historic Jewish Quarter, the area around the Great Synagogue, and past key landmarks associated with the 1943 rescue—a defining moment of national resistance. The tour culminates with skip-the-line admission and a focused visit to the Danish Jewish Museum, allowing you to seamlessly connect the stories from the street with the artifacts and architecture inside. This is a respectful, intimate journey designed for a deep, personalized understanding of the community's heritage and the remarkable chapter known as The Golden Escape.",
+        "highlights": [
+          "Architectural Heritage: Explore the historic Jewish Quarter and admire the distinct, Moorish-revival exterior of the Great Synagogue.",
+          "Museum Deep Dive: Gain immediate skip-the-line access to the renowned Danish Jewish Museum for a focused, guided visit through its unique collection.",
+          "Bespoke Insights: Understand the unique moral courage of the Danish population that sets this chapter of European Jewish history apart."
+        ],
+        "itineraryDescription": "Explore the rich history of the Jewish Quarter in Copenhagen on this private walking tour. Begin your journey at Kongens Nytorv close to Nyhavn. Then admire the Great Synagogue with its striking Moorish-revival design, then stroll through the Old Town to uncover the story of Jewish migration and the bravery of the Danish community during WWII. Visit the Danish Jewish Museum with skip-the-line access, where your expert guide will share insights on the architecture and significant artifacts. Conclude with a personalized Q&A session, receiving recommendations for kosher dining and shops to enhance your experience in Jewish Copenhagen. - Private tour lasting 3 hours with an expert guide - Skip-the-Line entry to the Danish Jewish Museum included - Focused exploration of the Jewish Quarter and key historical sites.",
+        "included": [
+          "Private Expert Guide for the entire 3-hour duration.",
+          "Skip-the-Line Entry/Admission to the Danish Jewish Museum (Tickets are fully covered in the price).",
+          "A focused, guided walking tour through the historic Jewish Quarter and Old Town landmarks.",
+          "Personalized recommendations for the best of Jewish Copenhagen, including tips on shops and kosher dining."
+        ],
+        "notIncluded": [
+          "Entry to the Great Synagogue (due to security requirements, access is not permitted on this tour).",
+          "Any costs for food, beverages, or personal shopping (unless a coffee/pastry break is specifically negotiated and included in the price).",
+          "Public transportation tickets (this is a walking tour).",
+          "Gratuities or tips for your private guide."
+        ],
+        "facts": {
+          "meetingPoint": "Kongens Nytorv",
+          "endPoint": "Jewish Museum",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Private Tour",
+          "languages": "English"
+        }
       }
     }
   },
