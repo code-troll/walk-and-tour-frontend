@@ -48,7 +48,7 @@ export default function TourListingCard({
           />
         </a>
         <span
-          className="absolute left-4 top-4 rounded-full bg-[#f8f4ef]/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[#5b4d3c]">
+          className="absolute left-4 top-4 rounded-full bg-[#2b666d]/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
             { tourItemT(`${ tour.id }.tag`) }
           </span>
       </div>

@@ -652,6 +652,14 @@ export const tours: Tour[] = [
       "royalPalaces",
       "essential",
     ],
+    heroImageSrc: "/walkandtour/tours/shore-excursion.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.shoreExcursion }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.shoreExcursion }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.shoreExcursion }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.shoreExcursion }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.shoreExcursion }/5.jpg`,
+    ],
   },
   {
     id: "copenhagenCityToCoast",
@@ -666,6 +674,15 @@ export const tours: Tour[] = [
       "groupTour",
       "cruise",
       "history",
+    ],
+    heroImageSrc: "/walkandtour/tours/copenhagen-city-to-coast.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/6.jpg`,
     ],
   },
 ];

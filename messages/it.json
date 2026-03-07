@@ -739,6 +739,34 @@
         "imageAlt": "Panorama di Copenaghen: esperienza privata dal porto al centro"
       },
       "shoreExcursion": {
+        "aboutTourDescription": "Vivi Copenaghen nella sua forma più autentica. Questa escursione di 4 ore in piccolo gruppo è pensata specificamente per i passeggeri delle crociere che preferiscono il tocco personale di un tour a piedi invece di osservare la città dal finestrino di un autobus. La tua esperienza inizia nel momento in cui scendi dalla nave, quando la guida ti incontra vicino al porto crocieristico. Combiniamo i principali luoghi imperdibili della città con vicoli medievali nascosti e segreti locali, insegnandoti anche il vero significato dell'hygge danese. Grazie all'efficiente trasporto pubblico cittadino, ti muoverai come un locale e sfrutterai al massimo il tempo nel cuore storico della capitale.",
+        "highlights": [
+          "La tua guida ti incontra direttamente al terminal metro Orientkaj (M4), a soli 10 minuti di autobus dal terminal crociere.",
+          "A differenza dei tour standard di 3 ore, la nostra ora extra permette un ritmo rilassato, cortili storici nascosti e un approfondimento sullo stile di vita danese del \"hygge\".",
+          "Viaggi con bambini? I minori di 12 anni partecipano gratis. Questo lo rende l'esperienza più conveniente e accogliente per le famiglie.",
+          "Vivi Copenaghen come un locale esplorando la città a piedi e utilizzando il nostro sistema di trasporto pubblico green di livello mondiale."
+        ],
+        "itineraryDescription": "Poi godrai di un tragitto guidato in metro direttamente nel cuore storico di Copenaghen.\n\nLa parte a piedi inizia a Gammel Strand, l'antica riva della città, con splendide viste sul Palazzo di Christiansborg, sede del Parlamento danese.\n\nProseguendo verso il centro, passeggerai nella vivace piazza di Kongens Nytorv e nelle affascinanti strade medievali che definiscono il carattere della capitale.\n\nIl percorso porta poi all'iconico canale di Nyhavn, famoso per le colorate case del XVII secolo e le storiche navi in legno.\n\nDa lì, proseguirai verso il quartiere reale per ammirare il Palazzo di Amalienborg e l'imponente Chiesa di Marmo.\n\nDopo una piacevole passeggiata nel Giardino del Re, con vista sul Castello rinascimentale di Rosenborg, la tua guida ti accompagnerà di nuovo al molo di Oceankaj, assicurando un rientro comodo e puntuale per la partenza della nave.",
+        "included": [
+          "Servizio dedicato da parte di un esperto professionale di lingua inglese.",
+          "Accoglienza personalizzata direttamente al terminal metro di Orientkaj.",
+          "I minori di 12 anni partecipano gratis (fino a 2 bambini per adulto).",
+          "Consigli locali sulla cultura danese, l'\"hygge\" e i migliori posti della città.",
+          "Tutti i biglietti del trasporto pubblico necessari per il tour (bus/metro) sono inclusi."
+        ],
+        "notIncluded": [
+          "Snack, caffè o pasti durante la camminata di 4 ore.",
+          "Ingresso all'interno di musei o palazzi.",
+          "Questo è un tour a piedi con trasporto pubblico; non è previsto un'auto privata o minivan.",
+          "Mance per la guida (facoltative ma apprezzate)."
+        ],
+        "facts": {
+          "meetingPoint": "Stazione metro Orientkaj (M4)",
+          "endPoint": "Stazione metro Orientkaj (M4)",
+          "cancellationType": "Cancellazione gratuita entro 24 ore",
+          "typeTour": "Piccolo gruppo fino a 12 adulti",
+          "languages": "Inglese"
+        },
         "title": "Escursione a piedi a Copenaghen per crocieristi: dalla metro Orientkaj al cuore della citta",
         "location": "Copenaghen",
         "duration": "4 ore",
@@ -746,6 +774,28 @@
         "imageAlt": "Escursione a piedi a Copenaghen per crocieristi: dalla metro Orientkaj al cuore della citta"
       },
       "copenhagenCityToCoast": {
+        "aboutTourDescription": "Scopri la transizione perfetta dal cuore storico di Copenaghen alla sua anima moderna e dinamica. Questa esperienza di 3 ore ti porta dall'iconica City Hall Square, attraverso giardini reali nascosti e architetture di livello mondiale come il Black Diamond, prima di salire a bordo di una crociera panoramica nel porto. Attracchiamo direttamente a Reffen Street Food proprio quando iniziano la musica e l'atmosfera del tramonto, lasciandoti nel punto ideale per gustare i migliori sapori internazionali della città.",
+        "highlights": [
+          "Passiamo dalla grandiosità storica del Municipio e di Slotsholmen al lungomare ultra moderno, con il Black Diamond in vetro e granito e l'artistico Circle Bridge di Olafur Eliasson.",
+          "Invece di una lunga camminata in aree industriali, saliamo sull'Havnebus per una navigazione panoramica di 20 minuti. Avrai una vista in prima fila su Nyhavn, il Royal Playhouse e l'Opera House dall'acqua.",
+          "Attracchiamo direttamente a Refshaleøen all'inizio della \"golden hour\". La guida ti presenta i migliori stand internazionali di street food e gli angoli nascosti di Reffen, lasciandoti godere dell'atmosfera più vivace al tramonto."
+        ],
+        "itineraryDescription": "Il tour inizia a City Hall Square (Rådhuspladsen), dove esploriamo il battito storico della città prima di camminare verso Slotsholmen, sede del Parlamento danese. Ci allontaniamo dalla folla nel Librarian's Garden, un'oasi segreta tra antico e moderno, prima di raggiungere la sorprendente facciata in vetro e granito del Black Diamond. Da lì seguiamo il lungomare per osservare l'artistico Circle Bridge di Olafur Eliasson e il bohemien Kayak Bar, cogliendo il meglio dell'\"hygge\" moderno di Copenaghen. Poi faremo una navigazione panoramica di 20 minuti. Il tour si conclude attraccando direttamente a Refshaleøen, dove la guida ti offrirà un orientamento personalizzato sui migliori stand internazionali e angoli nascosti del mercato Reffen, proprio quando l'atmosfera serale raggiunge il suo apice e potrai goderti il tramonto.",
+        "included": [
+          "Esperienza guidata professionale di 3 ore con un esperto locale.",
+          "Biglietto di sola andata per l'Havnebus (bus del porto).",
+          "Orientamento personalizzato e lista di consigli per gli stand di Reffen Street Food."
+        ],
+        "notIncluded": [
+          "Qualsiasi cibo, snack o bevanda acquistati al mercato Reffen o lungo il percorso a piedi."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall Square",
+          "endPoint": "Reffen Street Market",
+          "cancellationType": "Cancellazione gratuita entro 24 ore",
+          "typeTour": "Piccolo gruppo fino a 12 adulti",
+          "languages": "Inglese"
+        },
         "title": "Copenaghen dalla citta alla costa: Diamante Nero, crociera sui canali e Reffen",
         "location": "Copenaghen",
         "duration": "3 ore",

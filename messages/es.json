@@ -734,6 +734,34 @@
         "imageAlt": "Panorama de Copenhague: experiencia privada del puerto al centro"
       },
       "shoreExcursion": {
+        "aboutTourDescription": "Descubre Copenhague en su versión más auténtica. Esta excursión de 4 horas en grupo reducido está diseñada específicamente para pasajeros de crucero que prefieren el trato cercano de un tour a pie en lugar de verlo todo desde la ventana de un autobús. Tu experiencia comienza en el momento en que bajas del barco, cuando tu guía te recibe cerca del puerto de cruceros. Combinamos los lugares imprescindibles de la ciudad con callejones medievales escondidos y secretos locales, mientras te enseñamos el verdadero significado del hygge danés. Usando el eficiente transporte público de la ciudad, te moverás como un local y aprovecharás al máximo tu tiempo en el corazón histórico de la capital.",
+        "highlights": [
+          "Tu guía te espera directamente en la terminal de metro Orientkaj (M4), a solo 10 minutos en autobús de la terminal de cruceros.",
+          "A diferencia de los tours estándar de 3 horas, nuestra hora extra permite un ritmo relajado, patios históricos ocultos y una inmersión más profunda en el estilo de vida danés del \"hygge\".",
+          "¿Viajas con niños? Los menores de 12 años se unen gratis. Esto lo convierte en la experiencia más económica y acogedora para familias.",
+          "Vive Copenhague como un local, recorriendo la ciudad a pie y utilizando nuestro sistema de transporte público ecológico de primer nivel."
+        ],
+        "itineraryDescription": "A continuación, disfrutarás de un trayecto guiado en metro directo al corazón histórico de Copenhague.\n\nLa parte a pie comienza en Gammel Strand, la antigua orilla de la ciudad, con impresionantes vistas del Palacio de Christiansborg, sede del Parlamento danés.\n\nMientras avanzas hacia el centro, pasearás por la vibrante plaza de Kongens Nytorv y por las encantadoras calles medievales que definen el carácter de la capital.\n\nLa ruta continúa hacia el icónico canal de Nyhavn, famoso por sus coloridas casas del siglo XVII y sus históricos barcos de madera.\n\nDesde allí, seguirás hacia el barrio real para admirar el Palacio de Amalienborg y la impresionante Iglesia de Mármol.\n\nDespués de un tranquilo paseo por el Jardín del Rey, con vistas al Castillo de Rosenborg de estilo renacentista, tu guía te acompañará de regreso al muelle de Oceankaj, asegurando que regreses con comodidad y a tiempo para la salida de tu barco.",
+        "included": [
+          "Atención dedicada de un experto profesional de habla inglesa.",
+          "Recepción personalizada directamente en la terminal de metro de Orientkaj.",
+          "Los menores de 12 años se unen gratis (hasta 2 niños por adulto).",
+          "Consejos locales sobre cultura danesa, \"hygge\" y los mejores lugares de la ciudad.",
+          "Todos los billetes de transporte público necesarios para el tour (autobús/metro) están incluidos."
+        ],
+        "notIncluded": [
+          "Snacks, café o comidas durante la caminata de 4 horas.",
+          "Entrada al interior de museos o palacios.",
+          "Este es un tour a pie con transporte público; no se proporciona coche privado ni miniván.",
+          "Propinas para tu guía (opcionales, pero apreciadas)."
+        ],
+        "facts": {
+          "meetingPoint": "Estación de metro Orientkaj (M4)",
+          "endPoint": "Estación de metro Orientkaj (M4)",
+          "cancellationType": "Cancelación gratuita 24 horas",
+          "typeTour": "Grupo reducido hasta 12 adultos",
+          "languages": "Inglés"
+        },
         "title": "Excursión a pie en Copenhague para cruceros: del metro Orientkaj al corazón de la ciudad",
         "location": "Copenhague",
         "duration": "4 horas",
@@ -741,6 +769,28 @@
         "imageAlt": "Excursión a pie en Copenhague para cruceros: del metro Orientkaj al corazón de la ciudad"
       },
       "copenhagenCityToCoast": {
+        "aboutTourDescription": "Descubre la transición perfecta del corazón histórico de Copenhague a su alma moderna y vibrante. Esta experiencia de 3 horas te lleva desde la icónica Plaza del Ayuntamiento, pasando por jardines reales escondidos y arquitectura de primer nivel como el Black Diamond, antes de embarcar en un crucero panorámico por el puerto. Atracamos directamente en Reffen Street Food justo cuando comienzan la música y el ambiente del atardecer, dejándote en el lugar ideal para disfrutar de los mejores sabores internacionales de la ciudad.",
+        "highlights": [
+          "Recorremos la grandeza histórica del Ayuntamiento y Slotsholmen hasta la zona de costa ultra moderna, con el Black Diamond de vidrio y granito y el artístico Circle Bridge de Olafur Eliasson.",
+          "En lugar de una larga caminata por zonas industriales, subimos al Havnebus para una navegación panorámica de 20 minutos. Tendrás vistas privilegiadas de Nyhavn, el Royal Playhouse y la Ópera desde el agua.",
+          "Atracamos directamente en Refshaleøen justo al inicio de la \"hora dorada\". Tu guía te presenta los mejores puestos de comida callejera internacional y rincones escondidos de Reffen, para que disfrutes del atardecer en el ambiente más vibrante de la ciudad."
+        ],
+        "itineraryDescription": "El recorrido comienza en la Plaza del Ayuntamiento (Rådhuspladsen), donde exploramos el pulso histórico de la ciudad antes de caminar hacia Slotsholmen, sede del Parlamento danés. Escapamos de las multitudes en el Jardín del Bibliotecario, un oasis secreto entre lo antiguo y lo nuevo, antes de llegar a la impactante fachada de vidrio y granito del Black Diamond. Desde allí seguimos la costa para contemplar el artístico Circle Bridge de Olafur Eliasson y el bohemio Kayak Bar, capturando lo mejor del \"hygge\" moderno de Copenhague. Después tomamos una navegación panorámica de 20 minutos. El tour concluye al atracar directamente en Refshaleøen, donde tu guía te dará una orientación personalizada de los mejores puestos de comida internacional y rincones ocultos del mercado Reffen, justo cuando el ambiente de la tarde alcanza su punto más alto y puedes disfrutar del atardecer.",
+        "included": [
+          "Experiencia guiada profesional de 3 horas con un experto local.",
+          "Billete de ida para el Havnebus (autobús acuático).",
+          "Orientación personalizada y recomendaciones para los puestos de Reffen Street Food."
+        ],
+        "notIncluded": [
+          "Comidas, snacks o bebidas compradas en el mercado de Reffen o durante la ruta a pie."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall Square",
+          "endPoint": "Reffen Street Market",
+          "cancellationType": "Cancelación gratuita 24 horas",
+          "typeTour": "Grupo reducido hasta 12 adultos",
+          "languages": "Inglés"
+        },
         "title": "De la ciudad a la costa de Copenhague: Diamante Negro, crucero por los canales y Reffen",
         "location": "Copenhague",
         "duration": "3 horas",

@@ -744,6 +744,34 @@
         "imageAlt": "Copenhagen Panorama: Private Shore-to-City Experience"
       },
       "shoreExcursion": {
+        "aboutTourDescription": "Experience Copenhagen at its most authentic. This 4-hour small group excursion is specifically designed for cruise passengers who prefer the personal touch of a walking tour over a bus window. Your experience begins the moment you step off the ship, as your guide meets you close the cruise port. We combine the city’s iconic \"must-see\" landmarks with hidden medieval alleys and local secrets, all while teaching you the true meaning of Danish Hygge. By using the city’s efficient public transit, you’ll travel like a local and maximize your time in the historic heart of the capital.",
+        "highlights": [
+          "Your guide meets you directly at the  OrientkajMetro Terminal (M4) just 10 minutes by bus from the Cruise Terminal.",
+          "Unlike standard 3-hour tours, our extra hour allows for a relaxed pace, hidden historic courtyards, and a deep dive into the Danish \"Hygge\" lifestyle.",
+          "Traveling with kids? Children under 12 join for free. This makes it the most cost-effective and welcoming private experience for families.",
+          "Experience Copenhagen like a local by exploring the city on foot and using our world-class green public transport system."
+        ],
+        "itineraryDescription": "You will then enjoy a guided metro ride straight into the historic heart of Copenhagen.\n\nThe walking portion starts at Gammel Strand, the city’s ancient shore, offering stunning views of Christiansborg Palace, the seat of the Danish Parliament.\n\nAs you move toward the city center, you will stroll through the vibrant Kongens Nytorv square and the charming medieval streets that define the capital’s character.\n\nThe route then leads you to the iconic Nyhavn canal, famous for its 17th-century colorful townhouses and historic wooden ships.\n\nFrom there, you will proceed to the royal quarter to admire Amalienborg Palace and the impressive Marble Church.\n\nAfter a peaceful walk through the King’s Garden, with views of the Renaissance Rosenborg Castle, your guide will escort you back to the Oceankaj pier, ensuring you return comfortably and on time for your ship’s departure.",
+        "included": [
+          "Dedicated service from a professional English-speaking expert.",
+          "Personal meet-and-greet directly at the Orientkaj terminal metro.",
+          "Children under 12 join for free (up to 2 kids per adult).",
+          "Insider tips on Danish culture, \"Hygge\", and the best local spots.",
+          "All public transport tickets (bus/metro) required for the tour are covered."
+        ],
+        "notIncluded": [
+          "Any snacks, coffee, or meals during the 4-hour walk.",
+          "Admission to the interior of museums or palaces.",
+          "This is a walking tour using public transit; no private car or minivan is provided.",
+          "Tips for your guide (optional but appreciated)."
+        ],
+        "facts": {
+          "meetingPoint": "Orientkaj Metro Station (M4)",
+          "endPoint": "Orientkaj Metro Station (M4)",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Small group up to 12 adults",
+          "languages": "English"
+        },
         "title": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City",
         "location": "Copenhagen",
         "duration": "4 hours",
@@ -751,6 +779,28 @@
         "imageAlt": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City"
       },
       "copenhagenCityToCoast": {
+        "aboutTourDescription": "Discover the perfect transition from Copenhagen’s historic heart to its gritty, modern soul. This 3-hour experience takes you from the iconic City Hall Square, through hidden royal gardens and world-class architecture like the Black Diamond, before boarding a scenic Harbor Cruise. We dock directly at Reffen Street Food just as the music and sunset vibes kick in, leaving you perfectly positioned to enjoy the city’s best global flavors.",
+        "highlights": [
+          "We journey from the historic grandeur of City Hall and Slotsholmen to the ultra-modern waterfront, featuring the glass-and-granite Black Diamond and the artistic Circle Bridge by Olafur Eliasson.",
+          "Instead of a long walk through industrial areas, we board the Havnebus for a scenic 20-minute navigation. This offers \"front-row seats\" to Nyhavn, the Royal Playhouse, and the Opera House from the water.",
+          "We dock directly at Refshaleøen just as the \"Golden Hour\" begins. Your guide introduces you to the best global street food stalls and hidden corners of Reffen, leaving you to enjoy the city’s most vibrant sunset atmosphere."
+        ],
+        "itineraryDescription": "The journey begins at City Hall Square (Rådhuspladsen), where we explore the historic pulse of the city before walking toward Slotsholmen, the seat of the Danish Parliament. We escape the crowds in the Librarian’s Garden, a secret oasis tucked between the old and the new, before reaching the striking glass-and-granite facade of the Black Diamond. From there, we trace the waterfront to witness the artistic Circle Bridge by Olafur Eliasson and the bohemian Kayak Bar, capturing the best of Copenhagen’s modern \"Hygge\" culture. Then we will take a  20-minute scenic navigation. The tour concludes as we dock directly at Refshaleøen, where your guide will provide a curated orientation of the best global street food stalls and hidden corners of the Reffen Market just as the evening atmosphere begins to peak and you can enjoy the sunset!",
+        "included": [
+          "Professional 3-hour guided experience with a local expert.",
+          "One way ticket for the Havnebus (Harbor Bus).",
+          "Personalized orientation/recommendation list for the Reffen Street Food stalls."
+        ],
+        "notIncluded": [
+          "Any food, snacks, or beverages purchased at the Reffen market or along the walking route."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall Square",
+          "endPoint": "Reffen Street Market",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Small group up to 12 adults",
+          "languages": "English"
+        },
         "title": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen",
         "location": "Copenhagen",
         "duration": "3 hours",
