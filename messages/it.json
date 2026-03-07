@@ -340,6 +340,124 @@
           "languages": "Inglese e spagnolo (in base alla partenza)"
         },
         "bookingDescription": "Prenota il tuo posto e partecipa a una delle migliori introduzioni al centro storico di Copenaghen. Formula a offerta libera e gruppi ridotti."
+      },
+      "rosenborgCastleTour": {
+        "aboutTourDescription": "Intraprendi un viaggio magico nel cuore dell’eredità reale danese con il nostro esclusivo tour di 2 ore al maestoso Castello di Rosenborg a Copenaghen. Questa esperienza è pensata per immergerti nella ricca storia di questo gioiello rinascimentale, un tempo amata residenza reale del re Christian IV. Il tour offre un’immersione culturale eccezionale nella narrazione unica della monarchia danese.",
+        "highlights": [
+          "Viaggio esclusivo: Partecipa a un tour di gruppo del Castello di Rosenborg.",
+          "Maestosità rinascimentale: Immergiti nella storia dell’antica residenza reale del re Christian IV.",
+          "Gioielli della Corona: Scopri segreti e storie affascinanti dietro i tesori reali di Danimarca.",
+          "Giardini rigogliosi: Passeggia nei bellissimi giardini che circondano questo luogo iconico.",
+          "Interni del castello: Esplora in dettaglio il capolavoro del re all’interno del castello.",
+          "Guida esperta: Lasciati accompagnare da guide competenti che raccontano segreti e storie reali."
+        ],
+        "itineraryDescription": "Il tour inizia dal nostro comodo punto di incontro: Øster Voldgade 4A, 1350 København, dove riconoscerai facilmente la guida con un caratteristico ombrello rosso all’ingresso.\n\nAccompagnato dalle nostre guide esperte, scoprirai i segreti dei Gioielli della Corona danese, pezzi ricchi di storie coinvolgenti e segreti reali. Proseguiremo con una passeggiata nei lussureggianti giardini che circondano questo palazzo emblematico, tra viste serene e scorci della vita di corte.\n\nSuccessivamente entreremo nel capolavoro di Christian IV con una visita intima degli straordinari interni del castello. Esplorerai collezioni e sale affascinanti, ognuna capace di raccontare qualcosa in più sul passato reale della Danimarca. Questo percorso ti permetterà di immergerti completamente nella narrazione unica della monarchia danese.",
+        "included": [
+          "Guida professionale esperta di lingua inglese.",
+          "Biglietto d’ingresso al Castello di Rosenborg (incluso accesso ai Gioielli della Corona e agli interni del castello).",
+          "Passeggiata guidata nei giardini del Castello di Rosenborg."
+        ],
+        "notIncluded": [
+          "Pasti e bevande.",
+          "Mance per la guida.",
+          "Spese personali.",
+          "Assicurazione di viaggio.",
+          "Trasporto da/per il punto di incontro (salvo diversa indicazione)."
+        ],
+        "facts": {
+          "meetingPoint": "Castello di Rosenborg",
+          "endPoint": "Castello di Rosenborg",
+          "cancellationType": "Cancellazione gratuita entro 24 h",
+          "typeTour": "Tour a pagamento",
+          "languages": "Inglese"
+        }
+      },
+      "malmoExcursion": {
+        "aboutTourDescription": "Scopri l’affascinante città di Malmö, la terza più grande della Svezia, con un tour emozionante pensato per immergerti nelle sue strade suggestive e nella sua ricca storia. Questa esperienza guidata offre un’esplorazione completa dei punti salienti di Malmö, dal centro storico ai luoghi iconici come Slottsmöllan (mulino olandese). Ammirerai l’architettura del Municipio di Malmö e del Castello di Malmöhus, vivendo da vicino la cultura locale tra piazze storiche e la visita alla chiesa di San Pietro.",
+        "highlights": [
+          "Attraversa il ponte di Øresund: Vivi l’impressionante viaggio in treno da Copenaghen a Malmö.",
+          "Esplora il Castello di Malmöhus: Scopri il ricco passato di questa antica fortezza.",
+          "Visita la chiesa di San Pietro: Entra in una delle chiese più antiche e importanti di Malmö.",
+          "Ammira il Municipio di Malmö: Osserva l’imponente architettura del cuore civico della città.",
+          "Vedi Slottsmöllan (mulino olandese): Scatta foto di questo simbolo storico di Malmö.",
+          "Passeggia nel centro storico: Cammina tra strade acciottolate e case colorate piene di fascino."
+        ],
+        "itineraryDescription": "La nostra avventura inizia attraversando in treno l’iconico ponte di Øresund, con viste mozzafiato verso la Svezia. Una volta a Malmö, ci immergeremo subito nella storia della città.\n\nIl viaggio ci porta nel cuore di Malmö, dove ci attende il castello di Malmöhus. Questa antica fortezza custodisce storie affascinanti di secoli passati che la guida farà rivivere. Poi visiteremo la chiesa di San Pietro, una delle più antiche e importanti della città, ammirandone l’architettura. Successivamente osserveremo la maestosità del Municipio di Malmö, elemento centrale del suo paesaggio storico.\n\nNon mancherà la celebre Slottsmöllan, il mulino olandese simbolo del patrimonio di Malmö. Passeggeremo nel suggestivo centro storico, tra strade in pietra e case colorate, dove il tempo sembra rallentare.\n\nIl tour include anche una visita alla Biblioteca di Malmö, luogo magico che ospita un piccolo castello del 1901. Avrai inoltre del tempo libero per il pranzo e per gustare la cucina locale con il tuo ritmo.",
+        "included": [
+          "Guida professionale di lingua inglese.",
+          "Mappa interattiva (accesso digitale) per facilitare l’orientamento.",
+          "Biglietto del trasporto pubblico valido 24 ore per gli spostamenti tra Copenaghen e Malmö e all’interno di Malmö.",
+          "Biglietti d’ingresso alla chiesa di San Pietro e alla Biblioteca di Malmö."
+        ],
+        "notIncluded": [
+          "Pasti e bevande.",
+          "Mance per la guida.",
+          "Ingressi ad altre attrazioni (salvo indicazione contraria).",
+          "Spese personali.",
+          "Assicurazione di viaggio."
+        ],
+        "facts": {
+          "meetingPoint": "Stazione Centrale di Copenaghen",
+          "endPoint": "Stazione Centrale di Copenaghen",
+          "cancellationType": "Cancellazione gratuita entro 24 h",
+          "typeTour": "Tour a pagamento",
+          "languages": "Inglese"
+        }
+      },
+      "amalienborgPalace": {
+        "aboutTourDescription": "Preparati a entrare nella vera casa della monarchia danese. Amalienborg non è solo un museo: è la residenza invernale attiva della Famiglia Reale. In questo tour andremo oltre la facciata rococò per scoprire come hanno vissuto re e regine di Danimarca per oltre 250 anni.",
+        "highlights": [
+          "Tesori imperiali: Accesso alla straordinaria Camera Fabergé, con una delle più importanti collezioni al mondo di gioielleria russa.",
+          "Vita reale: Percorso tra sale private e sale di rappresentanza di antichi re e regine.",
+          "Storia viva: Scopri i segreti del complesso rococò, dimora della famiglia reale danese da oltre 250 anni.",
+          "Cerimonia reale: Possibilità di assistere al famoso Cambio della Guardia Reale (se il tour coincide con le 12:00)."
+        ],
+        "itineraryDescription": "La nostra avventura inizia nella grande piazza ottagonale, il cuore di Amalienborg. Ammirando la simmetria dei quattro palazzi gemelli, la guida ti racconterà come un tragico incendio spinse la Famiglia Reale a trasformare questo complesso nella propria residenza permanente.\n\nCon il biglietto già incluso, entreremo direttamente nel Museo di Amalienborg (nel Palazzo di Christian VIII). All’interno inizieremo un viaggio nel tempo tra ambienti conservati: dagli uffici privati dei vecchi monarchi ai grandi saloni di rappresentanza. Vedrai da vicino com’era la vita a corte, con arredi originali, oggetti personali e decorazioni storiche.\n\nProseguiremo nelle sale più significative, come la maestosa Sala di Pompei e l’elegante Salotto della Regina Luisa. Concluderemo nella spettacolare Camera Fabergé, dove storia e ricchezza si incontrano in preziosi capolavori legati anche alla corona danese.\n\nDopo circa un’ora e mezza, il tour termina all’interno del palazzo, lasciandoti una comprensione più profonda di questa duratura dinastia europea.",
+        "included": [
+          "Guida esperta di lingua inglese.",
+          "Biglietto d’ingresso al Museo di Amalienborg (Palazzo di Christian VIII).",
+          "Accesso alle sale storiche e alla Camera Fabergé.",
+          "Esperienza in gruppo ridotto."
+        ],
+        "notIncluded": [
+          "Trasporto pubblico (il tour è a piedi).",
+          "Cibo o bevande.",
+          "Ingresso agli altri tre palazzi (a uso privato).",
+          "Mance (facoltative)."
+        ],
+        "facts": {
+          "meetingPoint": "Palazzo di Amalienborg",
+          "endPoint": "Palazzo di Amalienborg",
+          "cancellationType": "Cancellazione gratuita entro 24 h",
+          "typeTour": "Tour a pagamento",
+          "languages": "Inglese"
+        }
+      },
+      "christiansborgPalace": {
+        "aboutTourDescription": "Scopri l’imponente Palazzo di Christiansborg, pilastro della storia danese e sede simbolica del potere a Copenaghen. Questo tour guidato di 1,5 ore approfondisce il duplice ruolo del palazzo: motore della moderna democrazia danese e scenario della monarchia. Esplorerai le maestose Sale di Ricevimento Reali, ancora utilizzate per funzioni di Stato, e la storica Sala del Trono. Il fulcro della visita è la straordinaria Sala degli Arazzi, dove opere monumentali raccontano visivamente la storia della Danimarca.",
+        "highlights": [
+          "Sede del potere: Esplora il palazzo in cui convergono i tre poteri dello Stato danese (esecutivo, legislativo e giudiziario).",
+          "Grandezza reale: Accedi alle lussuose Sale di Ricevimento Reali e alla storica Sala del Trono, ancora usate per cerimonie ufficiali.",
+          "Sala degli Arazzi: Ammira i maestosi arazzi che raccontano 1.000 anni di storia danese.",
+          "Accesso esperto: Immergiti in secoli di storia reale e vita politica con le spiegazioni di una guida locale."
+        ],
+        "itineraryDescription": "Questo tour di 1,5 ore inizia al punto d’incontro con la guida presso il Palazzo di Christiansborg. La visita parte dalle magnifiche Sale di Ricevimento Reali, dove scoprirai storie di eventi di Stato e della monarchia. Proseguiremo poi nella splendida Sala degli Arazzi per ammirare le opere monumentali che rappresentano 1.000 anni di storia danese, per concludere con l’accesso alla storica Sala del Trono. La parte guidata termina all’interno del palazzo, lasciandoti in una posizione ideale per continuare a esplorare in autonomia altre aree, come la Torre o le Scuderie Reali.",
+        "included": [
+          "Guida esperta per l’intera durata di 1,5 ore.",
+          "Biglietto d’ingresso al Palazzo di Christiansborg.",
+          "Accesso guidato alle Sale di Ricevimento Reali, alla Sala del Trono e alla Grande Sala degli Arazzi."
+        ],
+        "notIncluded": [
+          "Pasti, bevande o snack personali.",
+          "Mance per la guida."
+        ],
+        "facts": {
+          "meetingPoint": "Palazzo di Christiansborg",
+          "endPoint": "Palazzo di Christiansborg",
+          "cancellationType": "Cancellazione gratuita entro 24 h",
+          "typeTour": "Tour di gruppo",
+          "languages": "Inglese"
+        }
       }
     }
   },

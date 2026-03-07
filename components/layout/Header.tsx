@@ -270,14 +270,14 @@ export default function Header() {
   return (
     <>
       <header className={ headerClassName }>
-        <div className="flex h-full w-full items-center justify-between px-[var(--header-px)] py-[var(--header-py)]">
-          <a href={ homeHref } className="mb-[var(--logo-mb)] flex items-center gap-3">
+        <div className="flex h-full w-full items-center justify-between px-(--header-px) py-(--header-py)">
+          <a href={ homeHref } className="mb-(--logo-mb) flex items-center gap-3">
             <Image
               src="/walkandtour/branding/logo-formal.png"
               alt={ t("logoAlt") }
               width={ 120 }
               height={ 84 }
-              className="h-[var(--logo-h)] w-auto"
+              className="h-(--logo-h) w-auto"
               priority
             />
           </a>
@@ -299,7 +299,7 @@ export default function Header() {
               { t("privateTours") }
             </a>
           </nav>
-          <div className="flex items-center gap-[var(--ctrl-gap)]">
+          <div className="flex items-center gap-(--ctrl-gap)">
             <div ref={ desktopLanguageMenuRef } className="relative">
               <button
                 type="button"

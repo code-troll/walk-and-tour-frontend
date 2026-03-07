@@ -327,6 +327,15 @@ export const tours: Tour[] = [
       "history",
       "royalPalaces",
     ],
+    heroImageSrc: "/walkandtour/tours/tour-christiansborg.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/1.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/2.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/3.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/4.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/5.jpg`,
+      `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/6.jpg`,
+    ],
   },
   {
     id: "copenhagenEssentials",

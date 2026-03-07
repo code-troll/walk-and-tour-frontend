@@ -98,6 +98,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
   const tourCardT = await getTranslations({locale, namespace: "tours.card"});
   const tourDetailT = await getTranslations({locale, namespace: "tourDetail"});
+  const headerT = await getTranslations({locale, namespace: "header"});
 
   const itemKey = `items.${ tour.id }`;
   const highlights = getRawWithFallback<string[]>(
@@ -136,6 +137,11 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     ...defaultFacts,
     ...itemFacts,
   };
+  const localeLanguage = locale === "en"
+    ? headerT("languages.EN")
+    : locale === "es"
+      ? headerT("languages.ES")
+      : headerT("languages.IT");
 
   const aboutTourDescription = getRawWithFallback<string>(
     tourDetailT,
@@ -174,7 +180,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     {
       id: "languages" as const,
       label: tourDetailT("labels.languages"),
-      value: facts.languages,
+      value: localeLanguage,
     },
   ];
 

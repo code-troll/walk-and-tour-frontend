@@ -415,6 +415,32 @@
           "typeTour": "Paid Tour",
           "languages": "English"
         }
+      },
+      "christiansborgPalace": {
+        "aboutTourDescription": "Discover the imposing Christiansborg Palace, a cornerstone of Danish history and the symbolic seat of power in Copenhagen. This 1.5-hour guided  tour is a deep dive into the dual role of the palace as both the engine of modern Danish democracy and the opulent stage for the monarchy. You will explore the majestic Royal Reception Rooms, still used for state functions, and stand in the historic Throne Room. The tour’s centerpiece is the impressive Great Tapestry Hall, where monumental tapestries visually narrate Denmark’s history. This experience offers a perfect, concentrated blend of luxury, history, and political insight, designed for travelers who seek a deep, efficient understanding of the Danish state.",
+        "highlights": [
+          "Seat of Power: Explore the palace where the three branches of the Danish government (Executive, Legislative, and Judicial) converge.",
+          "Royal Grandeur: Gain private access to the luxurious Royal Reception Rooms and the historic Throne Room, still used for official royal ceremonies.",
+          "The Tapestry Hall: Admire the majestic Great Tapestries, unique works of art that chronicle 1,000 years of Danish history.",
+          "Insider Access: Immerse yourself in centuries of royal history and political life with the insights of a local expert."
+        ],
+        "itineraryDescription": "This 1.5 hours tour begins immediately upon meeting your guide at Christiansborg Palace. The exploration starts in the magnificent Royal Reception Rooms, where your guide will share stories of state events and royal history. We then move to the stunning Great Tapestry Hall to appreciate the monumental artworks depicting 1,000 years of Danish history, before concluding with access to the historical Throne Room. The guided portion of the tour concludes inside the palace, leaving you perfectly situated to continue exploring other areas, like the Tower or the Royal Stables, on your own.",
+        "included": [
+          "Expert Guide for the full 1.5-hour duration.",
+          "Ticket Entry for Christiansborg Palace.",
+          "Expertly Guided Access to the Royal Reception Rooms, the Throne Room, and the Great Tapestry Hall."
+        ],
+        "notIncluded": [
+          "Meals, beverages, or personal snacks.",
+          "Gratuities or tips for your private guide."
+        ],
+        "facts": {
+          "meetingPoint": "Christiansborg Palace",
+          "endPoint": "Christiansborg Palace",
+          "cancellationType": "24h Free Cancellation",
+          "typeTour": "Group Tour",
+          "languages": "English"
+        }
       }
     }
   },
