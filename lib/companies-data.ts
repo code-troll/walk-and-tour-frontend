@@ -12,14 +12,6 @@ export type CompanyExperienceSlug =
   | "danish-beer-tasting"
   | "danish-collage-workshop";
 
-export type CompanyExperienceCategoryId =
-  | "corporate"
-  | "teamBuilding"
-  | "food"
-  | "boat"
-  | "beer"
-  | "creative";
-
 export const companyExperienceSlugById = {
   smorrebrodExperience: "danish-smorrebrod-experience",
   canalBoatTour: "canal-boat-tour",
@@ -32,7 +24,6 @@ export type CompanyExperience = {
   slug: CompanyExperienceSlug;
   rating: string;
   reviews: string;
-  categories: CompanyExperienceCategoryId[];
   heroImageSrc: string;
   galleryImageSrcs?: readonly string[];
   bookingTarget?: TourDetailCtaTarget;
@@ -61,11 +52,6 @@ export const companyExperiences: CompanyExperience[] = [
     slug: companyExperienceSlugById.smorrebrodExperience,
     rating: "4.9",
     reviews: "128",
-    categories: [
-      "corporate",
-      "teamBuilding",
-      "food",
-    ],
     heroImageSrc: "/walkandtour/companies/food-tours.jpg",
     galleryImageSrcs: [
       `/walkandtour/companies/${ companyExperienceSlugById.smorrebrodExperience }/1.jpg`,
@@ -80,11 +66,6 @@ export const companyExperiences: CompanyExperience[] = [
     slug: companyExperienceSlugById.canalBoatTour,
     rating: "4.9",
     reviews: "96",
-    categories: [
-      "corporate",
-      "teamBuilding",
-      "boat",
-    ],
     heroImageSrc: "/walkandtour/tours/boat-tour.jpg",
   },
   {
@@ -92,12 +73,6 @@ export const companyExperiences: CompanyExperience[] = [
     slug: companyExperienceSlugById.danishBeerTasting,
     rating: "4.8",
     reviews: "84",
-    categories: [
-      "corporate",
-      "teamBuilding",
-      "beer",
-      "food",
-    ],
     heroImageSrc: "/walkandtour/companies/beer-tour.jpg",
     galleryImageSrcs: [
       `/walkandtour/companies/${ companyExperienceSlugById.danishBeerTasting }/1.jpg`,
@@ -112,11 +87,17 @@ export const companyExperiences: CompanyExperience[] = [
     slug: companyExperienceSlugById.danishCollageWorkshop,
     rating: "4.9",
     reviews: "73",
-    heroImageSrc: "/walkandtour/about/gallery-city.jpg",
-    categories: [
-      "corporate",
-      "teamBuilding",
-      "creative",
+    heroImageSrc: "/walkandtour/companies/collage-workshop-tour.png",
+    galleryImageSrcs: [
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/1.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/2.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/3.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/4.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/5.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/6.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/7.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/8.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.danishCollageWorkshop }/9.jpg`,
     ],
   },
 ];

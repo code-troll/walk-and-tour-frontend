@@ -909,14 +909,71 @@
         "imageAlt": "Canal Boat Tour"
       },
       "danishBeerTasting": {
+        "aboutTourDescription": "This is not a typical pub crawl. It is a cultural journey through Copenhagen’s oldest \"Bodegas.\" You will visit three historic taverns to taste traditional and modern beers while learning the songs, games, and drinking rituals that shaped Danish history.",
+        "highlights": [
+          "Drink from a Viking horn and learn the prehistoric meaning of \"Skål.\"",
+          "Taste the iconic 1895 Tuborg recipe in a bar dedicated to the Golden Horns.",
+          "Learn the rules of \"Beer-Pong\" and \"Snyd\" (dice game) and sing traditional sailor songs.",
+          "Finish the tour with a tasting of Mjød (Honey wine) and stories of Viking legends."
+        ],
+        "itineraryDescription": "Our journey begins in the heart of the city, signaled by the powerful sound of the Viking \"Lura.\" From there, we dive into a series of carefully selected historic taverns, each representing a different era of Danish history. At each stop, you will taste a specific style of beer—ranging from the iconic \"Golden Age\" recipes to modern-day award winners. Along the 2km route, your guide will reveal the myths of the Norse gods and the rowdy history of the Danish naval fleet. You will learn the rules of local dice games and join in traditional toasts before concluding the experience with a final, premium tasting of Viking Mead to seal the bond of the group.",
+        "included": [
+          "Expert storytelling led by a local host.",
+          "Three distinct beer or specialty shots at historic locations.",
+          "Use of traditional drinking horns and ritual instruments during the tour.",
+          "A tasting of traditional Viking Mead (Mjød) to close the session."
+        ],
+        "notIncluded": [
+          "Only light snacks are provided.",
+          "Any additional beverages ordered outside the scheduled tastings.",
+          "The tour is a walking experience; no vehicle transfers are included."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall",
+          "endPoint": "Rosenborg",
+          "cancellationType": "48h Free Cancellation",
+          "typeTour": "Private Experience",
+          "languages": "English"
+        },
         "title": "Danish Beer Tasting",
-        "description": "Discover Danish brewing culture with a guided tasting of local beers, paired with stories about traditions and modern beer innovation.",
+        "location": "Copenhagen",
+        "duration": "4 hours",
+        "tag": "Private Tour",
         "imageAlt": "Danish Beer Tasting"
       },
       "danishCollageWorkshop": {
-        "title": "Danish Collage Workshop",
-        "description": "Spark creativity with a collaborative collage workshop where your team builds a shared artwork inspired by Copenhagen's design spirit.",
-        "imageAlt": "Danish Collage Workshop"
+        "aboutTourDescription": "A creative, hands-on workshop where you learn to blend traditional watercolor techniques with the versatile art of collage.",
+        "highlights": [
+          "Experiment with mixed media including watercolors, vintage magazines, and old photography.",
+          "Learn professional composition and watercolor techniques.",
+          "Work with high-quality 300gr watercolor paper and a variety of textures.",
+          "A peaceful, inspiring environment perfect for bonding."
+        ],
+        "itineraryDescription": "Your session begins with an introduction to different artistic styles and watercolor techniques. We will guide you through the basics of composition to help you visualize your masterpiece. Once you feel inspired, you will dive into the practical phase, mixing watercolor washes with a variety of thin papers, old book pages, and vintage photographs. Throughout the workshop, you will experiment with layering, cutting, and gluing to create depth and meaning in your work. The experience concludes with a group gallery moment where everyone can share their creations and the stories behind their unique compositions.",
+        "included": [
+          "All paints, brushes, and specialized tools are provided.",
+          "High-quality 300gr watercolor paper for your final piece.",
+          "Access to vintage magazines, old book pages, and historic photographs.",
+          "Personal guidance on watercolor techniques and composition styles.",
+          "You will take home your unique 2.5-hour creation at the end of the session."
+        ],
+        "notIncluded": [
+          "Travel to and from the art studio is not provided.",
+          "Snacks or drinks are not included in the standard price.",
+          "We provide the paper and materials, but frames are not included."
+        ],
+        "facts": {
+          "meetingPoint": "Copenhagen",
+          "endPoint": "Copenhagen",
+          "cancellationType": "48h Free Cancellation",
+          "typeTour": "Private Experience",
+          "languages": "English"
+        },
+        "title": "Collage & Watercolor Workshop: A Creative Journey",
+        "location": "Copenhagen",
+        "duration": "2.5 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Collage & Watercolor Workshop: A Creative Journey"
       }
     }
   },
