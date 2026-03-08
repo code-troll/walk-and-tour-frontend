@@ -66,7 +66,15 @@ export const companyExperiences: CompanyExperience[] = [
     slug: companyExperienceSlugById.canalBoatTour,
     rating: "4.9",
     reviews: "96",
-    heroImageSrc: "/walkandtour/tours/boat-tour.jpg",
+    heroImageSrc: "/walkandtour/companies/boat-tour.jpg",
+    galleryImageSrcs: [
+      `/walkandtour/companies/${ companyExperienceSlugById.canalBoatTour }/1.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.canalBoatTour }/2.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.canalBoatTour }/3.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.canalBoatTour }/4.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.canalBoatTour }/5.jpg`,
+      `/walkandtour/companies/${ companyExperienceSlugById.canalBoatTour }/6.jpg`,
+    ],
   },
   {
     id: "danishBeerTasting",

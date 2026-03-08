@@ -876,28 +876,29 @@
         "imageAlt": "Danish Smorrebrod Experience"
       },
       "canalBoatTour": {
-        "aboutTourDescription": "This is not a typical pub crawl. It is a cultural journey through Copenhagen’s oldest \"Bodegas.\" You will visit three historic taverns to taste traditional and modern beers while learning the songs, games, and drinking rituals that shaped Danish history.",
+        "aboutTourDescription": "Experience Copenhagen from the water as it was meant to be seen. Enjoy a 2-hour guided navigation through the harbor while tasting a selection of premium, hand-crafted Smørrebrød.",
         "highlights": [
-          "Drink from a Viking horn and learn the prehistoric meaning of \"Skål.\"",
-          "Taste the iconic 1895 Tuborg recipe in a bar dedicated to the Golden Horns.",
-          "Learn the rules of \"Beer-Pong\" and \"Snyd\" (dice game) and sing traditional sailor songs.",
-          "Finish the tour with a tasting of Mjød (Honey wine) and stories of Viking legends."
+          "View Nyhavn, the Little Mermaid, and the Royal Palace from a unique perspective.",
+          "Taste a curated selection of traditional open-faced sandwiches.",
+          "Avoid the large tourist boats in a more intimate and comfortable setting.",
+          "Includes a cold Danish beer or organic soda to pair with your meal."
         ],
-        "itineraryDescription": "Our journey begins in the heart of the city, signaled by the powerful sound of the Viking \"Lura.\" From there, we dive into a series of carefully selected historic taverns, each representing a different era of Danish history. At each stop, you will taste a specific style of beer—ranging from the iconic \"Golden Age\" recipes to modern-day award winners. Along the 2km route, your guide will reveal the myths of the Norse gods and the rowdy history of the Danish naval fleet. You will learn the rules of local dice games and join in traditional toasts before concluding the experience with a final, premium tasting of Viking Mead to seal the bond of the group.",
+        "itineraryDescription": "Your journey begins at the harbor, where you will board our comfortable boat and meet your captain. As we set sail, the first course of traditional Smørrebrød will be served, featuring seasonal Nordic toppings and artisan rye bread. We will navigate through the picturesque canals of Christianshavn, passing under historic bridges and alongside the modern architecture of the Black Diamond and the Opera House. During the tour, your guide will share stories of Copenhagen’s maritime history while you enjoy your meal and drinks in a relaxed, scenic setting. The experience concludes back at the pier, leaving you right in the heart of the city.",
         "included": [
-          "Expert storytelling led by a local host.",
-          "Three distinct beer or specialty shots at historic locations.",
-          "Use of traditional drinking horns and ritual instruments during the tour.",
-          "A tasting of traditional Viking Mead (Mjød) to close the session."
+          "2 hours of navigation through the main canals and harbor.",
+          "A selection of 2 premium Smørrebrød per person.",
+          "One cold craft beer, organic soda, or bottled water.",
+          "Professional commentary on the city's landmarks.",
+          "Life jackets and all necessary maritime gear."
         ],
         "notIncluded": [
-          "Only light snacks are provided.",
-          "Any additional beverages ordered outside the scheduled tastings.",
-          "The tour is a walking experience; no vehicle transfers are included."
+          "Extra alcohol or beverages beyond the first serving.",
+          "Transportation to the meeting point at the pier.",
+          "Tips for the captain and service staff."
         ],
         "facts": {
-          "meetingPoint": "City Hall",
-          "endPoint": "Rosenborg",
+          "meetingPoint": "Gammel Strand",
+          "endPoint": "Gammel Strand",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Private Experience",
           "languages": "English"

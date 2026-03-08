@@ -52,7 +52,7 @@ export const companiesHeroConfig: HeroSectionConfig = {
   translationNamespace: "hero.companies",
   eyebrowKey: "eyebrow",
   titleKey: "heading",
-  imageSrc: "/walkandtour/heroes/private-tours.jpg",
+  imageSrc: "/walkandtour/heroes/company-tours.jpg",
   overlayClassName: "bg-[#2a221a]/58",
   backgroundPosition: "center 38%",
 };
