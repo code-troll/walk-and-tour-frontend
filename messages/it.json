@@ -43,6 +43,10 @@
     "about": {
       "eyebrow": "Agenzia di tour con esperienza",
       "heading": "Su Walk & Tour Copenaghen"
+    },
+    "companies": {
+      "eyebrow": "Per aziende",
+      "heading": "Esperienze aziendali e team building a Copenaghen"
     }
   },
   "tours": {
@@ -126,7 +130,7 @@
       "facts": {
         "meetingPoint": "Centro di Copenaghen",
         "endPoint": "Centro storico",
-        "cancellationType": "Cancellazione gratuita fino a 24 ore prima del tour",
+        "cancellationType": "Cancellazione gratuita entro 24 ore",
         "languages": "Inglese"
       },
       "customerSupportDescription": "Abbiamo un team professionale di assistenza clienti e ti accompagniamo in ogni viaggio."
@@ -820,6 +824,38 @@
     "description1": "Cerchi un'esperienza personalizzata a Copenaghen?",
     "description2": "Offriamo tour a piedi privati ed esperienze aziendali su misura per il tuo programma e i tuoi interessi. Che tu voglia un approfondimento storico, un'avventura gastronomica o un'attivita di team building, creiamo l'itinerario perfetto per te.",
     "ctaLabel": "Contattaci per progettare la tua esperienza privata a Copenaghen"
+  },
+  "companiesPage": {
+    "intro": {
+      "title": "Le nostre esperienze aziendali",
+      "description": "In Walk and Tour Copenaghen progettiamo esperienze aziendali che rafforzano i team e creano momenti memorabili in città. Dalle degustazioni food e birra ai tour privati in barca e ai workshop creativi, ogni attività può essere adattata ai tuoi obiettivi."
+    },
+    "actions": {
+      "viewExperience": "Vedi esperienza",
+      "readMore": "Scopri di più"
+    },
+    "items": {
+      "smorrebrodExperience": {
+        "title": "Esperienza danese di smorrebrod",
+        "description": "Impara a preparare e gustare i celebri panini aperti danesi in un workshop pratico guidato da esperti locali. Ideale per fare team bonding in un contesto rilassato.",
+        "imageAlt": "Esperienza danese di smorrebrod"
+      },
+      "canalBoatTour": {
+        "title": "Tour in barca sui canali",
+        "description": "Porta il tuo team in una crociera privata tra i canali più suggestivi di Copenaghen, con racconti, atmosfera piacevole e viste panoramiche sulla città.",
+        "imageAlt": "Tour in barca sui canali"
+      },
+      "danishBeerTasting": {
+        "title": "Degustazione di birra danese",
+        "description": "Scopri la cultura brassicola danese con una degustazione guidata di birre locali, accompagnata da storie su tradizione e innovazione moderna.",
+        "imageAlt": "Degustazione di birra danese"
+      },
+      "danishCollageWorkshop": {
+        "title": "Workshop danese di collage",
+        "description": "Stimola la creatività con un workshop collaborativo di collage in cui il team realizza un'opera condivisa ispirata allo spirito di design di Copenaghen.",
+        "imageAlt": "Workshop danese di collage"
+      }
+    }
   },
   "partners": {
     "heading": "I nostri partner",

@@ -5,14 +5,14 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/layout/Footer";
 import TourDetailAboutSection from "@/components/tour-detail/TourDetailAboutSection";
 import TourDetailContentWithSidebar from "@/components/tour-detail/TourDetailContentWithSidebar";
+import TourDetailCustomerSupportSection from "@/components/tour-detail/TourDetailCustomerSupportSection";
+import TourDetailElfsightReviewsSection from "@/components/tour-detail/TourDetailElfsightReviewsSection";
 import TourDetailHeroSection from "@/components/tour-detail/TourDetailHeroSection";
 import TourDetailHighlightsSection from "@/components/tour-detail/TourDetailHighlightsSection";
 import TourDetailIncludedSection from "@/components/tour-detail/TourDetailIncludedSection";
 import TourDetailItinerarySection from "@/components/tour-detail/TourDetailItinerarySection";
 import TourDetailQuickInfoSection from "@/components/tour-detail/TourDetailQuickInfoSection";
-import TourDetailRelatedToursSection from "@/components/tour-detail/TourDetailRelatedToursSection";
 import TourDetailSidebarPlaceholder from "@/components/tour-detail/TourDetailSidebarPlaceholder";
-import { type AppLocale, routing } from "@/i18n/routing";
 import {
   buildQuickInfoItems,
   getItemStringWithFallback,
@@ -21,16 +21,14 @@ import {
   resolveDetailDisplay,
   resolveHeroImages,
 } from "@/lib/detail-page-utils";
+import { type AppLocale, routing } from "@/i18n/routing";
 import {
-  getRelatedToursByTour,
-  getResolvedTourBySlug,
-  tourSlugs,
-  tourTemplateMapHref,
-} from "@/lib/landing-data";
-import TourDetailCustomerSupportSection from "@/components/tour-detail/TourDetailCustomerSupportSection";
-import TourDetailElfsightReviewsSection from "@/components/tour-detail/TourDetailElfsightReviewsSection";
+  companyExperienceSlugs,
+  getResolvedCompanyExperienceBySlug,
+} from "@/lib/companies-data";
+import { tourTemplateMapHref } from "@/lib/landing-data";
 
-type TourDetailPageProps = {
+type CompanyDetailPageProps = {
   params: Promise<{ locale: string; snug: string; }>;
 };
 
@@ -38,92 +36,113 @@ const isValidLocale = (locale: string): locale is AppLocale => (
   routing.locales.includes(locale as AppLocale)
 );
 
+const companyTagByLocale: Record<AppLocale, string> = {
+  en: "Corporate Experience",
+  es: "Experiencia corporativa",
+  it: "Esperienza aziendale",
+};
+
+const companyDurationByLocale: Record<AppLocale, string> = {
+  en: "2 hours",
+  es: "2 horas",
+  it: "2 ore",
+};
+
+const companyLocationByLocale: Record<AppLocale, string> = {
+  en: "Copenhagen",
+  es: "Copenhague",
+  it: "Copenaghen",
+};
+
 export function generateStaticParams() {
-  return tourSlugs.map((snug) => ({snug}));
+  return companyExperienceSlugs.map((snug) => ({snug}));
 }
 
 export async function generateMetadata({
                                          params,
-                                       }: TourDetailPageProps): Promise<Metadata> {
+                                       }: CompanyDetailPageProps): Promise<Metadata> {
   const {locale, snug} = await params;
 
   if (!isValidLocale(locale)) {
     notFound();
   }
 
-  const tour = getResolvedTourBySlug(snug);
+  const companyExperience = getResolvedCompanyExperienceBySlug(snug);
 
-  if (!tour) {
+  if (!companyExperience) {
     return {};
   }
 
-  const tourItemT = await getTranslations({locale, namespace: "tourDetail.items"});
-  const tourDetailT = await getTranslations({locale, namespace: "tourDetail"});
-  const aboutTourDescription = getItemStringWithFallback(
-    tourItemT,
-    tour.id,
+  const companyItemT = await getTranslations({locale, namespace: "companiesPage.items"});
+  const title = companyItemT(`${ companyExperience.id }.title`);
+  const description = getItemStringWithFallback(
+    companyItemT,
+    companyExperience.id,
     "aboutTourDescription",
     getItemStringWithFallback(
-      tourItemT,
-      tour.id,
+      companyItemT,
+      companyExperience.id,
       "description",
-      tourDetailT("defaults.aboutTourDescription")
+      title
     )
   );
 
   return {
-    title: `${ tourItemT(`${ tour.id }.title`) } | Walk and Tour Copenhagen`,
-    description: aboutTourDescription,
+    title: `${ title } | Walk and Tour Copenhagen`,
+    description,
   };
 }
 
-export default async function TourDetailPage({params}: TourDetailPageProps) {
+export default async function CompanyDetailPage({params}: CompanyDetailPageProps) {
   const {locale, snug} = await params;
 
   if (!isValidLocale(locale)) {
     notFound();
   }
 
-  const tour = getResolvedTourBySlug(snug);
+  const companyExperience = getResolvedCompanyExperienceBySlug(snug);
 
-  if (!tour) {
+  if (!companyExperience) {
     notFound();
   }
 
-  const tourItemT = await getTranslations({locale, namespace: "tourDetail.items"});
+  const companyItemT = await getTranslations({locale, namespace: "companiesPage.items"});
   const tourDetailT = await getTranslations({locale, namespace: "tourDetail"});
   const headerT = await getTranslations({locale, namespace: "header"});
   const localeLanguage = getLocaleLanguageLabel(locale, headerT);
   const display = resolveDetailDisplay({
-    itemT: tourItemT,
-    itemId: tour.id,
+    itemT: companyItemT,
+    itemId: companyExperience.id,
     fallbacks: {
-      tag: "",
-      duration: "",
-      location: "",
+      tag: companyTagByLocale[locale],
+      duration: companyDurationByLocale[locale],
+      location: companyLocationByLocale[locale],
     },
   });
   const detailContent = resolveDetailContent({
     detailT: tourDetailT,
-    itemT: tourItemT,
-    itemId: tour.id,
+    itemT: companyItemT,
+    itemId: companyExperience.id,
     languageLabel: localeLanguage,
   });
   const quickInfoItems = buildQuickInfoItems({
     detailT: tourDetailT,
-    facts: detailContent.facts,
+    facts: {
+      ...detailContent.facts,
+      meetingPoint: detailContent.facts.meetingPoint || companyLocationByLocale[locale],
+      endPoint: detailContent.facts.endPoint || companyLocationByLocale[locale],
+      typeTour: detailContent.facts.typeTour || display.tag,
+    },
   });
-
-  const relatedTours = getRelatedToursByTour(tour, 3);
-  const heroTourImages = resolveHeroImages(tour);
+  const heroTourImages = resolveHeroImages(companyExperience);
 
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
       <TourDetailHeroSection
         title={ display.title }
         tag={ display.tag }
-        rating={ tour.rating }
-        reviews={ tour.reviews }
+        rating={ companyExperience.rating }
+        reviews={ companyExperience.reviews }
         duration={ display.duration }
         location={ display.location }
         tourImages={ heroTourImages }
@@ -131,7 +150,8 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
       <TourDetailQuickInfoSection items={ quickInfoItems }/>
 
-      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder mapHref={ tourTemplateMapHref }/> }>
+      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder mapHref={ tourTemplateMapHref }/> }
+                                    sidebarContainerClassName="mb-26">
         <TourDetailHighlightsSection
           title={ tourDetailT("labels.highlights") }
           highlights={ detailContent.highlights }
@@ -164,11 +184,6 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
         <TourDetailElfsightReviewsSection/>
       </TourDetailContentWithSidebar>
-
-      <TourDetailRelatedToursSection
-        title={ tourDetailT("labels.relatedTours") }
-        tours={ relatedTours }
-      />
 
       <Footer/>
     </div>

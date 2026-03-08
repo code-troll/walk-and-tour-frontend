@@ -43,6 +43,10 @@
     "about": {
       "eyebrow": "Experienced tour agency",
       "heading": "About Walk & Tour Copenhagen"
+    },
+    "companies": {
+      "eyebrow": "For companies",
+      "heading": "Corporate & Team Building Experiences in Copenhagen"
     }
   },
   "tours": {
@@ -126,7 +130,7 @@
       "facts": {
         "meetingPoint": "Central Copenhagen",
         "endPoint": "City center (walkable from main attractions)",
-        "cancellationType": "Free cancellation up to 24 hours before the tour",
+        "cancellationType": "48h Free Cancellation",
         "languages": "English"
       },
       "customerSupportDescription": "We have a professional customer support team and always accompany you on every trip."
@@ -825,6 +829,96 @@
     "description1": "Looking for a personalized experience in Copenhagen?",
     "description2": "We offer private walking tours and corporate experiences tailored to your schedule and interests. Whether you want a historical deep dive, a food-focused adventure or a team-building activity, we create the perfect itinerary just for you.",
     "ctaLabel": "Contact us to design your private Copenhagen experience"
+  },
+  "companiesPage": {
+    "intro": {
+      "title": "Our Corporate Experiences",
+      "description": "At Walk and Tour Copenhagen, we design corporate experiences that strengthen teams and create memorable moments in the city. From food and beer tastings to private boat tours and creative workshops, every activity can be tailored to your goals."
+    },
+    "actions": {
+      "viewExperience": "View Experience",
+      "readMore": "Read more"
+    },
+    "items": {
+      "smorrebrodExperience": {
+        "aboutTourDescription": "An immersive, chef-led cooking experience where you go behind the scenes of Danish gastronomy. You will learn to bake traditional rye bread and master the intricate techniques of assembling \"Smørrebrød\"—the world-famous Danish open-faced sandwiches.",
+        "highlights": [
+          "Learn directly from our expert chef.",
+          "Create 3 delicious types of beautifully decorated sandwiches.",
+          "A class designed to satisfy the eye and the taste buds.",
+          "Enjoy your meal with a cold beer and traditional Snaps."
+        ],
+        "itineraryDescription": "Your experience begins with an introduction to the rich history of Danish heritage and the seasonal ingredients that define Nordic flavors. Once in the kitchen, you will jump straight into the action by preparing a variety of traditional toppings, dressings, and garnishes under the guidance of our chef. After the prep work, you will move into the creative phase where you learn the specific techniques required to assemble, stack, and decorate three distinct types of open-faced sandwiches. The session culminates in our dining room, where you will sit down to enjoy the beautiful meal you have prepared, paired with a cold beer and a glass of traditional snaps in a true atmosphere of Danish hygge.",
+        "included": [
+          "Hands-on cooking class with a chef",
+          "Ingredients for 3 types of Smørrebrød",
+          "A full meal (eat what you've cooked)",
+          "Cold Beer or Soda",
+          "1 Glass of traditional Snaps",
+          "Printable recipes from the day"
+        ],
+        "notIncluded": [
+          "Additional wine, beer, or soda",
+          "Hotel pick-up/transportation",
+          "Personal gratuities"
+        ],
+        "facts": {
+          "meetingPoint": "Nyhavn",
+          "endPoint": "Nyhavn",
+          "cancellationType": "48h Free Cancellation",
+          "typeTour": "Private Experience",
+          "languages": "English"
+        },
+        "title": "Danish Smorrebrod Experience",
+        "location": "Copenhagen",
+        "duration": "4 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Danish Smorrebrod Experience"
+      },
+      "canalBoatTour": {
+        "aboutTourDescription": "This is not a typical pub crawl. It is a cultural journey through Copenhagen’s oldest \"Bodegas.\" You will visit three historic taverns to taste traditional and modern beers while learning the songs, games, and drinking rituals that shaped Danish history.",
+        "highlights": [
+          "Drink from a Viking horn and learn the prehistoric meaning of \"Skål.\"",
+          "Taste the iconic 1895 Tuborg recipe in a bar dedicated to the Golden Horns.",
+          "Learn the rules of \"Beer-Pong\" and \"Snyd\" (dice game) and sing traditional sailor songs.",
+          "Finish the tour with a tasting of Mjød (Honey wine) and stories of Viking legends."
+        ],
+        "itineraryDescription": "Our journey begins in the heart of the city, signaled by the powerful sound of the Viking \"Lura.\" From there, we dive into a series of carefully selected historic taverns, each representing a different era of Danish history. At each stop, you will taste a specific style of beer—ranging from the iconic \"Golden Age\" recipes to modern-day award winners. Along the 2km route, your guide will reveal the myths of the Norse gods and the rowdy history of the Danish naval fleet. You will learn the rules of local dice games and join in traditional toasts before concluding the experience with a final, premium tasting of Viking Mead to seal the bond of the group.",
+        "included": [
+          "Expert storytelling led by a local host.",
+          "Three distinct beer or specialty shots at historic locations.",
+          "Use of traditional drinking horns and ritual instruments during the tour.",
+          "A tasting of traditional Viking Mead (Mjød) to close the session."
+        ],
+        "notIncluded": [
+          "Only light snacks are provided.",
+          "Any additional beverages ordered outside the scheduled tastings.",
+          "The tour is a walking experience; no vehicle transfers are included."
+        ],
+        "facts": {
+          "meetingPoint": "City Hall",
+          "endPoint": "Rosenborg",
+          "cancellationType": "48h Free Cancellation",
+          "typeTour": "Private Experience",
+          "languages": "English"
+        },
+        "title": "Canal Boat Tour",
+        "location": "Copenhagen",
+        "duration": "4 hours",
+        "tag": "Private Tour",
+        "imageAlt": "Canal Boat Tour"
+      },
+      "danishBeerTasting": {
+        "title": "Danish Beer Tasting",
+        "description": "Discover Danish brewing culture with a guided tasting of local beers, paired with stories about traditions and modern beer innovation.",
+        "imageAlt": "Danish Beer Tasting"
+      },
+      "danishCollageWorkshop": {
+        "title": "Danish Collage Workshop",
+        "description": "Spark creativity with a collaborative collage workshop where your team builds a shared artwork inspired by Copenhagen's design spirit.",
+        "imageAlt": "Danish Collage Workshop"
+      }
+    }
   },
   "partners": {
     "heading": "Our Partners",

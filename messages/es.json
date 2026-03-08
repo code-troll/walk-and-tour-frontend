@@ -43,6 +43,10 @@
     "about": {
       "eyebrow": "Agencia de tours con experiencia",
       "heading": "Sobre Walk & Tour Copenhague"
+    },
+    "companies": {
+      "eyebrow": "Para empresas",
+      "heading": "Experiencias corporativas y de team building en Copenhague"
     }
   },
   "tours": {
@@ -820,6 +824,38 @@
     "description1": "¿Buscas una experiencia personalizada en Copenhague?",
     "description2": "Ofrecemos tours a pie privados y experiencias corporativas adaptadas a tu horario e intereses. Ya sea que quieras una inmersión histórica, una aventura gastronómica o una actividad de team building, creamos el itinerario perfecto para ti.",
     "ctaLabel": "Contáctanos para diseñar tu experiencia privada en Copenhague"
+  },
+  "companiesPage": {
+    "intro": {
+      "title": "Nuestras experiencias corporativas",
+      "description": "En Walk and Tour Copenhague diseñamos experiencias corporativas que fortalecen equipos y crean momentos memorables en la ciudad. Desde catas gastronómicas y de cerveza hasta tours privados en barco y talleres creativos, cada actividad se adapta a tus objetivos."
+    },
+    "actions": {
+      "viewExperience": "Ver experiencia",
+      "readMore": "Leer más"
+    },
+    "items": {
+      "smorrebrodExperience": {
+        "title": "Experiencia danesa de smorrebrod",
+        "description": "Aprende a preparar y degustar los icónicos bocadillos abiertos daneses en un taller práctico guiado por expertos locales. Ideal para fomentar el vínculo del equipo en un ambiente relajado.",
+        "imageAlt": "Experiencia danesa de smorrebrod"
+      },
+      "canalBoatTour": {
+        "title": "Tour en barco por los canales",
+        "description": "Lleva a tu equipo a un crucero privado por los canales más pintorescos de Copenhague, con historias, gran ambiente y vistas panorámicas de la ciudad.",
+        "imageAlt": "Tour en barco por los canales"
+      },
+      "danishBeerTasting": {
+        "title": "Cata de cerveza danesa",
+        "description": "Descubre la cultura cervecera danesa con una cata guiada de cervezas locales, acompañada de historias sobre tradiciones e innovación cervecera.",
+        "imageAlt": "Cata de cerveza danesa"
+      },
+      "danishCollageWorkshop": {
+        "title": "Taller danés de collage",
+        "description": "Impulsa la creatividad con un taller colaborativo de collage donde tu equipo crea una obra compartida inspirada en el espíritu de diseño de Copenhague.",
+        "imageAlt": "Taller danés de collage"
+      }
+    }
   },
   "partners": {
     "heading": "Nuestros socios",

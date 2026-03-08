@@ -40,7 +40,7 @@ export default function TourListingCard({
       <div className="group relative overflow-hidden">
         <a href={ bookHref }>
           <Image
-            src={ tour.image.src }
+            src={ tour.heroImageSrc }
             alt={ tourItemT(`${ tour.id }.imageAlt`) }
             width={ 800 }
             height={ 600 }

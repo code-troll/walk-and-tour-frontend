@@ -95,12 +95,9 @@ export type Tour = {
   rating: string;
   reviews: string;
   price: string;
-  image: {
-    src: string;
-  };
   categories: TourCategoryId[];
-  heroImageSrc?: string;
-  galleryImageSrcs?: readonly string[];
+  heroImageSrc: string;
+  galleryImageSrcs: readonly string[];
   bookingTarget?: TourDetailCtaTarget;
   supportTarget?: TourDetailCtaTarget;
 };
@@ -180,7 +177,7 @@ export const navLinks: NavLink[] = [
   {id: "home", target: {kind: "homeSection", section: "home"}},
   {id: "tours", target: {kind: "page", page: "/tours"}},
   {id: "about", target: {kind: "page", page: "/about-us"}},
-  {id: "companies", target: {kind: "homeSection", section: "companies"}},
+  {id: "companies", target: {kind: "page", page: "/companies"}},
   {id: "blog", target: {kind: "homeSection", section: "blog"}},
   {id: "contact", target: {kind: "homeSection", section: "contact"}},
 ];
@@ -218,14 +215,12 @@ export const tours: Tour[] = [
     rating: "5.0",
     reviews: "1,756",
     price: "0",
-    image: {
-      src: "/walkandtour/tours/tour-nyhavn.jpg",
-    },
     categories: [
       "freeTour",
       "groupTour",
       "essential",
     ],
+    heroImageSrc: "/walkandtour/tours/tour-nyhavn.jpg",
     galleryImageSrcs: [
       `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/1.jpg`,
       `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/2.jpg`,
@@ -241,9 +236,6 @@ export const tours: Tour[] = [
     rating: "4.9",
     reviews: "386",
     price: "400",
-    image: {
-      src: "/walkandtour/tours/tour-rosenborg.jpg",
-    },
     categories: [
       "groupTour",
       "history",
@@ -264,9 +256,6 @@ export const tours: Tour[] = [
     rating: "4.7",
     reviews: "560",
     price: "780",
-    image: {
-      src: "/walkandtour/tours/tour-malmo.jpg",
-    },
     categories: [
       "groupTour",
       "dayTrip",
@@ -287,9 +276,6 @@ export const tours: Tour[] = [
     rating: "4.8",
     reviews: "609",
     price: "400",
-    image: {
-      src: "/walkandtour/tours/tour-amalienborg.jpg",
-    },
     categories: [
       "groupTour",
       "history",
@@ -311,9 +297,6 @@ export const tours: Tour[] = [
     rating: "5.0",
     reviews: "1,497",
     price: "500",
-    image: {
-      src: "/walkandtour/tours/tour-christiansborg.jpg",
-    },
     categories: [
       "groupTour",
       "history",
@@ -335,9 +318,6 @@ export const tours: Tour[] = [
     rating: "4.9",
     reviews: "305",
     price: "400",
-    image: {
-      src: "/walkandtour/tours/tour-copenhagen-essentials.jpg",
-    },
     categories: [
       "groupTour",
       "essential",
@@ -359,9 +339,6 @@ export const tours: Tour[] = [
     rating: "4.8",
     reviews: "792",
     price: "1500",
-    image: {
-      src: "/walkandtour/tours/round-tower.jpg",
-    },
     categories: [
       "history",
       "privateTour",
@@ -382,9 +359,6 @@ export const tours: Tour[] = [
     rating: "4.8",
     reviews: "462",
     price: "670",
-    image: {
-      src: "/walkandtour/tours/tivoli-garden.jpg",
-    },
     categories: [
       "groupTour",
       "history",
@@ -405,9 +379,6 @@ export const tours: Tour[] = [
     rating: "4.9",
     reviews: "367",
     price: "8800",
-    image: {
-      src: "/walkandtour/tours/boat-tour.jpg",
-    },
     categories: [
       "privateTour",
       "boat",
@@ -428,9 +399,6 @@ export const tours: Tour[] = [
     rating: "4.5",
     reviews: "150",
     price: "900",
-    image: {
-      src: "/walkandtour/tours/royal-deer-park-bike-tour.jpg",
-    },
     categories: [
       "dayTrip",
       "groupTour",
@@ -453,9 +421,6 @@ export const tours: Tour[] = [
     rating: "4.8",
     reviews: "481",
     price: "1250",
-    image: {
-      src: "/walkandtour/tours/harbor-architecture.jpg",
-    },
     categories: [
       "privateTour",
       "architecture",
@@ -477,9 +442,6 @@ export const tours: Tour[] = [
     rating: "4.5",
     reviews: "664",
     price: "1400",
-    image: {
-      src: "/walkandtour/tours/rosenborg-castle-canal-cruise.jpg",
-    },
     categories: [
       "privateTour",
       "royalPalaces",
@@ -500,9 +462,6 @@ export const tours: Tour[] = [
     rating: "4.9",
     reviews: "198",
     price: "3000",
-    image: {
-      src: "/walkandtour/tours/frederiksborg-and-kronborg-castle.jpg",
-    },
     categories: [
       "dayTrip",
       "privateTour",
@@ -524,9 +483,6 @@ export const tours: Tour[] = [
     rating: "4.8",
     reviews: "200",
     price: "1000",
-    image: {
-      src: "/walkandtour/tours/food-tours.jpg",
-    },
     categories: [
       "groupTour",
       "history",
@@ -547,9 +503,6 @@ export const tours: Tour[] = [
     rating: "4.8",
     reviews: "599",
     price: "1500",
-    image: {
-      src: "/walkandtour/tours/roskilde.jpg",
-    },
     categories: [
       "dayTrip",
       "privateTour",
@@ -570,9 +523,6 @@ export const tours: Tour[] = [
     rating: "5",
     reviews: "693",
     price: "400",
-    image: {
-      src: "/walkandtour/tours/nordhavn-architecture.jpg",
-    },
     categories: [
       "groupTour",
       "architecture",
@@ -592,9 +542,6 @@ export const tours: Tour[] = [
     rating: "4.9",
     reviews: "250",
     price: "1250",
-    image: {
-      src: "/walkandtour/tours/christmas-tour.jpg",
-    },
     categories: [
       "privateTour",
     ],
@@ -613,9 +560,6 @@ export const tours: Tour[] = [
     rating: "5",
     reviews: "408",
     price: "950",
-    image: {
-      src: "/walkandtour/tours/panorama.jpg",
-    },
     categories: [
       "privateTour",
       "cruise",
@@ -636,9 +580,6 @@ export const tours: Tour[] = [
     rating: "4.9",
     reviews: "693",
     price: "690",
-    image: {
-      src: "/walkandtour/tours/shore-excursion.jpg",
-    },
     categories: [
       "groupTour",
       "royalPalaces",
@@ -659,9 +600,6 @@ export const tours: Tour[] = [
     rating: "4.9",
     reviews: "204",
     price: "420",
-    image: {
-      src: "/walkandtour/tours/copenhagen-city-to-coast.jpg",
-    },
     categories: [
       "groupTour",
       "cruise",
@@ -681,10 +619,8 @@ export const tours: Tour[] = [
 
 const resolveTour = (tour: Tour): ResolvedTour => ({
   ...tour,
-  heroImageSrc: tour.heroImageSrc ?? tour.image.src,
-  galleryImageSrcs: tour.galleryImageSrcs && tour.galleryImageSrcs.length > 0
-    ? tour.galleryImageSrcs
-    : [tour.image.src],
+  heroImageSrc: tour.heroImageSrc,
+  galleryImageSrcs: tour.galleryImageSrcs.length > 0 ? tour.galleryImageSrcs : [tour.heroImageSrc],
   bookingTarget: tour.bookingTarget ?? defaultBookingTarget,
   supportTarget: tour.supportTarget ?? defaultSupportTarget,
 });
@@ -815,7 +751,7 @@ export const footerContent: FooterContent = {
       id: "wt",
       links: [
         {id: "about", target: {kind: "page", page: "/about-us"}},
-        {id: "companies", target: {kind: "homeSection", section: "companies"}},
+        {id: "companies", target: {kind: "page", page: "/companies"}},
         {id: "workWithUs", target: {kind: "homeSection", section: "contact"}},
         {id: "contact", target: {kind: "homeSection", section: "contact"}},
       ],
