@@ -35,7 +35,6 @@ export function mapImageAlignment(
   switch (alignment) {
     case "LEFT":
       return "float-left mr-12";
-      // return "mr-auto";
     case "CENTER":
       return "mx-auto";
     case "RIGHT":

@@ -24,7 +24,7 @@ export default function BlogPostMetaBottomBar({
                                                 locale,
                                               }: BlogPostMetaBottomBarProps) {
   return (
-    <div className="px-5">
+    <div className="clear-both px-5">
       <div className="flex flex-row gap-6">
         <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
           <Eye className="h-4 w-4 text-[#8a7562]"/>

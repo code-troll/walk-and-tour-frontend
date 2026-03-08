@@ -583,7 +583,7 @@ const fetchPostBySlugRaw = async ({
   baseUrl: string;
 }): Promise<UnknownRecord | null> => {
   const endpointUrl = new URL(baseUrl.replace(/\/$/, ""));
-  endpointUrl.pathname = `${ endpointUrl.pathname.replace(/\/$/, "") }/${ encodeURIComponent(slug) }`;
+  endpointUrl.pathname = `${ endpointUrl.pathname.replace(/\/$/, "") }/${ slug }`;
   endpointUrl.searchParams.set("fieldsets", "RICH_CONTENT");
 
   const response = await fetch(endpointUrl.toString(), {
@@ -613,6 +613,8 @@ const fetchPostBySlugRaw = async ({
     throw new Error("Unexpected Wix Blog post response shape");
   }
 
+  console.log(JSON.stringify(payload, null, 2));
+
   return extractSinglePost(payload);
 };
 
@@ -631,10 +633,10 @@ const parseCommentId = (payload: unknown): string | null => {
 };
 
 export async function listBlogPosts({
-                                     locale,
-                                     page,
-                                     limit,
-                                   }: BlogPostsQuery): Promise<BlogPostsResponse> {
+                                      locale,
+                                      page,
+                                      limit,
+                                    }: BlogPostsQuery): Promise<BlogPostsResponse> {
   const safePage = Number.isInteger(page) && page > 0 ? page : 1;
   const safeLimit = Number.isInteger(limit) && limit > 0 ? limit : DEFAULT_PAGE_LIMIT;
   const offset = (safePage - 1) * safeLimit;

@@ -8,6 +8,7 @@ type BlogPostContentProps = {
 };
 
 const contentClassName = [
+  "flow-root",
   "text-lg leading-8 text-[#3d3124]",
   "[&_h1]:mt-8 [&_h1]:text-4xl [&_h1]:font-semibold [&_h1]:leading-tight [&_h1]:text-[#2a221a]",
   "[&_h2]:mt-8 [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:text-[#2a221a]",

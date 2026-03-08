@@ -112,8 +112,88 @@ export type WixHtmlNode = {
       textWrap?: boolean;
     };
     html?: string;
+    url?: string;
     source?: string;
     autoHeight?: boolean;
+  };
+};
+
+export type WixCodeBlockNode = {
+  type: "CODE_BLOCK";
+  id?: string;
+  nodes?: WixNode[];
+  codeBlockData?: {
+    text?: string;
+    code?: string;
+    content?: string;
+    value?: string;
+    language?: string;
+  };
+};
+
+export type WixAppEmbedNode = {
+  type: "APP_EMBED";
+  id?: string;
+  nodes?: WixNode[];
+  appEmbedData?: {
+    type?: string;
+    itemId?: string;
+    name?: string;
+    url?: string;
+    image?: {
+      src?: {
+        url?: string;
+        id?: string;
+      };
+      width?: number | string;
+      height?: number | string;
+    };
+    bookingData?: {
+      durations?: string;
+    };
+    buttonStyles?: {
+      buttonText?: string;
+    };
+    pricingData?: Record<string, unknown>;
+  };
+};
+
+export type WixTableCellNode = {
+  type: "TABLE_CELL";
+  id?: string;
+  nodes?: WixNode[];
+  tableCellData?: {
+    cellStyle?: {
+      verticalAlignment?: "TOP" | "MIDDLE" | "BOTTOM" | string;
+      backgroundColor?: string;
+    };
+    borderColors?: {
+      left?: string;
+      right?: string;
+      top?: string;
+      bottom?: string;
+    };
+  };
+};
+
+export type WixTableRowNode = {
+  type: "TABLE_ROW";
+  id?: string;
+  nodes?: WixTableCellNode[];
+};
+
+export type WixTableNode = {
+  type: "TABLE";
+  id?: string;
+  nodes?: WixTableRowNode[];
+  tableData?: {
+    dimensions?: {
+      colsWidthRatio?: Array<number | string>;
+      rowsHeight?: Array<number | string>;
+      colsMinWidth?: Array<number | string>;
+    };
+    rowHeader?: boolean;
+    cellPadding?: unknown[];
   };
 };
 
@@ -154,6 +234,11 @@ export type WixNode =
   | WixHeadingNode
   | WixImageNode
   | WixHtmlNode
+  | WixCodeBlockNode
+  | WixAppEmbedNode
+  | WixTableNode
+  | WixTableRowNode
+  | WixTableCellNode
   | WixListItemNode
   | WixBulletedListNode
   | WixNumberedListNode
