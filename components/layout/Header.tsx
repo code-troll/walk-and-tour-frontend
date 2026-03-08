@@ -263,6 +263,26 @@ export default function Header() {
 
     return getHomeSectionHash(link.target.section);
   };
+  const isNavLinkActive = (link: (typeof navLinks)[number]) => {
+    if (link.target.kind === "page") {
+      if (pathname === link.target.page) {
+        return true;
+      }
+
+      return pathname.startsWith(`${ link.target.page }/`);
+    }
+
+    if (pathname !== "/") {
+      return false;
+    }
+
+    const targetHash = getHomeSectionHash(link.target.section);
+    if (link.target.section === "home") {
+      return activeHash === "#" || activeHash === targetHash;
+    }
+
+    return activeHash === targetHash;
+  };
   const selectedLanguageOption =
     languageOptions.find((option) => option.locale === locale) ?? languageOptions[0];
   const SelectedLanguageFlag = flagByCountryCode[selectedLanguageOption.countryCode];
@@ -282,15 +302,23 @@ export default function Header() {
             />
           </a>
           <nav className="hidden items-center gap-6 xl:flex">
-            { navLinks.map((link) => (
-              <a
-                key={ link.id }
-                href={ getNavHref(link.id) }
-                className="site-link text-xl font-semibold"
-              >
-                { t(`nav.${link.id}`) }
-              </a>
-            )) }
+            { navLinks.map((link) => {
+              const isActive = isNavLinkActive(link);
+
+              return (
+                <a
+                  key={ link.id }
+                  href={ getNavHref(link.id) }
+                  aria-current={ isActive ? "page" : undefined }
+                  className={ [
+                    "site-link text-xl font-semibold",
+                    isActive ? "is-active menu-link-active" : "",
+                  ].join(" ") }
+                >
+                  { t(`nav.${link.id}`) }
+                </a>
+              );
+            }) }
             <a
               href={ privateToursHref }
               className="flex btn-red-black items-center px-5 py-2 text-base font-semibold uppercase transition-colors"
@@ -409,24 +437,28 @@ export default function Header() {
         </div>
         <nav
           className="flex flex-1 flex-col items-center justify-center gap-8 text-center text-4xl font-semibold uppercase tracking-wide">
-          { navLinks.map((link) => (
-            <a
-              key={ link.id }
-              href={ getNavHref(link.id) }
-              onClick={ () => {
-                const nextHash = getNavHash(link.id);
-                setActiveHash(nextHash);
-                closeMobileMenu();
-              } }
-              tabIndex={ isMobileMenuOpen ? 0 : -1 }
-              className={ [
-                "text-white transition-opacity hover:opacity-80",
-                activeHash === getNavHash(link.id) ? "menu-link-active" : "",
-              ].join(" ") }
-            >
-              { t(`nav.${link.id}`) }
-            </a>
-          )) }
+          { navLinks.map((link) => {
+            const isActive = isNavLinkActive(link);
+
+            return (
+              <a
+                key={ link.id }
+                href={ getNavHref(link.id) }
+                onClick={ () => {
+                  const nextHash = getNavHash(link.id);
+                  setActiveHash(nextHash);
+                  closeMobileMenu();
+                } }
+                tabIndex={ isMobileMenuOpen ? 0 : -1 }
+                className={ [
+                  "text-white transition-opacity hover:opacity-80",
+                  isActive ? "menu-link-active" : "",
+                ].join(" ") }
+              >
+                { t(`nav.${link.id}`) }
+              </a>
+            );
+          }) }
           <a
             href={ privateToursHref }
             onClick={ closeMobileMenu }
