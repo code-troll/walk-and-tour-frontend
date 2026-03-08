@@ -804,15 +804,6 @@
       }
     }
   },
-  "aboutWalkAndTour": {
-    "eyebrow": "Su Walk and Tour",
-    "title": "Tour a piedi a Copenaghen",
-    "descriptions": [
-      "Una città affascinante dal fascino senza tempo e con persone cordiali e accoglienti, offre un'avventura moderna per ogni viaggiatore.",
-      "Pedala tra le strade per scoprire porti vivaci, splendidi palazzi reali e quartieri storici dove ogni angolo racconta una storia. Immergiti nella scena del design innovativo della città, nei musei di livello mondiale e nella rinomata cucina New Nordic."
-    ],
-    "ctaLabel": "Conosci il nostro team"
-  },
   "whyChoose": {
     "heading": "Perche i viaggiatori scelgono Walk & Tour",
     "description": "In Walk and Tour crediamo che il modo migliore per vivere davvero Copenaghen sia a piedi e con un ritmo locale.",

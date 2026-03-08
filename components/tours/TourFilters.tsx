@@ -1,4 +1,4 @@
-import type { TourCategoryId } from "@/lib/landing-data";
+import { TourCategoryId } from "@/lib/landing-data";
 import cn from "@meltdownjs/cn";
 
 type TourFilterOption = {
@@ -20,8 +20,8 @@ export default function TourFilters({
                                       onToggleOption,
                                     }: TourFiltersProps) {
   return (
-    <div className="rounded-2xl border border-[#e4d8cb] bg-white/90 p-4">
-      <p className="text-sm font-semibold uppercase tracking-[0.08em] text-[#5b4d3c]">
+    <div className="rounded-xl border border-[#d8c8b7] bg-[#ffffff] p-5">
+      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8a7562]">
         { label }
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
@@ -33,8 +33,11 @@ export default function TourFilters({
               key={ option.id }
               type="button"
               onClick={ () => onToggleOption(option.id) }
-              className={ cn("rounded-full border px-4 py-2 text-sm font-medium transition-colors cursor-pointer",
-                isSelected ? "border-[#2a221a] bg-[#2a221a] text-white" : "border-[#d8c8b7] bg-[#f8f4ef] text-[#5b4d3c] hover:border-[#2a221a] hover:text-[#2a221a]"
+              className={ cn(
+                "rounded-full border px-4 py-2 text-sm transition-colors duration-150 cursor-pointer",
+                isSelected
+                  ? "border-[#2b666d] bg-[#2b666d] text-[#ffffff]"
+                  : "border-[#d8c8b7] bg-[#ffffff] text-[#5b4d3c] hover:border-[#2b666d]"
               ) }
             >
               { option.label }

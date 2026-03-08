@@ -162,11 +162,11 @@
           "typeTour": "Free Tour",
           "languages": "English"
         },
-        "title": "Copenhagen Free Tour: Changing of the Guard & City Highlights",
+        "title": "Free Tour Copenhague: Cambio de Guardia y Centro Histórico",
         "location": "Copenhagen",
-        "duration": "2 hours",
-        "tag": "Tip-Based",
-        "imageAlt": "Copenhagen Free Tour: Changing of the Guard & City Highlights"
+        "duration": "2 horas",
+        "tag": "A base de propinas",
+        "imageAlt": "Free Tour Copenhague: Cambio de Guardia y Centro Histórico"
       },
       "rosenborgCastleTour": {
         "aboutTourDescription": "Embark on a magical journey through the heart of Danish royal legacy with our exclusive 2-hour tour of the majestic Rosenborg Palace in Copenhagen. This experience is designed to immerse you in the rich history of this Renaissance jewel, once the cherished royal residence of the beloved King Christian IV. Our tour promises an exceptional cultural immersion into the unique narrative of Danish royalty.",
@@ -808,15 +808,6 @@
         "imageAlt": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen"
       }
     }
-  },
-  "aboutWalkAndTour": {
-    "eyebrow": "About Walk and Tour",
-    "title": "Walking Tours in Copenhagen",
-    "descriptions": [
-      "A captivating city of timeless charm and warm, friendly locals, offers a modern adventure for every traveler.",
-      "Cycle through the streets to explore vibrant harbors, stunning royal palaces, and historic neighborhoods where every corner tells a story. Immerse yourself in the city's innovative design scene, world-class museums, and celebrated New Nordic cuisine."
-    ],
-    "ctaLabel": "Know our team!"
   },
   "whyChoose": {
     "heading": "Why Travelers Choose Walk & Tour",

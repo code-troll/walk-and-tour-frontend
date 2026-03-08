@@ -156,7 +156,12 @@
           "endPoint": "Centro histórico / distrito real",
           "cancellationType": "Cancelación gratuita 24 horas",
           "languages": "Inglés y español (según salida)"
-        }
+        },
+        "title": "Copenhagen Free Tour: Changing of the Guard & City Highlights",
+        "location": "Copenhagen",
+        "duration": "2 hours",
+        "tag": "Tip-Based",
+        "imageAlt": "Copenhagen Free Tour: Changing of the Guard & City Highlights"
       },
       "rosenborgCastleTour": {
         "aboutTourDescription": "Embárcate en un viaje mágico por el legado real danés con nuestro exclusivo tour de 2 horas por el majestuoso Palacio de Rosenborg en Copenhague. Esta experiencia está diseñada para sumergirte en la rica historia de esta joya renacentista, antigua residencia real del querido rey Christian IV. Nuestro recorrido ofrece una inmersión cultural excepcional en la narrativa única de la realeza danesa.",
@@ -798,15 +803,6 @@
         "imageAlt": "De la ciudad a la costa de Copenhague: Diamante Negro, crucero por los canales y Reffen"
       }
     }
-  },
-  "aboutWalkAndTour": {
-    "eyebrow": "Sobre Walk and Tour",
-    "title": "Tours a pie en Copenhague",
-    "descriptions": [
-      "Una ciudad cautivadora, con encanto atemporal y habitantes cálidos y amables, ofrece una aventura moderna para cada viajero.",
-      "Recorre sus calles en bicicleta para descubrir puertos vibrantes, impresionantes palacios reales y barrios históricos donde cada rincón cuenta una historia. Sumérgete en la innovadora escena de diseño de la ciudad, sus museos de primer nivel y su celebrada cocina nórdica contemporánea."
-    ],
-    "ctaLabel": "Conoce a nuestro equipo"
   },
   "whyChoose": {
     "heading": "Por qué los viajeros eligen Walk & Tour",
