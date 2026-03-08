@@ -1,7 +1,11 @@
 {
   "meta": {
     "title": "Walk and Tour Copenaghen | Tour a piedi ed esperienze locali",
-    "description": "Tour a piedi a Copenaghen ed esperienze locali guidate da guide appassionate. Tour gratuiti, visite ai castelli ed escursioni giornaliere."
+    "description": "Tour a piedi a Copenaghen ed esperienze locali guidate da guide appassionate. Tour gratuiti, visite ai castelli ed escursioni giornaliere.",
+    "blog": {
+      "title": "Blog di Walk and Tour | Storie, consigli e idee su Copenaghen",
+      "description": "Storie di viaggio, consigli pratici e suggerimenti locali da Copenaghen per aiutarti a pianificare la tua prossima esperienza."
+    }
   },
   "header": {
     "logoAlt": "Walk & Tour Copenaghen",
@@ -47,6 +51,11 @@
     "companies": {
       "eyebrow": "Per aziende",
       "heading": "Esperienze aziendali e team building a Copenaghen"
+    },
+    "blog": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Blog e storie di viaggio",
+      "subheading": "Consigli locali, suggerimenti pratici e ispirazione per la tua prossima avventura a Copenaghen."
     }
   },
   "tours": {
@@ -994,5 +1003,41 @@
       "eyebrow": "Testimonianze",
       "title": "Cosa dicono i nostri viaggiatori?"
     }
+  },
+  "blogPage": {
+    "title": "Ultimi articoli",
+    "description": "Leggi guide pratiche, consigli locali e storie del nostro team per vivere al meglio il tuo viaggio.",
+    "loading": "Caricamento articoli del blog...",
+    "loadingMore": "Caricamento...",
+    "loadMore": "Carica altro",
+    "readMore": "Leggi di più",
+    "empty": "Nessun articolo disponibile al momento.",
+    "error": "Non è stato possibile caricare gli articoli in questo momento.",
+    "retry": "Riprova",
+    "views": "visualizzazioni",
+    "comments": "commenti"
+  },
+  "blogPost": {
+    "backToBlog": "Torna al blog",
+    "publishedOn": "Pubblicato il",
+    "updatedOn": "Aggiornato il",
+    "views": "visualizzazioni",
+    "comments": "commenti",
+    "share": "Condividi questo articolo",
+    "copyLink": "Copia link",
+    "copied": "Copiato",
+    "shareFacebook": "Facebook",
+    "shareX": "X",
+    "shareLinkedIn": "LinkedIn",
+    "shareWhatsApp": "WhatsApp",
+    "latestPosts": "Articoli recenti",
+    "leaveComment": "Lascia un commento",
+    "name": "Nome",
+    "email": "Email",
+    "message": "Messaggio",
+    "submitComment": "Invia commento",
+    "commentSuccess": "Il tuo commento è stato inviato.",
+    "commentError": "Non è stato possibile inviare il tuo commento in questo momento.",
+    "commentValidationError": "Compila tutti i campi con informazioni valide."
   }
 }

@@ -1,7 +1,11 @@
 {
   "meta": {
     "title": "Walk and Tour Copenhague | Tours a pie y experiencias locales",
-    "description": "Tours a pie en Copenhague y experiencias locales guiadas por guías apasionados. Tours gratuitos, visitas a castillos y excursiones de un día."
+    "description": "Tours a pie en Copenhague y experiencias locales guiadas por guías apasionados. Tours gratuitos, visitas a castillos y excursiones de un día.",
+    "blog": {
+      "title": "Blog de Walk and Tour | Historias, consejos e ideas de Copenhague",
+      "description": "Historias de viaje, consejos prácticos y recomendaciones locales de Copenhague para ayudarte a planificar tu próxima experiencia."
+    }
   },
   "header": {
     "logoAlt": "Walk & Tour Copenhague",
@@ -47,6 +51,11 @@
     "companies": {
       "eyebrow": "Para empresas",
       "heading": "Experiencias corporativas y de team building en Copenhague"
+    },
+    "blog": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Blog e historias de viaje",
+      "subheading": "Consejos locales, ideas prácticas e inspiración para tu próxima aventura en Copenhague."
     }
   },
   "tours": {
@@ -994,5 +1003,41 @@
       "eyebrow": "Testimonios",
       "title": "¿Qué opinan nuestros viajeros?"
     }
+  },
+  "blogPage": {
+    "title": "Últimos artículos",
+    "description": "Lee guías prácticas, recomendaciones locales e historias de nuestro equipo para aprovechar al máximo tu viaje.",
+    "loading": "Cargando artículos del blog...",
+    "loadingMore": "Cargando...",
+    "loadMore": "Cargar más",
+    "readMore": "Leer más",
+    "empty": "No hay artículos disponibles por ahora.",
+    "error": "No hemos podido cargar los artículos en este momento.",
+    "retry": "Reintentar",
+    "views": "vistas",
+    "comments": "comentarios"
+  },
+  "blogPost": {
+    "backToBlog": "Volver al blog",
+    "publishedOn": "Publicado el",
+    "updatedOn": "Actualizado el",
+    "views": "vistas",
+    "comments": "comentarios",
+    "share": "Compartir esta publicación",
+    "copyLink": "Copiar enlace",
+    "copied": "Copiado",
+    "shareFacebook": "Facebook",
+    "shareX": "X",
+    "shareLinkedIn": "LinkedIn",
+    "shareWhatsApp": "WhatsApp",
+    "latestPosts": "Publicaciones recientes",
+    "leaveComment": "Deja un comentario",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "message": "Mensaje",
+    "submitComment": "Enviar comentario",
+    "commentSuccess": "Tu comentario ha sido enviado.",
+    "commentError": "No hemos podido enviar tu comentario en este momento.",
+    "commentValidationError": "Completa todos los campos con información válida."
   }
 }
