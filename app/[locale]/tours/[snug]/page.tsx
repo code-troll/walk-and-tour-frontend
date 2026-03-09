@@ -24,6 +24,7 @@ import {
 } from "@/lib/detail-page-utils";
 import {
   getTourAvailableLocales,
+  getTourBookingReferenceId,
   getTourContentLocale,
   getRelatedToursByTour,
   getResolvedTourBySlug,
@@ -130,6 +131,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
   const relatedTours = getRelatedToursByTour(tour, 3);
   const heroTourImages = resolveHeroImages(tour);
+  const bookingReferenceId = getTourBookingReferenceId(tour, locale);
 
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
@@ -155,7 +157,14 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
       <TourDetailQuickInfoSection items={ quickInfoItems }/>
 
-      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder mapHref={ tourTemplateMapHref }/> }>
+      <TourDetailContentWithSidebar
+        sidebar={
+          <TourDetailSidebarPlaceholder
+            bookingReferenceId={ bookingReferenceId }
+            language={ locale }
+          />
+        }
+      >
         <TourDetailHighlightsSection
           title={ tourDetailUiT("labels.highlights") }
           highlights={ detailContent.highlights }

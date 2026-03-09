@@ -150,7 +150,7 @@ export default async function CompanyDetailPage({params}: CompanyDetailPageProps
 
       <TourDetailQuickInfoSection items={ quickInfoItems }/>
 
-      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder mapHref={ tourTemplateMapHref }/> }
+      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder/> }
                                     sidebarContainerClassName="mb-26">
         <TourDetailHighlightsSection
           title={ tourDetailT("labels.highlights") }

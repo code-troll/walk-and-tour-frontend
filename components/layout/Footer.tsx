@@ -22,30 +22,38 @@ export default function Footer() {
             <div className="space-y-2 text-base text-[#e0d7ce]">
               <p>{ t("labels.cvr") }: { footerContent.contact.cvr }</p>
               <p>{ t("labels.phone") }: { footerContent.contact.phone }</p>
-              <p>{ t("labels.email") }: <a href={ "mailto:" + footerContent.contact.email }>{ footerContent.contact.email }</a></p>
+              <p>{ t("labels.email") }: <a
+                href={ "mailto:" + footerContent.contact.email }>{ footerContent.contact.email }</a></p>
             </div>
             <div className="flex gap-3">
               <a href="https://www.instagram.com/walkandtour.dk" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/social/color/instagram.png" alt={ t("social.instagram") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/instagram.png" alt={ t("social.instagram") } width={ 28 }
+                       height={ 28 }/>
               </a>
               <a href="https://www.facebook.com/walkandtour.dk" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/social/color/facebook.png" alt={ t("social.facebook") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/facebook.png" alt={ t("social.facebook") } width={ 28 }
+                       height={ 28 }/>
               </a>
               <a href="https://www.linkedin.com/company/walk-and-tour" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/social/color/linkedin.png" alt={ t("social.linkedin") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/linkedin.png" alt={ t("social.linkedin") } width={ 28 }
+                       height={ 28 }/>
               </a>
               <a href="https://www.tiktok.com/@walkandtour.dk" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/social/color/tiktok.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
+                <Image src="/walkandtour/social/color/tiktok.png" alt={ t("social.tiktok") } width={ 28 }
+                       height={ 28 }/>
               </a>
-              <a href="https://www.tripadvisor.com/Attraction_Review-g189541-d33403499-Reviews-Walk_and_Tour-Copenhagen_Zealand.html" target="_blank" rel="noopener noreferrer">
-                <Image src="/walkandtour/social/color/tripadvisor.png" alt={ t("social.tiktok") } width={ 28 } height={ 28 }/>
+              <a
+                href="https://www.tripadvisor.com/Attraction_Review-g189541-d33403499-Reviews-Walk_and_Tour-Copenhagen_Zealand.html"
+                target="_blank" rel="noopener noreferrer">
+                <Image src="/walkandtour/social/color/tripadvisor.png" alt={ t("social.tiktok") } width={ 28 }
+                       height={ 28 }/>
               </a>
             </div>
           </div>
           { footerContent.linkSections.map((section) => (
             <div key={ section.id } className="space-y-3">
               <h4 className="text-base font-semibold uppercase tracking-wide text-[#f5f1ec]">
-                { t(`sections.${section.id}.title`) }
+                { t(`sections.${ section.id }.title`) }
               </h4>
               <ul className="space-y-2 text-base text-[#e0d7ce]">
                 { section.links.map((link) => (
@@ -54,7 +62,7 @@ export default function Footer() {
                       href={ getInternalHref({locale, target: link.target}) }
                       className="hover:text-white"
                     >
-                      { t(`sections.${section.id}.links.${link.id}`) }
+                      { t(`sections.${ section.id }.links.${ link.id }`) }
                     </a>
                   </li>
                 )) }
