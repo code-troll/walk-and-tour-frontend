@@ -15,7 +15,7 @@ export default function TourDetailContentWithSidebar({
   return (
     <div className="bg-[#fcfaf7]">
       <div className="mx-auto w-full max-w-7xl">
-        <div className="my-6 lg:hidden">
+        <div className="py-6 lg:hidden">
           { sidebar }
         </div>
         <div className="relative w-full lg:[&>section>div]:pr-96">

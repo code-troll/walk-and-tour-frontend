@@ -49,7 +49,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider>
       <Header />
-      <main className="pt-18 md:pt-24">{children}</main>
+      <main className="pt-12 md:pt-24">{children}</main>
     </NextIntlClientProvider>
   );
 }
