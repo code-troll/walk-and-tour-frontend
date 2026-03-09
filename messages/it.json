@@ -117,6 +117,13 @@
       "relatedTours": "Potrebbe interessarti anche",
       "startingFrom": "A partire da"
     },
+    "languageFallback": {
+      "title": "Questo tour non è disponibile nella lingua selezionata",
+      "description": "I dettagli del tour sono attualmente mostrati in inglese. Scegli una delle lingue disponibili per continuare con una versione supportata di questo tour.",
+      "selectedLanguage": "Lingua selezionata",
+      "showingLanguage": "Attualmente mostrato in",
+      "availableLanguages": "Lingue disponibili"
+    },
     "defaults": {
       "aboutTourDescription": "Partecipa a una delle nostre esperienze guidate a piedi e scopri Copenaghen con punti di vista locali, luoghi iconici e consigli pratici per il resto del tuo viaggio.",
       "highlights": [

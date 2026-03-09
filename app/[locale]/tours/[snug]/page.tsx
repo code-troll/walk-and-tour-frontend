@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/layout/Footer";
 import TourDetailAboutSection from "@/components/tour-detail/TourDetailAboutSection";
 import TourDetailContentWithSidebar from "@/components/tour-detail/TourDetailContentWithSidebar";
+import TourDetailLanguageFallbackDialog from "@/components/tour-detail/TourDetailLanguageFallbackDialog";
 import TourDetailHeroSection from "@/components/tour-detail/TourDetailHeroSection";
 import TourDetailHighlightsSection from "@/components/tour-detail/TourDetailHighlightsSection";
 import TourDetailIncludedSection from "@/components/tour-detail/TourDetailIncludedSection";
@@ -22,8 +23,11 @@ import {
   resolveHeroImages,
 } from "@/lib/detail-page-utils";
 import {
+  getTourAvailableLocales,
+  getTourContentLocale,
   getRelatedToursByTour,
   getResolvedTourBySlug,
+  isTourAvailableInLocale,
   tourSlugs,
   tourTemplateMapHref,
 } from "@/lib/landing-data";
@@ -57,8 +61,9 @@ export async function generateMetadata({
     return {};
   }
 
-  const tourItemT = await getTranslations({locale, namespace: "tourDetail.items"});
-  const tourDetailT = await getTranslations({locale, namespace: "tourDetail"});
+  const contentLocale = getTourContentLocale(tour, locale);
+  const tourItemT = await getTranslations({locale: contentLocale, namespace: "tourDetail.items"});
+  const tourDetailT = await getTranslations({locale: contentLocale, namespace: "tourDetail"});
   const aboutTourDescription = getItemStringWithFallback(
     tourItemT,
     tour.id,
@@ -90,10 +95,19 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     notFound();
   }
 
-  const tourItemT = await getTranslations({locale, namespace: "tourDetail.items"});
-  const tourDetailT = await getTranslations({locale, namespace: "tourDetail"});
-  const headerT = await getTranslations({locale, namespace: "header"});
-  const localeLanguage = getLocaleLanguageLabel(locale, headerT);
+  const contentLocale = getTourContentLocale(tour, locale);
+  const isFallbackLanguage = !isTourAvailableInLocale(tour, locale);
+  const [tourItemT, tourDetailUiT, tourDetailContentT, headerT] = await Promise.all([
+    getTranslations({locale: contentLocale, namespace: "tourDetail.items"}),
+    getTranslations({locale, namespace: "tourDetail"}),
+    getTranslations({locale: contentLocale, namespace: "tourDetail"}),
+    getTranslations({locale, namespace: "header"}),
+  ]);
+  const availableLanguages = getTourAvailableLocales(tour).map((availableLocale) => ({
+    locale: availableLocale,
+    label: getLocaleLanguageLabel(availableLocale, headerT),
+  }));
+  const availableLanguagesLabel = availableLanguages.map((language) => language.label).join(", ");
   const display = resolveDetailDisplay({
     itemT: tourItemT,
     itemId: tour.id,
@@ -104,13 +118,13 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     },
   });
   const detailContent = resolveDetailContent({
-    detailT: tourDetailT,
+    detailT: tourDetailContentT,
     itemT: tourItemT,
     itemId: tour.id,
-    languageLabel: localeLanguage,
+    languageLabel: availableLanguagesLabel,
   });
   const quickInfoItems = buildQuickInfoItems({
-    detailT: tourDetailT,
+    detailT: tourDetailUiT,
     facts: detailContent.facts,
   });
 
@@ -119,6 +133,16 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
+      { isFallbackLanguage ? (
+        <TourDetailLanguageFallbackDialog
+          title={ tourDetailUiT("languageFallback.title") }
+          description={ tourDetailUiT("languageFallback.description") }
+          availableLanguagesLabel={ tourDetailUiT("languageFallback.availableLanguages") }
+          availableLanguages={ availableLanguages }
+          tourSlug={ snug }
+        />
+      ) : null }
+
       <TourDetailHeroSection
         title={ display.title }
         tag={ display.tag }
@@ -133,32 +157,32 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
 
       <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder mapHref={ tourTemplateMapHref }/> }>
         <TourDetailHighlightsSection
-          title={ tourDetailT("labels.highlights") }
+          title={ tourDetailUiT("labels.highlights") }
           highlights={ detailContent.highlights }
         />
 
         <TourDetailAboutSection
-          title={ tourDetailT("labels.aboutTour") }
+          title={ tourDetailUiT("labels.aboutTour") }
           description={ detailContent.aboutTourDescription }
         />
 
         <TourDetailItinerarySection
-          title={ tourDetailT("labels.itinerary") }
+          title={ tourDetailUiT("labels.itinerary") }
           description={ detailContent.itineraryDescription }
         />
 
         <TourDetailIncludedSection
-          title={ tourDetailT("labels.includedSection") }
-          includedTitle={ tourDetailT("labels.included") }
-          notIncludedTitle={ tourDetailT("labels.notIncluded") }
+          title={ tourDetailUiT("labels.includedSection") }
+          includedTitle={ tourDetailUiT("labels.included") }
+          notIncludedTitle={ tourDetailUiT("labels.notIncluded") }
           includedItems={ detailContent.includedItems }
           notIncludedItems={ detailContent.notIncludedItems }
         />
 
         <TourDetailCustomerSupportSection
-          title={ tourDetailT("labels.customerSupport") }
+          title={ tourDetailUiT("labels.customerSupport") }
           description={ detailContent.customerSupportDescription }
-          ctaLabel={ tourDetailT("labels.contactUs") }
+          ctaLabel={ tourDetailUiT("labels.contactUs") }
           ctaHref="/contact"
         />
 
@@ -166,7 +190,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
       </TourDetailContentWithSidebar>
 
       <TourDetailRelatedToursSection
-        title={ tourDetailT("labels.relatedTours") }
+        title={ tourDetailUiT("labels.relatedTours") }
         tours={ relatedTours }
       />
 

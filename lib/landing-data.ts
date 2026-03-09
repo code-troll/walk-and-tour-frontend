@@ -1,3 +1,4 @@
+import { routing, type AppLocale } from "@/i18n/routing";
 import type { InternalTarget } from "@/lib/internal-paths";
 
 export type NavLink = {
@@ -89,6 +90,12 @@ export type TourDetailCtaTarget =
   | { kind: "internal"; target: InternalTarget; }
   | { kind: "external"; href: string; };
 
+export type TourLocaleAvailabilityEntry = {
+  bookingReferenceId?: string;
+};
+
+export type TourLocaleAvailability = Partial<Record<AppLocale, TourLocaleAvailabilityEntry>>;
+
 export type Tour = {
   id: TourId;
   slug: TourSlug;
@@ -98,6 +105,7 @@ export type Tour = {
   categories: TourCategoryId[];
   heroImageSrc: string;
   galleryImageSrcs: readonly string[];
+  localeAvailability: TourLocaleAvailability;
   bookingTarget?: TourDetailCtaTarget;
   supportTarget?: TourDetailCtaTarget;
 };
@@ -208,7 +216,25 @@ const defaultSupportTarget: TourDetailCtaTarget = {
 
 export const tourTemplateMapHref = "https://maps.app.goo.gl/pWqY5GfNPPtoDK3x6";
 
-export const tours: Tour[] = [
+const createTourLocaleAvailability = (
+  locales: readonly AppLocale[],
+  bookingReferenceIds: Partial<Record<AppLocale, string | undefined>> = {},
+): TourLocaleAvailability => (
+  Object.fromEntries(
+    locales.map((locale) => {
+      const bookingReferenceId = bookingReferenceIds[locale];
+
+      return [
+        locale,
+        bookingReferenceId === undefined ? {} : {bookingReferenceId},
+      ];
+    })
+  ) as TourLocaleAvailability
+);
+
+const defaultTourLocaleAvailability = () => createTourLocaleAvailability(["en", "es", "it"]);
+
+const tourDefinitions: Tour[] = [
   {
     id: "copenhagenFreeTour",
     slug: "copenhagen-historic-center-free-tour",
@@ -229,6 +255,17 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.copenhagenFreeTour }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P7"
+      },
+      es: {
+        bookingReferenceId: "P1"
+      },
+      it: {
+        bookingReferenceId: "P11"
+      },
+    },
   },
   {
     id: "rosenborgCastleTour",
@@ -249,6 +286,17 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.rosenborgCastleTour }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.rosenborgCastleTour }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P16"
+      },
+      es: {
+        bookingReferenceId: "P21"
+      },
+      it: {
+        bookingReferenceId: "P15"
+      },
+    },
   },
   {
     id: "malmoExcursion",
@@ -269,6 +317,17 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.malmoExcursion }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.malmoExcursion }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P10"
+      },
+      es: {
+        bookingReferenceId: "P4"
+      },
+      it: {
+        bookingReferenceId: "P14"
+      },
+    },
   },
   {
     id: "amalienborgPalace",
@@ -290,6 +349,17 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.amalienborgPalace }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P18"
+      },
+      es: {
+        bookingReferenceId: "P22"
+      },
+      it: {
+        bookingReferenceId: "P17"
+      },
+    },
   },
   {
     id: "christiansborgPalace",
@@ -311,6 +381,15 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.christiansborgPalace }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P19"
+      },
+      es: {},
+      it: {
+        bookingReferenceId: "P20"
+      },
+    },
   },
   {
     id: "copenhagenEssentials",
@@ -332,6 +411,17 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.copenhagenEssentials }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.copenhagenEssentials }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P28"
+      },
+      es: {
+        bookingReferenceId: "P29"
+      },
+      it: {
+        bookingReferenceId: "P32"
+      },
+    },
   },
   {
     id: "jewishQuarter",
@@ -352,6 +442,14 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.jewishQuarter }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.jewishQuarter }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P26"
+      },
+      es: {
+        bookingReferenceId: "P27"
+      },
+    },
   },
   {
     id: "tivoliGardensEntry",
@@ -372,6 +470,14 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.tivoliGardensEntry }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P30"
+      },
+      es: {
+        bookingReferenceId: "P31"
+      },
+    },
   },
   {
     id: "boatTour",
@@ -392,6 +498,14 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.boatTour }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.boatTour }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P8"
+      },
+      es: {
+        bookingReferenceId: "P6"
+      },
+    },
   },
   {
     id: "royalDeerParkBikeTour",
@@ -414,6 +528,14 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.royalDeerParkBikeTour }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P9"
+      },
+      es: {
+        bookingReferenceId: "P3"
+      },
+    },
   },
   {
     id: "harborArchitecture",
@@ -435,6 +557,14 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.harborArchitecture }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.harborArchitecture }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P24"
+      },
+      es: {
+        bookingReferenceId: "P25"
+      },
+    },
   },
   {
     id: "rosenborgCastleCanalCruise",
@@ -455,6 +585,17 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.rosenborgCastleCanalCruise }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P23"
+      },
+      es: {
+        bookingReferenceId: "P5"
+      },
+      it: {
+        bookingReferenceId: "P13"
+      },
+    },
   },
   {
     id: "frederiksborgAndKronborgCastle",
@@ -476,6 +617,10 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/6.jpg`,
       `/walkandtour/tours/${ tourSlugById.frederiksborgAndKronborgCastle }/7.jpg`,
     ],
+    localeAvailability: {
+      en: {},
+      es: {},
+    },
   },
   {
     id: "foodTours",
@@ -496,6 +641,10 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.foodTours }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.foodTours }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {},
+      es: {},
+    },
   },
   {
     id: "roskilde",
@@ -516,6 +665,10 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.roskilde }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.roskilde }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {},
+      es: {},
+    },
   },
   {
     id: "nordhavnArchitecture",
@@ -535,6 +688,10 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.nordhavnArchitecture }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.nordhavnArchitecture }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {},
+      es: {},
+    },
   },
   {
     id: "christmasTour",
@@ -553,6 +710,11 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.christmasTour }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.christmasTour }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {},
+      es: {},
+      it: {},
+    },
   },
   {
     id: "panorama",
@@ -573,6 +735,14 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.panorama }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.panorama }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P33"
+      },
+      es: {
+        bookingReferenceId: "P34"
+      },
+    },
   },
   {
     id: "shoreExcursion",
@@ -593,6 +763,13 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.shoreExcursion }/4.jpg`,
       `/walkandtour/tours/${ tourSlugById.shoreExcursion }/5.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P35"
+      },
+      es: {},
+      it: {},
+    },
   },
   {
     id: "copenhagenCityToCoast",
@@ -614,8 +791,19 @@ export const tours: Tour[] = [
       `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/5.jpg`,
       `/walkandtour/tours/${ tourSlugById.copenhagenCityToCoast }/6.jpg`,
     ],
+    localeAvailability: {
+      en: {
+        bookingReferenceId: "P36"
+      },
+      es: {},
+    },
   },
 ];
+
+export const tours: Tour[] = tourDefinitions.map((tour) => ({
+  ...tour,
+  localeAvailability: tour.localeAvailability ?? defaultTourLocaleAvailability(),
+}));
 
 const resolveTour = (tour: Tour): ResolvedTour => ({
   ...tour,
@@ -641,6 +829,23 @@ const shuffle = <T, >(items: readonly T[]): T[] => {
 
 export const toursCatalog: Tour[] = tours;
 export const tourSlugs: TourSlug[] = toursCatalog.map((tour) => tour.slug);
+
+export const getTourAvailableLocales = (tour: Tour): AppLocale[] => (
+  routing.locales.filter((locale) => Object.hasOwn(tour.localeAvailability, locale))
+);
+
+export const isTourAvailableInLocale = (tour: Tour, locale: AppLocale): boolean => (
+  Object.hasOwn(tour.localeAvailability, locale)
+);
+
+export const getTourContentLocale = (tour: Tour, locale: AppLocale): AppLocale => (
+  isTourAvailableInLocale(tour, locale) ? locale : routing.defaultLocale
+);
+
+export const getTourBookingReferenceId = (
+  tour: Tour,
+  locale: AppLocale,
+): string | undefined => tour.localeAvailability[locale]?.bookingReferenceId;
 
 export const getTourBySlug = (snug: string): Tour | undefined => (
   toursCatalog.find((tour) => tour.slug === snug)

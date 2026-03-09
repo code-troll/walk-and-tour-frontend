@@ -117,6 +117,13 @@
       "relatedTours": "You may also like",
       "startingFrom": "Starting from"
     },
+    "languageFallback": {
+      "title": "This tour is not available in your selected language",
+      "description": "The tour details below are currently shown in English. Choose one of the available languages to continue with a supported version of this tour.",
+      "selectedLanguage": "Selected language",
+      "showingLanguage": "Currently shown in",
+      "availableLanguages": "Available languages"
+    },
     "defaults": {
       "aboutTourDescription": "Join one of our guided walking experiences and discover Copenhagen with local insights, iconic landmarks and practical recommendations for the rest of your stay.",
       "highlights": [
