@@ -59,9 +59,9 @@ export default function TourDetailQuickInfoSection({
 
               const rowBorderClass = [
                 "border-[#dfd6c9]/50",
-                index >= 2 ? "border-t" : "",
-                index >= 3 ? "sm:border-t" : "sm:border-t-0",
-                index >= 5 ? "lg:border-t" : "lg:border-t-0",
+                index >= 1 ? "border-t" : "",
+                index >= 2 ? "sm:border-t" : "sm:border-t-0",
+                index >= 4 ? "border-b lg:border-t lg:border-b-0" : "lg:border-t-0",
               ].join(" ");
 
               return (

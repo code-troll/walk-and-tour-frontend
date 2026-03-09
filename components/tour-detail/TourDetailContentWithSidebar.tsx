@@ -15,6 +15,9 @@ export default function TourDetailContentWithSidebar({
   return (
     <div className="bg-[#fcfaf7]">
       <div className="mx-auto w-full max-w-7xl">
+        <div className="my-6 lg:hidden">
+          { sidebar }
+        </div>
         <div className="relative w-full lg:[&>section>div]:pr-96">
           { children }
           <aside className="hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[calc(25rem)]">
@@ -22,9 +25,6 @@ export default function TourDetailContentWithSidebar({
               { sidebar }
             </div>
           </aside>
-        </div>
-        <div className="lg:hidden my-12">
-          { sidebar }
         </div>
       </div>
     </div>
