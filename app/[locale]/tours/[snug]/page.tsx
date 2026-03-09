@@ -30,7 +30,6 @@ import {
   getResolvedTourBySlug,
   isTourAvailableInLocale,
   tourSlugs,
-  tourTemplateMapHref,
 } from "@/lib/landing-data";
 import TourDetailCustomerSupportSection from "@/components/tour-detail/TourDetailCustomerSupportSection";
 import TourDetailElfsightReviewsSection from "@/components/tour-detail/TourDetailElfsightReviewsSection";
@@ -108,7 +107,6 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     locale: availableLocale,
     label: getLocaleLanguageLabel(availableLocale, headerT),
   }));
-  const availableLanguagesLabel = availableLanguages.map((language) => language.label).join(", ");
   const display = resolveDetailDisplay({
     itemT: tourItemT,
     itemId: tour.id,
@@ -122,7 +120,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     detailT: tourDetailContentT,
     itemT: tourItemT,
     itemId: tour.id,
-    languageLabel: availableLanguagesLabel,
+    languageLabel: availableLanguages.find(locale => locale === locale)?.label!,
   });
   const quickInfoItems = buildQuickInfoItems({
     detailT: tourDetailUiT,

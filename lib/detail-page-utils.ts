@@ -175,8 +175,8 @@ export const buildQuickInfoItems = ({
   },
   {
     id: "languages" as const,
-    label: detailT("labels.languages"),
-    value: facts.languages,
+    label: detailT("labels.language"),
+    value: facts.language,
   },
 ];
 

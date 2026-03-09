@@ -6,12 +6,20 @@
   --foreground: #121212;
   --muted: #5b4d3c;
   --border: #e5ddd2;
-  --header-h: clamp(6rem, 4.8rem + 3.2vw, 8rem);
-  --logo-h: clamp(3.5rem, 3rem + 1.4vw, 4rem);
+  --header-h-expanded: clamp(6rem, 4.8rem + 3.2vw, 8rem);
+  --header-h-condensed: clamp(4.5rem, 4rem + 1.25vw, 5.5rem);
+  --logo-h-expanded: clamp(3.5rem, 3rem + 1.4vw, 4rem);
+  --logo-h-condensed: clamp(2.45rem, 2.2rem + 0.8vw, 3rem);
   --header-px: clamp(1rem, 0.5rem + 1.4vw, 3rem);
-  --header-py: clamp(0.75rem, 0.45rem + 0.8vw, 1.25rem);
-  --logo-mb: clamp(0.25rem, 0.1rem + 0.35vw, 0.75rem);
+  --header-py-expanded: clamp(0.75rem, 0.45rem + 0.8vw, 1.25rem);
+  --header-py-condensed: clamp(0.3rem, 0.2rem + 0.3vw, 0.55rem);
+  --logo-mb-expanded: clamp(0.25rem, 0.1rem + 0.35vw, 0.75rem);
+  --logo-mb-condensed: clamp(0rem, 0rem + 0vw, 0.2rem);
   --ctrl-gap: clamp(0.25rem, 0.12rem + 0.35vw, 0.5rem);
+  --header-h: var(--header-h-expanded);
+  --logo-h: var(--logo-h-expanded);
+  --header-py: var(--header-py-expanded);
+  --logo-mb: var(--logo-mb-expanded);
 }
 
 @theme inline {
@@ -24,6 +32,53 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "work-sans-v2", sans-serif;
+}
+
+.header-shell {
+  --header-h: var(--header-h-expanded);
+  --logo-h: var(--logo-h-expanded);
+  --header-py: var(--header-py-expanded);
+  --logo-mb: var(--logo-mb-expanded);
+  transform: translateY(0);
+  opacity: 1;
+  will-change: transform, opacity, height;
+  transition:
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms ease,
+    height 380ms ease,
+    box-shadow 380ms ease;
+}
+
+.header-shell.is-condensed {
+  --header-h: var(--header-h-condensed);
+  --logo-h: var(--logo-h-condensed);
+  --header-py: var(--header-py-condensed);
+  --logo-mb: var(--logo-mb-condensed);
+}
+
+.header-shell.is-hidden {
+  transform: translateY(calc(-100% - 0.5rem));
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 767px) {
+  .header-shell {
+    --header-h: var(--header-h-condensed);
+    --logo-h: var(--logo-h-condensed);
+    --header-py: var(--header-py-condensed);
+    --logo-mb: var(--logo-mb-condensed);
+  }
+}
+
+.header-inner,
+.header-logo-link,
+.header-logo-image {
+  transition:
+    padding 380ms ease,
+    margin 380ms ease,
+    height 380ms ease,
+    transform 380ms ease;
 }
 
 @keyframes tour-card-reveal {
@@ -104,6 +159,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .header-shell,
+  .header-inner,
+  .header-logo-link,
+  .header-logo-image {
+    transition: none;
+  }
+
   .tour-card-reveal {
     animation: none;
   }

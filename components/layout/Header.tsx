@@ -10,7 +10,8 @@ import { getHomeSectionHash, getInternalHref } from "@/lib/internal-paths";
 import { CalendarCheckIcon, ChevronDown, Menu, X } from "lucide-react";
 import { ES, GB, IT } from "country-flag-icons/react/3x2";
 
-const SCROLL_THRESHOLD = 32;
+const SCROLL_DIRECTION_EPSILON = 2;
+const SCROLL_TOGGLE_DISTANCE = 18;
 type LanguageCode = "EN" | "ES" | "IT";
 type CountryCode = "GB" | "ES" | "IT";
 
@@ -70,36 +71,62 @@ export default function Header() {
   const locale = useLocale() as AppLocale;
   const router = useRouter();
   const pathname = usePathname();
+  const [isAtTop, setIsAtTop] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopLanguageMenuOpen, setIsDesktopLanguageMenuOpen] = useState(false);
   const [isMobileLanguageMenuOpen, setIsMobileLanguageMenuOpen] = useState(false);
   const [activeHash, setActiveHash] = useState("#");
   const lastScrollY = useRef(0);
+  const lastToggleY = useRef(0);
+  const visibleRef = useRef(true);
   const ticking = useRef(false);
   const desktopLanguageMenuRef = useRef<HTMLDivElement>(null);
   const mobileLanguageMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     lastScrollY.current = window.scrollY;
+    lastToggleY.current = window.scrollY;
+    visibleRef.current = true;
 
     const update = () => {
       const currentY = window.scrollY;
-      const delta = currentY - lastScrollY.current;
+      const previousY = lastScrollY.current;
+      const delta = currentY - previousY;
+      const atTop = currentY <= 0;
 
-      if (currentY <= 0) {
+      setIsAtTop(atTop);
+
+      if (atTop) {
         setIsVisible(true);
+        visibleRef.current = true;
         lastScrollY.current = 0;
+        lastToggleY.current = 0;
         return;
       }
 
-      if (delta > SCROLL_THRESHOLD) {
-        setIsVisible(false);
+      if (Math.abs(delta) < SCROLL_DIRECTION_EPSILON) {
         lastScrollY.current = currentY;
-      } else if (delta < -SCROLL_THRESHOLD) {
-        setIsVisible(true);
-        lastScrollY.current = currentY;
+        return;
       }
+
+      const distanceSinceToggle = Math.abs(currentY - lastToggleY.current);
+      if (distanceSinceToggle < SCROLL_TOGGLE_DISTANCE) {
+        lastScrollY.current = currentY;
+        return;
+      }
+
+      if (delta > 0 && visibleRef.current) {
+        setIsVisible(false);
+        visibleRef.current = false;
+        lastToggleY.current = currentY;
+      } else if (delta < 0 && !visibleRef.current) {
+        setIsVisible(true);
+        visibleRef.current = true;
+        lastToggleY.current = currentY;
+      }
+
+      lastScrollY.current = currentY;
     };
 
     const onScroll = () => {
@@ -235,9 +262,9 @@ export default function Header() {
   };
 
   const headerClassName = [
-    "fixed inset-x-0 top-0 z-50 h-[var(--header-h)] border-b border-black/10 bg-white",
-    "transition-transform duration-500 ease-out motion-reduce:transition-none",
-    isVisible ? "translate-y-0" : "-translate-y-full",
+    "header-shell fixed inset-x-0 top-0 z-50 h-[var(--header-h)] border-b border-black/10 bg-white",
+    isAtTop ? "" : "is-condensed",
+    isVisible ? "" : "is-hidden",
   ].join(" ");
   const homeHref = getInternalHref({
     locale,
@@ -290,14 +317,14 @@ export default function Header() {
   return (
     <>
       <header className={ headerClassName }>
-        <div className="flex h-full w-full items-center justify-between px-(--header-px) py-(--header-py)">
-          <a href={ homeHref } className="mb-(--logo-mb) flex items-center gap-3">
+        <div className="header-inner flex h-full w-full items-center justify-between px-(--header-px) py-(--header-py)">
+          <a href={ homeHref } className="header-logo-link mb-(--logo-mb) flex items-center gap-3">
             <Image
               src="/walkandtour/branding/logo-formal.png"
               alt={ t("logoAlt") }
               width={ 120 }
               height={ 84 }
-              className="h-(--logo-h) w-auto"
+              className="header-logo-image h-(--logo-h) w-auto"
               priority
             />
           </a>
