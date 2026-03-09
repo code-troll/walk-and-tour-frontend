@@ -298,8 +298,13 @@ export default function Header() {
     languageOptions.find((option) => option.locale === locale) ?? languageOptions[0];
   const SelectedLanguageFlag = flagByCountryCode[selectedLanguageOption.countryCode];
 
+  const headerFrameClassName = [
+    "header-frame",
+    isAtTop ? "" : "is-condensed",
+  ].join(" ");
+
   return (
-    <>
+    <div className={ headerFrameClassName }>
       <header className={ headerClassName }>
         <div className="header-inner flex h-full w-full items-center justify-between px-(--header-px) py-(--header-py)">
           <a href={ homeHref } className="header-logo-link mb-(--logo-mb) flex items-center gap-3">
@@ -410,7 +415,7 @@ export default function Header() {
         id="mobile-menu-overlay"
         aria-hidden={ !isMobileMenuOpen }
         className={ [
-          "fixed inset-0 z-9999 flex flex-col bg-[#c24343] px-6 pt-7 md:pt-9 lg:pt-11 pb-6 text-white transition-transform duration-300 ease-in-out lg:hidden",
+          "header-mobile-overlay fixed inset-x-0 bottom-0 z-40 flex flex-col bg-[#c24343] px-6 pt-7 md:pt-9 lg:pt-11 pb-6 text-white transition-transform duration-300 ease-in-out lg:hidden",
           isMobileMenuOpen ? "translate-x-0" : "pointer-events-none translate-x-full",
         ].join(" ") }
       >
@@ -480,6 +485,6 @@ export default function Header() {
           </a>
         </nav>
       </div>
-    </>
+    </div>
   );
 }

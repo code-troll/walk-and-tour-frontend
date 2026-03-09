@@ -42,6 +42,14 @@ body {
   font-family: "work-sans-v2", sans-serif;
 }
 
+.header-frame {
+  --header-overlay-top: var(--header-h-expanded);
+}
+
+.header-frame.is-condensed {
+  --header-overlay-top: var(--header-h-condensed);
+}
+
 .header-shell {
   --header-h: var(--header-h-expanded);
   --logo-h: var(--logo-h-expanded);
@@ -74,6 +82,10 @@ body {
 }
 
 @media (max-width: 767px) {
+  .header-frame {
+    --header-overlay-top: var(--header-h-condensed);
+  }
+
   .header-shell {
     --header-h: var(--header-h-condensed);
     --logo-h: var(--logo-h-condensed);
@@ -104,10 +116,30 @@ body {
   max-width: 100%;
 }
 
+.header-shell {
+  left: 0;
+  right: 0;
+  width: auto;
+  isolation: isolate;
+  overflow: visible;
+}
+
+#mobile-menu-overlay {
+  overflow: visible;
+}
+
+.header-frame {
+  overflow: visible;
+}
+
 #mobile-menu-overlay {
   width: 100%;
   max-width: 100vw;
   overflow-x: clip;
+}
+
+.header-mobile-overlay {
+  top: var(--header-overlay-top);
 }
 
 @keyframes tour-card-reveal {
