@@ -86,14 +86,14 @@ export default async function BlogPostDetailPage({
     notFound();
   }
 
-  const blogHref = getPathname({locale, href: "/blog"});
+  const postHref = getPathname({locale, href: "/post"});
   const requestHeaders = await headers();
   const forwardedHost = requestHeaders.get("x-forwarded-host");
   const host = forwardedHost || requestHeaders.get("host");
   const protocol = requestHeaders.get("x-forwarded-proto") || "https";
   const shareUrl = host
-    ? `${ protocol }://${ host }${ blogHref }/post/${ post.slug }`
-    : `${ blogHref }/post/${ post.slug }`;
+    ? `${ protocol }://${ host }${ postHref }/${ post.slug }`
+    : `${ postHref }/${ post.slug }`;
 
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
@@ -102,7 +102,7 @@ export default async function BlogPostDetailPage({
       <section className="bg-white py-16">
         <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
           <a
-            href={ blogHref }
+            href={ postHref }
             className="inline-flex items-center text-base font-semibold uppercase tracking-wide text-[#c24343] transition-colors hover:text-[#2a221a]"
           >
             { tBlogPost("backToBlog") }

@@ -24,7 +24,7 @@ export default function BlogRecentPostsSection({
     return null;
   }
 
-  const blogBasePath = getPathname({locale, href: "/blog"});
+  const postBasePath = getPathname({locale, href: "/post"});
 
   return (
     <section className="bg-[#fcfaf7] py-16">
@@ -37,7 +37,7 @@ export default function BlogRecentPostsSection({
             <BlogPostCard
               key={ post.id }
               post={ post }
-              postHref={ `${ blogBasePath }/post/${ post.slug }` }
+              postHref={ `${ postBasePath }/${ post.slug }` }
               readMoreLabel={ readMoreLabel }
               viewsLabel={ viewsLabel }
               commentsLabel={ commentsLabel }

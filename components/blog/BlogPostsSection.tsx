@@ -29,7 +29,7 @@ const dedupeById = (items: BlogPostListItem[]): BlogPostListItem[] => {
 
 export default function BlogPostsSection({ locale }: BlogPostsSectionProps) {
   const t = useTranslations("blogPage");
-  const blogBasePath = getPathname({locale, href: "/blog"});
+  const postBasePath = getPathname({locale, href: "/post"});
   const [posts, setPosts] = useState<BlogPostListItem[]>([]);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -114,7 +114,7 @@ export default function BlogPostsSection({ locale }: BlogPostsSectionProps) {
               <BlogPostCard
                 key={ post.id }
                 post={ post }
-                postHref={ `${ blogBasePath }/post/${ post.slug }` }
+                postHref={ `${ postBasePath }/${ post.slug }` }
                 readMoreLabel={ t("readMore") }
                 viewsLabel={ t("views") }
                 commentsLabel={ t("comments") }

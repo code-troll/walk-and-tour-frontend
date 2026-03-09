@@ -178,7 +178,7 @@ export const navLinks: NavLink[] = [
   {id: "tours", target: {kind: "page", page: "/tours"}},
   {id: "about", target: {kind: "page", page: "/about-us"}},
   {id: "companies", target: {kind: "page", page: "/companies"}},
-  {id: "blog", target: {kind: "page", page: "/blog"}},
+  {id: "blog", target: {kind: "page", page: "/post"}},
   {id: "contact", target: {kind: "homeSection", section: "contact"}},
 ];
 
