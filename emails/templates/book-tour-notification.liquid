@@ -1,0 +1,56 @@
+<div style="background:#f7f1ea;padding:24px;font-family:Arial,sans-serif;color:#2a221a;">
+  <div style="max-width:680px;margin:0 auto;background:#ffffff;border:1px solid #eadfd3;border-radius:24px;padding:32px;">
+    <p style="margin:0 0 8px;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7562;">Walk and Tour</p>
+    <h1 style="margin:0 0 24px;font-size:28px;line-height:1.2;">New Book Tour Request</h1>
+
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;width:220px;">Submitted from locale</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ languageName | escape }}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Booking type</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ bookingTypeLabel | escape }}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Selected tour</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">
+          {% if selectedItemLabel != blank %}
+            {{ selectedItemLabel | escape }}{% if selectedItemId != blank %} ({{ selectedItemId | escape }}){% endif %}
+          {% else %}
+            Not selected
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Requested date</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ desiredDate | escape }}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Participants</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ participants | escape }}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Requested language</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ tourLanguageLabel | escape }}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Name</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ name | escape }}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Email</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ email | escape }}</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;font-weight:700;">Phone</td>
+        <td style="padding:10px 0;border-top:1px solid #f0e6dc;">{{ phoneDisplay | escape }}</td>
+      </tr>
+    </table>
+
+    <div style="margin-top:28px;padding-top:24px;border-top:1px solid #f0e6dc;">
+      <p style="margin:0 0 12px;font-size:14px;font-weight:700;">Message</p>
+      <p style="margin:0;font-size:15px;line-height:1.7;">{{ messageHtml }}</p>
+    </div>
+  </div>
+</div>

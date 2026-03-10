@@ -4,6 +4,7 @@ import type { AppLocale } from "@/i18n/routing";
 export type InternalPage =
     | "/"
     | "/tours"
+    | "/book-tour"
     | "/about-us"
     | "/companies"
     | "/work-with-us"

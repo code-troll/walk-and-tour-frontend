@@ -256,7 +256,7 @@ export default function Header() {
   });
   const privateToursHref = getInternalHref({
     locale,
-    target: {kind: "homeSection", section: "private"},
+    target: {kind: "page", page: "/book-tour"},
   });
   const getNavHref = (linkId: (typeof navLinks)[number]["id"]) => {
     const link = navLinks.find((item) => item.id === linkId);

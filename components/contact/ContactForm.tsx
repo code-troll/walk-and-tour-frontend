@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useEffectEvent, useRef, useState } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { useLocale, useTranslations } from "next-intl";
 import PhoneInput, { type Value } from "react-phone-number-input";
@@ -65,14 +65,21 @@ export default function ContactForm({
         "mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-[#2a221a] focus-within:border-[#2a221a]";
     const phoneInputClassName =
         "w-full bg-transparent text-sm text-[#2a221a] placeholder:text-[#b5a695] focus:outline-none";
+    const resetFormState = useEffectEvent(() => {
+        formRef.current?.reset();
+        setPhone(undefined);
+        setTurnstileToken("");
+        setLocalFeedbackReason(turnstileSiteKey ? null : "turnstileUnavailable");
+        turnstileRef.current?.reset();
+    });
+    const resetTurnstileState = useEffectEvent(() => {
+        setTurnstileToken("");
+        turnstileRef.current?.reset();
+    });
 
     useEffect(() => {
         if (state.status === "success") {
-            formRef.current?.reset();
-            setPhone(undefined);
-            setTurnstileToken("");
-            setLocalFeedbackReason(turnstileSiteKey ? null : "turnstileUnavailable");
-            turnstileRef.current?.reset();
+            resetFormState();
             return;
         }
 
@@ -80,10 +87,9 @@ export default function ContactForm({
             state.status === "error" &&
             (state.reason === "turnstileRequired" || state.reason === "turnstileFailed")
         ) {
-            setTurnstileToken("");
-            turnstileRef.current?.reset();
+            resetTurnstileState();
         }
-    }, [state, turnstileSiteKey]);
+    }, [state]);
 
     const feedbackKey =
         state.status === "success"
@@ -97,6 +103,7 @@ export default function ContactForm({
 
     return (
         <form ref={ formRef } action={ formAction } className={ className }>
+            <input type="hidden" name="locale" value={ locale }/>
             <div>
                 <input
                     type="text"

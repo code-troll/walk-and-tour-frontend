@@ -5,12 +5,23 @@ import type {
     TurnstileServerValidationResponse,
 } from "@marsidev/react-turnstile";
 
+import { sendEmail } from "@/lib/email/send-email";
+import {
+    renderEmailTemplate,
+    renderMultilineHtml,
+} from "@/lib/email/template-renderer";
+
 const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 const NAME_MAX_LENGTH = 120;
 const PHONE_MAX_LENGTH = 40;
 const MESSAGE_MIN_LENGTH = 10;
 const MESSAGE_MAX_LENGTH = 3_000;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const languageNameByLocale: Record<string, string> = {
+    en: "English",
+    es: "Spanish",
+    it: "Italian",
+};
 
 const TURNSTILE_CONFIGURATION_ERRORS = new Set<TurnstileServerValidationErrorCode>([
     "missing-input-secret",
@@ -51,6 +62,20 @@ const asOptionalString = (value: FormDataEntryValue | null): string => (
     typeof value === "string" ? value.trim() : ""
 );
 
+const getConfiguredEmailValue = (...values: Array<string | undefined>): string | null => {
+    for (const value of values) {
+        if (value && value.trim().length > 0) {
+            return value.trim();
+        }
+    }
+
+    return null;
+};
+
+const resolveLanguageName = (locale: string): string => (
+    languageNameByLocale[locale] ?? locale
+);
+
 const resolveTurnstileFailureReason = (
     verificationResult: TurnstileServerValidationResponse
 ): ContactFormFailureReason => {
@@ -84,6 +109,8 @@ export async function submitContactForm(
     const name = asRequiredString(formData.get("name"));
     const email = asRequiredString(formData.get("email"));
     const message = asRequiredString(formData.get("message"));
+    const locale = asOptionalString(formData.get("locale")) || "unknown";
+    const submittedLanguage = resolveLanguageName(locale);
     const phone = asOptionalString(formData.get("phone"));
     const turnstileToken = asRequiredString(formData.get("turnstileToken"));
 
@@ -150,9 +177,58 @@ export async function submitContactForm(
             };
         }
 
+        const resendApiKey = process.env.RESEND_API_KEY?.trim();
+        const fromEmail = getConfiguredEmailValue(
+            process.env.CONTACT_FORM_FROM_EMAIL,
+            process.env.BOOKING_REQUEST_FROM_EMAIL
+        );
+        const toEmail = getConfiguredEmailValue(
+            process.env.CONTACT_FORM_TO_EMAIL,
+            process.env.BOOKING_REQUEST_TO_EMAIL
+        );
+
+        if (!resendApiKey || !fromEmail || !toEmail) {
+            console.error("Contact form email configuration is incomplete");
+
+            return {
+                status: "error",
+                reason: "submitFailed",
+            };
+        }
+
+        const phoneDisplay = phone || "Not provided";
+        const textBody = [
+            "New contact form message",
+            "",
+            `Language: ${submittedLanguage}`,
+            "",
+            `Name: ${name}`,
+            `Email: ${email}`,
+            `Phone: ${phoneDisplay}`,
+            "",
+            "Message:",
+            message,
+        ].join("\n");
+        const htmlBody = await renderEmailTemplate("contact-notification", {
+            email,
+            languageName: submittedLanguage,
+            messageHtml: renderMultilineHtml(message),
+            name,
+            phoneDisplay,
+        });
+
+        await sendEmail({
+            fromEmail,
+            html: htmlBody,
+            resendApiKey,
+            subject: `Contact Form Message | ${name}`,
+            text: textBody,
+            toEmail,
+        });
+
         return {status: "success"};
     } catch (error) {
-        console.error("Contact form Turnstile validation failed", error);
+        console.error("Contact form submission failed", error);
 
         return {
             status: "error",

@@ -21,6 +21,10 @@
     "workWithUs": {
       "title": "Lavora con noi | Walk and Tour Copenaghen",
       "description": "Unisciti a Walk and Tour Copenaghen come guida turistica e aiuta a creare esperienze memorabili basate su storie locali e un'ospitalità autentica."
+    },
+    "bookTour": {
+      "title": "Prenota tour | Walk and Tour Copenaghen",
+      "description": "Invia una richiesta di prenotazione per tour privati, tour aziendali o esperienze personalizzate a Copenaghen e il nostro team ti ricontatterà con la disponibilità."
     }
   },
   "header": {
@@ -913,6 +917,79 @@
       "civitatis": "Civitatis",
       "embassyOfArgentina": "Ambasciata dell'Argentina",
       "viator": "Viator"
+    }
+  },
+  "bookTourPage": {
+    "eyebrow": "Walk and Tour Copenhagen",
+    "title": "Prenota tour",
+    "intro": "Dicci che tipo di esperienza stai cercando e ti aiuteremo a organizzare il tour privato, il tour aziendale o la richiesta personalizzata più adatta al tuo gruppo.",
+    "sidebar": {
+      "title": "Richieste di prenotazione semplificate",
+      "description": "Scegli il tipo di tour, aggiungi la data preferita e i dettagli del gruppo, e il nostro team ti ricontatterà con la disponibilità e i prossimi passi."
+    },
+    "fields": {
+      "bookingType": {
+        "label": "Tipo di tour"
+      },
+      "name": {
+        "label": "Nome",
+        "placeholder": "Il tuo nome completo"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Il tuo indirizzo email"
+      },
+      "phone": {
+        "label": "Telefono",
+        "placeholder": "Il tuo numero di telefono"
+      },
+      "desiredDate": {
+        "label": "Data desiderata"
+      },
+      "tour": {
+        "label": "Selezione del tour",
+        "placeholder": "Seleziona un tour",
+        "disabledPlaceholder": "Seleziona prima «Tour privati» o «Tour aziendali»",
+        "disabledHelp": "Hai selezionato Altri tour. Descrivi il tour richiesto nel campo messaggio."
+      },
+      "participants": {
+        "label": "Partecipanti",
+        "placeholder": "Numero di partecipanti"
+      },
+      "tourLanguage": {
+        "label": "Lingua richiesta",
+        "placeholder": "Seleziona una lingua"
+      },
+      "message": {
+        "label": "Messaggio",
+        "placeholder": "Indicaci il periodo preferito, i dettagli del gruppo ed eventuali richieste speciali."
+      }
+    },
+    "bookingTypes": {
+      "privateTours": "Tour privati",
+      "companyTours": "Tour aziendali",
+      "otherTours": "Altri tour"
+    },
+    "languageOptions": {
+      "english": "Inglese",
+      "spanish": "Spagnolo",
+      "italian": "Italiano",
+      "danish": "Danese",
+      "german": "Tedesco",
+      "french": "Francese",
+      "other": "Altro"
+    },
+    "captchaLabel": "Verifica di sicurezza",
+    "submit": "Invia richiesta di prenotazione",
+    "sendingRequest": "Invio in corso...",
+    "feedback": {
+      "success": "La tua richiesta di prenotazione è stata inviata con successo.",
+      "invalidFields": "Compila tutti i campi obbligatori e seleziona un tour quando necessario.",
+      "invalidEmail": "Inserisci un indirizzo email valido.",
+      "turnstileRequired": "Completa il controllo di sicurezza prima di inviare la richiesta di prenotazione.",
+      "turnstileFailed": "Non siamo riusciti a verificare il controllo di sicurezza. Riprova.",
+      "turnstileUnavailable": "La verifica captcha non è attualmente disponibile. Riprova più tardi.",
+      "submitFailed": "Non siamo riusciti a inviare la tua richiesta di prenotazione. Riprova."
     }
   },
   "contact": {
