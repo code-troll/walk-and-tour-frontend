@@ -43,7 +43,7 @@ export type TourId =
 
 export type TourSlug =
   | "copenhagen-historic-center-free-tour"
-  | "rosenborg-castle-tour"
+  | "rosenborg-castle"
   | "excursion-to-malmo-sweden"
   | "amalienborg-palace-tour"
   | "christiansborg-palace-tour"
@@ -65,7 +65,7 @@ export type TourSlug =
 
 export const tourSlugById = {
   copenhagenFreeTour: "copenhagen-historic-center-free-tour",
-  rosenborgCastleTour: "rosenborg-castle-tour",
+  rosenborgCastleTour: "rosenborg-castle",
   malmoExcursion: "excursion-to-malmo-sweden",
   amalienborgPalace: "amalienborg-palace-tour",
   christiansborgPalace: "christiansborg-palace-tour",
@@ -274,7 +274,7 @@ const tourDefinitions: Tour[] = [
   },
   {
     id: "rosenborgCastleTour",
-    slug: "rosenborg-castle-tour",
+    slug: "rosenborg-castle",
     rating: "4.9",
     reviews: "386",
     price: "400",
