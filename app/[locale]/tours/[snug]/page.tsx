@@ -122,6 +122,8 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     itemId: tour.id,
     languageLabel: availableLanguages.find(locale => locale === locale)?.label!,
   });
+
+  console.log({availableLanguages, locale});
   const quickInfoItems = buildQuickInfoItems({
     detailT: tourDetailUiT,
     facts: detailContent.facts,

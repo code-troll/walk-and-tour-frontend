@@ -77,7 +77,7 @@ export default function TourDetailSidebarPlaceholder({
   }
 
   return (
-    <div className="pt-6 px-0 md:px-6 lg:px-12 lg:pl-0">
+    <div className="pt-6 px-0 md:px-6 lg:pt-0 lg:px-12 lg:pl-0">
       <div className="rounded-3xl bg-[#fcfaf7] md:bg-white p-0 md:shadow-sm ring-0 md:ring-1  md:ring-[#e8ddd2] overflow-hidden">
         <div ref={ containerRef } className="my-4 md:my-0" />
       </div>

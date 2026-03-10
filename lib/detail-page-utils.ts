@@ -141,7 +141,7 @@ export const resolveDetailContent = ({
     facts: {
       ...defaultFacts,
       ...itemFacts,
-      languages: languageLabel,
+      language: languageLabel,
     },
   };
 };
