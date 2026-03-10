@@ -898,6 +898,7 @@
     "subheading": "Contattaci oggi e ti risponderemo il prima possibile!",
     "detailsHeading": "Informazioni di contatto",
     "detailsDescription": "Contattaci per tour, esperienze private o richieste aziendali. Puoi scriverci direttamente o inviarci un messaggio tramite il modulo.",
+    "captchaLabel": "Verifica di sicurezza",
     "info": {
       "address": {
         "label": "Indirizzo"
@@ -913,7 +914,17 @@
     "phonePlaceholder": "Il tuo telefono",
     "emailPlaceholder": "La tua email",
     "messagePlaceholder": "Il tuo messaggio",
-    "sendMessage": "Invia messaggio"
+    "sendMessage": "Invia messaggio",
+    "sendingMessage": "Invio in corso...",
+    "feedback": {
+      "success": "Il tuo messaggio è stato verificato correttamente.",
+      "invalidFields": "Completa nome, email e messaggio con dati validi.",
+      "invalidEmail": "Inserisci un indirizzo email valido.",
+      "turnstileRequired": "Completa la verifica di sicurezza prima di inviare il messaggio.",
+      "turnstileFailed": "Non siamo riusciti a verificare il controllo di sicurezza. Riprova.",
+      "turnstileUnavailable": "La verifica captcha non è attualmente disponibile. Riprova più tardi.",
+      "submitFailed": "Non siamo riusciti a inviare il tuo messaggio. Riprova."
+    }
   },
   "footer": {
     "brandName": "Walk and Tour",

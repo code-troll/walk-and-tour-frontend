@@ -1019,6 +1019,7 @@
     "subheading": "Contact us today and we will answer as soon as possible!",
     "detailsHeading": "Contact information",
     "detailsDescription": "Reach out for tours, private experiences or company requests. You can contact us directly or send us a message through the form.",
+    "captchaLabel": "Security check",
     "info": {
       "address": {
         "label": "Address"
@@ -1034,7 +1035,17 @@
     "phonePlaceholder": "Your phone",
     "emailPlaceholder": "Your email",
     "messagePlaceholder": "Your message",
-    "sendMessage": "Send message"
+    "sendMessage": "Send message",
+    "sendingMessage": "Sending...",
+    "feedback": {
+      "success": "Your message was verified successfully.",
+      "invalidFields": "Please complete your name, email and message with valid details.",
+      "invalidEmail": "Please enter a valid email address.",
+      "turnstileRequired": "Please complete the security check before sending your message.",
+      "turnstileFailed": "We could not verify the security check. Please try again.",
+      "turnstileUnavailable": "Captcha verification is currently unavailable. Please try again later.",
+      "submitFailed": "We could not submit your message. Please try again."
+    }
   },
   "footer": {
     "brandName": "Walk and Tour",
