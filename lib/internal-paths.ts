@@ -1,7 +1,14 @@
 import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 
-export type InternalPage = "/" | "/tours" | "/about-us" | "/companies" | "/post" | "/contact";
+export type InternalPage =
+    | "/"
+    | "/tours"
+    | "/about-us"
+    | "/companies"
+    | "/post"
+    | "/contact"
+    | "/terms-of-use";
 
 export type HomeSectionId =
     | "home"

@@ -7,9 +7,13 @@ import { getInternalHref } from "@/lib/internal-paths";
 export default function Footer() {
   const t = useTranslations("footer");
   const locale = useLocale() as AppLocale;
-  const blogHref = getInternalHref({
+  const privacyHref = getInternalHref({
     locale,
     target: {kind: "homeSection", section: "blog"},
+  });
+  const termsHref = getInternalHref({
+    locale,
+    target: {kind: "page", page: "/terms-of-use"},
   });
 
   return (
@@ -99,10 +103,10 @@ export default function Footer() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p>{ t("copyright") }</p>
             <div className="flex gap-6">
-              <a href={ blogHref } className="hover:text-white">
+              <a href={ privacyHref } className="hover:text-white">
                 { t("legal.privacyPolicy") }
               </a>
-              <a href={ blogHref } className="hover:text-white">
+              <a href={ termsHref } className="hover:text-white">
                 { t("legal.termsOfUse") }
               </a>
             </div>

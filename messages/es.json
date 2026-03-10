@@ -9,6 +9,10 @@
     "blog": {
       "title": "Blog de Walk and Tour | Historias, consejos e ideas de Copenhague",
       "description": "Historias de viaje, consejos prácticos y recomendaciones locales de Copenhague para ayudarte a planificar tu próxima experiencia."
+    },
+    "termsOfUse": {
+      "title": "Términos y condiciones | Walk and Tour Copenhague",
+      "description": "Consulta los términos y condiciones oficiales de Walk and Tour ApS, incluidas nuestras políticas sobre reservas, cancelaciones, pagos y participación en tours."
     }
   },
   "header": {
@@ -65,6 +69,11 @@
       "eyebrow": "Walk and Tour Copenhagen",
       "heading": "Contacta con nuestro equipo",
       "subheading": "Escríbenos para tours, experiencias privadas y asistencia en Copenhague."
+    },
+    "termsOfUse": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Términos y condiciones",
+      "subheading": "Políticas de reservas, cancelaciones, pagos y participación para las experiencias ofrecidas por Walk and Tour ApS."
     }
   },
   "tours": {
@@ -971,6 +980,141 @@
     "legal": {
       "privacyPolicy": "Política de privacidad",
       "termsOfUse": "Términos de uso"
+    }
+  },
+  "termsOfUsePage": {
+    "intro": "Revisa estos términos y condiciones antes de usar el Sitio web o reservar cualquier experiencia con Walk and Tour ApS.",
+    "sections": {
+      "introduction": {
+        "title": "1. Introducción",
+        "paragraphs": [
+          "Bienvenido al sitio web de Walk and Tour ApS (el \"Sitio web\"). Al acceder o utilizar este Sitio web, aceptas cumplir estos Términos y condiciones. Si no estás de acuerdo, te pedimos que te abstengas de utilizar el Sitio web."
+        ]
+      },
+      "useOfWebsite": {
+        "title": "2. Uso del sitio web",
+        "paragraphs": [
+          "Puedes utilizar este Sitio web para fines personales y no comerciales, como consultar paquetes de viaje, hacer reservas y acceder a información.",
+          "Queda estrictamente prohibido cualquier uso no autorizado, incluyendo, entre otros, minería de datos, reproducción o modificación."
+        ]
+      },
+      "bookingAndPayments": {
+        "title": "3. Reservas y pagos",
+        "paragraphs": [
+          "La participación en los tours promovidos por Walk and Tour ApS es estrictamente voluntaria. Al realizar una reserva, el participante acepta automáticamente los términos y condiciones especificados en este documento."
+        ],
+        "subsections": {
+          "freeTours": {
+            "title": "3.1 Tours gratuitos",
+            "paragraphs": [
+              "Siempre recomendamos reservar tu plaza en el tour gratuito a través de nuestro sitio web. Se dará prioridad a quienes hayan realizado una reserva.",
+              "Quienes no tengan una plaza reservada estarán sujetos a disponibilidad por orden de llegada."
+            ]
+          },
+          "groups": {
+            "title": "3.2 Grupos",
+            "paragraphs": [
+              "Los tours gratuitos están pensados para grupos pequeños. A los grupos de 6 o más adultos se les solicita una contribución de 10 euros por persona al inicio del tour, para garantizar al guía una remuneración justa por su trabajo.",
+              "Esto también se aplica a varias reservas realizadas por la misma familia o grupo de amigos. El guía puede cancelar la reserva en el lugar si el grupo no cumple esta política.",
+              "Si el grupo supera los 10 adultos, ponte en contacto con nosotros para contratar un tour privado. Esta es la única forma de garantizar que el grupo realice el tour junto y con un guía exclusivo."
+            ]
+          },
+          "modificationOfDate": {
+            "title": "3.3 Modificación de fecha",
+            "paragraphs": [
+              "Si quieres cambiar la fecha y/o la hora de un tour de pago o privado, envía un correo a info@walkandtour.dk con el nombre, una foto del ticket y la nueva fecha solicitada para el tour.",
+              "Cualquier cambio en tu reserva debe solicitarse al menos 72 horas antes de la hora de salida del tour. Estaremos encantados de ayudarte siempre que sea posible."
+            ]
+          },
+          "delays": {
+            "title": "3.4 Retrasos",
+            "paragraphs": [
+              "En los tours gratuitos y en los tours de pago, el guía inicia la actividad a la hora acordada. Por motivos de organización, no es posible incorporarse al tour una vez comenzado.",
+              "Si los participantes no llegan a tiempo al punto de inicio acordado, Walk and Tour ApS se reserva el derecho de comenzar el tour, la excursión o el viaje sin ellos.",
+              "En los tours privados, el guía queda reservado únicamente durante el periodo indicado en la descripción de la reserva. Si el grupo llega con más de 15 minutos de retraso, el tiempo de espera se descontará de la duración acordada del tour.",
+              "El guía tiene una tolerancia de 15 minutos. Si el grupo no establece contacto, se considerará una ausencia y el servicio se cancelará sin posibilidad de reembolso.",
+              "En caso de retraso, puedes contactarnos de lunes a domingo en el +45 71352453 entre las 10:00 y las 16:00, o escribir a info@walkandtour.dk."
+            ]
+          },
+          "considerations": {
+            "title": "3.5 Consideraciones",
+            "paragraphs": [
+              "Los participantes deben tener en cuenta que los tours se realizan a pie y en algunos momentos pueden requerir esfuerzo físico. Por ello, no se recomiendan para personas con determinadas condiciones de salud.",
+              "Recomendamos llevar ropa y calzado adecuados para la actividad, así como agua, paraguas o ropa de lluvia. El clima en Copenhague puede ser bastante irregular."
+            ]
+          }
+        }
+      },
+      "cancellationsAndRefunds": {
+        "title": "4. Cancelaciones y reembolsos",
+        "paragraphs": [
+          "Puedes cancelar tu reserva de tour privado o de pago enviando un correo a info@walkandtour.dk. Las cancelaciones deben realizarse al menos 72 horas antes del inicio de la actividad.",
+          "Después de ese plazo, la empresa se reserva el derecho de no efectuar ningún reembolso.",
+          "Walk and Tour se reserva el derecho de cobrar gastos de cancelación."
+        ]
+      },
+      "intellectualProperty": {
+        "title": "5. Propiedad intelectual",
+        "paragraphs": [
+          "Todo el contenido de este Sitio web, incluyendo textos, imágenes, logotipos y marcas, es propiedad de Walk and Tour o de sus licenciantes. Queda prohibido su uso, reproducción o distribución no autorizados.",
+          "Las descripciones de los tours son informativas y generales. Walk and Tour ApS y el guía se reservan el derecho de modificar la ruta cuando lo consideren necesario por motivos de seguridad o condiciones meteorológicas.",
+          "Las actividades no incluyen la entrada a atracciones como castillos o museos, salvo que se indique expresamente."
+        ]
+      },
+      "limitationOfLiability": {
+        "title": "6. Limitación de responsabilidad",
+        "paragraphs": [
+          "Walk and Tour no se hace responsable de ningún daño directo o indirecto derivado del uso de este Sitio web o de sus servicios, incluidas cancelaciones por circunstancias imprevistas, retrasos o acciones de terceros.",
+          "El precio del tour no incluye ningún tipo de seguro para los participantes. Recomendamos contratar un seguro de viaje que cubra accidentes personales, pertenencias o responsabilidad civil.",
+          "Ni Walk and Tour ApS ni los guías que realizan los tours serán responsables de lesiones físicas, daños o pérdida de bienes personales durante los tours.",
+          "Los guías se reservan el derecho de denegar la participación de cualquier persona, por cualquier motivo, en cualquiera de los tours."
+        ]
+      },
+      "privacyPolicy": {
+        "title": "7. Política de privacidad",
+        "paragraphs": [
+          "El uso de este Sitio web también se rige por nuestra Política de privacidad, donde explicamos cómo recopilamos, utilizamos y protegemos tu información personal."
+        ]
+      },
+      "externalLinks": {
+        "title": "8. Enlaces externos",
+        "paragraphs": [
+          "El Sitio web puede contener enlaces a sitios de terceros. Walk and Tour no es responsable del contenido ni de las políticas de esos sitios externos."
+        ]
+      },
+      "changesToTerms": {
+        "title": "9. Cambios en los términos",
+        "paragraphs": [
+          "Walk and Tour se reserva el derecho de modificar estos Términos de uso en cualquier momento. El uso continuado del Sitio web después de la publicación de cambios constituye la aceptación de los términos actualizados."
+        ]
+      },
+      "contactInformation": {
+        "title": "10. Información de contacto",
+        "paragraphs": [
+          "Si tienes cualquier pregunta sobre estos términos, ponte en contacto con nosotros:"
+        ],
+        "companyName": "Walk and Tour",
+        "details": [
+          {
+            "label": "Dirección",
+            "value": "Højbro Pl. 10, 1200 København, Denmark"
+          },
+          {
+            "label": "CVR",
+            "value": "43268465"
+          },
+          {
+            "label": "Teléfono",
+            "value": "+45 71352453",
+            "href": "tel:+4571352453"
+          },
+          {
+            "label": "Correo electrónico",
+            "value": "info@walkandtour.dk",
+            "href": "mailto:info@walkandtour.dk"
+          }
+        ]
+      }
     }
   },
   "aboutUs": {
