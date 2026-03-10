@@ -17,6 +17,10 @@
     "privacyPolicy": {
       "title": "Privacy Policy | Walk and Tour Copenhagen",
       "description": "Your privacy matters. Read the Walk and Tour ApS Privacy Policy to understand how we collect, use, and protect your personal data for tours and bookings."
+    },
+    "workWithUs": {
+      "title": "Work With Us | Walk and Tour Copenhagen",
+      "description": "Join Walk and Tour Copenhagen as a tour guide and help create memorable travel experiences rooted in local stories and genuine hospitality."
     }
   },
   "header": {
@@ -1438,6 +1442,14 @@
         ]
       }
     }
+  },
+  "workWithUsPage": {
+    "eyebrow": "Work with us",
+    "title": "Your City. Your Stories. Our Team.",
+    "paragraph1": "Would you like to be part of leading the next tours in Copenhagen? We're looking for passionate, exceptional guides ready to handpick and bring to life the city's most captivating stories, all while building genuine relationships with travelers from around the world.",
+    "paragraph2": "This role isn't about reciting facts; it's about being a cultural host and the face of the city. If you have a true connection to Copenhagen, thrive on the freedom to personalize your narrative, and are eager to join a growing, entrepreneurial agency, then you belong here. Come and help us build the tours that set the standard for quality and connection in Denmark.",
+    "ctaLabel": "Apply as a tour guide",
+    "imageAlt": "Work with us at Walk and Tour"
   },
   "aboutUs": {
     "intro": {

@@ -967,7 +967,7 @@ export const footerContent: FooterContent = {
       links: [
         {id: "about", target: {kind: "page", page: "/about-us"}},
         {id: "companies", target: {kind: "page", page: "/companies"}},
-        {id: "workWithUs", target: {kind: "homeSection", section: "contact"}},
+        {id: "workWithUs", target: {kind: "page", page: "/work-with-us"}},
         {id: "contact", target: {kind: "page", page: "/contact"}},
       ],
     },

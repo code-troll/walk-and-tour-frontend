@@ -17,6 +17,10 @@
     "privacyPolicy": {
       "title": "Informativa sulla privacy | Walk and Tour Copenaghen",
       "description": "La tua privacy conta. Leggi l'Informativa sulla privacy di Walk and Tour ApS per capire come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali per tour e prenotazioni."
+    },
+    "workWithUs": {
+      "title": "Lavora con noi | Walk and Tour Copenaghen",
+      "description": "Unisciti a Walk and Tour Copenaghen come guida turistica e aiuta a creare esperienze memorabili basate su storie locali e un'ospitalità autentica."
     }
   },
   "header": {
@@ -1317,6 +1321,14 @@
         ]
       }
     }
+  },
+  "workWithUsPage": {
+    "eyebrow": "Lavora con noi",
+    "title": "La tua città. Le tue storie. Il nostro team.",
+    "paragraph1": "Ti piacerebbe guidare i prossimi tour a Copenaghen? Cerchiamo guide appassionate e straordinarie, pronte a selezionare e dare vita alle storie più affascinanti della città, costruendo allo stesso tempo relazioni autentiche con viaggiatori provenienti da tutto il mondo.",
+    "paragraph2": "Questo ruolo non consiste nel recitare fatti; si tratta di essere un host culturale e il volto della città. Se hai un legame autentico con Copenaghen, ami la libertà di personalizzare il tuo racconto e vuoi entrare in un'agenzia in crescita e dallo spirito imprenditoriale, allora questo è il posto giusto per te. Vieni ad aiutarci a costruire tour che definiscano lo standard di qualità e relazione in Danimarca.",
+    "ctaLabel": "Candidati come guida turistica",
+    "imageAlt": "Lavora con noi in Walk and Tour"
   },
   "aboutUs": {
     "intro": {

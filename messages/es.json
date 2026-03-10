@@ -17,6 +17,10 @@
     "privacyPolicy": {
       "title": "Política de privacidad | Walk and Tour Copenhague",
       "description": "Tu privacidad importa. Lee la Política de privacidad de Walk and Tour ApS para entender cómo recopilamos, usamos y protegemos tus datos personales para tours y reservas."
+    },
+    "workWithUs": {
+      "title": "Trabaja con nosotros | Walk and Tour Copenhague",
+      "description": "Únete a Walk and Tour Copenhague como guía turístico y ayuda a crear experiencias memorables basadas en historias locales y una hospitalidad auténtica."
     }
   },
   "header": {
@@ -1317,6 +1321,14 @@
         ]
       }
     }
+  },
+  "workWithUsPage": {
+    "eyebrow": "Trabaja con nosotros",
+    "title": "Tu ciudad. Tus historias. Nuestro equipo.",
+    "paragraph1": "¿Te gustaría formar parte de quienes lideran los próximos tours en Copenhague? Buscamos guías apasionados y excepcionales, preparados para seleccionar y dar vida a las historias más cautivadoras de la ciudad mientras construyen relaciones genuinas con viajeros de todo el mundo.",
+    "paragraph2": "Este puesto no consiste en recitar datos; se trata de ser un anfitrión cultural y la cara de la ciudad. Si tienes una conexión real con Copenhague, disfrutas de la libertad de personalizar tu narrativa y quieres unirte a una agencia en crecimiento y con espíritu emprendedor, aquí es donde debes estar. Ven y ayúdanos a construir tours que marquen el estándar de calidad y cercanía en Dinamarca.",
+    "ctaLabel": "Solicita ser guía turístico",
+    "imageAlt": "Trabaja con nosotros en Walk and Tour"
   },
   "aboutUs": {
     "intro": {

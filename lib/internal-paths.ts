@@ -6,6 +6,7 @@ export type InternalPage =
     | "/tours"
     | "/about-us"
     | "/companies"
+    | "/work-with-us"
     | "/post"
     | "/contact"
     | "/privacy-policy"
