@@ -13,6 +13,10 @@
     "termsOfUse": {
       "title": "Terms & Conditions | Walk and Tour Copenhagen",
       "description": "Read the official terms and conditions for Walk and Tour ApS, including our policies on bookings, cancellations, payments, and tour participation."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy | Walk and Tour Copenhagen",
+      "description": "Your privacy matters. Read the Walk and Tour ApS Privacy Policy to understand how we collect, use, and protect your personal data for tours and bookings."
     }
   },
   "header": {
@@ -74,6 +78,11 @@
       "eyebrow": "Walk and Tour Copenhagen",
       "heading": "Terms & Conditions",
       "subheading": "Bookings, cancellations, payments, and participation policies for experiences offered by Walk and Tour ApS."
+    },
+    "privacyPolicy": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Privacy Policy",
+      "subheading": "How Walk and Tour ApS collects, uses, and protects personal data related to tours, bookings, and Website usage."
     }
   },
   "tours": {
@@ -1213,6 +1222,198 @@
         "title": "10. Contact Information",
         "paragraphs": [
           "For any questions regarding these Terms, please contact us:"
+        ],
+        "companyName": "Walk and Tour",
+        "details": [
+          {
+            "label": "Address",
+            "value": "Højbro Pl. 10, 1200 København, Denmark"
+          },
+          {
+            "label": "CVR",
+            "value": "43268465"
+          },
+          {
+            "label": "Phone",
+            "value": "+45 71352453",
+            "href": "tel:+4571352453"
+          },
+          {
+            "label": "Email",
+            "value": "info@walkandtour.dk",
+            "href": "mailto:info@walkandtour.dk"
+          }
+        ]
+      }
+    }
+  },
+  "privacyPolicyPage": {
+    "intro": "Read how Walk and Tour ApS collects, uses, stores, and protects personal information when you visit our Website or book our services.",
+    "sections": {
+      "introduction": {
+        "title": "1. Introduction",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Walk and Tour ApS (\"Walk and Tour,\" \"we,\" \"our,\" or \"us\") values your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use our website (\"Website\") and services."
+          }
+        ]
+      },
+      "informationWeCollect": {
+        "title": "2. Information We Collect",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "We may collect the following types of personal information when you use our Website or services:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "label": "Personal Details",
+                "text": "Name, email address, phone number, and payment details when making a booking."
+              },
+              {
+                "label": "Booking Information",
+                "text": "Travel dates, destinations, accommodation preferences, and other relevant details."
+              },
+              {
+                "label": "Technical Data",
+                "text": "IP address, browser type, operating system, and browsing behavior on our Website."
+              },
+              {
+                "label": "Communication Data",
+                "text": "Messages, inquiries, and feedback submitted through our Website or customer service."
+              }
+            ]
+          }
+        ]
+      },
+      "howWeUseYourInformation": {
+        "title": "3. How We Use Your Information",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "We use your information for the following purposes:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "To process and confirm your bookings."
+              },
+              {
+                "text": "To communicate with you regarding your travel plans and provide customer support."
+              },
+              {
+                "text": "To personalize your experience and improve our Website and services."
+              },
+              {
+                "text": "To send promotional emails or offers (you may opt out at any time)."
+              },
+              {
+                "text": "To comply with legal obligations and prevent fraud."
+              }
+            ]
+          }
+        ]
+      },
+      "dataSharingAndDisclosure": {
+        "title": "4. Data Sharing and Disclosure",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "We do not sell or rent your personal data. However, we may share it with:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "label": "Service Providers",
+                "text": "Hotels, tour guides, tour operators, and transport providers to fulfill your bookings."
+              },
+              {
+                "label": "Payment Processors",
+                "text": "Secure third-party services to process transactions."
+              },
+              {
+                "label": "Legal Authorities",
+                "text": "When required by law or to protect our rights and users."
+              }
+            ]
+          }
+        ]
+      },
+      "dataSecurity": {
+        "title": "5. Data Security",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "We take appropriate security measures to protect your personal data from unauthorized access, loss, or misuse. However, no system is completely secure, and we cannot guarantee absolute security."
+          }
+        ]
+      },
+      "cookiesAndTrackingTechnologies": {
+        "title": "6. Cookies and Tracking Technologies",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Our Website uses cookies to enhance your browsing experience. You can manage cookie preferences through your browser settings."
+          }
+        ]
+      },
+      "yourRights": {
+        "title": "7. Your Rights",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "You have the right to:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Access, update, or delete your personal information."
+              },
+              {
+                "text": "Opt out of marketing emails."
+              },
+              {
+                "text": "Request a copy of your stored data."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "To exercise these rights, contact us using the details listed below."
+          }
+        ]
+      },
+      "thirdPartyLinks": {
+        "title": "8. Third-Party Links",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Our Website may contain links to third-party websites. We are not responsible for their privacy policies or practices."
+          }
+        ]
+      },
+      "changesToThisPolicy": {
+        "title": "9. Changes to This Policy",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "We may update this Privacy Policy from time to time. Any changes will be posted on this page, and continued use of our Website means you accept the updates."
+          }
+        ]
+      },
+      "contactUs": {
+        "title": "10. Contact Us",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "For any questions about this Privacy Policy, please contact us:"
+          }
         ],
         "companyName": "Walk and Tour",
         "details": [

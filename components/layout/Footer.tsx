@@ -9,7 +9,7 @@ export default function Footer() {
   const locale = useLocale() as AppLocale;
   const privacyHref = getInternalHref({
     locale,
-    target: {kind: "homeSection", section: "blog"},
+    target: {kind: "page", page: "/privacy-policy"},
   });
   const termsHref = getInternalHref({
     locale,

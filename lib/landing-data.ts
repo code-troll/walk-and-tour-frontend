@@ -975,7 +975,7 @@ export const footerContent: FooterContent = {
       id: "support",
       links: [
         // {id: "faqs", target: {kind: "homeSection", section: "contact"}},
-        {id: "privacyPolicy", target: {kind: "homeSection", section: "blog"}},
+        {id: "privacyPolicy", target: {kind: "page", page: "/privacy-policy"}},
         {id: "termsOfUse", target: {kind: "page", page: "/terms-of-use"}},
       ],
     },

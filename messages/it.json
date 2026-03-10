@@ -13,6 +13,10 @@
     "termsOfUse": {
       "title": "Termini e condizioni | Walk and Tour Copenaghen",
       "description": "Consulta i termini e le condizioni ufficiali di Walk and Tour ApS, incluse le nostre politiche su prenotazioni, cancellazioni, pagamenti e partecipazione ai tour."
+    },
+    "privacyPolicy": {
+      "title": "Informativa sulla privacy | Walk and Tour Copenaghen",
+      "description": "La tua privacy conta. Leggi l'Informativa sulla privacy di Walk and Tour ApS per capire come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali per tour e prenotazioni."
     }
   },
   "header": {
@@ -74,6 +78,11 @@
       "eyebrow": "Walk and Tour Copenhagen",
       "heading": "Termini e condizioni",
       "subheading": "Politiche di prenotazione, cancellazione, pagamento e partecipazione per le esperienze offerte da Walk and Tour ApS."
+    },
+    "privacyPolicy": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Informativa sulla privacy",
+      "subheading": "Come Walk and Tour ApS raccoglie, utilizza e protegge i dati personali relativi a tour, prenotazioni e utilizzo del Sito web."
     }
   },
   "tours": {
@@ -1092,6 +1101,198 @@
         "title": "10. Informazioni di contatto",
         "paragraphs": [
           "Per qualsiasi domanda riguardante questi termini, contattaci:"
+        ],
+        "companyName": "Walk and Tour",
+        "details": [
+          {
+            "label": "Indirizzo",
+            "value": "Højbro Pl. 10, 1200 København, Denmark"
+          },
+          {
+            "label": "CVR",
+            "value": "43268465"
+          },
+          {
+            "label": "Telefono",
+            "value": "+45 71352453",
+            "href": "tel:+4571352453"
+          },
+          {
+            "label": "Email",
+            "value": "info@walkandtour.dk",
+            "href": "mailto:info@walkandtour.dk"
+          }
+        ]
+      }
+    }
+  },
+  "privacyPolicyPage": {
+    "intro": "Scopri come Walk and Tour ApS raccoglie, utilizza, conserva e protegge le informazioni personali quando visiti il nostro Sito web o prenoti i nostri servizi.",
+    "sections": {
+      "introduction": {
+        "title": "1. Introduzione",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Walk and Tour ApS (\"Walk and Tour\", \"noi\", \"nostro\" o \"ci\") tiene alla tua privacy. Questa Informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo le tue informazioni personali quando utilizzi il nostro sito web (\"Sito web\") e i nostri servizi."
+          }
+        ]
+      },
+      "informationWeCollect": {
+        "title": "2. Informazioni che raccogliamo",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Possiamo raccogliere i seguenti tipi di informazioni personali quando utilizzi il nostro Sito web o i nostri servizi:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "label": "Dati personali",
+                "text": "Nome, indirizzo email, numero di telefono e dati di pagamento al momento della prenotazione."
+              },
+              {
+                "label": "Informazioni di prenotazione",
+                "text": "Date di viaggio, destinazioni, preferenze di alloggio e altri dettagli pertinenti."
+              },
+              {
+                "label": "Dati tecnici",
+                "text": "Indirizzo IP, tipo di browser, sistema operativo e comportamento di navigazione sul nostro Sito web."
+              },
+              {
+                "label": "Dati di comunicazione",
+                "text": "Messaggi, richieste e feedback inviati tramite il nostro Sito web o il servizio clienti."
+              }
+            ]
+          }
+        ]
+      },
+      "howWeUseYourInformation": {
+        "title": "3. Come utilizziamo le tue informazioni",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Utilizziamo le tue informazioni per i seguenti scopi:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Elaborare e confermare le tue prenotazioni."
+              },
+              {
+                "text": "Comunicare con te in merito ai tuoi piani di viaggio e fornire assistenza clienti."
+              },
+              {
+                "text": "Personalizzare la tua esperienza e migliorare il nostro Sito web e i nostri servizi."
+              },
+              {
+                "text": "Inviare email promozionali o offerte (puoi revocare il consenso in qualsiasi momento)."
+              },
+              {
+                "text": "Rispettare gli obblighi di legge e prevenire le frodi."
+              }
+            ]
+          }
+        ]
+      },
+      "dataSharingAndDisclosure": {
+        "title": "4. Condivisione e divulgazione dei dati",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Non vendiamo né affittiamo i tuoi dati personali. Tuttavia, possiamo condividerli con:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "label": "Fornitori di servizi",
+                "text": "Hotel, guide turistiche, tour operator e fornitori di trasporto per gestire le tue prenotazioni."
+              },
+              {
+                "label": "Processori di pagamento",
+                "text": "Servizi terzi sicuri per elaborare le transazioni."
+              },
+              {
+                "label": "Autorità legali",
+                "text": "Quando richiesto dalla legge o per proteggere i nostri diritti e gli utenti."
+              }
+            ]
+          }
+        ]
+      },
+      "dataSecurity": {
+        "title": "5. Sicurezza dei dati",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Adottiamo misure di sicurezza adeguate per proteggere i tuoi dati personali da accessi non autorizzati, perdita o uso improprio. Tuttavia, nessun sistema è completamente sicuro e non possiamo garantire una sicurezza assoluta."
+          }
+        ]
+      },
+      "cookiesAndTrackingTechnologies": {
+        "title": "6. Cookie e tecnologie di tracciamento",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Il nostro Sito web utilizza cookie per migliorare la tua esperienza di navigazione. Puoi gestire le preferenze sui cookie tramite le impostazioni del browser."
+          }
+        ]
+      },
+      "yourRights": {
+        "title": "7. I tuoi diritti",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Hai il diritto di:"
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "text": "Accedere, aggiornare o eliminare le tue informazioni personali."
+              },
+              {
+                "text": "Rinunciare alle email di marketing."
+              },
+              {
+                "text": "Richiedere una copia dei tuoi dati archiviati."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "Per esercitare questi diritti, contattaci utilizzando i recapiti riportati di seguito."
+          }
+        ]
+      },
+      "thirdPartyLinks": {
+        "title": "8. Link di terze parti",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Il nostro Sito web può contenere link a siti web di terze parti. Non siamo responsabili delle loro politiche o pratiche sulla privacy."
+          }
+        ]
+      },
+      "changesToThisPolicy": {
+        "title": "9. Modifiche a questa informativa",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Possiamo aggiornare periodicamente questa Informativa sulla privacy. Eventuali modifiche saranno pubblicate su questa pagina e l'uso continuato del nostro Sito web implica l'accettazione degli aggiornamenti."
+          }
+        ]
+      },
+      "contactUs": {
+        "title": "10. Contattaci",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Per qualsiasi domanda su questa Informativa sulla privacy, contattaci:"
+          }
         ],
         "companyName": "Walk and Tour",
         "details": [

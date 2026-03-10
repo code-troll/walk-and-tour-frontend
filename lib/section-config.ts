@@ -87,3 +87,13 @@ export const termsOfUseHeroConfig: HeroSectionConfig = {
   overlayClassName: "bg-[#2a221a]/58",
   backgroundPosition: "center 44%",
 };
+
+export const privacyPolicyHeroConfig: HeroSectionConfig = {
+  translationNamespace: "hero.privacyPolicy",
+  eyebrowKey: "eyebrow",
+  titleKey: "heading",
+  descriptionKey: "subheading",
+  imageSrc: "/walkandtour/heroes/privacy-policy.jpg",
+  overlayClassName: "bg-[#2a221a]/52",
+  backgroundPosition: "center 38%",
+};

@@ -8,6 +8,7 @@ export type InternalPage =
     | "/companies"
     | "/post"
     | "/contact"
+    | "/privacy-policy"
     | "/terms-of-use";
 
 export type HomeSectionId =
