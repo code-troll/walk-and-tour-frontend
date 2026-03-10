@@ -2,6 +2,10 @@
   "meta": {
     "title": "Walk and Tour Copenaghen | Tour a piedi ed esperienze locali",
     "description": "Tour a piedi a Copenaghen ed esperienze locali guidate da guide appassionate. Tour gratuiti, visite ai castelli ed escursioni giornaliere.",
+    "contact": {
+      "title": "Contatta Walk and Tour Copenaghen | Indirizzo, telefono ed email",
+      "description": "Contatta Walk and Tour Copenaghen per tour, esperienze private e assistenza. Trova il nostro indirizzo, numero di telefono ed email."
+    },
     "blog": {
       "title": "Blog di Walk and Tour | Storie, consigli e idee su Copenaghen",
       "description": "Storie di viaggio, consigli pratici e suggerimenti locali da Copenaghen per aiutarti a pianificare la tua prossima esperienza."
@@ -56,6 +60,11 @@
       "eyebrow": "Walk and Tour Copenhagen",
       "heading": "Blog e storie di viaggio",
       "subheading": "Consigli locali, suggerimenti pratici e ispirazione per la tua prossima avventura a Copenaghen."
+    },
+    "contact": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Contatta il nostro team",
+      "subheading": "Scrivici per tour, esperienze private e assistenza a Copenaghen."
     }
   },
   "tours": {
@@ -887,6 +896,19 @@
   "contact": {
     "heading": "Pianifichiamo la tua esperienza a Copenaghen",
     "subheading": "Contattaci oggi e ti risponderemo il prima possibile!",
+    "detailsHeading": "Informazioni di contatto",
+    "detailsDescription": "Contattaci per tour, esperienze private o richieste aziendali. Puoi scriverci direttamente o inviarci un messaggio tramite il modulo.",
+    "info": {
+      "address": {
+        "label": "Indirizzo"
+      },
+      "phone": {
+        "label": "Telefono"
+      },
+      "email": {
+        "label": "Email"
+      }
+    },
     "namePlaceholder": "Il tuo nome",
     "phonePlaceholder": "Il tuo telefono",
     "emailPlaceholder": "La tua email",

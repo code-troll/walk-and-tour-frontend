@@ -152,6 +152,11 @@ export type Partner = {
 export type ContactInfo = {
   headingKey: "heading";
   subheadingKey: "subheading";
+  detailsHeadingKey: "detailsHeading";
+  detailsDescriptionKey: "detailsDescription";
+  address: string;
+  phone: string;
+  email: string;
 };
 
 export type FooterLink = {
@@ -187,7 +192,7 @@ export const navLinks: NavLink[] = [
   {id: "about", target: {kind: "page", page: "/about-us"}},
   {id: "companies", target: {kind: "page", page: "/companies"}},
   {id: "blog", target: {kind: "page", page: "/post"}},
-  {id: "contact", target: {kind: "homeSection", section: "contact"}},
+  {id: "contact", target: {kind: "page", page: "/contact"}},
 ];
 
 export const tourCategories: TourCategoryId[] = [
@@ -909,7 +914,7 @@ export const privateTours: PrivateTours = {
     "description2",
   ],
   ctaLabelKey: "ctaLabel",
-  ctaTarget: {kind: "homeSection", section: "contact"},
+  ctaTarget: {kind: "page", page: "/contact"},
 };
 
 export const partners: Partner[] = [
@@ -942,14 +947,19 @@ export const partners: Partner[] = [
 export const contactInfo: ContactInfo = {
   headingKey: "heading",
   subheadingKey: "subheading",
+  detailsHeadingKey: "detailsHeading",
+  detailsDescriptionKey: "detailsDescription",
+  address: "Højbro Pl. 10, 1200 København, Denmark",
+  phone: "+45 71352453",
+  email: "info@walkandtour.dk",
 };
 
 export const footerContent: FooterContent = {
   blurbKey: "blurb",
   contact: {
     cvr: "43268465",
-    phone: "+45 71352453",
-    email: "info@walkandtour.dk",
+    phone: contactInfo.phone,
+    email: contactInfo.email,
   },
   linkSections: [
     {
@@ -958,7 +968,7 @@ export const footerContent: FooterContent = {
         {id: "about", target: {kind: "page", page: "/about-us"}},
         {id: "companies", target: {kind: "page", page: "/companies"}},
         {id: "workWithUs", target: {kind: "homeSection", section: "contact"}},
-        {id: "contact", target: {kind: "homeSection", section: "contact"}},
+        {id: "contact", target: {kind: "page", page: "/contact"}},
       ],
     },
     {

@@ -67,3 +67,13 @@ export const blogHeroConfig: HeroSectionConfig = {
   overlayClassName: "bg-[#2a221a]/58",
   backgroundPosition: "center 44%",
 };
+
+export const contactHeroConfig: HeroSectionConfig = {
+  translationNamespace: "hero.contact",
+  eyebrowKey: "eyebrow",
+  titleKey: "heading",
+  descriptionKey: "subheading",
+  imageSrc: "/walkandtour/heroes/hero.jpg",
+  overlayClassName: "bg-[#2a221a]/58",
+  backgroundPosition: "center 44%",
+};

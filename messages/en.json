@@ -2,6 +2,10 @@
   "meta": {
     "title": "Walk and Tour Copenhagen | Walking Tours & Local Experiences",
     "description": "Copenhagen walking tours and local experiences led by passionate guides. Free tours, castle visits, and day trips.",
+    "contact": {
+      "title": "Contact Walk and Tour Copenhagen | Address, Phone & Email",
+      "description": "Get in touch with Walk and Tour Copenhagen for tours, private experiences and support. Find our address, phone number and email."
+    },
     "blog": {
       "title": "Walk and Tour Blog | Stories, Tips & Copenhagen Insights",
       "description": "Travel stories, practical tips and local insights from Copenhagen to help you plan your next experience."
@@ -56,6 +60,11 @@
       "eyebrow": "Walk and Tour Copenhagen",
       "heading": "Blog & Travel Stories",
       "subheading": "Local insights, practical tips and inspiration for your next Copenhagen adventure."
+    },
+    "contact": {
+      "eyebrow": "Walk and Tour Copenhagen",
+      "heading": "Contact Our Team",
+      "subheading": "Reach out for tours, private experiences and support in Copenhagen."
     }
   },
   "tours": {
@@ -1008,6 +1017,19 @@
   "contact": {
     "heading": "Let's Plan Your Copenhagen Experience",
     "subheading": "Contact us today and we will answer as soon as possible!",
+    "detailsHeading": "Contact information",
+    "detailsDescription": "Reach out for tours, private experiences or company requests. You can contact us directly or send us a message through the form.",
+    "info": {
+      "address": {
+        "label": "Address"
+      },
+      "phone": {
+        "label": "Phone"
+      },
+      "email": {
+        "label": "Email"
+      }
+    },
     "namePlaceholder": "Your name",
     "phonePlaceholder": "Your phone",
     "emailPlaceholder": "Your email",
