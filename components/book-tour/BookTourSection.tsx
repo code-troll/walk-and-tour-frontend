@@ -1,15 +1,24 @@
-"use client";
-
 import BookTourForm from "@/components/book-tour/BookTourForm";
-import { useSearchParams } from "next/navigation";
+import type { BookTourType } from "@/components/book-tour/BookTourForm";
 import { useTranslations } from "next-intl";
 
-export default function BookTourSection() {
+type BookTourSectionProps = {
+  initialBookingType?: string;
+  initialSelectedItemId?: string;
+};
+
+export default function BookTourSection({
+  initialBookingType,
+  initialSelectedItemId = "",
+}: BookTourSectionProps) {
   const t = useTranslations("bookTourPage");
-  const searchParams = useSearchParams();
-  const initialBookingType = searchParams.get("bookingType");
-  const initialSelectedItemId = searchParams.get("selectedItemId") ?? "";
   const formKey = `${ initialBookingType ?? "" }:${ initialSelectedItemId }`;
+  const resolvedInitialBookingType: BookTourType | undefined =
+    initialBookingType === "privateTours" ||
+    initialBookingType === "companyTours" ||
+    initialBookingType === "otherTours"
+      ? initialBookingType
+      : undefined;
 
   return (
     <section className="bg-[#f8f4ef] py-8 sm:py-12">
@@ -36,13 +45,7 @@ export default function BookTourSection() {
 
         <BookTourForm
           key={ formKey }
-          initialBookingType={
-            initialBookingType === "privateTours" ||
-            initialBookingType === "companyTours" ||
-            initialBookingType === "otherTours"
-              ? initialBookingType
-              : undefined
-          }
+          initialBookingType={ resolvedInitialBookingType }
           initialSelectedItemId={ initialSelectedItemId }
         />
       </div>

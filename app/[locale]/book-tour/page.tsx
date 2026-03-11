@@ -8,6 +8,10 @@ import { type AppLocale, routing } from "@/i18n/routing";
 
 type BookTourPageProps = {
   params: Promise<{ locale: string; }>;
+  searchParams: Promise<{
+    bookingType?: string;
+    selectedItemId?: string;
+  }>;
 };
 
 const isValidLocale = (locale: string): locale is AppLocale => (
@@ -29,8 +33,12 @@ export async function generateMetadata({params}: BookTourPageProps): Promise<Met
   };
 }
 
-export default async function BookTourPage({params}: BookTourPageProps) {
+export default async function BookTourPage({
+  params,
+  searchParams: searchParamsPromise,
+}: BookTourPageProps) {
   const {locale} = await params;
+  const searchParams = await searchParamsPromise;
 
   if (!isValidLocale(locale)) {
     notFound();
@@ -38,7 +46,10 @@ export default async function BookTourPage({params}: BookTourPageProps) {
 
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
-      <BookTourSection />
+      <BookTourSection
+        initialBookingType={ searchParams.bookingType }
+        initialSelectedItemId={ searchParams.selectedItemId }
+      />
       <Footer />
     </div>
   );
