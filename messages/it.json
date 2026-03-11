@@ -174,6 +174,19 @@
       "showingLanguage": "Attualmente mostrato in",
       "availableLanguages": "Lingue disponibili"
     },
+    "sidebarFallback": {
+      "eyebrow": "Miglior valore",
+      "priceSuffix": "/ persona",
+      "priceFootnote": "Tasse e commissioni incluse",
+      "quoteTitle": "Richiedi un preventivo su misura",
+      "quoteDescription": "Contatta Walk and Tour per ricevere prezzi e disponibilità in base al tuo gruppo e alle tue preferenze.",
+      "dateLabel": "Scegli la data",
+      "dateValue": "Seleziona",
+      "durationLabel": "Durata",
+      "cancellationLabel": "Cancellazione",
+      "cta": "Verifica disponibilità",
+      "supportingText": "Prenota ora e paga dopo per assicurarti il posto"
+    },
     "defaults": {
       "aboutTourDescription": "Partecipa a una delle nostre esperienze guidate a piedi e scopri Copenaghen con punti di vista locali, luoghi iconici e consigli pratici per il resto del tuo viaggio.",
       "highlights": [

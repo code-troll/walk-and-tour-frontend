@@ -181,6 +181,11 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
           <TourDetailSidebarPlaceholder
             bookingReferenceId={ bookingReferenceId }
             language={ locale }
+            price={ `${ tour.price } kr` }
+            duration={ display.duration }
+            cancellationType={ detailContent.facts.cancellationType }
+            requestedBookingType="privateTours"
+            requestedItemId={ tour.id }
           />
         }
       >

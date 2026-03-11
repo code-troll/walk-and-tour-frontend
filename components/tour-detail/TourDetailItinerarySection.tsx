@@ -112,7 +112,7 @@ export default function TourDetailItinerarySection({
                   onMouseEnter={ () => setHoveredStopId(stopId) }
                   onMouseLeave={ () => setHoveredStopId(null) }
                 >
-                  <div className="rounded-xl border border-[#d8c8b7] bg-[#ffffff] px-5 py-6">
+                  <div className="rounded-3xl border border-[#d8c8b7] bg-[#ffffff] px-5 py-6">
                     <div className="flex flex-col gap-1.5">
                       <h3 className="text-lg font-semibold text-[#000000]">
                         { stop.title }
@@ -176,7 +176,7 @@ export default function TourDetailItinerarySection({
           }) }
         </div>
       ) : (
-        <div className="relative overflow-hidden rounded-xl border border-[#d8c8b7] bg-[#ffffff] p-6">
+        <div className="relative overflow-hidden rounded-3xl border border-[#d8c8b7] bg-[#ffffff] p-6">
           <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#2b666d]/5"/>
           <div className="flex flex-col gap-4 text-base leading-relaxed text-[#5b4d3c]">
             { (paragraphs.length > 0 ? paragraphs : [description]).map(

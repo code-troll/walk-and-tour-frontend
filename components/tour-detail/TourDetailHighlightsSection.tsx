@@ -30,7 +30,7 @@ export default function TourDetailHighlightsSection({
       defaultExpanded={ true }
       iconContainerClassName="bg-[#e75c3a]/15 text-[#e75c3a]"
     >
-      <article className="relative overflow-hidden rounded-2xl border border-[#dfd6c9]/60 bg-white p-5">
+      <article className="relative overflow-hidden rounded-3xl border border-[#dfd6c9]/60 bg-white p-5">
         <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#2b666d]/5"/>
         <ul className="relative space-y-4">
           { highlights.map((highlight, index) => {

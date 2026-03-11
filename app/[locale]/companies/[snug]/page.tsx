@@ -149,7 +149,15 @@ export default async function CompanyDetailPage({params}: CompanyDetailPageProps
 
       <TourDetailQuickInfoSection items={ quickInfoItems }/>
 
-      <TourDetailContentWithSidebar sidebar={ <TourDetailSidebarPlaceholder/> }
+      <TourDetailContentWithSidebar
+        sidebar={
+          <TourDetailSidebarPlaceholder
+            duration={ display.duration }
+            cancellationType={ detailContent.facts.cancellationType }
+            requestedBookingType="companyTours"
+            requestedItemId={ companyExperience.id }
+          />
+        }
                                     sidebarContainerClassName="mb-26">
         <TourDetailHighlightsSection
           title={ tourDetailT("labels.highlights") }

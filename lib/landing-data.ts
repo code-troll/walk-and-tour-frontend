@@ -219,8 +219,6 @@ const defaultSupportTarget: TourDetailCtaTarget = {
   target: {kind: "homeSection", section: "contact"},
 };
 
-export const tourTemplateMapHref = "https://maps.app.goo.gl/pWqY5GfNPPtoDK3x6";
-
 const createTourLocaleAvailability = (
   locales: readonly AppLocale[],
   bookingReferenceIds: Partial<Record<AppLocale, string | undefined>> = {},
