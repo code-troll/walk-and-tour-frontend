@@ -48,12 +48,16 @@ export default function TourDetailContentWithSidebar({
         </div>
         <div className="relative w-full lg:[&>section>div]:pr-96">
           { children }
-          <aside className="hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[calc(25rem)]">
+          <aside
+            className={ cn(
+              "hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[calc(25rem)] lg:transition-[padding-top] lg:duration-300 lg:ease-in-out lg:pt-30",
+            ) }
+          >
             <div
-              id="side-container"
+              id="sidebar-container"
               className={ cn(
-                "mb-1 transition-[margin-top,top] duration-300 ease-in-out lg:self-start lg:sticky",
-                isHeaderVisible ? "mt-30 lg:top-30" : "mt-8 lg:top-8",
+                "mb-1 transition-[top] duration-300 ease-in-out lg:self-start lg:sticky",
+                isHeaderVisible ? "lg:top-24" : "lg:top-8",
                 sidebarContainerClassName
               ) }
             >
