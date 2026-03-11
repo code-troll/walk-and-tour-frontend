@@ -1,8 +1,13 @@
 import BookTourForm from "@/components/book-tour/BookTourForm";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 export default function BookTourSection() {
   const t = useTranslations("bookTourPage");
+  const searchParams = useSearchParams();
+  const initialBookingType = searchParams.get("bookingType");
+  const initialSelectedItemId = searchParams.get("selectedItemId") ?? "";
+  const formKey = `${ initialBookingType ?? "" }:${ initialSelectedItemId }`;
 
   return (
     <section className="bg-[#f8f4ef] py-8 sm:py-12">
@@ -27,7 +32,17 @@ export default function BookTourSection() {
           </div>
         </div>
 
-        <BookTourForm />
+        <BookTourForm
+          key={ formKey }
+          initialBookingType={
+            initialBookingType === "privateTours" ||
+            initialBookingType === "companyTours" ||
+            initialBookingType === "otherTours"
+              ? initialBookingType
+              : undefined
+          }
+          initialSelectedItemId={ initialSelectedItemId }
+        />
       </div>
     </section>
   );

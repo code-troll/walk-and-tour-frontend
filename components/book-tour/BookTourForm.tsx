@@ -3,7 +3,6 @@
 import { useActionState, useEffect, useEffectEvent, useRef, useState, type ComponentType } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { ChevronDown } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { ES, GB, IT } from "country-flag-icons/react/3x2";
 import PhoneInput, { type Value } from "react-phone-number-input";
@@ -23,7 +22,7 @@ import {
   type TourId,
 } from "@/lib/landing-data";
 
-type BookTourType = "privateTours" | "companyTours" | "otherTours";
+export type BookTourType = "privateTours" | "companyTours" | "otherTours";
 type TourLanguageOptionId =
   | "english"
   | "spanish"
@@ -66,7 +65,6 @@ const flagByCountryCode: Record<
   IT,
 };
 const initialState: BookTourFormActionState = {status: "idle"};
-const initialBookingType: BookTourType = "privateTours";
 const turnstileFieldName = "turnstileToken";
 const turnstileAction = "book-tour-form";
 
@@ -82,18 +80,20 @@ const feedbackKeyByReason: Record<
   submitFailed: "bookTourPage.feedback.submitFailed",
 };
 
-export default function BookTourForm() {
+type BookTourFormProps = {
+  initialBookingType?: BookTourType;
+  initialSelectedItemId?: string;
+};
+
+export default function BookTourForm({
+  initialBookingType = "privateTours",
+  initialSelectedItemId = "",
+}: BookTourFormProps) {
   const t = useTranslations("bookTourPage");
   const tourItemsT = useTranslations("tourDetail.items");
   const companyItemsT = useTranslations("companiesPage.items");
   const locale = useLocale();
-  const searchParams = useSearchParams();
-  const requestedBookingTypeParam = searchParams.get("bookingType");
-  const requestedSelectedItemIdParam = searchParams.get("selectedItemId") ?? "";
-  const requestedBookingType = bookingTypes.includes(requestedBookingTypeParam as BookTourType)
-    ? requestedBookingTypeParam as BookTourType
-    : initialBookingType;
-  const requestedTour = toursCatalog.find((tour) => tour.id === requestedSelectedItemIdParam);
+  const requestedTour = toursCatalog.find((tour) => tour.id === initialSelectedItemId);
   const [phone, setPhone] = useState<Value | undefined>();
   const [turnstileToken, setTurnstileToken] = useState("");
   const [tourLanguage, setTourLanguage] = useState<TourLanguageOptionId | "">("");
@@ -116,7 +116,7 @@ export default function BookTourForm() {
       label: tourItemsT(`${ tour.id }.title` as `${ TourId }.title`),
     }));
   const privateTourOptions: SelectOption[] =
-    requestedBookingType === "privateTours" &&
+    initialBookingType === "privateTours" &&
     requestedTour &&
     !privateTourOptionsBase.some((option) => option.id === requestedTour.id)
       ? [
@@ -132,16 +132,16 @@ export default function BookTourForm() {
     label: companyItemsT(`${ experience.id }.title` as `${ CompanyExperienceId }.title`),
   }));
   const requestedItemId =
-    requestedBookingType === "privateTours"
-      ? privateTourOptions.some((option) => option.id === requestedSelectedItemIdParam)
-        ? requestedSelectedItemIdParam
+    initialBookingType === "privateTours"
+      ? privateTourOptions.some((option) => option.id === initialSelectedItemId)
+        ? initialSelectedItemId
         : ""
-      : requestedBookingType === "companyTours"
-        ? companyTourOptions.some((option) => option.id === requestedSelectedItemIdParam)
-          ? requestedSelectedItemIdParam
+      : initialBookingType === "companyTours"
+        ? companyTourOptions.some((option) => option.id === initialSelectedItemId)
+          ? initialSelectedItemId
           : ""
         : "";
-  const [bookingType, setBookingType] = useState<BookTourType>(requestedBookingType);
+  const [bookingType, setBookingType] = useState<BookTourType>(initialBookingType);
   const [selectedItemId, setSelectedItemId] = useState(requestedItemId);
   const [isTourMenuOpen, setIsTourMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
@@ -178,7 +178,7 @@ export default function BookTourForm() {
     formRef.current?.reset();
     setPhone(undefined);
     setTurnstileToken("");
-    setBookingType(requestedBookingType);
+    setBookingType(initialBookingType);
     setSelectedItemId(requestedItemId);
     setIsTourMenuOpen(false);
     setTourLanguage("");
@@ -204,12 +204,6 @@ export default function BookTourForm() {
       resetTurnstileState();
     }
   }, [state]);
-
-  useEffect(() => {
-    setBookingType(requestedBookingType);
-    setSelectedItemId(requestedItemId);
-    setIsTourMenuOpen(false);
-  }, [requestedBookingType, requestedItemId]);
 
   useEffect(() => {
     const onPointerDown = (event: MouseEvent) => {
