@@ -45,10 +45,10 @@ export type TourSlug =
   | "copenhagen-historic-center-free-tour"
   | "rosenborg-castle"
   | "excursion-to-malmo-sweden"
-  | "amalienborg-palace-tour"
-  | "christiansborg-palace-tour"
+  | "amalienborg-palace"
+  | "christiansborg-palace"
   | "copenhagen-essentials"
-  | "jewish-quarter-and-danish-jewish-museum-tour"
+  | "jewish-quarter-and-danish-jewish-museum"
   | "copenhagen-walking-tour-tivoli-gardens-entry"
   | "boat-tour-gateway"
   | "bike-tour-deer-park"
@@ -56,8 +56,8 @@ export type TourSlug =
   | "rosenborg-castle-and-canal-cruise"
   | "frederiksborg-and-kronborg-castle"
   | "copenhagen-food-tour"
-  | "roskilde-old-viking-city-tour"
-  | "nordhavn-architecture-tour"
+  | "roskilde-old-viking-city"
+  | "nordhavn-architecture"
   | "private-ultimate-christmas-tivoli-hygge"
   | "copenhagen-panorama-private-shore-to-city-experience"
   | "copenhagen-walking-shore-excursion"
@@ -67,10 +67,10 @@ export const tourSlugById = {
   copenhagenFreeTour: "copenhagen-historic-center-free-tour",
   rosenborgCastleTour: "rosenborg-castle",
   malmoExcursion: "excursion-to-malmo-sweden",
-  amalienborgPalace: "amalienborg-palace-tour",
-  christiansborgPalace: "christiansborg-palace-tour",
+  amalienborgPalace: "amalienborg-palace",
+  christiansborgPalace: "christiansborg-palace",
   copenhagenEssentials: "copenhagen-essentials",
-  jewishQuarter: "jewish-quarter-and-danish-jewish-museum-tour",
+  jewishQuarter: "jewish-quarter-and-danish-jewish-museum",
   tivoliGardensEntry: "copenhagen-walking-tour-tivoli-gardens-entry",
   boatTour: "boat-tour-gateway",
   royalDeerParkBikeTour: "bike-tour-deer-park",
@@ -78,8 +78,8 @@ export const tourSlugById = {
   rosenborgCastleCanalCruise: "rosenborg-castle-and-canal-cruise",
   frederiksborgAndKronborgCastle: "frederiksborg-and-kronborg-castle",
   foodTours: "copenhagen-food-tour",
-  roskilde: "roskilde-old-viking-city-tour",
-  nordhavnArchitecture: "nordhavn-architecture-tour",
+  roskilde: "roskilde-old-viking-city",
+  nordhavnArchitecture: "nordhavn-architecture",
   christmasTour: "private-ultimate-christmas-tivoli-hygge",
   panorama: "copenhagen-panorama-private-shore-to-city-experience",
   shoreExcursion: "copenhagen-walking-shore-excursion",
@@ -336,7 +336,7 @@ const tourDefinitions: Tour[] = [
   },
   {
     id: "amalienborgPalace",
-    slug: "amalienborg-palace-tour",
+    slug: "amalienborg-palace",
     rating: "4.8",
     reviews: "609",
     price: "400",
@@ -368,7 +368,7 @@ const tourDefinitions: Tour[] = [
   },
   {
     id: "christiansborgPalace",
-    slug: "christiansborg-palace-tour",
+    slug: "christiansborg-palace",
     rating: "5.0",
     reviews: "1,497",
     price: "500",
@@ -430,7 +430,7 @@ const tourDefinitions: Tour[] = [
   },
   {
     id: "jewishQuarter",
-    slug: "jewish-quarter-and-danish-jewish-museum-tour",
+    slug: "jewish-quarter-and-danish-jewish-museum",
     rating: "4.8",
     reviews: "792",
     price: "1500",
@@ -653,7 +653,7 @@ const tourDefinitions: Tour[] = [
   },
   {
     id: "roskilde",
-    slug: "roskilde-old-viking-city-tour",
+    slug: "roskilde-old-viking-city",
     rating: "4.8",
     reviews: "599",
     price: "1500",
@@ -677,7 +677,7 @@ const tourDefinitions: Tour[] = [
   },
   {
     id: "nordhavnArchitecture",
-    slug: "nordhavn-architecture-tour",
+    slug: "nordhavn-architecture",
     rating: "5",
     reviews: "693",
     price: "400",
