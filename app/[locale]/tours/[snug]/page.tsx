@@ -15,12 +15,14 @@ import TourDetailRelatedToursSection from "@/components/tour-detail/TourDetailRe
 import TourDetailSidebarPlaceholder from "@/components/tour-detail/TourDetailSidebarPlaceholder";
 import { type AppLocale, routing } from "@/i18n/routing";
 import {
+  buildItineraryUiLabels,
   buildQuickInfoItems,
   getItemStringWithFallback,
   getLocaleLanguageLabel,
   resolveDetailContent,
   resolveDetailDisplay,
   resolveHeroImages,
+  resolveTourItinerary,
 } from "@/lib/detail-page-utils";
 import {
   getTourAvailableLocales,
@@ -31,12 +33,21 @@ import {
   isTourAvailableInLocale,
   tourSlugs,
 } from "@/lib/landing-data";
+import { getSharedTourItinerary } from "@/lib/tour-itineraries";
 import TourDetailCustomerSupportSection from "@/components/tour-detail/TourDetailCustomerSupportSection";
 import TourDetailElfsightReviewsSection from "@/components/tour-detail/TourDetailElfsightReviewsSection";
 
 type TourDetailPageProps = {
   params: Promise<{ locale: string; snug: string; }>;
 };
+
+const ContentDivider = () => (
+  <section className="bg-[#fcfaf7] py-1">
+    <div className="mx-auto lg:mx-12 w-full max-w-11/12 px-0">
+      <div className="h-px w-full bg-[#d8c8b7]"/>
+    </div>
+  </section>
+);
 
 const isValidLocale = (locale: string): locale is AppLocale => (
   routing.locales.includes(locale as AppLocale)
@@ -107,6 +118,9 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     locale: availableLocale,
     label: getLocaleLanguageLabel(availableLocale, headerT),
   }));
+  const contentLanguageLabel = availableLanguages.find(
+    ({locale: availableLocale}) => availableLocale === contentLocale
+  )?.label ?? getLocaleLanguageLabel(contentLocale, headerT);
   const display = resolveDetailDisplay({
     itemT: tourItemT,
     itemId: tour.id,
@@ -116,18 +130,23 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
       location: "",
     },
   });
+  const itinerary = resolveTourItinerary({
+    itemT: tourItemT,
+    itemId: tour.id,
+    sharedItinerary: getSharedTourItinerary(tour.id),
+  });
   const detailContent = resolveDetailContent({
     detailT: tourDetailContentT,
     itemT: tourItemT,
     itemId: tour.id,
-    languageLabel: availableLanguages.find(locale => locale === locale)?.label!,
+    languageLabel: contentLanguageLabel,
+    itinerary,
   });
-
-  console.log({availableLanguages, locale});
   const quickInfoItems = buildQuickInfoItems({
     detailT: tourDetailUiT,
     facts: detailContent.facts,
   });
+  const itineraryUiLabels = buildItineraryUiLabels(tourDetailUiT);
 
   const relatedTours = getRelatedToursByTour(tour, 3);
   const heroTourImages = resolveHeroImages(tour);
@@ -169,16 +188,21 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
           title={ tourDetailUiT("labels.highlights") }
           highlights={ detailContent.highlights }
         />
+        <ContentDivider/>
 
         <TourDetailAboutSection
           title={ tourDetailUiT("labels.aboutTour") }
           description={ detailContent.aboutTourDescription }
         />
+        <ContentDivider/>
 
         <TourDetailItinerarySection
           title={ tourDetailUiT("labels.itinerary") }
+          itinerary={ detailContent.itinerary }
           description={ detailContent.itineraryDescription }
+          uiLabels={ itineraryUiLabels }
         />
+        <ContentDivider/>
 
         <TourDetailIncludedSection
           title={ tourDetailUiT("labels.includedSection") }
@@ -187,6 +211,7 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
           includedItems={ detailContent.includedItems }
           notIncludedItems={ detailContent.notIncludedItems }
         />
+        <ContentDivider/>
 
         <TourDetailCustomerSupportSection
           title={ tourDetailUiT("labels.customerSupport") }

@@ -1,13 +1,27 @@
 import type { getTranslations } from "next-intl/server";
 import type { AppLocale } from "@/i18n/routing";
+import type {
+  CommuteMode,
+  LocalizedItineraryStopCopy,
+  ResolvedTourItinerary,
+  SharedTourItinerary,
+} from "@/lib/tour-itineraries";
 
 type Translator = Awaited<ReturnType<typeof getTranslations>>;
 
 type DetailFacts = Record<string, string>;
 
+export type ItineraryUiLabels = {
+  stopDuration: string;
+  travelTime: string;
+  showOnMap: string;
+  transportModes: Record<CommuteMode, string>;
+};
+
 type DetailContent = {
   aboutTourDescription: string;
   highlights: string[];
+  itinerary: ResolvedTourItinerary | null;
   itineraryDescription: string;
   includedItems: string[];
   notIncludedItems: string[];
@@ -34,6 +48,35 @@ type DetailHeroEntity = {
 };
 
 const getItemPath = (itemId: string, key: string) => `${ itemId }.${ key }`;
+
+const isRecord = (value: unknown): value is Record<string, unknown> => (
+  typeof value === "object" && value !== null
+);
+
+const isLocalizedItineraryStopCopy = (
+  value: unknown
+): value is LocalizedItineraryStopCopy => {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return (
+    typeof value.title === "string" &&
+    value.title.length > 0 &&
+    typeof value.description === "string" &&
+    value.description.length > 0
+  );
+};
+
+const isLocalizedItineraryStopsMap = (
+  value: unknown
+): value is Record<string, LocalizedItineraryStopCopy> => {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return Object.values(value).every(isLocalizedItineraryStopCopy);
+};
 
 export const getItemStringWithFallback = (
   itemT: Translator,
@@ -84,11 +127,13 @@ export const resolveDetailContent = ({
   itemT,
   itemId,
   languageLabel,
+  itinerary = null,
 }: {
   detailT: Translator;
   itemT: Translator;
   itemId: string;
   languageLabel: string;
+  itinerary?: ResolvedTourItinerary | null;
 }): DetailContent => {
   const defaultAboutTourDescription = detailT("defaults.aboutTourDescription");
   const aboutTourDescription = getItemStringWithFallback(
@@ -114,6 +159,7 @@ export const resolveDetailContent = ({
       "highlights",
       detailT.raw("defaults.highlights") as string[]
     ),
+    itinerary,
     itineraryDescription: getItemStringWithFallback(
       itemT,
       itemId,
@@ -145,6 +191,72 @@ export const resolveDetailContent = ({
     },
   };
 };
+
+export const resolveTourItinerary = ({
+  itemT,
+  itemId,
+  sharedItinerary,
+}: {
+  itemT: Translator;
+  itemId: string;
+  sharedItinerary: SharedTourItinerary | null;
+}): ResolvedTourItinerary | null => {
+  if (!sharedItinerary) {
+    return null;
+  }
+
+  const rawStopsCopy = getItemRawWithFallback<unknown>(
+    itemT,
+    itemId,
+    "itineraryStops",
+    null
+  );
+
+  if (!isLocalizedItineraryStopsMap(rawStopsCopy)) {
+    return null;
+  }
+
+  const stops = sharedItinerary.stops.map((stop) => {
+    const localizedStopCopy = rawStopsCopy[stop.id];
+
+    return localizedStopCopy
+      ? {
+          ...stop,
+          ...localizedStopCopy,
+        }
+      : null;
+  });
+
+  const resolvedStops: ResolvedTourItinerary["stops"] = [];
+
+  for (const stop of stops) {
+    if (!stop) {
+      return null;
+    }
+
+    resolvedStops.push(stop);
+  }
+
+  return {stops: resolvedStops};
+};
+
+export const buildItineraryUiLabels = (detailT: Translator): ItineraryUiLabels => ({
+  stopDuration: detailT("labels.stopDuration"),
+  travelTime: detailT("labels.travelTime"),
+  showOnMap: detailT("labels.showOnMap"),
+  transportModes: {
+    walk: detailT("transportModes.walk"),
+    bike: detailT("transportModes.bike"),
+    bus: detailT("transportModes.bus"),
+    train: detailT("transportModes.train"),
+    metro: detailT("transportModes.metro"),
+    tram: detailT("transportModes.tram"),
+    ferry: detailT("transportModes.ferry"),
+    privateTransport: detailT("transportModes.privateTransport"),
+    boat: detailT("transportModes.boat"),
+    other: detailT("transportModes.other"),
+  },
+});
 
 export const buildQuickInfoItems = ({
   detailT,

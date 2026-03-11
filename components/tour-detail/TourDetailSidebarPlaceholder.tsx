@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const TURITOP_SCRIPT_ID = "js-turitop";
 const TURITOP_SCRIPT_SRC = "https://app.turitop.com/js/load-turitop.min.js";
@@ -47,32 +47,27 @@ export default function TourDetailSidebarPlaceholder({
   bookingReferenceId,
   language,
 }: TourDetailSidebarPlaceholderProps) {
-  const [hasMounted, setHasMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setHasMounted(true);
-  }, []);
+    const container = containerRef.current;
 
-  useEffect(() => {
-    if (!hasMounted || !bookingReferenceId || !language || !containerRef.current) {
+    if (!bookingReferenceId || !language || !container) {
       return;
     }
 
     mountTuritopWidget({
-      container: containerRef.current,
+      container,
       bookingReferenceId,
       language,
     });
 
     return () => {
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
-      }
+      container.innerHTML = "";
     };
-  }, [bookingReferenceId, hasMounted, language]);
+  }, [bookingReferenceId, language]);
 
-  if (!bookingReferenceId || !language || !hasMounted) {
+  if (!bookingReferenceId || !language) {
     return null;
   }
 

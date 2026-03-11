@@ -150,7 +150,22 @@
       "needHelp": "Hai bisogno di aiuto per organizzare?",
       "contactTeam": "Contatta il nostro team",
       "relatedTours": "Potrebbe interessarti anche",
-      "startingFrom": "A partire da"
+      "startingFrom": "A partire da",
+      "stopDuration": "Tempo alla tappa",
+      "travelTime": "Tempo di trasferimento",
+      "showOnMap": "Mostra sulla mappa"
+    },
+    "transportModes": {
+      "walk": "A piedi",
+      "bike": "Bici",
+      "bus": "Bus",
+      "train": "Treno",
+      "metro": "Metro",
+      "tram": "Tram",
+      "ferry": "Ferry",
+      "privateTransport": "Trasporto privato",
+      "boat": "Barca",
+      "other": "Altro"
     },
     "languageFallback": {
       "title": "Questo tour non è disponibile nella lingua selezionata",
@@ -195,6 +210,36 @@
           "Contesto sulla zona del Cambio della Guardia e sulle tradizioni reali.",
           "Consigli utili su cibo, trasporti e quartieri da esplorare dopo il tour."
         ],
+        "itineraryStops": {
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Incontro con la guida e breve introduzione al percorso, al centro storico e alle tappe reali che incontreremo durante l’esperienza."
+          },
+          "nytorv-gammeltorv": {
+            "title": "Nytorv e Gammeltorv",
+            "description": "Passeggiata tra le piazze medievali per capire come questo antico centro civico organizzava la vita pubblica e commerciale di Copenaghen."
+          },
+          "christiansborg-palace": {
+            "title": "Palazzo di Christiansborg",
+            "description": "Sosta davanti al cuore del potere danese per collegare storia reale, cerimonie di Stato e politica contemporanea."
+          },
+          "kongens-nytorv": {
+            "title": "Kongens Nytorv e Teatro Reale",
+            "description": "Esploriamo la grande piazza e i suoi edifici eleganti con racconti su cultura, commercio e vita urbana nella capitale."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Tempo per ammirare il porto colorato e le navi storiche mentre scopriamo come l’antico molo sia diventato uno dei simboli della città."
+          },
+          "marble-church": {
+            "title": "Chiesa di Marmo",
+            "description": "Sosta sotto la grande cupola per parlare dell’architettura monumentale di Copenaghen e del significato simbolico del quartiere reale."
+          },
+          "amalienborg-palace": {
+            "title": "Palazzo di Amalienborg",
+            "description": "Conclusione nella piazza reale, con introduzione al complesso di palazzi e alla cerimonia del Cambio della Guardia per la partenza delle 10:30."
+          }
+        },
         "itineraryDescription": "Incontro con la guida e il gruppo, panoramica delle tappe principali e avvio del percorso. Visita delle principali attrazioni con racconti, curiosità e spiegazioni storiche. Consigli su musei, canali, mercati e quartieri da vedere in base ai tuoi interessi.",
         "included": [
           "Tour a piedi a offerta libera con guida locale professionale",
@@ -264,6 +309,40 @@
           "Vedi Slottsmöllan (mulino olandese): Scatta foto di questo simbolo storico di Malmö.",
           "Passeggia nel centro storico: Cammina tra strade acciottolate e case colorate piene di fascino."
         ],
+        "itineraryStops": {
+          "copenhagen-central-station": {
+            "title": "Stazione Centrale di Copenaghen",
+            "description": "Ritrovo alla Stazione Centrale di Copenaghen per prendere il treno che porterà il gruppo in Svezia attraversando l’Øresund."
+          },
+          "malmo-central": {
+            "title": "Malmö Central",
+            "description": "Arrivo a Malmö Central per iniziare l’escursione dal cuore della città."
+          },
+          "malmohus-castle": {
+            "title": "Castello di Malmöhus",
+            "description": "Proseguiamo verso il Castello di Malmöhus per esplorare uno dei luoghi più storici della città e scoprire i racconti legati a questa antica fortezza."
+          },
+          "st-peters-church": {
+            "title": "Chiesa di San Pietro",
+            "description": "Visitiamo la Chiesa di San Pietro per scoprire uno degli edifici religiosi più antichi e importanti di Malmö."
+          },
+          "malmo-town-hall": {
+            "title": "Municipio di Malmö",
+            "description": "Sosta al Municipio di Malmö per ammirarne l'architettura civica e capire come questa piazza abbia segnato la vita pubblica della città."
+          },
+          "slottsmollan": {
+            "title": "Slottsmöllan",
+            "description": "Vediamo il mulino olandese di Slottsmöllan, uno dei simboli storici più riconoscibili di Malmö."
+          },
+          "old-town-malmo": {
+            "title": "Centro storico di Malmö",
+            "description": "Passeggiamo tra le strade acciottolate e le facciate colorate del centro storico mentre la guida racconta il carattere di Malmö e la sua vita quotidiana."
+          },
+          "malmo-library": {
+            "title": "Biblioteca di Malmö",
+            "description": "Concludiamo con una visita alla Biblioteca di Malmö, dove l’escursione termina tra architettura particolare e il piccolo castello storico del 1901."
+          }
+        },
         "itineraryDescription": "La nostra avventura inizia attraversando in treno l’iconico ponte di Øresund, con viste mozzafiato verso la Svezia. Una volta a Malmö, ci immergeremo subito nella storia della città.\n\nIl viaggio ci porta nel cuore di Malmö, dove ci attende il castello di Malmöhus. Questa antica fortezza custodisce storie affascinanti di secoli passati che la guida farà rivivere. Poi visiteremo la chiesa di San Pietro, una delle più antiche e importanti della città, ammirandone l’architettura. Successivamente osserveremo la maestosità del Municipio di Malmö, elemento centrale del suo paesaggio storico.\n\nNon mancherà la celebre Slottsmöllan, il mulino olandese simbolo del patrimonio di Malmö. Passeggeremo nel suggestivo centro storico, tra strade in pietra e case colorate, dove il tempo sembra rallentare.\n\nIl tour include anche una visita alla Biblioteca di Malmö, luogo magico che ospita un piccolo castello del 1901. Avrai inoltre del tempo libero per il pranzo e per gustare la cucina locale con il tuo ritmo.",
         "included": [
           "Guida professionale di lingua inglese.",
@@ -363,6 +442,60 @@
           "Ferry elettrico: Attraversa il porto come un abitante locale su un’imbarcazione sostenibile e scopri storie uniche del patrimonio Carlsberg.",
           "Finale con la Guardia Reale: Vivi un itinerario dinamico di 2,5 ore che culmina con la tradizionale cerimonia del Cambio della Guardia al Palazzo di Amalienborg."
         ],
+        "itineraryStops": {
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Ritrovo accanto a City Hall Square, vicino alla Dragon Fountain, per iniziare il percorso nel cuore civico di Copenaghen."
+          },
+          "glyptotek-area": {
+            "title": "Area della Glyptotek",
+            "description": "Ci dirigiamo verso l'area della Glyptotek mentre la guida introduce il centro città e le storie legate alla famiglia Carlsberg."
+          },
+          "dante-plads": {
+            "title": "Dante Plads",
+            "description": "Sosta a Dante Plads per collegare questa zona all'evoluzione urbana e alla vita culturale di Copenaghen."
+          },
+          "old-town": {
+            "title": "Centro storico",
+            "description": "Proseguiamo nel centro storico per scoprire le strade e l'atmosfera del nucleo più antico della città."
+          },
+          "christiansborg-palace": {
+            "title": "Palazzo di Christiansborg",
+            "description": "Sosta davanti al Palazzo di Christiansborg per capire come storia reale e vita politica danese continuino a incontrarsi qui."
+          },
+          "old-library": {
+            "title": "Old Library",
+            "description": "Passiamo davanti alla storica Old Library prima di raggiungere il lungomare per attraversare il porto."
+          },
+          "harbour-ferry": {
+            "title": "Ferry del porto",
+            "description": "Saliamo sul ferry elettrico locale per attraversare il porto come un abitante della città e vedere Copenaghen dall'acqua."
+          },
+          "black-diamond": {
+            "title": "Black Diamond",
+            "description": "Godiamo della vista del Black Diamond dal ferry mentre la guida racconta l'architettura contemporanea del waterfront."
+          },
+          "opera-house": {
+            "title": "Opera House",
+            "description": "La traversata continua con una vista aperta sull'Opera House e sui principali landmark culturali del porto."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Ammiriamo il colorato lungomare di Nyhavn dalla rotta sul porto prima di proseguire a piedi sulla sponda nord."
+          },
+          "kastellet": {
+            "title": "Kastellet",
+            "description": "Attraversiamo la fortezza a stella di Kastellet e scopriamo una delle difese storiche meglio conservate della città."
+          },
+          "little-mermaid": {
+            "title": "La Sirenetta",
+            "description": "Raggiungiamo la Sirenetta e ascoltiamo la storia dietro la statua più famosa di Copenaghen."
+          },
+          "amalienborg-palace": {
+            "title": "Palazzo di Amalienborg",
+            "description": "Concludiamo nella piazza del Palazzo di Amalienborg giusto in tempo per la cerimonia del Cambio della Guardia."
+          }
+        },
         "itineraryDescription": "La nostra avventura inizia nella vivace City Hall Square, accanto all’iconica Dragon Fountain, il cuore pulsante di Copenaghen. Da lì ci dirigeremo verso l’area della Glyptotek per scoprire l’affascinante storia della famiglia Carlsberg e anche la particolare piazza Dante Plads. Dopo aver esplorato il centro storico e ammirato la maestosità del Palazzo di Christiansborg e della storica Old Library, ci sposteremo verso l’acqua. Saliremo su un ferry elettrico locale per una suggestiva traversata del porto, godendo di viste privilegiate della biblioteca Black Diamond, del Teatro dell’Opera e del colorato fronte mare di Nyhavn dal mare. Una volta raggiunta la sponda nord, passeggeremo nella fortezza a stella di Kastellet fino a incontrare la leggendaria Sirenetta. Infine, raggiungeremo a piedi la piazza del Palazzo di Amalienborg, arrivando giusto in tempo per vivere l’emozione del Cambio della Guardia: il gran finale perfetto del nostro percorso.",
         "included": [
           "Guida professionale in inglese.",
@@ -426,6 +559,44 @@
           "Inizia dallo storico porto di Nyhavn e termina proprio ai cancelli dei Giardini di Tivoli con i tuoi biglietti salta-fila in mano.",
           "Scopri l'imponente esterno e i cortili del Palazzo di Christiansborg, sede del Parlamento danese."
         ],
+        "itineraryStops": {
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Inizia il percorso a Nyhavn, lo storico lungomare con navi e facciate colorate."
+          },
+          "amalienborg-palace": {
+            "title": "Palazzo di Amalienborg",
+            "description": "Raggiungiamo il Palazzo di Amalienborg per introdurre la residenza reale e il cuore cerimoniale della monarchia danese."
+          },
+          "marble-church": {
+            "title": "Chiesa di Marmo",
+            "description": "Proseguiamo verso la Chiesa di Marmo per ammirare una delle cupole più riconoscibili di Copenaghen."
+          },
+          "kongens-nytorv": {
+            "title": "Kongens Nytorv",
+            "description": "Attraversiamo Kongens Nytorv scoprendo come questa grande piazza colleghi il centro storico al quartiere del porto."
+          },
+          "royal-theatre": {
+            "title": "Teatro Reale",
+            "description": "Sosta accanto al Teatro Reale per collegare architettura, cultura scenica e patronato reale a Copenaghen."
+          },
+          "bourse": {
+            "title": "La Borsa",
+            "description": "Passiamo davanti alla storica Borsa per comprenderne il ruolo nella storia commerciale e civica della città."
+          },
+          "christiansborg-palace": {
+            "title": "Palazzo di Christiansborg",
+            "description": "Arriviamo al Palazzo di Christiansborg per vedere la sede simbolica del Parlamento danese e del potere dello Stato."
+          },
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Concludiamo il percorso a piedi a City Hall Square, uno dei principali accessi al centro di Copenaghen."
+          },
+          "tivoli-gardens": {
+            "title": "Giardini di Tivoli",
+            "description": "Il percorso termina ai cancelli dei Giardini di Tivoli, dove finisce la visita guidata e inizia l'esperienza nel parco."
+          }
+        },
         "itineraryDescription": "Il nostro tour inizia dal famosissimo Nyhavn, il vivace lungomare del XVII secolo. Dopo aver ammirato le navi storiche e le case tradizionali, faremo una breve passeggiata fino al Palazzo di Amalienborg (residenza reale) e alla magnifica Chiesa di Marmo.\n\nProseguiremo poi verso la grande piazza Kongens Nytorv e il Teatro Reale, entrando nel cuore della città per vedere la storica Borsa e il maestoso Palazzo di Christiansborg, sede del Parlamento danese.\n\nIl percorso si conclude in City Hall Square (Rådhuspladsen). A pochi passi dall'ingresso principale dei Giardini di Tivoli, la guida ti consegnerà i biglietti d'ingresso così potrai esplorare la magia del parco al tuo ritmo.",
         "included": [
           "Guida esperta per il tour interattivo a piedi di 2 ore.",
@@ -462,6 +633,36 @@
           "Luoghi iconici: Ammira la Sirenetta, l’Opera House, il Black Diamond e il ponte Cirkelbroen da una prospettiva unica.",
           "Esperienze su misura: Perfetto per fughe romantiche, celebrazioni o eventi aziendali originali."
         ],
+        "itineraryStops": {
+          "gammel-strand-pier": {
+            "title": "Molo di Gammel Strand",
+            "description": "Imbarco al molo di Gammel Strand, nel quartiere portuale di Copenaghen, per iniziare la crociera privata."
+          },
+          "hidden-coves-and-canals": {
+            "title": "Insenature e canali nascosti",
+            "description": "Lasciamo la rotta turistica principale per scivolare tra insenature e canali più tranquilli con una vista più intima del porto."
+          },
+          "little-mermaid": {
+            "title": "La Sirenetta",
+            "description": "Navighiamo accanto alla Sirenetta per osservare dall'acqua uno dei simboli più riconoscibili di Copenaghen."
+          },
+          "opera-house": {
+            "title": "Opera House",
+            "description": "Proseguiamo lungo il porto con una vista aperta sull'Opera House di Copenaghen e sul waterfront che la circonda."
+          },
+          "black-diamond": {
+            "title": "Black Diamond",
+            "description": "Passiamo davanti al Black Diamond e ammiriamo dalla barca la facciata moderna della Biblioteca Reale Danese."
+          },
+          "cirkelbroen-bridge": {
+            "title": "Ponte Cirkelbroen",
+            "description": "Vediamo il ponte Cirkelbroen dalla rotta nei canali e uno dei progetti di ponte moderno più particolari della città."
+          },
+          "gammel-strand-pier-return": {
+            "title": "Ritorno a Gammel Strand",
+            "description": "Rientriamo al molo di Gammel Strand, dove il tour in barca si conclude nel cuore del distretto portuale."
+          }
+        },
         "itineraryDescription": "La nostra avventura inizia e termina al molo di Gammel Strand, nel vivace quartiere portuale di Copenaghen. Da lì, il tuo skipper esperto ti accompagnerà in una crociera di 2 ore, lontano dai percorsi turistici più battuti, per scoprire gemme nascoste tra insenature segrete e canali suggestivi.\n\nVivrai la città da una prospettiva unica sull’acqua, visitando luoghi iconici come la Sirenetta, l’imponente Opera House di Copenaghen, il suggestivo Black Diamond (Biblioteca Reale Danese) e l’innovativo ponte Cirkelbroen. Quasi tutto è possibile! Che tu stia cercando una fuga romantica, una celebrazione speciale o un evento aziendale originale, i nostri tour in barca possono essere personalizzati in base alle tue esigenze. E puoi sempre estendere la durata per un’esperienza ancora più lunga e personalizzata.",
         "included": [
           "Noleggio privato di barca elettrica di lusso per almeno 2 ore.",
@@ -500,6 +701,32 @@
           "Spostamenti senza pensieri: Goditi un comodo viaggio in treno di 30 minuti da e verso Klampenborg.",
           "Natura e storia: Immergiti in paesaggi da sogno e nella straordinaria storia della monarchia danese."
         ],
+        "itineraryStops": {
+          "copenhagen-central-station": {
+            "title": "Stazione Centrale di Copenaghen",
+            "description": "Incontro con la guida alla Stazione Centrale di Copenaghen prima di partire verso la costa nord."
+          },
+          "klampenborg-station": {
+            "title": "Stazione di Klampenborg",
+            "description": "Arrivo a Klampenborg, porta d'accesso a Dyrehaven, dove le e-bike sono pronte per iniziare il percorso."
+          },
+          "dyrehaven-secret-trails": {
+            "title": "Sentieri segreti di Dyrehaven",
+            "description": "Iniziamo il percorso in bici lungo i sentieri più tranquilli di Dyrehaven per vivere il parco lontano dalle zone più frequentate."
+          },
+          "deer-grazing-area": {
+            "title": "Area dei cervi",
+            "description": "Pedaliamo negli spazi aperti dove i cervi pascolano spesso mentre la guida racconta la fauna del parco."
+          },
+          "hermitage-hunting-lodge": {
+            "title": "Padiglione di caccia Hermitage",
+            "description": "Proseguiamo fino al padiglione di caccia Hermitage per collegare il paesaggio reale alla storia della corte danese."
+          },
+          "arne-jacobsen-lifeguard-tower": {
+            "title": "Torre di salvataggio di Arne Jacobsen",
+            "description": "Concludiamo vicino alla torre di salvataggio di Arne Jacobsen, uno dei riferimenti di design più particolari della zona."
+          }
+        },
         "itineraryDescription": "La nostra avventura inizia incontrando la guida alla Stazione Centrale di Copenaghen. In soli 30 minuti di treno raggiungeremo la tranquillità di Klampenborg, porta d’accesso a Dyrehaven.\n\nAll’arrivo troveremo le nostre e-bike pronte per un entusiasmante tour di 2 ore lungo i sentieri segreti di Dyrehaven. Immagina di pedalare tra foreste secolari circondato da cervi al pascolo: un’esperienza davvero serena. La nostra guida esperta ti mostrerà gli angoli più suggestivi del parco, dalle aree preferite dai cervi fino al maestoso padiglione di caccia Hermitage.\n\nDopo il giro in bici avrai tempo libero per gustare un pranzo (non incluso) o visitare l’iconica torre di salvataggio progettata da Arne Jacobsen, un’opera architettonica capace di trasportarti in un’altra epoca.\n\nPer concludere questa giornata perfetta, torneremo a Copenaghen in treno, rigenerati e con ricordi indelebili della bellezza naturale e del fascino reale di Dyrehaven.",
         "included": [
           "Guida professionale.",
@@ -534,6 +761,32 @@
           "Scopri perché Copenaghen è stata Capitale Mondiale dell’Architettura 2023.",
           "Non perdere l’occasione di vivere gli straordinari waterfront di Copenaghen."
         ],
+        "itineraryStops": {
+          "ofelia-plads": {
+            "title": "Ofelia Plads",
+            "description": "Ritrovo a Ofelia Plads per iniziare il percorso architettonico da uno degli spazi sul porto più scenografici di Copenaghen."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Passeggiamo a Nyhavn per collegare le facciate storiche del porto con la trasformazione del quartiere nel tempo."
+          },
+          "papiroen": {
+            "title": "Papiroen",
+            "description": "Proseguiamo verso Papiroen per vedere come l'ex area industriale sia diventata un nuovo quartiere sul waterfront."
+          },
+          "opera-house": {
+            "title": "Opera House",
+            "description": "Sosta con vista sull'Opera House per osservare uno degli edifici contemporanei più riconoscibili di Copenaghen."
+          },
+          "cirkelbroen": {
+            "title": "Cirkelbroen",
+            "description": "Raggiungiamo Cirkelbroen per guardare il suo disegno particolare e il modo in cui collega i due lati del porto."
+          },
+          "danish-architecture-center": {
+            "title": "Danish Architecture Center",
+            "description": "Concludiamo al Danish Architecture Center dopo aver seguito il modo in cui il porto racconta lo sviluppo urbano moderno di Copenaghen."
+          }
+        },
         "itineraryDescription": "Parti per un affascinante tour privato di architettura di 2 ore nella vivace area portuale di Copenaghen, esplorando l’architettura unica di Nyhavn, Papiroen, Operaen, Cirkelbroen e DAC. Questo tour è perfetto per chi desidera conoscere meglio la nuova architettura di Copenaghen e scoprire i suoi sviluppi moderni.\n\nInizia il tour a Ofelia Plads, vicino all’iconico Nyhavn, quartiere portuale del XVII secolo ricco di case colorate e ristoranti animati. La guida ti accompagnerà in una passeggiata rilassata lungo i canali, condividendo approfondimenti su storia e architettura dell’area. Scoprirai le origini del quartiere come porto commerciale e ascolterai storie su artisti e scrittori famosi che un tempo vivevano a Nyhavn.\n\nProsegui poi verso il nuovo quartiere di Papiroen, un tempo cartiera e oggi trasformato in un vivace spazio urbano. Ammira l’architettura distintiva degli edifici e le splendide viste sul porto. Scoprirai come l’area si è sviluppata e come sia stato preservato il suo patrimonio industriale, creando al tempo stesso uno spazio moderno.\n\nGoditi la vista di Operaen, edificio moderno sul lungomare dal design inconfondibile. Completato nel 2005, è diventato rapidamente un punto di riferimento della scena culturale di Copenaghen. La guida ti racconterà la storia della sua architettura, ispirata al porto e al patrimonio culturale danese.\n\nSuccessivamente raggiungerai Cirkelbroen, un ponte pedonale con un design innovativo ispirato ai cerchi della vita. Questo ponte è funzionale e bellissimo, collega le due sponde del porto e crea un’esperienza architettonica unica.\n\nDurante tutto il tour, la guida ti offrirà approfondimenti interessanti su storia, cultura e architettura del porto di Copenaghen. Avrai anche molte occasioni per scattare foto straordinarie e assaporare la bellezza di questa città dinamica.\n\nQuesto tour di architettura di 2 ore è un modo eccellente per vivere il ricco patrimonio culturale di Copenaghen e le sue spettacolari viste sull’acqua. Che tu sia appassionato di storia o semplicemente interessato agli sviluppi urbani moderni, questo percorso ti lascerà una nuova consapevolezza dell’architettura e del paesaggio urbano della città.",
         "included": [
           "Guida.",
@@ -601,6 +854,44 @@
           "Castello di Frederiksborg (Hillerød): Visita uno dei palazzi rinascimentali danesi più rappresentativi e impressionanti, spesso chiamato la \"Versailles del Nord\".",
           "Percorso panoramico nella Selandia del Nord: Goditi un bellissimo e rilassante tragitto tra boschi scenografici ed eleganti cittadine costiere a nord di Copenaghen."
         ],
+        "itineraryStops": {
+          "norreport-station": {
+            "title": "Stazione di Nørreport",
+            "description": "Incontro con la guida alla stazione di Nørreport, dove inizia l'escursione prima di lasciare Copenaghen verso nord."
+          },
+          "hillerod-station-arrival": {
+            "title": "Stazione di Hillerød",
+            "description": "Arrivo alla stazione di Hillerød, punto di accesso alla prima destinazione reale della giornata."
+          },
+          "frederiksborg-castle": {
+            "title": "Castello di Frederiksborg",
+            "description": "Iniziamo la visita guidata al Castello di Frederiksborg per esplorare l'architettura rinascimentale, la cappella, la Grande Sala e gli appartamenti reali."
+          },
+          "hillerod-station-departure": {
+            "title": "Stazione di Hillerød",
+            "description": "Torniamo alla stazione di Hillerød per proseguire l'escursione in treno verso la costa."
+          },
+          "helsingor-station": {
+            "title": "Stazione di Helsingør",
+            "description": "Proseguiamo in treno fino a Helsingør, la cittadina costiera che introduce la seconda grande visita a un castello."
+          },
+          "helsingor-harbor": {
+            "title": "Porto di Helsingør",
+            "description": "Pausa nella cittadina portuale medievale per il pranzo e per vivere l'atmosfera vicino all'acqua."
+          },
+          "kronborg-castle": {
+            "title": "Castello di Kronborg",
+            "description": "Entriamo nel Castello di Kronborg per collegare la sua storia marittima strategica con la leggenda di Amleto."
+          },
+          "oresund-viewpoint": {
+            "title": "Belvedere sull'Øresund",
+            "description": "Breve sosta per scattare foto sullo stretto dell'Øresund prima di tornare alla stazione."
+          },
+          "norreport-station-return": {
+            "title": "Ritorno a Nørreport",
+            "description": "Concludiamo di nuovo alla stazione di Nørreport dopo il viaggio regionale di ritorno a Copenaghen."
+          }
+        },
         "itineraryDescription": "Incontra la tua guida alla stazione di Nørreport.\n\nPrenderemo il treno per un suggestivo viaggio di 50 minuti fino a Hillerød, la cittadina che ospita la nostra prima destinazione reale.\n\nVisita guidata: Inizieremo la giornata dal magnifico Castello di Frederiksborg (biglietto incluso). Esploreremo la sontuosa cappella, la Grande Sala e gli appartamenti reali di questo iconico castello rinascimentale, spesso chiamato la “Versailles del Nord”.\n\nTrasferimento verso la costa\nViaggio: Prenderemo il treno per un breve trasferimento di 35 minuti fino alla cittadina costiera di Helsingør, dove ci aspetta il leggendario Castello di Kronborg.\n\nTempo libero: Pausa pranzo nell’affascinante cittadina portuale medievale di Helsingør. La tua guida ti consiglierà alcuni posti locali per un pranzo veloce e piacevole o una pausa caffè vicino all’acqua.\n\nCastello di Kronborg (Amleto)\nVisita guidata: Entreremo nell’imponente Castello di Kronborg, sito patrimonio mondiale dell’UNESCO (biglietto incluso). Approfondiremo la sua storia marittima strategica e la leggenda che lega questa fortezza all’Amleto di Shakespeare, esplorando gli Appartamenti Reali e le celebri Casematte.\n\nVista costiera e tempo cuscinetto\nTempo libero (15 min): Breve momento per scattare foto dell’Øresund, lo stretto che separa la Danimarca dalla Svezia, prima di tornare alla stazione.\n\nPartenza per Copenaghen\nViaggio: Prenderemo il treno regionale diretto per tornare a Copenaghen. Il viaggio dura circa 50-60 minuti.\n\nArrivo di nuovo a Nørreport.",
         "included": [
           "Tutti i biglietti di trasporto per il viaggio panoramico andata e ritorno da Copenaghen (trasporto pubblico incluso).",
@@ -668,6 +959,40 @@
           "Grandezza reale: Scopri la straordinaria Cattedrale di Roskilde, sito UNESCO Patrimonio dell'Umanità, e ripercorri l'affascinante storia della monarchia danese visitando le tombe reali.",
           "Logistica senza pensieri: Goditi un'esperienza completamente privata e all-inclusive, con guida che gestisce trasporti e ingressi per massimizzare il tempo di visita."
         ],
+        "itineraryStops": {
+          "copenhagen-central-station": {
+            "title": "Stazione Centrale di Copenaghen",
+            "description": "Incontro con la guida privata alla Stazione Centrale di Copenaghen prima di partire verso Roskilde."
+          },
+          "roskilde-station-arrival": {
+            "title": "Stazione di Roskilde",
+            "description": "Arrivo alla stazione di Roskilde per iniziare l'escursione in una delle città più storiche della Danimarca."
+          },
+          "viking-ship-museum": {
+            "title": "Museo delle Navi Vichinghe",
+            "description": "Iniziamo dal Museo delle Navi Vichinghe per scoprire le imbarcazioni originali e le attività interattive dedicate alla vita marittima norrena."
+          },
+          "roskilde-harbor": {
+            "title": "Porto di Roskilde",
+            "description": "Pausa nell'area del porto per pranzo o caffè e per godersi l'atmosfera sul lungomare."
+          },
+          "roskilde-cathedral": {
+            "title": "Cattedrale di Roskilde",
+            "description": "Proseguiamo verso la Cattedrale di Roskilde per collegare la storia reale danese al luogo di sepoltura di re e regine."
+          },
+          "roskilde-historic-center": {
+            "title": "Centro storico di Roskilde",
+            "description": "Facciamo una breve passeggiata panoramica nel centro storico prima di tornare alla stazione."
+          },
+          "roskilde-station-departure": {
+            "title": "Stazione di Roskilde",
+            "description": "Torniamo alla stazione di Roskilde per prendere il treno regionale di rientro a Copenaghen."
+          },
+          "copenhagen-central-station-return": {
+            "title": "Ritorno alla Stazione Centrale di Copenaghen",
+            "description": "Concludiamo di nuovo alla Stazione Centrale di Copenaghen dopo il viaggio regionale da Roskilde."
+          }
+        },
         "itineraryDescription": "Incontra la tua guida privata all'ingresso principale della Stazione Centrale di Copenaghen. Goditi un comodo viaggio diretto in treno (biglietti inclusi) verso la storica città di Roskilde.\n\nImmersione vichinga - Museo delle Navi Vichinghe: La guida faciliterà un ingresso rapido (biglietti inclusi). Esplora le cinque navi originali dell'XI secolo e dedica tempo ad attività interattive per famiglie e all'apprendimento della vita marittima norrena.\n\nPausa pranzo - Tempo libero: Concediti una pausa rilassata per pranzo o un caffè nella suggestiva area del porto di Roskilde (pasti non inclusi).\n\nMonarchia danese - Cattedrale di Roskilde (UNESCO): Visita guidata (biglietto incluso) alla magnifica cattedrale in mattoni. La tua guida esperta illustrerà la storia della monarchia danese e le elaborate tombe reali custodite al suo interno.\n\nRientro a Copenaghen: Breve passeggiata panoramica nel centro storico di Roskilde prima di salire sul treno regionale di ritorno alla Stazione Centrale di Copenaghen, dove il tour si conclude.",
         "included": [
           "Guida esperta privata per tutte le 4 ore.",
@@ -700,6 +1025,36 @@
           "Viste panoramiche: Goditi prospettive uniche del porto e dello skyline di Copenaghen da punti di osservazione insoliti.",
           "Vita urbana danese: Comprendi come i danesi integrano design, funzionalità e senso di comunità nella vita quotidiana in questo nuovo quartiere pionieristico."
         ],
+        "itineraryStops": {
+          "orientkaj": {
+            "title": "Orientkaj",
+            "description": "Ritrovo a Orientkaj per iniziare il percorso nel margine più recente dello sviluppo waterfront di Nordhavn."
+          },
+          "arhusgade-quarter": {
+            "title": "Quartiere di Århusgade",
+            "description": "Entriamo nel quartiere di Århusgade per esplorare i primi edifici residenziali completati e il concetto delle isole urbane di Nordhavn."
+          },
+          "frihavnstarnet": {
+            "title": "Frihavnstårnet",
+            "description": "Proseguiamo verso Frihavnstårnet per vedere come gli antichi silos per cereali siano stati trasformati in moderni appartamenti sul waterfront."
+          },
+          "konditaget-luders": {
+            "title": "Konditaget Lüders",
+            "description": "Raggiungiamo Konditaget Lüders per capire come una struttura per auto sia diventata uno spazio pubblico panoramico sul tetto."
+          },
+          "gotenborg-plads": {
+            "title": "Götenborg Plads",
+            "description": "Passeggiamo a Götenborg Plads per osservare una delle piazze principali del distretto e l'architettura che la definisce."
+          },
+          "harbour-bath": {
+            "title": "Bagno del porto",
+            "description": "Concludiamo al bagno del porto per collegare l'architettura di Nordhavn alla vita quotidiana sul mare a Copenaghen."
+          },
+          "nordhavn-station": {
+            "title": "Stazione di Nordhavn",
+            "description": "Il percorso termina alla stazione di Nordhavn dopo aver seguito il modo in cui il quartiere collega la vita sul waterfront al resto della città."
+          }
+        },
         "itineraryDescription": "Il nostro percorso di 90 minuti si concentra sulla prima fase dello sviluppo di Nordhavn, evidenziandone la trasformazione:\n\n\nQuartiere di Århusgade\n\n\nIl cuore di Nordhavn. Esploriamo i primi edifici residenziali completati, comprendendo il concetto di \"isole\" urbane e il riuso creativo delle strutture dei magazzini.\n\n\nFrihavnstårnet (la Torre del Porto Franco)\n\n\nEx silos per cereali convertiti in splendidi appartamenti moderni sul lungomare. Un esempio iconico di riuso architettonico adattivo.\n\n\nKonditaget Lüders (il tetto fitness)\n\n\nVisitiamo questo parco pubblico unico situato sul tetto di un parcheggio multipiano. Un brillante esempio di spazio funzionale, con area giochi, attrezzature fitness e viste panoramiche.\n\n\nGötenborg Plads\n\n\nUna delle piazze centrali e più vivaci del distretto, dove osserviamo l'architettura circostante e la vita comunitaria.\n\n\nBagno del porto (Havnebadet)\n\n\nOsserviamo le nuove aree pubbliche per il nuoto e i punti di accesso all'acqua, un elemento essenziale dello stile di vita costiero di Copenaghen.",
         "included": [
           "Guida turistica esperta in lingua inglese."
@@ -801,6 +1156,48 @@
           "Viaggi con bambini? I minori di 12 anni partecipano gratis. Questo lo rende l'esperienza più conveniente e accogliente per le famiglie.",
           "Vivi Copenaghen come un locale esplorando la città a piedi e utilizzando il nostro sistema di trasporto pubblico green di livello mondiale."
         ],
+        "itineraryStops": {
+          "orientkaj-metro-station": {
+            "title": "Stazione metro Orientkaj",
+            "description": "Incontro con la guida alla stazione metro di Orientkaj, vicino al porto crociere, prima di entrare in città."
+          },
+          "gammel-strand": {
+            "title": "Gammel Strand",
+            "description": "La parte a piedi comincia da Gammel Strand, l'antica riva di Copenaghen."
+          },
+          "christiansborg-palace": {
+            "title": "Palazzo di Christiansborg",
+            "description": "Sosta con vista sul Palazzo di Christiansborg e sul suo ruolo come sede del Parlamento danese."
+          },
+          "kongens-nytorv": {
+            "title": "Kongens Nytorv",
+            "description": "Attraversiamo Kongens Nytorv, una delle piazze più vive del centro cittadino."
+          },
+          "medieval-streets": {
+            "title": "Strade medievali",
+            "description": "Passeggiamo tra vie antiche e passaggi nascosti che rivelano il carattere medievale della capitale."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Proseguiamo verso Nyhavn per vedere il canale, le facciate del XVII secolo e le storiche navi in legno."
+          },
+          "amalienborg-palace": {
+            "title": "Palazzo di Amalienborg",
+            "description": "Entriamo nel quartiere reale per ammirare il Palazzo di Amalienborg e il suo contesto cerimoniale."
+          },
+          "marble-church": {
+            "title": "Chiesa di Marmo",
+            "description": "Sosta alla Chiesa di Marmo per osservare una delle cupole più iconiche di Copenaghen."
+          },
+          "rosenborg-castle-views": {
+            "title": "Vista sul Castello di Rosenborg",
+            "description": "Osserviamo il profilo rinascimentale del Castello di Rosenborg prima di rientrare verso il porto."
+          },
+          "orientkaj-metro-station-return": {
+            "title": "Ritorno alla stazione metro Orientkaj",
+            "description": "Concludiamo di nuovo alla stazione metro di Orientkaj per un rientro comodo verso il terminal crociere."
+          }
+        },
         "itineraryDescription": "Poi godrai di un tragitto guidato in metro direttamente nel cuore storico di Copenaghen.\n\nLa parte a piedi inizia a Gammel Strand, l'antica riva della città, con splendide viste sul Palazzo di Christiansborg, sede del Parlamento danese.\n\nProseguendo verso il centro, passeggerai nella vivace piazza di Kongens Nytorv e nelle affascinanti strade medievali che definiscono il carattere della capitale.\n\nIl percorso porta poi all'iconico canale di Nyhavn, famoso per le colorate case del XVII secolo e le storiche navi in legno.\n\nDa lì, proseguirai verso il quartiere reale per ammirare il Palazzo di Amalienborg e l'imponente Chiesa di Marmo.\n\nDopo una piacevole passeggiata nel Giardino del Re, con vista sul Castello rinascimentale di Rosenborg, la tua guida ti accompagnerà di nuovo al molo di Oceankaj, assicurando un rientro comodo e puntuale per la partenza della nave.",
         "included": [
           "Servizio dedicato da parte di un esperto professionale di lingua inglese.",
@@ -835,6 +1232,44 @@
           "Invece di una lunga camminata in aree industriali, saliamo sull'Havnebus per una navigazione panoramica di 20 minuti. Avrai una vista in prima fila su Nyhavn, il Royal Playhouse e l'Opera House dall'acqua.",
           "Attracchiamo direttamente a Refshaleøen all'inizio della \"golden hour\". La guida ti presenta i migliori stand internazionali di street food e gli angoli nascosti di Reffen, lasciandoti godere dell'atmosfera più vivace al tramonto."
         ],
+        "itineraryStops": {
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Partiamo da City Hall Square, nel cuore civico di Copenaghen, prima di muoverci verso il waterfront."
+          },
+          "slotsholmen": {
+            "title": "Slotsholmen",
+            "description": "Camminiamo verso Slotsholmen per collegare il centro storico alla sede della vita politica danese."
+          },
+          "librarians-garden": {
+            "title": "Librarian's Garden",
+            "description": "Facciamo una pausa nel Librarian's Garden, un angolo verde nascosto tra la città antica e quella più moderna."
+          },
+          "black-diamond": {
+            "title": "Black Diamond",
+            "description": "Proseguiamo fino al Black Diamond per osservare la sua facciata in vetro e granito sul lungomare."
+          },
+          "circle-bridge": {
+            "title": "Circle Bridge",
+            "description": "Seguiamo il bordo del porto fino al Circle Bridge per guardare il disegno dinamico di Olafur Eliasson."
+          },
+          "kayak-bar": {
+            "title": "Kayak Bar",
+            "description": "Passiamo accanto al Kayak Bar per vedere un lato più informale della cultura portuale contemporanea di Copenaghen."
+          },
+          "harbour-bus": {
+            "title": "Havnebus",
+            "description": "Saliamo sull'Havnebus per la traversata panoramica che porta il percorso dal centro storico verso la costa."
+          },
+          "refshaleoen": {
+            "title": "Refshaleøen",
+            "description": "Attracchiamo a Refshaleøen quando l'atmosfera serale inizia a crescere nel vecchio waterfront industriale."
+          },
+          "reffen-street-market": {
+            "title": "Reffen Street Market",
+            "description": "Concludiamo al Reffen Street Market, dove termina il percorso guidato e iniziano i sapori e l'atmosfera del tramonto."
+          }
+        },
         "itineraryDescription": "Il tour inizia a City Hall Square (Rådhuspladsen), dove esploriamo il battito storico della città prima di camminare verso Slotsholmen, sede del Parlamento danese. Ci allontaniamo dalla folla nel Librarian's Garden, un'oasi segreta tra antico e moderno, prima di raggiungere la sorprendente facciata in vetro e granito del Black Diamond. Da lì seguiamo il lungomare per osservare l'artistico Circle Bridge di Olafur Eliasson e il bohemien Kayak Bar, cogliendo il meglio dell'\"hygge\" moderno di Copenaghen. Poi faremo una navigazione panoramica di 20 minuti. Il tour si conclude attraccando direttamente a Refshaleøen, dove la guida ti offrirà un orientamento personalizzato sui migliori stand internazionali e angoli nascosti del mercato Reffen, proprio quando l'atmosfera serale raggiunge il suo apice e potrai goderti il tramonto.",
         "included": [
           "Esperienza guidata professionale di 3 ore con un esperto locale.",

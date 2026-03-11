@@ -26,7 +26,6 @@ import {
   companyExperienceSlugs,
   getResolvedCompanyExperienceBySlug,
 } from "@/lib/companies-data";
-import { tourTemplateMapHref } from "@/lib/landing-data";
 
 type CompanyDetailPageProps = {
   params: Promise<{ locale: string; snug: string; }>;

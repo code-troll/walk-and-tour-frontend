@@ -150,7 +150,22 @@
       "needHelp": "Need help planning?",
       "contactTeam": "Contact our team",
       "relatedTours": "You may also like",
-      "startingFrom": "Starting from"
+      "startingFrom": "Starting from",
+      "stopDuration": "Stop duration",
+      "travelTime": "Travel time",
+      "showOnMap": "Show on map"
+    },
+    "transportModes": {
+      "walk": "Walk",
+      "bike": "Bike",
+      "bus": "Bus",
+      "train": "Train",
+      "metro": "Metro",
+      "tram": "Tram",
+      "ferry": "Ferry",
+      "privateTransport": "Private transport",
+      "boat": "Boat",
+      "other": "Other"
     },
     "languageFallback": {
       "title": "This tour is not available in your selected language",
@@ -197,6 +212,36 @@
           "Architectural Highlights: Admire St. Nicholas Church and the Marble Church.",
           "Royal Tradition: Witness the Changing of the Guard at Amalienborg Palace (10:30 am tour)."
         ],
+        "itineraryStops": {
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Meet the guide beside City Hall Square for a short introduction to Copenhagen, the route, and the royal highlights ahead."
+          },
+          "nytorv-gammeltorv": {
+            "title": "Nytorv and Gammeltorv",
+            "description": "Walk through the medieval market squares while the guide explains how the old civic center shaped daily life in Copenhagen."
+          },
+          "christiansborg-palace": {
+            "title": "Christiansborg Palace",
+            "description": "Pause at the seat of the Danish Parliament to connect royal history, state ceremonies, and the political life of modern Denmark."
+          },
+          "kongens-nytorv": {
+            "title": "Kongens Nytorv and the Royal Theatre",
+            "description": "Explore the grand square and its elegant surroundings while hearing stories about culture, trade, and city life."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Take in the colorful harbor, wooden ships, and postcard views while learning how the waterfront evolved from busy port to city icon."
+          },
+          "marble-church": {
+            "title": "Marble Church",
+            "description": "Stop beneath the imposing dome to discuss Copenhagen's monumental architecture and the symbolism of the royal quarter."
+          },
+          "amalienborg-palace": {
+            "title": "Amalienborg Palace",
+            "description": "Finish in the royal square, where the guide introduces the palace complex and the Changing of the Guard tradition for the 10:30 departure."
+          }
+        },
         "itineraryDescription": "Our walking tour will take you from the imposing City Hall Square, the vibrant meeting point and enduring symbol of the city. From there, we'll journey to the medieval squares of Nytorv and Gammeltorv, where time seems to stand still amidst charming architecture and echoes of the past. You'll truly feel the power of Danish history as you gaze at Christiansborg Palace, the seat of Danish democracy and royalty for centuries. Marvel at the architectural beauty of St. Nicholas Church, a striking landmark with a unique history.\n\nAs we continue, we'll arrive at Kongens Nytorv, where elegance and urban life merge in a vibrant atmosphere, surrounded by grand buildings. Copenhagen's Royal Theatre invites you to immerse yourself in Denmark's rich culture, showcasing its artistic heritage. Next, Nyhavn, with its colorful facades and historic ships, offers the perfect postcard view of the city, a truly picturesque spot. The majesty of the Marble Church will take your breath away with its impressive dome and intricate details. And, for those joining our 10:30 am tour, you'll witness the solemn Changing of the Guard at Amalienborg Palace, a captivating tradition that beautifully captures the essence of Danish royalty.",
         "included": [
           "Professional English-speaking guide throughout the trip.",
@@ -269,6 +314,40 @@
           "See Slottsmöllan (Dutch Windmill): Capture photos of this famous symbol of Malmö's heritage.",
           "Stroll Through the Charming Old Town: Wander cobbled streets and vibrant, colorful houses."
         ],
+        "itineraryStops": {
+          "copenhagen-central-station": {
+            "title": "Copenhagen Central Station",
+            "description": "Meet at Copenhagen Central Station and board the train that will take the group across the Øresund to Sweden."
+          },
+          "malmo-central": {
+            "title": "Malmö Central",
+            "description": "Arrive at Malmö Central and begin the excursion from the heart of the city."
+          },
+          "malmohus-castle": {
+            "title": "Malmöhus Castle",
+            "description": "Continue toward Malmöhus Castle to explore one of the city's most historic landmarks and hear the stories tied to this old fortress."
+          },
+          "st-peters-church": {
+            "title": "St. Peter's Church",
+            "description": "Visit St. Peter's Church and discover one of Malmö's oldest and most significant religious buildings."
+          },
+          "malmo-town-hall": {
+            "title": "Malmö Town Hall",
+            "description": "Stop at Malmö Town Hall to take in the civic architecture and learn how this square shaped local life and government."
+          },
+          "slottsmollan": {
+            "title": "Slottsmöllan",
+            "description": "See the Dutch windmill of Slottsmöllan, one of Malmö's most recognizable heritage symbols."
+          },
+          "old-town-malmo": {
+            "title": "Malmö Old Town",
+            "description": "Walk through the old town's cobbled streets and colorful houses while the guide shares stories about Malmö's character and daily life."
+          },
+          "malmo-library": {
+            "title": "Malmö Library",
+            "description": "Finish with a visit to Malmö Library, where the excursion closes among striking architecture and the small historic castle from 1901."
+          }
+        },
         "itineraryDescription": "Our adventure begins as we cross the iconic Øresund Bridge by train, offering breathtaking views as we make our way to Sweden. Once in Malmö, we'll immediately immerse ourselves in the city's rich history.\n\nOur journey takes us to the heart of Malmö, where Malmöhus Castle awaits. This ancient fort holds fascinating stories from centuries past, which our guide will bring to life. We'll then walk through history at St. Peter's Church, one of the oldest and most significant churches in the city, admiring its imposing architecture. Next, we'll marvel at the grandeur of Malmö Town Hall, a central piece of the city's historical landscape.\n\nDon't miss the chance to see the famous Dutch windmill, Slottsmöllan, a picturesque symbol of Malmö's enduring heritage. We'll then stroll through the charming old town, with its cobblestone streets and colorful houses, where time seems to stand still amidst its captivating beauty.\n\nOur tour also includes a visit to Malmö Library, a magical place that houses a small castle from 1901, and we'll explore its charming interiors. In addition to immersing ourselves in Malmö's rich history and architecture, you'll have free time to savor the local cuisine during lunch, allowing you to experience the city at your own pace.",
         "included": [
           "Professional English-speaking Tour Guide.",
@@ -368,6 +447,60 @@
           "Electric Ferry: Cross the harbor like a local on a sustainable boat and discover unique tales of the Carlsberg legacy.",
           "Royal Guard Finale: Enjoy a dynamic 2.5-hour route that culminates with the traditional Changing of the Guards ceremony at Amalienborg Palace."
         ],
+        "itineraryStops": {
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Meet by City Hall Square next to the Dragon Fountain to begin the route in the civic heart of Copenhagen."
+          },
+          "glyptotek-area": {
+            "title": "Glyptotek Area",
+            "description": "Walk toward the Glyptotek area while the guide introduces the city center and the stories surrounding the Carlsberg family."
+          },
+          "dante-plads": {
+            "title": "Dante Plads",
+            "description": "Pause at Dante Plads to connect the neighborhood with Copenhagen's urban evolution and cultural life."
+          },
+          "old-town": {
+            "title": "Old Town",
+            "description": "Continue through the Old Town to explore the streets and atmosphere of Copenhagen's historic core."
+          },
+          "christiansborg-palace": {
+            "title": "Christiansborg Palace",
+            "description": "Stop at Christiansborg Palace to hear how royal history and Danish political life still meet in this landmark."
+          },
+          "old-library": {
+            "title": "Old Library",
+            "description": "Pass the historic Old Library before moving toward the waterfront for the harbor crossing."
+          },
+          "harbour-ferry": {
+            "title": "Harbour Ferry",
+            "description": "Board the local electric ferry to cross the harbor like a resident and experience the city from the water."
+          },
+          "black-diamond": {
+            "title": "Black Diamond",
+            "description": "Enjoy the view of the Black Diamond from the ferry as the guide explains Copenhagen's modern waterfront architecture."
+          },
+          "opera-house": {
+            "title": "Opera House",
+            "description": "Continue across the harbor with a clear view of the Opera House and the cultural landmarks lining the waterfront."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Take in the colorful Nyhavn waterfront from the harbor route before continuing on foot on the northern side."
+          },
+          "kastellet": {
+            "title": "Kastellet",
+            "description": "Walk through the star-shaped fortress of Kastellet and discover one of Copenhagen's best-preserved historic defenses."
+          },
+          "little-mermaid": {
+            "title": "The Little Mermaid",
+            "description": "Reach the Little Mermaid and hear the story behind the city's most famous statue."
+          },
+          "amalienborg-palace": {
+            "title": "Amalienborg Palace",
+            "description": "Finish in Amalienborg Palace Square in time for the Changing of the Guards ceremony."
+          }
+        },
         "itineraryDescription": "Our adventure begins at the vibrant City Hall Square, right next to the iconic Dragon Fountain, the beating heart of Copenhagen. From there, we’ll make our way towards the Glyptotek area to uncover the fascinating history of the Carlsberg family and also the unique Dante Plads square. After exploring the Old Town and admiring the majesty of Christiansborg Palace and the historic Old Library, we’ll head to the water. We’ll board a local electric ferry for a scenic harbour crossing, enjoying privileged views of the Black Diamond library, the Opera House, and the colourful Nyhavn waterfront from the sea. Once we reach the northern shore, we’ll stroll through the star-shaped Kastellet fortress to meet the legendary Little Mermaid. Finally, we’ll walk to Amalienborg Palace square, arriving just in time to experience the excitement of the Changing of the Guards ceremony—the perfect grand finale to our journey.",
         "included": [
           "Professional guide in English.",
@@ -431,6 +564,44 @@
           "Start at the historic harbor Nyhavn and finish exactly at the gates of Tivoli Gardens with your skip-the-line tickets in hand.",
           "Discover the impressive exterior and courtyards of Christiansborg Palace, the seat of the Danish Parliament."
         ],
+        "itineraryStops": {
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Begin the route at Nyhavn, the historic waterfront lined with ships and colorful facades."
+          },
+          "amalienborg-palace": {
+            "title": "Amalienborg Palace",
+            "description": "Walk to Amalienborg Palace to introduce the royal residence and the ceremonial heart of the Danish monarchy."
+          },
+          "marble-church": {
+            "title": "Marble Church",
+            "description": "Continue to Marble Church and take in one of Copenhagen's most recognizable domes."
+          },
+          "kongens-nytorv": {
+            "title": "Kongens Nytorv",
+            "description": "Cross Kongens Nytorv and hear how this grand square connects the old city with the harbor district."
+          },
+          "royal-theatre": {
+            "title": "Royal Theatre",
+            "description": "Stop by the Royal Theatre to connect architecture, performance culture, and royal patronage in Copenhagen."
+          },
+          "bourse": {
+            "title": "The Bourse",
+            "description": "Pass the historic Bourse and explore its role in Copenhagen's commercial and civic history."
+          },
+          "christiansborg-palace": {
+            "title": "Christiansborg Palace",
+            "description": "Reach Christiansborg Palace to see the symbolic seat of the Danish Parliament and state power."
+          },
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Finish the walking route in City Hall Square, one of the busiest gateways into central Copenhagen."
+          },
+          "tivoli-gardens": {
+            "title": "Tivoli Gardens",
+            "description": "End at the gates of Tivoli Gardens, where the guided walk concludes and the visit to the park begins."
+          }
+        },
         "itineraryDescription": "Our tour begins at the world-famous Nyhavn, the vibrant 17th-century waterfront. After admiring the historic ships and townhouses, we’ll take a short walk to Amalienborg Palace (the Royal residence) and the magnificent Marble Church.\n\nNext, we’ll head towards the grand Kongens Nytorv square and the Royal Theatre, moving into the heart of the city to see the historic Bourse (Stock Exchange) and the majestic Christiansborg Palace, home to the Danish Parliament.\n\nThe journey concludes at the City Hall Square (Rådhuspladsen). Located just steps away from the main entrance of Tivoli Gardens, your guide will hand over your admission tickets so you can explore the park’s magic at your own pace.",
         "included": [
           "Expert Tour Guide for the dedicated 2-hour interactive walking tour.",
@@ -467,6 +638,36 @@
           "Iconic Landmarks: See the Little Mermaid, Opera House, Black Diamond, and Cirkelbroen Bridge from a unique perspective.",
           "Tailored Experiences: Perfect for romantic escapes, celebrations, or unique corporate events."
         ],
+        "itineraryStops": {
+          "gammel-strand-pier": {
+            "title": "Gammel Strand Pier",
+            "description": "Board at Gammel Strand Pier in Copenhagen's harbor district and settle in before the private cruise begins."
+          },
+          "hidden-coves-and-canals": {
+            "title": "Hidden Coves and Canals",
+            "description": "Leave the main tourist route behind and glide through quieter coves and canals for a more intimate view of the harbor."
+          },
+          "little-mermaid": {
+            "title": "The Little Mermaid",
+            "description": "Cruise past the Little Mermaid and take in one of Copenhagen's most recognizable landmarks from the water."
+          },
+          "opera-house": {
+            "title": "Opera House",
+            "description": "Continue along the harbor with a clear view of the Copenhagen Opera House and the waterfront around it."
+          },
+          "black-diamond": {
+            "title": "Black Diamond",
+            "description": "Pass the Black Diamond and admire the striking modern facade of the Royal Danish Library from the boat."
+          },
+          "cirkelbroen-bridge": {
+            "title": "Cirkelbroen Bridge",
+            "description": "See Cirkelbroen Bridge from the canal route and enjoy one of Copenhagen's most distinctive modern bridge designs."
+          },
+          "gammel-strand-pier-return": {
+            "title": "Return to Gammel Strand",
+            "description": "Return to Gammel Strand Pier, where the boat tour ends back in the center of the harbor district."
+          }
+        },
         "itineraryDescription": "Our adventure begins and ends at the Gammel Strand pier, located in Copenhagen's vibrant harbor district. From there, your expert skipper will take you on a 2 hours cruise, venturing off the beaten tourist trail to discover hidden gems in secret coves and enchanting canals.\n\nYou'll experience the city from a unique water perspective, visiting iconic landmarks such as The Little Mermaid, the impressive Copenhagen Opera House, the striking Black Diamond (Royal Danish Library), and the innovative Cirkelbroen Bridge. Almost anything is possible! Whether you're looking for a romantic escape, an exciting celebration, or a unique corporate event, our boat trips can be tailored to your specific needs. And you can always extend the duration for an even longer, more personalized experience!",
         "included": [
           "Private luxury electric boat rental for minimum 2 hours.",
@@ -505,6 +706,32 @@
           "Seamless Travel: Enjoy a comfortable 30-minute train journey to Klampenborg and back.",
           "Nature & History Blend: Immerse yourself in dreamlike landscapes and fascinating royal history."
         ],
+        "itineraryStops": {
+          "copenhagen-central-station": {
+            "title": "Copenhagen Central Station",
+            "description": "Meet the guide at Copenhagen Central Station before departing for the north coast."
+          },
+          "klampenborg-station": {
+            "title": "Klampenborg Station",
+            "description": "Arrive in Klampenborg, the gateway to Dyrehaven, where the e-bikes are ready for the park route."
+          },
+          "dyrehaven-secret-trails": {
+            "title": "Dyrehaven Secret Trails",
+            "description": "Begin the bike route along the quieter trails of Dyrehaven to experience the park away from the busiest paths."
+          },
+          "deer-grazing-area": {
+            "title": "Deer Grazing Area",
+            "description": "Ride through the open landscapes where deer often graze and the guide shares stories about the park's wildlife."
+          },
+          "hermitage-hunting-lodge": {
+            "title": "Hermitage Hunting Lodge",
+            "description": "Continue to the Hermitage Hunting Lodge to connect the royal landscape with the history of the Danish court."
+          },
+          "arne-jacobsen-lifeguard-tower": {
+            "title": "Arne Jacobsen's Lifeguard Tower",
+            "description": "Finish near Arne Jacobsen's Lifeguard Tower, where the route closes with one of the area's most distinctive design landmarks."
+          }
+        },
         "itineraryDescription": "Our adventure begins as we meet our guide at Copenhagen Central Station. In just 30 minutes by train, we'll be immersed in the tranquility of Klampenborg, the gateway to Dyrehaven.\n\nUpon arrival, our e-bikes will be waiting, ready to take us on an exciting 2-hour tour through the secret trails of Dyrehaven. Imagine pedaling through ancient forests, surrounded by peacefully grazing deer, a truly serene experience. Our expert guide will reveal the park's most enchanting corners, from the deer's favorite spots to the majestic Hermitage Hunting Lodge, making it an unforgettable journey.\n\nAfter our cycling adventure, you'll have free time to enjoy a delicious lunch (not included) or even visit the iconic Lifeguard Tower designed by Arne Jacobsen, an architectural work of art that will transport us to another era.\n\nTo end this perfect day, we'll return to Copenhagen by train, recharged and with lasting memories of Dyrehaven's natural beauty and royal charm.",
         "included": [
           "Professional Tour Guide.",
@@ -539,6 +766,32 @@
           "Discover why Copenhagen was World Capital of Architecture 2023.",
           "Don't miss this chance to experience Copenhagen stunning waterfronts."
         ],
+        "itineraryStops": {
+          "ofelia-plads": {
+            "title": "Ofelia Plads",
+            "description": "Meet at Ofelia Plads to begin the architecture route from one of Copenhagen's most striking waterfront spaces."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Walk through Nyhavn to connect the harbor's historic facades with the district's transformation over time."
+          },
+          "papiroen": {
+            "title": "Papiroen",
+            "description": "Continue to Papiroen to explore how the former industrial site became a new waterfront neighborhood."
+          },
+          "opera-house": {
+            "title": "Opera House",
+            "description": "Stop with a view of the Opera House and examine one of Copenhagen's most recognizable contemporary buildings."
+          },
+          "cirkelbroen": {
+            "title": "Cirkelbroen",
+            "description": "Reach Cirkelbroen to look at its distinctive bridge design and its role in linking the harbor fronts."
+          },
+          "danish-architecture-center": {
+            "title": "Danish Architecture Center",
+            "description": "Finish at the Danish Architecture Center after tracing how the harbor reflects Copenhagen's modern urban development."
+          }
+        },
         "itineraryDescription": "Embark on a fascinating 2-hour Private architecture tour of Copenhagen's vibrant harbor area, and explore the unique architecture of Nyhavn, Papiroen, Operaen, Cirkelbroen and Dac. This tour is perfect for those looking to learn more about the rich new arquitecture of Copenhagen and experience its modern developments.\n\nBegin your tour at Ofelia Plads close to the iconic Nyhavn, a 17th-century waterfront district filled with colorful houses and lively restaurants. Your guide will lead you on a leisurely stroll along the canals, sharing insights into the area's history and architecture. You'll learn about the district's origins as a bustling port and hear stories about the famous artists and writers who once called Nyhavn home.\n\nNext, head to the new neighborhood of Papiroen, which was once a paper mill but has since been transformed into a vibrant oasis. Admire the unique architecture of the market's buildings and the stunning views of the harbor. You'll learn about the development of the area and the efforts to preserve its industrial heritage while creating a modern urban space.\n\nEnjoy the view of Operaen, a modern building located on the waterfront that boasts a distinctive design. The building was completed in 2005 and has quickly become a landmark of Copenhagen's cultural scene. Your guide will share the story of the building's architecture, which was inspired by the surrounding harbor and the cultural heritage of Denmark.\n\nNext, make your way to Cirkelbroen, a pedestrian bridge that features an innovative design inspired by the circles of life. This bridge is both functional and beautiful, connecting the harbor's two sides while creating a unique architectural experience.\n\nThroughout the tour, your guide will provide you with fascinating insights into the history, culture, and architecture of Copenhagen's harbor. You'll also have plenty of opportunities to take stunning photos and soak in the beauty of this dynamic city.\n\nThis 2-hour architecture tour is an excellent way to experience Copenhagen's rich cultural heritage and stunning waterfront views. Whether you're a history buff or simply interested in the city's modern developments, this tour is sure to leave you with a new appreciation for Copenhagen's unique architecture and urban landscape.",
         "included": [
           "Guide.",
@@ -606,6 +859,44 @@
           "Frederiksborg Castle (Hillerød): Visit one of the most representative and impressive Danish Renaissance palaces, often referred to as the \"Versailles of the North.\"",
           "North Sealand Scenic Drive: Enjoy a beautiful, relaxing drive through the scenic forests and affluent coastal towns north of Copenhagen."
         ],
+        "itineraryStops": {
+          "norreport-station": {
+            "title": "Nørreport Station",
+            "description": "Meet the guide at Nørreport Station, where the excursion begins before heading north out of Copenhagen."
+          },
+          "hillerod-station-arrival": {
+            "title": "Hillerød Station",
+            "description": "Arrive at Hillerød Station, the gateway to the day's first royal destination."
+          },
+          "frederiksborg-castle": {
+            "title": "Frederiksborg Castle",
+            "description": "Begin the guided visit at Frederiksborg Castle and explore its Renaissance architecture, chapel, great hall, and royal chambers."
+          },
+          "hillerod-station-departure": {
+            "title": "Hillerød Station",
+            "description": "Return to Hillerød Station to continue the excursion by train toward the coast."
+          },
+          "helsingor-station": {
+            "title": "Helsingør Station",
+            "description": "Continue by train to Helsingør, the coastal town that sets up the second major castle visit."
+          },
+          "helsingor-harbor": {
+            "title": "Helsingør Harbor",
+            "description": "Pause in the medieval harbor town for lunch time and to experience the atmosphere by the water."
+          },
+          "kronborg-castle": {
+            "title": "Kronborg Castle",
+            "description": "Enter Kronborg Castle to connect its strategic maritime history with the legend of Hamlet."
+          },
+          "oresund-viewpoint": {
+            "title": "Øresund Viewpoint",
+            "description": "Stop briefly for photos over the Øresund strait before returning to the station."
+          },
+          "norreport-station-return": {
+            "title": "Return to Nørreport",
+            "description": "Finish back at Nørreport Station after the regional train ride to Copenhagen."
+          }
+        },
         "itineraryDescription": "Meet your guide at Nørreport Station.\n\nWe will board the train for a scenic 50-minute journey to Hillerød, the town hosting our first royal destination.\n\nGuided visit: Begin the day at the magnificent Frederiksborg Palace (ticket included). We will explore the opulent chapel, the Great Hall, and the royal chambers of this iconic Renaissance castle, often called the “Versailles of the North.”\n\nTransfer to coast\nTravel: Board the train for a brief 35-minute transfer to the coastal town of Helsingør, where the legendary Kronborg Castle awaits.\n\nFree time: Break for lunch in the charming medieval harbor town of Helsingør. Your guide will recommend local spots for a quick, enjoyable meal or a coffee break near the water.\n\nKronborg Castle (Hamlet)\nGuided visit: Enter the formidable UNESCO World Heritage site of Kronborg Castle (ticket included). We will delve into its strategic maritime history and the legend that ties this fortress to Shakespeare’s Hamlet, exploring the Royal Chambers and the famed Casemates.\n\nCoastal views & buffer\nFree time (15 mins): Short time for photos of the Øresund, the strait separating Denmark and Sweden, before heading back to the station.\n\nDeparture for Copenhagen\nTravel: Board the direct regional train back to Copenhagen. The journey is approximately 50 to 60 minutes.\n\nArrive back at Nørreport.",
         "included": [
           "All Transport Tickets for the scenic round trip from Copenhagen (public transport is included).",
@@ -673,6 +964,40 @@
           "Royal Grandeur: Discover the breathtaking Roskilde Cathedral—a UNESCO World Heritage Site—and trace the fascinating history of the Danish monarchy by visiting the royal tombs.",
           "Seamless Logistics: Enjoy a completely private, all-inclusive experience where your guide manages all transport and ticket entry, maximizing your time for exploration."
         ],
+        "itineraryStops": {
+          "copenhagen-central-station": {
+            "title": "Copenhagen Central Station",
+            "description": "Meet the private guide at Copenhagen Central Station before departing west toward Roskilde."
+          },
+          "roskilde-station-arrival": {
+            "title": "Roskilde Station",
+            "description": "Arrive at Roskilde Station and begin the excursion in one of Denmark's most historic cities."
+          },
+          "viking-ship-museum": {
+            "title": "Viking Ship Museum",
+            "description": "Start with the Viking Ship Museum to explore the original ships and the interactive exhibits around Norse maritime life."
+          },
+          "roskilde-harbor": {
+            "title": "Roskilde Harbor",
+            "description": "Pause in the harbor area for lunch or coffee time and to enjoy the waterfront atmosphere."
+          },
+          "roskilde-cathedral": {
+            "title": "Roskilde Cathedral",
+            "description": "Continue to Roskilde Cathedral to connect Danish royal history with the burial site of kings and queens."
+          },
+          "roskilde-historic-center": {
+            "title": "Roskilde Historic Center",
+            "description": "Take a short scenic walk through the historic center before returning to the station."
+          },
+          "roskilde-station-departure": {
+            "title": "Roskilde Station",
+            "description": "Return to Roskilde Station to board the regional train back to Copenhagen."
+          },
+          "copenhagen-central-station-return": {
+            "title": "Return to Copenhagen Central Station",
+            "description": "Finish back at Copenhagen Central Station after the regional train ride from Roskilde."
+          }
+        },
         "itineraryDescription": "Meet your private guide at the main entrance of Copenhagen Central Station. Enjoy a comfortable, direct train journey (tickets included) to the historic city of Roskilde.\n\nViking ImmersionViking Ship Museum: Your guide facilitates quick entry (tickets included). Explore the five original 11th-century ships and have plenty of time for interactive, family-friendly activities and learning about Norse maritime life.\n\nLunch BreakFree Time: Enjoy a leisurely break for lunch or a quick coffee in the charming harbor area of Roskilde (meals not included).\n\nDanish RoyaltyRoskilde Cathedral (UNESCO): Guided visit (ticket included) to the magnificent brick Cathedral. Your expert will detail the history of the Danish monarchy and the elaborate royal tombs housed within.\n\nReturn to CopenhagenA brief, scenic walk through Roskilde's historic center before boarding the regional train back to Copenhagen Central Station, where the tour concludes.",
         "included": [
           "Private Expert Guide for the full 4 hours.",
@@ -705,6 +1030,36 @@
           "Panoramic Vistas: Enjoy unique views of the harbor and the Copenhagen skyline from unusual vantage points.",
           "Danish Urban Life: Understand how Danes integrate design, functionality, and community in their daily lives in this pioneering new neighborhood."
         ],
+        "itineraryStops": {
+          "orientkaj": {
+            "title": "Orientkaj",
+            "description": "Meet at Orientkaj to begin the route in the newest edge of Nordhavn's waterfront development."
+          },
+          "arhusgade-quarter": {
+            "title": "Århusgade Quarter",
+            "description": "Enter the Århusgade Quarter to explore the first completed residential blocks and the idea of Nordhavn's urban islands."
+          },
+          "frihavnstarnet": {
+            "title": "Frihavnstårnet",
+            "description": "Continue to Frihavnstårnet to see how former grain silos were transformed into modern waterfront apartments."
+          },
+          "konditaget-luders": {
+            "title": "Konditaget Lüders",
+            "description": "Climb or approach Konditaget Lüders to examine how a parking structure became a public rooftop space with panoramic views."
+          },
+          "gotenborg-plads": {
+            "title": "Götenborg Plads",
+            "description": "Walk through Götenborg Plads to observe one of the district's main civic spaces and the architecture around it."
+          },
+          "harbour-bath": {
+            "title": "Harbour Bath",
+            "description": "Finish at the Harbour Bath to connect Nordhavn's architecture with Copenhagen's everyday life by the water."
+          },
+          "nordhavn-station": {
+            "title": "Nordhavn Station",
+            "description": "End the route at Nordhavn Station after tracing how the district connects new waterfront living with the wider city."
+          }
+        },
         "itineraryDescription": "Our 90-minute route focuses on the first phase of Nordhavn's development, highlighting its transformation:\n\n\nÅrhusgade Quarter\n\n\nThe heart of Nordhavn. We explore the first completed residential buildings, understanding the concept of urban \"islands\" and the creative reuse of warehouse structures.\n\n\nFrihavnstårnet (The Free Port Tower)\n\n\nFormer grain silos converted into stunning, modern waterfront apartments. An iconic example of architectural adaptive reuse.\n\n\nKonditaget Lüders (The Fitness Rooftop)\n\n\nWe visit this unique public park located on the roof of a multi-story car park. A brilliant example of functional space, offering a playground, fitness equipment, and panoramic views.\n\n\nGötenborg Plads\n\n\nOne of the district's central and most vibrant squares, examining the surrounding architecture and community life.\n\n\nHarbour Bath (Havnebadet)\n\n\nWe observe the new public swimming areas and water access points, an essential element of Copenhagen's coastal lifestyle.",
         "included": [
           "Expert English Tour Guide."
@@ -806,6 +1161,48 @@
           "Traveling with kids? Children under 12 join for free. This makes it the most cost-effective and welcoming private experience for families.",
           "Experience Copenhagen like a local by exploring the city on foot and using our world-class green public transport system."
         ],
+        "itineraryStops": {
+          "orientkaj-metro-station": {
+            "title": "Orientkaj Metro Station",
+            "description": "Meet the guide at Orientkaj Metro Station near the cruise port before heading into the city."
+          },
+          "gammel-strand": {
+            "title": "Gammel Strand",
+            "description": "Begin the walking route at Gammel Strand, the ancient shoreline of Copenhagen."
+          },
+          "christiansborg-palace": {
+            "title": "Christiansborg Palace",
+            "description": "Pause for views of Christiansborg Palace and its role as the seat of the Danish Parliament."
+          },
+          "kongens-nytorv": {
+            "title": "Kongens Nytorv",
+            "description": "Cross Kongens Nytorv and take in one of the city's most vibrant public squares."
+          },
+          "medieval-streets": {
+            "title": "Medieval Streets",
+            "description": "Walk through the older streets and hidden lanes that reveal the medieval character of the capital."
+          },
+          "nyhavn": {
+            "title": "Nyhavn",
+            "description": "Continue to Nyhavn for the colorful 17th-century canal frontage and historic wooden ships."
+          },
+          "amalienborg-palace": {
+            "title": "Amalienborg Palace",
+            "description": "Enter the royal quarter to admire Amalienborg Palace and its ceremonial setting."
+          },
+          "marble-church": {
+            "title": "Marble Church",
+            "description": "Stop at Marble Church to take in one of Copenhagen's most recognizable domes."
+          },
+          "rosenborg-castle-views": {
+            "title": "Rosenborg Castle Views",
+            "description": "Take in the Renaissance silhouette of Rosenborg Castle before heading back toward the port."
+          },
+          "orientkaj-metro-station-return": {
+            "title": "Return to Orientkaj Metro Station",
+            "description": "Finish back at Orientkaj Metro Station for a comfortable return toward the cruise terminal."
+          }
+        },
         "itineraryDescription": "You will then enjoy a guided metro ride straight into the historic heart of Copenhagen.\n\nThe walking portion starts at Gammel Strand, the city’s ancient shore, offering stunning views of Christiansborg Palace, the seat of the Danish Parliament.\n\nAs you move toward the city center, you will stroll through the vibrant Kongens Nytorv square and the charming medieval streets that define the capital’s character.\n\nThe route then leads you to the iconic Nyhavn canal, famous for its 17th-century colorful townhouses and historic wooden ships.\n\nFrom there, you will proceed to the royal quarter to admire Amalienborg Palace and the impressive Marble Church.\n\nAfter a peaceful walk through the King’s Garden, with views of the Renaissance Rosenborg Castle, your guide will escort you back to the Oceankaj pier, ensuring you return comfortably and on time for your ship’s departure.",
         "included": [
           "Dedicated service from a professional English-speaking expert.",
@@ -840,6 +1237,44 @@
           "Instead of a long walk through industrial areas, we board the Havnebus for a scenic 20-minute navigation. This offers \"front-row seats\" to Nyhavn, the Royal Playhouse, and the Opera House from the water.",
           "We dock directly at Refshaleøen just as the \"Golden Hour\" begins. Your guide introduces you to the best global street food stalls and hidden corners of Reffen, leaving you to enjoy the city’s most vibrant sunset atmosphere."
         ],
+        "itineraryStops": {
+          "city-hall-square": {
+            "title": "City Hall Square",
+            "description": "Begin at City Hall Square and start in the civic center of Copenhagen before moving toward the waterfront."
+          },
+          "slotsholmen": {
+            "title": "Slotsholmen",
+            "description": "Walk to Slotsholmen to connect the historic heart of the city with the seat of Danish political life."
+          },
+          "librarians-garden": {
+            "title": "Librarian's Garden",
+            "description": "Pause in the Librarian's Garden, a hidden green pocket tucked between the older and newer parts of the city."
+          },
+          "black-diamond": {
+            "title": "Black Diamond",
+            "description": "Continue to the Black Diamond and take in the striking glass-and-granite facade along the waterfront."
+          },
+          "circle-bridge": {
+            "title": "Circle Bridge",
+            "description": "Follow the harbor edge to Circle Bridge and examine Olafur Eliasson's playful bridge design."
+          },
+          "kayak-bar": {
+            "title": "Kayak Bar",
+            "description": "Pass Kayak Bar to see a more relaxed side of Copenhagen's modern harbor culture."
+          },
+          "harbour-bus": {
+            "title": "Harbour Bus",
+            "description": "Board the Harbour Bus for the scenic crossing that shifts the route from the historic core to the coast."
+          },
+          "refshaleoen": {
+            "title": "Refshaleøen",
+            "description": "Dock at Refshaleøen as the evening atmosphere starts to build around the old industrial waterfront."
+          },
+          "reffen-street-market": {
+            "title": "Reffen Street Market",
+            "description": "Finish at Reffen Street Market, where the guided route ends and the food stalls and sunset atmosphere take over."
+          }
+        },
         "itineraryDescription": "The journey begins at City Hall Square (Rådhuspladsen), where we explore the historic pulse of the city before walking toward Slotsholmen, the seat of the Danish Parliament. We escape the crowds in the Librarian’s Garden, a secret oasis tucked between the old and the new, before reaching the striking glass-and-granite facade of the Black Diamond. From there, we trace the waterfront to witness the artistic Circle Bridge by Olafur Eliasson and the bohemian Kayak Bar, capturing the best of Copenhagen’s modern \"Hygge\" culture. Then we will take a  20-minute scenic navigation. The tour concludes as we dock directly at Refshaleøen, where your guide will provide a curated orientation of the best global street food stalls and hidden corners of the Reffen Market just as the evening atmosphere begins to peak and you can enjoy the sunset!",
         "included": [
           "Professional 3-hour guided experience with a local expert.",
