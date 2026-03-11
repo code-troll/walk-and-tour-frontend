@@ -1,3 +1,5 @@
+"use client";
+
 import BookTourForm from "@/components/book-tour/BookTourForm";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
