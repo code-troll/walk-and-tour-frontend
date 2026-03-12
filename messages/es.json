@@ -265,10 +265,10 @@
           "Comidas, bebidas y transporte"
         ],
         "facts": {
-          "meetingPoint": "Nyhavn (punto exacto tras reservar)",
-          "endPoint": "Centro histórico / distrito real",
-          "cancellationType": "Cancelación gratuita 24 horas",
-          "languages": "Inglés y español (según salida)"
+          "meetingPoint": "Plaza del Ayuntamiento",
+          "endPoint": "Palacio de Amalienborg",
+          "cancellationType": "Cancela en cualquier momento",
+          "languages": "Español"
         },
         "title": "Free Tour Copenhague: Cambio de Guardia y Centro Histórico",
         "location": "Copenhagen",
