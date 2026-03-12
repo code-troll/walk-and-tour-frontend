@@ -12,7 +12,7 @@ type TourDetailQuickInfoId =
   | "endAt"
   | "typeTour"
   | "cancellationType"
-  | "languages";
+  | "language";
 
 type TourDetailQuickInfoItem = {
   id: TourDetailQuickInfoId;
@@ -29,7 +29,7 @@ const iconById: Record<TourDetailQuickInfoId, LucideIcon> = {
   endAt: Flag,
   typeTour: Footprints,
   cancellationType: ShieldCheck,
-  languages: Languages,
+  language: Languages,
 };
 
 export default function TourDetailQuickInfoSection({

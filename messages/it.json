@@ -210,7 +210,7 @@
         "meetingPoint": "Centro di Copenaghen",
         "endPoint": "Centro storico",
         "cancellationType": "Cancellazione gratuita entro 24 ore",
-        "languages": "Inglese"
+        "language": "Inglese"
       },
       "customerSupportDescription": "Abbiamo un team professionale di assistenza clienti e ti accompagniamo in ogni viaggio."
     },
@@ -268,7 +268,7 @@
           "meetingPoint": "Piazza del Municipio",
           "endPoint": "Palazzo di Amalienborg",
           "cancellationType": "Cancella in qualsiasi momento",
-          "languages": "Italiano"
+          "language": "Italiano"
         },
         "title": "Tour gratuito di Copenaghen: Cambio della Guardia e principali attrazioni della citta",
         "location": "Copenaghen",
@@ -304,7 +304,7 @@
           "endPoint": "Castello di Rosenborg",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Tour guidato del Castello di Rosenborg",
         "location": "Castello di Rosenborg",
@@ -375,7 +375,7 @@
           "endPoint": "Stazione Centrale di Copenaghen",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Escursione a Malmo, Svezia",
         "location": "Malmo",
@@ -409,7 +409,7 @@
           "endPoint": "Palazzo di Amalienborg",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Palazzo di Amalienborg",
         "location": "Copenaghen",
@@ -440,7 +440,7 @@
           "endPoint": "Palazzo di Christiansborg",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour di gruppo",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Palazzo di Christiansborg",
         "location": "Copenaghen",
@@ -524,7 +524,7 @@
           "endPoint": "Palazzo di Amalienborg",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Copenaghen Essentials: centro storico, traghetto del porto e guardie reali",
         "location": "Copenaghen",
@@ -557,7 +557,7 @@
           "endPoint": "Museo Ebraico Danese",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour privato",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Tour del Quartiere Ebraico e del Museo Ebraico Danese",
         "location": "Copenaghen",
@@ -628,7 +628,7 @@
           "endPoint": "Municipio",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour di gruppo",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Tour a piedi di Copenaghen + ingresso ai Giardini di Tivoli",
         "location": "Copenaghen",
@@ -696,7 +696,7 @@
           "endPoint": "Gammel Strand",
           "cancellationType": "Cancellazione gratuita entro 48 ore",
           "typeTour": "Piccolo gruppo fino a 10 adulti",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Tour privato in barca a Copenaghen: gemme nascoste e hygge",
         "location": "Copenaghen",
@@ -759,7 +759,7 @@
           "endPoint": "Stazione Centrale di Copenaghen",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Tour in bici al Palazzo dell'Hermitage e al Parco Reale dei Cervi",
         "location": "Copenaghen",
@@ -815,7 +815,7 @@
           "endPoint": "Danish Architecture Center",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour privato",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Copenaghen: tour privato a piedi dell'architettura del porto",
         "location": "Copenaghen",
@@ -852,7 +852,7 @@
           "endPoint": "Nyhavn",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Salta la fila al Castello di Rosenborg e crociera sui canali",
         "location": "Copenaghen",
@@ -921,7 +921,7 @@
           "endPoint": "Nørreport Station",
           "cancellationType": "Cancellazione gratuita entro 48 ore",
           "typeTour": "Tour privato",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Nord di Copenaghen: castelli di Frederiksborg e Kronborg - Amleto",
         "location": "Copenaghen",
@@ -957,7 +957,7 @@
           "endPoint": "Nørreport",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Tour gastronomici",
         "location": "Copenaghen",
@@ -1023,7 +1023,7 @@
           "endPoint": "Stazione Centrale",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour privato",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Roskilde: antica citta vichinga",
         "location": "Copenaghen",
@@ -1082,7 +1082,7 @@
           "endPoint": "Nordhavn",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Architettura di Nordhavn",
         "location": "Copenaghen",
@@ -1118,7 +1118,7 @@
           "endPoint": "Nyhavn",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Tour a pagamento",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Tour privato natalizio definitivo da 90 min: Tivoli e hygge",
         "location": "Copenaghen",
@@ -1153,7 +1153,7 @@
           "endPoint": "Porto crocieristico di Copenaghen",
           "cancellationType": "Cancellazione gratuita entro 72 ore",
           "typeTour": "Piccolo gruppo fino a 10 adulti",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Panorama di Copenaghen: esperienza privata dal porto al centro",
         "location": "Copenaghen",
@@ -1230,7 +1230,7 @@
           "endPoint": "Stazione metro Orientkaj (M4)",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Piccolo gruppo fino a 12 adulti",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Escursione a piedi a Copenaghen per crocieristi: dalla metro Orientkaj al cuore della citta",
         "location": "Copenaghen",
@@ -1297,7 +1297,7 @@
           "endPoint": "Reffen Street Market",
           "cancellationType": "Cancellazione gratuita entro 24 ore",
           "typeTour": "Piccolo gruppo fino a 12 adulti",
-          "languages": "Inglese"
+          "language": "Inglese"
         },
         "title": "Copenaghen dalla citta alla costa: Diamante Nero, crociera sui canali e Reffen",
         "location": "Copenaghen",

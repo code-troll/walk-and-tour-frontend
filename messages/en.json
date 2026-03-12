@@ -210,7 +210,7 @@
         "meetingPoint": "Central Copenhagen",
         "endPoint": "City center (walkable from main attractions)",
         "cancellationType": "48h Free Cancellation",
-        "languages": "English"
+        "language": "English"
       },
       "customerSupportDescription": "We have a professional customer support team and always accompany you on every trip."
     },
@@ -273,7 +273,7 @@
           "endPoint": "Amalienborg palace",
           "cancellationType": "Cancel any time",
           "typeTour": "Free Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen Free Tour: Changing of the Guard & City Highlights",
         "location": "Copenhagen",
@@ -309,7 +309,7 @@
           "endPoint": "Rosenborg Castle",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Rosenborg Castle Guided Tour",
         "location": "Rosenborg Castle",
@@ -380,7 +380,7 @@
           "endPoint": "Copenhagen Central Station",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Excursion to Malmö Sweden",
         "location": "Malmö",
@@ -414,7 +414,7 @@
           "endPoint": "Amalienborg Palace",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Amalienborg Palace",
         "location": "Copenhagen",
@@ -445,7 +445,7 @@
           "endPoint": "Christiansborg Palace",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Group Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Christiansborg Palace",
         "location": "Copenhagen",
@@ -529,7 +529,7 @@
           "endPoint": "Amalienborg Palace",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen Essentials: Old Town, Harbour Ferry & Royal Guards",
         "location": "Copenhagen",
@@ -562,7 +562,7 @@
           "endPoint": "Jewish Museum",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Private Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Jewish Quarter and Danish Jewish Museum Tour",
         "location": "Copenhagen",
@@ -633,7 +633,7 @@
           "endPoint": "City Hall",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Group Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen Walking Tour + Tivoli Gardens Entry",
         "location": "Copenhagen",
@@ -701,7 +701,7 @@
           "endPoint": "Gammel Strand",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Small group up to 10 adults",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen Private Boat Tour: Hidden Gems & Hygge",
         "location": "Copenhagen",
@@ -764,7 +764,7 @@
           "endPoint": "Copenhagen Central Station",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Hermitage Palace & Royal Deer Park Bike Tour",
         "location": "Copenhagen",
@@ -820,7 +820,7 @@
           "endPoint": "Danish Architecture Center",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Private Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen: Harbor Architecture Private Walking Tour",
         "location": "Copenhagen",
@@ -857,7 +857,7 @@
           "endPoint": "Nyhavn",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Skip the Line to Rosenborg Castle and Canal Cruise",
         "location": "Copenhagen",
@@ -926,7 +926,7 @@
           "endPoint": "Nørreport Station",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Private Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "North Copenhagen: Frederiksborg & Kronborg Castle - Hamlet",
         "location": "Copenhagen",
@@ -962,7 +962,7 @@
           "endPoint": "Nørreport",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Food Tours",
         "location": "Copenhagen",
@@ -1028,7 +1028,7 @@
           "endPoint": "Central Station",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Private Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Roskilde: Old Viking City",
         "location": "Copenhagen",
@@ -1087,7 +1087,7 @@
           "endPoint": "Nordhavn",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Nordhavn Architecture",
         "location": "Copenhagen",
@@ -1123,7 +1123,7 @@
           "endPoint": "Nyhavn",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Paid Tour",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Private 90-Min Ultimate Christmas: Tivoli & Hygge",
         "location": "Copenhagen",
@@ -1158,7 +1158,7 @@
           "endPoint": "Copenhagen Cruise Port",
           "cancellationType": "72h Free Cancellation",
           "typeTour": "Small group up to 10 adults",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen Panorama: Private Shore-to-City Experience",
         "location": "Copenhagen",
@@ -1235,7 +1235,7 @@
           "endPoint": "Orientkaj Metro Station (M4)",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Small group up to 12 adults",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen Walking Shore Excursion: From Metro Orientkaj to the Heart of the City",
         "location": "Copenhagen",
@@ -1302,7 +1302,7 @@
           "endPoint": "Reffen Street Market",
           "cancellationType": "24h Free Cancellation",
           "typeTour": "Small group up to 12 adults",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Copenhagen City to Coast: The Black Diamond, Canal Cruise & Reffen",
         "location": "Copenhagen",
@@ -1366,7 +1366,7 @@
           "endPoint": "Nyhavn",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Private Experience",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Danish Smorrebrod Experience",
         "location": "Copenhagen",
@@ -1400,7 +1400,7 @@
           "endPoint": "Gammel Strand",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Private Experience",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Canal Boat Tour",
         "location": "Copenhagen",
@@ -1433,7 +1433,7 @@
           "endPoint": "Rosenborg",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Private Experience",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Danish Beer Tasting",
         "location": "Copenhagen",
@@ -1467,7 +1467,7 @@
           "endPoint": "Copenhagen",
           "cancellationType": "48h Free Cancellation",
           "typeTour": "Private Experience",
-          "languages": "English"
+          "language": "English"
         },
         "title": "Collage & Watercolor Workshop: A Creative Journey",
         "location": "Copenhagen",
