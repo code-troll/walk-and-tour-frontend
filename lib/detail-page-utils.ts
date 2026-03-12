@@ -286,7 +286,7 @@ export const buildQuickInfoItems = ({
     value: facts.cancellationType,
   },
   {
-    id: "languages" as const,
+    id: "language" as const,
     label: detailT("labels.language"),
     value: facts.language,
   },
