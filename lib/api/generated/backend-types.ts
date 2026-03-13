@@ -142,7 +142,7 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["deleteTag"];
         options?: never;
         head?: never;
         patch: operations["updateTag"];
@@ -511,6 +511,7 @@ export interface components {
         AdminTour: {
             /** Format: uuid */
             id: string;
+            name: string;
             slug: string;
             category: string | null;
             publicationStatus: components["schemas"]["PublicationStatus"];
@@ -529,6 +530,7 @@ export interface components {
             audit: components["schemas"]["AuditMetadata"];
         };
         AdminTourUpsert: {
+            name: string;
             slug: string;
             category?: string | null;
             publicationStatus: components["schemas"]["PublicationStatus"];
@@ -548,6 +550,7 @@ export interface components {
             translations?: components["schemas"]["AdminTranslation"][];
         };
         AdminTourPatch: {
+            name?: string;
             slug?: string;
             category?: string | null;
             publicationStatus?: components["schemas"]["PublicationStatus"];
@@ -578,6 +581,7 @@ export interface components {
         AdminBlogPost: {
             /** Format: uuid */
             id: string;
+            name: string;
             slug: string;
             heroMediaRef: string | null;
             category: string | null;
@@ -590,6 +594,7 @@ export interface components {
             audit: components["schemas"]["AuditMetadata"];
         };
         AdminBlogPostUpsert: {
+            name: string;
             slug: string;
             heroMediaRef?: string | null;
             category?: string | null;
@@ -598,6 +603,7 @@ export interface components {
             translations?: components["schemas"]["AdminBlogTranslation"][];
         };
         AdminBlogPostPatch: {
+            name?: string;
             slug?: string;
             heroMediaRef?: string | null;
             category?: string | null;
@@ -949,6 +955,27 @@ export interface operations {
             };
             400: components["responses"]["ErrorResponse"];
             409: components["responses"]["ErrorResponse"];
+        };
+    };
+    deleteTag: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: components["parameters"]["TagKeyPath"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Tag deleted after cascading association removal */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: components["responses"]["ErrorResponse"];
         };
     };
     updateTag: {

@@ -221,6 +221,129 @@ BOOKING_REQUEST_FROM_EMAIL=
 BOOKING_REQUEST_TO_EMAIL=
 ```
 
+## Auth0 Configuration
+
+The admin area uses Auth0 for login in the Next.js app, and then requests a bearer token for the backend admin API.
+
+### 1. Create or use an Auth0 application
+
+In the Auth0 Dashboard:
+
+- Go to `Applications` -> `Applications`
+- Create an application if needed
+- Use application type `Regular Web Application`
+
+From that application, copy:
+
+- `Domain` -> use it as `AUTH0_DOMAIN`
+- `Client ID` -> use it as `AUTH0_CLIENT_ID`
+- `Client Secret` -> use it as `AUTH0_CLIENT_SECRET`
+
+If your tenant domain is something like:
+
+```text
+dev-d6cba0cbx4c6cfjh.us.auth0.com
+```
+
+then set:
+
+```env
+AUTH0_DOMAIN=https://dev-d6cba0cbx4c6cfjh.us.auth0.com
+```
+
+### 2. Generate `AUTH0_SECRET`
+
+`AUTH0_SECRET` does not come from the Auth0 dashboard. It is a local application secret used by `@auth0/nextjs-auth0` to encrypt session cookies.
+
+Generate it locally with:
+
+```bash
+openssl rand -hex 32
+```
+
+Then place the generated value in `.env`:
+
+```env
+AUTH0_SECRET=your_generated_value
+```
+
+### 3. Configure the backend audience
+
+The frontend must request a token for the backend API audience.
+
+If the backend is configured like this:
+
+```env
+AUTH0_ISSUER_BASE_URL=https://dev-d6cba0cbx4c6cfjh.us.auth0.com
+AUTH0_AUDIENCE=https://api.dev.walkandtour.dk/api
+```
+
+then the frontend should use:
+
+```env
+AUTH0_DOMAIN=https://dev-d6cba0cbx4c6cfjh.us.auth0.com
+BACKEND_AUTH0_AUDIENCE=https://api.dev.walkandtour.dk/api
+```
+
+Notes:
+
+- `AUTH0_ISSUER_BASE_URL` in the backend corresponds to `AUTH0_DOMAIN` in this frontend setup
+- `AUTH0_AUDIENCE` in the backend corresponds to `BACKEND_AUTH0_AUDIENCE` in the frontend
+- `BACKEND_API_BASE_URL` is the backend base URL for HTTP calls, not the Auth0 audience
+
+Example:
+
+```env
+BACKEND_API_BASE_URL=https://api.dev.walkandtour.dk
+BACKEND_AUTH0_AUDIENCE=https://api.dev.walkandtour.dk/api
+```
+
+### 4. Configure local callback and logout URLs in Auth0
+
+For local development with the domains used in this project, set these values in the Auth0 application settings.
+
+Allowed Callback URLs:
+
+```text
+http://dev.walkandtour.dk:3000/auth/callback,http://admin.dev.walkandtour.dk:3000/auth/callback
+```
+
+Allowed Logout URLs:
+
+```text
+http://dev.walkandtour.dk:3000,http://admin.dev.walkandtour.dk:3000
+```
+
+Allowed Web Origins:
+
+```text
+http://dev.walkandtour.dk:3000,http://admin.dev.walkandtour.dk:3000
+```
+
+### 5. Configure `APP_BASE_URL`
+
+This project uses both the public local host and the admin local host. If you set `APP_BASE_URL`, it must contain both origins:
+
+```env
+APP_BASE_URL=http://dev.walkandtour.dk:3000,http://admin.dev.walkandtour.dk:3000
+```
+
+If `APP_BASE_URL` does not include the current origin, Auth0 middleware will fail with an error saying the current request origin does not match the configured base URLs.
+
+### 6. Recommended local admin `.env`
+
+For local backoffice work, this is the recommended minimum Auth0/backend setup:
+
+```env
+BACKEND_API_BASE_URL=https://api.dev.walkandtour.dk
+AUTH0_DOMAIN=https://dev-d6cba0cbx4c6cfjh.us.auth0.com
+AUTH0_CLIENT_ID=
+AUTH0_CLIENT_SECRET=
+AUTH0_SECRET=
+BACKEND_AUTH0_AUDIENCE=https://api.dev.walkandtour.dk/api
+APP_BASE_URL=http://dev.walkandtour.dk:3000,http://admin.dev.walkandtour.dk:3000
+```
+
 ## Build
 
 Run a production build with:
