@@ -21,11 +21,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {Field, FieldGroup, FieldLabel} from "@/components/ui/field";
+import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Switch} from "@/components/ui/switch";
 
 type ApiTag = components["schemas"]["Tag"];
 type ApiLanguage = components["schemas"]["Language"];
+
+const TAG_KEY_PATTERN = "^[a-z0-9]+(?:-[a-z0-9]+)*$";
+const LANGUAGE_CODE_PATTERN = "^[a-z]{2}(?:-[A-Z]{2})?$";
+const TAG_KEY_MAX_LENGTH = 100;
+const TAG_LABEL_MAX_LENGTH = 100;
+const LANGUAGE_NAME_MAX_LENGTH = 100;
 
 type TaxonomyClientProps = {
   initialTags: ApiTag[];
@@ -42,7 +48,7 @@ type LanguageFormState = {
   code: string;
   name: string;
   isEnabled: boolean;
-  sortOrder: number;
+  sortOrder: string;
 };
 
 type DeleteConfirmState =
@@ -51,6 +57,17 @@ type DeleteConfirmState =
       id: string;
     }
   | null;
+
+type TagFormErrors = {
+  key?: string;
+  labels?: string;
+};
+
+type LanguageFormErrors = {
+  code?: string;
+  name?: string;
+  sortOrder?: string;
+};
 
 const sortLanguages = (languages: ApiLanguage[]) =>
   [...languages].sort(
@@ -76,7 +93,7 @@ const getLanguageFormState = (language?: ApiLanguage): LanguageFormState => ({
   code: language?.code ?? "",
   name: language?.name ?? "",
   isEnabled: language?.isEnabled ?? true,
-  sortOrder: language?.sortOrder ?? 0,
+  sortOrder: String(language?.sortOrder ?? 0),
 });
 
 const getDefaultTagLabels = ({
@@ -114,6 +131,8 @@ export function TaxonomyClient({
   const [tagDialogError, setTagDialogError] = useState<string | null>(null);
   const [languageDialogError, setLanguageDialogError] = useState<string | null>(null);
   const [deleteDialogError, setDeleteDialogError] = useState<string | null>(null);
+  const [tagFormErrors, setTagFormErrors] = useState<TagFormErrors>({});
+  const [languageFormErrors, setLanguageFormErrors] = useState<LanguageFormErrors>({});
 
   const enabledLanguages = languages.filter((language) => language.isEnabled);
   const languageNameByCode = Object.fromEntries(
@@ -169,6 +188,7 @@ export function TaxonomyClient({
 
   const openTagDialog = (tag?: ApiTag) => {
     setTagDialogError(null);
+    setTagFormErrors({});
 
     if (tag) {
       setEditingTag(tag);
@@ -194,10 +214,12 @@ export function TaxonomyClient({
     setIsTagDialogOpen(false);
     setEditingTag(null);
     setTagDialogError(null);
+    setTagFormErrors({});
   };
 
   const openLanguageDialog = (language?: ApiLanguage) => {
     setLanguageDialogError(null);
+    setLanguageFormErrors({});
     setEditingLanguage(language ?? null);
     setLanguageForm(getLanguageFormState(language));
     setIsLanguageDialogOpen(true);
@@ -207,24 +229,77 @@ export function TaxonomyClient({
     setIsLanguageDialogOpen(false);
     setEditingLanguage(null);
     setLanguageDialogError(null);
+    setLanguageFormErrors({});
+  };
+
+  const validateTagForm = (formState: TagFormState): TagFormErrors => {
+    const normalizedKey = formState.key.trim();
+    const labels = sanitizeLabels(formState.labels);
+    const nextErrors: TagFormErrors = {};
+
+    if (!normalizedKey) {
+      nextErrors.key = "Tag key is required.";
+    } else if (normalizedKey.length > TAG_KEY_MAX_LENGTH) {
+      nextErrors.key = `Tag key must be ${ TAG_KEY_MAX_LENGTH } characters or less.`;
+    } else if (!new RegExp(TAG_KEY_PATTERN).test(normalizedKey)) {
+      nextErrors.key = "Use lowercase letters, numbers, and hyphens only.";
+    }
+
+    if (Object.keys(labels).length === 0) {
+      nextErrors.labels = "At least one locale label is required.";
+    } else {
+      const invalidLabelEntry = Object.entries(labels).find(
+        ([, label]) => label.length > TAG_LABEL_MAX_LENGTH,
+      );
+
+      if (invalidLabelEntry) {
+        nextErrors.labels = `Label for ${ invalidLabelEntry[0] } must be ${ TAG_LABEL_MAX_LENGTH } characters or less.`;
+      }
+    }
+
+    return nextErrors;
+  };
+
+  const validateLanguageForm = (formState: LanguageFormState): LanguageFormErrors => {
+    const code = formState.code.trim();
+    const name = formState.name.trim();
+    const nextErrors: LanguageFormErrors = {};
+
+    if (!code) {
+      nextErrors.code = "Locale code is required.";
+    } else if (!new RegExp(LANGUAGE_CODE_PATTERN).test(code)) {
+      nextErrors.code = "Use locale codes like en or en-US.";
+    }
+
+    if (!name) {
+      nextErrors.name = "Locale name is required.";
+    } else if (name.length > LANGUAGE_NAME_MAX_LENGTH) {
+      nextErrors.name = `Locale name must be ${ LANGUAGE_NAME_MAX_LENGTH } characters or less.`;
+    }
+
+    if (!formState.sortOrder.trim()) {
+      nextErrors.sortOrder = "Sort order is required.";
+    } else if (!/^\d+$/.test(formState.sortOrder.trim())) {
+      nextErrors.sortOrder = "Sort order must be a whole number.";
+    }
+
+    return nextErrors;
   };
 
   const saveTag = async () => {
     const normalizedKey = tagForm.key.trim();
     const labels = sanitizeLabels(tagForm.labels);
+    const nextErrors = validateTagForm(tagForm);
 
-    if (!normalizedKey) {
-      setTagDialogError("Tag key is required.");
-      return;
-    }
-
-    if (Object.keys(labels).length === 0) {
-      setTagDialogError("At least one locale label is required.");
+    if (Object.keys(nextErrors).length > 0) {
+      setTagFormErrors(nextErrors);
+      setTagDialogError(null);
       return;
     }
 
     setIsMutating(true);
     setTagDialogError(null);
+    setTagFormErrors({});
 
     try {
       if (editingTag) {
@@ -266,14 +341,17 @@ export function TaxonomyClient({
   const saveLanguage = async () => {
     const code = languageForm.code.trim();
     const name = languageForm.name.trim();
+    const nextErrors = validateLanguageForm(languageForm);
 
-    if (!code || !name) {
-      setLanguageDialogError("Locale code and name are required.");
+    if (Object.keys(nextErrors).length > 0) {
+      setLanguageFormErrors(nextErrors);
+      setLanguageDialogError(null);
       return;
     }
 
     setIsMutating(true);
     setLanguageDialogError(null);
+    setLanguageFormErrors({});
 
     try {
       if (editingLanguage) {
@@ -282,7 +360,7 @@ export function TaxonomyClient({
           body: {
             name,
             isEnabled: languageForm.isEnabled,
-            sortOrder: languageForm.sortOrder,
+            sortOrder: Number.parseInt(languageForm.sortOrder, 10),
           },
         });
       } else {
@@ -290,7 +368,7 @@ export function TaxonomyClient({
             code,
             name,
             isEnabled: languageForm.isEnabled,
-            sortOrder: languageForm.sortOrder,
+            sortOrder: Number.parseInt(languageForm.sortOrder, 10),
         });
       }
 
@@ -532,6 +610,9 @@ export function TaxonomyClient({
               <Input
                 placeholder="e.g., adventure"
                 value={tagForm.key}
+                pattern={TAG_KEY_PATTERN}
+                maxLength={TAG_KEY_MAX_LENGTH}
+                aria-invalid={Boolean(tagFormErrors.key)}
                 onChange={(event) =>
                   setTagForm({
                     ...tagForm,
@@ -540,6 +621,7 @@ export function TaxonomyClient({
                 }
                 disabled={Boolean(editingTag) || isMutating}
               />
+              <FieldError>{tagFormErrors.key}</FieldError>
             </Field>
             <div className="space-y-3">
               <FieldLabel>Labels by Locale</FieldLabel>
@@ -556,6 +638,8 @@ export function TaxonomyClient({
                     <Input
                       placeholder={`Label in ${ locale.name }`}
                       value={tagForm.labels[locale.code] ?? ""}
+                      maxLength={TAG_LABEL_MAX_LENGTH}
+                      aria-invalid={Boolean(tagFormErrors.labels)}
                       onChange={(event) =>
                         setTagForm({
                           ...tagForm,
@@ -570,6 +654,7 @@ export function TaxonomyClient({
                   </Field>
                 ))
               )}
+              <FieldError>{tagFormErrors.labels}</FieldError>
             </div>
             {tagDialogError ? (
               <p className="text-sm font-medium text-destructive">{tagDialogError}</p>
@@ -606,6 +691,8 @@ export function TaxonomyClient({
               <Input
                 placeholder="e.g., en, es, fr"
                 value={languageForm.code}
+                pattern={LANGUAGE_CODE_PATTERN}
+                aria-invalid={Boolean(languageFormErrors.code)}
                 onChange={(event) =>
                   setLanguageForm({
                     ...languageForm,
@@ -614,12 +701,15 @@ export function TaxonomyClient({
                 }
                 disabled={Boolean(editingLanguage) || isMutating}
               />
+              <FieldError>{languageFormErrors.code}</FieldError>
             </Field>
             <Field>
               <FieldLabel>Name</FieldLabel>
               <Input
                 placeholder="e.g., English, Spanish"
                 value={languageForm.name}
+                maxLength={LANGUAGE_NAME_MAX_LENGTH}
+                aria-invalid={Boolean(languageFormErrors.name)}
                 onChange={(event) =>
                   setLanguageForm({
                     ...languageForm,
@@ -628,21 +718,25 @@ export function TaxonomyClient({
                 }
                 disabled={isMutating}
               />
+              <FieldError>{languageFormErrors.name}</FieldError>
             </Field>
             <Field>
               <FieldLabel>Sort Order</FieldLabel>
               <Input
                 type="number"
                 min={0}
+                step={1}
                 value={languageForm.sortOrder}
+                aria-invalid={Boolean(languageFormErrors.sortOrder)}
                 onChange={(event) =>
                   setLanguageForm({
                     ...languageForm,
-                    sortOrder: Number.parseInt(event.target.value, 10) || 0,
+                    sortOrder: event.target.value,
                   })
                 }
                 disabled={isMutating}
               />
+              <FieldError>{languageFormErrors.sortOrder}</FieldError>
             </Field>
             <Field orientation="horizontal">
               <FieldLabel className="flex-1">Enabled</FieldLabel>

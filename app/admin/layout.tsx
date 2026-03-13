@@ -3,6 +3,7 @@ import Link from "next/link";
 import {headers} from "next/headers";
 import {notFound} from "next/navigation";
 import {AdminNoticeCard} from "@/components/admin/AdminUi";
+import {AdminSidebarNav} from "@/components/admin/AdminSidebarNav";
 import {getAdminEnvironmentLabel, isAdminHostname} from "@/lib/admin-hosts";
 import {getAdminViewerState} from "@/lib/admin/session";
 import React from "react";
@@ -131,18 +132,7 @@ export default async function AdminLayout({
                     {viewerState.backendAdmin.roleName.replace("_", " ")}
                   </p>
                 </div>
-
-                <nav className="mt-5 space-y-2">
-                  {navigationByRole[viewerState.backendAdmin.roleName].map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className="block rounded-2xl px-4 py-3 text-sm font-medium text-[#294049] transition hover:bg-white hover:text-[#102129]"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
+                <AdminSidebarNav items={navigationByRole[viewerState.backendAdmin.roleName]} />
 
                 <div className="mt-6 border-t border-[#eadfce] pt-5">
                   <Link
