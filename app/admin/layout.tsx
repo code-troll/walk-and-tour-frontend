@@ -5,6 +5,7 @@ import {notFound} from "next/navigation";
 import {AdminNoticeCard} from "@/components/admin/AdminUi";
 import {getAdminEnvironmentLabel, isAdminHostname} from "@/lib/admin-hosts";
 import {getAdminViewerState} from "@/lib/admin/session";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Walk and Tour Admin",
@@ -46,7 +47,7 @@ export default async function AdminLayout({
   const viewerState = await getAdminViewerState();
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#efe2cc_0%,_#fcf8f1_50%,_#f6f1e7_100%)] px-6 py-10 text-[#1c2c33]">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_top,#efe2cc_0%,#fcf8f1_50%,#f6f1e7_100%)] px-6 py-10 text-[#1c2c33]">
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-7xl flex-col rounded-[2rem] border border-[#d8c5a8] bg-white/85 p-8 shadow-[0_30px_80px_rgba(61,45,27,0.10)] backdrop-blur md:p-10">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#eadfce] pb-6">
           <div>
@@ -63,7 +64,7 @@ export default async function AdminLayout({
           </div>
         </div>
 
-        <div className="flex-1 py-8">
+        <div className="flex-1 pt-8">
           {viewerState.kind === "auth0-not-configured" ? (
             <AdminNoticeCard
               eyebrow="Configuration"
