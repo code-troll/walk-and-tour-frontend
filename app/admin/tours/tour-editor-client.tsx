@@ -15,11 +15,11 @@ import { formatBackendErrorMessage } from "@/lib/api/core/backend-error";
 import {
   TourEditorHeader,
   type TourSection,
-} from "@/components/tour-editor/header";
-import { GeneralSection } from "@/components/tour-editor/general-section";
-import { ItinerarySection } from "@/components/tour-editor/itinerary-section";
-import { TranslationsSection } from "@/components/tour-editor/translations-section";
-import { PublicationSection } from "@/components/tour-editor/publication-section";
+} from "@/components/tour-editor/Header";
+import { GeneralSection } from "@/components/tour-editor/GeneralSection";
+import { ItinerarySection } from "@/components/tour-editor/ItinerarySection";
+import { TranslationsSection } from "@/components/tour-editor/TranslationsSection";
+import { PublicationSection } from "@/components/tour-editor/PublicationSection";
 import {
   type ApiAdminMediaAssetListResponse,
   buildAttachTourMediaPayload,

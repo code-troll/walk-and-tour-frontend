@@ -97,7 +97,7 @@ const normalizePositiveIntegerInput = (value: string) => {
 const PRICE_CURRENCY_OPTIONS = ["DKK", "EUR"] as const;
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 const sectionClassName =
-  "rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]";
+  "rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)] max-[520px]:p-4";
 const subCardClassName = "rounded-[1.25rem] border border-[#efe4d5] bg-[#fffcf7] p-4";
 const warmSelectClassName =
   "h-11 w-full rounded-2xl border border-[#ddd0bf] bg-[#fdfbf7] px-3 text-sm text-[#21343b] shadow-sm outline-none transition focus:border-[#cfb48f] focus:ring-2 focus:ring-[#eadfce]";
@@ -516,7 +516,7 @@ export function GeneralSection({
           </section>
 
           <section className={ sectionClassName }>
-            <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-4 max-[520px]:items-stretch">
               <div>
                 <h2 className="text-lg font-semibold text-[#21343b]">Media Gallery</h2>
                 <p className="mt-1 text-sm text-[#627176]">
@@ -529,7 +529,7 @@ export function GeneralSection({
                 variant="outline"
                 onClick={ openMediaDialog }
                 disabled={ isMutating }
-                className="border-[#d8c5a8] bg-[#fbf7f0] text-[#7a5424] hover:bg-[#f4ebde]"
+                className="border-[#d8c5a8] bg-[#fbf7f0] text-[#7a5424] hover:bg-[#f4ebde] max-[520px]:w-full"
               >
                 <Upload className="size-4"/>
                 Add Images
@@ -564,7 +564,7 @@ export function GeneralSection({
                   >
                     <div className="flex flex-col gap-4 p-3 sm:flex-row sm:items-start">
                       <div
-                        className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[#f3ede4]">
+                        className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[#f3ede4] max-[520px]:h-40 max-[520px]:w-full">
                         { mediaPreviewStatus[image.mediaId]?.previewUrl ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
@@ -584,14 +584,14 @@ export function GeneralSection({
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <div className="mb-3 flex items-start justify-between gap-3">
+                        <div className="mb-3 flex items-start justify-between gap-3 max-[520px]:flex-col">
                           <div className="min-w-0 flex-1">
                             <p className="text-sm font-medium text-[#21343b]">Image { index + 1 }</p>
                             <p className="truncate text-xs text-[#627176]">{ image.originalFilename }</p>
                             <p className="truncate text-xs text-[#8b7862]">{ image.storagePath }</p>
                           </div>
 
-                          <div className="flex flex-wrap items-center justify-end gap-1.5">
+                          <div className="flex shrink-0 flex-wrap items-center gap-1.5 max-[520px]:justify-start">
                             <button
                               type="button"
                               onClick={ () => {
@@ -718,7 +718,7 @@ export function GeneralSection({
 
               <div className="space-y-4">
                 <form className="flex flex-col gap-3 sm:flex-row" onSubmit={ handleMediaSearchSubmit }>
-                  <div className="relative flex-1">
+                  <div className="relative min-w-0 flex-1">
                     <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"/>
                     <Input
                       value={ mediaSearchInput }
@@ -727,17 +727,23 @@ export function GeneralSection({
                       className="h-10 pl-9"
                     />
                   </div>
-                  <Button type="submit" variant="outline" disabled={ isLoadingMediaLibrary || isUploadingMedia }>
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      disabled={ isLoadingMediaLibrary || isUploadingMedia }
+                      className="max-[520px]:w-full"
+                    >
                     { isLoadingMediaLibrary ? <LoaderCircle className="size-4 animate-spin"/> :
                       <Search className="size-4"/> }
                     Search
                   </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={ () => fileInputRef.current?.click() }
-                    disabled={ isUploadingMedia || isMutating }
-                  >
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={ () => fileInputRef.current?.click() }
+                      disabled={ isUploadingMedia || isMutating }
+                      className="max-[520px]:w-full"
+                    >
                     { isUploadingMedia ? <LoaderCircle className="size-4 animate-spin"/> :
                       <Upload className="size-4"/> }
                     Upload images
@@ -852,8 +858,8 @@ export function GeneralSection({
                 ) : null }
               </div>
 
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={ () => setIsMediaDialogOpen(false) }>
+              <DialogFooter className="max-[520px]:gap-2">
+                <Button type="button" variant="outline" onClick={ () => setIsMediaDialogOpen(false) } className="max-[520px]:w-full">
                   Cancel
                 </Button>
                 <Button
@@ -864,6 +870,7 @@ export function GeneralSection({
                   disabled={
                     isMutating || selectedMediaIds.filter((mediaId) => !attachedMediaIds.has(mediaId)).length === 0
                   }
+                  className="max-[520px]:w-full"
                 >
                   Add selected images
                 </Button>
@@ -888,7 +895,7 @@ export function GeneralSection({
 
               { formState.hasPrice && formState.tourType !== "tip_based" ? (
                 <div className="flex flex-1 flex-col gap-3 md:max-w-lg">
-                  <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_120px]">
+                  <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_120px] max-[520px]:grid-cols-1">
                     <div className="space-y-1.5">
                       <label className="text-xs font-medium text-muted-foreground">Amount</label>
                       <div className="relative">

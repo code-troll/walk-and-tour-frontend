@@ -27,7 +27,7 @@ import {
 const textareaClassName =
   "flex min-h-24 w-full rounded-2xl border border-[#ddd0bf] bg-[#fdfbf7] px-3 py-2 text-sm text-[#21343b] outline-none transition-colors placeholder:text-[#a39482] focus-visible:border-[#cfb48f] focus-visible:ring-2 focus-visible:ring-[#eadfce] disabled:cursor-not-allowed disabled:opacity-50";
 const sectionClassName =
-  "rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]";
+  "rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)] max-[520px]:p-4";
 
 type TranslationsSectionProps = {
   formState: TourFormState;
@@ -95,7 +95,7 @@ export function TranslationsSection({
   return (
     <div className="space-y-6">
       <section className={ sectionClassName }>
-        <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 max-[520px]:items-stretch">
           <div>
             <h2 className="text-lg font-semibold text-[#21343b]">Translations</h2>
             <p className="mt-1 text-sm text-[#627176]">
@@ -103,7 +103,7 @@ export function TranslationsSection({
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 max-[520px]:w-full">
             <select
               value=""
               onChange={ (event) => {
@@ -113,7 +113,7 @@ export function TranslationsSection({
 
                 onAddTranslationAction(event.target.value);
               } }
-              className="h-10 rounded-2xl border border-[#ddd0bf] bg-[#fdfbf7] px-3 text-sm text-[#21343b] shadow-sm outline-none transition focus:border-[#cfb48f] focus:ring-2 focus:ring-[#eadfce]"
+              className="h-10 rounded-2xl border border-[#ddd0bf] bg-[#fdfbf7] px-3 text-sm text-[#21343b] shadow-sm outline-none transition focus:border-[#cfb48f] focus:ring-2 focus:ring-[#eadfce] max-[520px]:w-full"
               disabled={ availableToAdd.length === 0 }
             >
               <option value="">Select language</option>
@@ -152,26 +152,26 @@ export function TranslationsSection({
                 key={ translation.languageCode }
                 className="overflow-hidden rounded-[1.5rem] border border-[#eadfce] bg-white shadow-[0_14px_32px_rgba(42,36,25,0.04)]"
               >
-                <div className="flex items-center gap-3 px-6 py-4 transition-colors hover:bg-[#fcfaf6]">
+                <div className="flex items-center gap-3 px-6 py-4 transition-colors hover:bg-[#fcfaf6] max-[520px]:flex-col max-[520px]:items-stretch max-[520px]:px-4">
                   <button
                     type="button"
                     onClick={ () => onSelectTranslationAction(isExpanded ? null : translation.languageCode) }
-                    className="flex min-w-0 flex-1 items-center gap-4 text-left"
+                    className="flex min-w-0 flex-1 items-center gap-4 text-left max-[520px]:w-full"
                   >
-                    <div className="flex flex-1 items-center gap-3">
+                    <div className="flex min-w-0 flex-1 items-center gap-3">
                       { isExpanded ? (
                         <ChevronDown className="size-5 text-muted-foreground"/>
                       ) : (
                         <ChevronRight className="size-5 text-muted-foreground"/>
                       ) }
 
-                      <div className="flex size-10 items-center justify-center rounded-[1rem] bg-[#f3e5cf]">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-[1rem] bg-[#f3e5cf]">
                         <span className="text-sm font-bold uppercase text-[#9a6a2f]">
                           { translation.languageCode }
                         </span>
                       </div>
 
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <div className="font-semibold text-[#21343b]">{ languageName }</div>
                         <div className="truncate text-sm text-[#627176]">
                           { translation.title || "No title set" }
@@ -180,55 +180,57 @@ export function TranslationsSection({
                     </div>
                   </button>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex shrink-0 items-center gap-3 max-[520px]:w-full max-[520px]:flex-col max-[520px]:items-stretch">
                     <span
                       className={ cn(
-                        "rounded-full px-2.5 py-1 text-xs font-medium",
+                        "rounded-full px-2.5 py-1 text-center text-xs font-medium max-[520px]:w-full",
                         isReady ? "bg-[#ecf6ef] text-[#2f6f45]" : "bg-[#f4ede3] text-[#7c6a54]",
                       ) }
                     >
                       { isReady ? "Ready" : "Not ready" }
                     </span>
                     { translation.isPublished ? (
-                      <span className="flex items-center gap-1 text-xs font-medium text-[#2f6f45]">
+                      <span className="flex items-center gap-1 text-xs font-medium text-[#2f6f45] max-[520px]:justify-center">
                         <Check className="size-3.5"/>
                         Published
                       </span>
                     ) : null }
-                    <Button
-                      size="sm"
-                      onClick={ (event) => {
-                        event.stopPropagation();
-                        onSaveTranslationAction(translation.languageCode);
-                      } }
-                      className="gap-2"
-                      disabled={ isSavingTranslation }
-                    >
-                      { isSavingTranslation ? (
-                        <LoaderCircle className="size-4 animate-spin"/>
-                      ) : (
-                        <Save className="size-4"/>
-                      ) }
-                      Save
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={ (event) => {
-                        event.stopPropagation();
-                        onRemoveTranslationAction(translation.languageCode);
-                      } }
-                      className="gap-2 text-[#b3574a] hover:bg-[#fbf2f0] hover:text-[#b3574a]"
-                      disabled={ isSavingTranslation }
-                    >
-                      <Trash2 className="size-4"/>
-                      Delete
-                    </Button>
+                    <div className="flex items-center gap-3 max-[520px]:grid max-[520px]:grid-cols-2">
+                      <Button
+                        size="sm"
+                        onClick={ (event) => {
+                          event.stopPropagation();
+                          onSaveTranslationAction(translation.languageCode);
+                        } }
+                        className="gap-2 whitespace-normal max-[520px]:w-full"
+                        disabled={ isSavingTranslation }
+                      >
+                        { isSavingTranslation ? (
+                          <LoaderCircle className="size-4 animate-spin"/>
+                        ) : (
+                          <Save className="size-4"/>
+                        ) }
+                        <span className="hidden md:visible">Save</span>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={ (event) => {
+                          event.stopPropagation();
+                          onRemoveTranslationAction(translation.languageCode);
+                        } }
+                        className="gap-2 whitespace-normal text-[#b3574a] hover:bg-[#fbf2f0] hover:text-[#b3574a] max-[520px]:w-full"
+                        disabled={ isSavingTranslation }
+                      >
+                        <Trash2 className="size-4"/>
+                        <span className="hidden md:visible">Delete</span>
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
                 { isExpanded ? (
-                  <div className="space-y-6 border-t border-[#f0e6d8] px-6 pt-4 pb-6">
+                  <div className="space-y-6 border-t border-[#f0e6d8] px-6 pt-4 pb-6 max-[520px]:px-4">
                     { translationError ? (
                       <div className="rounded-[1rem] border border-[#e8c7c1] bg-[#fbf2f0] p-4">
                         <div className="space-y-4">
