@@ -309,7 +309,7 @@ export function PublicationSection({
           />
           <ChecklistItem
             label="A cover image is configured"
-            passed={ formState.galleryImages.some((image) => image.isCover && image.ref.trim().length > 0) }
+            passed={ Boolean(formState.coverMediaId) }
           />
         </div>
       </section>

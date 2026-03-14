@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Dialog,
@@ -21,22 +21,26 @@ import { ItinerarySection } from "@/components/tour-editor/itinerary-section";
 import { TranslationsSection } from "@/components/tour-editor/translations-section";
 import { PublicationSection } from "@/components/tour-editor/publication-section";
 import {
+  type ApiAdminMediaAssetListResponse,
+  buildAttachTourMediaPayload,
   buildCreateTourTranslationPayload,
   buildInitialCreateTourPayload,
   buildPublishTourTranslationPayload,
+  buildSetTourCoverMediaPayload,
   buildUpdateTourPayload,
+  buildUpdateTourMediaPayload,
   buildUpdateTourTranslationPayload,
+  type ApiUploadedMediaAsset,
   createEmptyStopFormState,
   createEmptyTourFormErrors,
   createEmptyTranslationFormState,
   getInitialTourFormState,
-  getLegacyMediaFieldsFromGalleryImages,
   hasTourFormErrors,
   type ApiLanguage,
   type ApiTag,
   type ApiTour,
   type TourFormState,
-  type TourGalleryImageFormState,
+  type TourMediaItemFormState,
   type TourTranslationFormState,
   validateInitialTourCreateForm,
   validateSharedTourSaveForm,
@@ -74,6 +78,40 @@ type TourFetchResult =
   message: string;
 };
 
+type MediaLibraryResult =
+  | {
+  ok: true;
+  response: ApiAdminMediaAssetListResponse;
+}
+  | {
+  ok: false;
+  statusCode: number;
+  message: string;
+};
+
+type MediaDeleteResult =
+  | {
+  ok: true;
+}
+  | {
+  ok: false;
+  statusCode: number;
+  message: string;
+};
+
+type MediaUploadBatchResult = {
+  uploaded: ApiUploadedMediaAsset[];
+  errors: string[];
+};
+
+type MediaPreviewStatus = Record<
+  string,
+  {
+    error: string | null;
+    previewUrl: string | null;
+  }
+>;
+
 type DirtyScope =
   | {
   type: "shared";
@@ -104,6 +142,9 @@ const getActionErrorMessage = ({
   statusCode: number;
 }) => `Request failed with status ${ statusCode }: ${ message }`;
 
+const normalizeBackendApiBaseUrl = (backendApiBaseUrl: string) =>
+  backendApiBaseUrl.trim().replace(/\/$/, "");
+
 const parseJsonSafely = async (response: Response) => {
   try {
     return (await response.json()) as unknown;
@@ -130,7 +171,7 @@ const mutateTour = async ({
   method: "POST" | "PATCH";
   path: string;
 }): Promise<TourMutationResult> => {
-  const normalizedBaseUrl = backendApiBaseUrl.trim().replace(/\/$/, "");
+  const normalizedBaseUrl = normalizeBackendApiBaseUrl(backendApiBaseUrl);
   const response = await fetch(`${ normalizedBaseUrl }${ path }`, {
     method,
     headers: buildAuthHeaders(accessToken),
@@ -171,7 +212,7 @@ const fetchTour = async ({
   backendApiBaseUrl: string;
   path: string;
 }): Promise<TourFetchResult> => {
-  const normalizedBaseUrl = backendApiBaseUrl.trim().replace(/\/$/, "");
+  const normalizedBaseUrl = normalizeBackendApiBaseUrl(backendApiBaseUrl);
   const response = await fetch(`${ normalizedBaseUrl }${ path }`, {
     method: "GET",
     headers: buildAuthHeaders(accessToken, false),
@@ -211,7 +252,7 @@ const deleteTourTranslation = async ({
   backendApiBaseUrl: string;
   path: string;
 }) => {
-  const normalizedBaseUrl = backendApiBaseUrl.trim().replace(/\/$/, "");
+  const normalizedBaseUrl = normalizeBackendApiBaseUrl(backendApiBaseUrl);
   const response = await fetch(`${ normalizedBaseUrl }${ path }`, {
     method: "DELETE",
     headers: buildAuthHeaders(accessToken, false),
@@ -229,6 +270,167 @@ const deleteTourTranslation = async ({
     ok: false as const,
     statusCode: response.status,
     message: formatBackendErrorMessage(payload, "Backend request failed."),
+  };
+};
+
+const listMediaAssets = async ({
+  accessToken,
+  backendApiBaseUrl,
+  limit,
+  page,
+  search,
+}: {
+  accessToken: string;
+  backendApiBaseUrl: string;
+  limit: number;
+  page: number;
+  search: string;
+}): Promise<MediaLibraryResult> => {
+  const normalizedBaseUrl = normalizeBackendApiBaseUrl(backendApiBaseUrl);
+  const query = new URLSearchParams({
+    page: String(page),
+    limit: String(limit),
+    mediaType: "image",
+  });
+
+  if (search.trim()) {
+    query.set("search", search.trim());
+  }
+
+  const response = await fetch(`${ normalizedBaseUrl }/api/admin/media?${ query.toString() }`, {
+    method: "GET",
+    headers: buildAuthHeaders(accessToken, false),
+    cache: "no-store",
+  });
+
+  const payload = await parseJsonSafely(response);
+  if (!response.ok) {
+    return {
+      ok: false,
+      statusCode: response.status,
+      message: formatBackendErrorMessage(payload, "Unable to load media assets."),
+    };
+  }
+
+  if (!payload || typeof payload !== "object") {
+    return {
+      ok: false,
+      statusCode: 500,
+      message: "Backend returned an unexpected media library response.",
+    };
+  }
+
+  return {
+    ok: true,
+    response: payload as ApiAdminMediaAssetListResponse,
+  };
+};
+
+const uploadMediaAsset = async ({
+  accessToken,
+  backendApiBaseUrl,
+  file,
+  folder,
+}: {
+  accessToken: string;
+  backendApiBaseUrl: string;
+  file: File;
+  folder: string;
+}) => {
+  const normalizedBaseUrl = normalizeBackendApiBaseUrl(backendApiBaseUrl);
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("folder", folder);
+
+  const response = await fetch(`${ normalizedBaseUrl }/api/admin/media`, {
+    method: "POST",
+    headers: buildAuthHeaders(accessToken, false),
+    body: formData,
+    cache: "no-store",
+  });
+
+  const payload = await parseJsonSafely(response);
+  if (!response.ok) {
+    return {
+      ok: false as const,
+      statusCode: response.status,
+      message: formatBackendErrorMessage(payload, "Unable to upload the selected image."),
+    };
+  }
+
+  if (!payload || typeof payload !== "object") {
+    return {
+      ok: false as const,
+      statusCode: 500,
+      message: "Backend returned an unexpected upload response.",
+    };
+  }
+
+  return {
+    ok: true as const,
+    media: payload as ApiUploadedMediaAsset,
+  };
+};
+
+const deleteMediaAsset = async ({
+  accessToken,
+  backendApiBaseUrl,
+  mediaId,
+}: {
+  accessToken: string;
+  backendApiBaseUrl: string;
+  mediaId: string;
+}): Promise<MediaDeleteResult> => {
+  const normalizedBaseUrl = normalizeBackendApiBaseUrl(backendApiBaseUrl);
+  const response = await fetch(`${ normalizedBaseUrl }/api/admin/media/${ mediaId }`, {
+    method: "DELETE",
+    headers: buildAuthHeaders(accessToken, false),
+    cache: "no-store",
+  });
+
+  if (response.status === 204) {
+    return {
+      ok: true,
+    };
+  }
+
+  const payload = await parseJsonSafely(response);
+  return {
+    ok: false,
+    statusCode: response.status,
+    message: formatBackendErrorMessage(payload, "Unable to delete the uploaded image."),
+  };
+};
+
+const detachTourMedia = async ({
+                                 accessToken,
+                                 backendApiBaseUrl,
+                                 mediaId,
+                                 tourId,
+                               }: {
+  accessToken: string;
+  backendApiBaseUrl: string;
+  mediaId: string;
+  tourId: string;
+}) => {
+  const normalizedBaseUrl = normalizeBackendApiBaseUrl(backendApiBaseUrl);
+  const response = await fetch(`${ normalizedBaseUrl }/api/admin/tours/${ tourId }/media/${ mediaId }`, {
+    method: "DELETE",
+    headers: buildAuthHeaders(accessToken, false),
+    cache: "no-store",
+  });
+
+  if (response.status === 204) {
+    return {
+      ok: true as const,
+    };
+  }
+
+  const payload = await parseJsonSafely(response);
+  return {
+    ok: false as const,
+    statusCode: response.status,
+    message: formatBackendErrorMessage(payload, "Unable to detach the selected image."),
   };
 };
 
@@ -276,11 +478,16 @@ export function TourEditorClient({
   const [dirtyScope, setDirtyScope] = useState<DirtyScope | null>(null);
   const [pendingNavigation, setPendingNavigation] = useState<NavigationIntent | null>(null);
   const [isMutating, setIsMutating] = useState(false);
+  const [isMediaMutating, setIsMediaMutating] = useState(false);
+  const [mediaPreviewStatus, setMediaPreviewStatus] = useState<MediaPreviewStatus>({});
   const [savingTranslationLanguageCode, setSavingTranslationLanguageCode] = useState<string | null>(null);
+  const sessionUploadedMediaIdsRef = useRef<Set<string>>(new Set());
+  const mediaPreviewObjectUrlsRef = useRef<Map<string, string>>(new Map());
+  const loadingMediaPreviewIdsRef = useRef<Set<string>>(new Set());
   const isCreated = mode === "edit" || Boolean(savedTour?.id ?? initialTour?.id);
   const canSaveInitialTour = formState.name.trim().length > 0;
   const diagnostics = savedTour?.translationAvailability ?? initialTour?.translationAvailability ?? [];
-  const getLanguageName = (languageCode: string) => availableLanguages.find(lang => lang.code === languageCode)?.name
+  const getLanguageName = (languageCode: string) => availableLanguages.find((lang) => lang.code === languageCode)?.name;
 
   useEffect(() => {
     if (!dirtyScope) {
@@ -295,6 +502,19 @@ export function TourEditorClient({
     window.addEventListener("beforeunload", beforeUnload);
     return () => window.removeEventListener("beforeunload", beforeUnload);
   }, [dirtyScope]);
+
+  useEffect(() => {
+    const previewUrls = mediaPreviewObjectUrlsRef.current;
+    const loadingPreviewIds = loadingMediaPreviewIdsRef.current;
+
+    return () => {
+      previewUrls.forEach((previewUrl) => {
+        URL.revokeObjectURL(previewUrl);
+      });
+      previewUrls.clear();
+      loadingPreviewIds.clear();
+    };
+  }, []);
 
   const clearFeedback = () => {
     setSubmitError(null);
@@ -358,15 +578,473 @@ export function TourEditorClient({
     }));
   };
 
-  const updateGalleryImages = (galleryImages: TourGalleryImageFormState[]) => {
-    markSharedDirty();
-    const legacyMediaFields = getLegacyMediaFieldsFromGalleryImages(galleryImages);
+  const loadMediaLibrary = async ({
+    limit,
+    page,
+    search,
+  }: {
+    limit: number;
+    page: number;
+    search: string;
+  }) =>
+    listMediaAssets({
+      accessToken,
+      backendApiBaseUrl,
+      limit,
+      page,
+      search,
+    });
 
-    setFormState((current) => ({
-      ...current,
-      ...legacyMediaFields,
-      galleryImages,
-    }));
+  const uploadMediaFiles = async (files: File[]): Promise<MediaUploadBatchResult> => {
+    const tourId = savedTour?.id ?? initialTour?.id;
+    if (!tourId) {
+      return {
+        uploaded: [],
+        errors: ["Create the tour before uploading images."],
+      };
+    }
+
+    const uploaded: ApiUploadedMediaAsset[] = [];
+    const errors: string[] = [];
+
+    for (const file of files) {
+      const result = await uploadMediaAsset({
+        accessToken,
+        backendApiBaseUrl,
+        file,
+        folder: `tours/${ tourId }`,
+      });
+
+      if (!result.ok) {
+        errors.push(`${ file.name }: ${ result.message }`);
+        continue;
+      }
+
+      uploaded.push(result.media);
+      sessionUploadedMediaIdsRef.current.add(result.media.id);
+    }
+
+    return {
+      uploaded,
+      errors,
+    };
+  };
+
+  const attachMediaItems = async (mediaIds: string[]) => {
+    if (blockDirtyMediaMutation()) {
+      return false;
+    }
+
+    const tourId = savedTour?.id ?? initialTour?.id;
+    if (!tourId || mediaIds.length === 0) {
+      return false;
+    }
+
+    clearFeedback();
+    setIsMediaMutating(true);
+
+    try {
+      let latestTour = savedTour ?? initialTour;
+      const attachedMediaIds = new Set(formState.mediaItems.map((item) => item.mediaId));
+      let nextOrderIndex = formState.mediaItems.length;
+
+      for (const mediaId of mediaIds) {
+        if (attachedMediaIds.has(mediaId)) {
+          continue;
+        }
+
+        const result = await mutateTour({
+          accessToken,
+          backendApiBaseUrl,
+          method: "POST",
+          path: `/api/admin/tours/${ tourId }/media`,
+          body: buildAttachTourMediaPayload({
+            mediaId,
+            orderIndex: nextOrderIndex,
+          }),
+        });
+
+        if (!result.ok) {
+          setSubmitError(
+            getActionErrorMessage({
+              message: result.message,
+              statusCode: result.statusCode,
+            }),
+          );
+          return false;
+        }
+
+        latestTour = result.tour;
+        attachedMediaIds.add(mediaId);
+        nextOrderIndex += 1;
+      }
+
+      if (latestTour) {
+        syncWithSavedTour({
+          preferredLanguageCode: activeTranslationLanguageCode,
+          tour: latestTour,
+        });
+      }
+
+      setSuccessMessage("Images attached.");
+      return true;
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message
+          ? error.message
+          : "Unable to attach the selected images.",
+      );
+      return false;
+    } finally {
+      setIsMediaMutating(false);
+    }
+  };
+
+  const setCoverMedia = async (mediaId: string) => {
+    if (blockDirtyMediaMutation()) {
+      return false;
+    }
+
+    const tourId = savedTour?.id ?? initialTour?.id;
+    if (!tourId) {
+      return false;
+    }
+
+    clearFeedback();
+    setIsMediaMutating(true);
+
+    try {
+      const result = await mutateTour({
+        accessToken,
+        backendApiBaseUrl,
+        method: "POST",
+        path: `/api/admin/tours/${ tourId }/cover-media`,
+        body: buildSetTourCoverMediaPayload(mediaId),
+      });
+
+      if (!result.ok) {
+        setSubmitError(
+          getActionErrorMessage({
+            message: result.message,
+            statusCode: result.statusCode,
+          }),
+        );
+        return false;
+      }
+
+      syncWithSavedTour({
+        preferredLanguageCode: activeTranslationLanguageCode,
+        tour: result.tour,
+      });
+      setSuccessMessage("Cover image updated.");
+      return true;
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message ? error.message : "Unable to update the cover image.",
+      );
+      return false;
+    } finally {
+      setIsMediaMutating(false);
+    }
+  };
+
+  const reorderMediaItems = async (mediaItems: TourMediaItemFormState[]) => {
+    if (blockDirtyMediaMutation()) {
+      return false;
+    }
+
+    const tourId = savedTour?.id ?? initialTour?.id;
+    if (!tourId) {
+      return false;
+    }
+
+    clearFeedback();
+    setIsMediaMutating(true);
+
+    try {
+      let latestTour = savedTour ?? initialTour;
+
+      for (const [index, mediaItem] of mediaItems.entries()) {
+        const result = await mutateTour({
+          accessToken,
+          backendApiBaseUrl,
+          method: "PATCH",
+          path: `/api/admin/tours/${ tourId }/media/${ mediaItem.mediaId }`,
+          body: buildUpdateTourMediaPayload({
+            orderIndex: index,
+          }),
+        });
+
+        if (!result.ok) {
+          await refreshTourSnapshot({
+            preferredLanguageCode: activeTranslationLanguageCode,
+            tourId,
+          });
+          setSubmitError(
+            getActionErrorMessage({
+              message: result.message,
+              statusCode: result.statusCode,
+            }),
+          );
+          return false;
+        }
+
+        latestTour = result.tour;
+      }
+
+      if (latestTour) {
+        syncWithSavedTour({
+          preferredLanguageCode: activeTranslationLanguageCode,
+          tour: latestTour,
+        });
+      }
+
+      setSuccessMessage("Image order updated.");
+      return true;
+    } catch (error) {
+      await refreshTourSnapshot({
+        preferredLanguageCode: activeTranslationLanguageCode,
+        tourId,
+      });
+      setSubmitError(
+        error instanceof Error && error.message ? error.message : "Unable to update the image order.",
+      );
+      return false;
+    } finally {
+      setIsMediaMutating(false);
+    }
+  };
+
+  const updateMediaAltTexts = async ({
+    altTexts,
+    mediaId,
+  }: {
+    altTexts: Record<string, string>;
+    mediaId: string;
+  }) => {
+    if (blockDirtyMediaMutation()) {
+      return false;
+    }
+
+    const tourId = savedTour?.id ?? initialTour?.id;
+    if (!tourId) {
+      return false;
+    }
+
+    clearFeedback();
+    setIsMediaMutating(true);
+
+    try {
+      const result = await mutateTour({
+        accessToken,
+        backendApiBaseUrl,
+        method: "PATCH",
+        path: `/api/admin/tours/${ tourId }/media/${ mediaId }`,
+        body: buildUpdateTourMediaPayload({
+          altTexts,
+        }),
+      });
+
+      if (!result.ok) {
+        await refreshTourSnapshot({
+          preferredLanguageCode: activeTranslationLanguageCode,
+          tourId,
+        });
+        setSubmitError(
+          getActionErrorMessage({
+            message: result.message,
+            statusCode: result.statusCode,
+          }),
+        );
+        return false;
+      }
+
+      syncWithSavedTour({
+        preferredLanguageCode: activeTranslationLanguageCode,
+        tour: result.tour,
+      });
+      setSuccessMessage("Image details saved.");
+      return true;
+    } catch (error) {
+      await refreshTourSnapshot({
+        preferredLanguageCode: activeTranslationLanguageCode,
+        tourId,
+      });
+      setSubmitError(
+        error instanceof Error && error.message ? error.message : "Unable to update the image details.",
+      );
+      return false;
+    } finally {
+      setIsMediaMutating(false);
+    }
+  };
+
+  const removeMediaItem = async (mediaId: string) => {
+    if (blockDirtyMediaMutation()) {
+      return false;
+    }
+
+    const tourId = savedTour?.id ?? initialTour?.id;
+    if (!tourId) {
+      return false;
+    }
+
+    clearFeedback();
+    setIsMediaMutating(true);
+
+    try {
+      const result = await detachTourMedia({
+        accessToken,
+        backendApiBaseUrl,
+        mediaId,
+        tourId,
+      });
+
+      if (!result.ok) {
+        setSubmitError(
+          getActionErrorMessage({
+            message: result.message,
+            statusCode: result.statusCode,
+          }),
+        );
+        return false;
+      }
+
+      const refreshedTour = await refreshTourSnapshot({
+        preferredLanguageCode: activeTranslationLanguageCode,
+        tourId,
+      });
+
+      if (!refreshedTour) {
+        return false;
+      }
+
+      await deleteSessionUploadedMediaIfOrphaned(mediaId);
+      setSuccessMessage("Image removed.");
+      return true;
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message ? error.message : "Unable to remove the selected image.",
+      );
+      return false;
+    } finally {
+      setIsMediaMutating(false);
+    }
+  };
+
+  const refreshTourSnapshot = async ({
+    preferredLanguageCode,
+    tourId,
+  }: {
+    preferredLanguageCode?: string | null;
+    tourId: string;
+  }) => {
+    const refreshedTour = await fetchTour({
+      accessToken,
+      backendApiBaseUrl,
+      path: `/api/admin/tours/${ tourId }`,
+    });
+
+    if (!refreshedTour.ok) {
+      setSubmitError(
+        getActionErrorMessage({
+          message: refreshedTour.message,
+          statusCode: refreshedTour.statusCode,
+        }),
+      );
+      return null;
+    }
+
+    syncWithSavedTour({
+      preferredLanguageCode,
+      tour: refreshedTour.tour,
+    });
+    return refreshedTour.tour;
+  };
+
+  const ensureMediaPreview = async ({
+    contentUrl,
+    mediaId,
+  }: {
+    contentUrl: string;
+    mediaId: string;
+  }) => {
+    if (!contentUrl || mediaPreviewObjectUrlsRef.current.has(mediaId) || loadingMediaPreviewIdsRef.current.has(mediaId)) {
+      return;
+    }
+
+    loadingMediaPreviewIdsRef.current.add(mediaId);
+
+    try {
+      const response = await fetch(contentUrl, {
+        method: "GET",
+        headers: buildAuthHeaders(accessToken, false),
+        cache: "force-cache",
+      });
+
+      if (!response.ok) {
+        setMediaPreviewStatus((current) => ({
+          ...current,
+          [mediaId]: {
+            error: `Preview unavailable (${ response.status }).`,
+            previewUrl: null,
+          },
+        }));
+        return;
+      }
+
+      const blob = await response.blob();
+      const previewUrl = URL.createObjectURL(blob);
+      const previousPreviewUrl = mediaPreviewObjectUrlsRef.current.get(mediaId);
+
+      if (previousPreviewUrl) {
+        URL.revokeObjectURL(previousPreviewUrl);
+      }
+
+      mediaPreviewObjectUrlsRef.current.set(mediaId, previewUrl);
+      setMediaPreviewStatus((current) => ({
+        ...current,
+        [mediaId]: {
+          error: null,
+          previewUrl,
+        },
+      }));
+    } catch {
+      setMediaPreviewStatus((current) => ({
+        ...current,
+        [mediaId]: {
+          error: "Preview unavailable.",
+          previewUrl: null,
+        },
+      }));
+    } finally {
+      loadingMediaPreviewIdsRef.current.delete(mediaId);
+    }
+  };
+
+  const deleteSessionUploadedMediaIfOrphaned = async (mediaId: string) => {
+    if (!sessionUploadedMediaIdsRef.current.has(mediaId)) {
+      return;
+    }
+
+    const result = await deleteMediaAsset({
+      accessToken,
+      backendApiBaseUrl,
+      mediaId,
+    });
+
+    if (result.ok) {
+      sessionUploadedMediaIdsRef.current.delete(mediaId);
+    }
+  };
+
+  const blockDirtyMediaMutation = () => {
+    if (!dirtyScope) {
+      return false;
+    }
+
+    setSubmitError("Save or discard tour changes before editing media.");
+    return true;
   };
 
   const setTranslationField = ({
@@ -876,7 +1554,7 @@ export function TourEditorClient({
   };
 
   const requestNavigation = (action: NavigationIntent) => {
-    if (isMutating) {
+    if (isMutating || isMediaMutating) {
       return;
     }
 
@@ -1207,7 +1885,7 @@ export function TourEditorClient({
           mode={ mode }
           formState={ formState }
           onBack={ () => requestNavigation({type: "leave"}) }
-          isMutating={ isMutating }
+          isMutating={ isMutating || isMediaMutating }
           lastSaved={ lastSaved }
           activeSection={ activeSection }
           isCreated={ isCreated }
@@ -1247,8 +1925,17 @@ export function TourEditorClient({
               <GeneralSection
                 formState={ formState }
                 isCreated={ isCreated }
+                isMutating={ isMutating || isMediaMutating }
                 updateFormStateAction={ updateFormState }
-                updateGalleryImagesAction={ updateGalleryImages }
+                loadMediaLibraryAction={ loadMediaLibrary }
+                uploadMediaFilesAction={ uploadMediaFiles }
+                attachMediaItemsAction={ attachMediaItems }
+                removeMediaItemAction={ removeMediaItem }
+                reorderMediaItemsAction={ reorderMediaItems }
+                setCoverMediaAction={ setCoverMedia }
+                updateMediaAltTextsAction={ updateMediaAltTexts }
+                ensureMediaPreviewAction={ ensureMediaPreview }
+                mediaPreviewStatus={ mediaPreviewStatus }
                 availableTags={ availableTags }
                 availableLanguages={ availableLanguages }
               />

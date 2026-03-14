@@ -3,10 +3,17 @@ import type { components } from "@/lib/api/generated/backend-types";
 export type ApiTour = components["schemas"]["TourAdminResponseDto"];
 export type ApiLanguage = components["schemas"]["LanguageResponseDto"];
 export type ApiTag = components["schemas"]["TagResponseDto"];
+export type ApiAdminMediaAsset = components["schemas"]["AdminMediaAssetResponseDto"];
+export type ApiAdminMediaAssetListResponse = components["schemas"]["AdminMediaAssetListResponseDto"];
+export type ApiUploadedMediaAsset = components["schemas"]["UploadedMediaResponseDto"];
 export type CreateTourBody = components["schemas"]["CreateTourDto"];
 export type UpdateTourBody = components["schemas"]["UpdateTourDto"];
+export type AttachTourMediaBody = components["schemas"]["AttachTourMediaDto"];
+export type UpdateTourMediaBody = components["schemas"]["UpdateTourMediaDto"];
+export type SetTourCoverMediaBody = components["schemas"]["SetTourCoverMediaDto"];
 export type TourContentSchema = NonNullable<UpdateTourBody["contentSchema"]>;
 export type TourType = CreateTourBody["tourType"];
+export type MediaType = ApiAdminMediaAsset["mediaType"];
 export type ItineraryVariant = components["schemas"]["TourItineraryDto"]["variant"];
 export type CommuteMode = NonNullable<
   components["schemas"]["TourItineraryConnectionDto"]["commuteMode"]
@@ -42,8 +49,8 @@ export const TOUR_SLUG_PATTERN = "^[a-z0-9]+(?:-[a-z0-9]+)*$";
 export const STOP_ID_PATTERN = TOUR_SLUG_PATTERN;
 export const TOUR_NAME_MAX_LENGTH = 255;
 export const TOUR_SLUG_MAX_LENGTH = 150;
-export const TOUR_MEDIA_REF_MAX_LENGTH = 255;
 export const TOUR_MEDIA_ALT_TEXT_MAX_LENGTH = 255;
+export const TOUR_IMAGE_UPLOAD_MAX_SIZE = 104857600;
 export const TOUR_CURRENCY_MAX_LENGTH = 10;
 export const TOUR_TITLE_MAX_LENGTH = 255;
 export const TOUR_POINT_LABEL_MAX_LENGTH = 255;
@@ -144,9 +151,15 @@ export type TranslationStopContent = {
   description: string;
 };
 
-export type TourGalleryImageFormState = {
-  id: string;
-  ref: string;
+export type TourMediaItemFormState = {
+  clientId: string;
+  mediaId: string;
+  mediaType: MediaType;
+  storagePath: string;
+  contentUrl: string;
+  contentType: string;
+  size: number;
+  originalFilename: string;
   altTexts: Record<string, string>;
   isCover: boolean;
 };
@@ -183,9 +196,8 @@ export type TourStopFormState = {
 export type TourFormState = {
   name: string;
   slug: string;
-  coverMediaRef: string;
-  galleryMediaRefsText: string;
-  galleryImages: TourGalleryImageFormState[];
+  coverMediaId: string | null;
+  mediaItems: TourMediaItemFormState[];
   tourType: TourType;
   durationMinutes: string;
   rating: string;
@@ -213,6 +225,8 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
 const asString = (value: unknown) => (typeof value === "string" ? value : "");
+
+const asOptionalString = (value: unknown) => (typeof value === "string" ? value : null);
 
 const asNumberString = (value: unknown) =>
   typeof value === "number" && Number.isFinite(value) ? String(value) : "";
@@ -286,30 +300,66 @@ const sanitizeAltTexts = (altTexts: Record<string, string>) =>
       .filter((entry) => entry[1].length > 0),
   );
 
-const toGalleryImageFormState = ({
-                                   asset,
-                                   isCover,
-                                 }: {
+const toTourMediaItemFormState = ({
+  asset,
+  altText,
+  isCover,
+}: {
   asset: {
-    ref: string;
-    altText?: Record<string, string> | null;
+    mediaId: string;
+    mediaType: MediaType;
+    storagePath: string;
+    contentUrl: string;
+    contentType: string;
+    size: number;
+    originalFilename: string;
   };
+  altText?: Record<string, string> | null;
   isCover: boolean;
-}): TourGalleryImageFormState => ({
-  id: createClientId("media"),
-  ref: asset.ref,
-  altTexts: asAltTextRecord(asset.altText),
+}): TourMediaItemFormState => ({
+  clientId: createClientId("media"),
+  mediaId: asset.mediaId,
+  mediaType: asset.mediaType,
+  storagePath: asset.storagePath,
+  contentUrl: asset.contentUrl,
+  contentType: asset.contentType,
+  size: asset.size,
+  originalFilename: asset.originalFilename,
+  altTexts: asAltTextRecord(altText),
   isCover,
 });
 
-export const createEmptyGalleryImageFormState = (
-  isCover = false,
-): TourGalleryImageFormState => ({
-  id: createClientId("media"),
-  ref: "",
-  altTexts: {},
-  isCover,
-});
+export const createTourMediaItemFormStateFromAdminAsset = (
+  asset: ApiAdminMediaAsset,
+): TourMediaItemFormState =>
+  toTourMediaItemFormState({
+    asset: {
+      mediaId: asset.id,
+      mediaType: asset.mediaType,
+      storagePath: asset.storagePath,
+      contentUrl: asset.contentUrl,
+      contentType: asset.contentType,
+      size: asset.size,
+      originalFilename: asset.originalFilename,
+    },
+    isCover: false,
+  });
+
+export const createTourMediaItemFormStateFromUploadedAsset = (
+  asset: ApiUploadedMediaAsset,
+): TourMediaItemFormState =>
+  toTourMediaItemFormState({
+    asset: {
+      mediaId: asset.id,
+      mediaType: asset.mediaType,
+      storagePath: asset.storagePath,
+      contentUrl: asset.contentUrl,
+      contentType: asset.contentType,
+      size: asset.size,
+      originalFilename: asset.originalFilename,
+    },
+    isCover: false,
+  });
 
 export const createEmptyStopFormState = (): TourStopFormState => ({
   clientId: createClientId("stop"),
@@ -343,9 +393,8 @@ export const createEmptyTranslationFormState = (languageCode: string): TourTrans
 export const createEmptyTourFormState = (): TourFormState => ({
   name: "",
   slug: "",
-  coverMediaRef: "",
-  galleryMediaRefsText: "",
-  galleryImages: [],
+  coverMediaId: null,
+  mediaItems: [],
   tourType: "group",
   durationMinutes: "",
   rating: "5",
@@ -380,74 +429,6 @@ export const getTranslationDisplayName = ({
   languages: ApiLanguage[];
 }) => languages.find((language) => language.code === languageCode)?.name ?? languageCode;
 
-export const getLegacyMediaFieldsFromGalleryImages = (
-  galleryImages: TourGalleryImageFormState[],
-) => {
-  const coverImage = galleryImages.find((image) => image.isCover && image.ref.trim());
-  const galleryRefs = galleryImages
-    .filter((image) => !image.isCover)
-    .map((image) => image.ref.trim())
-    .filter((ref) => ref.length > 0);
-
-  return {
-    coverMediaRef: coverImage?.ref.trim() ?? "",
-    galleryMediaRefsText: galleryRefs.join("\n"),
-  };
-};
-
-const getLegacyGalleryImages = ({
-                                  coverMediaRef,
-                                  galleryMediaRefsText,
-                                }: Pick<TourFormState, "coverMediaRef" | "galleryMediaRefsText">): TourGalleryImageFormState[] => {
-  const galleryImages: TourGalleryImageFormState[] = [];
-
-  const normalizedCoverMediaRef = coverMediaRef.trim();
-  if (normalizedCoverMediaRef) {
-    galleryImages.push({
-      ...createEmptyGalleryImageFormState(true),
-      ref: normalizedCoverMediaRef,
-    });
-  }
-
-  splitTextareaLines(galleryMediaRefsText).forEach((ref) => {
-    galleryImages.push({
-      ...createEmptyGalleryImageFormState(false),
-      ref,
-    });
-  });
-
-  return galleryImages;
-};
-
-const getGalleryImagesForPayload = (
-  formState: Pick<TourFormState, "coverMediaRef" | "galleryMediaRefsText" | "galleryImages">,
-) => {
-  const normalizedGalleryImages = formState.galleryImages
-    .map((image) => ({
-      ...image,
-      ref: image.ref.trim(),
-      altTexts: sanitizeAltTexts(image.altTexts),
-    }))
-    .filter((image) => image.ref.length > 0);
-
-  if (normalizedGalleryImages.length > 0) {
-    return normalizedGalleryImages;
-  }
-
-  return getLegacyGalleryImages(formState);
-};
-
-const buildMediaAssetPayload = (
-  image: TourGalleryImageFormState,
-): components["schemas"]["TourMediaAssetDto"] => {
-  const altText = sanitizeAltTexts(image.altTexts);
-
-  return {
-    ref: image.ref.trim(),
-    ...(Object.keys(altText).length > 0 ? {altText} : {}),
-  };
-};
-
 export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
   if (!tour) {
     return createEmptyTourFormState();
@@ -481,19 +462,31 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
       stopContent: asStopContentMap(payload.itineraryStops),
     };
   });
-
-  const galleryImages = [
-    ...(tour.coverMediaRef ? [toGalleryImageFormState({asset: tour.coverMediaRef, isCover: true})] : []),
-    ...tour.galleryMediaRefs.map((asset) => toGalleryImageFormState({asset, isCover: false})),
-  ];
-  const legacyMediaFields = getLegacyMediaFieldsFromGalleryImages(galleryImages);
+  const coverMediaId = asOptionalString(tour.coverMediaId);
+  const mediaItems = (tour.mediaItems ?? [])
+    .slice()
+    .sort((left, right) => left.orderIndex - right.orderIndex)
+    .map((item) =>
+      toTourMediaItemFormState({
+        asset: {
+          mediaId: item.mediaId,
+          mediaType: item.mediaType,
+          storagePath: item.storagePath,
+          contentUrl: item.contentUrl,
+          contentType: item.contentType,
+          size: item.size,
+          originalFilename: item.originalFilename,
+        },
+        altText: item.altText,
+        isCover: coverMediaId === item.mediaId,
+      }),
+    );
 
   return {
     name: tour.name,
     slug: tour.slug,
-    coverMediaRef: legacyMediaFields.coverMediaRef,
-    galleryMediaRefsText: legacyMediaFields.galleryMediaRefsText,
-    galleryImages,
+    coverMediaId,
+    mediaItems,
     tourType: tour.tourType,
     durationMinutes: asNumberString(tour.durationMinutes),
     rating: asNumberString(tour.rating),
@@ -656,15 +649,9 @@ export const buildUpdateTourPayload = ({
                                        }: {
   formState: TourFormState;
 }): UpdateTourBody => {
-  const galleryImages = getGalleryImagesForPayload(formState);
-  const coverImage = galleryImages.find((image) => image.isCover);
-  const galleryMediaRefs = galleryImages.filter((image) => !image.isCover);
-
   return {
     name: formState.name.trim(),
     slug: formState.slug.trim(),
-    coverMediaRef: coverImage ? buildMediaAssetPayload(coverImage) : null,
-    galleryMediaRefs: galleryMediaRefs.map(buildMediaAssetPayload),
     contentSchema: TOUR_CONTENT_SCHEMA,
     price:
       formState.tourType === "tip_based" || !formState.hasPrice
@@ -715,6 +702,35 @@ export const buildUpdateTourPayload = ({
     tagKeys: formState.tagKeys,
   };
 };
+
+export const buildAttachTourMediaPayload = ({
+                                              mediaId,
+                                              altTexts,
+                                              orderIndex,
+                                            }: {
+  mediaId: string;
+  altTexts?: Record<string, string>;
+  orderIndex?: number;
+}): AttachTourMediaBody => ({
+  mediaId: mediaId.trim(),
+  ...(altTexts ? {altText: sanitizeAltTexts(altTexts)} : {}),
+  ...(typeof orderIndex === "number" ? {orderIndex} : {}),
+});
+
+export const buildUpdateTourMediaPayload = ({
+                                              altTexts,
+                                              orderIndex,
+                                            }: {
+  altTexts?: Record<string, string>;
+  orderIndex?: number;
+}): UpdateTourMediaBody => ({
+  ...(altTexts ? {altText: sanitizeAltTexts(altTexts)} : {}),
+  ...(typeof orderIndex === "number" ? {orderIndex} : {}),
+});
+
+export const buildSetTourCoverMediaPayload = (mediaId: string): SetTourCoverMediaBody => ({
+  mediaId: mediaId.trim(),
+});
 
 const addSharedError = (errors: TourFormErrors, message: string) => {
   errors.shared.push(message);
@@ -775,16 +791,7 @@ const validateSharedFields = ({
     }
   }
 
-  const galleryImages = getGalleryImagesForPayload(formState);
-  const invalidGalleryRef = galleryImages.find((image) => image.ref.length > TOUR_MEDIA_REF_MAX_LENGTH);
-  if (invalidGalleryRef) {
-    addSharedError(
-      errors,
-      `Media references must be ${ TOUR_MEDIA_REF_MAX_LENGTH } characters or less.`,
-    );
-  }
-
-  const invalidAltText = galleryImages.find((image) =>
+  const invalidAltText = formState.mediaItems.find((image) =>
     Object.values(image.altTexts).some((text) => text.length > TOUR_MEDIA_ALT_TEXT_MAX_LENGTH),
   );
   if (invalidAltText) {
@@ -792,6 +799,13 @@ const validateSharedFields = ({
       errors,
       `Media alt text must be ${ TOUR_MEDIA_ALT_TEXT_MAX_LENGTH } characters or less.`,
     );
+  }
+
+  if (
+    formState.coverMediaId &&
+    !formState.mediaItems.some((item) => item.mediaId === formState.coverMediaId)
+  ) {
+    addSharedError(errors, "Cover image must be one of the attached images.");
   }
 
   const rating = Number.parseFloat(formState.rating);
@@ -1042,7 +1056,78 @@ export const validateSharedTourSaveForm = ({
     }
   }
 
+  if (formState.itineraryVariant === "stops") {
+    const seenStopIds = new Set<string>();
+
+    formState.stops.forEach((stop, index) => {
+      const stopLabel = `Stop ${ index + 1 }`;
+      const normalizedId = stop.id.trim();
+
+      if (!normalizedId) {
+        addItineraryError(errors, `${ stopLabel } ID is required.`);
+        return;
+      }
+
+      if (normalizedId.length > TOUR_STOP_ID_MAX_LENGTH) {
+        addItineraryError(
+          errors,
+          `${ stopLabel } ID must be ${ TOUR_STOP_ID_MAX_LENGTH } characters or less.`,
+        );
+      }
+
+      if (!new RegExp(STOP_ID_PATTERN).test(normalizedId)) {
+        addItineraryError(
+          errors,
+          `${ stopLabel } ID must use lowercase letters, numbers, and hyphens only.`,
+        );
+      }
+
+      if (seenStopIds.has(normalizedId)) {
+        addItineraryError(errors, `${ stopLabel } ID must be unique.`);
+      }
+
+      seenStopIds.add(normalizedId);
+    });
+  }
+
   return errors;
+};
+
+const validateTranslationSaveRequirements = ({
+                                               errors,
+                                               formState,
+                                               translation,
+                                             }: {
+  errors: TourFormErrors;
+  formState: TourFormState;
+  translation: TourTranslationFormState;
+}) => {
+  const languageCode = translation.languageCode;
+
+  if (formState.itineraryVariant === "description") {
+    if (!translation.itineraryDescription.trim()) {
+      addTranslationError({
+        errors,
+        languageCode,
+        message: "Itinerary description is required for description-based itineraries.",
+      });
+    }
+
+    return;
+  }
+
+  formState.stops.forEach((stop, index) => {
+    const stopId = stop.id.trim();
+    const stopTitle = stopId ? translation.stopContent[stopId]?.title.trim() ?? "" : "";
+
+    if (!stopTitle) {
+      addTranslationError({
+        errors,
+        languageCode,
+        message: `Stop ${ index + 1 } title is required for stop-based itineraries.`,
+      });
+    }
+  });
 };
 
 export const validateTranslationForm = ({
@@ -1065,6 +1150,12 @@ export const validateTranslationForm = ({
   }
 
   validateTranslationEntry({
+    errors,
+    formState,
+    translation,
+  });
+
+  validateTranslationSaveRequirements({
     errors,
     formState,
     translation,

@@ -44,20 +44,68 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/admin/media/upload": {
+    "/api/admin/media": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * List media assets
+         * @description Returns paginated reusable media assets for the admin media library.
+         */
+        get: operations["AdminMediaController_findAll"];
         put?: never;
         /**
-         * Upload an image asset for admin content
-         * @description Uploads one image through the configured storage driver and returns a reusable media asset descriptor.
+         * Upload a media asset for admin content
+         * @description Uploads one image or video through the configured storage driver and returns a persisted reusable media asset descriptor.
          */
         post: operations["AdminMediaController_upload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/media/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a media asset
+         * @description Returns one reusable media asset by UUID.
+         */
+        get: operations["AdminMediaController_findOne"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a media asset
+         * @description Deletes an uploaded media asset and its stored object when it is no longer referenced by any tour.
+         */
+        delete: operations["AdminMediaController_remove"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/media/{id}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Fetch media content
+         * @description Streams the stored file bytes for one reusable media asset.
+         */
+        get: operations["AdminMediaController_fetchContent"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -176,6 +224,50 @@ export interface paths {
         patch: operations["BlogPostsController_updateAdmin"];
         trace?: never;
     };
+    "/api/admin/blog-posts/{id}/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List attached blog media
+         * @description Returns the hero media attached to the blog post, if any.
+         */
+        get: operations["BlogPostsController_listAdminMedia"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/blog-posts/{id}/hero-media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Set blog hero media
+         * @description Attaches or replaces the hero media on the blog post.
+         */
+        post: operations["BlogPostsController_setHeroMedia"];
+        /**
+         * Clear blog hero media
+         * @description Detaches the current hero media from the blog post.
+         */
+        delete: operations["BlogPostsController_clearHeroMedia"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/public/blog-posts": {
         parameters: {
             query?: never;
@@ -208,6 +300,26 @@ export interface paths {
          * @description Returns a published blog post only when the requested locale is enabled and that locale has a published translation.
          */
         get: operations["BlogPostsController_findOnePublic"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/blog-posts/{slug}/media/{mediaId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Fetch public blog media
+         * @description Streams the hero media attached to a publicly available blog post.
+         */
+        get: operations["BlogPostsController_getPublicMedia"];
         put?: never;
         post?: never;
         delete?: never;
@@ -496,6 +608,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/public/tours/{slug}/media/{mediaId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Fetch public tour media
+         * @description Streams one media asset attached to a tour when the tour is publicly available in at least one locale.
+         */
+        get: operations["PublicToursController_getMediaContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/tours": {
         parameters: {
             query?: never;
@@ -544,6 +676,78 @@ export interface paths {
         patch: operations["ToursController_update"];
         trace?: never;
     };
+    "/api/admin/tours/{id}/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List attached tour media
+         * @description Returns only the media assets currently attached to the tour.
+         */
+        get: operations["ToursController_listMedia"];
+        put?: never;
+        /**
+         * Attach media to a tour
+         * @description Attaches one existing media asset to the tour with optional localized alt text and order.
+         */
+        post: operations["ToursController_attachMedia"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/tours/{id}/media/{mediaId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Detach media from a tour
+         * @description Removes one media attachment from the tour and clears the cover if necessary.
+         */
+        delete: operations["ToursController_detachMedia"];
+        options?: never;
+        head?: never;
+        /**
+         * Update tour media metadata
+         * @description Updates only the per-tour metadata for one attached media asset.
+         */
+        patch: operations["ToursController_updateMedia"];
+        trace?: never;
+    };
+    "/api/admin/tours/{id}/cover-media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Set tour cover media
+         * @description Marks one attached image asset as the tour cover.
+         */
+        post: operations["ToursController_setCoverMedia"];
+        /**
+         * Clear tour cover media
+         * @description Removes the current cover media assignment from the tour.
+         */
+        delete: operations["ToursController_clearCoverMedia"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/tours/{id}/translations": {
         parameters: {
             query?: never;
@@ -574,7 +778,11 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * Delete a tour translation
+         * @description Deletes one localized tour translation by locale code. This permanently removes the locale from the tour.
+         */
+        delete: operations["ToursController_deleteTranslation"];
         options?: never;
         head?: never;
         /**
@@ -676,27 +884,28 @@ export interface components {
              */
             logoutStrategy: string;
         };
-        UploadedMediaResponseDto: {
+        AdminMediaAssetResponseDto: {
             /**
-             * @description Media reference path.
+             * Format: uuid
+             * @description Media asset UUID.
+             */
+            id: string;
+            /**
+             * @description Stored media type.
+             * @example image
+             * @enum {string}
+             */
+            mediaType: "image" | "video";
+            /**
+             * @description Media storage path.
              * @example media/tours/historic-center/cover.jpg
              */
-            ref: string;
+            storagePath: string;
             /**
-             * @description Optional localized alt text keyed by locale code.
-             * @example {
-             *       "en": "View of the cathedral facade",
-             *       "es": "Vista de la fachada de la catedral"
-             *     }
+             * @description API URL used to fetch the stored media bytes.
+             * @example http://api.dev.walkandtour.dk:3000/api/admin/media/uuid/content
              */
-            altText?: {
-                [key: string]: string;
-            } | null;
-            /**
-             * @description Public URL resolved by the configured storage driver.
-             * @example http://api.dev.walkandtour.dk:3000/media/tours/historic-center/uuid-cover.jpg
-             */
-            publicUrl: string;
+            contentUrl: string;
             /**
              * @description Detected content type of the uploaded object.
              * @example image/jpeg
@@ -707,6 +916,78 @@ export interface components {
              * @example 248193
              */
             size: number;
+            /**
+             * @description Original uploaded filename.
+             * @example cover.jpg
+             */
+            originalFilename: string;
+            /**
+             * Format: date-time
+             * @description Creation timestamp of the media asset record.
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp of the media asset record.
+             */
+            updatedAt: string;
+        };
+        AdminMediaAssetListResponseDto: {
+            /** @description Paginated media asset results. */
+            items: components["schemas"]["AdminMediaAssetResponseDto"][];
+            /**
+             * @description Current page number.
+             * @example 1
+             */
+            page: number;
+            /**
+             * @description Current page size.
+             * @example 20
+             */
+            limit: number;
+            /**
+             * @description Total matching media assets.
+             * @example 42
+             */
+            total: number;
+        };
+        UploadedMediaResponseDto: {
+            /**
+             * Format: uuid
+             * @description Media asset UUID.
+             */
+            id: string;
+            /**
+             * @description Stored media type.
+             * @example image
+             * @enum {string}
+             */
+            mediaType: "image" | "video";
+            /**
+             * @description Media storage path.
+             * @example media/tours/historic-center/cover.jpg
+             */
+            storagePath: string;
+            /**
+             * @description API URL used to fetch the stored media bytes.
+             * @example http://api.dev.walkandtour.dk:3000/api/admin/media/uuid/content
+             */
+            contentUrl: string;
+            /**
+             * @description Detected content type of the uploaded object.
+             * @example image/jpeg
+             */
+            contentType: string;
+            /**
+             * @description Stored file size in bytes.
+             * @example 248193
+             */
+            size: number;
+            /**
+             * @description Original uploaded filename.
+             * @example cover.jpg
+             */
+            originalFilename: string;
         };
         RoleResponseDto: {
             /**
@@ -832,6 +1113,44 @@ export interface components {
              */
             status?: "invited" | "active" | "disabled";
         };
+        MediaAssetResponseDto: {
+            /**
+             * Format: uuid
+             * @description Media asset UUID.
+             */
+            id: string;
+            /**
+             * @description Stored media type.
+             * @example image
+             * @enum {string}
+             */
+            mediaType: "image" | "video";
+            /**
+             * @description Media storage path.
+             * @example media/tours/historic-center/cover.jpg
+             */
+            storagePath: string;
+            /**
+             * @description API URL used to fetch the stored media bytes.
+             * @example http://api.dev.walkandtour.dk:3000/api/admin/media/uuid/content
+             */
+            contentUrl: string;
+            /**
+             * @description Detected content type of the uploaded object.
+             * @example image/jpeg
+             */
+            contentType: string;
+            /**
+             * @description Stored file size in bytes.
+             * @example 248193
+             */
+            size: number;
+            /**
+             * @description Original uploaded filename.
+             * @example cover.jpg
+             */
+            originalFilename: string;
+        };
         TagResponseDto: {
             /**
              * @description Stable internal tag key.
@@ -924,8 +1243,13 @@ export interface components {
              * @example barcelona-historic-center-guide
              */
             slug: string;
-            /** @description Optional hero media reference. */
-            heroMediaRef?: Record<string, never> | null;
+            /**
+             * Format: uuid
+             * @description Optional hero media asset UUID.
+             */
+            heroMediaId?: Record<string, never> | null;
+            /** @description Resolved hero media asset. */
+            heroMedia?: components["schemas"]["MediaAssetResponseDto"] | null;
             /**
              * @description Blog post publication state.
              * @enum {string}
@@ -1001,11 +1325,6 @@ export interface components {
              */
             slug: string;
             /**
-             * @description Optional hero media reference.
-             * @example media/blog/historic-center/hero.jpg
-             */
-            heroMediaRef?: string;
-            /**
              * @description Top-level publication state of the blog post.
              * @example draft
              * @enum {string}
@@ -1034,11 +1353,6 @@ export interface components {
              */
             slug?: string;
             /**
-             * @description Updated hero media reference. Set `null` to clear the current value.
-             * @example media/blog/historic-center/hero.jpg
-             */
-            heroMediaRef?: Record<string, never> | null;
-            /**
              * @description Updated top-level publication state.
              * @example published
              * @enum {string}
@@ -1054,6 +1368,17 @@ export interface components {
             tagKeys?: string[];
             /** @description Translations to merge into the existing set by locale code. */
             translations?: components["schemas"]["CreateBlogPostTranslationDto"][];
+        };
+        BlogMediaListResponseDto: {
+            /** @description Attached blog media assets. */
+            items: components["schemas"]["MediaAssetResponseDto"][];
+        };
+        SetBlogPostHeroMediaDto: {
+            /**
+             * Format: uuid
+             * @description Media asset UUID to attach as the blog hero media.
+             */
+            mediaId: string;
         };
         PublicTagResponseDto: {
             /**
@@ -1100,8 +1425,8 @@ export interface components {
              * @example barcelona-historic-center-guide
              */
             slug: string;
-            /** @description Optional hero media reference. */
-            heroMediaRef?: Record<string, never> | null;
+            /** @description Resolved hero media asset. */
+            heroMedia?: components["schemas"]["MediaAssetResponseDto"] | null;
             /** @description Localized tag labels for the requested locale. */
             tags: components["schemas"]["PublicTagResponseDto"][];
             /** @description Published localized blog translation selected for the requested locale. */
@@ -1431,14 +1756,50 @@ export interface components {
                 [key: string]: string;
             };
         };
-        TourMediaAssetResponseDto: {
+        TourMediaItemResponseDto: {
             /**
-             * @description Media reference path.
+             * Format: uuid
+             * @description Media asset UUID.
+             */
+            id: string;
+            /**
+             * @description Stored media type.
+             * @example image
+             * @enum {string}
+             */
+            mediaType: "image" | "video";
+            /**
+             * @description Media storage path.
              * @example media/tours/historic-center/cover.jpg
              */
-            ref: string;
+            storagePath: string;
             /**
-             * @description Optional localized alt text keyed by locale code.
+             * @description API URL used to fetch the stored media bytes.
+             * @example http://api.dev.walkandtour.dk:3000/api/admin/media/uuid/content
+             */
+            contentUrl: string;
+            /**
+             * @description Detected content type of the uploaded object.
+             * @example image/jpeg
+             */
+            contentType: string;
+            /**
+             * @description Stored file size in bytes.
+             * @example 248193
+             */
+            size: number;
+            /**
+             * @description Original uploaded filename.
+             * @example cover.jpg
+             */
+            originalFilename: string;
+            /**
+             * Format: uuid
+             * @description Attached media asset UUID.
+             */
+            mediaId: string;
+            /**
+             * @description Optional localized alt text keyed by locale code for this tour usage.
              * @example {
              *       "en": "View of the cathedral facade",
              *       "es": "Vista de la fachada de la catedral"
@@ -1447,6 +1808,11 @@ export interface components {
             altText?: {
                 [key: string]: string;
             } | null;
+            /**
+             * @description Display order among the attached media items.
+             * @example 0
+             */
+            orderIndex: number;
         };
         PriceResponseDto: {
             /**
@@ -1595,10 +1961,10 @@ export interface components {
              * @example historic-center
              */
             slug: string;
-            /** @description Optional cover media asset. */
-            coverMediaRef?: components["schemas"]["TourMediaAssetResponseDto"] | null;
-            /** @description Public gallery media assets. */
-            galleryMediaRefs: components["schemas"]["TourMediaAssetResponseDto"][];
+            /** @description Optional cover media item selected from the attached assets. */
+            coverMedia?: components["schemas"]["TourMediaItemResponseDto"] | null;
+            /** @description Public gallery media items excluding the selected cover. */
+            galleryMedia: components["schemas"]["TourMediaItemResponseDto"][];
             /** @description Fixed price data. `null` for tip-based tours. */
             price?: components["schemas"]["PriceResponseDto"] | null;
             /**
@@ -1733,10 +2099,13 @@ export interface components {
              * @example historic-center
              */
             slug: string;
-            /** @description Optional cover media asset. */
-            coverMediaRef?: components["schemas"]["TourMediaAssetResponseDto"] | null;
-            /** @description Additional gallery media assets. */
-            galleryMediaRefs: components["schemas"]["TourMediaAssetResponseDto"][];
+            /**
+             * Format: uuid
+             * @description Attached image asset UUID used as the tour cover.
+             */
+            coverMediaId?: Record<string, never> | null;
+            /** @description Ordered attached media items with per-tour localized alt text. */
+            mediaItems: components["schemas"]["TourMediaItemResponseDto"][];
             /** @description Shared JSON Schema that localized translation payloads must satisfy. */
             contentSchema?: {
                 [key: string]: unknown;
@@ -1804,23 +2173,6 @@ export interface components {
              * @enum {string}
              */
             tourType: "private" | "group" | "tip_based";
-        };
-        TourMediaAssetDto: {
-            /**
-             * @description Optional localized alt text keyed by locale code.
-             * @example {
-             *       "en": "View of the cathedral facade",
-             *       "es": "Vista de la fachada de la catedral"
-             *     }
-             */
-            altText?: {
-                [key: string]: string;
-            };
-            /**
-             * @description Media reference path.
-             * @example media/tours/historic-center/cover.jpg
-             */
-            ref: string;
         };
         PriceDto: {
             /**
@@ -1900,10 +2252,6 @@ export interface components {
              * @example historic-center
              */
             slug?: string;
-            /** @description Updated cover media asset. Set `null` to clear the value. */
-            coverMediaRef?: components["schemas"]["TourMediaAssetDto"] | null;
-            /** @description Replacement gallery media assets. */
-            galleryMediaRefs?: components["schemas"]["TourMediaAssetDto"][];
             /** @description Updated shared JSON Schema for localized payload validation. */
             contentSchema?: {
                 [key: string]: unknown;
@@ -1939,6 +2287,56 @@ export interface components {
             itinerary?: components["schemas"]["TourItineraryDto"];
             /** @description Replacement ordered tag key list. */
             tagKeys?: string[];
+        };
+        TourMediaListResponseDto: {
+            /** @description Attached tour media assets in display order. */
+            items: components["schemas"]["TourMediaItemResponseDto"][];
+        };
+        AttachTourMediaDto: {
+            /**
+             * @description Optional localized alt text keyed by locale code.
+             * @example {
+             *       "en": "View of the cathedral facade",
+             *       "es": "Vista de la fachada de la catedral"
+             *     }
+             */
+            altText?: {
+                [key: string]: string;
+            };
+            /**
+             * Format: uuid
+             * @description Uploaded media asset UUID to attach to the tour.
+             */
+            mediaId: string;
+            /**
+             * @description Optional explicit display order. If omitted, the media is appended to the end.
+             * @example 0
+             */
+            orderIndex?: number;
+        };
+        UpdateTourMediaDto: {
+            /**
+             * @description Optional localized alt text keyed by locale code.
+             * @example {
+             *       "en": "View of the cathedral facade",
+             *       "es": "Vista de la fachada de la catedral"
+             *     }
+             */
+            altText?: {
+                [key: string]: string;
+            };
+            /**
+             * @description Optional explicit display order. If omitted, the existing order is preserved.
+             * @example 0
+             */
+            orderIndex?: number;
+        };
+        SetTourCoverMediaDto: {
+            /**
+             * Format: uuid
+             * @description Attached image media asset UUID to use as the tour cover.
+             */
+            mediaId: string;
         };
         CreateTourTranslationDto: {
             /**
@@ -2155,6 +2553,59 @@ export interface operations {
             };
         };
     };
+    AdminMediaController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Pagination page number. */
+                page?: number;
+                /** @description Pagination page size. */
+                limit?: number;
+                /** @description Optional media type filter. */
+                mediaType?: "image" | "video";
+                /** @description Optional filename/path search term. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated media asset records. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminMediaAssetListResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
     AdminMediaController_upload: {
         parameters: {
             query?: never;
@@ -2199,6 +2650,152 @@ export interface operations {
                 };
             };
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    AdminMediaController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Media asset UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Media asset record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminMediaAssetResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    AdminMediaController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Media asset UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Media asset deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    AdminMediaController_fetchContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Media asset UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2617,6 +3214,157 @@ export interface operations {
             };
         };
     };
+    BlogPostsController_listAdminMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Attached blog media assets. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogMediaListResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_setHeroMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetBlogPostHeroMediaDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin blog post record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_clearHeroMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Hero media cleared successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
     BlogPostsController_findAllPublic: {
         parameters: {
             query: {
@@ -2688,6 +3436,30 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_getPublicMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Public blog post slug. */
+                slug: string;
+                /** @description Attached media asset UUID. */
+                mediaId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
             404: {
                 headers: {
                     [name: string]: unknown;
@@ -3485,6 +4257,30 @@ export interface operations {
             };
         };
     };
+    PublicToursController_getMediaContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Public tour slug. */
+                slug: string;
+                /** @description Attached media asset UUID. */
+                mediaId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
     ToursController_findAll: {
         parameters: {
             query?: never;
@@ -3691,6 +4487,342 @@ export interface operations {
             };
         };
     };
+    ToursController_listMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Attached tour media items. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourMediaListResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_attachMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachTourMediaDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin tour record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_detachMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+                /** @description Attached media asset UUID. */
+                mediaId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Media detached successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_updateMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+                /** @description Attached media asset UUID. */
+                mediaId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTourMediaDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin tour record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_setCoverMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetTourCoverMediaDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin tour record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_clearCoverMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Updated admin tour record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
     ToursController_createTranslation: {
         parameters: {
             query?: never;
@@ -3749,6 +4881,53 @@ export interface operations {
                 };
             };
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_deleteTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+                /** @description Translation locale code. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Translation deleted successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
