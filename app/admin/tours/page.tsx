@@ -29,37 +29,37 @@ export default async function AdminToursPage() {
       <AdminNoticeCard
         eyebrow="Admin API"
         title="The tours workspace could not be loaded."
-        description={toursData.errorMessage ?? "Unable to load tours."}
+        description={ toursData.errorMessage ?? "Unable to load tours." }
       />
     );
   }
+
+  const languageNameByCode = Object.fromEntries(
+    toursData.languages.map((language) => [language.code, language.name]),
+  );
 
   return (
     <div className="space-y-6">
       <AdminSectionCard
         title="Tours"
         description="Create, edit, and validate the shared tour data, localized translations, and itinerary structure from one place."
-      >
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border pb-5">
-          <p className="max-w-2xl text-sm text-muted-foreground">
-            Translation availability comes directly from the backend and reflects schema validity,
-            required lists, and missing stop translations per locale.
-          </p>
+        actions={
           <Button asChild>
             <Link href="/tours/new">
-              <Plus className="size-4" />
+              <Plus className="size-4"/>
               Create Tour
             </Link>
           </Button>
-        </div>
-
-        <div className="mt-6 space-y-4">
-          {toursData.tours.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
+        }
+      >
+        <div className="space-y-4">
+          { toursData.tours.length === 0 ? (
+            <div
+              className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
               <p>No tours have been created yet.</p>
               <Button asChild className="mt-4">
                 <Link href="/tours/new">
-                  <Plus className="size-4" />
+                  <Plus className="size-4"/>
                   Create your first tour
                 </Link>
               </Button>
@@ -67,33 +67,27 @@ export default async function AdminToursPage() {
           ) : (
             toursData.tours.map((tour) => (
               <article
-                key={tour.id}
-                className="rounded-2xl border border-border bg-muted/30 p-5 transition-colors hover:bg-muted/50"
+                key={ tour.id }
+                className="rounded-2xl border border-[#f0e6d8] bg-white p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <h2 className="text-lg font-semibold text-foreground">{tour.name}</h2>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      <span className="font-medium">{tour.slug}</span>
-                      {" • "}
-                      {tour.tourType}
-                      {" • "}
-                      {typeof tour.durationMinutes === "number"
-                        ? `${tour.durationMinutes} minutes`
-                        : "Duration not set"}
-                    </p>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="truncate text-base font-semibold text-foreground">{ tour.name }</h2>
+                    <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                      <span className="truncate">Slug: { tour.slug }</span>
+                      <span>
+                        Duration: { typeof tour.durationMinutes === "number"
+                        ? `${ tour.durationMinutes } min`
+                        : "Not set" }
+                      </span>
+                      <span>{ Object.keys(tour.translations).length } translations</span>
+                    </div>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="rounded-lg bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
-                      {
-                        tour.translationAvailability.filter((item) => item.publiclyAvailable).length
-                      }{" "}
-                      public locales
-                    </span>
                     <Button asChild variant="outline" size="sm">
-                      <Link href={`/tours/${tour.id}`}>
-                        <Pencil className="size-4" />
+                      <Link href={ `/tours/${ tour.id }` }>
+                        <Pencil className="size-4"/>
                         Edit
                       </Link>
                     </Button>
@@ -101,19 +95,20 @@ export default async function AdminToursPage() {
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {tour.translationAvailability.map((availability) => (
+                  { tour.translationAvailability.map((availability) => (
                     <span
-                      key={availability.languageCode}
-                      className="rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground"
+                      key={ availability.languageCode }
+                      className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
                     >
-                      {availability.languageCode}: {availability.isReady ? "Ready" : "Not ready"}/
-                      {availability.isPublished ? "Published" : "Not published"}
+                      { languageNameByCode[availability.languageCode] ?? availability.languageCode }
+                      { ": " }
+                      { availability.isPublished ? "Published" : "Not Published" }
                     </span>
-                  ))}
+                  )) }
                 </div>
               </article>
             ))
-          )}
+          ) }
         </div>
       </AdminSectionCard>
     </div>

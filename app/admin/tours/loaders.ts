@@ -4,8 +4,14 @@ import { isBackendApiError } from "@/lib/api/core/backend-client";
 export const loadToursListData = async (accessToken: string) => {
   try {
     const adminApi = createAdminApi(accessToken);
+    const [tours, languages] = await Promise.all([
+      adminApi.getTours(),
+      adminApi.getLanguages(),
+    ]);
+
     return {
-      tours: await adminApi.getTours(),
+      tours,
+      languages,
     };
   } catch (error) {
     return {

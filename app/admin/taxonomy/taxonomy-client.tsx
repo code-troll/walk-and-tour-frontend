@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Switch} from "@/components/ui/switch";
+import {AdminSectionCard} from "@/components/admin/AdminUi";
 
 type ApiTag = components["schemas"]["TagResponseDto"];
 type ApiLanguage = components["schemas"]["LanguageResponseDto"];
@@ -405,17 +406,10 @@ export function TaxonomyClient({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <div className="flex items-center justify-between border-b border-border pb-4">
-          <div>
-            <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-              <Tag className="size-5 text-primary" />
-              Tags
-            </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Manage labels used by tours and blog posts across locales.
-            </p>
-          </div>
+      <AdminSectionCard
+        title="Tags"
+        description="Manage labels used by tours and blog posts across locales."
+        actions={
           <Button
             onClick={() => openTagDialog()}
             size="sm"
@@ -424,8 +418,8 @@ export function TaxonomyClient({
             <Plus className="size-4" />
             Add Tag
           </Button>
-        </div>
-        <div className="pt-5">
+        }
+      >
           {createTagLocales.length === 0 ? (
             <p className="mb-4 text-sm text-muted-foreground">
               No locale inputs are available for new tags yet.
@@ -495,27 +489,19 @@ export function TaxonomyClient({
               ))}
             </div>
           )}
-        </div>
-      </section>
+      </AdminSectionCard>
 
       {canManageLanguages ? (
-        <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-          <div className="flex items-center justify-between border-b border-border pb-4">
-            <div>
-              <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-                <Globe className="size-5 text-primary" />
-                Locales
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Manage enabled locales for your content.
-              </p>
-            </div>
+        <AdminSectionCard
+          title="Locales"
+          description="Manage enabled locales for your content."
+          actions={
             <Button onClick={() => openLanguageDialog()} size="sm" disabled={isMutating}>
               <Plus className="size-4" />
               Add Locale
             </Button>
-          </div>
-          <div className="pt-5">
+          }
+        >
             {languages.length === 0 ? (
               <div className="py-12 text-center text-muted-foreground">
                 <Globe className="mx-auto size-12 opacity-30" />
@@ -590,8 +576,7 @@ export function TaxonomyClient({
                 </table>
               </div>
             )}
-          </div>
-        </section>
+        </AdminSectionCard>
       ) : null}
 
       <Dialog open={isTagDialogOpen} onOpenChange={(open) => (!open ? closeTagDialog() : setIsTagDialogOpen(true))}>

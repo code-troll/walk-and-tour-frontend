@@ -22,19 +22,24 @@ export function AdminNoticeCard({
 }
 
 export function AdminSectionCard({
+  actions,
   children,
   description,
   title,
 }: {
+  actions?: ReactNode;
   children: ReactNode;
   description?: string;
   title: string;
 }) {
   return (
     <section className="rounded-3xl border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]">
-      <div className="border-b border-[#f0e6d8] pb-4">
-        <h2 className="text-xl font-semibold text-[#21343b]">{title}</h2>
-        {description ? <p className="mt-2 text-sm text-[#627176]">{description}</p> : null}
+      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[#f0e6d8] pb-4">
+        <div className="min-w-0 flex-1">
+          <h2 className="text-xl font-semibold text-[#21343b]">{title}</h2>
+          {description ? <p className="mt-2 text-sm text-[#627176]">{description}</p> : null}
+        </div>
+        {actions ? <div className="flex shrink-0 items-center gap-3">{actions}</div> : null}
       </div>
       <div className="pt-5">{children}</div>
     </section>
