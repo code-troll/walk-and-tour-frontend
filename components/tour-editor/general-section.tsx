@@ -96,6 +96,11 @@ const normalizePositiveIntegerInput = (value: string) => {
 
 const PRICE_CURRENCY_OPTIONS = ["DKK", "EUR"] as const;
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
+const sectionClassName =
+  "rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]";
+const subCardClassName = "rounded-[1.25rem] border border-[#efe4d5] bg-[#fffcf7] p-4";
+const warmSelectClassName =
+  "h-11 w-full rounded-2xl border border-[#ddd0bf] bg-[#fdfbf7] px-3 text-sm text-[#21343b] shadow-sm outline-none transition focus:border-[#cfb48f] focus:ring-2 focus:ring-[#eadfce]";
 
 const formatFileSize = (sizeInBytes: number) => {
   if (sizeInBytes < 1024 * 1024) {
@@ -381,8 +386,8 @@ export function GeneralSection({
 
   return (
     <div className="space-y-8">
-      <section className="rounded-xl border border-border bg-card p-6">
-        <h2 className="mb-6 text-lg font-semibold text-foreground">Basic Information</h2>
+      <section className={ sectionClassName }>
+        <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Basic Information</h2>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           <div className="space-y-2">
@@ -415,7 +420,7 @@ export function GeneralSection({
             <select
               value={ formState.tourType }
               onChange={ (event) => handleTourTypeChange(event.target.value) }
-              className="h-11 w-full rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              className={ warmSelectClassName }
             >
               { TOUR_TYPE_OPTIONS.map((tourType) => (
                 <option key={ tourType } value={ tourType }>
@@ -428,9 +433,9 @@ export function GeneralSection({
       </section>
 
       { !isCreated ? (
-        <section className="rounded-xl border border-dashed border-border bg-card p-6">
-          <h2 className="text-lg font-semibold text-foreground">Complete Initial Setup</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+        <section className="rounded-[1.5rem] border border-dashed border-[#d8c5a8] bg-[#fcfaf6] p-6">
+          <h2 className="text-lg font-semibold text-[#21343b]">Complete Initial Setup</h2>
+          <p className="mt-2 text-sm text-[#627176]">
             Save the tour after entering Basic Information to unlock the remaining
             settings and tabs.
           </p>
@@ -440,15 +445,15 @@ export function GeneralSection({
       { isCreated ? (
         <>
 
-          <section className="rounded-xl border border-border bg-card p-6">
-            <h2 className="mb-6 text-lg font-semibold text-foreground">Tour Metrics</h2>
+          <section className={ sectionClassName }>
+            <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Tour Metrics</h2>
 
             <div className="grid gap-4 sm:grid-cols-3">
-              <div className="space-y-3 rounded-lg border border-border p-4">
-                <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex">
                   <Clock className="size-4"/>
-                  <span className="text-xs font-medium uppercase tracking-wide">Duration</span>
-                </div>
+                  <span className="text-xs font-medium uppercase tracking-wide ml-2">Duration</span>
+                </label>
                 <div className="flex items-baseline gap-2">
                   <Input
                     type="text"
@@ -468,11 +473,11 @@ export function GeneralSection({
                 </div>
               </div>
 
-              <div className="space-y-3 rounded-lg border border-border p-4">
-                <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex">
                   <Star className="size-4"/>
-                  <span className="text-xs font-medium uppercase tracking-wide">Rating</span>
-                </div>
+                  <span className="text-xs font-medium uppercase tracking-wide ml-2">Rating</span>
+                </label>
                 <div className="flex items-baseline gap-2">
                   <Input
                     type="number"
@@ -487,11 +492,11 @@ export function GeneralSection({
                 </div>
               </div>
 
-              <div className="space-y-3 rounded-lg border border-border p-4">
-                <div className="flex items-center gap-2 text-muted-foreground">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex">
                   <Star className="size-4"/>
-                  <span className="text-xs font-medium uppercase tracking-wide">Reviews</span>
-                </div>
+                  <span className="text-xs font-medium uppercase tracking-wide ml-2">Reviews</span>
+                </label>
                 <Input
                   type="text"
                   value={ formState.reviewCount }
@@ -510,16 +515,22 @@ export function GeneralSection({
             </div>
           </section>
 
-          <section className="rounded-xl border border-border bg-card p-6">
+          <section className={ sectionClassName }>
             <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-lg font-semibold text-foreground">Media Gallery</h2>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <h2 className="text-lg font-semibold text-[#21343b]">Media Gallery</h2>
+                <p className="mt-1 text-sm text-[#627176]">
                   Attach uploaded images, choose the cover, and edit localized alt text.
                 </p>
               </div>
 
-              <Button type="button" variant="outline" onClick={ openMediaDialog } disabled={ isMutating }>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={ openMediaDialog }
+                disabled={ isMutating }
+                className="border-[#d8c5a8] bg-[#fbf7f0] text-[#7a5424] hover:bg-[#f4ebde]"
+              >
                 <Upload className="size-4"/>
                 Add Images
               </Button>
@@ -527,14 +538,14 @@ export function GeneralSection({
 
             { mediaItems.length === 0 ? (
               <div
-                className="rounded-lg border-2 border-dashed border-border px-6 py-10 text-center text-muted-foreground">
-                <ImageIcon className="mx-auto mb-3 size-10 opacity-60"/>
+                className="rounded-[1.25rem] border-2 border-dashed border-[#d8c5a8] bg-[#fcfaf6] px-6 py-10 text-center text-[#627176]">
+                <ImageIcon className="mx-auto mb-3 size-10 text-[#8f7e67] opacity-80"/>
                 <p className="text-sm">No images attached yet.</p>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={ openMediaDialog }
-                  className="mt-4"
+                  className="mt-4 border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]"
                   disabled={ isMutating }
                 >
                   <Upload className="size-4"/>
@@ -547,13 +558,13 @@ export function GeneralSection({
                   <div
                     key={ image.clientId }
                     className={ cn(
-                      "overflow-hidden rounded-lg border transition-all",
-                      image.isCover ? "border-primary ring-2 ring-primary/20" : "border-border",
+                      "overflow-hidden rounded-[1.25rem] border transition-all shadow-[0_8px_22px_rgba(42,36,25,0.04)]",
+                      image.isCover ? "border-[#d5b588] ring-2 ring-[#ead7b8]" : "border-[#efe4d5] bg-[#fffcf7]",
                     ) }
                   >
                     <div className="flex items-start gap-4 p-3">
                       <div
-                        className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted">
+                        className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[#f3ede4]">
                         { mediaPreviewStatus[image.mediaId]?.previewUrl ? (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
@@ -562,11 +573,11 @@ export function GeneralSection({
                             className="h-full w-full object-cover"
                           />
                         ) : (
-                          <ImageIcon className="size-8 text-muted-foreground"/>
+                          <ImageIcon className="size-8 text-[#9b8a73]"/>
                         ) }
                         { image.isCover ? (
                           <div
-                            className="absolute top-1 left-1 rounded bg-primary px-1.5 py-0.5 text-xs font-medium text-primary-foreground">
+                            className="absolute top-1 left-1 rounded-full bg-[#9a6a2f] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
                             Cover
                           </div>
                         ) : null }
@@ -575,9 +586,9 @@ export function GeneralSection({
                       <div className="min-w-0 flex-1">
                         <div className="mb-3 flex items-start justify-between gap-3">
                           <div className="min-w-0 flex-1">
-                            <p className="text-sm font-medium text-foreground">Image { index + 1 }</p>
-                            <p className="truncate text-xs text-muted-foreground">{ image.originalFilename }</p>
-                            <p className="truncate text-xs text-muted-foreground">{ image.storagePath }</p>
+                            <p className="text-sm font-medium text-[#21343b]">Image { index + 1 }</p>
+                            <p className="truncate text-xs text-[#627176]">{ image.originalFilename }</p>
+                            <p className="truncate text-xs text-[#8b7862]">{ image.storagePath }</p>
                           </div>
 
                           <div className="flex items-center gap-1.5">
@@ -586,7 +597,7 @@ export function GeneralSection({
                               onClick={ () => {
                                 void moveImage(image.clientId, "up");
                               } }
-                              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted disabled:opacity-40"
+                              className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf] disabled:opacity-40"
                               title="Move image up"
                               disabled={ index === 0 || isMutating }
                             >
@@ -597,7 +608,7 @@ export function GeneralSection({
                               onClick={ () => {
                                 void moveImage(image.clientId, "down");
                               } }
-                              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted disabled:opacity-40"
+                              className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf] disabled:opacity-40"
                               title="Move image down"
                               disabled={ index === mediaItems.length - 1 || isMutating }
                             >
@@ -611,8 +622,8 @@ export function GeneralSection({
                               className={ cn(
                                 "rounded-md p-1.5 transition-colors",
                                 image.isCover
-                                  ? "bg-primary text-primary-foreground"
-                                  : "text-muted-foreground hover:bg-muted",
+                                  ? "bg-[#21343b] text-white"
+                                  : "text-[#627176] hover:bg-[#f2eadf]",
                               ) }
                               title={ image.isCover ? "Current cover" : "Set as cover" }
                               disabled={ isMutating }
@@ -624,7 +635,7 @@ export function GeneralSection({
                               onClick={ () =>
                                 setExpandedImageId(expandedImageId === image.clientId ? null : image.clientId)
                               }
-                              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted"
+                              className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf]"
                               title="Edit media details"
                             >
                               { expandedImageId === image.clientId ? (
@@ -638,7 +649,7 @@ export function GeneralSection({
                               onClick={ () => {
                                 void removeImage(image.mediaId, image.clientId);
                               } }
-                              className="rounded-md p-1.5 text-destructive transition-colors hover:bg-destructive/10"
+                              className="rounded-xl p-1.5 text-[#b3574a] transition-colors hover:bg-[#fbf2f0]"
                               title="Remove image"
                               disabled={ isMutating }
                             >
@@ -647,17 +658,17 @@ export function GeneralSection({
                           </div>
                         </div>
 
-                        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                          <span className="rounded-full bg-muted px-2 py-1 font-medium">
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-[#627176]">
+                          <span className="rounded-full bg-[#f4ede3] px-2.5 py-1 font-medium text-[#6a5743]">
                             { formatFileSize(image.size) }
                           </span>
-                          <span className="rounded-full bg-muted px-2 py-1 font-medium">
+                          <span className="rounded-full bg-[#f4ede3] px-2.5 py-1 font-medium text-[#6a5743]">
                             { image.contentType }
                           </span>
                         </div>
 
                         { Object.keys(image.altTexts).length > 0 && expandedImageId !== image.clientId ? (
-                          <p className="mt-2 truncate text-xs text-muted-foreground">
+                          <p className="mt-2 truncate text-xs text-[#627176]">
                             Alt: { Object.values(image.altTexts)[0] }
                           </p>
                         ) : null }
@@ -665,7 +676,7 @@ export function GeneralSection({
                     </div>
 
                     { expandedImageId === image.clientId ? (
-                      <div className="border-t border-border bg-muted/30 p-3">
+                      <div className="border-t border-[#f0e6d8] bg-[#fcfaf6] p-4">
                         <div className="grid gap-3 sm:grid-cols-2">
                           { enabledLanguages.map((language) => (
                             <div key={ language.code } className="space-y-1">
@@ -697,7 +708,7 @@ export function GeneralSection({
           </section>
 
           <Dialog open={ isMediaDialogOpen } onOpenChange={ setIsMediaDialogOpen }>
-            <DialogContent className="sm:max-w-3xl">
+            <DialogContent className="border border-[#eadfce] bg-[#fffdfa] shadow-[0_30px_80px_rgba(61,45,27,0.14)] sm:max-w-3xl">
               <DialogHeader>
                 <DialogTitle>Select Images</DialogTitle>
                 <DialogDescription>
@@ -743,13 +754,13 @@ export function GeneralSection({
                   />
                 </form>
 
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-[#627176]">
                   Only images are supported in the frontend. Maximum file size: { TOUR_IMAGE_UPLOAD_MAX_SIZE } bytes.
                 </p>
 
                 { mediaDialogError ? (
                   <div
-                    className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+                    className="rounded-[1rem] border border-[#e8c7c1] bg-[#fbf2f0] px-3 py-2 text-sm text-[#a3483f]">
                     { mediaDialogError }
                   </div>
                 ) : null }
@@ -768,10 +779,11 @@ export function GeneralSection({
                         className={ cn(
                           "overflow-hidden rounded-lg border text-left transition-colors",
                           isSelected ? "border-primary ring-2 ring-primary/20" : "border-border",
-                          isAttached ? "cursor-not-allowed opacity-60" : "hover:bg-muted/40",
+                          isSelected ? "border-[#d5b588] ring-2 ring-[#ead7b8]" : "border-[#efe4d5] bg-[#fffcf7]",
+                          isAttached ? "cursor-not-allowed opacity-60" : "hover:bg-[#fcf7ef]",
                         ) }
                       >
-                        <div className="relative aspect-[4/3] bg-muted">
+                        <div className="relative aspect-[4/3] bg-[#f3ede4]">
                           { mediaPreviewStatus[asset.id]?.previewUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
@@ -781,19 +793,19 @@ export function GeneralSection({
                             />
                           ) : (
                             <div className="flex h-full items-center justify-center">
-                              <ImageIcon className="size-8 text-muted-foreground"/>
+                              <ImageIcon className="size-8 text-[#9b8a73]"/>
                             </div>
                           ) }
                           <div className="absolute top-2 left-2 flex gap-2">
                             { isAttached ? (
                               <span
-                                className="rounded bg-background/90 px-2 py-1 text-[11px] font-medium text-foreground">
+                                className="rounded-full bg-white/90 px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#21343b]">
                                 Attached
                               </span>
                             ) : null }
                             { isSelected ? (
                               <span
-                                className="rounded bg-primary px-2 py-1 text-[11px] font-medium text-primary-foreground">
+                                className="rounded-full bg-[#9a6a2f] px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-white">
                                 Selected
                               </span>
                             ) : null }
@@ -814,7 +826,7 @@ export function GeneralSection({
 
                 { !isLoadingMediaLibrary && mediaLibraryItems.length === 0 ? (
                   <div
-                    className="rounded-lg border border-dashed border-border px-6 py-10 text-center text-muted-foreground">
+                    className="rounded-[1.25rem] border border-dashed border-[#d8c5a8] bg-[#fcfaf6] px-6 py-10 text-center text-[#627176]">
                     No images found for this search.
                   </div>
                 ) : null }
@@ -859,8 +871,8 @@ export function GeneralSection({
             </DialogContent>
           </Dialog>
 
-          <section className="rounded-xl border border-border bg-card p-6">
-            <h2 className="mb-6 text-lg font-semibold text-foreground">Pricing</h2>
+          <section className={ sectionClassName }>
+            <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Pricing</h2>
 
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
               <label className="flex items-center gap-3 md:self-center">
@@ -923,17 +935,17 @@ export function GeneralSection({
             </div>
           </section>
 
-          <section className="rounded-xl border border-border bg-card p-6">
-            <h2 className="mb-6 text-lg font-semibold text-foreground">Start & End Points</h2>
+          <section className={ sectionClassName }>
+            <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Start & End Points</h2>
 
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="space-y-4 rounded-lg border border-border p-4">
-                <div className="flex items-center gap-2">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center">
                   <div className="flex size-8 items-center justify-center rounded-full bg-green-700/10">
                     <MapPin className="size-4 text-green-700"/>
                   </div>
-                  <span className="font-medium text-foreground">Start Point</span>
-                </div>
+                  <span className="font-medium text-foreground ml-2">Start Point</span>
+                </label>
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="space-y-1.5">
@@ -959,13 +971,13 @@ export function GeneralSection({
                 </div>
               </div>
 
-              <div className="space-y-4 rounded-lg border border-border p-4">
-                <div className="flex items-center gap-2">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground flex items-center">
                   <div className="flex size-8 items-center justify-center rounded-full bg-destructive/10">
                     <Flag className="size-4 text-destructive"/>
                   </div>
-                  <span className="font-medium text-foreground">End Point</span>
-                </div>
+                  <span className="font-medium text-foreground ml-2">End Point</span>
+                </label>
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="space-y-1.5">
@@ -993,9 +1005,9 @@ export function GeneralSection({
             </div>
           </section>
 
-          <section className="rounded-xl border border-border bg-card p-6">
-            <h2 className="mb-2 text-lg font-semibold text-foreground">Tags</h2>
-            <p className="mb-4 text-sm text-muted-foreground">
+          <section className={ sectionClassName }>
+            <h2 className="mb-2 text-lg font-semibold text-[#21343b]">Tags</h2>
+            <p className="mb-4 text-sm text-[#627176]">
               Select the tags that describe this tour.
             </p>
 
@@ -1018,8 +1030,8 @@ export function GeneralSection({
                     className={ cn(
                       "rounded-full px-4 py-2 text-sm font-medium transition-all cursor-pointer",
                       isSelected
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground hover:bg-muted/80",
+                        ? "border border-[#d9c3a2] bg-[#f3e5cf] text-[#8a6029]"
+                        : "border border-[#eadfce] bg-[#fbf7f0] text-[#627176] hover:bg-[#f4ebde] hover:text-[#21343b]",
                     ) }
                   >
                     { tag.key }

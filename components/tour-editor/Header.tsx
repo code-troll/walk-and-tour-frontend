@@ -33,6 +33,9 @@ const sections: { id: TourSection; label: string; icon: ElementType }[] = [
   {id: "publication", label: "Publication", icon: Globe},
 ];
 
+const headerSurfaceClassName =
+  "sticky top-0 z-10 overflow-hidden rounded-[1.75rem] border border-[#eadfce] bg-white/95 shadow-[0_20px_50px_rgba(42,36,25,0.05)] backdrop-blur";
+
 export function TourEditorHeader({
                                    mode,
                                    formState,
@@ -41,36 +44,36 @@ export function TourEditorHeader({
                                    lastSaved,
                                    activeSection,
                                    isCreated,
-                                   primaryAction,
-                                   onSectionChange,
-                                 }: HeaderProps) {
+                                 primaryAction,
+                                 onSectionChange,
+                               }: HeaderProps) {
   const statusColors = {
-    inactive: "bg-secondary text-secondary-foreground",
-    active: "bg-primary/10 text-primary",
+    inactive: "border border-[#e4d8c8] bg-[#f8f2e8] text-[#7c6a54]",
+    active: "border border-[#d9c3a2] bg-[#f3e5cf] text-[#8a6029]",
   } as const;
   const publicLocaleCount = formState.translations.filter((translation) => translation.isPublished).length;
 
   return (
-    <header className="sticky top-0 z-10 border-b border-border bg-card">
-      <div className="flex min-h-14 items-center justify-between gap-4 border-b border-border/50 px-6 py-3">
+    <header className={ headerSurfaceClassName }>
+      <div className="flex min-h-16 items-center justify-between gap-4 border-b border-[#f0e6d8] px-6 py-4">
         <div className="flex min-w-0 items-center gap-4">
           <button
             type="button"
             onClick={ onBack }
-            className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="flex items-center gap-2 text-sm font-medium text-[#627176] transition-colors hover:text-[#21343b]"
           >
             <ArrowLeft className="size-4"/>
             <span className="hidden sm:inline">Back to Tours</span>
           </button>
-          <div className="hidden h-5 w-px bg-border sm:block"/>
+          <div className="hidden h-5 w-px bg-[#eadfce] sm:block"/>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="truncate text-base font-semibold text-foreground sm:max-w-none">
+              <h1 className="truncate font-serif text-xl text-[#21343b] sm:max-w-none">
                 { formState.name || (mode === "create" ? "New Tour" : "Untitled Tour") }
               </h1>
               <span
                 className={ cn(
-                  "rounded-full px-2 py-0.5 text-xs font-medium capitalize whitespace-nowrap",
+                  "rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] whitespace-nowrap",
                   statusColors[publicLocaleCount > 0 ? "active" : "inactive"],
                 ) }
               >
@@ -90,7 +93,7 @@ export function TourEditorHeader({
             <time
               dateTime={ lastSaved.toISOString() }
               suppressHydrationWarning
-              className="hidden text-xs text-muted-foreground md:block"
+              className="hidden rounded-full border border-[#eadfce] bg-[#fbf7f0] px-3 py-1 text-xs font-medium text-[#627176] md:block"
             >
               Saved { lastSaved.toLocaleTimeString(undefined, {hourCycle: "h12"}) }
             </time>
@@ -101,7 +104,7 @@ export function TourEditorHeader({
               onClick={ primaryAction.onClick }
               disabled={ isMutating || primaryAction.disabled }
               size="sm"
-              className="gap-2"
+              className="gap-2 border border-[#21343b] bg-[#21343b] px-4 text-white hover:bg-[#2c454d]"
             >
               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Check className="size-4"/> }
               <span>{ primaryAction.label }</span>
@@ -110,8 +113,8 @@ export function TourEditorHeader({
         </div>
       </div>
 
-      <div className="flex h-12 items-end bg-muted/30 px-6">
-        <nav className="flex gap-1">
+      <div className="flex items-end bg-[#fbf7f0] px-4 pt-3">
+        <nav className="flex flex-wrap gap-2">
           { sections.map((section) => {
             const Icon = section.icon;
             const isActive = activeSection === section.id;
@@ -124,18 +127,18 @@ export function TourEditorHeader({
                 onClick={ () => onSectionChange(section.id) }
                 disabled={ isLocked }
                 className={ cn(
-                  "relative flex items-center gap-2 rounded-t-lg px-4 py-2.5 text-sm font-medium transition-colors",
+                  "relative flex items-center gap-2 rounded-t-2xl border border-transparent px-4 py-3 text-sm font-medium transition-colors",
                   isActive
-                    ? "bg-background text-foreground"
+                    ? "border-[#eadfce] border-b-white bg-white text-[#21343b] shadow-[0_-6px_18px_rgba(42,36,25,0.04)]"
                     : isLocked
-                      ? "cursor-not-allowed text-muted-foreground/60"
-                      : "text-muted-foreground hover:bg-background/50 hover:text-foreground",
+                      ? "cursor-not-allowed text-[#b0a08d]"
+                      : "text-[#627176] hover:border-[#eadfce] hover:bg-white/70 hover:text-[#21343b]",
                 ) }
               >
                 <Icon className="size-4"/>
                 <span>{ section.label }</span>
                 { isLocked ? <Lock className="size-3.5"/> : null }
-                { isActive ? <span className="absolute right-0 bottom-0 left-0 h-0.5 bg-primary"/> : null }
+                { isActive ? <span className="absolute right-4 bottom-0 left-4 h-0.5 rounded-full bg-[#9a6a2f]"/> : null }
               </button>
             );
           }) }

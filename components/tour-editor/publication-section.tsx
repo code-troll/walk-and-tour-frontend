@@ -95,15 +95,15 @@ export function PublicationSection({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-xl border border-border bg-card p-6">
+      <section className="rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold text-foreground">Translation Publication</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <h2 className="text-lg font-semibold text-[#21343b]">Translation Publication</h2>
+            <p className="mt-1 text-sm text-[#627176]">
               Control which translations are publicly available and review backend diagnostics.
             </p>
             { isMutating ? (
-              <p className="mt-2 text-xs text-muted-foreground">
+              <p className="mt-2 text-xs text-[#627176]">
                 Please wait for the current request to finish before changing publication state.
               </p>
             ) : null }
@@ -115,6 +115,7 @@ export function PublicationSection({
               size="sm"
               onClick={ onUnpublishAll }
               disabled={ isMutating || publishedTranslations.length === 0 }
+              className="border-[#d8c5a8] bg-[#fbf7f0] text-[#7a5424] hover:bg-[#f4ebde]"
             >
               Unpublish All
             </Button>
@@ -122,7 +123,7 @@ export function PublicationSection({
               size="sm"
               onClick={ onPublishAllReady }
               disabled={ isMutating || readyUnpublished.length === 0 }
-              className="gap-2"
+              className="gap-2 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]"
             >
               <Send className="size-4"/>
               Publish Ready
@@ -131,9 +132,9 @@ export function PublicationSection({
         </div>
 
         { formState.translations.length === 0 ? (
-          <div className="rounded-lg border-2 border-dashed border-border py-8 text-center">
-            <Globe className="mx-auto mb-3 size-10 text-muted-foreground"/>
-            <p className="text-muted-foreground">
+          <div className="rounded-[1.25rem] border-2 border-dashed border-[#d8c5a8] bg-[#fcfaf6] py-8 text-center">
+            <Globe className="mx-auto mb-3 size-10 text-[#8f7e67]"/>
+            <p className="text-[#627176]">
               No translations available. Add translations first.
             </p>
           </div>
@@ -155,15 +156,15 @@ export function PublicationSection({
                   className={ cn(
                     "rounded-xl border p-4 transition-colors",
                     isPublished
-                      ? "border-primary/30 bg-primary/5"
-                      : "border-border bg-background",
+                      ? "border-[#cfe1d3] bg-[#f5fbf6]"
+                      : "border-[#efe4d5] bg-[#fffcf7]",
                   ) }
                 >
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
                     <div className="flex items-center gap-4">
                       <div
-                        className="flex size-12 items-center justify-center rounded-lg bg-muted">
-                        <span className="text-sm font-bold uppercase text-foreground">
+                        className="flex size-12 items-center justify-center rounded-[1rem] bg-[#f3e5cf]">
+                        <span className="text-sm font-bold uppercase text-[#9a6a2f]">
                           { translation.languageCode }
                         </span>
                       </div>
@@ -175,14 +176,14 @@ export function PublicationSection({
                           <span
                             className={ cn(
                               "rounded-full px-2 py-0.5 text-xs font-medium",
-                              isReady ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground",
+                              isReady ? "bg-[#ecf6ef] text-[#2f6f45]" : "bg-[#f4ede3] text-[#7c6a54]",
                             ) }
                           >
                             { isReady ? "Ready" : "Not ready" }
                           </span>
                           { diagnostic && !diagnostic.isSchemaValid ? (
                             <span
-                              className="rounded-full bg-destructive/10 px-2 py-0.5 text-xs font-medium text-destructive">
+                              className="rounded-full bg-[#fbf2f0] px-2 py-0.5 text-xs font-medium text-[#a3483f]">
                               Schema issues
                             </span>
                           ) : null }
@@ -190,9 +191,9 @@ export function PublicationSection({
 
                         <div className="mt-2 flex items-center gap-3">
                           <div
-                            className="h-1.5 max-w-40 flex-1 overflow-hidden rounded-full bg-muted">
+                            className="h-1.5 max-w-40 flex-1 overflow-hidden rounded-full bg-[#efe4d5]">
                             <div
-                              className="h-full rounded-full bg-primary transition-all"
+                              className="h-full rounded-full bg-[#9a6a2f] transition-all"
                               style={ {width: `${ completion.percentage }%`} }
                             />
                           </div>
@@ -203,7 +204,7 @@ export function PublicationSection({
 
                         { diagnostic ? (
                           <div
-                            className="mt-2 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                            className="mt-2 flex flex-wrap gap-2 text-xs text-[#627176]">
                             <span>
                               { diagnostic.publiclyAvailable ? "Publicly available" : "Not public" }
                             </span>
@@ -225,13 +226,13 @@ export function PublicationSection({
                     <div className="ml-auto flex items-center gap-3">
                       { isPublished ? (
                         <span
-                          className="flex items-center gap-1.5 text-sm font-medium text-primary">
+                          className="flex items-center gap-1.5 text-sm font-medium text-[#2f6f45]">
                           <CheckCircle2 className="size-4"/>
                           Published
                         </span>
                       ) : !isReady ? (
                         <span
-                          className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                          className="flex items-center gap-1.5 text-sm text-[#7c6a54]">
                           <AlertCircle className="size-4"/>
                           Not ready
                         </span>
@@ -269,9 +270,9 @@ export function PublicationSection({
         ) }
       </section>
 
-      <section className="rounded-xl border border-border bg-card p-6">
-        <h2 className="mb-4 text-lg font-semibold text-foreground">Publication Checklist</h2>
-        <p className="mb-6 text-sm text-muted-foreground">
+      <section className="rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]">
+        <h2 className="mb-4 text-lg font-semibold text-[#21343b]">Publication Checklist</h2>
+        <p className="mb-6 text-sm text-[#627176]">
           Ensure these requirements are met before publishing.
         </p>
 
@@ -321,23 +322,23 @@ function ChecklistItem({label, passed}: { label: string; passed: boolean }) {
   return (
     <div
       className={ cn(
-        "flex items-center gap-3 rounded-lg p-3",
-        passed ? "bg-primary/5" : "bg-muted/50",
+        "flex items-center gap-3 rounded-[1rem] p-3",
+        passed ? "bg-[#f5fbf6]" : "bg-[#fcfaf6]",
       ) }
     >
       <div
         className={ cn(
           "flex size-6 items-center justify-center rounded-full",
-          passed ? "bg-primary text-primary-foreground" : "bg-muted",
+          passed ? "bg-[#2f6f45] text-white" : "bg-[#efe4d5]",
         ) }
       >
         { passed ? (
           <Check className="size-3.5"/>
         ) : (
-          <X className="size-3.5 text-muted-foreground"/>
+          <X className="size-3.5 text-[#7c6a54]"/>
         ) }
       </div>
-      <span className={ cn("text-sm", passed ? "text-foreground" : "text-muted-foreground") }>
+      <span className={ cn("text-sm", passed ? "text-[#21343b]" : "text-[#627176]") }>
         { label }
       </span>
     </div>

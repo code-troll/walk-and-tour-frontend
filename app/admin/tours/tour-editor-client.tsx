@@ -1880,7 +1880,7 @@ export function TourEditorClient({
 
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-muted/30">
+      <div className="flex min-h-screen flex-col bg-transparent">
         <TourEditorHeader
           mode={ mode }
           formState={ formState }
@@ -1893,27 +1893,27 @@ export function TourEditorClient({
           onSectionChange={ (section) => requestNavigation({type: "section", section}) }
         />
 
-        <main className="flex-1 overflow-auto p-6">
+        <main className="flex-1 overflow-auto px-2 py-6 sm:px-4">
           <div className="mx-auto max-w-5xl space-y-6">
             { submitError ? (
               <div
-                className="rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+                className="rounded-[1.25rem] border border-[#e8c7c1] bg-[#fbf2f0] px-4 py-3 text-sm text-[#a3483f] shadow-[0_10px_24px_rgba(163,72,63,0.08)]">
                 { submitError }
               </div>
             ) : null }
 
             { successMessage ? (
-              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-700">
+              <div className="rounded-[1.25rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-[0_10px_24px_rgba(47,111,69,0.08)]">
                 { successMessage }
               </div>
             ) : null }
 
             { visibleErrors.length > 0 ? (
-              <div className="rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-3">
-                <p className="text-sm font-medium text-destructive">
+              <div className="rounded-[1.25rem] border border-[#e8c7c1] bg-[#fbf2f0] px-4 py-3 shadow-[0_10px_24px_rgba(163,72,63,0.08)]">
+                <p className="text-sm font-medium text-[#a3483f]">
                   Fix the following issues before saving:
                 </p>
-                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-destructive">
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[#a3483f]">
                   { visibleErrors.map((message) => (
                     <li key={ message }>{ message }</li>
                   )) }
@@ -1997,18 +1997,19 @@ export function TourEditorClient({
       </div>
 
       <Dialog open={ Boolean(pendingNavigation) } onOpenChange={ () => undefined }>
-        <DialogContent showCloseButton={ false }>
+        <DialogContent showCloseButton={ false } className="border border-[#eadfce] bg-[#fffdfa] shadow-[0_30px_80px_rgba(61,45,27,0.14)]">
           <DialogHeader>
-            <DialogTitle>Unsaved changes</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-[#21343b]">Unsaved changes</DialogTitle>
+            <DialogDescription className="text-[#627176]">
               Save or discard your current changes before leaving this part of the editor.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <DialogFooter className="border-t border-[#f0e6d8] bg-[#fbf7f0]">
             <Button
               variant="outline"
               onClick={ () => setPendingNavigation(null) }
               disabled={ isMutating }
+              className="border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]"
             >
               Stay
             </Button>
@@ -2016,10 +2017,15 @@ export function TourEditorClient({
               variant="outline"
               onClick={ handleDiscardAndContinue }
               disabled={ isMutating }
+              className="border-[#e8c7c1] bg-white text-[#a3483f] hover:bg-[#fbf2f0]"
             >
               Discard
             </Button>
-            <Button onClick={ () => void handleSaveAndContinue() } disabled={ isMutating }>
+            <Button
+              onClick={ () => void handleSaveAndContinue() }
+              disabled={ isMutating }
+              className="border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]"
+            >
               Save
             </Button>
           </DialogFooter>
