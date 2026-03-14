@@ -15,13 +15,13 @@ type HeaderPrimaryAction = {
 type HeaderProps = {
   mode: "create" | "edit";
   formState: TourFormState;
-  onBack: () => void;
+  onBackAction: () => void;
   isMutating: boolean;
   lastSaved: Date | null;
   activeSection: TourSection;
   isCreated: boolean;
   primaryAction: HeaderPrimaryAction | null;
-  onSectionChange: (section: TourSection) => void;
+  onSectionChangeAction: (section: TourSection) => void;
 };
 
 export type TourSection = "general" | "itinerary" | "translations" | "publication";
@@ -39,13 +39,13 @@ const headerSurfaceClassName =
 export function TourEditorHeader({
                                    mode,
                                    formState,
-                                   onBack,
+                                   onBackAction,
                                    isMutating,
                                    lastSaved,
                                    activeSection,
                                    isCreated,
                                  primaryAction,
-                                 onSectionChange,
+                                 onSectionChangeAction,
                                }: HeaderProps) {
   const statusColors = {
     inactive: "border border-[#e4d8c8] bg-[#f8f2e8] text-[#7c6a54]",
@@ -59,7 +59,7 @@ export function TourEditorHeader({
         <div className="flex min-w-0 items-center gap-4">
           <button
             type="button"
-            onClick={ onBack }
+            onClick={ onBackAction }
             className="flex items-center gap-2 text-sm font-medium text-[#627176] transition-colors hover:text-[#21343b]"
           >
             <ArrowLeft className="size-4"/>
@@ -107,7 +107,7 @@ export function TourEditorHeader({
               className="gap-2 border border-[#21343b] bg-[#21343b] px-4 text-white hover:bg-[#2c454d]"
             >
               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Check className="size-4"/> }
-              <span>{ primaryAction.label }</span>
+              <span className="hidden md:visible">{ primaryAction.label }</span>
             </Button>
           ) : null }
         </div>
@@ -124,7 +124,7 @@ export function TourEditorHeader({
               <button
                 key={ section.id }
                 type="button"
-                onClick={ () => onSectionChange(section.id) }
+                onClick={ () => onSectionChangeAction(section.id) }
                 disabled={ isLocked }
                 className={ cn(
                   "relative flex items-center gap-2 rounded-t-2xl border border-transparent px-4 py-3 text-sm font-medium transition-colors",

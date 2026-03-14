@@ -448,10 +448,10 @@ export function GeneralSection({
             <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Tour Metrics</h2>
 
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              <div className={ subCardClassName }>
+              <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground flex">
                   <Clock className="size-4"/>
-                  <span className="text-xs font-medium uppercase tracking-wide ml-2">Duration</span>
+                  <span className="text-xs font-medium uppercase tracking-wide ml-2">Duration (min)</span>
                 </label>
                 <div className="flex items-baseline gap-2">
                   <Input
@@ -468,14 +468,13 @@ export function GeneralSection({
                     pattern="[1-9][0-9]*"
                     placeholder="90"
                   />
-                  <span className="text-sm text-muted-foreground">min</span>
                 </div>
               </div>
 
-              <div className={ subCardClassName }>
+              <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground flex">
                   <Star className="size-4"/>
-                  <span className="text-xs font-medium uppercase tracking-wide ml-2">Rating</span>
+                  <span className="text-xs font-medium uppercase tracking-wide ml-2">Rating (1/5)</span>
                 </label>
                 <div className="flex items-baseline gap-2">
                   <Input
@@ -487,11 +486,10 @@ export function GeneralSection({
                     max={ 5 }
                     step={ 0.1 }
                   />
-                  <span className="text-sm text-muted-foreground">/5</span>
                 </div>
               </div>
 
-              <div className={ subCardClassName }>
+              <div className="space-y-2">
                 <label className="text-sm font-medium text-foreground flex">
                   <Star className="size-4"/>
                   <span className="text-xs font-medium uppercase tracking-wide ml-2">Reviews</span>
@@ -561,7 +559,7 @@ export function GeneralSection({
                       image.isCover ? "border-[#d5b588] ring-2 ring-[#ead7b8]" : "border-[#efe4d5] bg-[#fffcf7]",
                     ) }
                   >
-                    <div className="flex flex-col gap-4 p-3 sm:flex-row sm:items-start">
+                    <div className="flex flex-col gap-4 p-3 lg:flex-row lg:items-start">
                       <div
                         className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[#f3ede4] max-[520px]:h-40 max-[520px]:w-full">
                         { mediaPreviewStatus[image.mediaId]?.previewUrl ? (
@@ -676,7 +674,7 @@ export function GeneralSection({
 
                     { expandedImageId === image.clientId ? (
                       <div className="border-t border-[#f0e6d8] bg-[#fcfaf6] p-4">
-                        <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="grid gap-3 lg:grid-cols-2">
                           { enabledLanguages.map((language) => (
                             <div key={ language.code } className="space-y-1">
                               <label className="text-xs font-medium text-muted-foreground">
@@ -894,7 +892,7 @@ export function GeneralSection({
 
               { formState.hasPrice && formState.tourType !== "tip_based" ? (
                 <div className="flex flex-1 flex-col gap-3 md:max-w-lg">
-                  <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_120px] max-[520px]:grid-cols-1">
+                  <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_120px]">
                     <div className="space-y-1.5">
                       <label className="text-xs font-medium text-muted-foreground">Amount</label>
                       <div className="relative">
@@ -953,7 +951,7 @@ export function GeneralSection({
                   <span className="font-medium text-foreground ml-2">Start Point</span>
                 </label>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-3 lg:grid-cols-2">
                   <div className="space-y-1.5">
                     <label className="text-xs text-muted-foreground">Latitude</label>
                     <Input
@@ -985,7 +983,7 @@ export function GeneralSection({
                   <span className="font-medium text-foreground ml-2">End Point</span>
                 </label>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-3 lg:grid-cols-2">
                   <div className="space-y-1.5">
                     <label className="text-xs text-muted-foreground">Latitude</label>
                     <Input

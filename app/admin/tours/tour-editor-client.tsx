@@ -1884,13 +1884,13 @@ export function TourEditorClient({
         <TourEditorHeader
           mode={ mode }
           formState={ formState }
-          onBack={ () => requestNavigation({type: "leave"}) }
+          onBackAction={ () => requestNavigation({type: "leave"}) }
           isMutating={ isMutating || isMediaMutating }
           lastSaved={ lastSaved }
           activeSection={ activeSection }
           isCreated={ isCreated }
           primaryAction={ primaryAction }
-          onSectionChange={ (section) => requestNavigation({type: "section", section}) }
+          onSectionChangeAction={ (section) => requestNavigation({type: "section", section}) }
         />
 
         <main className="flex-1 overflow-auto px-2 py-6 sm:px-4">
