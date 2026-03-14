@@ -126,17 +126,19 @@ export default async function AdminLayout({
 
           {viewerState.kind === "authenticated" ? (
             <div className="grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)]">
-              <aside className="rounded-[1.5rem] border border-[#eadfce] bg-[#fbf7f0] p-5">
-                <div className="border-b border-[#eadfce] pb-4">
+              <aside className="rounded-[1.5rem] border border-[#eadfce] bg-[#fbf7f0] p-5 lg:block">
+                <div className="flex flex-col gap-4 border-b border-[#eadfce] pb-4 sm:flex-row sm:items-start sm:justify-between lg:block">
                   <p className="text-sm font-semibold text-[#21343b]">{viewerState.auth0User.name ?? viewerState.backendAdmin.email}</p>
-                  <p className="mt-1 text-sm text-[#627176]">{viewerState.backendAdmin.email}</p>
-                  <p className="mt-3 inline-flex rounded-full bg-[#f2e7d6] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#8a6029]">
-                    {viewerState.backendAdmin.roleName.replace("_", " ")}
-                  </p>
+                  <div className="sm:text-right lg:mt-0 lg:text-left">
+                    <p className="mt-1 text-sm text-[#627176]">{viewerState.backendAdmin.email}</p>
+                    <p className="mt-3 inline-flex rounded-full bg-[#f2e7d6] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#8a6029]">
+                      {viewerState.backendAdmin.roleName.replace("_", " ")}
+                    </p>
+                  </div>
                 </div>
                 <AdminSidebarNav items={navigationByRole[viewerState.backendAdmin.roleName]} />
 
-                <div className="mt-6 border-t border-[#eadfce] pt-5">
+                <div className="mt-5 border-t border-[#eadfce] pt-4 lg:mt-6 lg:pt-5">
                   <Link
                     href="/auth/logout"
                     className="inline-flex rounded-full border border-[#cbb390] px-4 py-2 text-sm font-semibold text-[#7a5424]"
