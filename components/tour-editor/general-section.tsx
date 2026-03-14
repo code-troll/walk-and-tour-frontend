@@ -389,8 +389,8 @@ export function GeneralSection({
       <section className={ sectionClassName }>
         <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Basic Information</h2>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <div className="space-y-2">
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="space-y-2 lg:col-span-2">
             <label className="text-sm font-medium text-foreground">Tour Name</label>
             <Input
               value={ formState.name }
@@ -448,8 +448,8 @@ export function GeneralSection({
           <section className={ sectionClassName }>
             <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Tour Metrics</h2>
 
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="space-y-2">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className={ subCardClassName }>
                 <label className="text-sm font-medium text-foreground flex">
                   <Clock className="size-4"/>
                   <span className="text-xs font-medium uppercase tracking-wide ml-2">Duration</span>
@@ -473,7 +473,7 @@ export function GeneralSection({
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className={ subCardClassName }>
                 <label className="text-sm font-medium text-foreground flex">
                   <Star className="size-4"/>
                   <span className="text-xs font-medium uppercase tracking-wide ml-2">Rating</span>
@@ -492,7 +492,7 @@ export function GeneralSection({
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className={ subCardClassName }>
                 <label className="text-sm font-medium text-foreground flex">
                   <Star className="size-4"/>
                   <span className="text-xs font-medium uppercase tracking-wide ml-2">Reviews</span>
@@ -562,7 +562,7 @@ export function GeneralSection({
                       image.isCover ? "border-[#d5b588] ring-2 ring-[#ead7b8]" : "border-[#efe4d5] bg-[#fffcf7]",
                     ) }
                   >
-                    <div className="flex items-start gap-4 p-3">
+                    <div className="flex flex-col gap-4 p-3 sm:flex-row sm:items-start">
                       <div
                         className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[#f3ede4]">
                         { mediaPreviewStatus[image.mediaId]?.previewUrl ? (
@@ -591,7 +591,7 @@ export function GeneralSection({
                             <p className="truncate text-xs text-[#8b7862]">{ image.storagePath }</p>
                           </div>
 
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex flex-wrap items-center justify-end gap-1.5">
                             <button
                               type="button"
                               onClick={ () => {
@@ -911,7 +911,7 @@ export function GeneralSection({
                       <select
                         value={ formState.priceCurrency }
                         onChange={ (event) => updateFormStateAction("priceCurrency", event.target.value) }
-                        className="h-11 w-full rounded-lg border border-input bg-background px-3 text-center text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring"
+                        className={ warmSelectClassName }
                       >
                         { PRICE_CURRENCY_OPTIONS.map((currency) => (
                           <option key={ currency } value={ currency }>
@@ -939,7 +939,7 @@ export function GeneralSection({
             <h2 className="mb-6 text-lg font-semibold text-[#21343b]">Start & End Points</h2>
 
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="space-y-2">
+              <div className={ subCardClassName }>
                 <label className="text-sm font-medium text-foreground flex items-center">
                   <div className="flex size-8 items-center justify-center rounded-full bg-green-700/10">
                     <MapPin className="size-4 text-green-700"/>
@@ -971,7 +971,7 @@ export function GeneralSection({
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className={ subCardClassName }>
                 <label className="text-sm font-medium text-foreground flex items-center">
                   <div className="flex size-8 items-center justify-center rounded-full bg-destructive/10">
                     <Flag className="size-4 text-destructive"/>
