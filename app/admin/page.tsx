@@ -68,10 +68,10 @@ export default async function AdminHomePage() {
         description="This shell resolves the Auth0 session, exchanges it for the backend admin context, and uses the new shared API layer for the first admin surfaces."
         actions={
           <Link
-            href="/content"
+            href="/tours"
             className="rounded-full bg-[#21343b] px-5 py-3 text-sm font-semibold text-white"
           >
-            Open content workspace
+            Open tours workspace
           </Link>
         }
       />

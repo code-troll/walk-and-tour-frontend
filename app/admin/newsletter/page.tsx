@@ -100,7 +100,9 @@ export default async function AdminNewsletterPage() {
                       { subscriber.subscriptionStatus }
                     </span>
                 </td>
-                <td className="py-4 pr-4 text-muted-foreground">{ subscriber.preferredLocale ?? "N/A" }</td>
+                <td className="py-4 pr-4 text-muted-foreground">
+                  { typeof subscriber.preferredLocale === "string" ? subscriber.preferredLocale : "N/A" }
+                </td>
                 <td className="py-4 pr-4 text-muted-foreground">{ subscriber.confirmedAt ?? "Not confirmed" }</td>
               </tr>
             )) }

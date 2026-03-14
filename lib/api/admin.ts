@@ -14,6 +14,9 @@ type UpdateLanguageBody =
 type CreateTagBody = paths["/api/admin/tags"]["post"]["requestBody"]["content"]["application/json"];
 type UpdateTagBody =
   paths["/api/admin/tags/{key}"]["patch"]["requestBody"]["content"]["application/json"];
+type CreateTourBody = paths["/api/admin/tours"]["post"]["requestBody"]["content"]["application/json"];
+type UpdateTourBody =
+  paths["/api/admin/tours/{id}"]["patch"]["requestBody"]["content"]["application/json"];
 
 export const createAdminApi = (accessToken: string) => {
   const client = createBackendApiClient({accessToken});
@@ -102,6 +105,42 @@ export const createAdminApi = (accessToken: string) => {
       },
     getTours: async () =>
       unwrapBackendApiResult(await client.GET("/api/admin/tours"), "Unable to load tours."),
+    getTour: async (id: string) =>
+      unwrapBackendApiResult(
+        await client.GET("/api/admin/tours/{id}", {
+          params: {
+            path: {
+              id,
+            },
+          },
+        }),
+        "Unable to load the tour.",
+      ),
+    createTour: async (body: CreateTourBody) =>
+      unwrapBackendApiResult(
+        await client.POST("/api/admin/tours", {
+          body,
+        }),
+        "Unable to create the tour.",
+      ),
+    updateTour: async ({
+      body,
+      id,
+    }: {
+      body: UpdateTourBody;
+      id: string;
+    }) =>
+      unwrapBackendApiResult(
+        await client.PATCH("/api/admin/tours/{id}", {
+          params: {
+            path: {
+              id,
+            },
+          },
+          body,
+        }),
+        "Unable to update the tour.",
+      ),
     getBlogPosts: async () =>
       unwrapBackendApiResult(
         await client.GET("/api/admin/blog-posts"),

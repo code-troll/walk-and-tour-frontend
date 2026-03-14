@@ -1,7 +1,9 @@
 import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
+import { Button } from "@/components/ui/button";
 import { createAdminApi } from "@/lib/api/admin";
 import { isBackendApiError } from "@/lib/api/core/backend-client";
 import { getAdminViewerState } from "@/lib/admin/session";
+import Link from "next/link";
 
 const loadContentData = async (accessToken: string) => {
   try {
@@ -57,6 +59,11 @@ export default async function AdminContentPage() {
         title="Tours"
         description="Tour records include backend-derived translation availability so the UI can surface publishability state without reimplementing backend rules."
       >
+        <div className="mb-4 flex justify-end">
+          <Button asChild size="sm">
+            <Link href="/tours">Manage tours</Link>
+          </Button>
+        </div>
         <div className="space-y-4">
           { contentData.tours.map((tour) => (
             <article key={ tour.id }
@@ -68,11 +75,19 @@ export default async function AdminContentPage() {
                     <span className="font-medium">{ tour.tourType }</span>
                     { " • " }
                     <span
-                      className={ tour.publicationStatus === "published" ? "text-primary" : "text-muted-foreground" }>
-                      { tour.publicationStatus }
+                      className={
+                        tour.translationAvailability.some((item) => item.publiclyAvailable)
+                          ? "text-primary"
+                          : "text-muted-foreground"
+                      }>
+                      { tour.translationAvailability.some((item) => item.publiclyAvailable)
+                        ? "Publicly available"
+                        : "Not public" }
                     </span>
                     { " • " }
-                    { tour.durationMinutes } minutes
+                    { typeof tour.durationMinutes === "number"
+                      ? `${ tour.durationMinutes } minutes`
+                      : "Duration not set" }
                   </p>
                 </div>
                 <span
@@ -86,8 +101,8 @@ export default async function AdminContentPage() {
                     key={ availability.languageCode }
                     className="rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground"
                   >
-                    { availability.languageCode }: { availability.translationStatus }/
-                    { availability.publicationStatus }
+                    { availability.languageCode }: { availability.isReady ? "Ready" : "Not ready" }/
+                    { availability.isPublished ? "Published" : "Not published" }
                   </span>
                 )) }
               </div>
@@ -108,8 +123,6 @@ export default async function AdminContentPage() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground">{ post.slug }</h3>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    <span className="font-medium">{ post.category ?? "Uncategorized" }</span>
-                    { " • " }
                     <span
                       className={ post.publicationStatus === "published" ? "text-primary" : "text-muted-foreground" }>
                       { post.publicationStatus }

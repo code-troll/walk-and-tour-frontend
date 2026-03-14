@@ -24,8 +24,8 @@ import {
 import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Switch} from "@/components/ui/switch";
 
-type ApiTag = components["schemas"]["Tag"];
-type ApiLanguage = components["schemas"]["Language"];
+type ApiTag = components["schemas"]["TagResponseDto"];
+type ApiLanguage = components["schemas"]["LanguageResponseDto"];
 
 const TAG_KEY_PATTERN = "^[a-z0-9]+(?:-[a-z0-9]+)*$";
 const LANGUAGE_CODE_PATTERN = "^[a-z]{2}(?:-[A-Z]{2})?$";

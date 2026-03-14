@@ -4,12 +4,12 @@ import type {components} from "@/lib/api/generated/backend-types";
 import {createAdminApi} from "@/lib/api/admin";
 import {getAdminViewerState} from "@/lib/admin/session";
 
-type ApiTag = components["schemas"]["Tag"];
-type ApiLanguage = components["schemas"]["Language"];
-type CreateTagBody = components["schemas"]["TagUpsert"];
-type UpdateTagBody = components["schemas"]["TagPatch"];
-type CreateLanguageBody = components["schemas"]["LanguageUpsert"];
-type UpdateLanguageBody = components["schemas"]["LanguagePatch"];
+type ApiTag = components["schemas"]["TagResponseDto"];
+type ApiLanguage = components["schemas"]["LanguageResponseDto"];
+type CreateTagBody = components["schemas"]["CreateTagDto"];
+type UpdateTagBody = components["schemas"]["UpdateTagDto"];
+type CreateLanguageBody = components["schemas"]["CreateLanguageDto"];
+type UpdateLanguageBody = components["schemas"]["UpdateLanguageDto"];
 
 const getTaxonomyAdminApi = async () => {
   const viewerState = await getAdminViewerState();

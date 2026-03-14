@@ -11,7 +11,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getAdminAuthMe"];
+        /**
+         * Get the current authenticated admin
+         * @description Resolves the authenticated Auth0 bearer token to the local admin user context used by guarded admin routes.
+         */
+        get: operations["AdminAuthController_me"];
         put?: never;
         post?: never;
         delete?: never;
@@ -29,7 +33,31 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["postAdminLogout"];
+        /**
+         * Describe admin logout behavior
+         * @description The backend uses bearer tokens, so logout is handled by the client discarding the current token.
+         */
+        post: operations["AdminAuthController_logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/media/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload an image asset for admin content
+         * @description Uploads one image through the configured storage driver and returns a reusable media asset descriptor.
+         */
+        post: operations["AdminMediaController_upload"];
         delete?: never;
         options?: never;
         head?: never;
@@ -43,9 +71,17 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["listAdminUsers"];
+        /**
+         * List admin users
+         * @description Returns all local admin users with their expanded role records.
+         */
+        get: operations["AdminUsersController_findAll"];
         put?: never;
-        post: operations["createAdminUser"];
+        /**
+         * Create an admin user
+         * @description Creates a local admin user record that can later authenticate through Auth0 mapping.
+         */
+        post: operations["AdminUsersController_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -65,7 +101,11 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["updateAdminUser"];
+        /**
+         * Update an admin user
+         * @description Updates email, role, Auth0 mapping, or status of an existing local admin user.
+         */
+        patch: operations["AdminUsersController_update"];
         trace?: never;
     };
     "/api/admin/roles": {
@@ -75,7 +115,119 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["listAdminRoles"];
+        /**
+         * List admin roles
+         * @description Returns the local role catalog used by admin route authorization.
+         */
+        get: operations["RolesController_findAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/blog-posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List blog posts for admin management
+         * @description Returns all blog posts with localized translation maps, public availability diagnostics, and audit metadata.
+         */
+        get: operations["BlogPostsController_findAllAdmin"];
+        put?: never;
+        /**
+         * Create a blog post
+         * @description Creates a blog post with shared attributes and localized translations.
+         */
+        post: operations["BlogPostsController_createAdmin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/blog-posts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a blog post by UUID for admin management
+         * @description Returns the full admin representation of a single blog post.
+         */
+        get: operations["BlogPostsController_findOneAdmin"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update a blog post
+         * @description Updates shared blog data and merges translations by locale code.
+         */
+        patch: operations["BlogPostsController_updateAdmin"];
+        trace?: never;
+    };
+    "/api/public/blog-posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List public blog posts by locale
+         * @description Returns only published blog posts whose requested locale also has a published translation.
+         */
+        get: operations["BlogPostsController_findAllPublic"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/blog-posts/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a public blog post by slug and locale
+         * @description Returns a published blog post only when the requested locale is enabled and that locale has a published translation.
+         */
+        get: operations["BlogPostsController_findOnePublic"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get service health and foundation vocabulary
+         * @description Returns a simple liveness payload together with the shared enum vocabularies currently compiled into the backend.
+         */
+        get: operations["HealthController_getHealth"];
         put?: never;
         post?: never;
         delete?: never;
@@ -91,9 +243,17 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["listLanguages"];
+        /**
+         * List configured languages
+         * @description Returns all registered languages ordered by `sortOrder` and then by locale code.
+         */
+        get: operations["LanguagesController_findAll"];
         put?: never;
-        post: operations["createLanguage"];
+        /**
+         * Create a language
+         * @description Registers a locale that can later be used by tags, tours, blog posts, and public locale-aware endpoints.
+         */
+        post: operations["LanguagesController_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -113,7 +273,139 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch: operations["updateLanguage"];
+        /**
+         * Update a language
+         * @description Updates metadata and enablement for a previously registered language.
+         */
+        patch: operations["LanguagesController_update"];
+        trace?: never;
+    };
+    "/api/public/newsletter/subscribers/subscribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start newsletter subscription
+         * @description Starts or restarts the double opt-in flow. The subscriber remains in `pending_confirmation` until the confirmation token is used.
+         */
+        post: operations["NewsletterSubscribersController_subscribe"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/newsletter/subscribers/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Confirm newsletter subscription via direct link
+         * @description Confirms a newsletter subscription using a token carried in a direct email link.
+         */
+        get: operations["NewsletterSubscribersController_confirmByLink"];
+        put?: never;
+        /**
+         * Confirm newsletter subscription
+         * @description Completes the double opt-in flow using a confirmation token delivered through email.
+         */
+        post: operations["NewsletterSubscribersController_confirm"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/newsletter/subscribers/unsubscribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Unsubscribe via direct link
+         * @description Unsubscribes a newsletter subscriber using a token carried in a direct email link.
+         */
+        get: operations["NewsletterSubscribersController_unsubscribeByLink"];
+        put?: never;
+        /**
+         * Unsubscribe from the newsletter
+         * @description Unsubscribes a subscriber using the tokenized unsubscribe link delivered through email.
+         */
+        post: operations["NewsletterSubscribersController_unsubscribe"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/newsletter/subscribers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List newsletter subscribers
+         * @description Returns newsletter subscribers with optional email search, status filtering, and pagination.
+         */
+        get: operations["NewsletterSubscribersController_findAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/newsletter/subscribers/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export newsletter subscribers as CSV
+         * @description Exports newsletter subscribers using the same search and status filters as the list endpoint.
+         */
+        get: operations["NewsletterSubscribersController_exportCsv"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/newsletter/subscribers/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get newsletter subscriber detail
+         * @description Returns the full admin view of a newsletter subscriber record.
+         */
+        get: operations["NewsletterSubscribersController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/admin/tags": {
@@ -123,9 +415,17 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["listTags"];
+        /**
+         * List tags
+         * @description Returns all registered tags ordered by key.
+         */
+        get: operations["TagsController_findAll"];
         put?: never;
-        post: operations["createTag"];
+        /**
+         * Create a tag
+         * @description Creates a reusable tag with locale-specific labels.
+         */
+        post: operations["TagsController_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -142,122 +442,18 @@ export interface paths {
         get?: never;
         put?: never;
         post?: never;
-        delete: operations["deleteTag"];
+        /**
+         * Delete a tag
+         * @description Removes the tag from all tours and blog posts, then deletes the tag record itself.
+         */
+        delete: operations["TagsController_remove"];
         options?: never;
         head?: never;
-        patch: operations["updateTag"];
-        trace?: never;
-    };
-    "/api/admin/tours": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listAdminTours"];
-        put?: never;
-        post: operations["createTour"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/tours/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAdminTour"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateTour"];
-        trace?: never;
-    };
-    "/api/admin/blog-posts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listAdminBlogPosts"];
-        put?: never;
-        post: operations["createBlogPost"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/blog-posts/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getAdminBlogPost"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch: operations["updateBlogPost"];
-        trace?: never;
-    };
-    "/api/admin/newsletter/subscribers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["listNewsletterSubscribers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/newsletter/subscribers/export": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["exportNewsletterSubscribers"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/admin/newsletter/subscribers/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["getNewsletterSubscriber"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
+        /**
+         * Update a tag
+         * @description Replaces the localized labels for an existing tag.
+         */
+        patch: operations["TagsController_update"];
         trace?: never;
     };
     "/api/public/tours": {
@@ -267,7 +463,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["listPublicTours"];
+        /**
+         * List public tours by locale
+         * @description Returns only tours whose shared data is publicly valid and whose requested locale has a published, ready, and schema-valid translation.
+         */
+        get: operations["PublicToursController_findAll"];
         put?: never;
         post?: never;
         delete?: never;
@@ -283,7 +483,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["getPublicTour"];
+        /**
+         * Get a public tour by slug and locale
+         * @description Returns a public tour only when the shared tour data is valid, the requested locale is enabled, and that locale has a published, ready, schema-valid translation.
+         */
+        get: operations["PublicToursController_findOne"];
         put?: never;
         post?: never;
         delete?: never;
@@ -292,39 +496,95 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/public/blog-posts": {
+    "/api/admin/tours": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["listPublicBlogPosts"];
+        /**
+         * List tours for admin management
+         * @description Returns all tours with shared data, translation diagnostics, and audit metadata.
+         */
+        get: operations["ToursController_findAll"];
+        put?: never;
+        /**
+         * Create a tour
+         * @description Creates a minimal draft tour with only the shared identifier fields. Shared content, schema, media, itinerary, tags, and translations are added later through PATCH.
+         */
+        post: operations["ToursController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/tours/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a tour by UUID for admin management
+         * @description Returns the full admin representation of a single tour, including translation availability diagnostics.
+         */
+        get: operations["ToursController_findOne"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Update a tour
+         * @description Updates only shared tour data. It fully replaces the shared itinerary when provided and recalculates readiness for existing translations that depend on shared schema or stop structure.
+         */
+        patch: operations["ToursController_update"];
         trace?: never;
     };
-    "/api/public/blog-posts/{slug}": {
+    "/api/admin/tours/{id}/translations": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["getPublicBlogPost"];
+        get?: never;
+        put?: never;
+        /**
+         * Create a tour translation
+         * @description Creates a localized tour translation independently from the shared tour record. The backend calculates readiness and keeps the translation unpublished until the dedicated publish endpoint is called.
+         */
+        post: operations["ToursController_createTranslation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/tours/{id}/translations/{languageCode}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Update a tour translation
+         * @description Updates one localized tour translation independently from shared tour data. Any readiness recalculation that fails will automatically unpublish that translation.
+         */
+        patch: operations["ToursController_updateTranslation"];
         trace?: never;
     };
-    "/api/public/newsletter/subscribers/subscribe": {
+    "/api/admin/tours/{id}/translations/{languageCode}/publish": {
         parameters: {
             query?: never;
             header?: never;
@@ -333,14 +593,18 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["subscribeToNewsletter"];
+        /**
+         * Publish a tour translation
+         * @description Publishes one localized tour translation. This endpoint is the only place where translation publication can be enabled, and it rejects translations that are not ready.
+         */
+        post: operations["ToursController_publishTranslation"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/public/newsletter/subscribers/confirm": {
+    "/api/admin/tours/{id}/translations/{languageCode}/unpublish": {
         parameters: {
             query?: never;
             header?: never;
@@ -349,23 +613,11 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["confirmNewsletterSubscription"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/public/newsletter/subscribers/unsubscribe": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["unsubscribeFromNewsletter"];
+        /**
+         * Unpublish a tour translation
+         * @description Unpublishes one localized tour translation. This endpoint is the only place where translation publication can be disabled manually.
+         */
+        post: operations["ToursController_unpublishTranslation"];
         delete?: never;
         options?: never;
         head?: never;
@@ -376,330 +628,1462 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        LocaleCode: string;
-        /** @enum {string} */
-        AdminRoleName: "super_admin" | "editor" | "marketing";
-        /** @enum {string} */
-        AdminUserStatus: "invited" | "active" | "disabled";
-        /** @enum {string} */
-        PublicationStatus: "draft" | "published";
-        /** @enum {string} */
-        TranslationStatus: "draft" | "ready";
-        /** @enum {string} */
-        TranslationPublicationStatus: "published" | "unpublished";
-        /** @enum {string} */
-        TourType: "private" | "group" | "tip_based";
-        /** @enum {string} */
-        CancellationType: "12h_free_cancellation" | "24h_free_cancellation" | "48h_free_cancellation" | "72h_free_cancellation";
-        /** @enum {string} */
-        NewsletterSubscriptionStatus: "pending_confirmation" | "subscribed" | "unsubscribed";
-        ErrorResponse: {
-            statusCode: number;
-            message: string | string[];
-            error?: string;
-        };
-        LogoutInstruction: {
-            logoutStrategy: string;
-        };
-        AuthenticatedAdmin: {
-            /** Format: uuid */
+        AuthenticatedAdminResponseDto: {
+            /**
+             * Format: uuid
+             * @description Local admin UUID.
+             */
             id: string;
-            /** Format: email */
+            /**
+             * @description Authenticated admin email.
+             * @example editor@example.com
+             */
             email: string;
-            roleName: components["schemas"]["AdminRoleName"];
-            status: components["schemas"]["AdminUserStatus"];
+            /**
+             * @description Resolved local role of the authenticated admin.
+             * @enum {string}
+             */
+            roleName: "super_admin" | "editor" | "marketing";
+            /**
+             * @description Lifecycle status of the authenticated admin.
+             * @enum {string}
+             */
+            status: "invited" | "active" | "disabled";
+            /**
+             * @description Bearer token subject issued by Auth0.
+             * @example auth0|abc123
+             */
             auth0UserId: string;
         };
-        Role: {
-            name: components["schemas"]["AdminRoleName"];
+        ErrorResponseDto: {
+            /**
+             * @description HTTP status code returned by NestJS for the failed request.
+             * @example 400
+             */
+            statusCode: number;
+            /** @description Validation or domain error details. NestJS may return a string or a list of strings. */
+            message: string | string[];
+            /**
+             * @description NestJS exception name.
+             * @example Bad Request
+             */
+            error: string;
+        };
+        LogoutResponseDto: {
+            /**
+             * @description Logout strategy expected by the frontend. Tokens are bearer tokens and must be discarded client-side.
+             * @example client_discard_bearer_token
+             */
+            logoutStrategy: string;
+        };
+        UploadedMediaResponseDto: {
+            /**
+             * @description Media reference path.
+             * @example media/tours/historic-center/cover.jpg
+             */
+            ref: string;
+            /**
+             * @description Optional localized alt text keyed by locale code.
+             * @example {
+             *       "en": "View of the cathedral facade",
+             *       "es": "Vista de la fachada de la catedral"
+             *     }
+             */
+            altText?: {
+                [key: string]: string;
+            } | null;
+            /**
+             * @description Public URL resolved by the configured storage driver.
+             * @example http://api.dev.walkandtour.dk:3000/media/tours/historic-center/uuid-cover.jpg
+             */
+            publicUrl: string;
+            /**
+             * @description Detected content type of the uploaded object.
+             * @example image/jpeg
+             */
+            contentType: string;
+            /**
+             * @description Stored file size in bytes.
+             * @example 248193
+             */
+            size: number;
+        };
+        RoleResponseDto: {
+            /**
+             * @description Stable role name used by route guards.
+             * @example super_admin
+             * @enum {string}
+             */
+            name: "super_admin" | "editor" | "marketing";
+            /**
+             * @description Human-readable explanation of the role.
+             * @example Full administrative access to backoffice management endpoints.
+             */
             description: string;
+            /**
+             * @description Permission identifiers attached to the role record.
+             * @example [
+             *       "admin.users.manage",
+             *       "content.publish"
+             *     ]
+             */
             permissions: string[];
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
             createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
             updatedAt: string;
         };
-        AdminUser: {
-            /** Format: uuid */
+        AdminUserResponseDto: {
+            /**
+             * Format: uuid
+             * @description Admin user UUID.
+             */
             id: string;
-            auth0UserId: string | null;
-            /** Format: email */
+            /**
+             * @description Mapped Auth0 subject, if already linked.
+             * @example auth0|abc123
+             */
+            auth0UserId?: Record<string, never> | null;
+            /**
+             * @description Normalized admin email address.
+             * @example admin@example.com
+             */
             email: string;
-            roleName: components["schemas"]["AdminRoleName"];
-            role: components["schemas"]["Role"];
-            status: components["schemas"]["AdminUserStatus"];
+            /**
+             * @description Assigned role name.
+             * @enum {string}
+             */
+            roleName: "super_admin" | "editor" | "marketing";
+            /** @description Expanded role record. */
+            role: components["schemas"]["RoleResponseDto"];
+            /**
+             * @description Lifecycle state of the admin user.
+             * @enum {string}
+             */
+            status: "invited" | "active" | "disabled";
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
             createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
             updatedAt: string;
-            lastLoginAt: string | null;
+            /**
+             * Format: date-time
+             * @description Last successful authenticated login timestamp.
+             */
+            lastLoginAt?: string | null;
         };
-        AdminUserUpsert: {
-            /** Format: email */
+        CreateAdminUserDto: {
+            /**
+             * @description Email address used to identify the local admin user.
+             * @example admin@example.com
+             */
             email: string;
-            roleName: components["schemas"]["AdminRoleName"];
-            status?: components["schemas"]["AdminUserStatus"];
-            auth0UserId?: string | null;
+            /**
+             * @description Role assigned to the new admin user.
+             * @example editor
+             * @enum {string}
+             */
+            roleName: "super_admin" | "editor" | "marketing";
+            /**
+             * @description Optional Auth0 subject to pre-bind to the local admin user.
+             * @example auth0|abc123
+             */
+            auth0UserId?: string;
+            /**
+             * @description Initial lifecycle status. Defaults to `invited` when omitted.
+             * @default invited
+             * @example invited
+             * @enum {string}
+             */
+            status: "invited" | "active" | "disabled";
         };
-        AdminUserUpdate: {
-            /** Format: email */
+        UpdateAdminUserDto: {
+            /**
+             * @description Updated email address for the admin user.
+             * @example admin@example.com
+             */
             email?: string;
-            roleName?: components["schemas"]["AdminRoleName"];
-            status?: components["schemas"]["AdminUserStatus"];
-            auth0UserId?: string | null;
+            /**
+             * @description Updated role assignment.
+             * @example marketing
+             * @enum {string}
+             */
+            roleName?: "super_admin" | "editor" | "marketing";
+            /**
+             * @description Updated Auth0 subject. Set `null` to unlink the current identity.
+             * @example auth0|abc123
+             */
+            auth0UserId?: Record<string, never> | null;
+            /**
+             * @description Updated lifecycle status.
+             * @example disabled
+             * @enum {string}
+             */
+            status?: "invited" | "active" | "disabled";
         };
-        Language: {
-            code: components["schemas"]["LocaleCode"];
-            name: string;
-            isEnabled: boolean;
-            sortOrder: number;
-            createdAt: string;
-            updatedAt: string;
-        };
-        LanguageUpsert: {
-            code: components["schemas"]["LocaleCode"];
-            name: string;
-            isEnabled?: boolean;
-            sortOrder: number;
-        };
-        LanguagePatch: {
-            name?: string;
-            isEnabled?: boolean;
-            sortOrder?: number;
-        };
-        Tag: {
+        TagResponseDto: {
+            /**
+             * @description Stable internal tag key.
+             * @example history
+             */
             key: string;
+            /**
+             * @description Localized labels keyed by locale code.
+             * @example {
+             *       "en": "History",
+             *       "es": "Historia"
+             *     }
+             */
             labels: {
                 [key: string]: string;
             };
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
             createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
             updatedAt: string;
         };
-        TagUpsert: {
-            key: string;
-            labels: {
-                [key: string]: string;
-            };
-        };
-        TagPatch: {
-            labels: {
-                [key: string]: string;
-            };
-        };
-        AuditMetadata: {
-            createdBy: string | null;
-            updatedBy: string | null;
-            publishedBy: string | null;
-            createdAt: string;
-            updatedAt: string;
-            publishedAt: string | null;
-        };
-        TranslationAvailability: {
-            languageCode: components["schemas"]["LocaleCode"];
-            translationStatus: components["schemas"]["TranslationStatus"];
-            publicationStatus: components["schemas"]["TranslationPublicationStatus"];
-            missingRequiredLists: string[];
-            missingStopTranslations: string[];
-            isSchemaValid: boolean;
+        BlogTranslationAvailabilityResponseDto: {
+            /**
+             * @description Locale code being evaluated.
+             * @example en
+             */
+            languageCode: string;
+            /**
+             * @description Translation publication state.
+             * @enum {string}
+             */
+            publicationStatus: "published" | "unpublished";
+            /**
+             * @description Whether the locale is currently exposed through the public blog APIs.
+             * @example true
+             */
             publiclyAvailable: boolean;
         };
-        AdminTranslation: {
-            languageCode: components["schemas"]["LocaleCode"];
-            translationStatus: components["schemas"]["TranslationStatus"];
-            publicationStatus: components["schemas"]["TranslationPublicationStatus"];
-            payload: {
-                [key: string]: unknown;
-            };
-            bookingReferenceId?: string | null;
-        };
-        AdminTour: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-            slug: string;
-            category: string | null;
-            publicationStatus: components["schemas"]["PublicationStatus"];
-            tourType: components["schemas"]["TourType"];
-            cancellationType: components["schemas"]["CancellationType"];
-            durationMinutes: number;
-            price: number | null;
-            rating: number;
-            reviewCount: number;
-            tagKeys: string[];
-            tags: components["schemas"]["Tag"][];
-            translations: {
-                [key: string]: components["schemas"]["AdminTranslation"];
-            };
-            translationAvailability: components["schemas"]["TranslationAvailability"][];
-            audit: components["schemas"]["AuditMetadata"];
-        };
-        AdminTourUpsert: {
-            name: string;
-            slug: string;
-            category?: string | null;
-            publicationStatus: components["schemas"]["PublicationStatus"];
-            contentSchema: {
-                [key: string]: unknown;
-            };
-            price?: number | null;
-            rating: number;
-            reviewCount: number;
-            tourType: components["schemas"]["TourType"];
-            cancellationType: components["schemas"]["CancellationType"];
-            durationMinutes: number;
-            itinerary: {
-                [key: string]: unknown;
-            };
-            tagKeys: string[];
-            translations?: components["schemas"]["AdminTranslation"][];
-        };
-        AdminTourPatch: {
-            name?: string;
-            slug?: string;
-            category?: string | null;
-            publicationStatus?: components["schemas"]["PublicationStatus"];
-            contentSchema?: {
-                [key: string]: unknown;
-            };
-            price?: number | null;
-            rating?: number;
-            reviewCount?: number;
-            tourType?: components["schemas"]["TourType"];
-            cancellationType?: components["schemas"]["CancellationType"];
-            durationMinutes?: number;
-            itinerary?: {
-                [key: string]: unknown;
-            };
-            tagKeys?: string[];
-            translations?: components["schemas"]["AdminTranslation"][];
-        };
-        AdminBlogTranslation: {
-            languageCode: components["schemas"]["LocaleCode"];
-            publicationStatus: components["schemas"]["TranslationPublicationStatus"];
-            title: string | null;
-            summary: string | null;
-            htmlContent: string | null;
-            seoTitle: string | null;
-            seoDescription: string | null;
-        };
-        AdminBlogPost: {
-            /** Format: uuid */
-            id: string;
-            name: string;
-            slug: string;
-            heroMediaRef: string | null;
-            category: string | null;
-            publicationStatus: components["schemas"]["PublicationStatus"];
-            tags: components["schemas"]["Tag"][];
-            translations: {
-                [key: string]: components["schemas"]["AdminBlogTranslation"];
-            };
-            translationAvailability: components["schemas"]["TranslationAvailability"][];
-            audit: components["schemas"]["AuditMetadata"];
-        };
-        AdminBlogPostUpsert: {
-            name: string;
-            slug: string;
-            heroMediaRef?: string | null;
-            category?: string | null;
-            publicationStatus: components["schemas"]["PublicationStatus"];
-            tagKeys?: string[];
-            translations?: components["schemas"]["AdminBlogTranslation"][];
-        };
-        AdminBlogPostPatch: {
-            name?: string;
-            slug?: string;
-            heroMediaRef?: string | null;
-            category?: string | null;
-            publicationStatus?: components["schemas"]["PublicationStatus"];
-            tagKeys?: string[];
-            translations?: components["schemas"]["AdminBlogTranslation"][];
-        };
-        NewsletterSubscriber: {
-            /** Format: uuid */
-            id: string;
-            /** Format: email */
-            email: string;
-            subscriptionStatus: components["schemas"]["NewsletterSubscriptionStatus"];
-            preferredLocale: string | null;
-            consentSource: string | null;
-            sourceMetadata: {
-                [key: string]: unknown;
-            } | null;
-            consentedAt: string | null;
-            confirmedAt: string | null;
-            unsubscribedAt: string | null;
+        AuditMetadataDto: {
+            /**
+             * Format: uuid
+             * @description UUID of the admin that originally created the record.
+             */
+            createdBy?: Record<string, never> | null;
+            /**
+             * Format: uuid
+             * @description UUID of the admin that most recently updated the record.
+             */
+            updatedBy?: Record<string, never> | null;
+            /**
+             * Format: uuid
+             * @description UUID of the admin that published the record, if it is currently published.
+             */
+            publishedBy?: Record<string, never> | null;
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
             createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
+            updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Publication timestamp, or `null` when the record is not currently published.
+             */
+            publishedAt?: string | null;
+        };
+        BlogAdminResponseDto: {
+            /**
+             * Format: uuid
+             * @description Blog post UUID.
+             */
+            id: string;
+            /**
+             * @description Non-localized admin-facing name for the blog post.
+             * @example Barcelona Historic Center SEO Article
+             */
+            name: string;
+            /**
+             * @description Stable public slug.
+             * @example barcelona-historic-center-guide
+             */
+            slug: string;
+            /** @description Optional hero media reference. */
+            heroMediaRef?: Record<string, never> | null;
+            /**
+             * @description Blog post publication state.
+             * @enum {string}
+             */
+            publicationStatus: "draft" | "published";
+            /** @description Ordered tag keys assigned to the post. */
+            tagKeys: string[];
+            /** @description Expanded tag records. */
+            tags: components["schemas"]["TagResponseDto"][];
+            /** @description Localized translations keyed by locale code. */
+            translations: {
+                [key: string]: components["schemas"]["BlogAdminTranslationResponseDto"];
+            };
+            /** @description Per-locale public availability diagnostics. */
+            translationAvailability: components["schemas"]["BlogTranslationAvailabilityResponseDto"][];
+            /** @description Audit metadata for create, update, and publish operations. */
+            audit: components["schemas"]["AuditMetadataDto"];
+        };
+        CreateBlogPostTranslationDto: {
+            /**
+             * @description Locale code for this blog translation.
+             * @example en
+             */
+            languageCode: string;
+            /**
+             * @description Publication state of the localized blog translation.
+             * @example published
+             * @enum {string}
+             */
+            publicationStatus: "published" | "unpublished";
+            /**
+             * @description Localized title. Required before the translation can be published.
+             * @example Barcelona Historic Center Guide
+             */
+            title?: string;
+            /**
+             * @description Localized summary or excerpt.
+             * @example A walking guide to the historic center of Barcelona.
+             */
+            summary?: string;
+            /**
+             * @description Localized HTML body. Required before the translation can be published.
+             * @example <p>Walk through centuries of history.</p>
+             */
+            htmlContent?: string;
+            /**
+             * @description Optional SEO title override.
+             * @example Historic Center Guide | Walk and Tour
+             */
+            seoTitle?: string;
+            /**
+             * @description Optional SEO meta description override.
+             * @example Discover the best historic landmarks in Barcelona.
+             */
+            seoDescription?: string;
+            /**
+             * @description Localized image references used by the article.
+             * @example [
+             *       "media/blog/historic-center/hero.jpg"
+             *     ]
+             */
+            imageRefs?: string[];
+        };
+        CreateBlogPostDto: {
+            /**
+             * @description Non-localized admin-facing name used to identify the blog post.
+             * @example Barcelona Historic Center SEO Article
+             */
+            name: string;
+            /**
+             * @description Stable public slug for the blog post.
+             * @example barcelona-historic-center-guide
+             */
+            slug: string;
+            /**
+             * @description Optional hero media reference.
+             * @example media/blog/historic-center/hero.jpg
+             */
+            heroMediaRef?: string;
+            /**
+             * @description Top-level publication state of the blog post.
+             * @example draft
+             * @enum {string}
+             */
+            publicationStatus: "draft" | "published";
+            /**
+             * @description Assigned tag keys.
+             * @example [
+             *       "history",
+             *       "city-guide"
+             *     ]
+             */
+            tagKeys?: string[];
+            /** @description Localized translations keyed by locale through an array of translation objects. */
+            translations?: components["schemas"]["CreateBlogPostTranslationDto"][];
+        };
+        UpdateBlogPostDto: {
+            /**
+             * @description Updated non-localized admin-facing name.
+             * @example Barcelona Historic Center SEO Article
+             */
+            name?: string;
+            /**
+             * @description Updated public slug.
+             * @example barcelona-historic-center-guide
+             */
+            slug?: string;
+            /**
+             * @description Updated hero media reference. Set `null` to clear the current value.
+             * @example media/blog/historic-center/hero.jpg
+             */
+            heroMediaRef?: Record<string, never> | null;
+            /**
+             * @description Updated top-level publication state.
+             * @example published
+             * @enum {string}
+             */
+            publicationStatus?: "draft" | "published";
+            /**
+             * @description Replacement tag key list.
+             * @example [
+             *       "history",
+             *       "architecture"
+             *     ]
+             */
+            tagKeys?: string[];
+            /** @description Translations to merge into the existing set by locale code. */
+            translations?: components["schemas"]["CreateBlogPostTranslationDto"][];
+        };
+        PublicTagResponseDto: {
+            /**
+             * @description Stable internal tag key.
+             * @example history
+             */
+            key: string;
+            /**
+             * @description Localized tag label for the requested locale, or `null` if the label is missing.
+             * @example History
+             */
+            label?: Record<string, never> | null;
+        };
+        PublicBlogTranslationResponseDto: {
+            /**
+             * @description Requested locale code.
+             * @example en
+             */
+            locale: string;
+            /**
+             * @description Published localized title.
+             * @example Barcelona Historic Center Guide
+             */
+            title: string;
+            /** @description Published localized summary. */
+            summary?: Record<string, never> | null;
+            /** @description Published localized HTML body. */
+            htmlContent: string;
+            /** @description SEO title override. */
+            seoTitle?: Record<string, never> | null;
+            /** @description SEO description override. */
+            seoDescription?: Record<string, never> | null;
+            /** @description Published localized image references. */
+            imageRefs: string[];
+        };
+        PublicBlogResponseDto: {
+            /**
+             * Format: uuid
+             * @description Blog post UUID.
+             */
+            id: string;
+            /**
+             * @description Stable public slug.
+             * @example barcelona-historic-center-guide
+             */
+            slug: string;
+            /** @description Optional hero media reference. */
+            heroMediaRef?: Record<string, never> | null;
+            /** @description Localized tag labels for the requested locale. */
+            tags: components["schemas"]["PublicTagResponseDto"][];
+            /** @description Published localized blog translation selected for the requested locale. */
+            translation: components["schemas"]["PublicBlogTranslationResponseDto"];
+            /**
+             * Format: date-time
+             * @description Publication timestamp of the parent blog post.
+             */
+            publishedAt: string;
+        };
+        HealthFoundationDto: {
+            /** @description Configured admin roles available in the platform. */
+            adminRoles: ("super_admin" | "editor" | "marketing")[];
+            /** @description Supported language codes defined in the shared domain vocabulary. */
+            supportedLanguageCodes: ("en" | "es" | "it")[];
+            /** @description Supported tour commercial models. */
+            tourTypes: ("private" | "group" | "tip_based")[];
+            /** @description Supported commute modes between itinerary stops. */
+            tourCommuteModes: ("walk" | "bike" | "bus" | "train" | "metro" | "tram" | "ferry" | "private-transport" | "boat" | "other")[];
+            /** @description Top-level publication states available for blog posts. */
+            blogPublicationStatuses: ("draft" | "published")[];
+            /** @description Newsletter subscription lifecycle states reserved by the domain model. */
+            newsletterSubscriptionStatuses: ("pending_confirmation" | "subscribed" | "unsubscribed")[];
+        };
+        HealthResponseDto: {
+            /**
+             * @description Service health status.
+             * @example ok
+             */
+            status: string;
+            /**
+             * @description Configured application name.
+             * @example walk-and-tour-backend
+             */
+            app: string;
+            /**
+             * @description Current runtime environment.
+             * @example development
+             */
+            environment: string;
+            /** @description Shared domain constants exported by the backend foundation layer. */
+            foundation: components["schemas"]["HealthFoundationDto"];
+        };
+        LanguageResponseDto: {
+            /**
+             * @description Locale code used throughout the API and translation tables.
+             * @example en
+             */
+            code: string;
+            /**
+             * @description Human-readable language name.
+             * @example English
+             */
+            name: string;
+            /**
+             * @description Whether the locale is enabled for public content APIs.
+             * @example true
+             */
+            isEnabled: boolean;
+            /**
+             * @description Ordering index used when listing languages.
+             * @example 1
+             */
+            sortOrder: number;
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
             updatedAt: string;
         };
-        PaginatedNewsletterSubscribers: {
-            items: components["schemas"]["NewsletterSubscriber"][];
-            total: number;
-            page: number;
-            limit: number;
+        CreateLanguageDto: {
+            /**
+             * @description Locale code used throughout translation-aware endpoints.
+             * @example en
+             */
+            code: string;
+            /**
+             * @description Human-readable display name for the locale.
+             * @example English
+             */
+            name: string;
+            /**
+             * @description Whether the locale is enabled for public APIs.
+             * @default true
+             * @example true
+             */
+            isEnabled: boolean;
+            /**
+             * @description Ordering index used when listing locales in admin and public selectors.
+             * @example 1
+             */
+            sortOrder: number;
         };
-        PublicTour: {
-            slug: string;
-            category: string | null;
-            publicationStatus: components["schemas"]["PublicationStatus"];
-            translation: {
-                [key: string]: unknown;
-            };
-            itinerary: {
-                [key: string]: unknown;
-            };
-            publishedAt: string | null;
+        UpdateLanguageDto: {
+            /**
+             * @description Updated display name for the locale.
+             * @example English (US)
+             */
+            name?: string;
+            /**
+             * @description Whether the locale remains publicly enabled.
+             * @example true
+             */
+            isEnabled?: boolean;
+            /**
+             * @description Updated ordering index for admin/public locale lists.
+             * @example 2
+             */
+            sortOrder?: number;
         };
-        PublicBlogPost: {
-            slug: string;
-            category: string | null;
-            translation: {
-                [key: string]: unknown;
-            };
-            publishedAt: string | null;
-        };
-        NewsletterSubscribeRequest: {
-            /** Format: email */
+        SubscribeNewsletterDto: {
+            /**
+             * @description Subscriber email address. Duplicate subscribe attempts are normalized by email.
+             * @example subscriber@example.com
+             */
             email: string;
-            preferredLocale?: components["schemas"]["LocaleCode"];
+            /**
+             * @description Optional preferred locale for future newsletter targeting.
+             * @example en
+             */
+            preferredLocale?: string;
+            /**
+             * @description Optional source identifier for consent capture, such as `footer_form`.
+             * @example footer_form
+             */
             consentSource?: string;
+            /**
+             * @description Optional additional source metadata stored for audit and operational context.
+             * @example {
+             *       "page": "/blog/barcelona-historic-center-guide",
+             *       "campaign": "spring-2026"
+             *     }
+             */
             sourceMetadata?: {
                 [key: string]: unknown;
             };
         };
-        NewsletterSubscribeResponse: {
+        NewsletterSubscriptionRequestedResponseDto: {
+            /**
+             * @description Normalized subscriber email address.
+             * @example subscriber@example.com
+             */
+            email: string;
+            /**
+             * @description Current subscription state after the subscribe request.
+             * @example pending_confirmation
+             * @enum {string}
+             */
+            subscriptionStatus: "pending_confirmation" | "subscribed" | "unsubscribed";
+            /**
+             * @description Whether the email was already actively subscribed before this request.
+             * @example false
+             */
             alreadySubscribed: boolean;
-            subscriptionStatus: components["schemas"]["NewsletterSubscriptionStatus"];
+            /**
+             * @description What the subscriber must do next.
+             * @example confirm_email
+             * @enum {string}
+             */
+            nextAction: "confirm_email" | "none";
+            /**
+             * @description Optional preferred locale retained for the subscriber.
+             * @example en
+             */
+            preferredLocale?: Record<string, never> | null;
+            /**
+             * Format: date-time
+             * @description Timestamp at which consent was captured for this subscription attempt.
+             */
+            consentedAt: string;
         };
-        TokenRequest: {
+        NewsletterTokenDto: {
+            /**
+             * @description Opaque token delivered through confirmation or unsubscribe links.
+             * @example 0123456789abcdef0123456789abcdef0123456789abcdef
+             */
             token: string;
         };
-        TokenResult: {
-            success: boolean;
-            subscriptionStatus: components["schemas"]["NewsletterSubscriptionStatus"];
+        NewsletterSubscriptionConfirmedResponseDto: {
+            /**
+             * @description Normalized subscriber email address.
+             * @example subscriber@example.com
+             */
+            email: string;
+            /**
+             * @description Current subscription state after confirmation.
+             * @example subscribed
+             * @enum {string}
+             */
+            subscriptionStatus: "pending_confirmation" | "subscribed" | "unsubscribed";
+            /**
+             * Format: date-time
+             * @description Timestamp at which double opt-in confirmation was completed.
+             */
+            confirmedAt: string;
+        };
+        NewsletterUnsubscribedResponseDto: {
+            /**
+             * @description Normalized subscriber email address.
+             * @example subscriber@example.com
+             */
+            email: string;
+            /**
+             * @description Current subscription state after unsubscription.
+             * @example unsubscribed
+             * @enum {string}
+             */
+            subscriptionStatus: "pending_confirmation" | "subscribed" | "unsubscribed";
+            /**
+             * Format: date-time
+             * @description Timestamp at which the subscriber was unsubscribed.
+             */
+            unsubscribedAt?: string | null;
+        };
+        NewsletterSubscriberAdminResponseDto: {
+            /**
+             * Format: uuid
+             * @description Newsletter subscriber UUID.
+             */
+            id: string;
+            /**
+             * @description Normalized subscriber email address.
+             * @example subscriber@example.com
+             */
+            email: string;
+            /**
+             * @description Current newsletter subscription lifecycle state.
+             * @enum {string}
+             */
+            subscriptionStatus: "pending_confirmation" | "subscribed" | "unsubscribed";
+            /**
+             * @description Optional preferred locale captured during subscription.
+             * @example en
+             */
+            preferredLocale?: Record<string, never> | null;
+            /**
+             * @description Optional consent source identifier, such as `footer_form`.
+             * @example footer_form
+             */
+            consentSource?: Record<string, never> | null;
+            /**
+             * @description Stored source metadata captured during subscription.
+             * @example {
+             *       "page": "/blog/barcelona-historic-center-guide",
+             *       "campaign": "spring-2026"
+             *     }
+             */
+            sourceMetadata: {
+                [key: string]: unknown;
+            };
+            /**
+             * Format: date-time
+             * @description Timestamp at which consent was captured.
+             */
+            consentedAt: string;
+            /**
+             * Format: date-time
+             * @description Timestamp at which the subscriber confirmed the double opt-in email.
+             */
+            confirmedAt?: string | null;
+            /**
+             * Format: date-time
+             * @description Timestamp at which the subscriber unsubscribed.
+             */
+            unsubscribedAt?: string | null;
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
+            updatedAt: string;
+        };
+        NewsletterSubscriberAdminListResponseDto: {
+            /** @description Paginated subscriber records. */
+            items: components["schemas"]["NewsletterSubscriberAdminResponseDto"][];
+            /**
+             * @description Total number of matching records before pagination.
+             * @example 1250
+             */
+            total: number;
+            /**
+             * @description 1-based page number.
+             * @example 1
+             */
+            page: number;
+            /**
+             * @description Page size used for the response.
+             * @example 50
+             */
+            limit: number;
+        };
+        CreateTagDto: {
+            /**
+             * @description Stable tag identifier used across tours and blog posts.
+             * @example history
+             */
+            key: string;
+            /**
+             * @description Localized tag labels keyed by locale code. Every key must reference a registered language and each label can be at most 100 characters long.
+             * @example {
+             *       "en": "History",
+             *       "es": "Historia"
+             *     }
+             */
+            labels: {
+                [key: string]: string;
+            };
+        };
+        UpdateTagDto: {
+            /**
+             * @description Replacement localized labels keyed by locale code. Each label can be at most 100 characters long.
+             * @example {
+             *       "en": "History",
+             *       "es": "Historia"
+             *     }
+             */
+            labels?: {
+                [key: string]: string;
+            };
+        };
+        TourMediaAssetResponseDto: {
+            /**
+             * @description Media reference path.
+             * @example media/tours/historic-center/cover.jpg
+             */
+            ref: string;
+            /**
+             * @description Optional localized alt text keyed by locale code.
+             * @example {
+             *       "en": "View of the cathedral facade",
+             *       "es": "Vista de la fachada de la catedral"
+             *     }
+             */
+            altText?: {
+                [key: string]: string;
+            } | null;
+        };
+        PriceResponseDto: {
+            /**
+             * @description Fixed price amount.
+             * @example 25
+             */
+            amount: number;
+            /**
+             * @description Currency code paired with the fixed price amount.
+             * @example EUR
+             */
+            currency: string;
+        };
+        GeoCoordinatesDto: {
+            /**
+             * @description Latitude in decimal degrees.
+             * @example 41.3874
+             */
+            lat: number;
+            /**
+             * @description Longitude in decimal degrees.
+             * @example 2.1686
+             */
+            lng: number;
+        };
+        SharedPointResponseDto: {
+            /** @description Coordinates shared across all locales for the point. */
+            coordinates?: components["schemas"]["GeoCoordinatesDto"];
+        };
+        PublicPointResponseDto: {
+            /** @description Shared point metadata defined at the tour level. */
+            shared: components["schemas"]["SharedPointResponseDto"];
+            /**
+             * @description Localized point metadata from the selected translation payload.
+             * @example {
+             *       "label": "Town Hall"
+             *     }
+             */
+            localized?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        PublicTourTranslationResponseDto: {
+            /**
+             * @description Requested locale code.
+             * @example en
+             */
+            locale: string;
+            /** @description External booking reference associated with the published locale. */
+            bookingReferenceId?: Record<string, never> | null;
+            /**
+             * @description Localized cancellation policy text.
+             * @example Free cancellation up to 24 hours before the start time.
+             */
+            cancellationType: string;
+            /**
+             * @description Localized highlight bullets in display order.
+             * @example [
+             *       "Gothic Quarter landmarks",
+             *       "Roman walls"
+             *     ]
+             */
+            highlights: string[];
+            /**
+             * @description Localized inclusions list in display order.
+             * @example [
+             *       "Local guide",
+             *       "City map"
+             *     ]
+             */
+            included: string[];
+            /**
+             * @description Localized exclusions list in display order.
+             * @example [
+             *       "Hotel pickup",
+             *       "Food and drinks"
+             *     ]
+             */
+            notIncluded: string[];
+            /** @description Published localized payload for the requested locale. */
+            payload: {
+                [key: string]: unknown;
+            };
+        };
+        TourNextConnectionResponseDto: {
+            /**
+             * @description Travel time to the next stop in minutes.
+             * @example 8
+             */
+            durationMinutes?: Record<string, never> | null;
+            /**
+             * @description Commute mode used between this stop and the next stop.
+             * @enum {string}
+             */
+            commuteMode: "walk" | "bike" | "bus" | "train" | "metro" | "tram" | "ferry" | "private-transport" | "boat" | "other";
+        };
+        PublicTourStopResponseDto: {
+            /**
+             * @description Stable stop identifier shared across translations.
+             * @example stop-1
+             */
+            id: string;
+            /**
+             * @description Planned stop duration in minutes.
+             * @example 15
+             */
+            durationMinutes?: Record<string, never> | null;
+            /** @description Optional stop coordinates. */
+            coordinates?: components["schemas"]["GeoCoordinatesDto"] | null;
+            /** @description Transport information to the next stop. The final stop must keep this field `null`. */
+            nextConnection?: components["schemas"]["TourNextConnectionResponseDto"] | null;
+            /**
+             * @description Localized stop title from the selected translation.
+             * @example City Hall
+             */
+            title?: Record<string, never> | null;
+            /**
+             * @description Localized stop description from the selected translation.
+             * @example Meet at the main square.
+             */
+            description?: Record<string, never> | null;
+        };
+        PublicTourItineraryResponseDto: {
+            /**
+             * @description Whether the itinerary is modeled as ordered localized stops or a localized description.
+             * @example description
+             * @enum {string}
+             */
+            variant: "description" | "stops";
+            /** @description Ordered localized itinerary stops. Present for `stops` itineraries. */
+            stops?: components["schemas"]["PublicTourStopResponseDto"][];
+            /**
+             * @description Localized itinerary narrative. Present for `description` itineraries.
+             * @example Walk through the old city and discover Roman, medieval, and modern landmarks.
+             */
+            itineraryDescription?: Record<string, never> | null;
+        };
+        PublicTourResponseDto: {
+            /**
+             * Format: uuid
+             * @description Tour UUID.
+             */
+            id: string;
+            /**
+             * @description Stable public slug.
+             * @example historic-center
+             */
+            slug: string;
+            /** @description Optional cover media asset. */
+            coverMediaRef?: components["schemas"]["TourMediaAssetResponseDto"] | null;
+            /** @description Public gallery media assets. */
+            galleryMediaRefs: components["schemas"]["TourMediaAssetResponseDto"][];
+            /** @description Fixed price data. `null` for tip-based tours. */
+            price?: components["schemas"]["PriceResponseDto"] | null;
+            /**
+             * @description Average rating normalized to a numeric value.
+             * @example 4.8
+             */
+            rating: number;
+            /**
+             * @description Total review count.
+             * @example 120
+             */
+            reviewCount: number;
+            /**
+             * @description Tour commercial model.
+             * @enum {string}
+             */
+            tourType: "private" | "group" | "tip_based";
+            /**
+             * @description Total duration in minutes.
+             * @example 120
+             */
+            durationMinutes: number;
+            /** @description Start point data split into shared and localized portions. */
+            startPoint: components["schemas"]["PublicPointResponseDto"];
+            /** @description End point data split into shared and localized portions. */
+            endPoint: components["schemas"]["PublicPointResponseDto"];
+            /** @description Localized tag labels for the requested locale. */
+            tags: components["schemas"]["PublicTagResponseDto"][];
+            /** @description Published localized translation payload selected for the requested locale. */
+            translation: components["schemas"]["PublicTourTranslationResponseDto"];
+            /** @description Localized itinerary returned for the requested locale. */
+            itinerary: components["schemas"]["PublicTourItineraryResponseDto"];
+        };
+        TourAdminItineraryStopResponseDto: {
+            /**
+             * @description Stable stop identifier shared across translations.
+             * @example stop-1
+             */
+            id: string;
+            /**
+             * @description Planned stop duration in minutes.
+             * @example 15
+             */
+            durationMinutes?: Record<string, never> | null;
+            /** @description Optional stop coordinates. */
+            coordinates?: components["schemas"]["GeoCoordinatesDto"] | null;
+            /** @description Transport information to the next stop. The final stop must keep this field `null`. */
+            nextConnection?: components["schemas"]["TourNextConnectionResponseDto"] | null;
+        };
+        TourAdminItineraryResponseDto: {
+            /**
+             * @description Whether the itinerary is modeled as shared ordered stops or a free-form description.
+             * @example stops
+             * @enum {string}
+             */
+            variant: "description" | "stops";
+            /** @description Ordered shared itinerary stops. Empty for `description` itineraries. */
+            stops: components["schemas"]["TourAdminItineraryStopResponseDto"][];
+        };
+        TourTranslationAvailabilityResponseDto: {
+            /**
+             * @description Locale code being evaluated.
+             * @example en
+             */
+            languageCode: string;
+            /**
+             * @description Whether the translation currently satisfies all required completeness rules.
+             * @example true
+             */
+            isReady: boolean;
+            /**
+             * @description Whether the translation is configured to be publicly exposed.
+             * @example true
+             */
+            isPublished: boolean;
+            /**
+             * @description Required localized list fields that are missing or malformed.
+             * @example []
+             */
+            missingRequiredLists: string[];
+            /**
+             * @description Shared stop identifiers that still lack localized title/description pairs.
+             * @example []
+             */
+            missingStopTranslations: string[];
+            /**
+             * @description Whether the localized payload currently validates against the required schema.
+             * @example true
+             */
+            isSchemaValid: boolean;
+            /**
+             * @description Whether the translation is currently exposed by `public/tours` for its locale.
+             * @example true
+             */
+            publiclyAvailable: boolean;
+        };
+        RecordAuditMetadataDto: {
+            /**
+             * Format: uuid
+             * @description UUID of the admin that originally created the record.
+             */
+            createdBy?: Record<string, never> | null;
+            /**
+             * Format: uuid
+             * @description UUID of the admin that most recently updated the record.
+             */
+            updatedBy?: Record<string, never> | null;
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
+            updatedAt: string;
+        };
+        TourAdminResponseDto: {
+            /**
+             * Format: uuid
+             * @description Tour UUID.
+             */
+            id: string;
+            /**
+             * @description Non-localized admin-facing name for the tour.
+             * @example Barcelona Historic Center Main Tour
+             */
+            name: string;
+            /**
+             * @description Stable public slug.
+             * @example historic-center
+             */
+            slug: string;
+            /** @description Optional cover media asset. */
+            coverMediaRef?: components["schemas"]["TourMediaAssetResponseDto"] | null;
+            /** @description Additional gallery media assets. */
+            galleryMediaRefs: components["schemas"]["TourMediaAssetResponseDto"][];
+            /** @description Shared JSON Schema that localized translation payloads must satisfy. */
+            contentSchema?: {
+                [key: string]: unknown;
+            } | null;
+            /** @description Fixed price data. `null` for tip-based tours. */
+            price?: components["schemas"]["PriceResponseDto"] | null;
+            /**
+             * @description Average rating normalized to a numeric value.
+             * @example 4.8
+             */
+            rating?: Record<string, never> | null;
+            /**
+             * @description Total review count.
+             * @example 120
+             */
+            reviewCount?: Record<string, never> | null;
+            /**
+             * @description Tour commercial model.
+             * @enum {string}
+             */
+            tourType: "private" | "group" | "tip_based";
+            /**
+             * @description Total duration in minutes.
+             * @example 120
+             */
+            durationMinutes?: Record<string, never> | null;
+            /** @description Shared start point object. */
+            startPoint?: components["schemas"]["SharedPointResponseDto"] | null;
+            /** @description Shared end point object. */
+            endPoint?: components["schemas"]["SharedPointResponseDto"] | null;
+            /** @description Shared itinerary structure. */
+            itinerary?: components["schemas"]["TourAdminItineraryResponseDto"] | null;
+            /**
+             * @description Ordered tag keys assigned to the tour.
+             * @example [
+             *       "history"
+             *     ]
+             */
+            tagKeys: string[];
+            /** @description Expanded tag records. */
+            tags: components["schemas"]["TagResponseDto"][];
+            /** @description Localized translation records keyed by locale code. */
+            translations: {
+                [key: string]: components["schemas"]["TourAdminTranslationResponseDto"];
+            };
+            /** @description Per-locale publishability diagnostics derived from the shared schema and itinerary. */
+            translationAvailability: components["schemas"]["TourTranslationAvailabilityResponseDto"][];
+            /** @description Audit metadata for create and update operations. */
+            audit: components["schemas"]["RecordAuditMetadataDto"];
+        };
+        CreateTourDto: {
+            /**
+             * @description Non-localized admin-facing name used to identify the tour.
+             * @example Barcelona Historic Center Main Tour
+             */
+            name: string;
+            /**
+             * @description Stable public slug for the tour.
+             * @example historic-center
+             */
+            slug: string;
+            /**
+             * @description Commercial model of the tour. Required during minimal creation.
+             * @example group
+             * @enum {string}
+             */
+            tourType: "private" | "group" | "tip_based";
+        };
+        TourMediaAssetDto: {
+            /**
+             * @description Optional localized alt text keyed by locale code.
+             * @example {
+             *       "en": "View of the cathedral facade",
+             *       "es": "Vista de la fachada de la catedral"
+             *     }
+             */
+            altText?: {
+                [key: string]: string;
+            };
+            /**
+             * @description Media reference path.
+             * @example media/tours/historic-center/cover.jpg
+             */
+            ref: string;
+        };
+        PriceDto: {
+            /**
+             * @description Fixed price amount. Only valid for non-tip-based tours.
+             * @example 25
+             */
+            amount: number;
+            /**
+             * @description Currency code paired with the fixed amount.
+             * @example EUR
+             */
+            currency: string;
+        };
+        TourCoordinatesDto: {
+            /**
+             * @description Latitude in decimal degrees.
+             * @example 41.3874
+             */
+            lat: number;
+            /**
+             * @description Longitude in decimal degrees.
+             * @example 2.1686
+             */
+            lng: number;
+        };
+        SharedPointDto: {
+            /** @description Optional shared coordinates for the point. */
+            coordinates?: components["schemas"]["TourCoordinatesDto"];
+        };
+        TourItineraryConnectionDto: {
+            /**
+             * @description Travel time in minutes to the next stop.
+             * @example 8
+             */
+            durationMinutes?: number;
+            /**
+             * @description Commute mode used to move to the next stop.
+             * @example walk
+             * @enum {string}
+             */
+            commuteMode: "walk" | "bike" | "bus" | "train" | "metro" | "tram" | "ferry" | "private-transport" | "boat" | "other";
+        };
+        TourItineraryStopDto: {
+            /**
+             * @description Stable stop identifier shared across translations.
+             * @example stop-1
+             */
+            id: string;
+            /**
+             * @description Duration spent at the stop in minutes.
+             * @example 15
+             */
+            durationMinutes?: number;
+            /** @description Optional stop coordinates. */
+            coordinates?: components["schemas"]["TourCoordinatesDto"];
+            /** @description Transport information to the next stop. The final stop must omit this field. */
+            nextConnection?: components["schemas"]["TourItineraryConnectionDto"];
+        };
+        TourItineraryDto: {
+            /**
+             * @description Whether the itinerary is modeled as a localized description or shared ordered stops.
+             * @example description
+             * @enum {string}
+             */
+            variant: "description" | "stops";
+            /** @description Ordered shared stop list. Required when `variant` is `stops` and forbidden for `description` itineraries. */
+            stops?: components["schemas"]["TourItineraryStopDto"][];
+        };
+        UpdateTourDto: {
+            /**
+             * @description Updated non-localized admin-facing name.
+             * @example Barcelona Historic Center Main Tour
+             */
+            name?: string;
+            /**
+             * @description Updated public slug.
+             * @example historic-center
+             */
+            slug?: string;
+            /** @description Updated cover media asset. Set `null` to clear the value. */
+            coverMediaRef?: components["schemas"]["TourMediaAssetDto"] | null;
+            /** @description Replacement gallery media assets. */
+            galleryMediaRefs?: components["schemas"]["TourMediaAssetDto"][];
+            /** @description Updated shared JSON Schema for localized payload validation. */
+            contentSchema?: {
+                [key: string]: unknown;
+            };
+            /** @description Updated fixed price. Set `null` to remove price data. */
+            price?: components["schemas"]["PriceDto"] | null;
+            /**
+             * @description Updated average rating.
+             * @example 4.9
+             */
+            rating?: number;
+            /**
+             * @description Updated review count.
+             * @example 135
+             */
+            reviewCount?: number;
+            /**
+             * @description Updated commercial model.
+             * @example group
+             * @enum {string}
+             */
+            tourType?: "private" | "group" | "tip_based";
+            /**
+             * @description Updated duration in minutes.
+             * @example 150
+             */
+            durationMinutes?: number;
+            /** @description Replacement shared start point metadata. */
+            startPoint?: components["schemas"]["SharedPointDto"];
+            /** @description Replacement shared end point metadata. */
+            endPoint?: components["schemas"]["SharedPointDto"];
+            /** @description Replacement itinerary definition. For stop-based itineraries the full ordered list should be provided. */
+            itinerary?: components["schemas"]["TourItineraryDto"];
+            /** @description Replacement ordered tag key list. */
+            tagKeys?: string[];
+        };
+        CreateTourTranslationDto: {
+            /**
+             * @description Locale code for this tour translation.
+             * @example en
+             */
+            languageCode: string;
+            /**
+             * @description Optional external booking reference for this locale. Set `null` to clear it on update.
+             * @example booking-ref-123
+             */
+            bookingReferenceId?: Record<string, never> | null;
+            /**
+             * @description Localized payload validated against the shared tour content schema when available.
+             * @example {
+             *       "title": "Historic Center",
+             *       "cancellationType": "Free cancellation up to 24 hours before the start time.",
+             *       "highlights": [
+             *         "Gothic Quarter landmarks",
+             *         "Roman walls"
+             *       ],
+             *       "included": [
+             *         "Local guide",
+             *         "City map"
+             *       ],
+             *       "notIncluded": [
+             *         "Hotel pickup",
+             *         "Food and drinks"
+             *       ],
+             *       "startPoint": {
+             *         "label": "Town Hall"
+             *       },
+             *       "endPoint": {
+             *         "label": "Cathedral"
+             *       },
+             *       "itineraryDescription": "Walk through the center."
+             *     }
+             */
+            payload: {
+                [key: string]: unknown;
+            };
+        };
+        UpdateTourTranslationDto: {
+            /**
+             * @description Updated external booking reference for this locale. Set `null` to clear it.
+             * @example booking-ref-123
+             */
+            bookingReferenceId?: Record<string, never> | null;
+            /** @description Replacement localized payload. Omit to keep the existing payload. */
+            payload?: {
+                [key: string]: unknown;
+            };
+        };
+        PublishTourTranslationDto: {
+            /**
+             * @description Optional external booking reference override applied before publishing. Set `null` to clear it.
+             * @example booking-ref-123
+             */
+            bookingReferenceId?: Record<string, never> | null;
+        };
+        TourAdminTranslationResponseDto: {
+            /**
+             * @description Whether the translation currently satisfies all required completeness rules.
+             * @example true
+             */
+            isReady: boolean;
+            /**
+             * @description Whether the translation is configured to be publicly exposed.
+             * @example true
+             */
+            isPublished: boolean;
+            /**
+             * @description External booking reference for the locale, if any.
+             * @example booking-ref-123
+             */
+            bookingReferenceId?: Record<string, never> | null;
+            /**
+             * @description Localized cancellation policy text, or `null` when the translation is incomplete.
+             * @example Free cancellation up to 24 hours before the start time.
+             */
+            cancellationType?: Record<string, never> | null;
+            /**
+             * @description Localized highlight bullets in admin-defined order, or `null` when the translation is incomplete.
+             * @example [
+             *       "Gothic Quarter landmarks",
+             *       "Roman walls"
+             *     ]
+             */
+            highlights?: string[] | null;
+            /**
+             * @description Localized inclusions list in admin-defined order, or `null` when the translation is incomplete.
+             * @example [
+             *       "Local guide",
+             *       "City map"
+             *     ]
+             */
+            included?: string[] | null;
+            /**
+             * @description Localized exclusions list in admin-defined order, or `null` when the translation is incomplete.
+             * @example [
+             *       "Hotel pickup",
+             *       "Food and drinks"
+             *     ]
+             */
+            notIncluded?: string[] | null;
+            /** @description Localized payload validated against the shared content schema. */
+            payload: {
+                [key: string]: unknown;
+            };
+        };
+        BlogAdminTranslationResponseDto: {
+            /**
+             * @description Translation publication state.
+             * @enum {string}
+             */
+            publicationStatus: "published" | "unpublished";
+            /**
+             * @description Localized title.
+             * @example Barcelona Historic Center Guide
+             */
+            title: string;
+            /** @description Localized summary copy. */
+            summary?: Record<string, never> | null;
+            /**
+             * @description Localized rendered HTML body.
+             * @example <p>Walk through centuries of history.</p>
+             */
+            htmlContent: string;
+            /** @description SEO title override. */
+            seoTitle?: Record<string, never> | null;
+            /** @description SEO description override. */
+            seoDescription?: Record<string, never> | null;
+            /** @description Localized image references. */
+            imageRefs: string[];
         };
     };
-    responses: {
-        /** @description Error payload */
-        ErrorResponse: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ErrorResponse"];
-            };
-        };
-    };
-    parameters: {
-        UuidPathId: string;
-        LanguageCodePath: components["schemas"]["LocaleCode"];
-        TagKeyPath: string;
-        SlugPath: string;
-        LocaleQuery: components["schemas"]["LocaleCode"];
-    };
+    responses: never;
+    parameters: never;
     requestBodies: never;
     headers: never;
     pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    getAdminAuthMe: {
+    AdminAuthController_me: {
         parameters: {
             query?: never;
             header?: never;
@@ -708,20 +2092,34 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Authenticated admin context */
+            /** @description Resolved authenticated admin context. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AuthenticatedAdmin"];
+                    "application/json": components["schemas"]["AuthenticatedAdminResponseDto"];
                 };
             };
-            401: components["responses"]["ErrorResponse"];
-            403: components["responses"]["ErrorResponse"];
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    postAdminLogout: {
+    AdminAuthController_logout: {
         parameters: {
             query?: never;
             header?: never;
@@ -730,38 +2128,34 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Logout instructions */
+            /** @description Logout handling instructions. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["LogoutInstruction"];
+                    "application/json": components["schemas"]["LogoutResponseDto"];
                 };
             };
-        };
-    };
-    listAdminUsers: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Admin users */
-            200: {
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminUser"][];
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
         };
     };
-    createAdminUser: {
+    AdminMediaController_upload: {
         parameters: {
             query?: never;
             header?: never;
@@ -770,53 +2164,51 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["AdminUserUpsert"];
+                "multipart/form-data": {
+                    /** Format: binary */
+                    file: string;
+                    /** @example tours/historic-center */
+                    folder?: string;
+                };
             };
         };
         responses: {
-            /** @description Created admin user */
+            /** @description Stored media asset descriptor. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminUser"];
+                    "application/json": components["schemas"]["UploadedMediaResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
-        };
-    };
-    updateAdminUser: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["parameters"]["UuidPathId"];
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AdminUserUpdate"];
-            };
-        };
-        responses: {
-            /** @description Updated admin user */
-            200: {
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminUser"];
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    listAdminRoles: {
+    AdminUsersController_findAll: {
         parameters: {
             query?: never;
             header?: never;
@@ -825,38 +2217,34 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Roles */
+            /** @description Admin users. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Role"][];
+                    "application/json": components["schemas"]["AdminUserResponseDto"][];
                 };
             };
-        };
-    };
-    listLanguages: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Languages */
-            200: {
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Language"][];
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
         };
     };
-    createLanguage: {
+    AdminUsersController_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -865,53 +2253,129 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["LanguageUpsert"];
+                "application/json": components["schemas"]["CreateAdminUserDto"];
             };
         };
         responses: {
-            /** @description Created language */
+            /** @description Created admin user. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Language"];
+                    "application/json": components["schemas"]["AdminUserResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    updateLanguage: {
+    AdminUsersController_update: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                code: components["parameters"]["LanguageCodePath"];
+                /** @description Admin user UUID. */
+                id: string;
             };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["LanguagePatch"];
+                "application/json": components["schemas"]["UpdateAdminUserDto"];
             };
         };
         responses: {
-            /** @description Updated language */
+            /** @description Updated admin user. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Language"];
+                    "application/json": components["schemas"]["AdminUserResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    listTags: {
+    RolesController_findAll: {
         parameters: {
             query?: never;
             header?: never;
@@ -920,18 +2384,70 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Tags */
+            /** @description Available admin roles. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Tag"][];
+                    "application/json": components["schemas"]["RoleResponseDto"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
         };
     };
-    createTag: {
+    BlogPostsController_findAllAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin blog post records. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogAdminResponseDto"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_createAdmin: {
         parameters: {
             query?: never;
             header?: never;
@@ -940,74 +2456,249 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TagUpsert"];
+                "application/json": components["schemas"]["CreateBlogPostDto"];
             };
         };
         responses: {
-            /** @description Created tag */
+            /** @description Created admin blog post record. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Tag"];
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    deleteTag: {
+    BlogPostsController_findOneAdmin: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                key: components["parameters"]["TagKeyPath"];
+                /** @description Blog post UUID. */
+                id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Tag deleted after cascading association removal */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            404: components["responses"]["ErrorResponse"];
-        };
-    };
-    updateTag: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                key: components["parameters"]["TagKeyPath"];
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TagPatch"];
-            };
-        };
-        responses: {
-            /** @description Updated tag */
+            /** @description Admin blog post record. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Tag"];
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    listAdminTours: {
+    BlogPostsController_updateAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateBlogPostDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin blog post record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_findAllPublic: {
+        parameters: {
+            query: {
+                /** @description Requested locale code. */
+                locale: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Published localized blog posts. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicBlogResponseDto"][];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_findOnePublic: {
+        parameters: {
+            query: {
+                /** @description Requested locale code. */
+                locale: string;
+            };
+            header?: never;
+            path: {
+                /** @description Public blog post slug. */
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Published localized public blog post. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicBlogResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HealthController_getHealth: {
         parameters: {
             query?: never;
             header?: never;
@@ -1016,18 +2707,54 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Tours */
+            /** @description Foundation health payload. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminTour"][];
+                    "application/json": components["schemas"]["HealthResponseDto"];
                 };
             };
         };
     };
-    createTour: {
+    LanguagesController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Registered language records. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LanguageResponseDto"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    LanguagesController_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -1036,179 +2763,312 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["AdminTourUpsert"];
+                "application/json": components["schemas"]["CreateLanguageDto"];
             };
         };
         responses: {
-            /** @description Created tour */
+            /** @description Created language record. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminTour"];
+                    "application/json": components["schemas"]["LanguageResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
-        };
-    };
-    getAdminTour: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["parameters"]["UuidPathId"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Tour */
-            200: {
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminTour"];
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
-            404: components["responses"]["ErrorResponse"];
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    updateTour: {
+    LanguagesController_update: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["parameters"]["UuidPathId"];
+                /** @description Existing locale code to update. */
+                code: string;
             };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["AdminTourPatch"];
+                "application/json": components["schemas"]["UpdateLanguageDto"];
             };
         };
         responses: {
-            /** @description Updated tour */
+            /** @description Updated language record. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminTour"];
+                    "application/json": components["schemas"]["LanguageResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    listAdminBlogPosts: {
+    NewsletterSubscribersController_subscribe: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Blog posts */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AdminBlogPost"][];
-                };
-            };
-        };
-    };
-    createBlogPost: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["AdminBlogPostUpsert"];
+                "application/json": components["schemas"]["SubscribeNewsletterDto"];
             };
         };
         responses: {
-            /** @description Created blog post */
+            /** @description Subscription request accepted. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminBlogPost"];
+                    "application/json": components["schemas"]["NewsletterSubscriptionRequestedResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    getAdminBlogPost: {
+    NewsletterSubscribersController_confirmByLink: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["parameters"]["UuidPathId"];
+            query: {
+                /** @description Opaque newsletter confirmation token. */
+                token: string;
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Blog post */
+            /** @description Newsletter subscription confirmed. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminBlogPost"];
+                    "application/json": components["schemas"]["NewsletterSubscriptionConfirmedResponseDto"];
                 };
             };
-            404: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    updateBlogPost: {
+    NewsletterSubscribersController_confirm: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                id: components["parameters"]["UuidPathId"];
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["AdminBlogPostPatch"];
+                "application/json": components["schemas"]["NewsletterTokenDto"];
             };
         };
         responses: {
-            /** @description Updated blog post */
+            /** @description Newsletter subscription confirmed. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminBlogPost"];
+                    "application/json": components["schemas"]["NewsletterSubscriptionConfirmedResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
-            409: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    listNewsletterSubscribers: {
+    NewsletterSubscribersController_unsubscribeByLink: {
+        parameters: {
+            query: {
+                /** @description Opaque newsletter unsubscribe token. */
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Newsletter subscriber unsubscribed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NewsletterUnsubscribedResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    NewsletterSubscribersController_unsubscribe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NewsletterTokenDto"];
+            };
+        };
+        responses: {
+            /** @description Newsletter subscriber unsubscribed. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NewsletterUnsubscribedResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    NewsletterSubscribersController_findAll: {
         parameters: {
             query?: {
+                /** @description Case-insensitive email search term. */
                 q?: string;
-                status?: components["schemas"]["NewsletterSubscriptionStatus"];
+                /** @description Optional subscription status filter. */
+                status?: "pending_confirmation" | "subscribed" | "unsubscribed";
+                /** @description 1-based page number. */
                 page?: number;
+                /** @description Page size. Maximum 200. */
                 limit?: number;
             };
             header?: never;
@@ -1217,22 +3077,48 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Paginated subscribers */
+            /** @description Paginated newsletter subscribers. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedNewsletterSubscribers"];
+                    "application/json": components["schemas"]["NewsletterSubscriberAdminListResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
         };
     };
-    exportNewsletterSubscribers: {
+    NewsletterSubscribersController_exportCsv: {
         parameters: {
             query?: {
+                /** @description Case-insensitive email search term. */
                 q?: string;
-                status?: components["schemas"]["NewsletterSubscriptionStatus"];
+                /** @description Optional subscription status filter. */
+                status?: "pending_confirmation" | "subscribed" | "unsubscribed";
             };
             header?: never;
             path?: never;
@@ -1240,139 +3126,125 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description CSV export */
+            /** @description CSV export of newsletter subscribers. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "text/csv": string;
+                    "application/json": string;
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
         };
     };
-    getNewsletterSubscriber: {
+    NewsletterSubscribersController_findOne: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["parameters"]["UuidPathId"];
+                /** @description Newsletter subscriber UUID. */
+                id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Subscriber detail */
+            /** @description Newsletter subscriber detail. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["NewsletterSubscriber"];
+                    "application/json": components["schemas"]["NewsletterSubscriberAdminResponseDto"];
                 };
             };
-            404: components["responses"]["ErrorResponse"];
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    listPublicTours: {
+    TagsController_findAll: {
         parameters: {
-            query: {
-                locale: components["parameters"]["LocaleQuery"];
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Public tours */
+            /** @description Registered tags. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PublicTour"][];
+                    "application/json": components["schemas"]["TagResponseDto"][];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-        };
-    };
-    getPublicTour: {
-        parameters: {
-            query: {
-                locale: components["parameters"]["LocaleQuery"];
-            };
-            header?: never;
-            path: {
-                slug: components["parameters"]["SlugPath"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Public tour */
-            200: {
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PublicTour"];
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
-        };
-    };
-    listPublicBlogPosts: {
-        parameters: {
-            query: {
-                locale: components["parameters"]["LocaleQuery"];
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Public blog posts */
-            200: {
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PublicBlogPost"][];
+                    "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
         };
     };
-    getPublicBlogPost: {
-        parameters: {
-            query: {
-                locale: components["parameters"]["LocaleQuery"];
-            };
-            header?: never;
-            path: {
-                slug: components["parameters"]["SlugPath"];
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Public blog post */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PublicBlogPost"];
-                };
-            };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
-        };
-    };
-    subscribeToNewsletter: {
+    TagsController_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -1381,23 +3253,275 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["NewsletterSubscribeRequest"];
+                "application/json": components["schemas"]["CreateTagDto"];
             };
         };
         responses: {
-            /** @description Subscribe result */
+            /** @description Created tag record. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TagResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TagsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Stable tag key. */
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Tag deleted after all tour and blog associations were removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TagsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Stable tag key. */
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTagDto"];
+            };
+        };
+        responses: {
+            /** @description Updated tag record. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["NewsletterSubscribeResponse"];
+                    "application/json": components["schemas"]["TagResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    confirmNewsletterSubscription: {
+    PublicToursController_findAll: {
+        parameters: {
+            query: {
+                /** @description Requested locale code. */
+                locale: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Published public tours for the requested locale. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicTourResponseDto"][];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    PublicToursController_findOne: {
+        parameters: {
+            query: {
+                /** @description Requested locale code. */
+                locale: string;
+            };
+            header?: never;
+            path: {
+                /** @description Public tour slug. */
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Published localized public tour. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicTourResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_findAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin tour records. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_create: {
         parameters: {
             query?: never;
             header?: never;
@@ -1406,47 +3530,403 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TokenRequest"];
+                "application/json": components["schemas"]["CreateTourDto"];
             };
         };
         responses: {
-            /** @description Confirm result */
+            /** @description Created admin tour record. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin tour record. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TokenResult"];
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
-    unsubscribeFromNewsletter: {
+    ToursController_update: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TokenRequest"];
+                "application/json": components["schemas"]["UpdateTourDto"];
             };
         };
         responses: {
-            /** @description Unsubscribe result */
+            /** @description Updated admin tour record. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TokenResult"];
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
                 };
             };
-            400: components["responses"]["ErrorResponse"];
-            404: components["responses"]["ErrorResponse"];
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_createTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTourTranslationDto"];
+            };
+        };
+        responses: {
+            /** @description Admin tour record after translation creation. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_updateTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+                /** @description Translation locale code. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTourTranslationDto"];
+            };
+        };
+        responses: {
+            /** @description Admin tour record after translation update. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_publishTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+                /** @description Translation locale code. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublishTourTranslationDto"];
+            };
+        };
+        responses: {
+            /** @description Admin tour record after translation publication. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    ToursController_unpublishTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Tour UUID. */
+                id: string;
+                /** @description Translation locale code. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin tour record after translation unpublication. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TourAdminResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
 }

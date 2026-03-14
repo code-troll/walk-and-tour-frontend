@@ -4,7 +4,7 @@ paths:
     get:
       description: Resolves the authenticated Auth0 bearer token to the local admin user context used by guarded admin routes.
       operationId: AdminAuthController_me
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Resolved authenticated admin context.
@@ -25,7 +25,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Get the current authenticated admin
       tags:
         - Admin Auth
@@ -33,7 +33,7 @@ paths:
     post:
       description: The backend uses bearer tokens, so logout is handled by the client discarding the current token.
       operationId: AdminAuthController_logout
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Logout handling instructions.
@@ -54,15 +54,65 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Describe admin logout behavior
       tags:
         - Admin Auth
+  /api/admin/media/upload:
+    post:
+      description: Uploads one image through the configured storage driver and returns a reusable media asset descriptor.
+      operationId: AdminMediaController_upload
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                folder:
+                  type: string
+                  example: tours/historic-center
+              required:
+                - file
+      responses:
+        "201":
+          description: Stored media asset descriptor.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadedMediaResponseDto"
+        "400":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      security:
+        - admin-auth: []
+      summary: Upload an image asset for admin content
+      tags:
+        - Admin Media
   /api/admin/users:
     get:
       description: Returns all local admin users with their expanded role records.
       operationId: AdminUsersController_findAll
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Admin users.
@@ -85,14 +135,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: List admin users
       tags:
         - Admin Users
     post:
       description: Creates a local admin user record that can later authenticate through Auth0 mapping.
       operationId: AdminUsersController_create
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -137,7 +187,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Create an admin user
       tags:
         - Admin Users
@@ -197,7 +247,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Update an admin user
       tags:
         - Admin Users
@@ -205,7 +255,7 @@ paths:
     get:
       description: Returns the local role catalog used by admin route authorization.
       operationId: RolesController_findAll
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Available admin roles.
@@ -228,7 +278,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: List admin roles
       tags:
         - Admin Roles
@@ -236,7 +286,7 @@ paths:
     get:
       description: Returns all blog posts with localized translation maps, public availability diagnostics, and audit metadata.
       operationId: BlogPostsController_findAllAdmin
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Admin blog post records.
@@ -259,7 +309,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: List blog posts for admin management
       tags:
         - BlogPosts
@@ -267,7 +317,7 @@ paths:
     post:
       description: Creates a blog post with shared attributes and localized translations.
       operationId: BlogPostsController_createAdmin
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -306,7 +356,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Create a blog post
       tags:
         - BlogPosts
@@ -349,7 +399,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Get a blog post by UUID for admin management
       tags:
         - BlogPosts
@@ -409,7 +459,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Update a blog post
       tags:
         - BlogPosts
@@ -503,7 +553,7 @@ paths:
         Returns a simple liveness payload together with the shared enum vocabularies currently compiled into the
         backend.
       operationId: HealthController_getHealth
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Foundation health payload.
@@ -518,7 +568,7 @@ paths:
     get:
       description: Returns all registered languages ordered by `sortOrder` and then by locale code.
       operationId: LanguagesController_findAll
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Registered language records.
@@ -541,14 +591,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: List configured languages
       tags:
         - Admin Languages
     post:
       description: Registers a locale that can later be used by tags, tours, blog posts, and public locale-aware endpoints.
       operationId: LanguagesController_create
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -587,7 +637,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Create a language
       tags:
         - Admin Languages
@@ -641,7 +691,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Update a language
       tags:
         - Admin Languages
@@ -651,7 +701,7 @@ paths:
         Starts or restarts the double opt-in flow. The subscriber remains in `pending_confirmation` until the
         confirmation token is used.
       operationId: NewsletterSubscribersController_subscribe
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -679,7 +729,7 @@ paths:
     post:
       description: Completes the double opt-in flow using a confirmation token delivered through email.
       operationId: NewsletterSubscribersController_confirm
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -748,7 +798,7 @@ paths:
     post:
       description: Unsubscribes a subscriber using the tokenized unsubscribe link delivered through email.
       operationId: NewsletterSubscribersController_unsubscribe
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -881,7 +931,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: List newsletter subscribers
       tags:
         - NewsletterSubscribers
@@ -938,7 +988,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Export newsletter subscribers as CSV
       tags:
         - NewsletterSubscribers
@@ -981,7 +1031,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Get newsletter subscriber detail
       tags:
         - NewsletterSubscribers
@@ -990,7 +1040,7 @@ paths:
     get:
       description: Returns all registered tags ordered by key.
       operationId: TagsController_findAll
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Registered tags.
@@ -1013,14 +1063,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: List tags
       tags:
         - Admin Tags
     post:
       description: Creates a reusable tag with locale-specific labels.
       operationId: TagsController_create
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -1059,7 +1109,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Create a tag
       tags:
         - Admin Tags
@@ -1113,7 +1163,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Update a tag
       tags:
         - Admin Tags
@@ -1150,15 +1200,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Delete a tag
       tags:
         - Admin Tags
   /api/public/tours:
     get:
       description: >-
-        Returns only published tours that have a locale-specific published and schema-valid translation for the
-        requested locale.
+        Returns only tours whose shared data is publicly valid and whose requested locale has a published, ready, and
+        schema-valid translation.
       operationId: PublicToursController_findAll
       parameters:
         - name: locale
@@ -1196,8 +1246,8 @@ paths:
   /api/public/tours/{slug}:
     get:
       description: >-
-        Returns a published tour only when the requested locale is enabled and has a published, ready, schema-valid
-        translation.
+        Returns a public tour only when the shared tour data is valid, the requested locale is enabled, and that locale
+        has a published, ready, schema-valid translation.
       operationId: PublicToursController_findOne
       parameters:
         - name: slug
@@ -1241,7 +1291,7 @@ paths:
     get:
       description: Returns all tours with shared data, translation diagnostics, and audit metadata.
       operationId: ToursController_findAll
-      parameters: [ ]
+      parameters: []
       responses:
         "200":
           description: Admin tour records.
@@ -1264,14 +1314,16 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: List tours for admin management
       tags:
         - Admin Tours
     post:
-      description: Creates a tour with shared attributes, optional stop itinerary, and optional localized translations.
+      description: >-
+        Creates a minimal draft tour with only the shared identifier fields. Shared content, schema, media, itinerary,
+        tags, and translations are added later through PATCH.
       operationId: ToursController_create
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -1310,7 +1362,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Create a tour
       tags:
         - Admin Tours
@@ -1352,14 +1404,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Get a tour by UUID for admin management
       tags:
         - Admin Tours
     patch:
       description: >-
-        Updates shared tour data, fully replaces the shared itinerary when provided, and merges translations by locale
-        code.
+        Updates only shared tour data. It fully replaces the shared itinerary when provided and recalculates readiness
+        for existing translations that depend on shared schema or stop structure.
       operationId: ToursController_update
       parameters:
         - name: id
@@ -1413,17 +1465,300 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseDto"
       security:
-        - admin-auth: [ ]
+        - admin-auth: []
       summary: Update a tour
+      tags:
+        - Admin Tours
+  /api/admin/tours/{id}/translations:
+    post:
+      description: >-
+        Creates a localized tour translation independently from the shared tour record. The backend calculates readiness
+        and keeps the translation unpublished until the dedicated publish endpoint is called.
+      operationId: ToursController_createTranslation
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Tour UUID.
+          schema:
+            format: uuid
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTourTranslationDto"
+      responses:
+        "201":
+          description: Admin tour record after translation creation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TourAdminResponseDto"
+        "400":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "409":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      security:
+        - admin-auth: []
+      summary: Create a tour translation
+      tags:
+        - Admin Tours
+  /api/admin/tours/{id}/translations/{languageCode}:
+    patch:
+      description: >-
+        Updates one localized tour translation independently from shared tour data. Any readiness recalculation that
+        fails will automatically unpublish that translation.
+      operationId: ToursController_updateTranslation
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Tour UUID.
+          schema:
+            format: uuid
+            type: string
+        - name: languageCode
+          required: true
+          in: path
+          description: Translation locale code.
+          schema:
+            example: en
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTourTranslationDto"
+      responses:
+        "200":
+          description: Admin tour record after translation update.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TourAdminResponseDto"
+        "400":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      security:
+        - admin-auth: []
+      summary: Update a tour translation
+      tags:
+        - Admin Tours
+    delete:
+      description: Deletes one localized tour translation by locale code. This permanently removes the locale from the tour.
+      operationId: ToursController_deleteTranslation
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Tour UUID.
+          schema:
+            format: uuid
+            type: string
+        - name: languageCode
+          required: true
+          in: path
+          description: Translation locale code.
+          schema:
+            example: en
+            type: string
+      responses:
+        "204":
+          description: Translation deleted successfully.
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      security:
+        - admin-auth: []
+      summary: Delete a tour translation
+      tags:
+        - Admin Tours
+  /api/admin/tours/{id}/translations/{languageCode}/publish:
+    post:
+      description: >-
+        Publishes one localized tour translation. This endpoint is the only place where translation publication can be
+        enabled, and it rejects translations that are not ready.
+      operationId: ToursController_publishTranslation
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Tour UUID.
+          schema:
+            format: uuid
+            type: string
+        - name: languageCode
+          required: true
+          in: path
+          description: Translation locale code.
+          schema:
+            example: en
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PublishTourTranslationDto"
+      responses:
+        "200":
+          description: Admin tour record after translation publication.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TourAdminResponseDto"
+        "400":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      security:
+        - admin-auth: []
+      summary: Publish a tour translation
+      tags:
+        - Admin Tours
+  /api/admin/tours/{id}/translations/{languageCode}/unpublish:
+    post:
+      description: >-
+        Unpublishes one localized tour translation. This endpoint is the only place where translation publication can be
+        disabled manually.
+      operationId: ToursController_unpublishTranslation
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Tour UUID.
+          schema:
+            format: uuid
+            type: string
+        - name: languageCode
+          required: true
+          in: path
+          description: Translation locale code.
+          schema:
+            example: en
+            type: string
+      responses:
+        "200":
+          description: Admin tour record after translation unpublication.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TourAdminResponseDto"
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "403":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      security:
+        - admin-auth: []
+      summary: Unpublish a tour translation
       tags:
         - Admin Tours
 info:
   title: Walk and Tour Backend API
   description: Administrative and public API surface for languages, tags, tours, blog posts, and admin authentication.
   version: 1.0.0
-  contact: { }
-tags: [ ]
-servers: [ ]
+  contact: {}
+tags: []
+servers: []
 components:
   securitySchemes:
     admin-auth:
@@ -1501,6 +1836,39 @@ components:
           example: client_discard_bearer_token
       required:
         - logoutStrategy
+    UploadedMediaResponseDto:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: Media reference path.
+          example: media/tours/historic-center/cover.jpg
+        altText:
+          type: object
+          description: Optional localized alt text keyed by locale code.
+          additionalProperties:
+            type: string
+          nullable: true
+          example:
+            en: View of the cathedral facade
+            es: Vista de la fachada de la catedral
+        publicUrl:
+          type: string
+          description: Public URL resolved by the configured storage driver.
+          example: http://api.dev.walkandtour.dk:3000/media/tours/historic-center/uuid-cover.jpg
+        contentType:
+          type: string
+          description: Detected content type of the uploaded object.
+          example: image/jpeg
+        size:
+          type: number
+          description: Stored file size in bytes.
+          example: 248193
+      required:
+        - ref
+        - publicUrl
+        - contentType
+        - size
     RoleResponseDto:
       type: object
       properties:
@@ -1756,10 +2124,6 @@ components:
           type: object
           description: Optional hero media reference.
           nullable: true
-        category:
-          type: object
-          description: Optional category.
-          nullable: true
         publicationStatus:
           type: string
           description: Blog post publication state.
@@ -1867,11 +2231,6 @@ components:
           description: Optional hero media reference.
           example: media/blog/historic-center/hero.jpg
           maxLength: 255
-        category:
-          type: string
-          description: Optional category grouping for admin organization and public filters.
-          example: city-guides
-          maxLength: 100
         publicationStatus:
           type: string
           description: Top-level publication state of the blog post.
@@ -1919,11 +2278,6 @@ components:
           example: media/blog/historic-center/hero.jpg
           maxLength: 255
           nullable: true
-        category:
-          type: string
-          description: Updated category.
-          example: city-guides
-          maxLength: 100
         publicationStatus:
           type: string
           description: Updated top-level publication state.
@@ -2011,10 +2365,6 @@ components:
           type: object
           description: Optional hero media reference.
           nullable: true
-        category:
-          type: object
-          description: Optional category.
-          nullable: true
         tags:
           description: Localized tag labels for the requested locale.
           type: array
@@ -2055,30 +2405,6 @@ components:
               - en
               - es
               - it
-        tourPublicationStatuses:
-          type: array
-          description: Top-level publication states available for tours.
-          items:
-            type: string
-            enum:
-              - draft
-              - published
-        tourTranslationStatuses:
-          type: array
-          description: Translation workflow states available for tour localized content.
-          items:
-            type: string
-            enum:
-              - draft
-              - ready
-        tourTranslationPublicationStatuses:
-          type: array
-          description: Translation publication states available for tour localized content.
-          items:
-            type: string
-            enum:
-              - published
-              - unpublished
         tourTypes:
           type: array
           description: Supported tour commercial models.
@@ -2088,16 +2414,6 @@ components:
               - private
               - group
               - tip_based
-        tourCancellationTypes:
-          type: array
-          description: Supported tour cancellation policies.
-          items:
-            type: string
-            enum:
-              - 12h_free_cancellation
-              - 24h_free_cancellation
-              - 48h_free_cancellation
-              - 72h_free_cancellation
         tourCommuteModes:
           type: array
           description: Supported commute modes between itinerary stops.
@@ -2134,11 +2450,7 @@ components:
       required:
         - adminRoles
         - supportedLanguageCodes
-        - tourPublicationStatuses
-        - tourTranslationStatuses
-        - tourTranslationPublicationStatuses
         - tourTypes
-        - tourCancellationTypes
         - tourCommuteModes
         - blogPublicationStatuses
         - newsletterSubscriptionStatuses
@@ -2493,6 +2805,24 @@ components:
           example:
             en: History
             es: Historia
+    TourMediaAssetResponseDto:
+      type: object
+      properties:
+        ref:
+          type: string
+          description: Media reference path.
+          example: media/tours/historic-center/cover.jpg
+        altText:
+          type: object
+          description: Optional localized alt text keyed by locale code.
+          additionalProperties:
+            type: string
+          nullable: true
+          example:
+            en: View of the cathedral facade
+            es: Vista de la fachada de la catedral
+      required:
+        - ref
     PriceResponseDto:
       type: object
       properties:
@@ -2555,6 +2885,10 @@ components:
           type: object
           description: External booking reference associated with the published locale.
           nullable: true
+        cancellationType:
+          type: string
+          description: Localized cancellation policy text.
+          example: Free cancellation up to 24 hours before the start time.
         highlights:
           description: Localized highlight bullets in display order.
           example:
@@ -2585,6 +2919,7 @@ components:
           additionalProperties: true
       required:
         - locale
+        - cancellationType
         - highlights
         - included
         - notIncluded
@@ -2680,21 +3015,16 @@ components:
           type: string
           description: Stable public slug.
           example: historic-center
-        category:
-          type: object
-          description: Optional public category.
-          example: walking
-          nullable: true
         coverMediaRef:
-          type: object
-          description: Optional cover media reference.
-          example: media/tours/historic-center/cover.jpg
+          description: Optional cover media asset.
           nullable: true
+          allOf:
+            - $ref: "#/components/schemas/TourMediaAssetResponseDto"
         galleryMediaRefs:
-          description: Public gallery media references.
+          description: Public gallery media assets.
           type: array
           items:
-            type: string
+            $ref: "#/components/schemas/TourMediaAssetResponseDto"
         price:
           description: Fixed price data. `null` for tip-based tours.
           nullable: true
@@ -2715,14 +3045,6 @@ components:
             - private
             - group
             - tip_based
-        cancellationType:
-          type: string
-          description: Tour cancellation policy.
-          enum:
-            - 12h_free_cancellation
-            - 24h_free_cancellation
-            - 48h_free_cancellation
-            - 72h_free_cancellation
         durationMinutes:
           type: number
           description: Total duration in minutes.
@@ -2748,10 +3070,6 @@ components:
           description: Localized itinerary returned for the requested locale.
           allOf:
             - $ref: "#/components/schemas/PublicTourItineraryResponseDto"
-        publishedAt:
-          type: string
-          description: Publication timestamp of the parent tour.
-          format: date-time
       required:
         - id
         - slug
@@ -2759,14 +3077,12 @@ components:
         - rating
         - reviewCount
         - tourType
-        - cancellationType
         - durationMinutes
         - startPoint
         - endPoint
         - tags
         - translation
         - itinerary
-        - publishedAt
     TourAdminItineraryStopResponseDto:
       type: object
       properties:
@@ -2816,27 +3132,23 @@ components:
           type: string
           description: Locale code being evaluated.
           example: en
-        translationStatus:
-          type: string
-          description: Translation workflow state.
-          enum:
-            - draft
-            - ready
-        publicationStatus:
-          type: string
-          description: Translation publication state.
-          enum:
-            - published
-            - unpublished
+        isReady:
+          type: boolean
+          description: Whether the translation currently satisfies all required completeness rules.
+          example: true
+        isPublished:
+          type: boolean
+          description: Whether the translation is configured to be publicly exposed.
+          example: true
         missingRequiredLists:
           description: Required localized list fields that are missing or malformed.
-          example: [ ]
+          example: []
           type: array
           items:
             type: string
         missingStopTranslations:
           description: Shared stop identifiers that still lack localized title/description pairs.
-          example: [ ]
+          example: []
           type: array
           items:
             type: string
@@ -2850,12 +3162,36 @@ components:
           example: true
       required:
         - languageCode
-        - translationStatus
-        - publicationStatus
+        - isReady
+        - isPublished
         - missingRequiredLists
         - missingStopTranslations
         - isSchemaValid
         - publiclyAvailable
+    RecordAuditMetadataDto:
+      type: object
+      properties:
+        createdBy:
+          type: object
+          description: UUID of the admin that originally created the record.
+          format: uuid
+          nullable: true
+        updatedBy:
+          type: object
+          description: UUID of the admin that most recently updated the record.
+          format: uuid
+          nullable: true
+        createdAt:
+          type: string
+          description: Creation timestamp.
+          format: date-time
+        updatedAt:
+          type: string
+          description: Last update timestamp.
+          format: date-time
+      required:
+        - createdAt
+        - updatedAt
     TourAdminResponseDto:
       type: object
       properties:
@@ -2871,46 +3207,36 @@ components:
           type: string
           description: Stable public slug.
           example: historic-center
-        category:
-          type: object
-          description: Optional business category.
-          example: walking
-          nullable: true
         coverMediaRef:
-          type: object
-          description: Optional cover media reference.
-          example: media/tours/historic-center/cover.jpg
+          description: Optional cover media asset.
           nullable: true
+          allOf:
+            - $ref: "#/components/schemas/TourMediaAssetResponseDto"
         galleryMediaRefs:
-          description: Additional gallery media references.
-          example:
-            - media/tours/historic-center/1.jpg
+          description: Additional gallery media assets.
           type: array
           items:
-            type: string
-        publicationStatus:
-          type: string
-          description: Tour publication state.
-          enum:
-            - draft
-            - published
+            $ref: "#/components/schemas/TourMediaAssetResponseDto"
         contentSchema:
           type: object
           description: Shared JSON Schema that localized translation payloads must satisfy.
           additionalProperties: true
+          nullable: true
         price:
           description: Fixed price data. `null` for tip-based tours.
           nullable: true
           allOf:
             - $ref: "#/components/schemas/PriceResponseDto"
         rating:
-          type: number
+          type: object
           description: Average rating normalized to a numeric value.
           example: 4.8
+          nullable: true
         reviewCount:
-          type: number
+          type: object
           description: Total review count.
           example: 120
+          nullable: true
         tourType:
           type: string
           description: Tour commercial model.
@@ -2918,28 +3244,24 @@ components:
             - private
             - group
             - tip_based
-        cancellationType:
-          type: string
-          description: Tour cancellation policy.
-          enum:
-            - 12h_free_cancellation
-            - 24h_free_cancellation
-            - 48h_free_cancellation
-            - 72h_free_cancellation
         durationMinutes:
-          type: number
+          type: object
           description: Total duration in minutes.
           example: 120
+          nullable: true
         startPoint:
           description: Shared start point object.
+          nullable: true
           allOf:
             - $ref: "#/components/schemas/SharedPointResponseDto"
         endPoint:
           description: Shared end point object.
+          nullable: true
           allOf:
             - $ref: "#/components/schemas/SharedPointResponseDto"
         itinerary:
           description: Shared itinerary structure.
+          nullable: true
           allOf:
             - $ref: "#/components/schemas/TourAdminItineraryResponseDto"
         tagKeys:
@@ -2965,29 +3287,66 @@ components:
           items:
             $ref: "#/components/schemas/TourTranslationAvailabilityResponseDto"
         audit:
-          description: Audit metadata for create, update, and publish operations.
+          description: Audit metadata for create and update operations.
           allOf:
-            - $ref: "#/components/schemas/AuditMetadataDto"
+            - $ref: "#/components/schemas/RecordAuditMetadataDto"
       required:
         - id
         - name
         - slug
         - galleryMediaRefs
-        - publicationStatus
-        - contentSchema
-        - rating
-        - reviewCount
         - tourType
-        - cancellationType
-        - durationMinutes
-        - startPoint
-        - endPoint
-        - itinerary
         - tagKeys
         - tags
         - translations
         - translationAvailability
         - audit
+    CreateTourDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Non-localized admin-facing name used to identify the tour.
+          example: Barcelona Historic Center Main Tour
+          minLength: 1
+          maxLength: 255
+        slug:
+          type: string
+          description: Stable public slug for the tour.
+          example: historic-center
+          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
+          maxLength: 150
+        tourType:
+          type: string
+          description: Commercial model of the tour. Required during minimal creation.
+          enum:
+            - private
+            - group
+            - tip_based
+          example: group
+      required:
+        - name
+        - slug
+        - tourType
+    TourMediaAssetDto:
+      type: object
+      properties:
+        altText:
+          type: object
+          description: Optional localized alt text keyed by locale code.
+          additionalProperties:
+            type: string
+            maxLength: 255
+          example:
+            en: View of the cathedral facade
+            es: Vista de la fachada de la catedral
+        ref:
+          type: string
+          description: Media reference path.
+          example: media/tours/historic-center/cover.jpg
+          maxLength: 255
+      required:
+        - ref
     PriceDto:
       type: object
       properties:
@@ -3091,178 +3450,6 @@ components:
             $ref: "#/components/schemas/TourItineraryStopDto"
       required:
         - variant
-    CreateTourTranslationDto:
-      type: object
-      properties:
-        languageCode:
-          type: string
-          description: Locale code for this tour translation.
-          example: en
-          pattern: ^[a-z]{2}(?:-[A-Z]{2})?$
-        translationStatus:
-          type: string
-          description: Translation workflow state.
-          enum:
-            - draft
-            - ready
-          example: ready
-        publicationStatus:
-          type: string
-          description: Translation publication state. A translation can only be published after it is `ready`.
-          enum:
-            - published
-            - unpublished
-          example: published
-        bookingReferenceId:
-          type: string
-          description: Optional external booking reference for this locale.
-          example: booking-ref-123
-        payload:
-          type: object
-          description: Localized payload validated against the shared tour content schema.
-          additionalProperties: true
-          example:
-            title: Historic Center
-            highlights:
-              - Gothic Quarter landmarks
-              - Roman walls
-            included:
-              - Local guide
-              - City map
-            notIncluded:
-              - Hotel pickup
-              - Food and drinks
-            startPoint:
-              label: Town Hall
-            endPoint:
-              label: Cathedral
-            itineraryDescription: Walk through the center.
-      required:
-        - languageCode
-        - translationStatus
-        - publicationStatus
-        - bookingReferenceId
-        - payload
-    CreateTourDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Non-localized admin-facing name used to identify the tour.
-          example: Barcelona Historic Center Main Tour
-          minLength: 1
-          maxLength: 255
-        slug:
-          type: string
-          description: Stable public slug for the tour.
-          example: historic-center
-          pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
-          maxLength: 150
-        category:
-          type: string
-          description: Optional business category.
-          example: walking
-          maxLength: 100
-        coverMediaRef:
-          type: string
-          description: Optional cover media reference.
-          example: media/tours/historic-center/cover.jpg
-          maxLength: 255
-        galleryMediaRefs:
-          description: Additional gallery media references.
-          example:
-            - media/tours/historic-center/1.jpg
-          type: array
-          items:
-            type: string
-        publicationStatus:
-          type: string
-          description: Top-level publication state of the tour.
-          enum:
-            - draft
-            - published
-          example: draft
-        contentSchema:
-          type: object
-          description: Shared JSON Schema that every translation payload must satisfy once it is `ready` or `published`.
-          additionalProperties: true
-        price:
-          description: Fixed price definition. Omit for `tip_based` tours.
-          allOf:
-            - $ref: "#/components/schemas/PriceDto"
-        rating:
-          type: number
-          description: Average review score.
-          example: 4.8
-          minimum: 1
-          maximum: 5
-        reviewCount:
-          type: number
-          description: Total review count.
-          example: 120
-          minimum: 0
-        tourType:
-          type: string
-          description: Commercial model of the tour.
-          enum:
-            - private
-            - group
-            - tip_based
-          example: group
-        cancellationType:
-          type: string
-          description: Cancellation policy offered for the tour.
-          enum:
-            - 12h_free_cancellation
-            - 24h_free_cancellation
-            - 48h_free_cancellation
-            - 72h_free_cancellation
-          example: 24h_free_cancellation
-        durationMinutes:
-          type: number
-          description: Duration in minutes.
-          example: 120
-          minimum: 0
-        startPoint:
-          description: Shared start point metadata.
-          allOf:
-            - $ref: "#/components/schemas/SharedPointDto"
-        endPoint:
-          description: Shared end point metadata.
-          allOf:
-            - $ref: "#/components/schemas/SharedPointDto"
-        itinerary:
-          description: Shared itinerary structure.
-          allOf:
-            - $ref: "#/components/schemas/TourItineraryDto"
-        tagKeys:
-          description: Ordered tag keys assigned to the tour.
-          example:
-            - history
-          uniqueItems: true
-          type: array
-          items:
-            type: string
-        translations:
-          description: Localized translations to create together with the tour.
-          uniqueItems: true
-          type: array
-          items:
-            $ref: "#/components/schemas/CreateTourTranslationDto"
-      required:
-        - name
-        - slug
-        - publicationStatus
-        - contentSchema
-        - rating
-        - reviewCount
-        - tourType
-        - cancellationType
-        - durationMinutes
-        - startPoint
-        - endPoint
-        - itinerary
-        - tagKeys
     UpdateTourDto:
       type: object
       properties:
@@ -3278,29 +3465,16 @@ components:
           example: historic-center
           pattern: ^[a-z0-9]+(?:-[a-z0-9]+)*$
           maxLength: 150
-        category:
-          type: string
-          description: Updated business category.
-          example: walking
-          maxLength: 100
         coverMediaRef:
-          type: object
-          description: Updated cover media reference. Set `null` to clear the value.
-          example: media/tours/historic-center/cover.jpg
-          maxLength: 255
+          description: Updated cover media asset. Set `null` to clear the value.
           nullable: true
+          allOf:
+            - $ref: "#/components/schemas/TourMediaAssetDto"
         galleryMediaRefs:
-          description: Replacement gallery media references.
+          description: Replacement gallery media assets.
           type: array
           items:
-            type: string
-        publicationStatus:
-          type: string
-          description: Updated top-level publication state.
-          enum:
-            - draft
-            - published
-          example: published
+            $ref: "#/components/schemas/TourMediaAssetDto"
         contentSchema:
           type: object
           description: Updated shared JSON Schema for localized payload validation.
@@ -3329,15 +3503,6 @@ components:
             - group
             - tip_based
           example: group
-        cancellationType:
-          type: string
-          description: Updated cancellation policy.
-          enum:
-            - 12h_free_cancellation
-            - 24h_free_cancellation
-            - 48h_free_cancellation
-            - 72h_free_cancellation
-          example: 24h_free_cancellation
         durationMinutes:
           type: number
           description: Updated duration in minutes.
@@ -3361,32 +3526,84 @@ components:
           type: array
           items:
             type: string
-        translations:
-          description: Translations to merge into the existing translation set by locale code.
-          uniqueItems: true
-          type: array
-          items:
-            $ref: "#/components/schemas/CreateTourTranslationDto"
+    CreateTourTranslationDto:
+      type: object
+      properties:
+        languageCode:
+          type: string
+          description: Locale code for this tour translation.
+          example: en
+          pattern: ^[a-z]{2}(?:-[A-Z]{2})?$
+        bookingReferenceId:
+          type: object
+          description: Optional external booking reference for this locale. Set `null` to clear it on update.
+          example: booking-ref-123
+          nullable: true
+        payload:
+          type: object
+          description: Localized payload validated against the shared tour content schema when available.
+          additionalProperties: true
+          example:
+            title: Historic Center
+            cancellationType: Free cancellation up to 24 hours before the start time.
+            highlights:
+              - Gothic Quarter landmarks
+              - Roman walls
+            included:
+              - Local guide
+              - City map
+            notIncluded:
+              - Hotel pickup
+              - Food and drinks
+            startPoint:
+              label: Town Hall
+            endPoint:
+              label: Cathedral
+            itineraryDescription: Walk through the center.
+      required:
+        - languageCode
+        - payload
+    UpdateTourTranslationDto:
+      type: object
+      properties:
+        bookingReferenceId:
+          type: object
+          description: Updated external booking reference for this locale. Set `null` to clear it.
+          example: booking-ref-123
+          nullable: true
+        payload:
+          type: object
+          description: Replacement localized payload. Omit to keep the existing payload.
+          additionalProperties: true
+    PublishTourTranslationDto:
+      type: object
+      properties:
+        bookingReferenceId:
+          type: object
+          description: Optional external booking reference override applied before publishing. Set `null` to clear it.
+          example: booking-ref-123
+          nullable: true
     TourAdminTranslationResponseDto:
       type: object
       properties:
-        translationStatus:
-          type: string
-          description: Translation workflow state.
-          enum:
-            - draft
-            - ready
-        publicationStatus:
-          type: string
-          description: Translation publication state.
-          enum:
-            - published
-            - unpublished
+        isReady:
+          type: boolean
+          description: Whether the translation currently satisfies all required completeness rules.
+          example: true
+        isPublished:
+          type: boolean
+          description: Whether the translation is configured to be publicly exposed.
+          example: true
         bookingReferenceId:
           type: object
           description: External booking reference for the locale, if any.
           nullable: true
           example: booking-ref-123
+        cancellationType:
+          type: object
+          description: Localized cancellation policy text, or `null` when the translation is incomplete.
+          example: Free cancellation up to 24 hours before the start time.
+          nullable: true
         highlights:
           description: Localized highlight bullets in admin-defined order, or `null` when the translation is incomplete.
           example:
@@ -3419,8 +3636,8 @@ components:
           description: Localized payload validated against the shared content schema.
           additionalProperties: true
       required:
-        - translationStatus
-        - publicationStatus
+        - isReady
+        - isPublished
         - payload
     BlogAdminTranslationResponseDto:
       type: object
