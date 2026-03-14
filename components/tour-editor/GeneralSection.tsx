@@ -284,6 +284,74 @@ export function GeneralSection({
     });
   };
 
+  const renderImageActions = (image: TourMediaItemFormState, index: number, className?: string) => (
+    <div className={ cn("flex shrink-0 flex-wrap items-center gap-1.5", className) }>
+      <button
+        type="button"
+        onClick={ () => {
+          void moveImage(image.clientId, "up");
+        } }
+        className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf] disabled:opacity-40"
+        title="Move image up"
+        disabled={ index === 0 || isMutating }
+      >
+        <ArrowUp className="size-4"/>
+      </button>
+      <button
+        type="button"
+        onClick={ () => {
+          void moveImage(image.clientId, "down");
+        } }
+        className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf] disabled:opacity-40"
+        title="Move image down"
+        disabled={ index === mediaItems.length - 1 || isMutating }
+      >
+        <ArrowDown className="size-4"/>
+      </button>
+      <button
+        type="button"
+        onClick={ () => {
+          void setCoverImage(image.mediaId);
+        } }
+        className={ cn(
+          "rounded-md p-1.5 transition-colors",
+          image.isCover
+            ? "bg-[#21343b] text-white"
+            : "text-[#627176] hover:bg-[#f2eadf]",
+        ) }
+        title={ image.isCover ? "Current cover" : "Set as cover" }
+        disabled={ isMutating }
+      >
+        <Check className="size-4"/>
+      </button>
+      <button
+        type="button"
+        onClick={ () =>
+          setExpandedImageId(expandedImageId === image.clientId ? null : image.clientId)
+        }
+        className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf]"
+        title="Edit media details"
+      >
+        { expandedImageId === image.clientId ? (
+          <ChevronUp className="size-4"/>
+        ) : (
+          <ChevronDown className="size-4"/>
+        ) }
+      </button>
+      <button
+        type="button"
+        onClick={ () => {
+          void removeImage(image.mediaId, image.clientId);
+        } }
+        className="rounded-xl p-1.5 text-[#b3574a] transition-colors hover:bg-[#fbf2f0]"
+        title="Remove image"
+        disabled={ isMutating }
+      >
+        <X className="size-4"/>
+      </button>
+    </div>
+  );
+
   const toggleSelectedMediaId = (mediaId: string) => {
     setSelectedMediaIds((currentIds) =>
       currentIds.includes(mediaId)
@@ -560,99 +628,38 @@ export function GeneralSection({
                     ) }
                   >
                     <div className="flex flex-col gap-4 p-3 lg:flex-row lg:items-start">
-                      <div
-                        className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[#f3ede4] max-[520px]:h-40 max-[520px]:w-full">
-                        { mediaPreviewStatus[image.mediaId]?.previewUrl ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={ mediaPreviewStatus[image.mediaId]?.previewUrl ?? "" }
-                            alt={ image.altTexts[enabledLanguages[0]?.code ?? ""] ?? "" }
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <ImageIcon className="size-8 text-[#9b8a73]"/>
-                        ) }
-                        { image.isCover ? (
-                          <div
-                            className="absolute top-1 left-1 rounded-full bg-[#9a6a2f] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
-                            Cover
-                          </div>
-                        ) : null }
+                      <div className="flex items-start gap-3 lg:block">
+                        <div
+                          className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[#f3ede4]">
+                          { mediaPreviewStatus[image.mediaId]?.previewUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={ mediaPreviewStatus[image.mediaId]?.previewUrl ?? "" }
+                              alt={ image.altTexts[enabledLanguages[0]?.code ?? ""] ?? "" }
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <ImageIcon className="size-8 text-[#9b8a73]"/>
+                          ) }
+                          { image.isCover ? (
+                            <div
+                              className="absolute top-1 left-1 rounded-full bg-[#9a6a2f] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+                              Cover
+                            </div>
+                          ) : null }
+                        </div>
+                        { renderImageActions(image, index, "md:hidden") }
                       </div>
 
-                      <div className="min-w-0 flex-1">
-                        <div className="mb-3 flex items-start justify-between gap-3 max-[520px]:flex-col">
-                          <div className="min-w-0 flex-1">
+                      <div className="min-w-0 w-full flex-1">
+                        <div className="mb-3 grid min-w-0 w-full grid-cols-[minmax(0,1fr)_auto] items-start gap-3 max-[520px]:grid-cols-1">
+                          <div className="min-w-0 w-full overflow-hidden">
                             <p className="text-sm font-medium text-[#21343b]">Image { index + 1 }</p>
                             <p className="truncate text-xs text-[#627176]">{ image.originalFilename }</p>
                             <p className="truncate text-xs text-[#8b7862]">{ image.storagePath }</p>
                           </div>
 
-                          <div className="flex shrink-0 flex-wrap items-center gap-1.5 max-[520px]:justify-start">
-                            <button
-                              type="button"
-                              onClick={ () => {
-                                void moveImage(image.clientId, "up");
-                              } }
-                              className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf] disabled:opacity-40"
-                              title="Move image up"
-                              disabled={ index === 0 || isMutating }
-                            >
-                              <ArrowUp className="size-4"/>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={ () => {
-                                void moveImage(image.clientId, "down");
-                              } }
-                              className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf] disabled:opacity-40"
-                              title="Move image down"
-                              disabled={ index === mediaItems.length - 1 || isMutating }
-                            >
-                              <ArrowDown className="size-4"/>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={ () => {
-                                void setCoverImage(image.mediaId);
-                              } }
-                              className={ cn(
-                                "rounded-md p-1.5 transition-colors",
-                                image.isCover
-                                  ? "bg-[#21343b] text-white"
-                                  : "text-[#627176] hover:bg-[#f2eadf]",
-                              ) }
-                              title={ image.isCover ? "Current cover" : "Set as cover" }
-                              disabled={ isMutating }
-                            >
-                              <Check className="size-4"/>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={ () =>
-                                setExpandedImageId(expandedImageId === image.clientId ? null : image.clientId)
-                              }
-                              className="rounded-xl p-1.5 text-[#627176] transition-colors hover:bg-[#f2eadf]"
-                              title="Edit media details"
-                            >
-                              { expandedImageId === image.clientId ? (
-                                <ChevronUp className="size-4"/>
-                              ) : (
-                                <ChevronDown className="size-4"/>
-                              ) }
-                            </button>
-                            <button
-                              type="button"
-                              onClick={ () => {
-                                void removeImage(image.mediaId, image.clientId);
-                              } }
-                              className="rounded-xl p-1.5 text-[#b3574a] transition-colors hover:bg-[#fbf2f0]"
-                              title="Remove image"
-                              disabled={ isMutating }
-                            >
-                              <X className="size-4"/>
-                            </button>
-                          </div>
+                          { renderImageActions(image, index, "hidden md:flex") }
                         </div>
 
                         <div className="flex flex-wrap items-center gap-2 text-xs text-[#627176]">
