@@ -51,7 +51,7 @@ export default async function AdminLayout({
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top,#efe2cc_0%,#fcf8f1_50%,#f6f1e7_100%)] px-6 py-10 text-[#1c2c33]">
-      <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-7xl flex-col rounded-[2rem] border border-[#d8c5a8] bg-white/85 p-8 shadow-[0_30px_80px_rgba(61,45,27,0.10)] backdrop-blur md:p-10">
+      <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full min-w-120 max-w-7xl flex-col rounded-[2rem] border border-[#d8c5a8] bg-white/85 p-8 shadow-[0_30px_80px_rgba(61,45,27,0.10)] backdrop-blur md:p-10">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#eadfce] pb-6">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#9a6a2f]">

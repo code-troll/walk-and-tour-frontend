@@ -1,6 +1,6 @@
 "use client";
 
-import { type ChangeEvent, type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type ChangeEvent, type SubmitEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,16 +12,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
-  TOUR_IMAGE_UPLOAD_MAX_SIZE,
-  TOUR_MEDIA_ALT_TEXT_MAX_LENGTH,
-  TOUR_TYPE_OPTIONS,
-  generateTourSlug,
   type ApiAdminMediaAsset,
   type ApiAdminMediaAssetListResponse,
   type ApiLanguage,
   type ApiTag,
-  type TourFormState,
   type ApiUploadedMediaAsset,
+  generateTourSlug,
+  TOUR_IMAGE_UPLOAD_MAX_SIZE,
+  TOUR_MEDIA_ALT_TEXT_MAX_LENGTH,
+  TOUR_TYPE_OPTIONS,
+  type TourFormState,
   type TourMediaItemFormState,
   type TourType,
 } from "@/lib/tours/admin-tour-form";
@@ -33,7 +33,8 @@ import {
   ChevronDown,
   ChevronUp,
   Clock,
-  DollarSign, Flag,
+  DollarSign,
+  Flag,
   ImageIcon,
   LoaderCircle,
   MapPin,
@@ -89,9 +90,7 @@ const formatLabel = (value: string) =>
 
 const normalizePositiveIntegerInput = (value: string) => {
   const digitsOnly = value.replace(/\D+/g, "");
-  const normalizedValue = digitsOnly.replace(/^0+/, "");
-
-  return normalizedValue;
+  return digitsOnly.replace(/^0+/, "");
 };
 
 const PRICE_CURRENCY_OPTIONS = ["DKK", "EUR"] as const;
@@ -308,7 +307,7 @@ export function GeneralSection({
     setIsMediaDialogOpen(false);
   };
 
-  const handleMediaSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleMediaSearchSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     const nextSearch = mediaSearchInput.trim();
     setAppliedMediaSearch(nextSearch);
@@ -771,7 +770,7 @@ export function GeneralSection({
                   </div>
                 ) : null }
 
-                <div className="grid max-h-[420px] gap-3 overflow-y-auto pr-1 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid max-h-105 gap-3 overflow-y-auto pr-1 sm:grid-cols-2 xl:grid-cols-3">
                   { mediaLibraryItems.map((asset) => {
                     const isAttached = attachedMediaIds.has(asset.id);
                     const isSelected = selectedMediaIds.includes(asset.id);
@@ -789,7 +788,7 @@ export function GeneralSection({
                           isAttached ? "cursor-not-allowed opacity-60" : "hover:bg-[#fcf7ef]",
                         ) }
                       >
-                        <div className="relative aspect-[4/3] bg-[#f3ede4]">
+                        <div className="relative aspect-4/3 bg-[#f3ede4]">
                           { mediaPreviewStatus[asset.id]?.previewUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
