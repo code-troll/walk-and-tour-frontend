@@ -40,6 +40,9 @@ export type BlogFormState = {
 
 const EMPTY_PARAGRAPH_HTML = "<p></p>";
 
+const coerceApiString = (value: unknown) =>
+  typeof value === "string" ? value : "";
+
 const normalizeOptionalString = (value: string) => {
   const trimmed = value.trim();
   return trimmed ? trimmed : undefined;
@@ -98,10 +101,10 @@ const createTranslationFormStateFromApi = (
   imageRefsText: translation.imageRefs.join("\n"),
   isPublished: translation.isPublished,
   languageCode,
-  seoDescription: translation.seoDescription ?? "",
-  seoTitle: translation.seoTitle ?? "",
-  summary: translation.summary ?? "",
-  title: translation.title ?? "",
+  seoDescription: coerceApiString(translation.seoDescription),
+  seoTitle: coerceApiString(translation.seoTitle),
+  summary: coerceApiString(translation.summary),
+  title: coerceApiString(translation.title),
 });
 
 export const createBlogFormStateFromApi = (blogPost: ApiBlogPost): BlogFormState => ({
@@ -197,10 +200,10 @@ export const toUpdateBlogTranslationBody = (
   translation: BlogTranslationFormState,
 ): UpdateBlogTranslationBody => ({
   title: translation.title.trim(),
-  summary: normalizeNullableString(translation.summary),
+  summary: normalizeNullableString(translation.summary) as unknown as UpdateBlogTranslationBody["summary"],
   htmlContent: normalizeHtmlContent(translation.htmlContent),
-  seoTitle: normalizeNullableString(translation.seoTitle),
-  seoDescription: normalizeNullableString(translation.seoDescription),
+  seoTitle: normalizeNullableString(translation.seoTitle) as unknown as UpdateBlogTranslationBody["seoTitle"],
+  seoDescription: normalizeNullableString(translation.seoDescription) as unknown as UpdateBlogTranslationBody["seoDescription"],
   imageRefs: parseImageRefs(translation.imageRefsText),
 });
 

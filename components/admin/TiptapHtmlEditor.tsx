@@ -436,8 +436,6 @@ function BlogVideoNodeView({
   const containerStyle = getVideoContainerStyle(alignment, aspectRatio, widthPreset);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
-
-  const title = node.attrs.title?.trim() || `${ getVideoProviderLabel(provider) } video`;
   const setAlignment = (nextAlignment: VideoAlignment) => {
     updateAttributes({ alignment: nextAlignment });
   };
@@ -470,7 +468,7 @@ function BlogVideoNodeView({
     }
 
     const handlePointerDown = (event: MouseEvent) => {
-      if (rootRef.current?.contains(event.target as Node)) {
+      if (rootRef.current?.contains(event.target as globalThis.Node)) {
         return;
       }
 
@@ -514,6 +512,8 @@ function BlogVideoNodeView({
       </NodeViewWrapper>
     );
   }
+
+  const title = node.attrs.title?.trim() || `${ getVideoProviderLabel(provider) } video`;
 
   return (
     <NodeViewWrapper
@@ -854,13 +854,13 @@ function BlogImageNodeView({
       />
 
       <div
-        className="absolute bottom-[-6px] left-[-6px] size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
+        className="absolute -bottom-1.5 -left-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
         style={ { cursor: "nwse-resize" } }
         onMouseDown={ handleResizeMouseDown("left") }
         onTouchStart={ handleResizeTouchStart("left") }
       />
       <div
-        className="absolute bottom-[-6px] right-[-6px] size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
+        className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
         style={ { cursor: "nwse-resize" } }
         onMouseDown={ handleResizeMouseDown("right") }
         onTouchStart={ handleResizeTouchStart("right") }
@@ -1103,7 +1103,7 @@ const LinkMark = Mark.create({
 const BlogImage = ImageResize.extend({
   name: "blogImage",
   addAttributes() {
-    const parentAttributes = this.parent?.() ?? {};
+    const parentAttributes = (this.parent?.() ?? {}) as Record<string, unknown>;
 
     return {
       ...parentAttributes,
