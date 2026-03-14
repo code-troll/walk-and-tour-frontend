@@ -1049,7 +1049,7 @@ export function BlogPostEditorClient({
                       { languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode }
                     </h3>
                     <p className="mt-1 text-sm text-[#627176]">
-                      Upload images from the media library, insert them into the editor, then select them in the body to change width and alignment.
+                      Upload images from the media library, use Video for YouTube or Vimeo links, then select inserted images in the body to change size and alignment.
                     </p>
                   </div>
 
@@ -1110,6 +1110,7 @@ export function BlogPostEditorClient({
                     ref={ editorRef }
                     value={ activeTranslation.htmlContent }
                     onChange={ (value) => updateTranslationHtmlContent(activeTranslation.languageCode, value) }
+                    onError={ (message) => setFeedback({ tone: "error", message }) }
                     onRequestInsertImage={ () => void openMediaDialog("inline") }
                   />
                 </div>

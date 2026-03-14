@@ -18,7 +18,8 @@ const contentClassName = [
   "[&_ol]:mt-5 [&_ol]:list-decimal [&_ol]:pl-6",
   "[&_li]:mt-2",
   "[&_a]:font-semibold [&_a]:text-[#c24343] [&_a]:underline",
-  "[&_img]:mt-6 [&_img]:w-full [&_img]:rounded-2xl",
+  "[&_img]:rounded-2xl [&_img]:h-auto [&_img]:max-w-full",
+  "[&_[data-blog-video=\"true\"]]:shadow-sm",
 ].join(" ");
 
 export default function BlogPostContent({
