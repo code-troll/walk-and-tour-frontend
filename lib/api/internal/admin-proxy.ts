@@ -107,12 +107,16 @@ export const proxyAdminRequest = async ({
 
   const responseContentType = backendResponse.headers.get("content-type") ?? "";
   const responseDisposition = backendResponse.headers.get("content-disposition");
+  const responseCacheControl = backendResponse.headers.get("cache-control");
+  const responseContentLength = backendResponse.headers.get("content-length");
 
   if (responseContentType.includes("text/csv")) {
     return new Response(await backendResponse.text(), {
       status: backendResponse.status,
       headers: {
         "content-type": responseContentType,
+        ...(responseCacheControl ? {"cache-control": responseCacheControl} : {}),
+        ...(responseContentLength ? {"content-length": responseContentLength} : {}),
         ...(responseDisposition ? {"content-disposition": responseDisposition} : {}),
       },
     });
@@ -131,12 +135,15 @@ export const proxyAdminRequest = async ({
       );
     }
 
-    return NextResponse.json(payload, {status: backendResponse.status});
+    return NextResponse.json(payload, {
+      status: backendResponse.status,
+      headers: responseCacheControl ? {"cache-control": responseCacheControl} : undefined,
+    });
   }
 
-  const textBody = await backendResponse.text();
-
   if (!backendResponse.ok) {
+    const textBody = await backendResponse.text();
+
     return NextResponse.json(
       {
         message: textBody || "Backend request failed.",
@@ -145,8 +152,26 @@ export const proxyAdminRequest = async ({
     );
   }
 
-  return new Response(textBody, {
+  const responseHeaders = new Headers();
+
+  if (responseContentType) {
+    responseHeaders.set("content-type", responseContentType);
+  }
+
+  if (responseCacheControl) {
+    responseHeaders.set("cache-control", responseCacheControl);
+  }
+
+  if (responseContentLength) {
+    responseHeaders.set("content-length", responseContentLength);
+  }
+
+  if (responseDisposition) {
+    responseHeaders.set("content-disposition", responseDisposition);
+  }
+
+  return new Response(backendResponse.body, {
     status: backendResponse.status,
-    headers: responseContentType ? {"content-type": responseContentType} : undefined,
+    headers: responseHeaders,
   });
 };

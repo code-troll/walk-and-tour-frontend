@@ -191,7 +191,7 @@ export interface paths {
         put?: never;
         /**
          * Create a blog post
-         * @description Creates a blog post with shared attributes and localized translations.
+         * @description Creates a minimal blog draft with shared identifier fields. Localized translations are added later through the nested translation routes.
          */
         post: operations["BlogPostsController_createAdmin"];
         delete?: never;
@@ -219,9 +219,93 @@ export interface paths {
         head?: never;
         /**
          * Update a blog post
-         * @description Updates shared blog data and merges translations by locale code.
+         * @description Updates only shared blog data on the base blog post record.
          */
         patch: operations["BlogPostsController_updateAdmin"];
+        trace?: never;
+    };
+    "/api/admin/blog-posts/{id}/translations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a blog post translation
+         * @description Creates one localized blog translation independently from the shared blog post. New translations always start unpublished.
+         */
+        post: operations["BlogPostsController_createTranslation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/blog-posts/{id}/translations/{languageCode}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a blog post translation
+         * @description Deletes one localized blog translation by locale code.
+         */
+        delete: operations["BlogPostsController_deleteTranslation"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a blog post translation
+         * @description Updates one localized blog translation independently from the shared blog post. If the translation stops being publishable, it is automatically unpublished.
+         */
+        patch: operations["BlogPostsController_updateTranslation"];
+        trace?: never;
+    };
+    "/api/admin/blog-posts/{id}/translations/{languageCode}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Publish a blog post translation
+         * @description Publishes one localized blog translation. This endpoint is the only place where translation publication can be enabled manually.
+         */
+        post: operations["BlogPostsController_publishTranslation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/blog-posts/{id}/translations/{languageCode}/unpublish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Unpublish a blog post translation
+         * @description Unpublishes one localized blog translation. This endpoint is the only place where translation publication can be disabled manually.
+         */
+        post: operations["BlogPostsController_unpublishTranslation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/admin/blog-posts/{id}/media": {
@@ -1185,17 +1269,17 @@ export interface components {
              */
             languageCode: string;
             /**
-             * @description Translation publication state.
-             * @enum {string}
+             * @description Whether the locale is published.
+             * @example true
              */
-            publicationStatus: "published" | "unpublished";
+            isPublished: boolean;
             /**
              * @description Whether the locale is currently exposed through the public blog APIs.
              * @example true
              */
             publiclyAvailable: boolean;
         };
-        AuditMetadataDto: {
+        PublishedRecordAuditMetadataDto: {
             /**
              * Format: uuid
              * @description UUID of the admin that originally created the record.
@@ -1206,11 +1290,6 @@ export interface components {
              * @description UUID of the admin that most recently updated the record.
              */
             updatedBy?: Record<string, never> | null;
-            /**
-             * Format: uuid
-             * @description UUID of the admin that published the record, if it is currently published.
-             */
-            publishedBy?: Record<string, never> | null;
             /**
              * Format: date-time
              * @description Creation timestamp.
@@ -1223,7 +1302,7 @@ export interface components {
             updatedAt: string;
             /**
              * Format: date-time
-             * @description Publication timestamp, or `null` when the record is not currently published.
+             * @description Latest successful translation publication timestamp, or `null` when the record has no published translations.
              */
             publishedAt?: string | null;
         };
@@ -1250,11 +1329,6 @@ export interface components {
             heroMediaId?: Record<string, never> | null;
             /** @description Resolved hero media asset. */
             heroMedia?: components["schemas"]["MediaAssetResponseDto"] | null;
-            /**
-             * @description Blog post publication state.
-             * @enum {string}
-             */
-            publicationStatus: "draft" | "published";
             /** @description Ordered tag keys assigned to the post. */
             tagKeys: string[];
             /** @description Expanded tag records. */
@@ -1266,7 +1340,47 @@ export interface components {
             /** @description Per-locale public availability diagnostics. */
             translationAvailability: components["schemas"]["BlogTranslationAvailabilityResponseDto"][];
             /** @description Audit metadata for create, update, and publish operations. */
-            audit: components["schemas"]["AuditMetadataDto"];
+            audit: components["schemas"]["PublishedRecordAuditMetadataDto"];
+        };
+        CreateBlogPostDto: {
+            /**
+             * @description Non-localized admin-facing name used to identify the blog post.
+             * @example Barcelona Historic Center SEO Article
+             */
+            name: string;
+            /**
+             * @description Stable public slug for the blog post.
+             * @example barcelona-historic-center-guide
+             */
+            slug: string;
+            /**
+             * @description Assigned tag keys.
+             * @example [
+             *       "history",
+             *       "city-guide"
+             *     ]
+             */
+            tagKeys?: string[];
+        };
+        UpdateBlogPostDto: {
+            /**
+             * @description Updated non-localized admin-facing name.
+             * @example Barcelona Historic Center SEO Article
+             */
+            name?: string;
+            /**
+             * @description Updated public slug.
+             * @example barcelona-historic-center-guide
+             */
+            slug?: string;
+            /**
+             * @description Replacement tag key list.
+             * @example [
+             *       "history",
+             *       "architecture"
+             *     ]
+             */
+            tagKeys?: string[];
         };
         CreateBlogPostTranslationDto: {
             /**
@@ -1275,13 +1389,7 @@ export interface components {
              */
             languageCode: string;
             /**
-             * @description Publication state of the localized blog translation.
-             * @example published
-             * @enum {string}
-             */
-            publicationStatus: "published" | "unpublished";
-            /**
-             * @description Localized title. Required before the translation can be published.
+             * @description Localized title.
              * @example Barcelona Historic Center Guide
              */
             title?: string;
@@ -1291,7 +1399,7 @@ export interface components {
              */
             summary?: string;
             /**
-             * @description Localized HTML body. Required before the translation can be published.
+             * @description Localized HTML body.
              * @example <p>Walk through centuries of history.</p>
              */
             htmlContent?: string;
@@ -1313,61 +1421,39 @@ export interface components {
              */
             imageRefs?: string[];
         };
-        CreateBlogPostDto: {
+        UpdateBlogPostTranslationDto: {
             /**
-             * @description Non-localized admin-facing name used to identify the blog post.
-             * @example Barcelona Historic Center SEO Article
+             * @description Updated localized title.
+             * @example Barcelona Historic Center Guide
              */
-            name: string;
+            title?: string;
             /**
-             * @description Stable public slug for the blog post.
-             * @example barcelona-historic-center-guide
+             * @description Updated localized summary or excerpt. Set `null` to clear it.
+             * @example A walking guide to the historic center of Barcelona.
              */
-            slug: string;
+            summary?: Record<string, never> | null;
             /**
-             * @description Top-level publication state of the blog post.
-             * @example draft
-             * @enum {string}
+             * @description Updated localized HTML body.
+             * @example <p>Walk through centuries of history.</p>
              */
-            publicationStatus: "draft" | "published";
+            htmlContent?: string;
             /**
-             * @description Assigned tag keys.
+             * @description Updated SEO title override. Set `null` to clear it.
+             * @example Historic Center Guide | Walk and Tour
+             */
+            seoTitle?: Record<string, never> | null;
+            /**
+             * @description Updated SEO meta description override. Set `null` to clear it.
+             * @example Discover the best historic landmarks in Barcelona.
+             */
+            seoDescription?: Record<string, never> | null;
+            /**
+             * @description Replacement localized image references. Omit to keep the current list.
              * @example [
-             *       "history",
-             *       "city-guide"
+             *       "media/blog/historic-center/hero.jpg"
              *     ]
              */
-            tagKeys?: string[];
-            /** @description Localized translations keyed by locale through an array of translation objects. */
-            translations?: components["schemas"]["CreateBlogPostTranslationDto"][];
-        };
-        UpdateBlogPostDto: {
-            /**
-             * @description Updated non-localized admin-facing name.
-             * @example Barcelona Historic Center SEO Article
-             */
-            name?: string;
-            /**
-             * @description Updated public slug.
-             * @example barcelona-historic-center-guide
-             */
-            slug?: string;
-            /**
-             * @description Updated top-level publication state.
-             * @example published
-             * @enum {string}
-             */
-            publicationStatus?: "draft" | "published";
-            /**
-             * @description Replacement tag key list.
-             * @example [
-             *       "history",
-             *       "architecture"
-             *     ]
-             */
-            tagKeys?: string[];
-            /** @description Translations to merge into the existing set by locale code. */
-            translations?: components["schemas"]["CreateBlogPostTranslationDto"][];
+            imageRefs?: string[];
         };
         BlogMediaListResponseDto: {
             /** @description Attached blog media assets. */
@@ -1446,8 +1532,6 @@ export interface components {
             tourTypes: ("private" | "group" | "tip_based")[];
             /** @description Supported commute modes between itinerary stops. */
             tourCommuteModes: ("walk" | "bike" | "bus" | "train" | "metro" | "tram" | "ferry" | "private-transport" | "boat" | "other")[];
-            /** @description Top-level publication states available for blog posts. */
-            blogPublicationStatuses: ("draft" | "published")[];
             /** @description Newsletter subscription lifecycle states reserved by the domain model. */
             newsletterSubscriptionStatuses: ("pending_confirmation" | "subscribed" | "unsubscribed")[];
         };
@@ -2397,6 +2481,38 @@ export interface components {
              */
             bookingReferenceId?: Record<string, never> | null;
         };
+        AuditMetadataDto: {
+            /**
+             * Format: uuid
+             * @description UUID of the admin that originally created the record.
+             */
+            createdBy?: Record<string, never> | null;
+            /**
+             * Format: uuid
+             * @description UUID of the admin that most recently updated the record.
+             */
+            updatedBy?: Record<string, never> | null;
+            /**
+             * Format: uuid
+             * @description UUID of the admin that published the record, if it is currently published.
+             */
+            publishedBy?: Record<string, never> | null;
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
+            updatedAt: string;
+            /**
+             * Format: date-time
+             * @description Publication timestamp, or `null` when the record is not currently published.
+             */
+            publishedAt?: string | null;
+        };
         TourAdminTranslationResponseDto: {
             /**
              * @description Whether the translation currently satisfies all required completeness rules.
@@ -2449,10 +2565,10 @@ export interface components {
         };
         BlogAdminTranslationResponseDto: {
             /**
-             * @description Translation publication state.
-             * @enum {string}
+             * @description Whether the translation is published.
+             * @example true
              */
-            publicationStatus: "published" | "unpublished";
+            isPublished: boolean;
             /**
              * @description Localized title.
              * @example Barcelona Historic Center Guide
@@ -3205,6 +3321,295 @@ export interface operations {
                 };
             };
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_createTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateBlogPostTranslationDto"];
+            };
+        };
+        responses: {
+            /** @description Admin blog post record after translation creation. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_deleteTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+                /** @description Locale code for the translation. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Translation deleted successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_updateTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+                /** @description Locale code for the translation. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateBlogPostTranslationDto"];
+            };
+        };
+        responses: {
+            /** @description Admin blog post record after translation update. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_publishTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+                /** @description Locale code for the translation. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin blog post record after translation publication. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    BlogPostsController_unpublishTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Blog post UUID. */
+                id: string;
+                /** @description Locale code for the translation. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin blog post record after translation unpublication. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlogAdminResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

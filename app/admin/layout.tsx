@@ -19,14 +19,14 @@ const navigationByRole = {
     {href: "/users", label: "Users"},
     {href: "/taxonomy", label: "Taxonomy"},
     {href: "/tours", label: "Tours"},
-    {href: "/content", label: "Content"},
+    {href: "/blog-posts", label: "Blog posts"},
     {href: "/newsletter", label: "Newsletter"},
   ],
   editor: [
     {href: "/", label: "Overview"},
     {href: "/taxonomy", label: "Taxonomy"},
     {href: "/tours", label: "Tours"},
-    {href: "/content", label: "Content"},
+    {href: "/blog-posts", label: "Blog posts"},
   ],
   marketing: [
     {href: "/", label: "Overview"},
