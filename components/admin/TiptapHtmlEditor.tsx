@@ -8,7 +8,9 @@ import { EditorContent, NodeViewWrapper, ReactNodeViewRenderer, useEditor } from
 import { history } from "@tiptap/pm/history";
 import {
   Bold,
-  Film,
+  CalendarDays,
+  ExternalLink,
+  Globe,
   Heading2,
   Heading3,
   ImagePlus,
@@ -32,9 +34,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { mountTuritopWidgets, TURITOP_EMBED_MODE } from "@/lib/turitop/widget";
 import { cn } from "@/lib/utils";
 
 export type TiptapHtmlEditorHandle = {
+  getHtml: () => string;
   insertImage: (args: {
     alt: string;
     mediaId: string;
@@ -44,10 +48,36 @@ export type TiptapHtmlEditorHandle = {
 };
 
 type SupportedVideoProvider = "youtube" | "vimeo";
+type SupportedIframeProvider = "instagram" | "googleMaps" | "turitop" | "tiktok" | "walkAndTour";
 type ImageAlignment = "left" | "center" | "right";
 type VideoAlignment = "left" | "center" | "right";
 type VideoAspectRatio = "21:9" | "16:9" | "4:3" | "1:1";
 type VideoWidthPreset = "small" | "medium" | "wide" | "full";
+type EmbedAlignment = "left" | "center" | "right";
+type EmbedWidthPreset = "medium" | "wide" | "full";
+type TuritopAlignment = "left" | "center" | "right";
+
+type ParsedEmbedResult =
+  | {
+      kind: "video";
+      provider: SupportedVideoProvider;
+      title: string;
+      videoId: string;
+    }
+  | {
+      canonicalUrl: string;
+      embedSrc: string;
+      height: number;
+      kind: "iframe";
+      provider: SupportedIframeProvider;
+      title: string;
+      widthPreset: EmbedWidthPreset;
+    }
+  | {
+      href: string;
+      kind: "linkCard";
+      title: string;
+    };
 
 const IMAGE_ALIGNMENT_OPTIONS: Array<{ label: string; value: ImageAlignment }> = [
   { label: "Left", value: "left" },
@@ -56,6 +86,16 @@ const IMAGE_ALIGNMENT_OPTIONS: Array<{ label: string; value: ImageAlignment }> =
 ];
 const IMAGE_MIN_WIDTH = 120;
 const IMAGE_MAX_WIDTH = 960;
+const EMBED_MIN_WIDTH = 240;
+const EMBED_MAX_WIDTH = 960;
+const EMBED_MIN_HEIGHT = 240;
+const EMBED_MAX_HEIGHT = 1400;
+const TURITOP_MIN_WIDTH = 320;
+const TURITOP_MAX_WIDTH = 960;
+const TURITOP_MIN_HEIGHT = 320;
+const TURITOP_MAX_HEIGHT = 1400;
+const TURITOP_DEFAULT_WIDTH = 720;
+const TURITOP_DEFAULT_HEIGHT = 760;
 
 const VIDEO_ALIGNMENT_OPTIONS: Array<{ label: string; value: VideoAlignment }> = [
   { label: "Left", value: "left" },
@@ -75,6 +115,24 @@ const VIDEO_WIDTH_OPTIONS: Array<{ label: string; value: VideoWidthPreset }> = [
   { label: "M", value: "medium" },
   { label: "W", value: "wide" },
   { label: "Full", value: "full" },
+];
+
+const EMBED_ALIGNMENT_OPTIONS: Array<{ label: string; value: EmbedAlignment }> = [
+  { label: "Left", value: "left" },
+  { label: "Center", value: "center" },
+  { label: "Right", value: "right" },
+];
+
+const EMBED_WIDTH_OPTIONS: Array<{ label: string; value: EmbedWidthPreset }> = [
+  { label: "M", value: "medium" },
+  { label: "W", value: "wide" },
+  { label: "Full", value: "full" },
+];
+
+const TURITOP_ALIGNMENT_OPTIONS: Array<{ label: string; value: TuritopAlignment }> = [
+  { label: "Left", value: "left" },
+  { label: "Center", value: "center" },
+  { label: "Right", value: "right" },
 ];
 
 const toInternalAdminMediaSrc = (value: string) => {
@@ -164,6 +222,14 @@ const toSupportedVideoProvider = (value: string | null | undefined): SupportedVi
   return null;
 };
 
+const toSupportedIframeProvider = (value: string | null | undefined): SupportedIframeProvider | null => {
+  if (value === "instagram" || value === "googleMaps" || value === "turitop" || value === "tiktok" || value === "walkAndTour") {
+    return value;
+  }
+
+  return null;
+};
+
 const toImageAlignment = (value: string | null | undefined): ImageAlignment => {
   if (value === "left" || value === "center" || value === "right") {
     return value;
@@ -241,6 +307,7 @@ const getImagePublicStyle = (
     return style;
   }
 
+  style.display = "flow-root";
   style.marginLeft = "auto";
   style.marginRight = "auto";
   return style;
@@ -301,8 +368,39 @@ const toVideoWidthPreset = (value: string | null | undefined): VideoWidthPreset 
   return "wide";
 };
 
+const toEmbedWidthPreset = (value: string | null | undefined): EmbedWidthPreset => {
+  if (value === "medium" || value === "wide" || value === "full") {
+    return value;
+  }
+
+  return "wide";
+};
+
+const toEmbedAlignment = (value: string | null | undefined): EmbedAlignment => {
+  if (value === "left" || value === "center" || value === "right") {
+    return value;
+  }
+
+  return "center";
+};
+
 const getVideoProviderLabel = (provider: SupportedVideoProvider) =>
   provider === "youtube" ? "YouTube" : "Vimeo";
+
+const getEmbedProviderLabel = (provider: SupportedIframeProvider) => {
+  switch (provider) {
+    case "instagram":
+      return "Instagram";
+    case "googleMaps":
+      return "Google Maps";
+    case "turitop":
+      return "Turitop";
+    case "tiktok":
+      return "TikTok";
+    case "walkAndTour":
+      return "WalkAndTour";
+  }
+};
 
 const getVideoPaddingTop = (aspectRatio: VideoAspectRatio) => {
   switch (aspectRatio) {
@@ -328,6 +426,145 @@ const getVideoWidth = (widthPreset: VideoWidthPreset) => {
     case "full":
       return "100%";
   }
+};
+
+const getEmbedWidth = (widthPreset: EmbedWidthPreset) => {
+  switch (widthPreset) {
+    case "medium":
+      return "min(100%, 28rem)";
+    case "wide":
+      return "min(100%, 36rem)";
+    case "full":
+      return "100%";
+  }
+};
+
+const clampEmbedWidth = (width: number) =>
+  Math.min(EMBED_MAX_WIDTH, Math.max(EMBED_MIN_WIDTH, width));
+
+const clampEmbedHeight = (height: number) =>
+  Math.min(EMBED_MAX_HEIGHT, Math.max(EMBED_MIN_HEIGHT, height));
+
+const clampTuritopWidth = (width: number) =>
+  Math.min(TURITOP_MAX_WIDTH, Math.max(TURITOP_MIN_WIDTH, width));
+
+const clampTuritopHeight = (height: number) =>
+  Math.min(TURITOP_MAX_HEIGHT, Math.max(TURITOP_MIN_HEIGHT, height));
+
+const getEmbedWidthFromAttrs = (attrs: Record<string, unknown>) => {
+  if (typeof attrs.customWidth === "number" && Number.isFinite(attrs.customWidth)) {
+    return clampEmbedWidth(attrs.customWidth);
+  }
+
+  if (typeof attrs.customWidth === "string") {
+    const parsed = Number.parseFloat(attrs.customWidth);
+    if (!Number.isNaN(parsed)) {
+      return clampEmbedWidth(parsed);
+    }
+  }
+
+  const widthFromStyle = extractWidthFromStyle(
+    typeof attrs.style === "string" ? attrs.style : null,
+  );
+  if (widthFromStyle?.endsWith("px")) {
+    const parsed = Number.parseFloat(widthFromStyle);
+    if (!Number.isNaN(parsed)) {
+      return clampEmbedWidth(parsed);
+    }
+  }
+
+  return null;
+};
+
+const getEmbedHeightFromAttrs = (attrs: Record<string, unknown>) => {
+  if (typeof attrs.customHeight === "number" && Number.isFinite(attrs.customHeight)) {
+    return clampEmbedHeight(attrs.customHeight);
+  }
+
+  if (typeof attrs.customHeight === "string") {
+    const parsed = Number.parseFloat(attrs.customHeight);
+    if (!Number.isNaN(parsed)) {
+      return clampEmbedHeight(parsed);
+    }
+  }
+
+  return null;
+};
+
+const getTuritopWidthFromAttrs = (attrs: Record<string, unknown>) => {
+  if (typeof attrs.customWidth === "number" && Number.isFinite(attrs.customWidth)) {
+    return clampTuritopWidth(attrs.customWidth);
+  }
+
+  if (typeof attrs.customWidth === "string") {
+    const parsed = Number.parseFloat(attrs.customWidth);
+    if (!Number.isNaN(parsed)) {
+      return clampTuritopWidth(parsed);
+    }
+  }
+
+  const widthFromStyle = extractWidthFromStyle(
+    typeof attrs.style === "string" ? attrs.style : null,
+  );
+  if (widthFromStyle?.endsWith("px")) {
+    const parsed = Number.parseFloat(widthFromStyle);
+    if (!Number.isNaN(parsed)) {
+      return clampTuritopWidth(parsed);
+    }
+  }
+
+  return null;
+};
+
+const getTuritopHeightFromAttrs = (attrs: Record<string, unknown>) => {
+  if (typeof attrs.customHeight === "number" && Number.isFinite(attrs.customHeight)) {
+    return clampTuritopHeight(attrs.customHeight);
+  }
+
+  if (typeof attrs.customHeight === "string") {
+    const parsed = Number.parseFloat(attrs.customHeight);
+    if (!Number.isNaN(parsed)) {
+      return clampTuritopHeight(parsed);
+    }
+  }
+
+  return null;
+};
+
+const getTuritopContainerStyle = (
+  alignment: TuritopAlignment,
+  customWidth?: number | null,
+  customHeight?: number | null,
+): CSSProperties => {
+  const style: CSSProperties = {
+    background: "#fff",
+    border: "1px solid #eadfce",
+    borderRadius: "1rem",
+    display: "block",
+    height: `${ customHeight ?? TURITOP_DEFAULT_HEIGHT }px`,
+    marginBottom: "1.5rem",
+    marginTop: "1.5rem",
+    maxWidth: "100%",
+    overflow: "hidden",
+    width: `${ customWidth ?? TURITOP_DEFAULT_WIDTH }px`,
+  };
+
+  if (alignment === "left") {
+    style.float = "left";
+    style.marginRight = "1.5rem";
+    return style;
+  }
+
+  if (alignment === "right") {
+    style.float = "right";
+    style.marginLeft = "1.5rem";
+    return style;
+  }
+
+  style.display = "flow-root";
+  style.marginLeft = "auto";
+  style.marginRight = "auto";
+  return style;
 };
 
 const getVideoContainerStyle = (
@@ -365,6 +602,7 @@ const getVideoContainerStyle = (
     return style;
   }
 
+  style.display = "flow-root";
   style.marginLeft = "auto";
   style.marginRight = "auto";
   return style;
@@ -389,36 +627,254 @@ const buildVideoEmbedSrc = (provider: SupportedVideoProvider, videoId: string) =
     : `https://player.vimeo.com/video/${ videoId }`;
 };
 
-const parseSupportedVideoUrl = (value: string) => {
+const normalizeHttpUrl = (value: string) => {
   try {
     const url = new URL(normalizeVideoUrlInput(value));
-
     if (url.protocol !== "http:" && url.protocol !== "https:") {
       return null;
     }
 
-    const youtubeVideoId = parseYouTubeVideoId(url);
-    if (youtubeVideoId) {
-      return {
-        provider: "youtube" as const,
-        title: "YouTube video",
-        videoId: youtubeVideoId,
-      };
-    }
-
-    const vimeoVideoId = parseVimeoVideoId(url);
-    if (vimeoVideoId) {
-      return {
-        provider: "vimeo" as const,
-        title: "Vimeo video",
-        videoId: vimeoVideoId,
-      };
-    }
+    return url;
   } catch {
     return null;
   }
+};
+
+const parseInstagramEmbedUrl = (url: URL) => {
+  const hostname = normalizeHostname(url.hostname);
+  if (hostname !== "instagram.com") {
+    return null;
+  }
+
+  const [resourceType, mediaId] = url.pathname.split("/").filter(Boolean);
+
+  if (resourceType && mediaId && ["p", "reel", "reels", "tv"].includes(resourceType)) {
+    const canonicalUrl = `https://www.instagram.com/${ resourceType }/${ mediaId }/`;
+
+    return {
+      canonicalUrl,
+      embedSrc: `${ canonicalUrl }embed`,
+      height: 720,
+      kind: "iframe" as const,
+      provider: "instagram" as const,
+      title: resourceType === "p" ? "Instagram post" : "Instagram reel",
+      widthPreset: "medium" as const,
+    };
+  }
 
   return null;
+};
+
+const parseGoogleMapsEmbedUrl = (url: URL) => {
+  const hostname = normalizeHostname(url.hostname);
+  const isGoogleMapsHost = hostname === "google.com" || hostname === "maps.google.com";
+  const isEmbeddablePath = url.pathname.startsWith("/maps/embed") || url.pathname.startsWith("/maps/d/embed");
+
+  if (!isGoogleMapsHost || !isEmbeddablePath) {
+    return null;
+  }
+
+  return {
+    canonicalUrl: url.toString(),
+    embedSrc: url.toString(),
+    height: 420,
+    kind: "iframe" as const,
+    provider: "googleMaps" as const,
+    title: "Google Maps",
+    widthPreset: "wide" as const,
+  };
+};
+
+const parseTuritopEmbedUrl = (url: URL) => {
+  const hostname = normalizeHostname(url.hostname);
+  if (hostname !== "turitop.com") {
+    return null;
+  }
+
+  return {
+    canonicalUrl: url.toString(),
+    embedSrc: url.toString(),
+    height: 720,
+    kind: "iframe" as const,
+    provider: "turitop" as const,
+    title: "Turitop booking",
+    widthPreset: "wide" as const,
+  };
+};
+
+const parseTikTokVideoId = (url: URL) => {
+  const hostname = normalizeHostname(url.hostname);
+  if (hostname !== "tiktok.com") {
+    return null;
+  }
+
+  const segments = url.pathname.split("/").filter(Boolean);
+  const videoIndex = segments.findIndex((segment) => segment === "video");
+  if (videoIndex >= 0 && segments[videoIndex + 1]) {
+    return segments[videoIndex + 1];
+  }
+
+  if (segments[0] === "embed" && segments[1] === "v3" && segments[2]) {
+    return segments[2];
+  }
+
+  return null;
+};
+
+const parseTikTokEmbedUrl = (url: URL) => {
+  const videoId = parseTikTokVideoId(url);
+  if (!videoId) {
+    return null;
+  }
+
+  return {
+    canonicalUrl: url.toString(),
+    embedSrc: `https://www.tiktok.com/embed/v3/${ videoId }`,
+    height: 740,
+    kind: "iframe" as const,
+    provider: "tiktok" as const,
+    title: "TikTok video",
+    widthPreset: "medium" as const,
+  };
+};
+
+const WALK_AND_TOUR_EMBED_HOSTS = new Set([
+  "walkandtour.dk",
+  "staging.walkandtour.dk",
+]);
+
+const parseWalkAndTourEmbedUrl = (url: URL) => {
+  const hostname = normalizeHostname(url.hostname);
+  if (!WALK_AND_TOUR_EMBED_HOSTS.has(hostname)) {
+    return null;
+  }
+
+  return {
+    canonicalUrl: url.toString(),
+    embedSrc: url.toString(),
+    height: 720,
+    kind: "iframe" as const,
+    provider: "walkAndTour" as const,
+    title: "WalkAndTour page",
+    widthPreset: "wide" as const,
+  };
+};
+
+const getLinkCardTitle = (url: URL) => normalizeHostname(url.hostname).replace(/\.$/, "");
+
+const getEmbedContainerStyle = (
+  alignment: EmbedAlignment,
+  height: number,
+  widthPreset: EmbedWidthPreset,
+  customWidth?: number | null,
+  customHeight?: number | null,
+): CSSProperties => {
+  const resolvedAlignment = widthPreset === "full" ? "center" : alignment;
+  const style: CSSProperties = {
+    background: "#fff",
+    border: "1px solid #eadfce",
+    borderRadius: "1rem",
+    display: "block",
+    height: `${ customHeight ?? height }px`,
+    marginBottom: "1.5rem",
+    marginTop: "1.5rem",
+    maxWidth: "100%",
+    overflow: "hidden",
+    width: customWidth ? `${ customWidth }px` : getEmbedWidth(widthPreset),
+  };
+
+  if (widthPreset === "full") {
+    style.clear = "both";
+  }
+
+  if (resolvedAlignment === "left") {
+    style.float = "left";
+    style.marginRight = "1.5rem";
+    return style;
+  }
+
+  if (resolvedAlignment === "right") {
+    style.float = "right";
+    style.marginLeft = "1.5rem";
+    return style;
+  }
+
+  style.display = "flow-root";
+  style.marginLeft = "auto";
+  style.marginRight = "auto";
+  return style;
+};
+
+const getLinkCardStyle = (): CSSProperties => ({
+  background: "#fbf7f0",
+  border: "1px solid #eadfce",
+  borderRadius: "1rem",
+  color: "#21343b",
+  display: "block",
+  marginBottom: "1.5rem",
+  marginTop: "1.5rem",
+  maxWidth: "100%",
+  padding: "1rem 1.125rem",
+  textDecoration: "none",
+  width: "min(100%, 36rem)",
+});
+
+const parseSupportedVideoUrl = (value: string) => {
+  const url = normalizeHttpUrl(value);
+  if (!url) {
+    return null;
+  }
+
+  const youtubeVideoId = parseYouTubeVideoId(url);
+  if (youtubeVideoId) {
+    return {
+      provider: "youtube" as const,
+      title: "YouTube video",
+      videoId: youtubeVideoId,
+    };
+  }
+
+  const vimeoVideoId = parseVimeoVideoId(url);
+  if (vimeoVideoId) {
+    return {
+      provider: "vimeo" as const,
+      title: "Vimeo video",
+      videoId: vimeoVideoId,
+    };
+  }
+
+  return null;
+};
+
+const parseSupportedEmbedUrl = (value: string): ParsedEmbedResult | null => {
+  const videoEmbed = parseSupportedVideoUrl(value);
+  if (videoEmbed) {
+    return {
+      kind: "video",
+      ...videoEmbed,
+    };
+  }
+
+  const url = normalizeHttpUrl(value);
+  if (!url) {
+    return null;
+  }
+
+  const iframeEmbed = parseInstagramEmbedUrl(url)
+    ?? parseGoogleMapsEmbedUrl(url)
+    ?? parseTuritopEmbedUrl(url)
+    ?? parseTikTokEmbedUrl(url)
+    ?? parseWalkAndTourEmbedUrl(url);
+
+  if (iframeEmbed) {
+    return iframeEmbed;
+  }
+
+  return {
+    href: url.toString(),
+    kind: "linkCard",
+    title: getLinkCardTitle(url),
+  };
 };
 
 function BlogVideoNodeView({
@@ -869,6 +1325,713 @@ function BlogImageNodeView({
   );
 }
 
+function BlogEmbedNodeView({
+  editor,
+  getPos,
+  node,
+  selected,
+  updateAttributes,
+}: NodeViewProps) {
+  const resizeSessionRef = useRef<{
+    startHeight: number;
+    startWidth: number;
+    startX: number;
+    startY: number;
+  } | null>(null);
+  const provider = toSupportedIframeProvider(node.attrs.provider);
+  const embedSrc = typeof node.attrs.embedSrc === "string" ? node.attrs.embedSrc.trim() : "";
+  const title = typeof node.attrs.title === "string" ? node.attrs.title.trim() : "";
+  const height = typeof node.attrs.height === "number" && Number.isFinite(node.attrs.height)
+    ? node.attrs.height
+    : 560;
+  const alignment = toEmbedAlignment(node.attrs.alignment);
+  const widthPreset = toEmbedWidthPreset(node.attrs.widthPreset);
+  const persistedHeight = getEmbedHeightFromAttrs(node.attrs);
+  const persistedWidth = getEmbedWidthFromAttrs(node.attrs);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [dragHeight, setDragHeight] = useState<number | null>(null);
+  const [dragWidth, setDragWidth] = useState<number | null>(null);
+  const [isResizing, setIsResizing] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const fallbackWidth = widthPreset === "medium" ? 448 : widthPreset === "wide" ? 576 : EMBED_MAX_WIDTH;
+  const activeHeight = dragHeight ?? persistedHeight ?? height;
+  const activeWidth = dragWidth ?? persistedWidth ?? fallbackWidth;
+
+  useEffect(() => {
+    if (!selected) {
+      const timeoutId = window.setTimeout(() => {
+        setIsMenuOpen(false);
+        setDragHeight(null);
+        setDragWidth(null);
+        setIsResizing(false);
+        resizeSessionRef.current = null;
+      }, 0);
+
+      return () => {
+        window.clearTimeout(timeoutId);
+      };
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (rootRef.current?.contains(event.target as globalThis.Node)) {
+        return;
+      }
+
+      setIsMenuOpen(false);
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isMenuOpen]);
+
+  const persistSize = (nextWidth: number, nextHeight: number) => {
+    const clampedWidth = clampEmbedWidth(nextWidth);
+    const clampedHeight = clampEmbedHeight(nextHeight);
+    updateAttributes({
+      customHeight: clampedHeight,
+      customWidth: clampedWidth,
+      widthPreset: clampedWidth >= 576 ? "wide" : "medium",
+    });
+    setDragHeight(null);
+    setDragWidth(null);
+  };
+
+  const setAlignment = (nextAlignment: EmbedAlignment) => {
+    updateAttributes({ alignment: nextAlignment });
+  };
+
+  const setWidthPreset = (nextWidthPreset: EmbedWidthPreset) => {
+    setDragHeight(null);
+    setDragWidth(null);
+    updateAttributes({
+      alignment: nextWidthPreset === "full" ? "center" : alignment,
+      customWidth: null,
+      widthPreset: nextWidthPreset,
+    });
+  };
+
+  const openMenu = () => {
+    const position = typeof getPos === "function" ? getPos() : null;
+    if (typeof position === "number") {
+      editor.chain().focus().setNodeSelection(position).run();
+    }
+
+    setIsMenuOpen(true);
+  };
+
+  const getResizedSize = (clientX: number, clientY: number) => {
+    const session = resizeSessionRef.current;
+    if (!session) {
+      return {
+        height: activeHeight,
+        width: activeWidth,
+      };
+    }
+
+    const width = clampEmbedWidth(session.startWidth + (clientX - session.startX));
+    const height = clampEmbedHeight(session.startHeight + (clientY - session.startY));
+
+    return { height, width };
+  };
+
+  const updateResizePreview = (clientX: number, clientY: number) => {
+    const nextSize = getResizedSize(clientX, clientY);
+    setDragHeight(nextSize.height);
+    setDragWidth(nextSize.width);
+    return nextSize;
+  };
+
+  const finishResize = (clientX?: number, clientY?: number) => {
+    const nextSize = typeof clientX === "number" && typeof clientY === "number"
+      ? updateResizePreview(clientX, clientY)
+      : { height: dragHeight ?? activeHeight, width: dragWidth ?? activeWidth };
+    persistSize(nextSize.width, nextSize.height);
+    setIsResizing(false);
+    resizeSessionRef.current = null;
+  };
+
+  const startResize = (clientX: number, clientY: number) => {
+    const position = typeof getPos === "function" ? getPos() : null;
+    if (typeof position === "number") {
+      editor.chain().focus().setNodeSelection(position).run();
+    }
+
+    setIsMenuOpen(false);
+    resizeSessionRef.current = {
+      startHeight: activeHeight,
+      startWidth: activeWidth,
+      startX: clientX,
+      startY: clientY,
+    };
+    setDragHeight(activeHeight);
+    setDragWidth(activeWidth);
+    setIsResizing(true);
+  };
+
+  const handleResizeMouseDown = (event: ReactMouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    startResize(event.clientX, event.clientY);
+  };
+
+  const handleResizeTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    if (!event.touches[0]) {
+      return;
+    }
+
+    event.preventDefault();
+    startResize(event.touches[0].clientX, event.touches[0].clientY);
+  };
+
+  if (!provider || !embedSrc) {
+    return (
+      <NodeViewWrapper
+        as="div"
+        ref={ rootRef }
+        className="my-6 rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
+        data-blog-embed="true"
+        contentEditable={ false }
+      >
+        Unsupported embed
+      </NodeViewWrapper>
+    );
+  }
+
+  return (
+    <NodeViewWrapper
+      as="div"
+      ref={ rootRef }
+      className={ cn(
+        "group/embed shadow-sm",
+        selected ? "ring-2 ring-[#d9c3a2] ring-offset-2 ring-offset-white" : "",
+      ) }
+      data-blog-embed="true"
+      data-embed-alignment={ widthPreset === "full" ? "center" : alignment }
+      data-embed-provider={ provider }
+      data-embed-src={ embedSrc }
+      data-embed-title={ title || getEmbedProviderLabel(provider) }
+      data-embed-width={ widthPreset }
+      data-embed-height={ height }
+      data-embed-custom-height={ persistedHeight ?? "" }
+      data-embed-custom-width={ persistedWidth ?? "" }
+      contentEditable={ false }
+      style={ {
+        ...getEmbedContainerStyle(
+          alignment,
+          height,
+          widthPreset,
+          dragWidth ?? persistedWidth,
+          dragHeight ?? persistedHeight,
+        ),
+        position: "relative",
+      } }
+    >
+      <Button
+        type="button"
+        size="icon-xs"
+        variant="outline"
+        aria-label="Embed settings"
+        className="absolute right-3 top-3 z-30 opacity-100 shadow-sm transition md:opacity-0 md:group-hover/embed:opacity-100 md:group-focus-within/embed:opacity-100"
+        onMouseDown={ (event) => event.preventDefault() }
+        onClick={ openMenu }
+      >
+        <Settings2 className="size-3.5"/>
+      </Button>
+
+      { isMenuOpen ? (
+        <div className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+          <div className="flex flex-wrap items-center gap-1">
+            { EMBED_ALIGNMENT_OPTIONS.map((option) => (
+              <Button
+                key={ option.value }
+                type="button"
+                size="xs"
+                variant={
+                  (widthPreset === "full" ? option.value === "center" : alignment === option.value)
+                    ? "default"
+                    : "outline"
+                }
+                disabled={ widthPreset === "full" && option.value !== "center" }
+                className="h-7"
+                onMouseDown={ (event) => event.preventDefault() }
+                onClick={ () => setAlignment(option.value) }
+              >
+                { option.label }
+              </Button>
+            )) }
+          </div>
+          <div className="flex flex-wrap items-center gap-1">
+            { EMBED_WIDTH_OPTIONS.map((option) => (
+              <Button
+                key={ option.value }
+                type="button"
+                size="xs"
+                variant={ widthPreset === option.value && persistedWidth === null ? "default" : "outline" }
+                className="h-7"
+                onMouseDown={ (event) => event.preventDefault() }
+                onClick={ () => setWidthPreset(option.value) }
+              >
+                { option.label }
+              </Button>
+            )) }
+          </div>
+        </div>
+      ) : null }
+
+      { isResizing ? (
+        <div
+          className="fixed inset-0 z-40 cursor-nwse-resize bg-transparent"
+          onMouseMove={ (event) => updateResizePreview(event.clientX, event.clientY) }
+          onMouseUp={ (event) => finishResize(event.clientX, event.clientY) }
+          onTouchMove={ (event) => {
+            const touch = event.touches[0];
+            if (!touch) {
+              return;
+            }
+
+            event.preventDefault();
+            updateResizePreview(touch.clientX, touch.clientY);
+          } }
+          onTouchEnd={ (event) => finishResize(event.changedTouches[0]?.clientX, event.changedTouches[0]?.clientY) }
+          onTouchCancel={ () => finishResize() }
+        />
+      ) : null }
+
+      <iframe
+        title={ title || getEmbedProviderLabel(provider) }
+        src={ embedSrc }
+        loading="lazy"
+        referrerPolicy="strict-origin-when-cross-origin"
+        className="h-full w-full border-0"
+      />
+      <div
+        className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
+        style={ { cursor: "nwse-resize" } }
+        onMouseDown={ handleResizeMouseDown }
+        onTouchStart={ handleResizeTouchStart }
+      />
+    </NodeViewWrapper>
+  );
+}
+
+function BlogLinkCardNodeView({
+  node,
+  selected,
+}: NodeViewProps) {
+  const href = typeof node.attrs.href === "string" ? node.attrs.href.trim() : "";
+  const title = typeof node.attrs.title === "string" ? node.attrs.title.trim() : href;
+
+  if (!href) {
+    return (
+      <NodeViewWrapper
+        as="div"
+        className="my-6 rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
+        contentEditable={ false }
+      >
+        Invalid link
+      </NodeViewWrapper>
+    );
+  }
+
+  return (
+    <NodeViewWrapper
+      as="a"
+      href={ href }
+      target="_blank"
+      rel="noopener noreferrer"
+      className={ cn(
+        "group/link-card block shadow-sm",
+        selected ? "ring-2 ring-[#d9c3a2] ring-offset-2 ring-offset-white" : "",
+      ) }
+      data-blog-link-card="true"
+      data-link-card-title={ title }
+      contentEditable={ false }
+      style={ getLinkCardStyle() }
+    >
+      <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#21343b]">
+        <ExternalLink className="size-4 text-[#8b7862]"/>
+        { title }
+      </span>
+      <span className="block truncate text-sm text-[#627176]">{ href }</span>
+    </NodeViewWrapper>
+  );
+}
+
+function BlogTuritopWidgetNodeView({
+  editor,
+  getPos,
+  node,
+  selected,
+  updateAttributes,
+}: NodeViewProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [alignment, setAlignment] = useState<TuritopAlignment>(
+    typeof node.attrs.alignment === "string" && (node.attrs.alignment === "left" || node.attrs.alignment === "right")
+      ? node.attrs.alignment
+      : "center",
+  );
+  const [language, setLanguage] = useState(typeof node.attrs.language === "string" ? node.attrs.language : "");
+  const [service, setService] = useState(typeof node.attrs.service === "string" ? node.attrs.service : "");
+  const [dragWidth, setDragWidth] = useState<number | null>(null);
+  const [dragHeight, setDragHeight] = useState<number | null>(null);
+  const [isResizing, setIsResizing] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const widgetHostRef = useRef<HTMLDivElement | null>(null);
+  const resizeSessionRef = useRef<{
+    startHeight: number;
+    startWidth: number;
+    startX: number;
+    startY: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!selected) {
+      const timeoutId = window.setTimeout(() => {
+        setIsMenuOpen(false);
+      }, 0);
+
+      return () => {
+        window.clearTimeout(timeoutId);
+      };
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (rootRef.current?.contains(event.target as globalThis.Node)) {
+        return;
+      }
+
+      setIsMenuOpen(false);
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (!isResizing) {
+      return;
+    }
+
+    const handleMouseMove = (event: MouseEvent) => {
+      const session = resizeSessionRef.current;
+      if (!session) {
+        return;
+      }
+
+      setDragWidth(clampTuritopWidth(session.startWidth + event.clientX - session.startX));
+      setDragHeight(clampTuritopHeight(session.startHeight + event.clientY - session.startY));
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const session = resizeSessionRef.current;
+      const touch = event.touches[0];
+      if (!session || !touch) {
+        return;
+      }
+
+      event.preventDefault();
+      setDragWidth(clampTuritopWidth(session.startWidth + touch.clientX - session.startX));
+      setDragHeight(clampTuritopHeight(session.startHeight + touch.clientY - session.startY));
+    };
+
+    const finishResize = (clientX?: number, clientY?: number) => {
+      const session = resizeSessionRef.current;
+      if (!session) {
+        return;
+      }
+
+      const nextWidth = typeof clientX === "number"
+        ? clampTuritopWidth(session.startWidth + clientX - session.startX)
+        : (dragWidth ?? session.startWidth);
+      const nextHeight = typeof clientY === "number"
+        ? clampTuritopHeight(session.startHeight + clientY - session.startY)
+        : (dragHeight ?? session.startHeight);
+
+      updateAttributes({
+        customHeight: nextHeight,
+        customWidth: nextWidth,
+      });
+      setDragWidth(null);
+      setDragHeight(null);
+      setIsResizing(false);
+      resizeSessionRef.current = null;
+    };
+
+    const handleMouseUp = (event: MouseEvent) => {
+      finishResize(event.clientX, event.clientY);
+    };
+
+    const handleTouchEnd = (event: TouchEvent) => {
+      const touch = event.changedTouches[0];
+      finishResize(touch?.clientX, touch?.clientY);
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      setDragWidth(null);
+      setDragHeight(null);
+      setIsResizing(false);
+      resizeSessionRef.current = null;
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("touchcancel", handleTouchEnd);
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchcancel", handleTouchEnd);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [dragHeight, dragWidth, isResizing, updateAttributes]);
+
+  const openMenu = () => {
+    const position = typeof getPos === "function" ? getPos() : null;
+    if (typeof position === "number") {
+      editor.chain().focus().setNodeSelection(position).run();
+    }
+
+    setAlignment(
+      typeof node.attrs.alignment === "string" && (node.attrs.alignment === "left" || node.attrs.alignment === "right")
+        ? node.attrs.alignment
+        : "center",
+    );
+    setLanguage(typeof node.attrs.language === "string" ? node.attrs.language : "");
+    setService(typeof node.attrs.service === "string" ? node.attrs.service : "");
+    setIsMenuOpen(true);
+  };
+
+  const saveSettings = () => {
+    updateAttributes({
+      alignment,
+      embed: TURITOP_EMBED_MODE,
+      language: language.trim(),
+      service: service.trim(),
+    });
+    setIsMenuOpen(false);
+  };
+
+  const currentLanguage = typeof node.attrs.language === "string" ? node.attrs.language : "";
+  const currentService = typeof node.attrs.service === "string" ? node.attrs.service : "";
+  const currentAlignment: TuritopAlignment =
+    typeof node.attrs.alignment === "string" && (node.attrs.alignment === "left" || node.attrs.alignment === "right")
+      ? node.attrs.alignment
+      : "center";
+  const persistedWidth = getTuritopWidthFromAttrs(node.attrs as Record<string, unknown>) ?? TURITOP_DEFAULT_WIDTH;
+  const persistedHeight = getTuritopHeightFromAttrs(node.attrs as Record<string, unknown>) ?? TURITOP_DEFAULT_HEIGHT;
+  const activeWidth = dragWidth ?? persistedWidth;
+  const activeHeight = dragHeight ?? persistedHeight;
+
+  useEffect(() => {
+    const host = widgetHostRef.current;
+    if (!host) {
+      return;
+    }
+
+    host.innerHTML = "";
+
+    if (!currentService || !currentLanguage) {
+      return;
+    }
+
+    mountTuritopWidgets([
+      {
+        container: host,
+        embed: TURITOP_EMBED_MODE,
+        language: currentLanguage,
+        service: currentService,
+      },
+    ]);
+
+    return () => {
+      host.innerHTML = "";
+    };
+  }, [currentLanguage, currentService]);
+
+  const startResize = (clientX: number, clientY: number) => {
+    const position = typeof getPos === "function" ? getPos() : null;
+    if (typeof position === "number") {
+      editor.chain().focus().setNodeSelection(position).run();
+    }
+
+    setIsMenuOpen(false);
+    resizeSessionRef.current = {
+      startHeight: activeHeight,
+      startWidth: activeWidth,
+      startX: clientX,
+      startY: clientY,
+    };
+    setDragWidth(activeWidth);
+    setDragHeight(activeHeight);
+    setIsResizing(true);
+  };
+
+  const handleResizeMouseDown = (event: ReactMouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    startResize(event.clientX, event.clientY);
+  };
+
+  const handleResizeTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    if (!touch) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    startResize(touch.clientX, touch.clientY);
+  };
+
+  return (
+    <NodeViewWrapper
+      as="div"
+      ref={ rootRef }
+      className={ cn(
+        "group/embed relative shadow-sm",
+        selected ? "ring-2 ring-[#d9c3a2] ring-offset-2 ring-offset-white" : "",
+      ) }
+      data-blog-turitop="true"
+      data-alignment={ currentAlignment }
+      data-embed={ TURITOP_EMBED_MODE }
+      data-lang={ currentLanguage }
+      data-service={ currentService }
+      contentEditable={ false }
+      style={ {
+        ...getTuritopContainerStyle(currentAlignment, activeWidth, activeHeight),
+        position: "relative",
+      } }
+    >
+      <Button
+        type="button"
+        size="icon-xs"
+        variant="outline"
+        aria-label="Turitop widget settings"
+        className="absolute right-3 top-3 z-30 opacity-100 shadow-sm transition md:opacity-0 md:group-hover/embed:opacity-100 md:group-focus-within/embed:opacity-100"
+        onMouseDown={ (event) => event.preventDefault() }
+        onClick={ openMenu }
+      >
+        <Settings2 className="size-3.5"/>
+      </Button>
+
+      { isMenuOpen ? (
+        <div className="absolute inset-x-3 top-3 z-20 rounded-xl border border-[#eadfce] bg-white/95 p-3 shadow-sm backdrop-blur">
+          <div className="space-y-3">
+            <div className="flex flex-wrap items-center gap-1">
+              { TURITOP_ALIGNMENT_OPTIONS.map((option) => (
+                <Button
+                  key={ option.value }
+                  type="button"
+                  size="xs"
+                  variant={ alignment === option.value ? "default" : "outline" }
+                  className="h-7"
+                  onMouseDown={ (event) => event.preventDefault() }
+                  onClick={ () => setAlignment(option.value) }
+                >
+                  { option.label }
+                </Button>
+              )) }
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-medium uppercase tracking-wide text-[#8b7862]">Service</label>
+              <Input
+                value={ service }
+                onChange={ (event) => setService(event.target.value) }
+                placeholder="P1"
+                onMouseDown={ (event) => event.stopPropagation() }
+              />
+            </div>
+            <div className="space-y-1">
+              <label className="text-xs font-medium uppercase tracking-wide text-[#8b7862]">Language</label>
+              <Input
+                value={ language }
+                onChange={ (event) => setLanguage(event.target.value) }
+                placeholder="es"
+                onMouseDown={ (event) => event.stopPropagation() }
+              />
+            </div>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs text-[#8b7862]">Embed mode: { TURITOP_EMBED_MODE }</p>
+              <Button
+                type="button"
+                size="xs"
+                onMouseDown={ (event) => event.preventDefault() }
+                onClick={ saveSettings }
+                disabled={ !service.trim() || !language.trim() }
+              >
+                Save
+              </Button>
+            </div>
+          </div>
+        </div>
+      ) : null }
+
+      { currentService && currentLanguage ? (
+        <div
+          ref={ widgetHostRef }
+          className="h-full min-h-24 w-full"
+        />
+      ) : (
+        <div className="flex h-full min-h-24 w-full items-center justify-center rounded-[1rem] border border-dashed border-[#d6c7a5] bg-white/70 px-4 text-sm text-[#8b7862]">
+          <span>Set service and language to render the Turitop calendar here.</span>
+        </div>
+      ) }
+
+      <div
+        className="absolute bottom-2 right-2 z-30 h-4 w-4 cursor-se-resize rounded-sm border border-[#d6c7a5] bg-white/90 shadow-sm"
+        onMouseDown={ handleResizeMouseDown }
+        onTouchStart={ handleResizeTouchStart }
+      />
+
+      { isResizing ? (
+        <div className="fixed inset-0 z-[999]" />
+      ) : null }
+    </NodeViewWrapper>
+  );
+}
+
 const readVideoEmbedFromElement = (element: HTMLElement) => {
   const providerFromData = toSupportedVideoProvider(element.getAttribute("data-video-provider"));
   const videoIdFromData = element.getAttribute("data-video-id")?.trim();
@@ -890,7 +2053,9 @@ const readVideoEmbedFromElement = (element: HTMLElement) => {
     };
   }
 
-  const iframe = element.querySelector("iframe");
+  const iframe = element.tagName === "IFRAME"
+    ? element
+    : element.querySelector("iframe");
   if (!iframe) {
     return null;
   }
@@ -906,6 +2071,34 @@ const readVideoEmbedFromElement = (element: HTMLElement) => {
     ...parsedFromIframe,
     title: iframe.getAttribute("title")?.trim() || parsedFromIframe.title,
     widthPreset: widthPresetFromData,
+  };
+};
+
+const readIframeEmbedFromElement = (element: HTMLElement) => {
+  const provider = toSupportedIframeProvider(element.getAttribute("data-embed-provider"));
+  const embedSrc = element.getAttribute("data-embed-src")?.trim()
+    ?? element.querySelector("iframe")?.getAttribute("src")?.trim()
+    ?? "";
+  const title = element.getAttribute("data-embed-title")?.trim() || "";
+  const heightValue = Number.parseInt(element.getAttribute("data-embed-height") ?? "", 10);
+  const customHeightValue = Number.parseFloat(element.getAttribute("data-embed-custom-height") ?? "");
+  const customWidthValue = Number.parseFloat(element.getAttribute("data-embed-custom-width") ?? "");
+  const alignment = toEmbedAlignment(element.getAttribute("data-embed-alignment"));
+  const widthPreset = toEmbedWidthPreset(element.getAttribute("data-embed-width"));
+
+  if (!provider || !embedSrc) {
+    return null;
+  }
+
+  return {
+    alignment,
+    customHeight: Number.isFinite(customHeightValue) ? clampEmbedHeight(customHeightValue) : null,
+    customWidth: Number.isFinite(customWidthValue) ? clampEmbedWidth(customWidthValue) : null,
+    embedSrc,
+    height: Number.isFinite(heightValue) ? heightValue : 560,
+    provider,
+    title: title || getEmbedProviderLabel(provider),
+    widthPreset,
   };
 };
 
@@ -1203,12 +2396,28 @@ const BlogVideo = Node.create({
     };
   },
   parseHTML() {
-    return [{ tag: "div[data-blog-video=\"true\"]" }];
+    return [
+      { tag: "div[data-blog-video=\"true\"]" },
+      {
+        tag: "div",
+        getAttrs: (element) =>
+          readVideoEmbedFromElement(element as HTMLElement)
+            ? null
+            : false,
+      },
+      {
+        tag: "iframe",
+        getAttrs: (element) =>
+          readVideoEmbedFromElement(element as HTMLElement)
+            ? null
+            : false,
+      },
+    ];
   },
   addNodeView() {
     return ReactNodeViewRenderer(BlogVideoNodeView);
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({ HTMLAttributes, node }) {
     const {
       alignment: alignmentAttribute,
       aspectRatio: aspectRatioAttribute,
@@ -1217,7 +2426,7 @@ const BlogVideo = Node.create({
       videoId: videoIdAttribute,
       widthPreset: widthPresetAttribute,
       ...restAttributes
-    } = HTMLAttributes;
+    } = node.attrs as Record<string, unknown>;
     const alignment = toVideoAlignment(
       typeof alignmentAttribute === "string" ? alignmentAttribute : "",
     );
@@ -1243,7 +2452,7 @@ const BlogVideo = Node.create({
 
     return [
       "div",
-      mergeAttributes(restAttributes, {
+      mergeAttributes(HTMLAttributes, restAttributes, {
         "data-blog-video": "true",
         "data-video-alignment": widthPreset === "full" ? "center" : alignment,
         "data-video-ratio": aspectRatio,
@@ -1264,6 +2473,259 @@ const BlogVideo = Node.create({
           style: "position:absolute;inset:0;height:100%;width:100%;border:0;",
           title,
         },
+      ],
+    ];
+  },
+});
+
+const BlogEmbed = Node.create({
+  name: "blogEmbed",
+  group: "block",
+  atom: true,
+  selectable: true,
+  draggable: false,
+  addAttributes() {
+    return {
+      alignment: {
+        default: "center",
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.alignment ?? "center",
+        renderHTML: () => ({}),
+      },
+      customHeight: {
+        default: null,
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.customHeight ?? null,
+        renderHTML: () => ({}),
+      },
+      customWidth: {
+        default: null,
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.customWidth ?? null,
+        renderHTML: () => ({}),
+      },
+      provider: {
+        default: "",
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.provider ?? "",
+        renderHTML: () => ({}),
+      },
+      embedSrc: {
+        default: "",
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.embedSrc ?? "",
+        renderHTML: () => ({}),
+      },
+      title: {
+        default: "",
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.title ?? "",
+        renderHTML: () => ({}),
+      },
+      height: {
+        default: 560,
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.height ?? 560,
+        renderHTML: () => ({}),
+      },
+      widthPreset: {
+        default: "wide",
+        parseHTML: (element) => readIframeEmbedFromElement(element)?.widthPreset ?? "wide",
+        renderHTML: () => ({}),
+      },
+    };
+  },
+  parseHTML() {
+    return [{ tag: "div[data-blog-embed=\"true\"]" }];
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(BlogEmbedNodeView);
+  },
+  renderHTML({ HTMLAttributes }) {
+    const alignment = toEmbedAlignment(
+      typeof HTMLAttributes.alignment === "string" ? HTMLAttributes.alignment : "",
+    );
+    const provider = toSupportedIframeProvider(
+      typeof HTMLAttributes.provider === "string" ? HTMLAttributes.provider : "",
+    );
+    const embedSrc = typeof HTMLAttributes.embedSrc === "string" ? HTMLAttributes.embedSrc.trim() : "";
+    const title = typeof HTMLAttributes.title === "string" ? HTMLAttributes.title.trim() : "";
+    const customHeight = getEmbedHeightFromAttrs(HTMLAttributes);
+    const customWidth = getEmbedWidthFromAttrs(HTMLAttributes);
+    const widthPreset = toEmbedWidthPreset(
+      typeof HTMLAttributes.widthPreset === "string" ? HTMLAttributes.widthPreset : "",
+    );
+    const height = typeof HTMLAttributes.height === "number" && Number.isFinite(HTMLAttributes.height)
+      ? HTMLAttributes.height
+      : 560;
+
+    if (!provider || !embedSrc) {
+      return ["div", mergeAttributes(HTMLAttributes)];
+    }
+
+    return [
+      "div",
+      mergeAttributes(HTMLAttributes, {
+        "data-blog-embed": "true",
+        "data-embed-alignment": widthPreset === "full" ? "center" : alignment,
+        "data-embed-custom-height": customHeight ?? "",
+        "data-embed-custom-width": customWidth ?? "",
+        "data-embed-provider": provider,
+        "data-embed-src": embedSrc,
+        "data-embed-title": title || getEmbedProviderLabel(provider),
+        "data-embed-width": widthPreset,
+        "data-embed-height": height,
+        style: styleObjectToString(getEmbedContainerStyle(alignment, height, widthPreset, customWidth, customHeight)),
+      }),
+      [
+        "iframe",
+        {
+          loading: "lazy",
+          referrerpolicy: "strict-origin-when-cross-origin",
+          src: embedSrc,
+          style: "height:100%;width:100%;border:0;",
+          title: title || getEmbedProviderLabel(provider),
+        },
+      ],
+    ];
+  },
+});
+
+const BlogTuritopWidget = Node.create({
+  name: "blogTuritopWidget",
+  group: "block",
+  atom: true,
+  selectable: true,
+  draggable: false,
+  addAttributes() {
+    return {
+      alignment: {
+        default: "center",
+        parseHTML: (element) => {
+          const value = element.getAttribute("data-alignment");
+          return value === "left" || value === "right" ? value : "center";
+        },
+        renderHTML: () => ({}),
+      },
+      customHeight: {
+        default: null,
+        parseHTML: (element) => {
+          const value = Number.parseFloat(element.getAttribute("data-custom-height") ?? "");
+          return Number.isNaN(value) ? null : clampTuritopHeight(value);
+        },
+        renderHTML: () => ({}),
+      },
+      customWidth: {
+        default: null,
+        parseHTML: (element) => {
+          const value = Number.parseFloat(element.getAttribute("data-custom-width") ?? "");
+          return Number.isNaN(value) ? null : clampTuritopWidth(value);
+        },
+        renderHTML: () => ({}),
+      },
+      embed: {
+        default: TURITOP_EMBED_MODE,
+        parseHTML: (element) => element.getAttribute("data-embed") ?? TURITOP_EMBED_MODE,
+        renderHTML: () => ({}),
+      },
+      language: {
+        default: "",
+        parseHTML: (element) => element.getAttribute("data-lang") ?? "",
+        renderHTML: () => ({}),
+      },
+      service: {
+        default: "",
+        parseHTML: (element) => element.getAttribute("data-service") ?? "",
+        renderHTML: () => ({}),
+      },
+    };
+  },
+  parseHTML() {
+    return [{ tag: "div[data-blog-turitop=\"true\"]" }];
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(BlogTuritopWidgetNodeView);
+  },
+  renderHTML({ HTMLAttributes, node }) {
+    const attrs = node.attrs as Record<string, unknown>;
+    const alignment: TuritopAlignment =
+      typeof attrs.alignment === "string" && (attrs.alignment === "left" || attrs.alignment === "right")
+        ? attrs.alignment
+        : "center";
+    const embed = typeof attrs.embed === "string" && attrs.embed.trim()
+      ? attrs.embed.trim()
+      : TURITOP_EMBED_MODE;
+    const customHeight = getTuritopHeightFromAttrs(attrs);
+    const customWidth = getTuritopWidthFromAttrs(attrs);
+    const language = typeof attrs.language === "string" ? attrs.language.trim() : "";
+    const service = typeof attrs.service === "string" ? attrs.service.trim() : "";
+
+    return [
+      "div",
+      mergeAttributes(HTMLAttributes, {
+        "data-blog-turitop": "true",
+        "data-alignment": alignment,
+        "data-custom-height": customHeight ?? "",
+        "data-custom-width": customWidth ?? "",
+        "data-embed": embed,
+        "data-lang": language,
+        "data-service": service,
+        style: styleObjectToString(getTuritopContainerStyle(alignment, customWidth, customHeight)),
+      }),
+    ];
+  },
+});
+
+const BlogLinkCard = Node.create({
+  name: "blogLinkCard",
+  group: "block",
+  atom: true,
+  selectable: true,
+  draggable: false,
+  addAttributes() {
+    return {
+      href: {
+        default: "",
+        parseHTML: (element) => element.getAttribute("href") ?? "",
+        renderHTML: () => ({}),
+      },
+      title: {
+        default: "",
+        parseHTML: (element) => element.getAttribute("data-link-card-title") ?? element.textContent?.trim() ?? "",
+        renderHTML: () => ({}),
+      },
+    };
+  },
+  parseHTML() {
+    return [{ tag: "a[data-blog-link-card=\"true\"]" }];
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(BlogLinkCardNodeView);
+  },
+  renderHTML({ HTMLAttributes }) {
+    const href = typeof HTMLAttributes.href === "string" ? HTMLAttributes.href.trim() : "";
+    const title = typeof HTMLAttributes.title === "string" ? HTMLAttributes.title.trim() : href;
+
+    if (!href) {
+      return ["div", mergeAttributes(HTMLAttributes)];
+    }
+
+    return [
+      "a",
+      mergeAttributes(HTMLAttributes, {
+        href,
+        rel: "noopener noreferrer",
+        target: "_blank",
+        "data-blog-link-card": "true",
+        "data-link-card-title": title,
+        style: styleObjectToString(getLinkCardStyle()),
+      }),
+      [
+        "span",
+        {
+          style: "display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;font-size:0.875rem;font-weight:600;color:#21343b;",
+        },
+        title,
+      ],
+      [
+        "span",
+        {
+          style: "display:block;color:#627176;font-size:0.875rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;",
+        },
+        href,
       ],
     ];
   },
@@ -1294,6 +2756,9 @@ const editorExtensions = [
     maxWidth: 960,
   }),
   BlogVideo,
+  BlogEmbed,
+  BlogTuritopWidget,
+  BlogLinkCard,
   HistoryExtension,
 ];
 
@@ -1348,9 +2813,13 @@ export const TiptapHtmlEditor = forwardRef<
   onRequestInsertImage,
   value,
 }, ref) {
-  const [isVideoDialogOpen, setIsVideoDialogOpen] = useState(false);
-  const [videoUrlInput, setVideoUrlInput] = useState("");
-  const [videoDialogError, setVideoDialogError] = useState<string | null>(null);
+  const [isEmbedDialogOpen, setIsEmbedDialogOpen] = useState(false);
+  const [isTuritopDialogOpen, setIsTuritopDialogOpen] = useState(false);
+  const [embedUrlInput, setEmbedUrlInput] = useState("");
+  const [embedDialogError, setEmbedDialogError] = useState<string | null>(null);
+  const [turitopDialogError, setTuritopDialogError] = useState<string | null>(null);
+  const [turitopLanguageInput, setTuritopLanguageInput] = useState("es");
+  const [turitopServiceInput, setTuritopServiceInput] = useState("");
   const editor = useEditor({
     immediatelyRender: false,
     extensions: editorExtensions,
@@ -1358,7 +2827,7 @@ export const TiptapHtmlEditor = forwardRef<
     editorProps: {
       attributes: {
         class:
-          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [&_blockquote]:border-l-4 [&_blockquote]:border-[#d8c5a8] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[#eadfce] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm",
+          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [&_blockquote]:border-l-4 [&_blockquote]:border-[#d8c5a8] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[#eadfce] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-turitop=\"true\"]]:shadow-sm",
       },
     },
     onUpdate: ({ editor: nextEditor }) => {
@@ -1367,6 +2836,7 @@ export const TiptapHtmlEditor = forwardRef<
   });
 
   useImperativeHandle(ref, () => ({
+    getHtml: () => editor?.getHTML() ?? normalizeEditorValue(value),
     insertImage: ({ alt, mediaId, src, storagePath }) => {
       editor?.chain().focus().insertContent([
         {
@@ -1383,7 +2853,7 @@ export const TiptapHtmlEditor = forwardRef<
         },
       ]).run();
     },
-  }), [editor]);
+  }), [editor, value]);
 
   useEffect(() => {
     if (!editor) {
@@ -1422,35 +2892,114 @@ export const TiptapHtmlEditor = forwardRef<
       .run();
   };
 
-  const submitVideo = () => {
+  const submitEmbed = () => {
     if (!editor) {
       return;
     }
 
-    const normalizedUrl = videoUrlInput.trim();
+    const normalizedUrl = embedUrlInput.trim();
     if (!normalizedUrl) {
-      setVideoDialogError("Enter a YouTube or Vimeo URL.");
+      setEmbedDialogError("Enter a supported embed URL.");
       return;
     }
 
-    const embed = parseSupportedVideoUrl(normalizedUrl);
+    const embed = parseSupportedEmbedUrl(normalizedUrl);
     if (!embed) {
-      const message = "Only YouTube and Vimeo video links are supported.";
-      setVideoDialogError(message);
+      const message = "Enter a valid public URL.";
+      setEmbedDialogError(message);
+      onError?.(message);
+      return;
+    }
+
+    const content =
+      embed.kind === "video"
+        ? [
+            {
+              type: "blogVideo",
+              attrs: {
+                alignment: "center",
+                aspectRatio: "16:9",
+                provider: embed.provider,
+                title: embed.title,
+                videoId: embed.videoId,
+                widthPreset: "wide",
+              },
+            },
+          ]
+        : embed.kind === "iframe"
+          ? [
+              {
+                type: "blogEmbed",
+                attrs: {
+                  embedSrc: embed.embedSrc,
+                  height: embed.height,
+                  provider: embed.provider,
+                  title: embed.title,
+                  widthPreset: embed.widthPreset,
+                },
+              },
+            ]
+          : [
+              {
+                type: "blogLinkCard",
+                attrs: {
+                  href: embed.href,
+                  title: embed.title,
+                },
+              },
+            ];
+
+    editor.chain().focus().insertContent([
+      ...content,
+      {
+        type: "paragraph",
+      },
+    ]).run();
+
+    handleEmbedDialogOpenChange(false);
+  };
+
+  const handleEmbedDialogOpenChange = (nextOpen: boolean) => {
+    setIsEmbedDialogOpen(nextOpen);
+
+    if (!nextOpen) {
+      setEmbedUrlInput("");
+      setEmbedDialogError(null);
+    }
+  };
+
+  const handleTuritopDialogOpenChange = (nextOpen: boolean) => {
+    setIsTuritopDialogOpen(nextOpen);
+
+    if (!nextOpen) {
+      setTuritopDialogError(null);
+      setTuritopLanguageInput("es");
+      setTuritopServiceInput("");
+    }
+  };
+
+  const submitTuritopWidget = () => {
+    if (!editor) {
+      return;
+    }
+
+    const service = turitopServiceInput.trim();
+    const language = turitopLanguageInput.trim();
+
+    if (!service || !language) {
+      const message = "Service and language are required.";
+      setTuritopDialogError(message);
       onError?.(message);
       return;
     }
 
     editor.chain().focus().insertContent([
       {
-        type: "blogVideo",
+        type: "blogTuritopWidget",
         attrs: {
-          alignment: "center",
-          aspectRatio: "16:9",
-          provider: embed.provider,
-          title: embed.title,
-          videoId: embed.videoId,
-          widthPreset: "wide",
+          embed: TURITOP_EMBED_MODE,
+          language,
+          service,
         },
       },
       {
@@ -1458,16 +3007,7 @@ export const TiptapHtmlEditor = forwardRef<
       },
     ]).run();
 
-    handleVideoDialogOpenChange(false);
-  };
-
-  const handleVideoDialogOpenChange = (nextOpen: boolean) => {
-    setIsVideoDialogOpen(nextOpen);
-
-    if (!nextOpen) {
-      setVideoUrlInput("");
-      setVideoDialogError(null);
-    }
+    handleTuritopDialogOpenChange(false);
   };
 
   return (
@@ -1551,58 +3091,137 @@ export const TiptapHtmlEditor = forwardRef<
           />
         ) : null }
         <ToolbarButton
-          icon={ Film }
-          label="Video"
+          icon={ Globe }
+          label="Embed"
           disabled={ !editor }
-          onClick={ () => handleVideoDialogOpenChange(true) }
+          onClick={ () => handleEmbedDialogOpenChange(true) }
+        />
+        <ToolbarButton
+          icon={ CalendarDays }
+          label="Turitop"
+          disabled={ !editor }
+          onClick={ () => handleTuritopDialogOpenChange(true) }
         />
       </div>
 
       <EditorContent editor={ editor }/>
 
-      <Dialog open={ isVideoDialogOpen } onOpenChange={ handleVideoDialogOpenChange }>
+      <Dialog open={ isEmbedDialogOpen } onOpenChange={ handleEmbedDialogOpenChange }>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Insert Video</DialogTitle>
+            <DialogTitle>Insert Embed</DialogTitle>
             <DialogDescription>
-              Paste a YouTube or Vimeo link to embed it in the post body.
+              Paste a public URL. YouTube, Vimeo, Instagram posts or reels, TikTok videos, Google Maps
+              embed URLs, Turitop URLs, and WalkAndTour production or staging pages become embeds.
+              Other public URLs become link cards.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-2">
-            <label htmlFor="blog-video-url" className="text-sm font-medium text-[#21343b]">
-              Video URL
+            <label htmlFor="blog-embed-url" className="text-sm font-medium text-[#21343b]">
+              Embed URL
             </label>
             <Input
-              id="blog-video-url"
+              id="blog-embed-url"
               type="url"
-              value={ videoUrlInput }
+              value={ embedUrlInput }
               onChange={ (event) => {
-                setVideoUrlInput(event.target.value);
-                if (videoDialogError) {
-                  setVideoDialogError(null);
+                setEmbedUrlInput(event.target.value);
+                if (embedDialogError) {
+                  setEmbedDialogError(null);
                 }
               } }
               onKeyDown={ (event) => {
                 if (event.key === "Enter") {
                   event.preventDefault();
-                  submitVideo();
+                  submitEmbed();
                 }
               } }
-              placeholder="https://www.youtube.com/watch?v=..."
+              placeholder="https://www.tiktok.com/@account/video/... or https://walkandtour.dk/..."
               autoFocus
             />
-            { videoDialogError ? (
-              <p className="text-sm text-[#8c3b32]">{ videoDialogError }</p>
+            { embedDialogError ? (
+              <p className="text-sm text-[#8c3b32]">{ embedDialogError }</p>
             ) : null }
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={ () => handleVideoDialogOpenChange(false) }>
+            <Button type="button" variant="outline" onClick={ () => handleEmbedDialogOpenChange(false) }>
               Cancel
             </Button>
-            <Button type="button" onClick={ submitVideo } disabled={ !editor }>
-              Insert Video
+            <Button type="button" onClick={ submitEmbed } disabled={ !editor }>
+              Insert Embed
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={ isTuritopDialogOpen } onOpenChange={ handleTuritopDialogOpenChange }>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Insert Turitop Calendar</DialogTitle>
+            <DialogDescription>
+              Add a Turitop calendar widget placeholder to the post. The live calendar is mounted on the public blog page.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-3">
+            <div className="space-y-2">
+              <label htmlFor="blog-turitop-service" className="text-sm font-medium text-[#21343b]">
+                Service
+              </label>
+              <Input
+                id="blog-turitop-service"
+                value={ turitopServiceInput }
+                onChange={ (event) => {
+                  setTuritopServiceInput(event.target.value);
+                  if (turitopDialogError) {
+                    setTuritopDialogError(null);
+                  }
+                } }
+                placeholder="P1"
+                autoFocus
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="blog-turitop-language" className="text-sm font-medium text-[#21343b]">
+                Language
+              </label>
+              <Input
+                id="blog-turitop-language"
+                value={ turitopLanguageInput }
+                onChange={ (event) => {
+                  setTuritopLanguageInput(event.target.value);
+                  if (turitopDialogError) {
+                    setTuritopDialogError(null);
+                  }
+                } }
+                placeholder="es"
+                onKeyDown={ (event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    submitTuritopWidget();
+                  }
+                } }
+              />
+            </div>
+
+            <div className="rounded-2xl border border-[#eadfce] bg-[#fbf7f0] px-4 py-3 text-sm text-[#627176]">
+              Embed mode: <span className="font-medium text-[#21343b]">{ TURITOP_EMBED_MODE }</span>
+            </div>
+
+            { turitopDialogError ? (
+              <p className="text-sm text-[#8c3b32]">{ turitopDialogError }</p>
+            ) : null }
+          </div>
+
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={ () => handleTuritopDialogOpenChange(false) }>
+              Cancel
+            </Button>
+            <Button type="button" onClick={ submitTuritopWidget } disabled={ !editor }>
+              Insert Calendar
             </Button>
           </DialogFooter>
         </DialogContent>

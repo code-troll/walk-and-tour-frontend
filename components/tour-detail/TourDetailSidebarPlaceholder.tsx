@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { mountTuritopWidgets } from "@/lib/turitop/widget";
 import TourDetailSidebarFallback from "./TourDetailSidebarFallback";
-
-const TURITOP_SCRIPT_ID = "js-turitop";
-const TURITOP_SCRIPT_SRC = "https://app.turitop.com/js/load-turitop.min.js";
 
 type TourDetailSidebarPlaceholderProps = {
   bookingReferenceId?: string;
@@ -14,39 +12,6 @@ type TourDetailSidebarPlaceholderProps = {
   cancellationType?: string;
   requestedBookingType?: "privateTours" | "companyTours";
   requestedItemId?: string;
-};
-
-const mountTuritopWidget = ({
-                              container,
-                              bookingReferenceId,
-                              language,
-                            }: {
-  container: HTMLDivElement;
-  bookingReferenceId: string;
-  language: string;
-}) => {
-  container.innerHTML = "";
-
-  const widget = document.createElement("div");
-  widget.className = "load-turitop";
-  widget.dataset.service = bookingReferenceId;
-  widget.dataset.lang = language;
-  widget.dataset.embed = "box";
-  container.appendChild(widget);
-
-  const existingScript = document.getElementById(TURITOP_SCRIPT_ID);
-  if (existingScript) {
-    existingScript.remove();
-  }
-
-  const script = document.createElement("script");
-  script.id = TURITOP_SCRIPT_ID;
-  script.src = TURITOP_SCRIPT_SRC;
-  script.async = true;
-  script.dataset.company = "W420";
-  script.dataset.buttoncolor = "green";
-  script.dataset.afftag = "ttafid";
-  document.body.appendChild(script);
 };
 
 export default function TourDetailSidebarPlaceholder({
@@ -67,11 +32,13 @@ export default function TourDetailSidebarPlaceholder({
       return;
     }
 
-    mountTuritopWidget({
-      container,
-      bookingReferenceId,
-      language,
-    });
+    mountTuritopWidgets([
+      {
+        container,
+        language,
+        service: bookingReferenceId,
+      },
+    ]);
 
     return () => {
       container.innerHTML = "";

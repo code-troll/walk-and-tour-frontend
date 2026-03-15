@@ -1,4 +1,6 @@
+import BlogPostHtmlContent from "@/components/blog/BlogPostHtmlContent";
 import { WixRichContentRenderer } from "@/components/wix/WixRichContentRenderer";
+import { sanitizeBlogContentHtml } from "@/lib/blog/sanitize-content-html";
 import type { WixRichContent } from "@/lib/wix/rich-content/types";
 
 type BlogPostContentProps = {
@@ -27,6 +29,8 @@ export default function BlogPostContent({
                                          contentHtml,
                                          contentText,
                                        }: BlogPostContentProps) {
+  const safeContentHtml = contentHtml ? sanitizeBlogContentHtml(contentHtml) : null;
+
   if (richContent?.nodes?.length) {
     return (
       <WixRichContentRenderer
@@ -36,13 +40,8 @@ export default function BlogPostContent({
     );
   }
 
-  if (contentHtml) {
-    return (
-      <div
-        className={ contentClassName }
-        dangerouslySetInnerHTML={ { __html: contentHtml } }
-      />
-    );
+  if (safeContentHtml) {
+    return <BlogPostHtmlContent className={ contentClassName } contentHtml={ safeContentHtml }/>;
   }
 
   return (
