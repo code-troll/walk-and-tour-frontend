@@ -321,7 +321,7 @@ export const createAdminApi = (accessToken: string) => {
       });
 
       if (result.response.status === 204) {
-        return await unwrapBackendApiResult(
+        return unwrapBackendApiResult(
           await client.GET("/api/admin/blog-posts/{id}", {
             params: {
               path: {
