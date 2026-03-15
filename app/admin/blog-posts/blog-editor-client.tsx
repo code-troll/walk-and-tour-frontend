@@ -8,7 +8,6 @@ import {
   ArrowLeft,
   Check,
   Globe,
-  ImagePlus,
   LoaderCircle,
   Plus,
   Save,
@@ -774,9 +773,6 @@ export function BlogPostEditorClient({
   const coverPreviewUrl = savedBlogPost?.heroMedia
     ? mediaPreviewStatus[savedBlogPost.heroMedia.id]?.previewUrl ?? null
     : null;
-  const usedImageRefs = activeTranslation?.imageRefsText
-    ? activeTranslation.imageRefsText.split("\n").map((value) => value.trim()).filter(Boolean)
-    : [];
   const mediaDialogTitle = mediaDialogMode === "cover" ? "Select Cover Image" : "Insert Post Image";
   const mediaDialogDescription = mediaDialogMode === "cover"
     ? "Choose or upload the image used for blog listings and the hero section."
@@ -1113,32 +1109,6 @@ export function BlogPostEditorClient({
                     onError={ (message) => setFeedback({ tone: "error", message }) }
                     onRequestInsertImage={ () => void openMediaDialog("inline") }
                   />
-                </div>
-
-                <div className="rounded-[1.25rem] border border-[#eadfce] bg-white p-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold text-[#21343b]">Images used in this translation</p>
-                      <p className="mt-1 text-xs text-[#627176]">
-                        These image references are synchronized automatically from the images inserted in the editor body.
-                      </p>
-                    </div>
-                    <Button type="button" variant="outline" onClick={ () => void openMediaDialog("inline") } className="gap-2">
-                      <ImagePlus className="size-4"/>
-                      Insert Image
-                    </Button>
-                  </div>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    { usedImageRefs.length === 0 ? (
-                      <p className="text-sm text-[#627176]">No article images inserted yet.</p>
-                    ) : (
-                      usedImageRefs.map((imageRef) => (
-                        <span key={ imageRef } className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-[#627176]">
-                          { imageRef }
-                        </span>
-                      ))
-                    ) }
-                  </div>
                 </div>
 
                 <div className="grid gap-5 lg:grid-cols-2">
