@@ -2861,9 +2861,21 @@ export const TiptapHtmlEditor = forwardRef<
     }
 
     const nextValue = normalizeEditorValue(value);
-    if (editor.getHTML() !== nextValue) {
-      editor.commands.setContent(nextValue, { emitUpdate: false });
-    }
+    let cancelled = false;
+
+    queueMicrotask(() => {
+      if (cancelled || editor.isDestroyed) {
+        return;
+      }
+
+      if (editor.getHTML() !== nextValue) {
+        editor.commands.setContent(nextValue, { emitUpdate: false });
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, [editor, value]);
 
   const setLink = () => {
