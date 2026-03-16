@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useNProgress } from "@tanem/react-nprogress";
 import {
   type ComponentPropsWithoutRef,
@@ -9,15 +9,26 @@ import {
   forwardRef,
   type MouseEvent,
   type ReactNode,
+  useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from "react";
 import { cn } from "@/lib/utils";
 
 type AdminRouteProgressContextValue = {
-  start: () => void;
+  enterLoadingBoundary: () => void;
+  exitLoadingBoundary: () => void;
+  startNavigation: () => void;
+};
+
+type NavigationState = {
+  hasCommitted: boolean;
+  isNavigating: boolean;
+  loadingBoundaryCount: number;
+  sourceRouteKey: string | null;
 };
 
 const AdminRouteProgressContext = createContext<AdminRouteProgressContextValue | null>(null);
@@ -41,35 +52,117 @@ const isPlainLeftClick = (event: MouseEvent<HTMLAnchorElement>) =>
   !event.shiftKey &&
   !event.altKey;
 
+const initialNavigationState: NavigationState = {
+  hasCommitted: false,
+  isNavigating: false,
+  loadingBoundaryCount: 0,
+  sourceRouteKey: null,
+};
+
 export function AdminRouteProgressProvider({
   children,
 }: {
   children: ReactNode;
 }) {
   const pathname = usePathname();
-  const [isAnimating, setIsAnimating] = useState(false);
+  const searchParams = useSearchParams();
+  const search = searchParams.toString();
+  const routeKey = search ? `${ pathname }?${ search }` : pathname;
+  const [navigationState, setNavigationState] = useState<NavigationState>(initialNavigationState);
+
+  const startNavigation = useCallback(() => {
+    setNavigationState((current) => {
+      if (current.isNavigating) {
+        return current;
+      }
+
+      return {
+        ...current,
+        hasCommitted: false,
+        isNavigating: true,
+        sourceRouteKey: routeKey,
+      };
+    });
+  }, [routeKey]);
+
+  const enterLoadingBoundary = useCallback(() => {
+    setNavigationState((current) => ({
+      ...current,
+      loadingBoundaryCount: current.loadingBoundaryCount + 1,
+    }));
+  }, []);
+
+  const exitLoadingBoundary = useCallback(() => {
+    setNavigationState((current) => ({
+      ...current,
+      loadingBoundaryCount: Math.max(0, current.loadingBoundaryCount - 1),
+    }));
+  }, []);
+
   const progressState = useMemo<AdminRouteProgressContextValue>(
     () => ({
-      start: () => {
-        setIsAnimating(true);
-      },
+      enterLoadingBoundary,
+      exitLoadingBoundary,
+      startNavigation,
     }),
-    [],
+    [enterLoadingBoundary, exitLoadingBoundary, startNavigation],
   );
+
   const { animationDuration, isFinished, progress } = useNProgress({
     animationDuration: 240,
     incrementDuration: 320,
-    isAnimating,
+    isAnimating: navigationState.isNavigating,
     minimum: 0.12,
   });
 
   useEffect(() => {
-    if (!isAnimating) {
+    setNavigationState((current) => {
+      if (
+        !current.isNavigating ||
+        current.hasCommitted ||
+        current.sourceRouteKey === null ||
+        routeKey === current.sourceRouteKey
+      ) {
+        return current;
+      }
+
+      return {
+        ...current,
+        hasCommitted: true,
+      };
+    });
+  }, [routeKey]);
+
+  useEffect(() => {
+    if (
+      !navigationState.isNavigating ||
+      !navigationState.hasCommitted ||
+      navigationState.loadingBoundaryCount > 0
+    ) {
       return;
     }
 
-    setIsAnimating(false);
-  }, [isAnimating, pathname]);
+    setNavigationState((current) => {
+      if (
+        !current.isNavigating ||
+        !current.hasCommitted ||
+        current.loadingBoundaryCount > 0
+      ) {
+        return current;
+      }
+
+      return {
+        ...current,
+        hasCommitted: false,
+        isNavigating: false,
+        sourceRouteKey: null,
+      };
+    });
+  }, [
+    navigationState.hasCommitted,
+    navigationState.isNavigating,
+    navigationState.loadingBoundaryCount,
+  ]);
 
   return (
     <AdminRouteProgressContext.Provider value={ progressState }>
@@ -96,6 +189,33 @@ export function AdminRouteProgressProvider({
   );
 }
 
+export function AdminRouteLoadingSignal() {
+  const progress = useContext(AdminRouteProgressContext);
+
+  useLayoutEffect(() => {
+    progress?.enterLoadingBoundary();
+
+    return () => {
+      progress?.exitLoadingBoundary();
+    };
+  }, [progress]);
+
+  return null;
+}
+
+export function useAdminRouteProgress() {
+  const progress = useContext(AdminRouteProgressContext);
+
+  return useMemo(
+    () => ({
+      startNavigation: () => {
+        progress?.startNavigation();
+      },
+    }),
+    [progress],
+  );
+}
+
 export const AdminProgressLink = forwardRef<
   HTMLAnchorElement,
   ComponentPropsWithoutRef<typeof Link>
@@ -119,7 +239,7 @@ export const AdminProgressLink = forwardRef<
       return;
     }
 
-    progress?.start();
+    progress?.startNavigation();
   };
 
   return <Link ref={ ref } href={ href } onClick={ handleClick } target={ target } { ...props } />;

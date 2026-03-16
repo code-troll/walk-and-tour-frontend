@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
 import {
   Dialog,
   DialogContent,
@@ -458,11 +459,12 @@ export function TourEditorClient({
                                    mode,
                                    initialTour,
                                    availableLanguages,
-                                   availableTags,
-                                   accessToken,
-                                   backendApiBaseUrl,
-                                 }: TourEditorClientProps) {
+                                 availableTags,
+                                 accessToken,
+                                 backendApiBaseUrl,
+                               }: TourEditorClientProps) {
   const router = useRouter();
+  const { startNavigation } = useAdminRouteProgress();
   const [activeSection, setActiveSection] = useState<TourSection>("general");
   const [activeTranslationLanguageCode, setActiveTranslationLanguageCode] = useState<string | null>(
     initialTour ? getInitialTourFormState(initialTour).translations[0]?.languageCode ?? null : null,
@@ -1402,6 +1404,7 @@ export function TourEditorClient({
         setSuccessMessage(redirectAfterCreate ? "Tour created. Redirecting to the editor." : "Tour created.");
 
         if (redirectAfterCreate) {
+          startNavigation();
           router.replace(`/tours/${ createResult.tour.id }`);
           router.refresh();
         }
@@ -1549,6 +1552,7 @@ export function TourEditorClient({
         addTranslationNow(action.languageCode);
         return;
       case "leave":
+        startNavigation();
         router.push("/tours");
     }
   };

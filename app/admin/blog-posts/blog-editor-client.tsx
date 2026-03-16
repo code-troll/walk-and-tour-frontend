@@ -15,7 +15,7 @@ import {
   Upload,
   X,
 } from "lucide-react";
-import { AdminProgressLink } from "@/components/admin/AdminRouteProgress";
+import { AdminProgressLink, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
 import { AdminSectionCard } from "@/components/admin/AdminUi";
 import { TiptapHtmlEditor, type TiptapHtmlEditorHandle } from "@/components/admin/TiptapHtmlEditor";
 import { Button } from "@/components/ui/button";
@@ -110,6 +110,7 @@ export function BlogPostEditorClient({
                                        mode,
                                      }: BlogPostEditorClientProps) {
   const router = useRouter();
+  const { startNavigation } = useAdminRouteProgress();
   const editorRef = useRef<TiptapHtmlEditorHandle | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const mediaPreviewObjectUrlsRef = useRef<Map<string, string>>(new Map());
@@ -282,6 +283,7 @@ export function BlogPostEditorClient({
     applySavedBlogPost(result.blogPost, savedBlogPost ? "Shared blog details updated." : "Blog post created.");
 
     if (!savedBlogPost) {
+      startNavigation();
       router.replace(`/blog-posts/${ result.blogPost.id }`);
     }
   };
