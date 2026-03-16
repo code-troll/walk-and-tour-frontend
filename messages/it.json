@@ -839,6 +839,7 @@
     "description": "Leggi guide pratiche, consigli locali e storie del nostro team per vivere al meglio il tuo viaggio.",
     "loadMore": "Carica altro",
     "readMore": "Leggi di più",
+    "views": "Visualizzazioni",
     "empty": "Nessun articolo disponibile al momento.",
     "error": "Non è stato possibile caricare gli articoli in questo momento."
   },
@@ -846,6 +847,7 @@
     "backToBlog": "Torna al blog",
     "publishedOn": "Pubblicato il",
     "updatedOn": "Aggiornato il",
+    "views": "Visualizzazioni",
     "share": "Condividi questo articolo",
     "copyLink": "Copia link",
     "copied": "Copiato",

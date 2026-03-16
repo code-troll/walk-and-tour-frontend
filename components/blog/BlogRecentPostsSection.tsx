@@ -8,6 +8,7 @@ type BlogRecentPostsSectionProps = {
   posts: PublicBlogCard[];
   title: string;
   readMoreLabel: string;
+  viewsLabel: string;
 };
 
 export default function BlogRecentPostsSection({
@@ -15,6 +16,7 @@ export default function BlogRecentPostsSection({
                                                  posts,
                                                  title,
                                                  readMoreLabel,
+                                                 viewsLabel,
                                                }: BlogRecentPostsSectionProps) {
   if (posts.length === 0) {
     return null;
@@ -35,6 +37,7 @@ export default function BlogRecentPostsSection({
               post={ post }
               postHref={ `${ postBasePath }/${ post.slug }` }
               readMoreLabel={ readMoreLabel }
+              viewsLabel={ viewsLabel }
               locale={ locale }
             />
           )) }

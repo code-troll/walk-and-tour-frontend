@@ -7,6 +7,7 @@ type BlogPostCardProps = {
   post: PublicBlogCard;
   postHref: string;
   readMoreLabel: string;
+  viewsLabel: string;
   locale: string;
 };
 
@@ -31,9 +32,11 @@ export default function BlogPostCard({
                                       post,
                                       postHref,
                                       readMoreLabel,
+                                      viewsLabel,
                                       locale,
                                     }: BlogPostCardProps) {
   const formattedDate = getFormattedDate(post.publishedDate, locale);
+  const formattedViewCount = new Intl.NumberFormat(locale).format(post.viewCount);
   const isRemoteImage = post.coverImageUrl?.startsWith("http://") || post.coverImageUrl?.startsWith("https://");
 
   return (
@@ -54,10 +57,11 @@ export default function BlogPostCard({
         ) }
       </a>
       <div className="flex flex-1 flex-col p-6">
-        { formattedDate ? (
-          <p className="text-sm font-medium text-[#8a7562]">
-            { formattedDate }
-          </p>
+        { formattedDate || typeof post.viewCount === "number" ? (
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-[#8a7562]">
+            { formattedDate ? <p>{ formattedDate }</p> : null }
+            <p>{ viewsLabel }: { formattedViewCount }</p>
+          </div>
         ) : null }
         <h3 className="mt-2 text-2xl font-semibold leading-tight text-[#2a221a]">
           { post.title }

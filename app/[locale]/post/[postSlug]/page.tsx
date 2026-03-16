@@ -110,8 +110,10 @@ export default async function BlogPostDetailPage({
             <div className="mt-12">
               <BlogPostMetaTopBar publishedLabel={ tBlogPost("publishedOn") }
                                   updatedLabel={ tBlogPost("updatedOn") }
+                                  viewsLabel={ tBlogPost("views") }
                                   publishedDate={ post.publishedDate }
                                   updatedDate={ post.updatedDate }
+                                  viewCount={ post.viewCount }
                                   locale={ locale }/>
 
               <h1 className="mt-2 text-4xl font-semibold leading-tight text-teal sm:text-5xl">
@@ -127,7 +129,7 @@ export default async function BlogPostDetailPage({
             </div>
 
             <div>
-              <div className="border-t border-[#e8dfd4] py-6">
+              <div className="border-t border-[#e8dfd4] mt-6 py-6">
                 <BlogPostShareLinks
                   title={ post.title }
                   shareUrl={ shareUrl }
@@ -152,6 +154,7 @@ export default async function BlogPostDetailPage({
         posts={ recentPosts }
         title={ tBlogPost("latestPosts") }
         readMoreLabel={ tBlogPage("readMore") }
+        viewsLabel={ tBlogPage("views") }
       />
 
       <Footer/>

@@ -817,6 +817,7 @@
     "description": "Read practical guides, local tips and stories from our team to make the most of your trip.",
     "loadMore": "Load more",
     "readMore": "Read more",
+    "views": "Views",
     "empty": "No blog posts available right now.",
     "error": "We could not load the blog posts right now."
   },
@@ -824,6 +825,7 @@
     "backToBlog": "Back to blog",
     "publishedOn": "Published on",
     "updatedOn": "Updated on",
+    "views": "Views",
     "share": "Share this post",
     "copyLink": "Copy link",
     "copied": "Copied",

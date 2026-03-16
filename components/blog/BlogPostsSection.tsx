@@ -59,6 +59,7 @@ export default function BlogPostsSection({
                 post={ post }
                 postHref={ `${ postBasePath }/${ post.slug }` }
                 readMoreLabel={ t("readMore") }
+                viewsLabel={ t("views") }
                 locale={ locale }
               />
             )) }

@@ -1,10 +1,12 @@
-import { PenLine } from "lucide-react";
+import { Eye, PenLine } from "lucide-react";
 
 type BlogPostMetaTopBarProps = {
   publishedLabel: string;
   updatedLabel: string;
+  viewsLabel: string;
   publishedDate: string | null;
   updatedDate: string | null;
+  viewCount: number;
   locale: string;
 };
 
@@ -28,12 +30,15 @@ const formatDate = (value: string | null, locale: string): string => {
 export default function BlogPostMetaTopBar({
                                              publishedLabel,
                                              updatedLabel,
+                                             viewsLabel,
                                              publishedDate,
                                              updatedDate,
+                                             viewCount,
                                              locale,
                                            }: BlogPostMetaTopBarProps) {
   const formattedPublishedDate = formatDate(publishedDate, locale);
   const formattedUpdatedDate = formatDate(updatedDate, locale);
+  const formattedViewCount = new Intl.NumberFormat(locale).format(viewCount);
 
   return (
     <div className="flex flex-row gap-6">
@@ -47,7 +52,10 @@ export default function BlogPostMetaTopBar({
           <span>{ updatedLabel }: { formattedUpdatedDate }</span>
         </p>
       ) : null }
-
+      <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
+        <Eye className="h-4 w-4 text-[#8a7562]"/>
+        <span>{ viewsLabel }: { formattedViewCount }</span>
+      </p>
     </div>
   );
 }

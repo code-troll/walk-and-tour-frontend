@@ -72,6 +72,7 @@ const selectClassName =
   "h-11 rounded-lg border border-input bg-background px-3 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20";
 const fieldLabelClassName = "text-sm font-medium text-foreground";
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
+const viewCountFormatter = new Intl.NumberFormat("en-US");
 
 type BlogPostEditorClientProps = {
   accessToken: string;
@@ -1019,6 +1020,7 @@ export function BlogPostEditorClient({
                     const availability = savedBlogPost?.translationAvailability.find(
                       (item) => item.languageCode === translation.languageCode,
                     );
+                    const savedTranslation = savedBlogPost?.translations[translation.languageCode];
                     const isActive = translation.languageCode === resolvedActiveLanguageCode;
 
                     return (
@@ -1041,6 +1043,9 @@ export function BlogPostEditorClient({
                           { availability?.isPublished || translation.isPublished ? "Published" : "Draft" }
                           { availability?.publiclyAvailable ? " - Public" : "" }
                         </p>
+                        <p className="mt-1 text-xs font-medium text-[#8f6a3b]">
+                          Views: { viewCountFormatter.format(savedTranslation?.viewCount ?? 0) }
+                        </p>
                       </button>
                     );
                   })
@@ -1060,6 +1065,18 @@ export function BlogPostEditorClient({
                       </p>
                     </div>
 
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="rounded-full border border-[#d8c5a8] bg-[#fcfaf6] px-3 py-1 text-xs font-medium text-[#8f6a3b]">
+                        Views: {
+                          viewCountFormatter.format(
+                            savedBlogPost?.translations[activeTranslation.languageCode]?.viewCount ?? 0,
+                          )
+                        }
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex flex-wrap items-center gap-2">
                       <Button type="button" variant="outline" onClick={ saveTranslation } disabled={ isMutating }
                               className="gap-2">

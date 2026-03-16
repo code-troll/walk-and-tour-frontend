@@ -18,6 +18,7 @@ export type PublicBlogCard = {
   coverImageUrl: string | null;
   coverImageAlt: string;
   publishedDate: string;
+  viewCount: number;
   tagLabels: PublicBlogTag[];
 };
 export type PublicBlogDetail = PublicBlogCard & {
@@ -76,6 +77,7 @@ const normalizeBlogCard = (post: PublicBlogResponse): PublicBlogCard => {
     coverImageUrl: post.heroMedia?.contentUrl ?? null,
     coverImageAlt: title,
     publishedDate: post.publishedAt,
+    viewCount: post.translation.viewCount,
     tagLabels: post.tags.map(normalizeTag),
   };
 };

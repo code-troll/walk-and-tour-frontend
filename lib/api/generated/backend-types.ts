@@ -112,6 +112,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/media/{id}/content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Fetch public media content
+         * @description Streams the stored file bytes for one reusable media asset by UUID.
+         */
+        get: operations["MediaController_fetchContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/users": {
         parameters: {
             query?: never;
@@ -381,7 +401,7 @@ export interface paths {
         };
         /**
          * Get a public blog post by slug and locale
-         * @description Returns a published blog post only when the requested locale is enabled and that locale has a published translation.
+         * @description Returns a published blog post only when the requested locale is enabled and that locale has a published translation. Successful requests update the requested translation view count at most once per translation and client IP hash every 24 hours.
          */
         get: operations["BlogPostsController_findOnePublic"];
         put?: never;
@@ -991,8 +1011,8 @@ export interface components {
              */
             adminContentUrl: string;
             /**
-             * @description Direct public storage URL for the uploaded object.
-             * @example http://cdn.dev.walkandtour.dk/media/tours/historic-center/cover.jpg
+             * @description Public API URL used to fetch the stored media bytes without admin authentication.
+             * @example http://api.dev.walkandtour.dk:3000/api/media/uuid/content
              */
             publicContentUrl: string;
             /**
@@ -1063,8 +1083,8 @@ export interface components {
              */
             adminContentUrl: string;
             /**
-             * @description Direct public storage URL for the uploaded object.
-             * @example http://cdn.dev.walkandtour.dk/media/tours/historic-center/cover.jpg
+             * @description Public API URL used to fetch the stored media bytes without admin authentication.
+             * @example http://api.dev.walkandtour.dk:3000/api/media/uuid/content
              */
             publicContentUrl: string;
             /**
@@ -1509,6 +1529,11 @@ export interface components {
             seoDescription?: Record<string, never> | null;
             /** @description Published localized image references. */
             imageRefs: string[];
+            /**
+             * @description Aggregated view count for this translation locale. Successful detail requests can increment it at most once per translation and client IP hash every 24 hours.
+             * @example 128
+             */
+            viewCount: number;
         };
         PublicBlogResponseDto: {
             /**
@@ -2595,6 +2620,11 @@ export interface components {
              */
             isPublished: boolean;
             /**
+             * @description Aggregated view count for this translation locale.
+             * @example 128
+             */
+            viewCount: number;
+            /**
              * @description Localized title.
              * @example Barcelona Historic Center Guide
              */
@@ -2929,6 +2959,43 @@ export interface operations {
                 };
             };
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    MediaController_fetchContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Media asset UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Stored media file bytes. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
                 headers: {
                     [name: string]: unknown;
                 };

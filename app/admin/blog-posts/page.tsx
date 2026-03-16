@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { getAdminViewerState } from "@/lib/admin/session";
 import { loadBlogPostsListData } from "./loaders";
 
+const viewCountFormatter = new Intl.NumberFormat("en-US");
+
 export default async function AdminBlogPostsPage() {
   const viewerState = await getAdminViewerState();
 
@@ -88,17 +90,22 @@ export default async function AdminBlogPostsPage() {
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                  { post.translationAvailability.map((availability) => (
-                    <span
-                      key={ availability.languageCode }
-                      className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
-                    >
-                      { languageNameByCode[availability.languageCode] ?? availability.languageCode }
-                      { ": " }
-                      { availability.isPublished ? "Published" : "Not Published" }
-                      { availability.publiclyAvailable ? " • Public" : "" }
-                    </span>
-                  )) }
+                  { post.translationAvailability.map((availability) => {
+                    const translation = post.translations[availability.languageCode];
+
+                    return (
+                      <span
+                        key={ availability.languageCode }
+                        className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
+                      >
+                        { languageNameByCode[availability.languageCode] ?? availability.languageCode }
+                        { ": " }
+                        { availability.isPublished ? "Published" : "Not Published" }
+                        { availability.publiclyAvailable ? " • Public" : "" }
+                        { translation ? ` • ${ viewCountFormatter.format(translation.viewCount) } views` : "" }
+                      </span>
+                    );
+                  }) }
                 </div>
               </article>
             )) }
