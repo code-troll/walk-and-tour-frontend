@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
               "https://tiktok.com",
               "https://www.google.com",
               "https://maps.google.com",
+              "https://challenges.cloudflare.com",
               "https://app.turitop.com",
               "https://www.turitop.com",
               "https://turitop.com",
