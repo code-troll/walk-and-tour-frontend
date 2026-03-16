@@ -84,9 +84,9 @@ const isTourRowDropData = (value: Record<string | symbol, unknown>): value is To
 };
 
 const getPlacementFromInput = ({
-  clientY,
-  element,
-}: {
+                                 clientY,
+                                 element,
+                               }: {
   clientY: number;
   element: Element;
 }): DropPlacement => {
@@ -95,16 +95,16 @@ const getPlacementFromInput = ({
 };
 
 function TourListRow({
-  index,
-  isDragged,
-  isLast,
-  isReordering,
-  languageNameByCode,
-  onDropIndicatorChange,
-  onMoveDown,
-  onMoveUp,
-  tour,
-}: TourListRowProps) {
+                       index,
+                       isDragged,
+                       isLast,
+                       isReordering,
+                       languageNameByCode,
+                       onDropIndicatorChange,
+                       onMoveDown,
+                       onMoveUp,
+                       tour,
+                     }: TourListRowProps) {
   const rowRef = useRef<HTMLElement | null>(null);
   const dragHandleRef = useRef<HTMLDivElement | null>(null);
 
@@ -129,8 +129,8 @@ function TourListRow({
       }),
       dropTargetForElements({
         element: rowElement,
-        canDrop: ({ source }) => isTourRowDragData(source.data) && !isReordering,
-        getData: ({ input }) => ({
+        canDrop: ({source}) => isTourRowDragData(source.data) && !isReordering,
+        getData: ({input}) => ({
           index,
           placement: getPlacementFromInput({
             clientY: input.clientY,
@@ -139,7 +139,7 @@ function TourListRow({
           tourId: tour.id,
           type: "tour-row",
         }),
-        onDragEnter: ({ self }) => {
+        onDragEnter: ({self}) => {
           if (!isTourRowDropData(self.data)) {
             return;
           }
@@ -149,7 +149,7 @@ function TourListRow({
             tourId: self.data.tourId,
           });
         },
-        onDrag: ({ self }) => {
+        onDrag: ({self}) => {
           if (!isTourRowDropData(self.data)) {
             return;
           }
@@ -179,7 +179,7 @@ function TourListRow({
           <div
             ref={ dragHandleRef }
             className={ cn(
-              "mt-0.5 flex shrink-0 cursor-grab rounded-xl border border-[#eadfce] bg-[#fbf7f0] p-2 text-[#8b7862]",
+              "mt-0.5 flex shrink-0 cursor-grab rounded-xl hover:bg-[#fbf7f0] p-2 text-[#8b7862]",
               isReordering && "cursor-not-allowed opacity-50",
             ) }
             aria-label={ `Drag to reorder ${ tour.name }` }
@@ -188,58 +188,59 @@ function TourListRow({
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-[#f4ede3] px-2.5 py-1 text-xs font-semibold text-[#6a5743]">
-                Position { index + 1 }
-              </span>
-              { isReordering ? (
-                <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                  <LoaderCircle className="size-3 animate-spin"/>
-                  Saving order
-                </span>
-              ) : null }
+            <div className="flex flex-wrap items-center gap-2 justify-between lg:flex-nowrap">
+              <div className="flex flex-wrap">
+                <h2 className="ml-2 mt-0 truncate text-wrap text-base font-semibold text-foreground">{ tour.name }</h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="flex mb-1 md:mb-0 flex-wrap items-center gap-2">
+                  <span
+                    className="relative inline-flex size-6 items-center justify-center rounded-full bg-[#f4ede3] text-xs font-semibold text-[#6a5743]">
+                    <span className="absolute inset-0 flex items-center justify-center">
+                      { index + 1 }
+                    </span>
+                    { isReordering && <LoaderCircle className="absolute inset-0 m-auto size-6 animate-spin"/> }
+                  </span>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={ onMoveUp }
+                  disabled={ index === 0 || isReordering }
+                >
+                  <ArrowUp className="size-4"/>
+                  Up
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={ onMoveDown }
+                  disabled={ isLast || isReordering }
+                >
+                  <ArrowDown className="size-4"/>
+                  Down
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <Link href={ `/tours/${ tour.id }` }>
+                    <Pencil className="size-4"/>
+                    Edit
+                  </Link>
+                </Button>
+              </div>
             </div>
-            <h2 className="mt-2 truncate text-base font-semibold text-foreground">{ tour.name }</h2>
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
               <span className="truncate">Slug: { tour.slug }</span>
               <span>Type: { formatLabel(tour.tourType) }</span>
               <span>
                 Duration: { typeof tour.durationMinutes === "number"
-                  ? `${ tour.durationMinutes } min`
-                  : "Not set" }
+                ? `${ tour.durationMinutes } min`
+                : "Not set" }
               </span>
               <span>{ Object.keys(tour.translations).length } translations</span>
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={ onMoveUp }
-            disabled={ index === 0 || isReordering }
-          >
-            <ArrowUp className="size-4"/>
-            Up
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={ onMoveDown }
-            disabled={ isLast || isReordering }
-          >
-            <ArrowDown className="size-4"/>
-            Down
-          </Button>
-          <Button asChild variant="outline" size="sm">
-            <Link href={ `/tours/${ tour.id }` }>
-              <Pencil className="size-4"/>
-              Edit
-            </Link>
-          </Button>
         </div>
       </div>
 
@@ -260,9 +261,9 @@ function TourListRow({
 }
 
 export function AdminToursListClient({
-  initialLanguages,
-  initialTours,
-}: AdminToursListClientProps) {
+                                       initialLanguages,
+                                       initialTours,
+                                     }: AdminToursListClientProps) {
   const [tours, setTours] = useState<ApiTour[]>(initialTours);
   const [isReordering, setIsReordering] = useState(false);
   const [reorderError, setReorderError] = useState<string | null>(null);
@@ -351,9 +352,9 @@ export function AdminToursListClient({
   }, [draggedTourId, isReordering]);
 
   const applyReorder = async ({
-    destinationIndex,
-    sourceTourId,
-  }: {
+                                destinationIndex,
+                                sourceTourId,
+                              }: {
     destinationIndex: number;
     sourceTourId: string;
   }) => {
@@ -396,9 +397,9 @@ export function AdminToursListClient({
   };
 
   const moveTourByOffset = async ({
-    offset,
-    tourId,
-  }: {
+                                    offset,
+                                    tourId,
+                                  }: {
     offset: -1 | 1;
     tourId: string;
   }) => {
@@ -420,8 +421,8 @@ export function AdminToursListClient({
 
   useEffect(() => {
     return monitorForElements({
-      canMonitor: ({ source }) => isTourRowDragData(source.data),
-      onDragStart: ({ source }) => {
+      canMonitor: ({source}) => isTourRowDragData(source.data),
+      onDragStart: ({source}) => {
         if (!isTourRowDragData(source.data)) {
           return;
         }
@@ -429,7 +430,7 @@ export function AdminToursListClient({
         setDraggedTourId(source.data.tourId);
         setReorderError(null);
       },
-      onDrop: async ({ location, source }) => {
+      onDrop: async ({location, source}) => {
         if (!isTourRowDragData(source.data)) {
           resetDragState();
           return;
@@ -523,10 +524,10 @@ export function AdminToursListClient({
                   languageNameByCode={ languageNameByCode }
                   onDropIndicatorChange={ setDropIndicator }
                   onMoveDown={ () => {
-                    void moveTourByOffset({ offset: 1, tourId: tour.id });
+                    void moveTourByOffset({offset: 1, tourId: tour.id});
                   } }
                   onMoveUp={ () => {
-                    void moveTourByOffset({ offset: -1, tourId: tour.id });
+                    void moveTourByOffset({offset: -1, tourId: tour.id});
                   } }
                   tour={ tour }
                 />
