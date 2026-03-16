@@ -319,6 +319,9 @@ const getImageContainerStyle = (width: number) =>
 const clampImageWidth = (width: number) =>
   Math.min(IMAGE_MAX_WIDTH, Math.max(IMAGE_MIN_WIDTH, width));
 
+const getImageCaptionText = (value: unknown) =>
+  (typeof value === "string" ? value : "").trim();
+
 const getImageWidthFromAttrs = (attrs: Record<string, unknown>) => {
   const widthFromStyle = extractWidthFromStyle(
     typeof attrs.containerStyle === "string" ? attrs.containerStyle : null,
@@ -1077,6 +1080,7 @@ function BlogImageNodeView({
 }: NodeViewProps) {
   const src = typeof node.attrs.src === "string" ? toInternalAdminMediaSrc(node.attrs.src) : "";
   const alt = typeof node.attrs.alt === "string" ? node.attrs.alt : "";
+  const caption = getImageCaptionText(node.attrs.caption);
   const alignment = toImageAlignment(
     typeof node.attrs.alignment === "string"
       ? node.attrs.alignment
@@ -1089,6 +1093,9 @@ function BlogImageNodeView({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [previewWidth, setPreviewWidth] = useState(persistedWidth);
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const captionInputId = `blog-image-caption-${ typeof node.attrs.mediaId === "string" && node.attrs.mediaId
+    ? node.attrs.mediaId
+    : "new" }`;
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
@@ -1282,7 +1289,7 @@ function BlogImageNodeView({
       </Button>
 
       { isMenuOpen ? (
-        <div className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+        <div className="absolute inset-x-3 top-3 z-20 flex min-w-0 flex-col gap-3 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-3 shadow-sm backdrop-blur">
           <div className="flex flex-wrap items-center gap-1">
             { IMAGE_ALIGNMENT_OPTIONS.map((option) => (
               <Button
@@ -1298,29 +1305,50 @@ function BlogImageNodeView({
               </Button>
             )) }
           </div>
+
+          <div className="space-y-1">
+            <label className="block text-xs font-medium text-[#5d4d3f]" htmlFor={ captionInputId }>
+              Caption
+            </label>
+            <Input
+              id={ captionInputId }
+              value={ caption }
+              onChange={ (event) => updateAttributes({ caption: event.target.value }) }
+              placeholder="Add an optional caption"
+              className="h-9 bg-white"
+            />
+          </div>
         </div>
       ) : null }
 
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={ src }
-        alt={ alt }
-        className="block h-auto max-w-full rounded-2xl"
-        style={ { width: `${ previewWidth }px` } }
-      />
+      <div className="relative">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={ src }
+          alt={ alt }
+          className="block h-auto max-w-full rounded-2xl"
+          style={ { width: `${ previewWidth }px` } }
+        />
 
-      <div
-        className="absolute -bottom-1.5 -left-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
-        style={ { cursor: "nwse-resize" } }
-        onMouseDown={ handleResizeMouseDown("left") }
-        onTouchStart={ handleResizeTouchStart("left") }
-      />
-      <div
-        className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
-        style={ { cursor: "nwse-resize" } }
-        onMouseDown={ handleResizeMouseDown("right") }
-        onTouchStart={ handleResizeTouchStart("right") }
-      />
+        <div
+          className="absolute -bottom-1.5 -left-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
+          style={ { cursor: "nwse-resize" } }
+          onMouseDown={ handleResizeMouseDown("left") }
+          onTouchStart={ handleResizeTouchStart("left") }
+        />
+        <div
+          className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
+          style={ { cursor: "nwse-resize" } }
+          onMouseDown={ handleResizeMouseDown("right") }
+          onTouchStart={ handleResizeTouchStart("right") }
+        />
+      </div>
+
+      { caption ? (
+        <p className="mt-3 text-center text-sm leading-6 text-[#6d5b47]">
+          { caption }
+        </p>
+      ) : null }
     </NodeViewWrapper>
   );
 }
@@ -2295,6 +2323,49 @@ const LinkMark = Mark.create({
 
 const BlogImage = ImageResize.extend({
   name: "blogImage",
+  parseHTML() {
+    return [
+      {
+        tag: "figure[data-blog-image=\"true\"]",
+        getAttrs: (element) => {
+          const figure = element as HTMLElement;
+          const image = figure.querySelector("img");
+          if (!image) {
+            return false;
+          }
+
+          const width = getImageWidthFromAttrs({
+            containerStyle:
+              figure.getAttribute("data-image-container-style")
+              ?? figure.getAttribute("containerstyle")
+              ?? image.getAttribute("containerstyle"),
+            width:
+              figure.getAttribute("data-image-width")
+              ?? figure.getAttribute("width")
+              ?? image.getAttribute("width"),
+          });
+
+          return {
+            alt: image.getAttribute("alt") ?? "",
+            blogImageMarker: "true",
+            caption: getImageCaptionText(figure.querySelector("figcaption")?.textContent ?? ""),
+            containerStyle: getImageContainerStyle(width),
+            mediaId: figure.getAttribute("data-media-id") ?? image.getAttribute("data-media-id") ?? "",
+            src: toInternalAdminMediaSrc(image.getAttribute("src") ?? ""),
+            storagePath: figure.getAttribute("data-storage-path") ?? image.getAttribute("data-storage-path") ?? "",
+            alignment:
+              figure.getAttribute("data-image-alignment")
+              ?? image.getAttribute("data-image-alignment")
+              ?? inferImageAlignment(figure.getAttribute("style"), image.getAttribute("style")),
+            width,
+          };
+        },
+      },
+      {
+        tag: "img[src]",
+      },
+    ];
+  },
   addAttributes() {
     const parentAttributes = (this.parent?.() ?? {}) as Record<string, unknown>;
 
@@ -2328,6 +2399,15 @@ const BlogImage = ImageResize.extend({
         renderHTML: (attributes: { storagePath?: string }) =>
           attributes.storagePath ? { "data-storage-path": attributes.storagePath } : {},
       },
+      caption: {
+        default: "",
+        parseHTML: (element: HTMLElement) =>
+          getImageCaptionText(
+            element.tagName === "FIGURE"
+              ? element.querySelector("figcaption")?.textContent
+              : element.getAttribute("data-image-caption"),
+          ),
+      },
       blogImageMarker: {
         default: "true",
         parseHTML: () => "true",
@@ -2344,13 +2424,49 @@ const BlogImage = ImageResize.extend({
     const containerStyle = typeof HTMLAttributes.containerStyle === "string" ? HTMLAttributes.containerStyle : "";
     const wrapperStyle = typeof HTMLAttributes.wrapperStyle === "string" ? HTMLAttributes.wrapperStyle : "";
     const alignment = typeof HTMLAttributes.alignment === "string" ? HTMLAttributes.alignment : "";
+    const caption = getImageCaptionText(HTMLAttributes.caption);
     const publicStyle = styleObjectToString(getImagePublicStyle(alignment, containerStyle, wrapperStyle));
+    const persistedWidth = getImageWidthFromAttrs(HTMLAttributes as Record<string, unknown>);
+    const figureAttributes = mergeAttributes(
+      {
+        "data-blog-image": "true",
+        "data-image-alignment": alignment || "center",
+        "data-image-container-style": containerStyle || getImageContainerStyle(persistedWidth),
+        "data-image-width": String(persistedWidth),
+        style: publicStyle,
+      },
+      typeof HTMLAttributes.mediaId === "string" && HTMLAttributes.mediaId.length > 0
+        ? { "data-media-id": HTMLAttributes.mediaId }
+        : {},
+      typeof HTMLAttributes.storagePath === "string" && HTMLAttributes.storagePath.length > 0
+        ? { "data-storage-path": HTMLAttributes.storagePath }
+        : {},
+    );
+    const imageAttributes = mergeAttributes(
+      typeof HTMLAttributes.src === "string" && HTMLAttributes.src.length > 0
+        ? { src: HTMLAttributes.src }
+        : {},
+      typeof HTMLAttributes.alt === "string"
+        ? { alt: HTMLAttributes.alt }
+        : {},
+      {
+        style: "display: block; height: auto; margin: 0; max-width: 100%; width: 100%;",
+      },
+    );
 
     return [
-      "img",
-      mergeAttributes(HTMLAttributes, {
-        style: publicStyle,
-      }),
+      "figure",
+      figureAttributes,
+      ["img", imageAttributes],
+      ...(caption
+        ? [[
+          "figcaption",
+          {
+            style: "margin-top: 0.75rem; text-align: center;",
+          },
+          caption,
+        ]]
+        : []),
     ];
   },
 });

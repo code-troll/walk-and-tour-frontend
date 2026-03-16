@@ -18,6 +18,9 @@ const contentClassName = [
   "[&_li]:mt-2",
   "[&_a]:font-semibold [&_a]:text-[#c24343] [&_a]:underline",
   "[&_img]:rounded-2xl [&_img]:h-auto [&_img]:max-w-full",
+  "[&_figure[data-blog-image=\"true\"]]:max-w-full",
+  "[&_figure[data-blog-image=\"true\"]_img]:m-0",
+  "[&_figure[data-blog-image=\"true\"]_figcaption]:mt-3 [&_figure[data-blog-image=\"true\"]_figcaption]:text-center [&_figure[data-blog-image=\"true\"]_figcaption]:text-sm [&_figure[data-blog-image=\"true\"]_figcaption]:leading-6 [&_figure[data-blog-image=\"true\"]_figcaption]:text-[#6d5b47]",
   "[&_[data-blog-video=\"true\"]]:shadow-sm",
 ].join(" ");
 

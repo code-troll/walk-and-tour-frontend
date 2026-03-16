@@ -745,7 +745,7 @@ export function BlogPostEditorClient({
     setIsMediaDialogOpen(false);
     setFeedback({
       tone: "success",
-      message: "Image inserted into the post body. Select it in the editor to change size or alignment.",
+      message: "Image inserted into the post body. Select it in the editor to change size, alignment, or caption.",
     });
   };
 
@@ -1056,7 +1056,7 @@ export function BlogPostEditorClient({
                       </h3>
                       <p className="mt-1 text-sm text-muted-foreground">
                         Upload images from the media library, use Video for YouTube or Vimeo links, then select inserted
-                        images in the body to change size and alignment.
+                        images in the body to change size, alignment, and captions.
                       </p>
                     </div>
 
