@@ -21,6 +21,7 @@ const contentClassName = [
   "[&_figure[data-blog-image=\"true\"]]:max-w-full",
   "[&_figure[data-blog-image=\"true\"]_img]:m-0",
   "[&_figure[data-blog-image=\"true\"]_figcaption]:mt-3 [&_figure[data-blog-image=\"true\"]_figcaption]:text-center [&_figure[data-blog-image=\"true\"]_figcaption]:text-sm [&_figure[data-blog-image=\"true\"]_figcaption]:leading-6 [&_figure[data-blog-image=\"true\"]_figcaption]:text-[#6d5b47]",
+  "[&_[data-blog-clear=\"true\"]]:block [&_[data-blog-clear=\"true\"]]:h-0 [&_[data-blog-clear=\"true\"]]:clear-both [&_[data-blog-clear=\"true\"]]:overflow-hidden [&_[data-blog-clear=\"true\"]]:m-0 [&_[data-blog-clear=\"true\"]]:border-0 [&_[data-blog-clear=\"true\"]]:p-0",
   "[&_[data-blog-video=\"true\"]]:shadow-sm",
 ].join(" ");
 

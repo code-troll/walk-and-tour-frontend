@@ -1701,6 +1701,24 @@ function BlogLinkCardNodeView({
   );
 }
 
+function BlogClearNodeView({
+  selected,
+}: NodeViewProps) {
+  return (
+    <NodeViewWrapper
+      as="div"
+      className={ cn(
+        "clear-both my-4 rounded-xl border border-dashed border-[#d8c5a8] bg-[#fbf7f0] px-3 py-2 text-xs font-medium uppercase tracking-[0.18em] text-[#8b7862]",
+        selected ? "ring-2 ring-[#d9c3a2] ring-offset-2 ring-offset-white" : "",
+      ) }
+      data-blog-clear="true"
+      contentEditable={ false }
+    >
+      Clear wrap
+    </NodeViewWrapper>
+  );
+}
+
 function BlogTuritopWidgetNodeView({
   editor,
   getPos,
@@ -2876,6 +2894,36 @@ const BlogLinkCard = Node.create({
   },
 });
 
+const BlogClear = Node.create({
+  name: "blogClear",
+  group: "block",
+  atom: true,
+  selectable: true,
+  parseHTML() {
+    return [{ tag: "div[data-blog-clear=\"true\"]" }];
+  },
+  addAttributes() {
+    return {
+      "aria-hidden": {
+        default: "true",
+      },
+    };
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(BlogClearNodeView);
+  },
+  renderHTML({ HTMLAttributes }) {
+    return [
+      "div",
+      mergeAttributes(HTMLAttributes, {
+        "data-blog-clear": "true",
+        "aria-hidden": "true",
+        style: "clear: both; display: block; height: 0; margin: 0; overflow: hidden; padding: 0; border: 0;",
+      }),
+    ];
+  },
+});
+
 const HistoryExtension = Extension.create({
   name: "history",
   addProseMirrorPlugins() {
@@ -2904,6 +2952,7 @@ const editorExtensions = [
   BlogEmbed,
   BlogTuritopWidget,
   BlogLinkCard,
+  BlogClear,
   HistoryExtension,
 ];
 
@@ -3167,6 +3216,21 @@ export const TiptapHtmlEditor = forwardRef<
     handleTuritopDialogOpenChange(false);
   };
 
+  const insertClearWrap = () => {
+    if (!editor) {
+      return;
+    }
+
+    editor.chain().focus().insertContent([
+      {
+        type: "blogClear",
+      },
+      {
+        type: "paragraph",
+      },
+    ]).run();
+  };
+
   return (
     <div className={ cn("overflow-hidden rounded-[1.35rem] border border-[#eadfce] bg-white", className) }>
       <div className="flex flex-wrap gap-2 border-b border-[#f0e6d8] bg-[#fbf7f0] p-3">
@@ -3238,6 +3302,12 @@ export const TiptapHtmlEditor = forwardRef<
           label="Divider"
           disabled={ !editor }
           onClick={ () => editor?.chain().focus().insertContent({ type: "horizontalRule" }).run() }
+        />
+        <ToolbarButton
+          icon={ Pilcrow }
+          label="Clear Wrap"
+          disabled={ !editor }
+          onClick={ insertClearWrap }
         />
         { onRequestInsertImage ? (
           <ToolbarButton
