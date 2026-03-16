@@ -986,10 +986,15 @@ export interface components {
              */
             storagePath: string;
             /**
-             * @description API URL used to fetch the stored media bytes.
+             * @description Authenticated admin API URL used to fetch the stored media bytes.
              * @example http://api.dev.walkandtour.dk:3000/api/admin/media/uuid/content
              */
-            contentUrl: string;
+            adminContentUrl: string;
+            /**
+             * @description Direct public storage URL for the uploaded object.
+             * @example http://cdn.dev.walkandtour.dk/media/tours/historic-center/cover.jpg
+             */
+            publicContentUrl: string;
             /**
              * @description Detected content type of the uploaded object.
              * @example image/jpeg
@@ -1053,10 +1058,15 @@ export interface components {
              */
             storagePath: string;
             /**
-             * @description API URL used to fetch the stored media bytes.
+             * @description Authenticated admin API URL used to fetch the stored media bytes.
              * @example http://api.dev.walkandtour.dk:3000/api/admin/media/uuid/content
              */
-            contentUrl: string;
+            adminContentUrl: string;
+            /**
+             * @description Direct public storage URL for the uploaded object.
+             * @example http://cdn.dev.walkandtour.dk/media/tours/historic-center/cover.jpg
+             */
+            publicContentUrl: string;
             /**
              * @description Detected content type of the uploaded object.
              * @example image/jpeg

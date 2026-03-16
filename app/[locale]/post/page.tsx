@@ -7,6 +7,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import BlogPostsSection from "@/components/blog/BlogPostsSection";
 import { blogHeroConfig } from "@/lib/section-config";
 import { routing, type AppLocale } from "@/i18n/routing";
+import { listPublicBlogCardsSafe } from "@/lib/public-blog-data";
 
 type BlogPageProps = {
   params: Promise<{ locale: string; }>;
@@ -38,10 +39,16 @@ export default async function BlogPage({ params }: BlogPageProps) {
     notFound();
   }
 
+  const blogPostsResult = await listPublicBlogCardsSafe({locale});
+
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
       <HeroSection {...blogHeroConfig} />
-      <BlogPostsSection locale={ locale } />
+      <BlogPostsSection
+        locale={ locale }
+        posts={ blogPostsResult.posts }
+        didFail={ blogPostsResult.didFail }
+      />
       <Footer />
     </div>
   );

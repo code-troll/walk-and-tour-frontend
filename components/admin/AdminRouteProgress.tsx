@@ -14,7 +14,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
-  useState,
+  useReducer,
 } from "react";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +30,25 @@ type NavigationState = {
   loadingBoundaryCount: number;
   sourceRouteKey: string | null;
 };
+
+type NavigationAction =
+  | {
+      type: "start";
+      routeKey: string;
+    }
+  | {
+      type: "enter_loading_boundary";
+    }
+  | {
+      type: "exit_loading_boundary";
+    }
+  | {
+      type: "route_changed";
+      routeKey: string;
+    }
+  | {
+      type: "finish_if_ready";
+    };
 
 const AdminRouteProgressContext = createContext<AdminRouteProgressContextValue | null>(null);
 
@@ -59,6 +78,66 @@ const initialNavigationState: NavigationState = {
   sourceRouteKey: null,
 };
 
+const navigationReducer = (
+  state: NavigationState,
+  action: NavigationAction,
+): NavigationState => {
+  switch (action.type) {
+    case "start":
+      if (state.isNavigating) {
+        return state;
+      }
+
+      return {
+        ...state,
+        hasCommitted: false,
+        isNavigating: true,
+        sourceRouteKey: action.routeKey,
+      };
+    case "enter_loading_boundary":
+      return {
+        ...state,
+        loadingBoundaryCount: state.loadingBoundaryCount + 1,
+      };
+    case "exit_loading_boundary":
+      return {
+        ...state,
+        loadingBoundaryCount: Math.max(0, state.loadingBoundaryCount - 1),
+      };
+    case "route_changed":
+      if (
+        !state.isNavigating ||
+        state.hasCommitted ||
+        state.sourceRouteKey === null ||
+        action.routeKey === state.sourceRouteKey
+      ) {
+        return state;
+      }
+
+      return {
+        ...state,
+        hasCommitted: true,
+      };
+    case "finish_if_ready":
+      if (
+        !state.isNavigating ||
+        !state.hasCommitted ||
+        state.loadingBoundaryCount > 0
+      ) {
+        return state;
+      }
+
+      return {
+        ...state,
+        hasCommitted: false,
+        isNavigating: false,
+        sourceRouteKey: null,
+      };
+    default:
+      return state;
+  }
+};
+
 export function AdminRouteProgressProvider({
   children,
 }: {
@@ -68,35 +147,25 @@ export function AdminRouteProgressProvider({
   const searchParams = useSearchParams();
   const search = searchParams.toString();
   const routeKey = search ? `${ pathname }?${ search }` : pathname;
-  const [navigationState, setNavigationState] = useState<NavigationState>(initialNavigationState);
+  const [navigationState, dispatchNavigation] = useReducer(navigationReducer, initialNavigationState);
 
   const startNavigation = useCallback(() => {
-    setNavigationState((current) => {
-      if (current.isNavigating) {
-        return current;
-      }
-
-      return {
-        ...current,
-        hasCommitted: false,
-        isNavigating: true,
-        sourceRouteKey: routeKey,
-      };
+    dispatchNavigation({
+      type: "start",
+      routeKey,
     });
   }, [routeKey]);
 
   const enterLoadingBoundary = useCallback(() => {
-    setNavigationState((current) => ({
-      ...current,
-      loadingBoundaryCount: current.loadingBoundaryCount + 1,
-    }));
+    dispatchNavigation({
+      type: "enter_loading_boundary",
+    });
   }, []);
 
   const exitLoadingBoundary = useCallback(() => {
-    setNavigationState((current) => ({
-      ...current,
-      loadingBoundaryCount: Math.max(0, current.loadingBoundaryCount - 1),
-    }));
+    dispatchNavigation({
+      type: "exit_loading_boundary",
+    });
   }, []);
 
   const progressState = useMemo<AdminRouteProgressContextValue>(
@@ -116,20 +185,9 @@ export function AdminRouteProgressProvider({
   });
 
   useEffect(() => {
-    setNavigationState((current) => {
-      if (
-        !current.isNavigating ||
-        current.hasCommitted ||
-        current.sourceRouteKey === null ||
-        routeKey === current.sourceRouteKey
-      ) {
-        return current;
-      }
-
-      return {
-        ...current,
-        hasCommitted: true,
-      };
+    dispatchNavigation({
+      type: "route_changed",
+      routeKey,
     });
   }, [routeKey]);
 
@@ -142,21 +200,8 @@ export function AdminRouteProgressProvider({
       return;
     }
 
-    setNavigationState((current) => {
-      if (
-        !current.isNavigating ||
-        !current.hasCommitted ||
-        current.loadingBoundaryCount > 0
-      ) {
-        return current;
-      }
-
-      return {
-        ...current,
-        hasCommitted: false,
-        isNavigating: false,
-        sourceRouteKey: null,
-      };
+    dispatchNavigation({
+      type: "finish_if_ready",
     });
   }, [
     navigationState.hasCommitted,

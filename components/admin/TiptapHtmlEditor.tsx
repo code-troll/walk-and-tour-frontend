@@ -2844,7 +2844,7 @@ export const TiptapHtmlEditor = forwardRef<
           attrs: {
             alt,
             mediaId,
-            src: toInternalAdminMediaSrc(src),
+            src,
             storagePath,
           },
         },

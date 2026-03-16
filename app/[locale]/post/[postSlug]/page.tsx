@@ -5,14 +5,12 @@ import { notFound } from "next/navigation";
 
 import Footer from "@/components/layout/Footer";
 import BlogPostContent from "@/components/blog/BlogPostContent";
-import BlogPostMetaBottomBar from "@/components/blog/BlogPostMetaBottomBar";
-import BlogPostReadNotifier from "@/components/blog/BlogPostReadNotifier";
 import BlogPostShareLinks from "@/components/blog/BlogPostShareLinks";
 import BlogRecentPostsSection from "@/components/blog/BlogRecentPostsSection";
 import { getPathname } from "@/i18n/navigation";
 import { type AppLocale, routing } from "@/i18n/routing";
-import { getBlogPostBySlug, getRecentBlogPosts } from "@/lib/wix/blog-client";
 import BlogPostMetaTopBar from "@/components/blog/BlogPostMetaTopBar";
+import { getPublicBlogDetail, getRecentPublicBlogPosts } from "@/lib/public-blog-data";
 
 type BlogPostDetailPageProps = {
   params: Promise<{ locale: string; postSlug: string; }>;
@@ -41,13 +39,13 @@ export async function generateMetadata({
     notFound();
   }
 
-  const post = await getBlogPostBySlug({locale, slug: postSlug});
+  const post = await getPublicBlogDetail({locale, slug: postSlug});
   if (!post) {
     return {};
   }
 
-  const metadataTitle = `${ post.title } | Walk and Tour Copenhagen`;
-  const metadataDescription = buildMetadataDescription(post.excerpt, post.contentText);
+  const metadataTitle = post.seoTitle ?? `${ post.title } | Walk and Tour Copenhagen`;
+  const metadataDescription = post.seoDescription ?? buildMetadataDescription(post.excerpt, post.contentText);
   return {
     title: metadataTitle,
     description: metadataDescription,
@@ -76,8 +74,8 @@ export default async function BlogPostDetailPage({
   }
 
   const [post, recentPosts, tBlogPost, tBlogPage] = await Promise.all([
-    getBlogPostBySlug({locale, slug: postSlug}),
-    getRecentBlogPosts({locale, excludeSlug: postSlug, limit: 3}),
+    getPublicBlogDetail({locale, slug: postSlug}),
+    getRecentPublicBlogPosts({locale, excludeSlug: postSlug, limit: 3}),
     getTranslations({locale, namespace: "blogPost"}),
     getTranslations({locale, namespace: "blogPage"}),
   ]);
@@ -97,8 +95,6 @@ export default async function BlogPostDetailPage({
 
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
-      <BlogPostReadNotifier locale={ locale } slug={ post.slug }/>
-
       <section className="bg-white py-16">
         <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
           <a
@@ -125,7 +121,6 @@ export default async function BlogPostDetailPage({
 
             <div className="mt-8">
               <BlogPostContent
-                richContent={ post.richContent }
                 contentHtml={ post.contentHtml }
                 contentText={ post.contentText }
               />
@@ -147,16 +142,6 @@ export default async function BlogPostDetailPage({
                   } }
                 />
               </div>
-              <div className="border-t border-[#e8dfd4] py-6">
-                <BlogPostMetaBottomBar
-                  viewsLabel={ tBlogPost("views") }
-                  commentsLabel={ tBlogPost("comments") }
-                  views={ post.views }
-                  comments={ post.comments }
-                  locale={ locale }
-                />
-              </div>
-
             </div>
           </div>
         </div>
@@ -167,8 +152,6 @@ export default async function BlogPostDetailPage({
         posts={ recentPosts }
         title={ tBlogPost("latestPosts") }
         readMoreLabel={ tBlogPage("readMore") }
-        viewsLabel={ tBlogPage("views") }
-        commentsLabel={ tBlogPage("comments") }
       />
 
       <Footer/>

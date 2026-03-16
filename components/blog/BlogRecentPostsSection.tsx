@@ -1,15 +1,13 @@
 import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
-import type { BlogPostListItem } from "@/lib/wix/blog-types";
 import BlogPostCard from "@/components/blog/BlogPostCard";
+import type { PublicBlogCard } from "@/lib/public-blog-data";
 
 type BlogRecentPostsSectionProps = {
   locale: AppLocale;
-  posts: BlogPostListItem[];
+  posts: PublicBlogCard[];
   title: string;
   readMoreLabel: string;
-  viewsLabel: string;
-  commentsLabel: string;
 };
 
 export default function BlogRecentPostsSection({
@@ -17,8 +15,6 @@ export default function BlogRecentPostsSection({
                                                  posts,
                                                  title,
                                                  readMoreLabel,
-                                                 viewsLabel,
-                                                 commentsLabel,
                                                }: BlogRecentPostsSectionProps) {
   if (posts.length === 0) {
     return null;
@@ -39,8 +35,6 @@ export default function BlogRecentPostsSection({
               post={ post }
               postHref={ `${ postBasePath }/${ post.slug }` }
               readMoreLabel={ readMoreLabel }
-              viewsLabel={ viewsLabel }
-              commentsLabel={ commentsLabel }
               locale={ locale }
             />
           )) }

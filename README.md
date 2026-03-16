@@ -161,24 +161,6 @@ Notes:
 - `BACKEND_API_BASE_URL` is the main backend URL used by the typed API clients and internal admin BFF routes.
 - `APP_BASE_URL` is optional because the Auth0 SDK can infer the origin from the incoming request host, but setting it is safer when you want explicit allowed origins.
 
-### Public site blog integration (current implementation)
-
-These are used by the current public blog integration that still talks to Wix:
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `WIX_API_KEY` | Yes for blog features | Wix API key used for blog content, comments, and metrics |
-| `WIX_SITE_ID` | Yes for blog features | Wix site identifier sent in Wix API requests |
-| `WIX_BLOG_SITE_BASE_URL` | Optional | Base public blog URL used when building post URLs from slugs |
-| `WIX_BLOG_QUERY_URL` | Optional | Override for the Wix posts query endpoint |
-| `WIX_BLOG_POST_BY_SLUG_BASE_URL` | Optional | Override for the Wix post-by-slug endpoint |
-| `WIX_BLOG_METRICS_BASE_URL` | Optional | Override for Wix blog metrics/read endpoints |
-| `WIX_COMMENTS_ENDPOINT` | Optional | Override for the Wix comments endpoint |
-| `WIX_BLOG_COMMENTS_APP_ID` | Optional | Override for the Wix blog comments app ID |
-| `WIX_BLOG_READ_ENDPOINT` | Optional | Endpoint template for notifying Wix that a post was read. Supports `{postId}` and `{slug}` placeholders |
-
-If you are only working on the admin shell and not on the existing public blog pages, the Wix variables can be omitted, but the current public blog routes will not work.
-
 ### Forms and email delivery
 
 These are used by the public contact and book-tour forms:
@@ -209,11 +191,10 @@ APP_BASE_URL=http://dev.walkandtour.dk:3000,http://admin.dev.walkandtour.dk:3000
 
 ### Minimal local setup for the existing public site
 
-If you want the current public blog and forms to work as well, also add:
+If you want the public site routes and forms to work as well, also add:
 
 ```env
-WIX_API_KEY=
-WIX_SITE_ID=
+BACKEND_API_BASE_URL=
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
 RESEND_API_KEY=

@@ -32,16 +32,21 @@ export default function BlogPostMetaTopBar({
                                              updatedDate,
                                              locale,
                                            }: BlogPostMetaTopBarProps) {
+  const formattedPublishedDate = formatDate(publishedDate, locale);
+  const formattedUpdatedDate = formatDate(updatedDate, locale);
+
   return (
     <div className="flex flex-row gap-6">
       <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
         <PenLine className="h-4 w-4 text-[#8a7562]"/>
-        <span>{ publishedLabel }: { formatDate(publishedDate, locale) }</span>
+        <span>{ publishedLabel }: { formattedPublishedDate }</span>
       </p>
-      <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
-        <PenLine className="h-4 w-4 text-[#8a7562]"/>
-        <span>{ updatedLabel }: { formatDate(updatedDate, locale) }</span>
-      </p>
+      { updatedDate ? (
+        <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
+          <PenLine className="h-4 w-4 text-[#8a7562]"/>
+          <span>{ updatedLabel }: { formattedUpdatedDate }</span>
+        </p>
+      ) : null }
 
     </div>
   );

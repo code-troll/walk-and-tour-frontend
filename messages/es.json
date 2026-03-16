@@ -837,22 +837,15 @@
   "blogPage": {
     "title": "Últimos artículos",
     "description": "Lee guías prácticas, recomendaciones locales e historias de nuestro equipo para aprovechar al máximo tu viaje.",
-    "loading": "Cargando artículos del blog...",
-    "loadingMore": "Cargando...",
     "loadMore": "Cargar más",
     "readMore": "Leer más",
     "empty": "No hay artículos disponibles por ahora.",
-    "error": "No hemos podido cargar los artículos en este momento.",
-    "retry": "Reintentar",
-    "views": "vistas",
-    "comments": "comentarios"
+    "error": "No hemos podido cargar los artículos en este momento."
   },
   "blogPost": {
     "backToBlog": "Volver al blog",
     "publishedOn": "Publicado el",
     "updatedOn": "Actualizado el",
-    "views": "vistas",
-    "comments": "comentarios",
     "share": "Compartir esta publicación",
     "copyLink": "Copiar enlace",
     "copied": "Copiado",
@@ -860,14 +853,6 @@
     "shareX": "X",
     "shareLinkedIn": "LinkedIn",
     "shareWhatsApp": "WhatsApp",
-    "latestPosts": "Publicaciones recientes",
-    "leaveComment": "Deja un comentario",
-    "name": "Nombre",
-    "email": "Correo electrónico",
-    "message": "Mensaje",
-    "submitComment": "Enviar comentario",
-    "commentSuccess": "Tu comentario ha sido enviado.",
-    "commentError": "No hemos podido enviar tu comentario en este momento.",
-    "commentValidationError": "Completa todos los campos con información válida."
+    "latestPosts": "Publicaciones recientes"
   }
 }

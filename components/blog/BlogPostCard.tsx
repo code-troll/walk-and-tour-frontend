@@ -1,14 +1,12 @@
 import Image from "next/image";
-import { ArrowRight, Eye, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import type { BlogPostListItem } from "@/lib/wix/blog-types";
+import type { PublicBlogCard } from "@/lib/public-blog-data";
 
 type BlogPostCardProps = {
-  post: BlogPostListItem;
+  post: PublicBlogCard;
   postHref: string;
   readMoreLabel: string;
-  viewsLabel: string;
-  commentsLabel: string;
   locale: string;
 };
 
@@ -33,18 +31,10 @@ export default function BlogPostCard({
                                       post,
                                       postHref,
                                       readMoreLabel,
-                                      viewsLabel,
-                                      commentsLabel,
                                       locale,
                                     }: BlogPostCardProps) {
   const formattedDate = getFormattedDate(post.publishedDate, locale);
-  const formatMetric = (value: number | null): string => {
-    if (value === null) {
-      return "—";
-    }
-
-    return new Intl.NumberFormat(locale).format(value);
-  };
+  const isRemoteImage = post.coverImageUrl?.startsWith("http://") || post.coverImageUrl?.startsWith("https://");
 
   return (
     <article
@@ -57,6 +47,7 @@ export default function BlogPostCard({
             width={ 1200 }
             height={ 760 }
             className="h-56 w-full object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04]"
+            unoptimized={ Boolean(isRemoteImage) }
           />
         ) : (
           <div className="h-56 w-full bg-linear-to-br from-[#2b666d]/80 via-[#2b666d]/55 to-[#2b666d]/40"/>
@@ -84,16 +75,6 @@ export default function BlogPostCard({
             { readMoreLabel }
             <ArrowRight className="h-4 w-4"/>
           </a>
-          <div className="mt-4 flex items-center gap-5 text-sm text-[#5b4d3c]">
-            <span className="inline-flex items-center gap-1.5">
-              <Eye className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ formatMetric(post.views) } { viewsLabel }</span>
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <MessageCircle className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ formatMetric(post.comments) } { commentsLabel }</span>
-            </span>
-          </div>
         </div>
       </div>
     </article>

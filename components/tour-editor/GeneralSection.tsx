@@ -184,7 +184,7 @@ export function GeneralSection({
     mediaLibraryItems.forEach((asset) => {
       void ensureMediaPreviewAction({
         mediaId: asset.id,
-        contentUrl: asset.contentUrl,
+        contentUrl: asset.adminContentUrl,
       });
     });
   }, [ensureMediaPreviewAction, mediaLibraryItems]);

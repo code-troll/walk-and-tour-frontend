@@ -1,10 +1,7 @@
 import BlogPostHtmlContent from "@/components/blog/BlogPostHtmlContent";
-import { WixRichContentRenderer } from "@/components/wix/WixRichContentRenderer";
 import { sanitizeBlogContentHtml } from "@/lib/blog/sanitize-content-html";
-import type { WixRichContent } from "@/lib/wix/rich-content/types";
 
 type BlogPostContentProps = {
-  richContent?: WixRichContent | null;
   contentHtml: string | null;
   contentText: string;
 };
@@ -25,20 +22,10 @@ const contentClassName = [
 ].join(" ");
 
 export default function BlogPostContent({
-                                         richContent,
                                          contentHtml,
                                          contentText,
                                        }: BlogPostContentProps) {
   const safeContentHtml = contentHtml ? sanitizeBlogContentHtml(contentHtml) : null;
-
-  if (richContent?.nodes?.length) {
-    return (
-      <WixRichContentRenderer
-        content={ richContent }
-        className={ contentClassName }
-      />
-    );
-  }
 
   if (safeContentHtml) {
     return <BlogPostHtmlContent className={ contentClassName } contentHtml={ safeContentHtml }/>;

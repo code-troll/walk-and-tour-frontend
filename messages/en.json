@@ -815,22 +815,15 @@
   "blogPage": {
     "title": "Latest Articles",
     "description": "Read practical guides, local tips and stories from our team to make the most of your trip.",
-    "loading": "Loading blog posts...",
-    "loadingMore": "Loading...",
     "loadMore": "Load more",
     "readMore": "Read more",
     "empty": "No blog posts available right now.",
-    "error": "We could not load the blog posts right now.",
-    "retry": "Try again",
-    "views": "views",
-    "comments": "comments"
+    "error": "We could not load the blog posts right now."
   },
   "blogPost": {
     "backToBlog": "Back to blog",
     "publishedOn": "Published on",
     "updatedOn": "Updated on",
-    "views": "views",
-    "comments": "comments",
     "share": "Share this post",
     "copyLink": "Copy link",
     "copied": "Copied",
@@ -839,14 +832,6 @@
     "shareLinkedIn": "LinkedIn",
     "shareWhatsApp": "WhatsApp",
     "latestPosts": "Latest posts",
-    "leaveComment": "Leave a comment",
-    "name": "Name",
-    "email": "Email",
-    "message": "Message",
-    "submitComment": "Submit comment",
-    "commentSuccess": "Your comment has been submitted.",
-    "commentError": "We could not submit your comment right now.",
-    "commentValidationError": "Please complete all fields with valid information.",
     "social": {
       "instagram": "Instagram",
       "facebook": "Facebook",

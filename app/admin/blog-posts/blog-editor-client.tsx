@@ -568,7 +568,7 @@ export function BlogPostEditorClient({
   useEffect(() => {
     mediaLibraryItems.forEach((asset) => {
       void ensureMediaPreview({
-        contentUrl: asset.contentUrl,
+        contentUrl: asset.adminContentUrl,
         mediaId: asset.id,
       });
     });
@@ -691,7 +691,7 @@ export function BlogPostEditorClient({
 
       uploadedAssets.forEach((asset) => {
         void ensureMediaPreview({
-          contentUrl: asset.contentUrl,
+          contentUrl: asset.adminContentUrl,
           mediaId: asset.id,
         });
       });
@@ -739,7 +739,7 @@ export function BlogPostEditorClient({
     editorRef.current?.insertImage({
       alt: selectedMediaAsset.originalFilename,
       mediaId: selectedMediaAsset.id,
-      src: selectedMediaAsset.contentUrl,
+      src: selectedMediaAsset.publicContentUrl,
       storagePath: selectedMediaAsset.storagePath,
     });
     setIsMediaDialogOpen(false);
