@@ -2374,7 +2374,12 @@ const BlogImage = ImageResize.extend({
       src: {
         ...(typeof parentAttributes.src === "object" ? parentAttributes.src : {}),
         default: "",
-        parseHTML: (element: HTMLElement) => toInternalAdminMediaSrc(element.getAttribute("src") ?? ""),
+        parseHTML: (element: HTMLElement) =>
+          toInternalAdminMediaSrc(
+            element.tagName === "FIGURE"
+              ? element.querySelector("img")?.getAttribute("src") ?? ""
+              : element.getAttribute("src") ?? "",
+          ),
       },
       alignment: {
         default: "center",
@@ -2389,13 +2394,19 @@ const BlogImage = ImageResize.extend({
       },
       mediaId: {
         default: "",
-        parseHTML: (element: HTMLElement) => element.getAttribute("data-media-id") ?? "",
+        parseHTML: (element: HTMLElement) =>
+          element.getAttribute("data-media-id")
+          ?? (element.tagName === "FIGURE" ? element.querySelector("img")?.getAttribute("data-media-id") : null)
+          ?? "",
         renderHTML: (attributes: { mediaId?: string }) =>
           attributes.mediaId ? { "data-media-id": attributes.mediaId } : {},
       },
       storagePath: {
         default: "",
-        parseHTML: (element: HTMLElement) => element.getAttribute("data-storage-path") ?? "",
+        parseHTML: (element: HTMLElement) =>
+          element.getAttribute("data-storage-path")
+          ?? (element.tagName === "FIGURE" ? element.querySelector("img")?.getAttribute("data-storage-path") : null)
+          ?? "",
         renderHTML: (attributes: { storagePath?: string }) =>
           attributes.storagePath ? { "data-storage-path": attributes.storagePath } : {},
       },
@@ -2423,23 +2434,41 @@ const BlogImage = ImageResize.extend({
   renderHTML({ HTMLAttributes }) {
     const containerStyle = typeof HTMLAttributes.containerStyle === "string" ? HTMLAttributes.containerStyle : "";
     const wrapperStyle = typeof HTMLAttributes.wrapperStyle === "string" ? HTMLAttributes.wrapperStyle : "";
-    const alignment = typeof HTMLAttributes.alignment === "string" ? HTMLAttributes.alignment : "";
+    const alignment = toImageAlignment(
+      typeof HTMLAttributes["data-image-alignment"] === "string"
+        ? HTMLAttributes["data-image-alignment"]
+        : typeof HTMLAttributes.alignment === "string"
+          ? HTMLAttributes.alignment
+          : "center",
+    );
     const caption = getImageCaptionText(HTMLAttributes.caption);
-    const publicStyle = styleObjectToString(getImagePublicStyle(alignment, containerStyle, wrapperStyle));
     const persistedWidth = getImageWidthFromAttrs(HTMLAttributes as Record<string, unknown>);
+    const mediaId = typeof HTMLAttributes["data-media-id"] === "string"
+      ? HTMLAttributes["data-media-id"]
+      : typeof HTMLAttributes.mediaId === "string"
+        ? HTMLAttributes.mediaId
+        : "";
+    const storagePath = typeof HTMLAttributes["data-storage-path"] === "string"
+      ? HTMLAttributes["data-storage-path"]
+      : typeof HTMLAttributes.storagePath === "string"
+        ? HTMLAttributes.storagePath
+        : "";
     const figureAttributes = mergeAttributes(
       {
         "data-blog-image": "true",
-        "data-image-alignment": alignment || "center",
+        "data-image-alignment": alignment,
         "data-image-container-style": containerStyle || getImageContainerStyle(persistedWidth),
         "data-image-width": String(persistedWidth),
-        style: publicStyle,
+        style: styleObjectToString({
+          ...getImagePublicStyle(alignment, containerStyle, wrapperStyle),
+          width: `${ persistedWidth }px`,
+        }),
       },
-      typeof HTMLAttributes.mediaId === "string" && HTMLAttributes.mediaId.length > 0
-        ? { "data-media-id": HTMLAttributes.mediaId }
+      mediaId.length > 0
+        ? { "data-media-id": mediaId }
         : {},
-      typeof HTMLAttributes.storagePath === "string" && HTMLAttributes.storagePath.length > 0
-        ? { "data-storage-path": HTMLAttributes.storagePath }
+      storagePath.length > 0
+        ? { "data-storage-path": storagePath }
         : {},
     );
     const imageAttributes = mergeAttributes(
