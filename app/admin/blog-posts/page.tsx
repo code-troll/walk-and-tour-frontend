@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Pencil, Plus } from "lucide-react";
+import { AdminProgressLink } from "@/components/admin/AdminRouteProgress";
 import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
 import { Button } from "@/components/ui/button";
 import { getAdminViewerState } from "@/lib/admin/session";
@@ -45,10 +45,10 @@ export default async function AdminBlogPostsPage() {
         description="Create shared blog records, manage localized content, and publish each locale independently from the backend contract."
         actions={
           <Button asChild>
-            <Link href="/blog-posts/new">
+            <AdminProgressLink href="/blog-posts/new">
               <Plus className="size-4"/>
               Create Blog Post
-            </Link>
+            </AdminProgressLink>
           </Button>
         }
       >
@@ -56,10 +56,10 @@ export default async function AdminBlogPostsPage() {
           <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No blog posts have been created yet.</p>
             <Button asChild className="mt-4">
-              <Link href="/blog-posts/new">
+              <AdminProgressLink href="/blog-posts/new">
                 <Plus className="size-4"/>
                 Create your first blog post
-              </Link>
+              </AdminProgressLink>
             </Button>
           </div>
         ) : (
@@ -80,10 +80,10 @@ export default async function AdminBlogPostsPage() {
                   </div>
 
                   <Button asChild variant="outline" size="sm">
-                    <Link href={ `/blog-posts/${ post.id }` }>
+                    <AdminProgressLink href={ `/blog-posts/${ post.id }` }>
                       <Pencil className="size-4"/>
                       Edit
-                    </Link>
+                    </AdminProgressLink>
                   </Button>
                 </div>
 

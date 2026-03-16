@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import {
@@ -11,6 +10,7 @@ import {
 import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
 import type { components } from "@/lib/api/generated/backend-types";
 import { GripVertical, LoaderCircle, Pencil, Plus, ArrowUp, ArrowDown } from "lucide-react";
+import { AdminProgressLink } from "@/components/admin/AdminRouteProgress";
 import { AdminSectionCard } from "@/components/admin/AdminUi";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -233,10 +233,10 @@ function TourListRow({
                   Down
                 </Button>
                 <Button asChild variant="outline" size="sm">
-                  <Link href={ `/tours/${ tour.id }` }>
+                  <AdminProgressLink href={ `/tours/${ tour.id }` }>
                     <Pencil className="size-4"/>
                     Edit
-                  </Link>
+                  </AdminProgressLink>
                 </Button>
               </div>
             </div>
@@ -487,10 +487,10 @@ export function AdminToursListClient({
       description="Create, edit, validate, and manually order tours from the admin list."
       actions={
         <Button asChild>
-          <Link href="/tours/new">
+          <AdminProgressLink href="/tours/new">
             <Plus className="size-4"/>
             Create Tour
-          </Link>
+          </AdminProgressLink>
         </Button>
       }
     >
@@ -505,10 +505,10 @@ export function AdminToursListClient({
           <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No tours have been created yet.</p>
             <Button asChild className="mt-4">
-              <Link href="/tours/new">
+              <AdminProgressLink href="/tours/new">
                 <Plus className="size-4"/>
                 Create your first tour
-              </Link>
+              </AdminProgressLink>
             </Button>
           </div>
         ) : (

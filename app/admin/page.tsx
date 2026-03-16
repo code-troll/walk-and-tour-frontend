@@ -1,4 +1,4 @@
-import Link from "next/link";
+import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard, AdminStatCard} from "@/components/admin/AdminUi";
 import {createAdminApi} from "@/lib/api/admin";
 import {isBackendApiError} from "@/lib/api/core/backend-client";
@@ -67,12 +67,12 @@ export default async function AdminHomePage() {
         title="The backoffice is now driven by the backend contract."
         description="This shell resolves the Auth0 session, exchanges it for the backend admin context, and uses the new shared API layer for the first admin surfaces."
         actions={
-          <Link
+          <AdminProgressLink
             href="/tours"
             className="rounded-full bg-[#21343b] px-5 py-3 text-sm font-semibold text-white"
           >
             Open tours workspace
-          </Link>
+          </AdminProgressLink>
         }
       />
 

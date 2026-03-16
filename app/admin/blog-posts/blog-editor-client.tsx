@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -16,6 +15,7 @@ import {
   Upload,
   X,
 } from "lucide-react";
+import { AdminProgressLink } from "@/components/admin/AdminRouteProgress";
 import { AdminSectionCard } from "@/components/admin/AdminUi";
 import { TiptapHtmlEditor, type TiptapHtmlEditorHandle } from "@/components/admin/TiptapHtmlEditor";
 import { Button } from "@/components/ui/button";
@@ -824,13 +824,13 @@ export function BlogPostEditorClient({
           }
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <Link
+            <AdminProgressLink
               href="/blog-posts"
               className="inline-flex items-center gap-2 text-sm font-medium text-[#627176] transition-colors hover:text-[#21343b]"
             >
               <ArrowLeft className="size-4"/>
               <span>Back to Blog Posts</span>
-            </Link>
+            </AdminProgressLink>
             <span
               className={ cn(
                 "rounded-full border px-3 py-1 text-xs font-medium",

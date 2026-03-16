@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AdminProgressLink } from "@/components/admin/AdminRouteProgress";
 
 type NavigationItem = {
   href: string;
@@ -29,7 +29,7 @@ export function AdminSidebarNav({
         const isActive = isItemActive(pathname, item.href);
 
         return (
-          <Link
+          <AdminProgressLink
             key={item.href}
             href={item.href}
             aria-current={isActive ? "page" : undefined}
@@ -40,7 +40,7 @@ export function AdminSidebarNav({
             }
           >
             {item.label}
-          </Link>
+          </AdminProgressLink>
         );
       })}
     </nav>
