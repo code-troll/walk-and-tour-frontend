@@ -20,32 +20,41 @@ type ToursCatalogProps = {
   tours: PublicTourCard[];
 };
 
+const filterToursByCategories = ({
+  categories,
+  tours,
+}: {
+  categories: TourFilterId[];
+  tours: PublicTourCard[];
+}) => {
+  if (categories.length === 0) {
+    return tours;
+  }
+
+  const selectedTagKeys = TOUR_FILTERS
+    .filter((filter) => categories.includes(filter.id))
+    .map((filter) => filter.tagKey);
+
+  return tours.filter((tour) => (
+    selectedTagKeys.every((tagKey) => tour.tagKeys.includes(tagKey))
+  ));
+};
+
 export default function ToursCatalog({tours}: ToursCatalogProps) {
   const t = useTranslations("tours");
   const [selectedCategories, setSelectedCategories] = useState<TourFilterId[]>([]);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_TOURS);
   const [newlyRevealedIds, setNewlyRevealedIds] = useState<string[]>([]);
 
-  const filterToursByCategories = (categories: TourFilterId[]) => {
-    if (categories.length === 0) {
-      return tours;
-    }
-
-    const selectedTagKeys = TOUR_FILTERS
-      .filter((filter) => categories.includes(filter.id))
-      .map((filter) => filter.tagKey);
-
-    return tours.filter((tour) => (
-      selectedTagKeys.every((tagKey) => tour.tagKeys.includes(tagKey))
-    ));
-  };
-
   const toggleCategory = (category: TourFilterId) => {
     const nextSelectedCategories = selectedCategories.includes(category)
       ? selectedCategories.filter((item) => item !== category)
       : [...selectedCategories, category];
 
-    const revealedIds = filterToursByCategories(nextSelectedCategories)
+    const revealedIds = filterToursByCategories({
+      categories: nextSelectedCategories,
+      tours,
+    })
       .slice(0, INITIAL_VISIBLE_TOURS)
       .map((tour) => tour.id);
 
@@ -63,7 +72,10 @@ export default function ToursCatalog({tours}: ToursCatalogProps) {
   );
 
   const filteredTours = useMemo(
-    () => filterToursByCategories(selectedCategories),
+    () => filterToursByCategories({
+      categories: selectedCategories,
+      tours,
+    }),
     [selectedCategories, tours]
   );
 

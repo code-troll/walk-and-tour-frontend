@@ -661,7 +661,7 @@ export interface paths {
         };
         /**
          * List public tours by locale
-         * @description Returns only tours whose shared data is publicly valid and whose requested locale has a published, ready, and schema-valid translation.
+         * @description Returns only tours whose shared data is publicly valid and whose requested locale has a published, ready, and schema-valid translation, ordered by the persisted manual tour sort order.
          */
         get: operations["PublicToursController_findAll"];
         put?: never;
@@ -721,13 +721,13 @@ export interface paths {
         };
         /**
          * List tours for admin management
-         * @description Returns all tours with shared data, translation diagnostics, and audit metadata.
+         * @description Returns all tours with shared data, translation diagnostics, and audit metadata, ordered by the persisted manual tour sort order.
          */
         get: operations["ToursController_findAll"];
         put?: never;
         /**
          * Create a tour
-         * @description Creates a minimal draft tour with only the shared identifier fields. Shared content, schema, media, itinerary, tags, and translations are added later through PATCH.
+         * @description Creates a minimal draft tour with the shared identifier fields and optional manual list position. Shared content, schema, media, itinerary, tags, and translations are added later through PATCH.
          */
         post: operations["ToursController_create"];
         delete?: never;
@@ -755,7 +755,7 @@ export interface paths {
         head?: never;
         /**
          * Update a tour
-         * @description Updates only shared tour data. It fully replaces the shared itinerary when provided and recalculates readiness for existing translations that depend on shared schema or stop structure.
+         * @description Updates only shared tour data, including the manual list position when provided. It fully replaces the shared itinerary when provided and recalculates readiness for existing translations that depend on shared schema or stop structure.
          */
         patch: operations["ToursController_update"];
         trace?: never;
@@ -2179,6 +2179,11 @@ export interface components {
              */
             name: string;
             /**
+             * @description Manual display position used by the default admin and public tour list ordering. Lower values appear first.
+             * @example 0
+             */
+            sortOrder: number;
+            /**
              * @description Stable public slug.
              * @example historic-center
              */
@@ -2257,6 +2262,11 @@ export interface components {
              * @enum {string}
              */
             tourType: "private" | "group" | "tip_based" | "company";
+            /**
+             * @description Optional manual display position used by admin and public tour lists. When omitted, the tour is appended to the end.
+             * @example 3
+             */
+            sortOrder?: number;
         };
         PriceDto: {
             /**
@@ -2371,6 +2381,11 @@ export interface components {
             itinerary?: components["schemas"]["TourItineraryDto"];
             /** @description Replacement ordered tag key list. */
             tagKeys?: string[];
+            /**
+             * @description Updated manual display position used by admin and public tour lists. Values beyond the current range move the tour to the end.
+             * @example 2
+             */
+            sortOrder?: number;
         };
         TourMediaListResponseDto: {
             /** @description Attached tour media assets in display order. */
