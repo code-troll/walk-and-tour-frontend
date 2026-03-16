@@ -50,6 +50,7 @@ export type TiptapHtmlEditorHandle = {
 type SupportedVideoProvider = "youtube" | "vimeo";
 type SupportedIframeProvider = "instagram" | "googleMaps" | "turitop" | "tiktok" | "walkAndTour";
 type ImageAlignment = "left" | "center" | "right";
+type ImageWidthPreset = "custom" | "full";
 type VideoAlignment = "left" | "center" | "right";
 type VideoAspectRatio = "21:9" | "16:9" | "4:3" | "1:1";
 type VideoWidthPreset = "small" | "medium" | "wide" | "full";
@@ -83,6 +84,10 @@ const IMAGE_ALIGNMENT_OPTIONS: Array<{ label: string; value: ImageAlignment }> =
   { label: "Left", value: "left" },
   { label: "Center", value: "center" },
   { label: "Right", value: "right" },
+];
+const IMAGE_WIDTH_OPTIONS: Array<{ label: string; value: ImageWidthPreset }> = [
+  { label: "Custom", value: "custom" },
+  { label: "Full", value: "full" },
 ];
 const IMAGE_MIN_WIDTH = 120;
 const IMAGE_MAX_WIDTH = 960;
@@ -238,6 +243,14 @@ const toImageAlignment = (value: string | null | undefined): ImageAlignment => {
   return "center";
 };
 
+const toImageWidthPreset = (value: string | null | undefined): ImageWidthPreset => {
+  if (value === "full") {
+    return "full";
+  }
+
+  return "custom";
+};
+
 const extractWidthFromStyle = (value: string | null | undefined) => {
   if (!value) {
     return null;
@@ -277,7 +290,9 @@ const getImagePublicStyle = (
   alignmentAttribute: string | null | undefined,
   containerStyle: string | null | undefined,
   wrapperStyle: string | null | undefined,
+  widthPresetAttribute?: string | null | undefined,
 ): CSSProperties => {
+  const widthPreset = toImageWidthPreset(widthPresetAttribute);
   const alignment = alignmentAttribute
     ? toImageAlignment(alignmentAttribute)
     : inferImageAlignment(containerStyle, wrapperStyle);
@@ -290,6 +305,15 @@ const getImagePublicStyle = (
     maxWidth: "100%",
     width: width ?? "100%",
   };
+
+  if (widthPreset === "full") {
+    style.clear = "both";
+    style.display = "flow-root";
+    style.marginLeft = "auto";
+    style.marginRight = "auto";
+    style.width = "100%";
+    return style;
+  }
 
   if (!width || width === "100%") {
     style.clear = "both";
@@ -345,6 +369,18 @@ const getImageWidthFromAttrs = (attrs: Record<string, unknown>) => {
   }
 
   return 320;
+};
+
+const isFullWidthImage = (attrs: Record<string, unknown>) => {
+  if (attrs.widthPreset === "full" || attrs.fullWidth === true || attrs.fullWidth === "true") {
+    return true;
+  }
+
+  const widthFromStyle = extractWidthFromStyle(
+    typeof attrs.containerStyle === "string" ? attrs.containerStyle : null,
+  );
+
+  return widthFromStyle === "100%";
 };
 
 const toVideoAlignment = (value: string | null | undefined): VideoAlignment => {
@@ -1081,6 +1117,13 @@ function BlogImageNodeView({
   const src = typeof node.attrs.src === "string" ? toInternalAdminMediaSrc(node.attrs.src) : "";
   const alt = typeof node.attrs.alt === "string" ? node.attrs.alt : "";
   const caption = getImageCaptionText(node.attrs.caption);
+  const widthPreset = toImageWidthPreset(
+    typeof node.attrs.widthPreset === "string"
+      ? node.attrs.widthPreset
+      : isFullWidthImage(node.attrs as Record<string, unknown>)
+        ? "full"
+        : "custom",
+  );
   const alignment = toImageAlignment(
     typeof node.attrs.alignment === "string"
       ? node.attrs.alignment
@@ -1151,6 +1194,7 @@ function BlogImageNodeView({
     const clampedWidth = clampImageWidth(nextWidth);
     updateAttributes({
       containerStyle: getImageContainerStyle(clampedWidth),
+      widthPreset: "custom",
       width: clampedWidth,
     });
     setPreviewWidth(clampedWidth);
@@ -1158,6 +1202,14 @@ function BlogImageNodeView({
 
   const setAlignment = (nextAlignment: ImageAlignment) => {
     updateAttributes({ alignment: nextAlignment });
+  };
+
+  const setWidthPreset = (nextWidthPreset: ImageWidthPreset) => {
+    updateAttributes({
+      alignment: nextWidthPreset === "full" ? "center" : alignment,
+      containerStyle: nextWidthPreset === "full" ? "width: 100%; height: auto; cursor: pointer;" : getImageContainerStyle(previewWidth),
+      widthPreset: nextWidthPreset,
+    });
   };
 
   const openMenu = () => {
@@ -1257,7 +1309,12 @@ function BlogImageNodeView({
   }
 
   const rootStyle: CSSProperties = {
-    ...getImagePublicStyle(alignment, getImageContainerStyle(previewWidth), null),
+    ...getImagePublicStyle(
+      alignment,
+      widthPreset === "full" ? "width: 100%; height: auto; cursor: pointer;" : getImageContainerStyle(previewWidth),
+      null,
+      widthPreset,
+    ),
     position: "relative",
   };
 
@@ -1271,6 +1328,7 @@ function BlogImageNodeView({
       ) }
       data-blog-image="true"
       data-image-alignment={ alignment }
+      data-image-width-preset={ widthPreset }
       data-media-id={ typeof node.attrs.mediaId === "string" ? node.attrs.mediaId : "" }
       data-storage-path={ typeof node.attrs.storagePath === "string" ? node.attrs.storagePath : "" }
       contentEditable={ false }
@@ -1296,10 +1354,31 @@ function BlogImageNodeView({
                 key={ option.value }
                 type="button"
                 size="xs"
-                variant={ alignment === option.value ? "default" : "outline" }
+                variant={
+                  (widthPreset === "full" ? option.value === "center" : alignment === option.value)
+                    ? "default"
+                    : "outline"
+                }
                 className="h-7"
+                disabled={ widthPreset === "full" && option.value !== "center" }
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setAlignment(option.value) }
+              >
+                { option.label }
+              </Button>
+            )) }
+          </div>
+
+          <div className="flex flex-wrap items-center gap-1">
+            { IMAGE_WIDTH_OPTIONS.map((option) => (
+              <Button
+                key={ option.value }
+                type="button"
+                size="xs"
+                variant={ widthPreset === option.value ? "default" : "outline" }
+                className="h-7"
+                onMouseDown={ (event) => event.preventDefault() }
+                onClick={ () => setWidthPreset(option.value) }
               >
                 { option.label }
               </Button>
@@ -1327,21 +1406,25 @@ function BlogImageNodeView({
           src={ src }
           alt={ alt }
           className="block h-auto max-w-full rounded-2xl"
-          style={ { width: `${ previewWidth }px` } }
+          style={ { width: widthPreset === "full" ? "100%" : `${ previewWidth }px` } }
         />
 
-        <div
-          className="absolute -bottom-1.5 -left-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
-          style={ { cursor: "nwse-resize" } }
-          onMouseDown={ handleResizeMouseDown("left") }
-          onTouchStart={ handleResizeTouchStart("left") }
-        />
-        <div
-          className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
-          style={ { cursor: "nwse-resize" } }
-          onMouseDown={ handleResizeMouseDown("right") }
-          onTouchStart={ handleResizeTouchStart("right") }
-        />
+        { widthPreset === "custom" ? (
+          <>
+            <div
+              className="absolute -bottom-1.5 -left-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
+              style={ { cursor: "nwse-resize" } }
+              onMouseDown={ handleResizeMouseDown("left") }
+              onTouchStart={ handleResizeTouchStart("left") }
+            />
+            <div
+              className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
+              style={ { cursor: "nwse-resize" } }
+              onMouseDown={ handleResizeMouseDown("right") }
+              onTouchStart={ handleResizeTouchStart("right") }
+            />
+          </>
+        ) : null }
       </div>
 
       { caption ? (
@@ -2352,11 +2435,19 @@ const BlogImage = ImageResize.extend({
             return false;
           }
 
+          const containerStyle =
+            figure.getAttribute("data-image-container-style")
+            ?? figure.getAttribute("containerstyle")
+            ?? image.getAttribute("containerstyle");
+          const widthPreset =
+            figure.getAttribute("data-image-width-preset")
+            ?? image.getAttribute("data-image-width-preset")
+            ?? (extractWidthFromStyle(containerStyle) === "100%"
+              ? "full"
+              : "custom");
+
           const width = getImageWidthFromAttrs({
-            containerStyle:
-              figure.getAttribute("data-image-container-style")
-              ?? figure.getAttribute("containerstyle")
-              ?? image.getAttribute("containerstyle"),
+            containerStyle,
             width:
               figure.getAttribute("data-image-width")
               ?? figure.getAttribute("width")
@@ -2367,7 +2458,9 @@ const BlogImage = ImageResize.extend({
             alt: image.getAttribute("alt") ?? "",
             blogImageMarker: "true",
             caption: getImageCaptionText(figure.querySelector("figcaption")?.textContent ?? ""),
-            containerStyle: getImageContainerStyle(width),
+            containerStyle: widthPreset === "full"
+              ? "width: 100%; height: auto; cursor: pointer;"
+              : getImageContainerStyle(width),
             mediaId: figure.getAttribute("data-media-id") ?? image.getAttribute("data-media-id") ?? "",
             src: toInternalAdminMediaSrc(image.getAttribute("src") ?? ""),
             storagePath: figure.getAttribute("data-storage-path") ?? image.getAttribute("data-storage-path") ?? "",
@@ -2375,6 +2468,7 @@ const BlogImage = ImageResize.extend({
               figure.getAttribute("data-image-alignment")
               ?? image.getAttribute("data-image-alignment")
               ?? inferImageAlignment(figure.getAttribute("style"), image.getAttribute("style")),
+            widthPreset,
             width,
           };
         },
@@ -2409,6 +2503,18 @@ const BlogImage = ImageResize.extend({
           ),
         renderHTML: (attributes: { alignment?: string }) =>
           attributes.alignment ? { "data-image-alignment": attributes.alignment } : {},
+      },
+      widthPreset: {
+        default: "custom",
+        parseHTML: (element: HTMLElement) =>
+          element.getAttribute("data-image-width-preset")
+          ?? (extractWidthFromStyle(
+            element.getAttribute("containerstyle"),
+          ) === "100%"
+            ? "full"
+            : "custom"),
+        renderHTML: (attributes: { widthPreset?: string }) =>
+          attributes.widthPreset ? { "data-image-width-preset": attributes.widthPreset } : {},
       },
       mediaId: {
         default: "",
@@ -2459,6 +2565,15 @@ const BlogImage = ImageResize.extend({
           ? HTMLAttributes.alignment
           : "center",
     );
+    const widthPreset = toImageWidthPreset(
+      typeof HTMLAttributes["data-image-width-preset"] === "string"
+        ? HTMLAttributes["data-image-width-preset"]
+        : typeof HTMLAttributes.widthPreset === "string"
+          ? HTMLAttributes.widthPreset
+          : isFullWidthImage(HTMLAttributes as Record<string, unknown>)
+            ? "full"
+            : "custom",
+    );
     const caption = getImageCaptionText(HTMLAttributes.caption);
     const persistedWidth = getImageWidthFromAttrs(HTMLAttributes as Record<string, unknown>);
     const mediaId = typeof HTMLAttributes["data-media-id"] === "string"
@@ -2475,11 +2590,14 @@ const BlogImage = ImageResize.extend({
       {
         "data-blog-image": "true",
         "data-image-alignment": alignment,
-        "data-image-container-style": containerStyle || getImageContainerStyle(persistedWidth),
-        "data-image-width": String(persistedWidth),
+        "data-image-container-style": containerStyle || (widthPreset === "full"
+          ? "width: 100%; height: auto; cursor: pointer;"
+          : getImageContainerStyle(persistedWidth)),
+        "data-image-width": widthPreset === "full" ? "full" : String(persistedWidth),
+        "data-image-width-preset": widthPreset,
         style: styleObjectToString({
-          ...getImagePublicStyle(alignment, containerStyle, wrapperStyle),
-          width: `${ persistedWidth }px`,
+          ...getImagePublicStyle(alignment, containerStyle, wrapperStyle, widthPreset),
+          width: widthPreset === "full" ? "100%" : `${ persistedWidth }px`,
         }),
       },
       mediaId.length > 0

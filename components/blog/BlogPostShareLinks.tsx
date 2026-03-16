@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { LinkIcon } from "lucide-react";
 import Image from "next/image";
 
@@ -25,15 +25,71 @@ const buildShareUrl = (base: string, query: Record<string, string>) => {
   return `${ base }?${ params.toString() }`;
 };
 
+const resolveShareUrl = (shareUrl: string, browserUrl: string) => {
+  const trimmedShareUrl = shareUrl.trim();
+  const trimmedBrowserUrl = browserUrl.trim();
+
+  if (/^https?:\/\//i.test(trimmedShareUrl)) {
+    return trimmedShareUrl;
+  }
+
+  if (trimmedShareUrl && trimmedBrowserUrl) {
+    try {
+      return new URL(trimmedShareUrl, trimmedBrowserUrl).toString();
+    } catch {
+      return trimmedShareUrl;
+    }
+  }
+
+  return trimmedShareUrl || trimmedBrowserUrl;
+};
+
+const fallbackCopyText = (value: string) => {
+  const textArea = document.createElement("textarea");
+  textArea.value = value;
+  textArea.setAttribute("readonly", "");
+  textArea.style.position = "fixed";
+  textArea.style.opacity = "0";
+  textArea.style.pointerEvents = "none";
+
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  textArea.setSelectionRange(0, value.length);
+
+  try {
+    return document.execCommand("copy");
+  } finally {
+    document.body.removeChild(textArea);
+  }
+};
+
 export default function BlogPostShareLinks({
                                              title,
                                              shareUrl,
                                              labels,
                                            }: BlogPostShareLinksProps) {
   const [copied, setCopied] = useState(false);
+  const [browserUrl, setBrowserUrl] = useState("");
+  const resetCopiedTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    setBrowserUrl(window.location.href);
+
+    return () => {
+      if (resetCopiedTimeoutRef.current !== null) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const resolvedShareUrl = useMemo(
+    () => resolveShareUrl(shareUrl, browserUrl),
+    [browserUrl, shareUrl],
+  );
 
   const shareTargets = useMemo(() => {
-    if (!shareUrl) {
+    if (!resolvedShareUrl) {
       return [];
     }
 
@@ -44,7 +100,7 @@ export default function BlogPostShareLinks({
         image: <Image src="/walkandtour/social/color/facebook.png" alt={ title } width={ 28 }
                       height={ 28 }/>,
         href: buildShareUrl("https://www.facebook.com/sharer/sharer.php", {
-          u: shareUrl,
+          u: resolvedShareUrl,
         }),
       },
       {
@@ -52,7 +108,7 @@ export default function BlogPostShareLinks({
         label: labels.x,
         image: <Image src="/walkandtour/social/color/x.png" alt={ title } width={ 28 } height={ 28 }/>,
         href: buildShareUrl("https://twitter.com/intent/tweet", {
-          url: shareUrl,
+          url: resolvedShareUrl,
           text: title,
         }),
       },
@@ -62,7 +118,7 @@ export default function BlogPostShareLinks({
         image: <Image src="/walkandtour/social/color/linkedin.png" alt={ title } width={ 28 }
                       height={ 28 }/>,
         href: buildShareUrl("https://www.linkedin.com/sharing/share-offsite/", {
-          url: shareUrl,
+          url: resolvedShareUrl,
         }),
       },
       {
@@ -71,21 +127,29 @@ export default function BlogPostShareLinks({
         image: <Image src="/walkandtour/social/color/whatsapp.png" alt={ title } width={ 28 }
                       height={ 28 }/>,
         href: buildShareUrl("https://wa.me/", {
-          text: `${ title } ${ shareUrl }`,
+          text: `${ title } ${ resolvedShareUrl }`,
         }),
       },
     ];
-  }, [labels.facebook, labels.linkedin, labels.whatsapp, labels.x, shareUrl, title]);
+  }, [labels.facebook, labels.linkedin, labels.whatsapp, labels.x, resolvedShareUrl, title]);
 
   const handleCopy = async () => {
-    if (!shareUrl || !navigator.clipboard) {
+    if (!resolvedShareUrl) {
       return;
     }
 
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      if (navigator.clipboard?.writeText && window.isSecureContext) {
+        await navigator.clipboard.writeText(resolvedShareUrl);
+      } else if (!fallbackCopyText(resolvedShareUrl)) {
+        throw new Error("fallback copy failed");
+      }
+
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1_500);
+      if (resetCopiedTimeoutRef.current !== null) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+      }
+      resetCopiedTimeoutRef.current = window.setTimeout(() => setCopied(false), 1_500);
     } catch {
       setCopied(false);
     }
