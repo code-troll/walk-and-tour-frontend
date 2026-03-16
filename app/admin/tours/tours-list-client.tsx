@@ -36,8 +36,10 @@ type TourRowDropData = TourRowDragData & {
 };
 
 type TourListRowProps = {
+  dropPlacement: DropPlacement | null;
   index: number;
   isDragged: boolean;
+  isDropTarget: boolean;
   isLast: boolean;
   isReordering: boolean;
   languageNameByCode: Record<string, string>;
@@ -95,8 +97,10 @@ const getPlacementFromInput = ({
 };
 
 function TourListRow({
+                       dropPlacement,
                        index,
                        isDragged,
+                       isDropTarget,
                        isLast,
                        isReordering,
                        languageNameByCode,
@@ -107,6 +111,11 @@ function TourListRow({
                      }: TourListRowProps) {
   const rowRef = useRef<HTMLElement | null>(null);
   const dragHandleRef = useRef<HTMLDivElement | null>(null);
+  const dropTargetHighlightClass = !isDropTarget
+    ? null
+    : dropPlacement === "before"
+      ? "border-[#d5b588] bg-[#fcf4e6] shadow-[inset_0_4px_0_0_#9a6a2f,0_0_0_1px_rgba(154,106,47,0.08),0_16px_32px_rgba(42,36,25,0.08)]"
+      : "border-[#d5b588] bg-[#fcf4e6] shadow-[inset_0_-4px_0_0_#9a6a2f,0_0_0_1px_rgba(154,106,47,0.08),0_16px_32px_rgba(42,36,25,0.08)]";
 
   useEffect(() => {
     const rowElement = rowRef.current;
@@ -170,7 +179,8 @@ function TourListRow({
     <article
       ref={ rowRef }
       className={ cn(
-        "rounded-2xl border border-[#f0e6d8] bg-white p-5 transition-shadow",
+        "rounded-2xl border border-[#f0e6d8] bg-white p-5 transition-[background-color,border-color,box-shadow,opacity] duration-150",
+        dropTargetHighlightClass,
         isDragged && "opacity-70",
       ) }
     >
@@ -503,22 +513,18 @@ export function AdminToursListClient({
           </div>
         ) : (
           tours.map((tour, index) => {
-            const showDropBefore =
-              dropIndicator?.tourId === tour.id && dropIndicator.placement === "before";
-            const showDropAfter =
-              dropIndicator?.tourId === tour.id && dropIndicator.placement === "after";
+            const isDropTarget = dropIndicator?.tourId === tour.id && draggedTourId !== tour.id;
 
             return (
               <div
                 key={ tour.id }
-                className={ cn(
-                  showDropBefore && "rounded-2xl shadow-[inset_0_4px_0_0_#9a6a2f]",
-                  showDropAfter && "rounded-2xl shadow-[inset_0_-4px_0_0_#9a6a2f]",
-                ) }
+                className="rounded-2xl"
               >
                 <TourListRow
+                  dropPlacement={ isDropTarget ? dropIndicator?.placement ?? null : null }
                   index={ index }
                   isDragged={ draggedTourId === tour.id }
+                  isDropTarget={ isDropTarget }
                   isLast={ index === tours.length - 1 }
                   isReordering={ isReordering }
                   languageNameByCode={ languageNameByCode }
