@@ -1,16 +1,16 @@
-import { TourCategoryId } from "@/lib/landing-data";
+import type { TourFilterId } from "@/lib/public-tour-data";
 import cn from "@meltdownjs/cn";
 
 type TourFilterOption = {
-  id: TourCategoryId;
+  id: TourFilterId;
   label: string;
 };
 
 type TourFiltersProps = {
   label: string;
   options: TourFilterOption[];
-  selectedOptions: TourCategoryId[];
-  onToggleOption: (option: TourCategoryId) => void;
+  selectedOptions: TourFilterId[];
+  onToggleOption: (option: TourFilterId) => void;
 };
 
 export default function TourFilters({

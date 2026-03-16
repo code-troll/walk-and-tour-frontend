@@ -14,18 +14,18 @@ import {
   TramFront,
 } from "lucide-react";
 import type { ItineraryUiLabels } from "@/lib/detail-page-utils";
-import type { CommuteMode, ResolvedTourItinerary } from "@/lib/tour-itineraries";
+import type { UiCommuteMode, UiResolvedTourItinerary } from "@/lib/public-tour-data";
 import TourDetailCollapsibleSection from "@/components/tour-detail/TourDetailCollapsibleSection";
 
 type TourDetailItinerarySectionProps = {
   title: string;
   description: string;
-  itinerary?: ResolvedTourItinerary | null;
+  itinerary?: UiResolvedTourItinerary | null;
   uiLabels?: ItineraryUiLabels;
 };
 
 const commuteModeIcons: Record<
-  CommuteMode,
+  UiCommuteMode,
   typeof Footprints
 > = {
   walk: Footprints,

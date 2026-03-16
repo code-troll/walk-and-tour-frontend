@@ -1529,7 +1529,7 @@ export interface components {
             /** @description Supported language codes defined in the shared domain vocabulary. */
             supportedLanguageCodes: ("en" | "es" | "it")[];
             /** @description Supported tour commercial models. */
-            tourTypes: ("private" | "group" | "tip_based")[];
+            tourTypes: ("private" | "group" | "tip_based" | "company")[];
             /** @description Supported commute modes between itinerary stops. */
             tourCommuteModes: ("walk" | "bike" | "bus" | "train" | "metro" | "tram" | "ferry" | "private-transport" | "boat" | "other")[];
             /** @description Newsletter subscription lifecycle states reserved by the domain model. */
@@ -2065,7 +2065,7 @@ export interface components {
              * @description Tour commercial model.
              * @enum {string}
              */
-            tourType: "private" | "group" | "tip_based";
+            tourType: "private" | "group" | "tip_based" | "company";
             /**
              * @description Total duration in minutes.
              * @example 120
@@ -2210,7 +2210,7 @@ export interface components {
              * @description Tour commercial model.
              * @enum {string}
              */
-            tourType: "private" | "group" | "tip_based";
+            tourType: "private" | "group" | "tip_based" | "company";
             /**
              * @description Total duration in minutes.
              * @example 120
@@ -2256,7 +2256,7 @@ export interface components {
              * @example group
              * @enum {string}
              */
-            tourType: "private" | "group" | "tip_based";
+            tourType: "private" | "group" | "tip_based" | "company";
         };
         PriceDto: {
             /**
@@ -2357,7 +2357,7 @@ export interface components {
              * @example group
              * @enum {string}
              */
-            tourType?: "private" | "group" | "tip_based";
+            tourType?: "private" | "group" | "tip_based" | "company";
             /**
              * @description Updated duration in minutes.
              * @example 150
@@ -4586,6 +4586,10 @@ export interface operations {
             query: {
                 /** @description Requested locale code. */
                 locale: string;
+                /** @description Optional tag-key filter. Accepts comma-separated values or repeated query params and matches tours that include at least one of the provided tags. */
+                tagKeys?: string[];
+                /** @description Optional tour-type filter. Accepts comma-separated values or repeated query params and matches tours whose type is one of the provided values. */
+                tourTypes?: ("private" | "group" | "tip_based" | "company")[];
             };
             header?: never;
             path?: never;
@@ -4688,7 +4692,12 @@ export interface operations {
     };
     ToursController_findAll: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Optional tag-key filter. Accepts comma-separated values or repeated query params and matches tours that include at least one of the provided tags. */
+                tagKeys?: string[];
+                /** @description Optional tour-type filter. Accepts comma-separated values or repeated query params and matches tours whose type is one of the provided values. */
+                tourTypes?: ("private" | "group" | "tip_based" | "company")[];
+            };
             header?: never;
             path?: never;
             cookie?: never;

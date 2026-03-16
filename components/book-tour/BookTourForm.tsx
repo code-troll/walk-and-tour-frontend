@@ -13,14 +13,6 @@ import {
   type BookTourFormActionState,
   type BookTourFormFailureReason,
 } from "@/components/book-tour/book-tour-form-action";
-import {
-  companyExperiences,
-  type CompanyExperienceId,
-} from "@/lib/companies-data";
-import {
-  toursCatalog,
-  type TourId,
-} from "@/lib/landing-data";
 
 export type BookTourType = "privateTours" | "companyTours" | "otherTours";
 type TourLanguageOptionId =
@@ -83,17 +75,19 @@ const feedbackKeyByReason: Record<
 type BookTourFormProps = {
   initialBookingType?: BookTourType;
   initialSelectedItemId?: string;
+  privateTourOptions: SelectOption[];
+  companyTourOptions: SelectOption[];
 };
 
 export default function BookTourForm({
   initialBookingType = "privateTours",
   initialSelectedItemId = "",
+  privateTourOptions,
+  companyTourOptions,
 }: BookTourFormProps) {
   const t = useTranslations("bookTourPage");
-  const tourItemsT = useTranslations("tourDetail.items");
-  const companyItemsT = useTranslations("companiesPage.items");
   const locale = useLocale();
-  const requestedTour = toursCatalog.find((tour) => tour.id === initialSelectedItemId);
+  const requestedTour = privateTourOptions.find((tour) => tour.id === initialSelectedItemId);
   const [phone, setPhone] = useState<Value | undefined>();
   const [turnstileToken, setTurnstileToken] = useState("");
   const [tourLanguage, setTourLanguage] = useState<TourLanguageOptionId | "">("");
@@ -109,31 +103,21 @@ export default function BookTourForm({
   const now = new Date();
   const todayIsoDate = `${ now.getFullYear() }-${ String(now.getMonth() + 1).padStart(2, "0") }-${ String(now.getDate()).padStart(2, "0") }`;
 
-  const privateTourOptionsBase: SelectOption[] = toursCatalog
-    .filter((tour) => tour.categories.includes("privateTour"))
-    .map((tour) => ({
-      id: tour.id,
-      label: tourItemsT(`${ tour.id }.title` as `${ TourId }.title`),
-    }));
-  const privateTourOptions: SelectOption[] =
+  const privateTourOptionsWithRequested: SelectOption[] =
     initialBookingType === "privateTours" &&
     requestedTour &&
-    !privateTourOptionsBase.some((option) => option.id === requestedTour.id)
+    !privateTourOptions.some((option) => option.id === requestedTour.id)
       ? [
           {
             id: requestedTour.id,
-            label: tourItemsT(`${ requestedTour.id }.title` as `${ TourId }.title`),
+            label: requestedTour.label,
           },
-          ...privateTourOptionsBase,
+          ...privateTourOptions,
         ]
-      : privateTourOptionsBase;
-  const companyTourOptions: SelectOption[] = companyExperiences.map((experience) => ({
-    id: experience.id,
-    label: companyItemsT(`${ experience.id }.title` as `${ CompanyExperienceId }.title`),
-  }));
+      : privateTourOptions;
   const requestedItemId =
     initialBookingType === "privateTours"
-      ? privateTourOptions.some((option) => option.id === initialSelectedItemId)
+      ? privateTourOptionsWithRequested.some((option) => option.id === initialSelectedItemId)
         ? initialSelectedItemId
         : ""
       : initialBookingType === "companyTours"
@@ -147,7 +131,7 @@ export default function BookTourForm({
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const activeOptions =
     bookingType === "privateTours"
-      ? privateTourOptions
+      ? privateTourOptionsWithRequested
       : bookingType === "companyTours"
         ? companyTourOptions
         : [];

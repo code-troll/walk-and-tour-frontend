@@ -23,10 +23,10 @@ type PublicationSectionProps = {
   availableLanguages: ApiLanguage[];
   diagnostics: ApiTour["translationAvailability"];
   isMutating: boolean;
-  onPublishTranslation: (args: { languageCode: string }) => void;
-  onUnpublishTranslation: (args: { languageCode: string }) => void;
-  onPublishAllReady: () => void;
-  onUnpublishAll: () => void;
+  onPublishTranslationAction: (args: { languageCode: string }) => void;
+  onUnpublishTranslationAction: (args: { languageCode: string }) => void;
+  onPublishAllReadyAction: () => void;
+  onUnpublishAllAction: () => void;
 };
 
 const splitTextareaLines = (value: string) =>
@@ -74,10 +74,10 @@ export function PublicationSection({
                                      availableLanguages,
                                      diagnostics,
                                      isMutating,
-                                     onPublishTranslation,
-                                     onUnpublishTranslation,
-                                     onPublishAllReady,
-                                     onUnpublishAll,
+                                     onPublishTranslationAction,
+                                     onUnpublishTranslationAction,
+                                     onPublishAllReadyAction,
+                                     onUnpublishAllAction,
                                    }: PublicationSectionProps) {
   const orderedLanguages = [...availableLanguages].sort(
     (left, right) => left.sortOrder - right.sortOrder || left.code.localeCompare(right.code),
@@ -113,7 +113,7 @@ export function PublicationSection({
             <Button
               variant="outline"
               size="sm"
-              onClick={ onUnpublishAll }
+              onClick={ onUnpublishAllAction }
               disabled={ isMutating || publishedTranslations.length === 0 }
               className="border-[#d8c5a8] bg-[#fbf7f0] text-[#7a5424] hover:bg-[#f4ebde]"
             >
@@ -121,7 +121,7 @@ export function PublicationSection({
             </Button>
             <Button
               size="sm"
-              onClick={ onPublishAllReady }
+              onClick={ onPublishAllReadyAction }
               disabled={ isMutating || readyUnpublished.length === 0 }
               className="gap-2 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]"
             >
@@ -243,8 +243,8 @@ export function PublicationSection({
                         size="sm"
                         onClick={ () =>
                           isPublished
-                            ? onUnpublishTranslation({languageCode: translation.languageCode})
-                            : onPublishTranslation({languageCode: translation.languageCode})
+                            ? onUnpublishTranslationAction({languageCode: translation.languageCode})
+                            : onPublishTranslationAction({languageCode: translation.languageCode})
                         }
                         disabled={ isMutating || (!isReady && !isPublished) }
                         className="min-w-24"

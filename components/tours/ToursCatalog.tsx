@@ -6,34 +6,41 @@ import { useTranslations } from "next-intl";
 import TourFilters from "@/components/tours/TourFilters";
 import TourListingCard from "@/components/tours/TourListingCard";
 import {
-  tourCategories,
-  toursCatalog,
-  type TourCategoryId,
-  type TourId,
-} from "@/lib/landing-data";
+  TOUR_FILTERS,
+  type PublicTourCard,
+  type TourFilterId,
+} from "@/lib/public-tour-data";
 
 const INITIAL_VISIBLE_TOURS = 6;
 const LOAD_MORE_STEP = 3;
 const REVEAL_STAGGER_MS = 60;
 const REVEAL_RESET_MS = 450;
 
-export default function ToursCatalog() {
-  const t = useTranslations("tours");
-  const [selectedCategories, setSelectedCategories] = useState<TourCategoryId[]>([]);
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_TOURS);
-  const [newlyRevealedIds, setNewlyRevealedIds] = useState<TourId[]>([]);
+type ToursCatalogProps = {
+  tours: PublicTourCard[];
+};
 
-  const filterToursByCategories = (categories: TourCategoryId[]) => {
+export default function ToursCatalog({tours}: ToursCatalogProps) {
+  const t = useTranslations("tours");
+  const [selectedCategories, setSelectedCategories] = useState<TourFilterId[]>([]);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_TOURS);
+  const [newlyRevealedIds, setNewlyRevealedIds] = useState<string[]>([]);
+
+  const filterToursByCategories = (categories: TourFilterId[]) => {
     if (categories.length === 0) {
-      return toursCatalog;
+      return tours;
     }
 
-    return toursCatalog.filter((tour) => (
-      categories.every((item) => tour.categories.includes(item))
+    const selectedTagKeys = TOUR_FILTERS
+      .filter((filter) => categories.includes(filter.id))
+      .map((filter) => filter.tagKey);
+
+    return tours.filter((tour) => (
+      selectedTagKeys.every((tagKey) => tour.tagKeys.includes(tagKey))
     ));
   };
 
-  const toggleCategory = (category: TourCategoryId) => {
+  const toggleCategory = (category: TourFilterId) => {
     const nextSelectedCategories = selectedCategories.includes(category)
       ? selectedCategories.filter((item) => item !== category)
       : [...selectedCategories, category];
@@ -48,16 +55,16 @@ export default function ToursCatalog() {
   };
 
   const filterOptions = useMemo(
-    () => tourCategories.map((category) => ({
-      id: category,
-      label: t(`filters.items.${category}`),
+    () => TOUR_FILTERS.map((filter) => ({
+      id: filter.id,
+      label: t(`filters.items.${filter.id}`),
     })),
     [t]
   );
 
   const filteredTours = useMemo(
     () => filterToursByCategories(selectedCategories),
-    [selectedCategories]
+    [selectedCategories, tours]
   );
 
   const visibleTours = filteredTours.slice(0, visibleCount);

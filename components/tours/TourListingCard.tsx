@@ -4,10 +4,10 @@ import { useLocale, useTranslations } from "next-intl";
 
 import { getPathname } from "@/i18n/navigation";
 import { type AppLocale } from "@/i18n/routing";
-import type { Tour } from "@/lib/landing-data";
+import type { PublicTourCard } from "@/lib/public-tour-data";
 
 type TourListingCardProps = {
-  tour: Tour;
+  tour: PublicTourCard;
   isNewlyRevealed?: boolean;
   revealDelayMs?: number;
 };
@@ -28,9 +28,9 @@ export default function TourListingCard({
                                           revealDelayMs = 0,
                                         }: TourListingCardProps) {
   const t = useTranslations("tours.card");
-  const tourItemT = useTranslations("tourDetail.items");
   const locale = useLocale() as AppLocale;
   const bookHref = `${ getPathname({locale, href: "/tours"}) }/${ tour.slug }`;
+  const isRemoteImage = tour.heroImageSrc.startsWith("http://") || tour.heroImageSrc.startsWith("https://");
 
   return (
     <article
@@ -41,20 +41,21 @@ export default function TourListingCard({
         <a href={ bookHref }>
           <Image
             src={ tour.heroImageSrc }
-            alt={ tourItemT(`${ tour.id }.imageAlt`) }
+            alt={ tour.imageAlt }
             width={ 800 }
             height={ 600 }
             className="h-52 w-full object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04] group-hover:brightness-[1.04]"
+            unoptimized={ isRemoteImage }
           />
         </a>
         <span
           className="absolute left-4 top-4 rounded-full bg-[#2b666d]/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-            { tourItemT(`${ tour.id }.tag`) }
+            { tour.tag }
           </span>
       </div>
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-xl font-semibold leading-tight text-[#2a221a]">
-          { tourItemT(`${ tour.id }.title`) }
+          { tour.title }
         </h3>
 
         <div className="mt-auto">
@@ -71,7 +72,7 @@ export default function TourListingCard({
 
           <div className="flex items-center justify-between gap-4">
             <p className="text-xl font-semibold text-[#2a221a]">
-              { tour.price } { t("currency") }
+              { tour.price ?? "—" }
             </p>
             <a
               href={ bookHref }
@@ -85,11 +86,11 @@ export default function TourListingCard({
           <div className="mt-4 grid grid-cols-1 gap-3 text-sm text-[#5b4d3c] sm:grid-cols-2">
             <div className="flex items-center gap-2">
               <CalendarDays className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ tourItemT(`${ tour.id }.duration`) }</span>
+              <span>{ tour.duration }</span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-[#8a7562]"/>
-              <span>{ tourItemT(`${ tour.id }.location`) }</span>
+              <span>{ tour.location }</span>
             </div>
           </div>
         </div>

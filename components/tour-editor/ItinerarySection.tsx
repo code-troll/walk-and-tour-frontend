@@ -22,11 +22,11 @@ import {
 
 type ItinerarySectionProps = {
   formState: TourFormState;
-  updateFormState: <K extends keyof TourFormState>(key: K, value: TourFormState[K]) => void;
-  onAddStop: () => void;
-  onRemoveStop: (clientId: string) => void;
-  onMoveStop: (args: { clientId: string; direction: "up" | "down" }) => void;
-  onUpdateStop: (args: {
+  updateFormStateAction: <K extends keyof TourFormState>(key: K, value: TourFormState[K]) => void;
+  onAddStopAction: () => void;
+  onRemoveStopAction: (clientId: string) => void;
+  onMoveStopAction: (args: { clientId: string; direction: "up" | "down" }) => void;
+  onUpdateStopAction: (args: {
     clientId: string;
     field: keyof TourFormState["stops"][number];
     value: string;
@@ -65,11 +65,11 @@ const stopCardClassName = "overflow-hidden rounded-[1.25rem] border border-[#efe
 
 export function ItinerarySection({
                                    formState,
-                                   updateFormState,
-                                   onAddStop,
-                                   onRemoveStop,
-                                   onMoveStop,
-                                   onUpdateStop,
+                                   updateFormStateAction,
+                                   onAddStopAction,
+                                   onRemoveStopAction,
+                                   onMoveStopAction,
+                                   onUpdateStopAction,
                                  }: ItinerarySectionProps) {
   const commuteModes = [
     {value: "", label: "Select mode", icon: null},
@@ -88,7 +88,7 @@ export function ItinerarySection({
         <div className="flex flex-col gap-3 md:flex-row">
           <button
             type="button"
-            onClick={ () => updateFormState("itineraryVariant", "stops") }
+            onClick={ () => updateFormStateAction("itineraryVariant", "stops") }
             className={ cn(
               "flex-1 rounded-lg border-2 px-6 py-4 text-left transition-all",
               formState.itineraryVariant === "stops"
@@ -107,7 +107,7 @@ export function ItinerarySection({
 
           <button
             type="button"
-            onClick={ () => updateFormState("itineraryVariant", "description") }
+            onClick={ () => updateFormStateAction("itineraryVariant", "description") }
             className={ cn(
               "flex-1 rounded-lg border-2 px-6 py-4 text-left transition-all",
               formState.itineraryVariant === "description"
@@ -136,7 +136,7 @@ export function ItinerarySection({
               </p>
             </div>
 
-            <Button onClick={ onAddStop } className="gap-2 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]">
+            <Button onClick={ onAddStopAction } className="gap-2 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]">
               <Plus className="size-4"/>
               Add Stop
             </Button>
@@ -146,7 +146,7 @@ export function ItinerarySection({
             <div className="rounded-[1.25rem] border-2 border-dashed border-[#d8c5a8] bg-[#fcfaf6] py-12 text-center">
               <MapPin className="mx-auto mb-3 size-10 text-[#8f7e67]"/>
               <p className="mb-4 text-[#627176]">No stops added yet.</p>
-              <Button onClick={ onAddStop } variant="outline" className="gap-2 border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]">
+              <Button onClick={ onAddStopAction } variant="outline" className="gap-2 border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]">
                 <Plus className="size-4"/>
                 Add Your First Stop
               </Button>
@@ -173,7 +173,7 @@ export function ItinerarySection({
                         <Input
                           value={ stop.id }
                           onChange={ (event) =>
-                            onUpdateStop({
+                            onUpdateStopAction({
                               clientId: stop.clientId,
                               field: "id",
                               value: event.target.value,
@@ -187,7 +187,7 @@ export function ItinerarySection({
                           <Button
                             variant="ghost"
                             size="icon-sm"
-                            onClick={ () => onMoveStop({clientId: stop.clientId, direction: "up"}) }
+                            onClick={ () => onMoveStopAction({clientId: stop.clientId, direction: "up"}) }
                             disabled={ index === 0 }
                             className="opacity-0 text-[#627176] transition-opacity group-hover:opacity-100 hover:bg-[#f2eadf] hover:text-[#21343b]"
                           >
@@ -196,7 +196,7 @@ export function ItinerarySection({
                           <Button
                             variant="ghost"
                             size="icon-sm"
-                            onClick={ () => onMoveStop({clientId: stop.clientId, direction: "down"}) }
+                            onClick={ () => onMoveStopAction({clientId: stop.clientId, direction: "down"}) }
                             disabled={ isLast }
                             className="opacity-0 text-[#627176] transition-opacity group-hover:opacity-100 hover:bg-[#f2eadf] hover:text-[#21343b]"
                           >
@@ -205,7 +205,7 @@ export function ItinerarySection({
                           <Button
                             variant="ghost"
                             size="icon-sm"
-                            onClick={ () => onRemoveStop(stop.clientId) }
+                            onClick={ () => onRemoveStopAction(stop.clientId) }
                             className="opacity-0 text-[#b3574a] transition-opacity group-hover:opacity-100 hover:bg-[#fbf2f0] hover:text-[#b3574a]"
                           >
                             <Trash2 className="size-4"/>
@@ -222,7 +222,7 @@ export function ItinerarySection({
                             type="number"
                             value={ stop.durationMinutes }
                             onChange={ (event) =>
-                              onUpdateStop({
+                              onUpdateStopAction({
                                 clientId: stop.clientId,
                                 field: "durationMinutes",
                                 value: event.target.value,
@@ -240,7 +240,7 @@ export function ItinerarySection({
                             type="number"
                             value={ stop.latitude }
                             onChange={ (event) =>
-                              onUpdateStop({
+                              onUpdateStopAction({
                                 clientId: stop.clientId,
                                 field: "latitude",
                                 value: event.target.value,
@@ -258,7 +258,7 @@ export function ItinerarySection({
                             type="number"
                             value={ stop.longitude }
                             onChange={ (event) =>
-                              onUpdateStop({
+                              onUpdateStopAction({
                                 clientId: stop.clientId,
                                 field: "longitude",
                                 value: event.target.value,
@@ -283,7 +283,7 @@ export function ItinerarySection({
                             <select
                               value={ stop.nextCommuteMode }
                               onChange={ (event) =>
-                                onUpdateStop({
+                                onUpdateStopAction({
                                   clientId: stop.clientId,
                                   field: "nextCommuteMode",
                                   value: event.target.value,
@@ -304,7 +304,7 @@ export function ItinerarySection({
                               type="number"
                               value={ stop.nextDurationMinutes }
                               onChange={ (event) =>
-                                onUpdateStop({
+                                onUpdateStopAction({
                                   clientId: stop.clientId,
                                   field: "nextDurationMinutes",
                                   value: event.target.value,

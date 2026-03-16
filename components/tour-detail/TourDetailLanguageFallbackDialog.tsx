@@ -30,6 +30,7 @@ type TourDetailLanguageFallbackDialogProps = {
   }[];
   availableLanguagesLabel: string;
   description: string;
+  hrefBasePath?: "/tours" | "/companies";
   title: string;
   tourSlug: string;
 };
@@ -38,6 +39,7 @@ export default function TourDetailLanguageFallbackDialog({
                                                            availableLanguages,
                                                            availableLanguagesLabel,
                                                            description,
+                                                           hrefBasePath = "/tours",
                                                            title,
                                                            tourSlug,
                                                          }: TourDetailLanguageFallbackDialogProps) {
@@ -99,7 +101,7 @@ export default function TourDetailLanguageFallbackDialog({
                 return (
                   <Link
                     key={ language.locale }
-                    href={ `/tours/${ tourSlug }` }
+                    href={ `${ hrefBasePath }/${ tourSlug }` }
                     locale={ language.locale }
                     className="inline-flex items-center gap-2 rounded-full border border-[#d8c8b7] bg-[#ffffff] px-4 py-2 text-sm font-medium text-[#5b4d3c] transition-colors hover:border-[#2b666d] hover:bg-[#2b666d] hover:text-[#ffffff]"
                   >

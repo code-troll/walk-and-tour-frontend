@@ -1944,11 +1944,11 @@ export function TourEditorClient({
             { activeSection === "itinerary" ? (
               <ItinerarySection
                 formState={ formState }
-                updateFormState={ updateFormState }
-                onAddStop={ addStop }
-                onRemoveStop={ removeStop }
-                onMoveStop={ moveStop }
-                onUpdateStop={ updateStopField }
+                updateFormStateAction={ updateFormState }
+                onAddStopAction={ addStop }
+                onRemoveStopAction={ removeStop }
+                onMoveStopAction={ moveStop }
+                onUpdateStopAction={ updateStopField }
               />
             ) : null }
 
@@ -1978,16 +1978,16 @@ export function TourEditorClient({
                 availableLanguages={ availableLanguages }
                 diagnostics={ diagnostics }
                 isMutating={ isMutating }
-                onPublishTranslation={ (args) => {
+                onPublishTranslationAction={ (args) => {
                   void publishTranslation(args);
                 } }
-                onUnpublishTranslation={ (args) => {
+                onUnpublishTranslationAction={ (args) => {
                   void unpublishTranslation(args);
                 } }
-                onPublishAllReady={ () => {
+                onPublishAllReadyAction={ () => {
                   void publishAllReady();
                 } }
-                onUnpublishAll={ () => {
+                onUnpublishAllAction={ () => {
                   void unpublishAll();
                 } }
               />

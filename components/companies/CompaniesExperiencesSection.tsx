@@ -1,9 +1,15 @@
 import { useTranslations } from "next-intl";
 
-import { companyExperiences } from "@/lib/companies-data";
 import CompanyListingCard from "@/components/companies/CompanyListingCard";
+import type { PublicTourCard } from "@/lib/public-tour-data";
 
-export default function CompaniesExperiencesSection() {
+type CompaniesExperiencesSectionProps = {
+  experiences: PublicTourCard[];
+};
+
+export default function CompaniesExperiencesSection({
+  experiences,
+}: CompaniesExperiencesSectionProps) {
   const t = useTranslations("companiesPage");
 
   return (
@@ -18,7 +24,7 @@ export default function CompaniesExperiencesSection() {
           </p>
         </div>
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          { companyExperiences.map((experience) => (
+          { experiences.map((experience) => (
             <CompanyListingCard key={ experience.id } experience={ experience }/>
           )) }
         </div>

@@ -1,15 +1,20 @@
 import BookTourForm from "@/components/book-tour/BookTourForm";
 import type { BookTourType } from "@/components/book-tour/BookTourForm";
+import type { BookingOption } from "@/lib/public-tour-data";
 import { useTranslations } from "next-intl";
 
 type BookTourSectionProps = {
   initialBookingType?: string;
   initialSelectedItemId?: string;
+  privateTourOptions: BookingOption[];
+  companyTourOptions: BookingOption[];
 };
 
 export default function BookTourSection({
   initialBookingType,
   initialSelectedItemId = "",
+  privateTourOptions,
+  companyTourOptions,
 }: BookTourSectionProps) {
   const t = useTranslations("bookTourPage");
   const formKey = `${ initialBookingType ?? "" }:${ initialSelectedItemId }`;
@@ -47,6 +52,8 @@ export default function BookTourSection({
           key={ formKey }
           initialBookingType={ resolvedInitialBookingType }
           initialSelectedItemId={ initialSelectedItemId }
+          privateTourOptions={ privateTourOptions }
+          companyTourOptions={ companyTourOptions }
         />
       </div>
     </section>

@@ -1,11 +1,11 @@
 import { ShoppingBag } from "lucide-react";
 
 import TourListingCard from "@/components/tours/TourListingCard";
-import type { Tour } from "@/lib/landing-data";
+import type { PublicTourCard } from "@/lib/public-tour-data";
 
 type TourDetailRelatedToursSectionProps = {
   title: string;
-  tours: Tour[];
+  tours: PublicTourCard[];
 };
 
 export default function TourDetailRelatedToursSection({

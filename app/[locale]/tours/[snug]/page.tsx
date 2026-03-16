@@ -17,23 +17,14 @@ import { type AppLocale, routing } from "@/i18n/routing";
 import {
   buildItineraryUiLabels,
   buildQuickInfoItems,
-  getItemStringWithFallback,
   getLocaleLanguageLabel,
-  resolveDetailContent,
-  resolveDetailDisplay,
-  resolveHeroImages,
-  resolveTourItinerary,
 } from "@/lib/detail-page-utils";
 import {
-  getTourAvailableLocales,
-  getTourBookingReferenceId,
-  getTourContentLocale,
-  getRelatedToursByTour,
-  getResolvedTourBySlug,
-  isTourAvailableInLocale,
-  tourSlugs,
-} from "@/lib/landing-data";
-import { getSharedTourItinerary } from "@/lib/tour-itineraries";
+  getExpectedTourTypesForPublicTours,
+  getLocalizedPublicTourTypeLabel,
+  getPublicTourDetailWithFallback,
+  listRelatedPublicToursSafe,
+} from "@/lib/public-tour-data";
 import TourDetailCustomerSupportSection from "@/components/tour-detail/TourDetailCustomerSupportSection";
 import TourDetailElfsightReviewsSection from "@/components/tour-detail/TourDetailElfsightReviewsSection";
 
@@ -53,43 +44,30 @@ const isValidLocale = (locale: string): locale is AppLocale => (
   routing.locales.includes(locale as AppLocale)
 );
 
-export function generateStaticParams() {
-  return tourSlugs.map((snug) => ({snug}));
-}
-
 export async function generateMetadata({
-                                         params,
-                                       }: TourDetailPageProps): Promise<Metadata> {
+  params,
+}: TourDetailPageProps): Promise<Metadata> {
   const {locale, snug} = await params;
 
   if (!isValidLocale(locale)) {
     notFound();
   }
 
-  const tour = getResolvedTourBySlug(snug);
+  const detailResult = await getPublicTourDetailWithFallback({
+    expectedTourTypes: getExpectedTourTypesForPublicTours(),
+    locale,
+    slug: snug,
+  });
 
-  if (!tour) {
+  if (!detailResult) {
     return {};
   }
 
-  const contentLocale = getTourContentLocale(tour, locale);
-  const tourItemT = await getTranslations({locale: contentLocale, namespace: "tourDetail.items"});
-  const tourDetailT = await getTranslations({locale: contentLocale, namespace: "tourDetail"});
-  const aboutTourDescription = getItemStringWithFallback(
-    tourItemT,
-    tour.id,
-    "aboutTourDescription",
-    getItemStringWithFallback(
-      tourItemT,
-      tour.id,
-      "description",
-      tourDetailT("defaults.aboutTourDescription")
-    )
-  );
+  const {tour} = detailResult;
 
   return {
-    title: `${ tourItemT(`${ tour.id }.title`) } | Walk and Tour Copenhagen`,
-    description: aboutTourDescription,
+    title: `${ tour.title } | Walk and Tour Copenhagen`,
+    description: tour.aboutTourDescription || undefined,
   };
 }
 
@@ -100,57 +78,48 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
     notFound();
   }
 
-  const tour = getResolvedTourBySlug(snug);
+  const detailResult = await getPublicTourDetailWithFallback({
+    expectedTourTypes: getExpectedTourTypesForPublicTours(),
+    locale,
+    slug: snug,
+  });
 
-  if (!tour) {
+  if (!detailResult) {
     notFound();
   }
 
-  const contentLocale = getTourContentLocale(tour, locale);
-  const isFallbackLanguage = !isTourAvailableInLocale(tour, locale);
-  const [tourItemT, tourDetailUiT, tourDetailContentT, headerT] = await Promise.all([
-    getTranslations({locale: contentLocale, namespace: "tourDetail.items"}),
+  const {availableLocales, contentLocale, isFallbackLanguage, tour} = detailResult;
+  const [tourDetailUiT, tourDetailContentT, headerT] = await Promise.all([
     getTranslations({locale, namespace: "tourDetail"}),
     getTranslations({locale: contentLocale, namespace: "tourDetail"}),
     getTranslations({locale, namespace: "header"}),
   ]);
-  const availableLanguages = getTourAvailableLocales(tour).map((availableLocale) => ({
+  const availableLanguageLabels = availableLocales.map((availableLocale) => ({
     locale: availableLocale,
     label: getLocaleLanguageLabel(availableLocale, headerT),
   }));
-  const contentLanguageLabel = availableLanguages.find(
-    ({locale: availableLocale}) => availableLocale === contentLocale
+  const contentLanguageLabel = availableLanguageLabels.find(
+    ({locale: availableLocale}) => availableLocale === contentLocale,
   )?.label ?? getLocaleLanguageLabel(contentLocale, headerT);
-  const display = resolveDetailDisplay({
-    itemT: tourItemT,
-    itemId: tour.id,
-    fallbacks: {
-      tag: "",
-      duration: "",
-      location: "",
-    },
-  });
-  const itinerary = resolveTourItinerary({
-    itemT: tourItemT,
-    itemId: tour.id,
-    sharedItinerary: getSharedTourItinerary(tour.id),
-  });
-  const detailContent = resolveDetailContent({
-    detailT: tourDetailContentT,
-    itemT: tourItemT,
-    itemId: tour.id,
-    languageLabel: contentLanguageLabel,
-    itinerary,
-  });
+  const tourTypeLabel = getLocalizedPublicTourTypeLabel(contentLocale, tour.tourType);
   const quickInfoItems = buildQuickInfoItems({
     detailT: tourDetailUiT,
-    facts: detailContent.facts,
+    facts: {
+      meetingPoint: tour.meetingPoint || tour.location,
+      endPoint: tour.endPoint || tour.location,
+      typeTour: tourTypeLabel,
+      cancellationType: tour.cancellationType,
+      language: contentLanguageLabel,
+    },
   });
   const itineraryUiLabels = buildItineraryUiLabels(tourDetailUiT);
-
-  const relatedTours = getRelatedToursByTour(tour, 3);
-  const heroTourImages = resolveHeroImages(tour);
-  const bookingReferenceId = getTourBookingReferenceId(tour, locale);
+  const relatedTours = await listRelatedPublicToursSafe({
+    currentSlug: tour.slug,
+    locale: contentLocale,
+    limit: 3,
+    tagKeys: tour.tagKeys,
+    tourTypes: getExpectedTourTypesForPublicTours(),
+  });
 
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
@@ -159,19 +128,19 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
           title={ tourDetailUiT("languageFallback.title") }
           description={ tourDetailUiT("languageFallback.description") }
           availableLanguagesLabel={ tourDetailUiT("languageFallback.availableLanguages") }
-          availableLanguages={ availableLanguages }
+          availableLanguages={ availableLanguageLabels }
           tourSlug={ snug }
         />
       ) : null }
 
       <TourDetailHeroSection
-        title={ display.title }
-        tag={ display.tag }
+        title={ tour.title }
+        tourTypeLabel={ tourTypeLabel }
         rating={ tour.rating }
         reviews={ tour.reviews }
-        duration={ display.duration }
-        location={ display.location }
-        tourImages={ heroTourImages }
+        duration={ tour.duration }
+        location={ tour.location }
+        tourImages={ tour.tourImages }
       />
 
       <TourDetailQuickInfoSection items={ quickInfoItems }/>
@@ -179,11 +148,11 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
       <TourDetailContentWithSidebar
         sidebar={
           <TourDetailSidebarPlaceholder
-            bookingReferenceId={ bookingReferenceId }
-            language={ locale }
-            price={ `${ tour.price } kr` }
-            duration={ display.duration }
-            cancellationType={ detailContent.facts.cancellationType }
+            bookingReferenceId={ tour.bookingReferenceId }
+            language={ contentLocale }
+            price={ tour.price }
+            duration={ tour.duration }
+            cancellationType={ tour.cancellationType }
             requestedBookingType="privateTours"
             requestedItemId={ tour.id }
           />
@@ -191,20 +160,20 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
       >
         <TourDetailHighlightsSection
           title={ tourDetailUiT("labels.highlights") }
-          highlights={ detailContent.highlights }
+          highlights={ tour.highlights }
         />
         <ContentDivider/>
 
         <TourDetailAboutSection
           title={ tourDetailUiT("labels.aboutTour") }
-          description={ detailContent.aboutTourDescription }
+          description={ tour.aboutTourDescription || tourDetailContentT("defaults.aboutTourDescription") }
         />
         <ContentDivider/>
 
         <TourDetailItinerarySection
           title={ tourDetailUiT("labels.itinerary") }
-          itinerary={ detailContent.itinerary }
-          description={ detailContent.itineraryDescription }
+          itinerary={ tour.itinerary }
+          description={ tour.itineraryDescription || tourDetailContentT("defaults.itineraryDescription") }
           uiLabels={ itineraryUiLabels }
         />
         <ContentDivider/>
@@ -213,14 +182,16 @@ export default async function TourDetailPage({params}: TourDetailPageProps) {
           title={ tourDetailUiT("labels.includedSection") }
           includedTitle={ tourDetailUiT("labels.included") }
           notIncludedTitle={ tourDetailUiT("labels.notIncluded") }
-          includedItems={ detailContent.includedItems }
-          notIncludedItems={ detailContent.notIncludedItems }
+          includedItems={ tour.includedItems }
+          notIncludedItems={ tour.notIncludedItems }
         />
         <ContentDivider/>
 
         <TourDetailCustomerSupportSection
           title={ tourDetailUiT("labels.customerSupport") }
-          description={ detailContent.customerSupportDescription }
+          description={
+            tour.customerSupportDescription || tourDetailContentT("defaults.customerSupportDescription")
+          }
           ctaLabel={ tourDetailUiT("labels.contactUs") }
           ctaHref="/contact"
         />

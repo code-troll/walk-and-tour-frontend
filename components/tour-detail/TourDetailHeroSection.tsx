@@ -7,7 +7,7 @@ import "react-photo-album/rows.css";
 
 type TourDetailHeroSectionProps = {
   title: string;
-  tag: string;
+  tourTypeLabel: string;
   rating: string;
   reviews: string;
   duration: string;
@@ -54,7 +54,7 @@ const estimateAlbumHeight = (totalAspectRatio: number, containerWidth: number, t
 
 export default function TourDetailHeroSection({
                                                 title,
-                                                tag,
+                                                tourTypeLabel,
                                                 rating,
                                                 reviews,
                                                 duration,
@@ -204,7 +204,7 @@ export default function TourDetailHeroSection({
           <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
             <p className="text-base leading-none">
               <span className="font-normal text-[#3d3124]">Type: </span>
-              <span className="font-semibold text-[#c24343]">{ tag }</span>
+              <span className="font-semibold text-[#c24343]">{ tourTypeLabel }</span>
             </p>
 
             <div className="inline-flex items-center gap-3">

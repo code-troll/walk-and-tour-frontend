@@ -7,8 +7,23 @@ type NewsletterSubscribeBody =
 type NewsletterTokenBody =
   paths["/api/public/newsletter/subscribers/confirm"]["post"]["requestBody"]["content"]["application/json"];
 
-export const createPublicApi = () => {
-  const client = createBackendApiClient();
+export const createPublicApi = ({
+  cache,
+  revalidate,
+}: {
+  cache?: RequestCache;
+  revalidate?: number;
+} = {}) => {
+  const client = createBackendApiClient({
+    cache,
+    requestInitExt: typeof revalidate === "number"
+      ? {
+          next: {
+            revalidate,
+          },
+        }
+      : undefined,
+  });
 
   return {
     getTours: async (query: LocaleQuery) =>

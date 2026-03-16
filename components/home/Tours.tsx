@@ -2,9 +2,13 @@ import { useTranslations } from "next-intl";
 
 import TourListingCard from "@/components/tours/TourListingCard";
 import { Link } from "@/i18n/navigation";
-import { homeTours } from "@/lib/landing-data";
+import type { PublicTourCard } from "@/lib/public-tour-data";
 
-export default function Tours() {
+type ToursProps = {
+  tours: PublicTourCard[];
+};
+
+export default function Tours({tours}: ToursProps) {
   const t = useTranslations("tours");
 
   return (
@@ -23,7 +27,7 @@ export default function Tours() {
         </div>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          { homeTours.map((tour) => (
+          { tours.map((tour) => (
             <TourListingCard key={ tour.id } tour={ tour }/>
           )) }
         </div>

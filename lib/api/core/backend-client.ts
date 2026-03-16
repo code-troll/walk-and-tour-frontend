@@ -11,16 +11,25 @@ type TypedApiResult<TData, TError> = {
 
 export const createBackendApiClient = ({
   accessToken,
+  fetch,
+  requestInitExt,
+  cache,
 }: {
   accessToken?: string;
+  fetch?: typeof globalThis.fetch;
+  requestInitExt?: Record<string, unknown>;
+  cache?: RequestCache;
 } = {}) =>
   createClient<paths>({
     baseUrl: requireBackendApiBaseUrl(),
+    cache,
+    fetch,
     headers: accessToken
       ? {
           Authorization: `Bearer ${accessToken}`,
         }
       : undefined,
+    requestInitExt,
   });
 
 export const unwrapBackendApiResult = <TData, TError>(
