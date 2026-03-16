@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { components } from "@/lib/api/generated/backend-types";
 import { GripVertical, LoaderCircle, Pencil, Plus, ArrowUp, ArrowDown } from "lucide-react";
 import { AdminSectionCard } from "@/components/admin/AdminUi";
@@ -17,6 +17,9 @@ type AdminToursListClientProps = {
   initialLanguages: ApiLanguage[];
   initialTours: ApiTour[];
 };
+
+const AUTO_SCROLL_EDGE_PX = 96;
+const AUTO_SCROLL_MAX_STEP_PX = 24;
 
 const formatLabel = (value: string) =>
   value
@@ -44,11 +47,66 @@ export function AdminToursListClient({
     placement: DropPlacement;
     tourId: string;
   } | null>(null);
+  const dragPointerYRef = useRef<number | null>(null);
+  const autoScrollFrameRef = useRef<number | null>(null);
 
   const languageNameByCode = useMemo(
     () => Object.fromEntries(initialLanguages.map((language) => [language.code, language.name])),
     [initialLanguages],
   );
+
+  useEffect(() => {
+    if (!draggedTourId || isReordering) {
+      if (autoScrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(autoScrollFrameRef.current);
+        autoScrollFrameRef.current = null;
+      }
+      return;
+    }
+
+    const tick = () => {
+      const pointerY = dragPointerYRef.current;
+
+      if (pointerY !== null) {
+        const viewportHeight = window.innerHeight;
+        const maxScrollTop = document.documentElement.scrollHeight - viewportHeight;
+        const currentScrollTop = window.scrollY;
+
+        if (pointerY < AUTO_SCROLL_EDGE_PX && currentScrollTop > 0) {
+          const intensity = (AUTO_SCROLL_EDGE_PX - pointerY) / AUTO_SCROLL_EDGE_PX;
+          window.scrollBy({
+            top: -Math.max(1, Math.round(AUTO_SCROLL_MAX_STEP_PX * intensity)),
+          });
+        } else if (
+          pointerY > viewportHeight - AUTO_SCROLL_EDGE_PX &&
+          currentScrollTop < maxScrollTop
+        ) {
+          const intensity =
+            (pointerY - (viewportHeight - AUTO_SCROLL_EDGE_PX)) / AUTO_SCROLL_EDGE_PX;
+          window.scrollBy({
+            top: Math.max(1, Math.round(AUTO_SCROLL_MAX_STEP_PX * intensity)),
+          });
+        }
+      }
+
+      autoScrollFrameRef.current = window.requestAnimationFrame(tick);
+    };
+
+    autoScrollFrameRef.current = window.requestAnimationFrame(tick);
+
+    return () => {
+      if (autoScrollFrameRef.current !== null) {
+        window.cancelAnimationFrame(autoScrollFrameRef.current);
+        autoScrollFrameRef.current = null;
+      }
+    };
+  }, [draggedTourId, isReordering]);
+
+  const resetDragState = () => {
+    dragPointerYRef.current = null;
+    setDraggedTourId(null);
+    setDropIndicator(null);
+  };
 
   const applyReorder = async ({
     sourceTourId,
@@ -191,6 +249,7 @@ export function AdminToursListClient({
                   }
 
                   event.preventDefault();
+                  dragPointerYRef.current = event.clientY;
                   const bounds = event.currentTarget.getBoundingClientRect();
                   const placement =
                     event.clientY - bounds.top < bounds.height / 2 ? "before" : "after";
@@ -220,7 +279,7 @@ export function AdminToursListClient({
                     placement: activeIndicator.placement,
                     targetTourId: activeIndicator.tourId,
                   });
-                  setDraggedTourId(null);
+                  resetDragState();
                 } }
                 className={ cn(
                   "rounded-2xl border border-[#f0e6d8] bg-white p-5 transition-shadow",
@@ -235,14 +294,12 @@ export function AdminToursListClient({
                       draggable={ !isReordering }
                       onDragStart={ (event) => {
                         setDraggedTourId(tour.id);
+                        dragPointerYRef.current = event.clientY;
                         setReorderError(null);
                         event.dataTransfer.effectAllowed = "move";
                         event.dataTransfer.setData("text/plain", tour.id);
                       } }
-                      onDragEnd={ () => {
-                        setDraggedTourId(null);
-                        setDropIndicator(null);
-                      } }
+                      onDragEnd={ resetDragState }
                       className={ cn(
                         "mt-0.5 flex shrink-0 cursor-grab rounded-xl border border-[#eadfce] bg-[#fbf7f0] p-2 text-[#8b7862]",
                         isReordering && "cursor-not-allowed opacity-50",
