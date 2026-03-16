@@ -22,7 +22,7 @@ export default function NewsletterResultPage({
           {/* Icon */ }
           <div
             className={ cn(
-              "inline-flex h-14 w-14 items-center justify-center rounded-full",
+              "inline-flex h-12 w-12 items-center justify-center rounded-full align-middle mr-2",
               isSuccess ? "bg-primary/10" : "bg-destructive/10"
             ) }
           >
@@ -66,13 +66,6 @@ export default function NewsletterResultPage({
             >
               <ArrowLeft className="h-4 w-4"/>
               Return home
-            </Link>
-            <Link
-              href="/#blog"
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
-            >
-              <Mail className="h-4 w-4"/>
-              Newsletter form
             </Link>
           </div>
         </div>
