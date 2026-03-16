@@ -31,7 +31,7 @@ export type PublishTourTranslationBody = {
   bookingReferenceId?: string | null;
 };
 
-export const TOUR_TYPE_OPTIONS: TourType[] = ["private", "group", "tip_based"];
+export const TOUR_TYPE_OPTIONS: TourType[] = ["private", "group", "tip_based", "company"];
 export const COMMUTE_MODE_OPTIONS: CommuteMode[] = [
   "walk",
   "bike",
