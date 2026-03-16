@@ -190,7 +190,7 @@ function TourListRow({
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2 justify-between lg:flex-nowrap">
               <div className="flex flex-wrap">
-                <h2 className="ml-2 mt-0 truncate text-wrap text-base font-semibold text-foreground">{ tour.name }</h2>
+                <h2 className="truncate text-wrap text-base font-semibold text-foreground">{ tour.name }</h2>
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex mb-1 md:mb-0 flex-wrap items-center gap-2">
