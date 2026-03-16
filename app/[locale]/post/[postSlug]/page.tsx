@@ -4,12 +4,11 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 
 import Footer from "@/components/layout/Footer";
-import BlogPostContent from "@/components/blog/BlogPostContent";
+import BlogPostArticle from "@/components/blog/BlogPostArticle";
 import BlogPostShareLinks from "@/components/blog/BlogPostShareLinks";
 import BlogRecentPostsSection from "@/components/blog/BlogRecentPostsSection";
 import { getPathname } from "@/i18n/navigation";
 import { type AppLocale, routing } from "@/i18n/routing";
-import BlogPostMetaTopBar from "@/components/blog/BlogPostMetaTopBar";
 import { getPublicBlogDetail, getRecentPublicBlogPosts } from "@/lib/public-blog-data";
 
 type BlogPostDetailPageProps = {
@@ -108,23 +107,18 @@ export default async function BlogPostDetailPage({
             className="mx-auto w-full max-w-7xl rounded-3xl border border-[#e8dfd4] bg-white px-6 py-2 lg:px-24 mt-10">
 
             <div className="mt-12">
-              <BlogPostMetaTopBar publishedLabel={ tBlogPost("publishedOn") }
-                                  updatedLabel={ tBlogPost("updatedOn") }
-                                  viewsLabel={ tBlogPost("views") }
-                                  publishedDate={ post.publishedDate }
-                                  updatedDate={ post.updatedDate }
-                                  viewCount={ post.viewCount }
-                                  locale={ locale }/>
-
-              <h1 className="mt-2 text-4xl font-semibold leading-tight text-teal sm:text-5xl">
-                { post.title }
-              </h1>
-            </div>
-
-            <div className="mt-8">
-              <BlogPostContent
+              <BlogPostArticle
                 contentHtml={ post.contentHtml }
                 contentText={ post.contentText }
+                locale={ locale }
+                publishedDate={ post.publishedDate }
+                publishedLabel={ tBlogPost("publishedOn") }
+                summary={ null }
+                title={ post.title }
+                updatedDate={ post.updatedDate }
+                updatedLabel={ tBlogPost("updatedOn") }
+                viewCount={ post.viewCount }
+                viewsLabel={ tBlogPost("views") }
               />
             </div>
 

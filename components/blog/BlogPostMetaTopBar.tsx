@@ -10,14 +10,10 @@ type BlogPostMetaTopBarProps = {
   locale: string;
 };
 
-const formatDate = (value: string | null, locale: string): string => {
-  if (!value) {
-    return "—";
-  }
-
+const formatDate = (value: string, locale: string): string => {
   const parsed = new Date(value);
   if (Number.isNaN(parsed.getTime())) {
-    return "—";
+    return "";
   }
 
   return new Intl.DateTimeFormat(locale, {
@@ -36,16 +32,18 @@ export default function BlogPostMetaTopBar({
                                              viewCount,
                                              locale,
                                            }: BlogPostMetaTopBarProps) {
-  const formattedPublishedDate = formatDate(publishedDate, locale);
-  const formattedUpdatedDate = formatDate(updatedDate, locale);
+  const formattedPublishedDate = publishedDate ? formatDate(publishedDate, locale) : null;
+  const formattedUpdatedDate = updatedDate ? formatDate(updatedDate, locale) : null;
   const formattedViewCount = new Intl.NumberFormat(locale).format(viewCount);
 
   return (
     <div className="flex flex-row gap-6">
-      <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
-        <PenLine className="h-4 w-4 text-[#8a7562]"/>
-        <span>{ publishedLabel }: { formattedPublishedDate }</span>
-      </p>
+      { publishedDate ? (
+        <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
+          <PenLine className="h-4 w-4 text-[#8a7562]"/>
+          <span>{ publishedLabel }: { formattedPublishedDate }</span>
+        </p>
+      ) : null }
       { updatedDate ? (
         <p className="inline-flex items-center gap-2 text-sm font-medium text-[#5b4d3c]">
           <PenLine className="h-4 w-4 text-[#8a7562]"/>

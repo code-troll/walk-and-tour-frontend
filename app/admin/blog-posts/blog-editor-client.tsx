@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Check,
+  Eye,
   Globe,
   LoaderCircle,
   Plus,
@@ -17,6 +18,7 @@ import {
 } from "lucide-react";
 import { AdminProgressLink, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
 import { AdminSectionCard } from "@/components/admin/AdminUi";
+import BlogPostArticle from "@/components/blog/BlogPostArticle";
 import { TiptapHtmlEditor, type TiptapHtmlEditorHandle } from "@/components/admin/TiptapHtmlEditor";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +38,7 @@ import {
   uploadAdminMediaAsset,
 } from "@/lib/admin/media-client";
 import {
+  createBlogPreviewData,
   createEmptyBlogFormState,
   createEmptyTranslationFormState,
   createBlogFormStateFromApi,
@@ -139,6 +142,7 @@ export function BlogPostEditorClient({
   const [isLoadingMediaLibrary, setIsLoadingMediaLibrary] = useState(false);
   const [isUploadingMedia, setIsUploadingMedia] = useState(false);
   const [mediaPreviewStatus, setMediaPreviewStatus] = useState<MediaPreviewStatus>({});
+  const [isPreviewDialogOpen, setIsPreviewDialogOpen] = useState(false);
 
   const enabledLanguages = useMemo(
     () => [...availableLanguages]
@@ -776,6 +780,18 @@ export function BlogPostEditorClient({
   const coverPreviewUrl = savedBlogPost?.heroMedia
     ? mediaPreviewStatus[savedBlogPost.heroMedia.id]?.previewUrl ?? null
     : null;
+  const previewData = useMemo(
+    () => (
+      activeTranslation
+        ? createBlogPreviewData({
+          blogPost: savedBlogPost,
+          formState,
+          translation: activeTranslation,
+        })
+        : null
+    ),
+    [activeTranslation, formState, savedBlogPost],
+  );
   const mediaDialogTitle = mediaDialogMode === "cover" ? "Select Cover Image" : "Insert Post Image";
   const mediaDialogDescription = mediaDialogMode === "cover"
     ? "Choose or upload the image used for blog listings and the hero section."
@@ -1078,6 +1094,16 @@ export function BlogPostEditorClient({
 
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex flex-wrap items-center gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={ () => setIsPreviewDialogOpen(true) }
+                        disabled={ isMutating }
+                        className="gap-2"
+                      >
+                        <Eye className="size-4"/>
+                        Preview
+                      </Button>
                       <Button type="button" variant="outline" onClick={ saveTranslation } disabled={ isMutating }
                               className="gap-2">
                         { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
@@ -1289,6 +1315,47 @@ export function BlogPostEditorClient({
               { mediaDialogMode === "cover" ? "Use as Cover" : "Insert Image" }
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={ isPreviewDialogOpen } onOpenChange={ setIsPreviewDialogOpen }>
+        <DialogContent className="grid max-h-[90vh] grid-rows-[auto_minmax(0,1fr)] overflow-hidden border border-[#eadfce] bg-white p-0 shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-5xl">
+          <DialogHeader className="border-b border-[#f0e6d8] px-6 py-5">
+            <DialogTitle>Preview Post</DialogTitle>
+            <DialogDescription>
+              This preview reflects the current draft after the same translation normalization used by save, without publishing or persisting changes.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="min-h-0 overflow-y-auto px-6 py-6">
+            { previewData ? (
+              <div className="mx-auto w-full max-w-4xl rounded-3xl border border-[#e8dfd4] bg-white px-6 py-8 lg:px-12">
+                <BlogPostArticle
+                  contentHtml={ previewData.contentHtml }
+                  contentText={ previewData.contentText }
+                  coverImageAlt={ previewData.title }
+                  coverImageUrl={ coverPreviewUrl }
+                  eyebrow="Preview"
+                  eyebrowNote={
+                    `Locale: ${ languageNameByCode[previewData.locale] ?? previewData.locale } • Slug: ${ previewData.slug }`
+                  }
+                  locale={ previewData.locale }
+                  publishedDate={ previewData.publishedDate }
+                  publishedLabel="Published on"
+                  summary={ previewData.summary }
+                  title={ previewData.title }
+                  updatedDate={ previewData.updatedDate }
+                  updatedLabel="Updated on"
+                  viewCount={ previewData.viewCount }
+                  viewsLabel="Views"
+                />
+              </div>
+            ) : (
+              <div className="rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-6 py-10 text-center text-sm text-[#627176]">
+                Select a translation to preview the rendered post.
+              </div>
+            ) }
+          </div>
         </DialogContent>
       </Dialog>
     </div>

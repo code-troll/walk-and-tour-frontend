@@ -38,6 +38,18 @@ export type BlogFormState = {
   translations: BlogTranslationFormState[];
 };
 
+export type BlogPreviewData = {
+  contentHtml: string | null;
+  contentText: string;
+  locale: string;
+  publishedDate: string | null;
+  slug: string;
+  summary: string | null;
+  title: string;
+  updatedDate: string | null;
+  viewCount: number;
+};
+
 const EMPTY_PARAGRAPH_HTML = "<p></p>";
 
 const coerceApiString = (value: unknown) =>
@@ -52,6 +64,22 @@ const normalizeNullableString = (value: string) => {
   const trimmed = value.trim();
   return trimmed ? trimmed : null;
 };
+
+const normalizePreviewString = (value: unknown) => {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
+};
+
+const stripHtml = (text: string) => (
+  text
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+);
 
 export const normalizeHtmlContent = (value: string) => value.trim();
 
@@ -206,6 +234,40 @@ export const toUpdateBlogTranslationBody = (
   seoDescription: normalizeNullableString(translation.seoDescription) as unknown as UpdateBlogTranslationBody["seoDescription"],
   imageRefs: parseImageRefs(translation.imageRefsText),
 });
+
+export const createBlogPreviewData = ({
+  blogPost,
+  formState,
+  translation,
+}: {
+  blogPost?: ApiBlogPost | null;
+  formState: BlogFormState;
+  translation: BlogTranslationFormState;
+}): BlogPreviewData => {
+  const normalizedTranslation = translation.existsOnServer
+    ? toUpdateBlogTranslationBody(translation)
+    : toCreateBlogTranslationBody(translation);
+  const slug = (formState.slug.trim() || generateBlogSlug(formState.name)).trim();
+  const title =
+    normalizePreviewString(normalizedTranslation.title) ||
+    formState.name.trim() ||
+    slug ||
+    "Untitled draft";
+  const summary = normalizePreviewString(normalizedTranslation.summary);
+  const contentHtml = normalizePreviewString(normalizedTranslation.htmlContent);
+
+  return {
+    contentHtml,
+    contentText: stripHtml(contentHtml ?? summary ?? ""),
+    locale: translation.languageCode,
+    publishedDate: blogPost?.audit.publishedAt ?? null,
+    slug,
+    summary,
+    title,
+    updatedDate: blogPost?.audit.updatedAt ?? null,
+    viewCount: blogPost?.translations[translation.languageCode]?.viewCount ?? 0,
+  };
+};
 
 export const validateBlogSharedForm = (formState: BlogFormState) => {
   const name = formState.name.trim();
