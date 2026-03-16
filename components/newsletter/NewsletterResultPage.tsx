@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { CheckCircle2, XCircle, ArrowLeft, Mail } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type NewsletterResultPageProps = {
   title: string;
@@ -7,45 +9,70 @@ type NewsletterResultPageProps = {
 };
 
 export default function NewsletterResultPage({
-  title,
-  body,
-  tone,
-}: NewsletterResultPageProps) {
-  const accentClassName =
-    tone === "success"
-      ? "bg-[#2b666d] text-white"
-      : "bg-[#c24343] text-white";
-  const titleClassName =
-    tone === "success"
-      ? "text-[#17383d]"
-      : "text-[#5c2019]";
+                                               title,
+                                               body,
+                                               tone,
+                                             }: NewsletterResultPageProps) {
+  const isSuccess = tone === "success";
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#fcfaf7_0%,#f4ece0_100%)] px-6 py-12 text-[#2a221a] sm:px-8">
-      <div className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-3xl items-center justify-center">
-        <div className="w-full rounded-[2rem] border border-black/10 bg-white p-8 shadow-[0_24px_80px_rgba(42,34,26,0.12)] sm:p-10">
-          <span className={ `inline-flex rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] ${ accentClassName }` }>
-            { tone === "success" ? "Newsletter updated" : "Newsletter issue" }
+    <main className="min-h-screen bg-muted/30 px-6 py-12 sm:px-8">
+      <div className="mx-auto flex min-h-[calc(100vh-6rem)] max-w-2xl items-center justify-center">
+        <div className="w-full rounded-xl border border-border bg-card p-8 shadow-lg sm:p-10">
+          {/* Icon */ }
+          <div
+            className={ cn(
+              "inline-flex h-14 w-14 items-center justify-center rounded-full",
+              isSuccess ? "bg-primary/10" : "bg-destructive/10"
+            ) }
+          >
+            { isSuccess ? (
+              <CheckCircle2 className="h-7 w-7 text-primary"/>
+            ) : (
+              <XCircle className="h-7 w-7 text-destructive"/>
+            ) }
+          </div>
+
+          {/* Badge */ }
+          <span
+            className={ cn(
+              "mt-6 inline-flex rounded-full px-3 py-1 text-xs font-medium",
+              isSuccess
+                ? "bg-primary/10 text-primary"
+                : "bg-destructive/10 text-destructive"
+            ) }
+          >
+            { isSuccess ? "Newsletter updated" : "Newsletter issue" }
           </span>
-          <h1 className={ `mt-6 text-3xl font-semibold tracking-tight sm:text-4xl ${ titleClassName }` }>
+
+          {/* Content */ }
+          <h1
+            className={ cn(
+              "mt-4 text-2xl font-semibold tracking-tight text-balance sm:text-3xl",
+              isSuccess ? "text-foreground" : "text-destructive"
+            ) }
+          >
             { title }
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-[#5b4d3c] sm:text-lg">
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             { body }
           </p>
 
+          {/* Actions */ }
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/"
-              className="inline-flex items-center justify-center rounded-full bg-[#2a221a] px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
+              <ArrowLeft className="h-4 w-4"/>
               Return home
             </Link>
             <Link
               href="/#blog"
-              className="inline-flex items-center justify-center rounded-full border border-[#2a221a]/15 bg-[#fcfaf6] px-6 py-3 text-sm font-semibold uppercase tracking-wide text-[#2a221a] transition-colors hover:bg-[#f1e8db]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-muted"
             >
-              Return to newsletter form
+              <Mail className="h-4 w-4"/>
+              Newsletter form
             </Link>
           </div>
         </div>
