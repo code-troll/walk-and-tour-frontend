@@ -18,7 +18,7 @@ type AdminToursListClientProps = {
   initialTours: ApiTour[];
 };
 
-const AUTO_SCROLL_EDGE_PX = 108;
+const AUTO_SCROLL_EDGE_PX = 216;
 const AUTO_SCROLL_MAX_STEP_PX = 24;
 const AUTO_SCROLL_SPEED_CURVE_EXPONENT = 0.8;
 
