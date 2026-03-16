@@ -6,13 +6,17 @@ import { getAdminViewerState } from "@/lib/admin/session";
 const loadNewsletterData = async (accessToken: string) => {
   try {
     const adminApi = createAdminApi(accessToken);
-    const subscribers = await adminApi.getNewsletterSubscribers({
-      limit: 10,
-      page: 1,
-    });
+    const [subscribers, languages] = await Promise.all([
+      adminApi.getNewsletterSubscribers({
+        limit: 10,
+        page: 1,
+      }),
+      adminApi.getLanguages(),
+    ]);
 
     return {
       subscribers,
+      languages,
     };
   } catch (error) {
     return {
@@ -62,6 +66,9 @@ export default async function AdminNewsletterPage() {
       (item) => item.subscriptionStatus === "pending_confirmation",
     ).length,
   };
+  const languageNameByCode = Object.fromEntries(
+    newsletterData.languages.map((language) => [language.code, language.name]),
+  );
 
   return (
     <div className="space-y-6">
@@ -101,7 +108,11 @@ export default async function AdminNewsletterPage() {
                     </span>
                 </td>
                 <td className="py-4 pr-4 text-muted-foreground">
-                  { typeof subscriber.preferredLocale === "string" ? subscriber.preferredLocale : "N/A" }
+                  {
+                    typeof subscriber.preferredLocale === "string"
+                      ? languageNameByCode[subscriber.preferredLocale] ?? subscriber.preferredLocale
+                      : "N/A"
+                  }
                 </td>
                 <td className="py-4 pr-4 text-muted-foreground">{ subscriber.confirmedAt ?? "Not confirmed" }</td>
               </tr>
