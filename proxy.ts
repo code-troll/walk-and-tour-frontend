@@ -6,6 +6,10 @@ import {runAuth0Middleware} from "@/lib/auth0";
 
 const intlMiddleware = createMiddleware(routing);
 const AUTH_PATH_PREFIX = "/auth";
+const PUBLIC_NEWSLETTER_RESULT_PATHS = new Set([
+  "/newsletter/confirm",
+  "/newsletter/unsubscribe",
+]);
 
 const stripAdminPrefix = (pathname: string): string => {
   if (pathname === "/admin") {
@@ -55,6 +59,10 @@ export default async function proxy(request: NextRequest) {
       source: authResponse,
       target: NextResponse.rewrite(rewriteUrl),
     });
+  }
+
+  if (PUBLIC_NEWSLETTER_RESULT_PATHS.has(pathname)) {
+    return authResponse;
   }
 
   return mergeMiddlewareCookies({
