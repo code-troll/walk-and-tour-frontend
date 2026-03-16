@@ -7,6 +7,7 @@ import { AdminSidebarNav } from "@/components/admin/AdminSidebarNav";
 import { getAdminEnvironmentLabel, isAdminHostname } from "@/lib/admin-hosts";
 import { getAdminViewerState } from "@/lib/admin/session";
 import React from "react";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Walk and Tour Admin",
@@ -86,12 +87,12 @@ export default async function AdminLayout({
                 title="Sign in to access the backoffice."
                 description="The admin routes are protected by Auth0, and the backend role mapping is resolved after login."
                 actions={
-                  <a
+                  <Link
                     href="/auth/login?returnTo=/"
                     className="rounded-full bg-[#21343b] px-5 py-3 text-sm font-semibold text-white"
                   >
                     Sign in with Auth0
-                  </a>
+                  </Link>
                 }
               />
             ) : null }
@@ -102,12 +103,12 @@ export default async function AdminLayout({
                 title="The frontend session could not obtain a backend token."
                 description={ viewerState.message }
                 actions={
-                  <a
+                  <Link
                     href="/auth/logout"
                     className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
                   >
                     Clear session
-                  </a>
+                  </Link>
                 }
               />
             ) : null }
@@ -118,12 +119,12 @@ export default async function AdminLayout({
                 title="The backend rejected the admin session."
                 description={ `Status ${ viewerState.statusCode }. ${ viewerState.message }` }
                 actions={
-                  <a
+                  <Link
                     href="/auth/logout"
                     className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 }
               />
             ) : null }
@@ -146,12 +147,12 @@ export default async function AdminLayout({
                   <AdminSidebarNav items={ navigationByRole[viewerState.backendAdmin.roleName] }/>
 
                   <div className="mt-5 border-t border-[#eadfce] pt-4 lg:mt-6 lg:pt-5">
-                    <a
+                    <Link
                       href="/auth/logout"
                       className="inline-flex rounded-full border border-[#cbb390] px-4 py-2 text-sm font-semibold text-[#7a5424]"
                     >
                       Sign out
-                    </a>
+                    </Link>
                   </div>
                 </aside>
 
