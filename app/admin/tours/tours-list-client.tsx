@@ -18,6 +18,12 @@ type AdminToursListClientProps = {
   initialTours: ApiTour[];
 };
 
+const formatLabel = (value: string) =>
+  value
+    .replaceAll("_", " ")
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (match) => match.toUpperCase());
+
 const moveItem = <T,>(items: T[], fromIndex: number, toIndex: number) => {
   const nextItems = [...items];
   const [movedItem] = nextItems.splice(fromIndex, 1);
@@ -261,6 +267,7 @@ export function AdminToursListClient({
                       <h2 className="mt-2 truncate text-base font-semibold text-foreground">{ tour.name }</h2>
                       <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
                         <span className="truncate">Slug: { tour.slug }</span>
+                        <span>Type: { formatLabel(tour.tourType) }</span>
                         <span>
                           Duration: { typeof tour.durationMinutes === "number"
                             ? `${ tour.durationMinutes } min`
