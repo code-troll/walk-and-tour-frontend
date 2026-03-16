@@ -3350,8 +3350,8 @@ export const TiptapHtmlEditor = forwardRef<
   };
 
   return (
-    <div className={ cn("overflow-hidden rounded-[1.35rem] border border-[#eadfce] bg-white", className) }>
-      <div className="flex flex-wrap gap-2 border-b border-[#f0e6d8] bg-[#fbf7f0] p-3">
+    <div className={ cn("rounded-[1.35rem] border border-[#eadfce] bg-white overflow-clip", className) }>
+      <div className="sticky top-0 z-10 flex flex-wrap gap-2 border-b border-[#f0e6d8] bg-[#fbf7f0]/95 p-3 shadow-[0_10px_24px_-18px_rgba(42,36,25,0.35)] backdrop-blur">
         <ToolbarButton
           icon={ Pilcrow }
           label="Paragraph"
