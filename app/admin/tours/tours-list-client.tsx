@@ -18,8 +18,9 @@ type AdminToursListClientProps = {
   initialTours: ApiTour[];
 };
 
-const AUTO_SCROLL_EDGE_PX = 96;
+const AUTO_SCROLL_EDGE_PX = 108;
 const AUTO_SCROLL_MAX_STEP_PX = 24;
+const AUTO_SCROLL_SPEED_CURVE_EXPONENT = 0.8;
 
 const formatLabel = (value: string) =>
   value
@@ -33,6 +34,18 @@ const moveItem = <T,>(items: T[], fromIndex: number, toIndex: number) => {
 
   nextItems.splice(toIndex, 0, movedItem);
   return nextItems;
+};
+
+const getAutoScrollStep = (distanceIntoEdgePx: number) => {
+  const normalizedDistance = Math.min(
+    1,
+    Math.max(0, distanceIntoEdgePx / AUTO_SCROLL_EDGE_PX),
+  );
+
+  return Math.max(
+    1,
+    Math.round(AUTO_SCROLL_MAX_STEP_PX * normalizedDistance ** AUTO_SCROLL_SPEED_CURVE_EXPONENT),
+  );
 };
 
 export function AdminToursListClient({
@@ -64,6 +77,7 @@ export function AdminToursListClient({
       return;
     }
 
+    // Keep nudging the page while the dragged pointer stays near the viewport edges.
     const tick = () => {
       const pointerY = dragPointerYRef.current;
 
@@ -72,19 +86,19 @@ export function AdminToursListClient({
         const maxScrollTop = document.documentElement.scrollHeight - viewportHeight;
         const currentScrollTop = window.scrollY;
 
+        // Scroll faster as the pointer gets closer to the top edge. The easing curve
+        // makes the faster speeds kick in a bit earlier without changing the max speed.
         if (pointerY < AUTO_SCROLL_EDGE_PX && currentScrollTop > 0) {
-          const intensity = (AUTO_SCROLL_EDGE_PX - pointerY) / AUTO_SCROLL_EDGE_PX;
           window.scrollBy({
-            top: -Math.max(1, Math.round(AUTO_SCROLL_MAX_STEP_PX * intensity)),
+            top: -getAutoScrollStep(AUTO_SCROLL_EDGE_PX - pointerY),
           });
         } else if (
           pointerY > viewportHeight - AUTO_SCROLL_EDGE_PX &&
           currentScrollTop < maxScrollTop
         ) {
-          const intensity =
-            (pointerY - (viewportHeight - AUTO_SCROLL_EDGE_PX)) / AUTO_SCROLL_EDGE_PX;
+          // Mirror the same behavior for the bottom edge of the viewport.
           window.scrollBy({
-            top: Math.max(1, Math.round(AUTO_SCROLL_MAX_STEP_PX * intensity)),
+            top: getAutoScrollStep(pointerY - (viewportHeight - AUTO_SCROLL_EDGE_PX)),
           });
         }
       }
@@ -103,6 +117,7 @@ export function AdminToursListClient({
   }, [draggedTourId, isReordering]);
 
   const resetDragState = () => {
+    // Clear both the drop target UI and the pointer used by the auto-scroll loop.
     dragPointerYRef.current = null;
     setDraggedTourId(null);
     setDropIndicator(null);
@@ -249,6 +264,7 @@ export function AdminToursListClient({
                   }
 
                   event.preventDefault();
+                  // Native drag events do not give us continuous pointer tracking, so reuse dragover.
                   dragPointerYRef.current = event.clientY;
                   const bounds = event.currentTarget.getBoundingClientRect();
                   const placement =
