@@ -428,6 +428,14 @@
       "termsOfUse": "Términos de uso"
     }
   },
+  "analyticsConsent": {
+    "eyebrow": "Preferencias de analítica",
+    "title": "¿Permitir cookies de analítica?",
+    "description": "Usamos Google Tag Manager y Google Analytics solo si aceptas las cookies de analítica. Esto nos ayuda a entender cómo se usa el sitio y a mejorar la experiencia.",
+    "privacyPolicy": "Lee nuestra Política de privacidad",
+    "decline": "Rechazar",
+    "accept": "Aceptar analítica"
+  },
   "termsOfUsePage": {
     "intro": "Revisa estos términos y condiciones antes de usar el Sitio web o reservar cualquier experiencia con Walk and Tour ApS.",
     "sections": {
@@ -674,7 +682,24 @@
         "blocks": [
           {
             "type": "paragraph",
-            "text": "Nuestro Sitio web utiliza cookies para mejorar tu experiencia de navegación. Puedes gestionar tus preferencias de cookies a través de la configuración de tu navegador."
+            "text": "Nuestro Sitio web puede utilizar cookies y tecnologías similares para mejorar el rendimiento y comprender cómo los visitantes usan nuestras páginas."
+          },
+          {
+            "type": "paragraph",
+            "text": "Solo activamos Google Tag Manager y Google Analytics después de que des tu consentimiento a través de nuestro banner de analítica. Si rechazas, el seguimiento analítico permanece desactivado."
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "label": "Proveedores de analítica",
+                "text": "Google Tag Manager y Google Analytics pueden procesar información como las páginas visitadas, la ubicación aproximada, los datos del dispositivo y del navegador, y las interacciones en el Sitio web."
+              },
+              {
+                "label": "Control de cookies",
+                "text": "Puedes aceptar o rechazar las cookies de analítica desde nuestro banner, y también puedes borrar tu preferencia guardada desde la configuración del navegador en cualquier momento."
+              }
+            ]
           }
         ]
       },

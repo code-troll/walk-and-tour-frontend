@@ -428,6 +428,14 @@
       "termsOfUse": "Termini di utilizzo"
     }
   },
+  "analyticsConsent": {
+    "eyebrow": "Preferenze di analisi",
+    "title": "Consentire i cookie di analisi?",
+    "description": "Utilizziamo Google Tag Manager e Google Analytics solo se accetti i cookie di analisi. Questo ci aiuta a capire come viene usato il sito e a migliorare l'esperienza.",
+    "privacyPolicy": "Leggi la nostra Informativa sulla privacy",
+    "decline": "Rifiuta",
+    "accept": "Accetta analisi"
+  },
   "termsOfUsePage": {
     "intro": "Ti invitiamo a leggere questi termini e condizioni prima di utilizzare il Sito web o prenotare qualsiasi esperienza con Walk and Tour ApS.",
     "sections": {
@@ -674,7 +682,24 @@
         "blocks": [
           {
             "type": "paragraph",
-            "text": "Il nostro Sito web utilizza cookie per migliorare la tua esperienza di navigazione. Puoi gestire le preferenze sui cookie tramite le impostazioni del browser."
+            "text": "Il nostro Sito web può utilizzare cookie e tecnologie simili per migliorare le prestazioni e comprendere come i visitatori utilizzano le nostre pagine."
+          },
+          {
+            "type": "paragraph",
+            "text": "Attiviamo Google Tag Manager e Google Analytics solo dopo che hai espresso il consenso tramite il nostro banner di analisi. Se rifiuti, il tracciamento analitico resta disattivato."
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "label": "Fornitori di analisi",
+                "text": "Google Tag Manager e Google Analytics possono trattare informazioni come le pagine visitate, la posizione approssimativa, i dati del dispositivo e del browser e le interazioni sul Sito web."
+              },
+              {
+                "label": "Controllo dei cookie",
+                "text": "Puoi accettare o rifiutare i cookie di analisi dal nostro banner e puoi anche cancellare in qualsiasi momento la preferenza salvata tramite le impostazioni del browser."
+              }
+            ]
           }
         ]
       },

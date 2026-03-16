@@ -137,7 +137,7 @@ Copy `.env.template` into `.env` and then add the remaining values used by the a
 cp .env.template .env
 ```
 
-The app currently uses three groups of environment variables:
+The app currently uses four groups of environment variables:
 
 ### Admin API and Auth0
 
@@ -175,6 +175,14 @@ These are used by the public contact and book-tour forms:
 | `CONTACT_FORM_FROM_EMAIL` | Optional | Sender address for contact-form emails. Falls back to `BOOKING_REQUEST_FROM_EMAIL` |
 | `CONTACT_FORM_TO_EMAIL` | Optional | Recipient address for contact-form emails. Falls back to `BOOKING_REQUEST_TO_EMAIL` |
 
+### Public analytics
+
+This is optional and used to enable consent-gated Google Tag Manager loading on the public site:
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID` | Optional | Google Tag Manager container ID for the public site. Tracking stays disabled until this value is set and the visitor accepts analytics cookies |
+
 ### Minimal local setup for the backoffice
 
 If you only want the admin area working locally, the minimum practical set is:
@@ -195,12 +203,15 @@ If you want the public site routes and forms to work as well, also add:
 
 ```env
 BACKEND_API_BASE_URL=
+NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID=
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
 RESEND_API_KEY=
 BOOKING_REQUEST_FROM_EMAIL=
 BOOKING_REQUEST_TO_EMAIL=
 ```
+
+If `NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID` is present, the public site shows an analytics-consent banner. GTM is loaded only after the visitor accepts analytics cookies; declining keeps analytics disabled.
 
 ## Auth0 Configuration
 

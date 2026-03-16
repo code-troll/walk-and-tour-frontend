@@ -1,7 +1,9 @@
 import type {Metadata} from "next";
+import {Suspense} from "react";
 import {NextIntlClientProvider} from "next-intl";
 import {getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
+import PublicAnalytics from "@/components/analytics/PublicAnalytics";
 import Header from "@/components/layout/Header";
 import {routing, type AppLocale} from "@/i18n/routing";
 
@@ -48,6 +50,9 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider>
+      <Suspense fallback={null}>
+        <PublicAnalytics />
+      </Suspense>
       <Header />
       <main className="pt-12 md:pt-24">{children}</main>
     </NextIntlClientProvider>

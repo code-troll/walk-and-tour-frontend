@@ -406,6 +406,14 @@
       "termsOfUse": "Terms of Use"
     }
   },
+  "analyticsConsent": {
+    "eyebrow": "Analytics preferences",
+    "title": "Allow analytics cookies?",
+    "description": "We use Google Tag Manager and Google Analytics only if you accept analytics cookies. This helps us understand how visitors use the site and improve the experience.",
+    "privacyPolicy": "Read our Privacy Policy",
+    "decline": "Decline",
+    "accept": "Accept analytics"
+  },
   "termsOfUsePage": {
     "intro": "Please review these terms and conditions before using the Website or booking any experience with Walk and Tour ApS.",
     "sections": {
@@ -652,7 +660,24 @@
         "blocks": [
           {
             "type": "paragraph",
-            "text": "Our Website uses cookies to enhance your browsing experience. You can manage cookie preferences through your browser settings."
+            "text": "Our Website may use cookies and similar technologies to improve performance and understand how visitors use our pages."
+          },
+          {
+            "type": "paragraph",
+            "text": "We only activate Google Tag Manager and Google Analytics after you give consent through our analytics banner. If you decline, analytics tracking remains disabled."
+          },
+          {
+            "type": "list",
+            "items": [
+              {
+                "label": "Analytics Providers",
+                "text": "Google Tag Manager and Google Analytics may process information such as pages visited, approximate location, device and browser details, and interactions on the Website."
+              },
+              {
+                "label": "Cookie Control",
+                "text": "You can accept or decline analytics cookies from our banner, and you can clear your stored preference through your browser settings at any time."
+              }
+            ]
           }
         ]
       },
