@@ -19,6 +19,11 @@ type TourActionSuccess = {
   tour: ApiTour;
 };
 export type TourActionResult = TourActionSuccess | TourActionError;
+type ToursActionSuccess = {
+  ok: true;
+  tours: ApiTour[];
+};
+export type ToursActionResult = ToursActionSuccess | TourActionError;
 
 const getToursAdminApi = async (): Promise<
   | {
@@ -125,6 +130,45 @@ export async function updateTourAction({
       ok: false,
       statusCode: 500,
       message: error instanceof Error ? error.message : "Unable to update the tour.",
+    };
+  }
+}
+
+export async function reorderTourAction({
+  id,
+  sortOrder,
+}: {
+  id: string;
+  sortOrder: number;
+}): Promise<ToursActionResult> {
+  const adminApiResult = await getToursAdminApi();
+  if (!adminApiResult.ok) {
+    return adminApiResult;
+  }
+
+  try {
+    await adminApiResult.adminApi.updateTour({
+      body: { sortOrder },
+      id,
+    });
+
+    return {
+      ok: true,
+      tours: await adminApiResult.adminApi.getTours(),
+    };
+  } catch (error) {
+    if (isBackendApiError(error)) {
+      return {
+        ok: false,
+        statusCode: error.statusCode,
+        message: error.message,
+      };
+    }
+
+    return {
+      ok: false,
+      statusCode: 500,
+      message: error instanceof Error ? error.message : "Unable to reorder the tours.",
     };
   }
 }
