@@ -420,7 +420,15 @@
       "description": "Únete a nuestro boletín para recibir nuevos tours, consejos de viaje y actualizaciones.",
       "emailPlaceholder": "Correo electrónico",
       "consent": "Acepto recibir el boletín de Walk and Tour.",
-      "submit": "Enviar"
+      "submit": "Enviar",
+      "submitting": "Enviando...",
+      "feedback": {
+        "success": "Revisa tu correo electrónico para el siguiente paso.",
+        "consentRequired": "Confirma que aceptas recibir el boletín.",
+        "invalidEmail": "Introduce una dirección de correo válida.",
+        "tooManyRequests": "Demasiados intentos. Vuelve a intentarlo en unos minutos.",
+        "submitFailed": "Algo salió mal. Inténtalo de nuevo más tarde."
+      }
     },
     "copyright": "Copyright 2026 Walk and Tour Copenhague. Todos los derechos reservados.",
     "legal": {

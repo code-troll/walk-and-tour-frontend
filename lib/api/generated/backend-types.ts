@@ -4168,6 +4168,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
     NewsletterSubscribersController_confirmByLink: {
@@ -4182,13 +4190,16 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Newsletter subscription confirmed. */
-            200: {
+            /** @description Redirects the browser to the configured public confirmation page with a success or error status. */
+            302: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["NewsletterSubscriptionConfirmedResponseDto"];
+                    "application/json": {
+                        /** @example https://www.walkandtour.test/newsletter/confirm?status=success */
+                        location?: string;
+                    };
                 };
             };
             400: {
@@ -4200,6 +4211,14 @@ export interface operations {
                 };
             };
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            429: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4247,6 +4266,14 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
         };
     };
     NewsletterSubscribersController_unsubscribeByLink: {
@@ -4261,13 +4288,16 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Newsletter subscriber unsubscribed. */
-            200: {
+            /** @description Redirects the browser to the configured public unsubscribe page with a success or error status. */
+            302: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["NewsletterUnsubscribedResponseDto"];
+                    "application/json": {
+                        /** @example https://www.walkandtour.test/newsletter/unsubscribe?status=success */
+                        location?: string;
+                    };
                 };
             };
             400: {
@@ -4279,6 +4309,14 @@ export interface operations {
                 };
             };
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            429: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4319,6 +4357,14 @@ export interface operations {
                 };
             };
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            429: {
                 headers: {
                     [name: string]: unknown;
                 };

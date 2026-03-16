@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { type AppLocale } from "@/i18n/routing";
 import { getInternalHref } from "@/lib/internal-paths";
+import FooterNewsletterForm from "@/components/layout/FooterNewsletterForm";
 
 export default function Footer() {
   const t = useTranslations("footer");
@@ -80,23 +81,7 @@ export default function Footer() {
             <p className="text-base text-[#e0d7ce]">
               { t("newsletter.description") }
             </p>
-            <div className="space-y-3">
-              <input
-                type="email"
-                placeholder={ t("newsletter.emailPlaceholder") }
-                className="w-full rounded-full border border-white/30 bg-transparent px-4 py-2 text-base text-white placeholder:text-[#cbbfb3] focus:border-white focus:outline-none"
-              />
-              <label className="flex items-center gap-2 text-sm text-[#e0d7ce]">
-                <input type="checkbox" className="h-4 w-4"/>
-                { t("newsletter.consent") }
-              </label>
-              <button
-                type="button"
-                className="w-full btn-red-white px-4 py-2 text-base font-semibold cursor-pointer"
-              >
-                { t("newsletter.submit") }
-              </button>
-            </div>
+            <FooterNewsletterForm />
           </div>
         </div>
         <div className="mt-12 border-t border-white/20 pt-6 text-base text-[#e0d7ce]">

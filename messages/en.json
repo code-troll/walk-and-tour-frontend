@@ -398,7 +398,15 @@
       "description": "Join our newsletter for new tours, travel tips, and updates.",
       "emailPlaceholder": "Email",
       "consent": "I agree to receive Walk and Tour newsletter.",
-      "submit": "Submit"
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "feedback": {
+        "success": "Check your email for the next step.",
+        "consentRequired": "Please confirm that you agree to receive the newsletter.",
+        "invalidEmail": "Enter a valid email address.",
+        "tooManyRequests": "Too many attempts. Please try again in a few minutes.",
+        "submitFailed": "Something went wrong. Please try again later."
+      }
     },
     "copyright": "Copyright 2026 Walk and Tour Copenhagen. All rights reserved.",
     "legal": {
