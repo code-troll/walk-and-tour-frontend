@@ -10,6 +10,7 @@
     "generate:backend-api": "openapi-typescript ./openapi/backend.yaml -o ./lib/api/generated/backend-types.ts"
   },
   "dependencies": {
+    "@atlaskit/pragmatic-drag-and-drop": "^1.7.9",
     "@auth0/nextjs-auth0": "^4.16.0",
     "@marsidev/react-turnstile": "^1.4.2",
     "@meltdownjs/cn": "^1.2.1",

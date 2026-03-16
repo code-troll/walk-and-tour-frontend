@@ -2,6 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
+import {
+  draggable,
+  dropTargetForElements,
+  monitorForElements,
+} from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
 import type { components } from "@/lib/api/generated/backend-types";
 import { GripVertical, LoaderCircle, Pencil, Plus, ArrowUp, ArrowDown } from "lucide-react";
 import { AdminSectionCard } from "@/components/admin/AdminUi";
@@ -18,6 +25,28 @@ type AdminToursListClientProps = {
   initialTours: ApiTour[];
 };
 
+type TourRowDragData = {
+  index: number;
+  tourId: string;
+  type: "tour-row";
+};
+
+type TourRowDropData = TourRowDragData & {
+  placement: DropPlacement;
+};
+
+type TourListRowProps = {
+  index: number;
+  isDragged: boolean;
+  isLast: boolean;
+  isReordering: boolean;
+  languageNameByCode: Record<string, string>;
+  onDropIndicatorChange: (nextValue: { placement: DropPlacement; tourId: string } | null) => void;
+  onMoveDown: () => void;
+  onMoveUp: () => void;
+  tour: ApiTour;
+};
+
 const AUTO_SCROLL_EDGE_PX = 216;
 const AUTO_SCROLL_MAX_STEP_PX = 24;
 const AUTO_SCROLL_SPEED_CURVE_EXPONENT = 0.8;
@@ -27,14 +56,6 @@ const formatLabel = (value: string) =>
     .replaceAll("_", " ")
     .replaceAll("-", " ")
     .replace(/\b\w/g, (match) => match.toUpperCase());
-
-const moveItem = <T,>(items: T[], fromIndex: number, toIndex: number) => {
-  const nextItems = [...items];
-  const [movedItem] = nextItems.splice(fromIndex, 1);
-
-  nextItems.splice(toIndex, 0, movedItem);
-  return nextItems;
-};
 
 const getAutoScrollStep = (distanceIntoEdgePx: number) => {
   const normalizedDistance = Math.min(
@@ -47,6 +68,196 @@ const getAutoScrollStep = (distanceIntoEdgePx: number) => {
     Math.round(AUTO_SCROLL_MAX_STEP_PX * normalizedDistance ** AUTO_SCROLL_SPEED_CURVE_EXPONENT),
   );
 };
+
+const isTourRowDragData = (value: Record<string | symbol, unknown>): value is TourRowDragData =>
+  value.type === "tour-row" &&
+  typeof value.tourId === "string" &&
+  typeof value.index === "number";
+
+const isTourRowDropData = (value: Record<string | symbol, unknown>): value is TourRowDropData => {
+  if (!isTourRowDragData(value)) {
+    return false;
+  }
+
+  const placement = (value as Record<string, unknown>).placement;
+  return placement === "before" || placement === "after";
+};
+
+const getPlacementFromInput = ({
+  clientY,
+  element,
+}: {
+  clientY: number;
+  element: Element;
+}): DropPlacement => {
+  const bounds = element.getBoundingClientRect();
+  return clientY - bounds.top < bounds.height / 2 ? "before" : "after";
+};
+
+function TourListRow({
+  index,
+  isDragged,
+  isLast,
+  isReordering,
+  languageNameByCode,
+  onDropIndicatorChange,
+  onMoveDown,
+  onMoveUp,
+  tour,
+}: TourListRowProps) {
+  const rowRef = useRef<HTMLElement | null>(null);
+  const dragHandleRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const rowElement = rowRef.current;
+    const dragHandleElement = dragHandleRef.current;
+
+    if (!rowElement || !dragHandleElement) {
+      return;
+    }
+
+    return combine(
+      draggable({
+        element: rowElement,
+        dragHandle: dragHandleElement,
+        canDrag: () => !isReordering,
+        getInitialData: () => ({
+          index,
+          tourId: tour.id,
+          type: "tour-row",
+        }),
+      }),
+      dropTargetForElements({
+        element: rowElement,
+        canDrop: ({ source }) => isTourRowDragData(source.data) && !isReordering,
+        getData: ({ input }) => ({
+          index,
+          placement: getPlacementFromInput({
+            clientY: input.clientY,
+            element: rowElement,
+          }),
+          tourId: tour.id,
+          type: "tour-row",
+        }),
+        onDragEnter: ({ self }) => {
+          if (!isTourRowDropData(self.data)) {
+            return;
+          }
+
+          onDropIndicatorChange({
+            placement: self.data.placement,
+            tourId: self.data.tourId,
+          });
+        },
+        onDrag: ({ self }) => {
+          if (!isTourRowDropData(self.data)) {
+            return;
+          }
+
+          onDropIndicatorChange({
+            placement: self.data.placement,
+            tourId: self.data.tourId,
+          });
+        },
+        onDragLeave: () => {
+          onDropIndicatorChange(null);
+        },
+      }),
+    );
+  }, [index, isReordering, onDropIndicatorChange, tour.id]);
+
+  return (
+    <article
+      ref={ rowRef }
+      className={ cn(
+        "rounded-2xl border border-[#f0e6d8] bg-white p-5 transition-shadow",
+        isDragged && "opacity-70",
+      ) }
+    >
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex min-w-0 flex-1 items-start gap-3">
+          <div
+            ref={ dragHandleRef }
+            className={ cn(
+              "mt-0.5 flex shrink-0 cursor-grab rounded-xl border border-[#eadfce] bg-[#fbf7f0] p-2 text-[#8b7862]",
+              isReordering && "cursor-not-allowed opacity-50",
+            ) }
+            aria-label={ `Drag to reorder ${ tour.name }` }
+          >
+            <GripVertical className="size-4"/>
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full bg-[#f4ede3] px-2.5 py-1 text-xs font-semibold text-[#6a5743]">
+                Position { index + 1 }
+              </span>
+              { isReordering ? (
+                <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                  <LoaderCircle className="size-3 animate-spin"/>
+                  Saving order
+                </span>
+              ) : null }
+            </div>
+            <h2 className="mt-2 truncate text-base font-semibold text-foreground">{ tour.name }</h2>
+            <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+              <span className="truncate">Slug: { tour.slug }</span>
+              <span>Type: { formatLabel(tour.tourType) }</span>
+              <span>
+                Duration: { typeof tour.durationMinutes === "number"
+                  ? `${ tour.durationMinutes } min`
+                  : "Not set" }
+              </span>
+              <span>{ Object.keys(tour.translations).length } translations</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={ onMoveUp }
+            disabled={ index === 0 || isReordering }
+          >
+            <ArrowUp className="size-4"/>
+            Up
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={ onMoveDown }
+            disabled={ isLast || isReordering }
+          >
+            <ArrowDown className="size-4"/>
+            Down
+          </Button>
+          <Button asChild variant="outline" size="sm">
+            <Link href={ `/tours/${ tour.id }` }>
+              <Pencil className="size-4"/>
+              Edit
+            </Link>
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        { tour.translationAvailability.map((availability) => (
+          <span
+            key={ availability.languageCode }
+            className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
+          >
+            { languageNameByCode[availability.languageCode] ?? availability.languageCode }
+            { ": " }
+            { availability.isPublished ? "Published" : "Not Published" }
+          </span>
+        )) }
+      </div>
+    </article>
+  );
+}
 
 export function AdminToursListClient({
   initialLanguages,
@@ -62,11 +273,22 @@ export function AdminToursListClient({
   } | null>(null);
   const dragPointerYRef = useRef<number | null>(null);
   const autoScrollFrameRef = useRef<number | null>(null);
+  const toursRef = useRef<ApiTour[]>(initialTours);
+
+  useEffect(() => {
+    toursRef.current = tours;
+  }, [tours]);
 
   const languageNameByCode = useMemo(
     () => Object.fromEntries(initialLanguages.map((language) => [language.code, language.name])),
     [initialLanguages],
   );
+
+  const resetDragState = () => {
+    dragPointerYRef.current = null;
+    setDraggedTourId(null);
+    setDropIndicator(null);
+  };
 
   useEffect(() => {
     if (!draggedTourId || isReordering) {
@@ -77,7 +299,6 @@ export function AdminToursListClient({
       return;
     }
 
-    // Keep nudging the page while the dragged pointer stays near the viewport edges.
     const tick = () => {
       const pointerY = dragPointerYRef.current;
 
@@ -86,8 +307,6 @@ export function AdminToursListClient({
         const maxScrollTop = document.documentElement.scrollHeight - viewportHeight;
         const currentScrollTop = window.scrollY;
 
-        // Scroll faster as the pointer gets closer to the top edge. The easing curve
-        // makes the faster speeds kick in a bit earlier without changing the max speed.
         if (pointerY < AUTO_SCROLL_EDGE_PX && currentScrollTop > 0) {
           window.scrollBy({
             top: -getAutoScrollStep(AUTO_SCROLL_EDGE_PX - pointerY),
@@ -96,7 +315,6 @@ export function AdminToursListClient({
           pointerY > viewportHeight - AUTO_SCROLL_EDGE_PX &&
           currentScrollTop < maxScrollTop
         ) {
-          // Mirror the same behavior for the bottom edge of the viewport.
           window.scrollBy({
             top: getAutoScrollStep(pointerY - (viewportHeight - AUTO_SCROLL_EDGE_PX)),
           });
@@ -116,27 +334,41 @@ export function AdminToursListClient({
     };
   }, [draggedTourId, isReordering]);
 
-  const resetDragState = () => {
-    // Clear both the drop target UI and the pointer used by the auto-scroll loop.
-    dragPointerYRef.current = null;
-    setDraggedTourId(null);
-    setDropIndicator(null);
-  };
+  useEffect(() => {
+    if (!draggedTourId || isReordering) {
+      return;
+    }
+
+    const handleDragOver = (event: DragEvent) => {
+      dragPointerYRef.current = event.clientY;
+    };
+
+    document.addEventListener("dragover", handleDragOver);
+
+    return () => {
+      document.removeEventListener("dragover", handleDragOver);
+    };
+  }, [draggedTourId, isReordering]);
 
   const applyReorder = async ({
-    sourceTourId,
     destinationIndex,
+    sourceTourId,
   }: {
-    sourceTourId: string;
     destinationIndex: number;
+    sourceTourId: string;
   }) => {
-    const sourceIndex = tours.findIndex((tour) => tour.id === sourceTourId);
+    const currentTours = toursRef.current;
+    const sourceIndex = currentTours.findIndex((tour) => tour.id === sourceTourId);
     if (sourceIndex === -1 || sourceIndex === destinationIndex) {
       return;
     }
 
-    const previousTours = tours;
-    const optimisticTours = moveItem(tours, sourceIndex, destinationIndex);
+    const previousTours = currentTours;
+    const optimisticTours = reorder({
+      list: currentTours,
+      startIndex: sourceIndex,
+      finishIndex: destinationIndex,
+    });
 
     setTours(optimisticTours);
     setIsReordering(true);
@@ -181,42 +413,62 @@ export function AdminToursListClient({
     }
 
     await applyReorder({
+      destinationIndex,
       sourceTourId: tourId,
-      destinationIndex,
     });
   };
 
-  const handleDrop = async ({
-    placement,
-    targetTourId,
-  }: {
-    placement: DropPlacement;
-    targetTourId: string;
-  }) => {
-    if (!draggedTourId || draggedTourId === targetTourId) {
-      return;
-    }
+  useEffect(() => {
+    return monitorForElements({
+      canMonitor: ({ source }) => isTourRowDragData(source.data),
+      onDragStart: ({ source }) => {
+        if (!isTourRowDragData(source.data)) {
+          return;
+        }
 
-    const sourceIndex = tours.findIndex((tour) => tour.id === draggedTourId);
-    const targetIndex = tours.findIndex((tour) => tour.id === targetTourId);
-    if (sourceIndex === -1 || targetIndex === -1) {
-      return;
-    }
+        setDraggedTourId(source.data.tourId);
+        setReorderError(null);
+      },
+      onDrop: async ({ location, source }) => {
+        if (!isTourRowDragData(source.data)) {
+          resetDragState();
+          return;
+        }
 
-    let destinationIndex = placement === "before" ? targetIndex : targetIndex + 1;
-    if (sourceIndex < destinationIndex) {
-      destinationIndex -= 1;
-    }
+        const activeTarget = location.current.dropTargets[0];
+        if (!activeTarget || !isTourRowDropData(activeTarget.data)) {
+          resetDragState();
+          return;
+        }
 
-    if (destinationIndex === sourceIndex) {
-      return;
-    }
+        const currentTours = toursRef.current;
+        const sourceIndex = currentTours.findIndex((tour) => tour.id === source.data.tourId);
+        const targetIndex = currentTours.findIndex((tour) => tour.id === activeTarget.data.tourId);
 
-    await applyReorder({
-      sourceTourId: draggedTourId,
-      destinationIndex,
+        if (sourceIndex === -1 || targetIndex === -1) {
+          resetDragState();
+          return;
+        }
+
+        let destinationIndex =
+          activeTarget.data.placement === "before" ? targetIndex : targetIndex + 1;
+        if (sourceIndex < destinationIndex) {
+          destinationIndex -= 1;
+        }
+
+        resetDragState();
+
+        if (destinationIndex === sourceIndex) {
+          return;
+        }
+
+        await applyReorder({
+          destinationIndex,
+          sourceTourId: source.data.tourId,
+        });
+      },
     });
-  };
+  }, [isReordering, tours]);
 
   return (
     <AdminSectionCard
@@ -256,148 +508,29 @@ export function AdminToursListClient({
               dropIndicator?.tourId === tour.id && dropIndicator.placement === "after";
 
             return (
-              <article
+              <div
                 key={ tour.id }
-                onDragOver={ (event) => {
-                  if (!draggedTourId || isReordering) {
-                    return;
-                  }
-
-                  event.preventDefault();
-                  // Native drag events do not give us continuous pointer tracking, so reuse dragover.
-                  dragPointerYRef.current = event.clientY;
-                  const bounds = event.currentTarget.getBoundingClientRect();
-                  const placement =
-                    event.clientY - bounds.top < bounds.height / 2 ? "before" : "after";
-
-                  setDropIndicator({
-                    placement,
-                    tourId: tour.id,
-                  });
-                } }
-                onDragLeave={ () => {
-                  setDropIndicator((currentIndicator) =>
-                    currentIndicator?.tourId === tour.id ? null : currentIndicator,
-                  );
-                } }
-                onDrop={ async (event) => {
-                  event.preventDefault();
-                  const activeIndicator =
-                    dropIndicator?.tourId === tour.id
-                      ? dropIndicator
-                      : {
-                        placement: "after" as const,
-                        tourId: tour.id,
-                      };
-
-                  setDropIndicator(null);
-                  await handleDrop({
-                    placement: activeIndicator.placement,
-                    targetTourId: activeIndicator.tourId,
-                  });
-                  resetDragState();
-                } }
                 className={ cn(
-                  "rounded-2xl border border-[#f0e6d8] bg-white p-5 transition-shadow",
-                  showDropBefore && "shadow-[inset_0_4px_0_0_#9a6a2f]",
-                  showDropAfter && "shadow-[inset_0_-4px_0_0_#9a6a2f]",
-                  draggedTourId === tour.id && "opacity-70",
+                  showDropBefore && "rounded-2xl shadow-[inset_0_4px_0_0_#9a6a2f]",
+                  showDropAfter && "rounded-2xl shadow-[inset_0_-4px_0_0_#9a6a2f]",
                 ) }
               >
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div className="flex min-w-0 flex-1 items-start gap-3">
-                    <div
-                      draggable={ !isReordering }
-                      onDragStart={ (event) => {
-                        setDraggedTourId(tour.id);
-                        dragPointerYRef.current = event.clientY;
-                        setReorderError(null);
-                        event.dataTransfer.effectAllowed = "move";
-                        event.dataTransfer.setData("text/plain", tour.id);
-                      } }
-                      onDragEnd={ resetDragState }
-                      className={ cn(
-                        "mt-0.5 flex shrink-0 cursor-grab rounded-xl border border-[#eadfce] bg-[#fbf7f0] p-2 text-[#8b7862]",
-                        isReordering && "cursor-not-allowed opacity-50",
-                      ) }
-                      aria-label={ `Drag to reorder ${ tour.name }` }
-                    >
-                      <GripVertical className="size-4"/>
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="rounded-full bg-[#f4ede3] px-2.5 py-1 text-xs font-semibold text-[#6a5743]">
-                          Position { index + 1 }
-                        </span>
-                        { isReordering ? (
-                          <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                            <LoaderCircle className="size-3 animate-spin"/>
-                            Saving order
-                          </span>
-                        ) : null }
-                      </div>
-                      <h2 className="mt-2 truncate text-base font-semibold text-foreground">{ tour.name }</h2>
-                      <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
-                        <span className="truncate">Slug: { tour.slug }</span>
-                        <span>Type: { formatLabel(tour.tourType) }</span>
-                        <span>
-                          Duration: { typeof tour.durationMinutes === "number"
-                            ? `${ tour.durationMinutes } min`
-                            : "Not set" }
-                        </span>
-                        <span>{ Object.keys(tour.translations).length } translations</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={ () => {
-                        void moveTourByOffset({ offset: -1, tourId: tour.id });
-                      } }
-                      disabled={ index === 0 || isReordering }
-                    >
-                      <ArrowUp className="size-4"/>
-                      Up
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={ () => {
-                        void moveTourByOffset({ offset: 1, tourId: tour.id });
-                      } }
-                      disabled={ index === tours.length - 1 || isReordering }
-                    >
-                      <ArrowDown className="size-4"/>
-                      Down
-                    </Button>
-                    <Button asChild variant="outline" size="sm">
-                      <Link href={ `/tours/${ tour.id }` }>
-                        <Pencil className="size-4"/>
-                        Edit
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex flex-wrap gap-2">
-                  { tour.translationAvailability.map((availability) => (
-                    <span
-                      key={ availability.languageCode }
-                      className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
-                    >
-                      { languageNameByCode[availability.languageCode] ?? availability.languageCode }
-                      { ": " }
-                      { availability.isPublished ? "Published" : "Not Published" }
-                    </span>
-                  )) }
-                </div>
-              </article>
+                <TourListRow
+                  index={ index }
+                  isDragged={ draggedTourId === tour.id }
+                  isLast={ index === tours.length - 1 }
+                  isReordering={ isReordering }
+                  languageNameByCode={ languageNameByCode }
+                  onDropIndicatorChange={ setDropIndicator }
+                  onMoveDown={ () => {
+                    void moveTourByOffset({ offset: 1, tourId: tour.id });
+                  } }
+                  onMoveUp={ () => {
+                    void moveTourByOffset({ offset: -1, tourId: tour.id });
+                  } }
+                  tour={ tour }
+                />
+              </div>
             );
           })
         ) }
