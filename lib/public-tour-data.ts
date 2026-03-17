@@ -117,7 +117,7 @@ export const TOUR_FILTERS: { id: TourFilterId; tagKey: string }[] = [
   {id: "royalPalaces", tagKey: "royal-palaces"},
 ];
 
-const PUBLIC_TOUR_REVALIDATE_SECONDS = 300;
+const PUBLIC_TOUR_REVALIDATE_SECONDS = 60;
 const NON_COMPANY_TOUR_TYPES: PublicTourType[] = ["private", "group", "tip_based"];
 const COMPANY_TOUR_TYPES: PublicTourType[] = ["company"];
 const fallbackLocationByLocale: Record<AppLocale, string> = {
