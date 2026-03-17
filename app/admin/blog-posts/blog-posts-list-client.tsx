@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {Pencil, Plus} from "lucide-react";
-import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
+import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {Button} from "@/components/ui/button";
 import {getAdminBlogPostsClient, getAdminLanguagesClient} from "@/lib/admin/admin-client";
@@ -18,6 +18,8 @@ export default function AdminBlogPostsListClient() {
   const [languages, setLanguages] = useState<ApiLanguage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useAdminRouteLoadingBoundary(isLoading);
 
   const loadBlogPostsWorkspace = async () => {
     setIsLoading(true);

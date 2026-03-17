@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
+import { useAdminRouteLoadingBoundary, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
 import { AdminNoticeCard } from "@/components/admin/AdminUi";
 import {
   Dialog,
@@ -504,6 +504,8 @@ export function TourEditorClient({
   const canSaveInitialTour = formState.name.trim().length > 0;
   const diagnostics = savedTour?.translationAvailability ?? initialTour?.translationAvailability ?? [];
   const getLanguageName = (languageCode: string) => availableLanguages.find((lang) => lang.code === languageCode)?.name;
+
+  useAdminRouteLoadingBoundary(isInitialLoading);
 
   useEffect(() => {
     if (

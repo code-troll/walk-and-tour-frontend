@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard, AdminStatCard} from "@/components/admin/AdminUi";
 import {getAdminLanguagesClient, getAdminNewsletterSubscribersClient} from "@/lib/admin/admin-client";
 import {formatAdminDate} from "@/lib/admin/format-date";
@@ -14,6 +15,8 @@ export default function AdminNewsletterClient() {
   const [languages, setLanguages] = useState<ApiLanguage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useAdminRouteLoadingBoundary(isLoading);
 
   const loadNewsletterWorkspace = async () => {
     setIsLoading(true);

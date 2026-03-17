@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {getAdminRolesClient, getAdminUsersClient} from "@/lib/admin/admin-client";
 import {formatAdminDate} from "@/lib/admin/format-date";
@@ -14,6 +15,8 @@ export default function AdminUsersClient() {
   const [roles, setRoles] = useState<ApiRole[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useAdminRouteLoadingBoundary(isLoading);
 
   const loadUsersWorkspace = async () => {
     setIsLoading(true);

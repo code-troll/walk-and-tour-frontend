@@ -10,7 +10,7 @@ import {
 import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
 import type { components } from "@/lib/api/generated/backend-types";
 import { GripVertical, LoaderCircle, Pencil, Plus, ArrowUp, ArrowDown } from "lucide-react";
-import { AdminProgressLink } from "@/components/admin/AdminRouteProgress";
+import { AdminProgressLink, useAdminRouteLoadingBoundary } from "@/components/admin/AdminRouteProgress";
 import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
 import { Button } from "@/components/ui/button";
 import { getAdminLanguagesClient, getAdminToursClient } from "@/lib/admin/admin-client";
@@ -291,6 +291,8 @@ export function AdminToursListClient({
   const dragPointerYRef = useRef<number | null>(null);
   const autoScrollFrameRef = useRef<number | null>(null);
   const toursRef = useRef<ApiTour[]>(initialTours);
+
+  useAdminRouteLoadingBoundary(isInitialLoading);
 
   useEffect(() => {
     toursRef.current = tours;

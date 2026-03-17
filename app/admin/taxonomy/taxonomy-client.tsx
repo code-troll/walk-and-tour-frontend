@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Switch} from "@/components/ui/switch";
+import {useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {getAdminLanguagesClient, getAdminTagsClient} from "@/lib/admin/admin-client";
 
@@ -138,6 +139,8 @@ export function TaxonomyClient({
   const [deleteDialogError, setDeleteDialogError] = useState<string | null>(null);
   const [tagFormErrors, setTagFormErrors] = useState<TagFormErrors>({});
   const [languageFormErrors, setLanguageFormErrors] = useState<LanguageFormErrors>({});
+
+  useAdminRouteLoadingBoundary(isInitialLoading);
 
   const enabledLanguages = languages.filter((language) => language.isEnabled);
   const languageNameByCode = Object.fromEntries(
