@@ -1,10 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { getPathname } from "@/i18n/navigation";
 import { type AppLocale } from "@/i18n/routing";
-import type { PublicTourCard } from "@/lib/public-tour-data";
+import type { PublicTourCard } from "@/lib/public-tour-model";
 
 type CompanyListingCardProps = {
   experience: PublicTourCard;

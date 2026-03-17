@@ -11,8 +11,9 @@ import { reorder } from "@atlaskit/pragmatic-drag-and-drop/reorder";
 import type { components } from "@/lib/api/generated/backend-types";
 import { GripVertical, LoaderCircle, Pencil, Plus, ArrowUp, ArrowDown } from "lucide-react";
 import { AdminProgressLink } from "@/components/admin/AdminRouteProgress";
-import { AdminSectionCard } from "@/components/admin/AdminUi";
+import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
 import { Button } from "@/components/ui/button";
+import { getAdminLanguagesClient, getAdminToursClient } from "@/lib/admin/admin-client";
 import { cn } from "@/lib/utils";
 import { reorderTourAction } from "./actions";
 
@@ -21,8 +22,8 @@ type ApiLanguage = components["schemas"]["LanguageResponseDto"];
 type DropPlacement = "before" | "after";
 
 type AdminToursListClientProps = {
-  initialLanguages: ApiLanguage[];
-  initialTours: ApiTour[];
+  initialLanguages?: ApiLanguage[];
+  initialTours?: ApiTour[];
 };
 
 type TourRowDragData = {
@@ -271,10 +272,15 @@ function TourListRow({
 }
 
 export function AdminToursListClient({
-                                       initialLanguages,
-                                       initialTours,
+                                       initialLanguages = [],
+                                       initialTours = [],
                                      }: AdminToursListClientProps) {
   const [tours, setTours] = useState<ApiTour[]>(initialTours);
+  const [languages, setLanguages] = useState<ApiLanguage[]>(initialLanguages);
+  const [isInitialLoading, setIsInitialLoading] = useState(
+    initialLanguages.length === 0 && initialTours.length === 0,
+  );
+  const [initialLoadError, setInitialLoadError] = useState<string | null>(null);
   const [isReordering, setIsReordering] = useState(false);
   const [reorderError, setReorderError] = useState<string | null>(null);
   const [draggedTourId, setDraggedTourId] = useState<string | null>(null);
@@ -291,9 +297,37 @@ export function AdminToursListClient({
   }, [tours]);
 
   const languageNameByCode = useMemo(
-    () => Object.fromEntries(initialLanguages.map((language) => [language.code, language.name])),
-    [initialLanguages],
+    () => Object.fromEntries(languages.map((language) => [language.code, language.name])),
+    [languages],
   );
+
+  const loadToursWorkspace = async () => {
+    setIsInitialLoading(true);
+    setInitialLoadError(null);
+
+    try {
+      const [nextTours, nextLanguages] = await Promise.all([
+        getAdminToursClient(),
+        getAdminLanguagesClient(),
+      ]);
+
+      setTours(nextTours);
+      setLanguages(nextLanguages);
+    } catch (error) {
+      setInitialLoadError(error instanceof Error ? error.message : "Unable to load tours.");
+    } finally {
+      setIsInitialLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (initialLanguages.length > 0 || initialTours.length > 0) {
+      setIsInitialLoading(false);
+      return;
+    }
+
+    void loadToursWorkspace();
+  }, [initialLanguages.length, initialTours.length]);
 
   const resetDragState = () => {
     dragPointerYRef.current = null;
@@ -480,6 +514,35 @@ export function AdminToursListClient({
       },
     });
   }, [isReordering, tours]);
+
+  if (isInitialLoading) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title="Loading the tours workspace."
+        description="Resolving tours and language metadata."
+      />
+    );
+  }
+
+  if (initialLoadError) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title="The tours workspace could not be loaded."
+        description={initialLoadError}
+        actions={
+          <button
+            type="button"
+            onClick={() => void loadToursWorkspace()}
+            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+          >
+            Retry
+          </button>
+        }
+      />
+    );
+  }
 
   return (
     <AdminSectionCard

@@ -2,7 +2,6 @@ import { AdminNoticeCard } from "@/components/admin/AdminUi";
 import { getAdminViewerState } from "@/lib/admin/session";
 import { getBackendApiBaseUrl } from "@/lib/api/core/backend-env";
 import { BlogPostEditorClient } from "../blog-editor-client";
-import { loadBlogPostEditorData } from "../loaders";
 
 export default async function AdminNewBlogPostPage() {
   const viewerState = await getAdminViewerState();
@@ -21,20 +20,7 @@ export default async function AdminNewBlogPostPage() {
     );
   }
 
-  const editorData = await loadBlogPostEditorData({
-    accessToken: viewerState.accessToken,
-  });
   const backendApiBaseUrl = getBackendApiBaseUrl();
-
-  if ("errorMessage" in editorData) {
-    return (
-      <AdminNoticeCard
-        eyebrow="Admin API"
-        title="The new blog post workspace could not be loaded."
-        description={ editorData.errorMessage ?? "Unable to load the new blog post workspace." }
-      />
-    );
-  }
 
   if (!backendApiBaseUrl) {
     return (
@@ -49,8 +35,8 @@ export default async function AdminNewBlogPostPage() {
   return (
     <BlogPostEditorClient
       mode="create"
-      availableLanguages={ editorData.languages }
-      availableTags={ editorData.tags }
+      availableLanguages={ [] }
+      availableTags={ [] }
       accessToken={ viewerState.accessToken }
       backendApiBaseUrl={ backendApiBaseUrl }
     />

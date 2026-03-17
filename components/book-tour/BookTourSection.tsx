@@ -1,6 +1,8 @@
+"use client";
+
 import BookTourForm from "@/components/book-tour/BookTourForm";
 import type { BookTourType } from "@/components/book-tour/BookTourForm";
-import type { BookingOption } from "@/lib/public-tour-data";
+import type { BookingOption } from "@/lib/public-tour-model";
 import { useTranslations } from "next-intl";
 
 type BookTourSectionProps = {

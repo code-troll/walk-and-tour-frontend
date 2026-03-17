@@ -1,7 +1,9 @@
+"use client";
+
 import { ShoppingBag } from "lucide-react";
 
 import TourListingCard from "@/components/tours/TourListingCard";
-import type { PublicTourCard } from "@/lib/public-tour-data";
+import type { PublicTourCard } from "@/lib/public-tour-model";
 
 type TourDetailRelatedToursSectionProps = {
   title: string;

@@ -14,7 +14,7 @@ import {
   TramFront,
 } from "lucide-react";
 import type { ItineraryUiLabels } from "@/lib/detail-page-utils";
-import type { UiCommuteMode, UiResolvedTourItinerary } from "@/lib/public-tour-data";
+import type { UiCommuteMode, UiResolvedTourItinerary } from "@/lib/public-tour-model";
 import TourDetailCollapsibleSection from "@/components/tour-detail/TourDetailCollapsibleSection";
 
 type TourDetailItinerarySectionProps = {

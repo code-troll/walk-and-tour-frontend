@@ -1,7 +1,9 @@
+"use client";
+
 import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import BlogPostCard from "@/components/blog/BlogPostCard";
-import type { PublicBlogCard } from "@/lib/public-blog-data";
+import type { PublicBlogCard } from "@/lib/public-blog-model";
 
 type BlogRecentPostsSectionProps = {
   locale: AppLocale;

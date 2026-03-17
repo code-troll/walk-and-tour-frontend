@@ -2,14 +2,9 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
-import BookTourSection from "@/components/book-tour/BookTourSection";
+import BookTourOptionsClient from "@/components/public/BookTourOptionsClient";
 import Footer from "@/components/layout/Footer";
 import { type AppLocale, routing } from "@/i18n/routing";
-import {
-  getExpectedTourTypesForCompanyTours,
-  getExpectedTourTypesForPublicTours,
-  listBookingOptionsSafe,
-} from "@/lib/public-tour-data";
 
 type BookTourPageProps = {
   params: Promise<{ locale: string; }>;
@@ -49,24 +44,12 @@ export default async function BookTourPage({
     notFound();
   }
 
-  const [privateTourOptions, companyTourOptions] = await Promise.all([
-    listBookingOptionsSafe({
-      locale,
-      tourTypes: getExpectedTourTypesForPublicTours().filter((tourType) => tourType === "private"),
-    }),
-    listBookingOptionsSafe({
-      locale,
-      tourTypes: getExpectedTourTypesForCompanyTours(),
-    }),
-  ]);
-
   return (
     <div className="min-h-screen bg-white text-[#2a221a]">
-      <BookTourSection
+      <BookTourOptionsClient
+        locale={ locale }
         initialBookingType={ searchParams.bookingType }
         initialSelectedItemId={ searchParams.selectedItemId }
-        privateTourOptions={ privateTourOptions }
-        companyTourOptions={ companyTourOptions }
       />
       <Footer />
     </div>
