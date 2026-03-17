@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CheckCircle2, XCircle, ArrowLeft, Mail } from "lucide-react";
+import { CheckCircle2, XCircle, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type NewsletterResultPageProps = {

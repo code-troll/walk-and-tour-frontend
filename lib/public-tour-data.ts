@@ -394,6 +394,30 @@ const normalizeTourDetail = (tour: PublicTourResponse, locale: AppLocale): Publi
 };
 
 const createCachedPublicApi = () => createPublicApi({revalidate: PUBLIC_TOUR_REVALIDATE_SECONDS});
+const createUncachedPublicApi = () => createPublicApi({cache: "no-store"});
+
+const getLocalizedPublicTour = async ({
+  api,
+  locale,
+  slug,
+}: {
+  api: ReturnType<typeof createPublicApi>;
+  locale: AppLocale;
+  slug: string;
+}) => {
+  try {
+    return await api.getTourBySlug({
+      locale,
+      slug,
+    });
+  } catch (error) {
+    if (isBackendApiError(error) && error.statusCode === 404) {
+      return null;
+    }
+
+    throw error;
+  }
+};
 
 export const listPublicTourCards = async ({
   locale,
@@ -455,46 +479,60 @@ export const getPublicTourDetailWithFallback = async ({
   locale: AppLocale;
   slug: string;
 }): Promise<PublicTourDetailResult | null> => {
-  const api = createCachedPublicApi();
-  const errors: Error[] = [];
-  const results = await Promise.all(
-    routing.locales.map(async (candidateLocale) => {
-      try {
-        const tour = await api.getTourBySlug({
-          locale: candidateLocale,
-          slug,
-        });
+  const api = createUncachedPublicApi();
+  const requestedTour = await getLocalizedPublicTour({
+    api,
+    locale,
+    slug,
+  });
 
-        return expectedTourTypes.includes(tour.tourType)
-          ? {locale: candidateLocale, tour}
-          : {locale: candidateLocale, tour: null};
-      } catch (error) {
-        if (isBackendApiError(error) && error.statusCode === 404) {
-          return {locale: candidateLocale, tour: null};
-        }
-
-        errors.push(error instanceof Error ? error : new Error("Unable to load the public tour."));
-        return {locale: candidateLocale, tour: null};
-      }
-    }),
-  );
-
-  const availableTours = results.filter(
-    (result): result is {locale: AppLocale; tour: PublicTourResponse} => Boolean(result.tour),
-  );
-
-  if (availableTours.length === 0) {
-    if (errors.length > 0) {
-      throw errors[0];
+  if (requestedTour) {
+    if (!expectedTourTypes.includes(requestedTour.tourType)) {
+      return null;
     }
 
+    return {
+      availableLocales: [locale],
+      contentLocale: locale,
+      isFallbackLanguage: false,
+      tour: normalizeTourDetail(requestedTour, locale),
+    };
+  }
+
+  const availableTours: {locale: AppLocale; tour: PublicTourResponse}[] = [];
+
+  for (const candidateLocale of routing.locales) {
+    if (candidateLocale === locale) {
+      continue;
+    }
+
+    const candidateTour = await getLocalizedPublicTour({
+      api,
+      locale: candidateLocale,
+      slug,
+    });
+
+    if (!candidateTour) {
+      continue;
+    }
+
+    if (!expectedTourTypes.includes(candidateTour.tourType)) {
+      return null;
+    }
+
+    availableTours.push({
+      locale: candidateLocale,
+      tour: candidateTour,
+    });
+  }
+
+  if (availableTours.length === 0) {
     return null;
   }
 
   const availableLocales = availableTours.map((result) => result.locale);
-  const contentLocale = availableLocales.includes(locale)
-    ? locale
-    : routing.locales.find((candidateLocale) => availableLocales.includes(candidateLocale)) ?? availableLocales[0];
+  const contentLocale =
+    routing.locales.find((candidateLocale) => availableLocales.includes(candidateLocale)) ?? availableLocales[0];
   const selectedTour = availableTours.find((result) => result.locale === contentLocale)?.tour;
 
   if (!selectedTour) {
