@@ -14,6 +14,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useReducer,
 } from "react";
 import { cn } from "@/lib/utils";
@@ -259,6 +260,32 @@ export function useAdminRouteProgress() {
     }),
     [progress],
   );
+}
+
+export function useAdminRouteLoadingBoundary(isActive: boolean) {
+  const progress = useContext(AdminRouteProgressContext);
+  const hasEnteredRef = useRef(false);
+
+  useLayoutEffect(() => {
+    if (isActive && !hasEnteredRef.current) {
+      progress?.enterLoadingBoundary();
+      hasEnteredRef.current = true;
+    }
+
+    if (!isActive && hasEnteredRef.current) {
+      progress?.exitLoadingBoundary();
+      hasEnteredRef.current = false;
+    }
+
+    return () => {
+      if (!hasEnteredRef.current) {
+        return;
+      }
+
+      progress?.exitLoadingBoundary();
+      hasEnteredRef.current = false;
+    };
+  }, [isActive, progress]);
 }
 
 export const AdminProgressLink = forwardRef<

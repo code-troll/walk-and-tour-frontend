@@ -16,7 +16,7 @@ import {
   Upload,
   X,
 } from "lucide-react";
-import { AdminProgressLink, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
+import { AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
 import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
 import BlogPostArticle from "@/components/blog/BlogPostArticle";
 import { TiptapHtmlEditor, type TiptapHtmlEditorHandle } from "@/components/admin/TiptapHtmlEditor";
@@ -148,6 +148,8 @@ export function BlogPostEditorClient({
   const [mediaSearchInput, setMediaSearchInput] = useState("");
   const [appliedMediaSearch, setAppliedMediaSearch] = useState("");
   const [mediaLibraryItems, setMediaLibraryItems] = useState<ApiAdminMediaAsset[]>([]);
+
+  useAdminRouteLoadingBoundary(isInitialLoading);
   const [mediaLibraryPage, setMediaLibraryPage] = useState(1);
   const [mediaLibraryTotal, setMediaLibraryTotal] = useState(0);
   const [selectedMediaId, setSelectedMediaId] = useState<string | null>(null);

@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
+import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard, AdminStatCard} from "@/components/admin/AdminUi";
 import {
   getAdminBlogPostsClient,
@@ -31,6 +31,8 @@ export default function OverviewClient({roleName}: OverviewClientProps) {
   const [data, setData] = useState<OverviewData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  useAdminRouteLoadingBoundary(isLoading);
 
   useEffect(() => {
     void (async () => {
