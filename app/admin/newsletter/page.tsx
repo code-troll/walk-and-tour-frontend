@@ -1,6 +1,7 @@
 import { AdminNoticeCard, AdminSectionCard, AdminStatCard } from "@/components/admin/AdminUi";
 import { createAdminApi } from "@/lib/api/admin";
 import { isBackendApiError } from "@/lib/api/core/backend-client";
+import { formatAdminDate } from "@/lib/admin/format-date";
 import { getAdminViewerState } from "@/lib/admin/session";
 
 const loadNewsletterData = async (accessToken: string) => {
@@ -114,7 +115,9 @@ export default async function AdminNewsletterPage() {
                       : "N/A"
                   }
                 </td>
-                <td className="py-4 pr-4 text-muted-foreground">{ subscriber.confirmedAt ?? "Not confirmed" }</td>
+                <td className="py-4 pr-4 text-muted-foreground">
+                  { subscriber.confirmedAt ? formatAdminDate(subscriber.confirmedAt) : "Not confirmed" }
+                </td>
               </tr>
             )) }
             </tbody>

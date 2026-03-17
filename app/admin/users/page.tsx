@@ -1,6 +1,7 @@
 import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {createAdminApi} from "@/lib/api/admin";
 import {isBackendApiError} from "@/lib/api/core/backend-client";
+import {formatAdminDate} from "@/lib/admin/format-date";
 import {getAdminViewerState} from "@/lib/admin/session";
 
 const loadUsersData = async (accessToken: string) => {
@@ -73,7 +74,7 @@ export default async function AdminUsersPage() {
                   <td className="py-4 pr-4">{user.email}</td>
                   <td className="py-4 pr-4">{user.roleName}</td>
                   <td className="py-4 pr-4 capitalize">{user.status}</td>
-                  <td className="py-4 pr-4">{user.lastLoginAt ?? "Never"}</td>
+                  <td className="py-4 pr-4">{user.lastLoginAt ? formatAdminDate(user.lastLoginAt) : "Never"}</td>
                 </tr>
               ))}
             </tbody>
