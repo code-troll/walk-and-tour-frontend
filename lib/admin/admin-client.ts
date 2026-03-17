@@ -42,7 +42,7 @@ export const getAdminTagsClient = () =>
   });
 
 export const getAdminToursClient = () =>
-  fetchJson<components["schemas"]["TourAdminResponseDto"][]>({
+  fetchJson<components["schemas"]["TourAdminListResponseDto"][]>({
     input: "/api/internal/admin/tours",
     fallbackMessage: "Unable to load tours.",
   });

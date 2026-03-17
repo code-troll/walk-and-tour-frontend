@@ -6,6 +6,7 @@ import { createAdminApi } from "@/lib/api/admin";
 import { getAdminViewerState } from "@/lib/admin/session";
 
 type ApiTour = components["schemas"]["TourAdminResponseDto"];
+type ApiTourListItem = components["schemas"]["TourAdminListResponseDto"];
 type CreateTourBody = components["schemas"]["CreateTourDto"];
 type UpdateTourBody = components["schemas"]["UpdateTourDto"];
 type ToursAdminApi = ReturnType<typeof createAdminApi>;
@@ -21,7 +22,7 @@ type TourActionSuccess = {
 export type TourActionResult = TourActionSuccess | TourActionError;
 type ToursActionSuccess = {
   ok: true;
-  tours: ApiTour[];
+  tours: ApiTourListItem[];
 };
 export type ToursActionResult = ToursActionSuccess | TourActionError;
 
