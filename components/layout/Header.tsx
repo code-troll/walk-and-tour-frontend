@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type ComponentType } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { type AppLocale } from "@/i18n/routing";
+import { routing, type AppLocale } from "@/i18n/routing";
 import { navLinks } from "@/lib/landing-data";
 import { getHomeSectionHash, getInternalHref } from "@/lib/internal-paths";
 import { CalendarCheckIcon, ChevronDown, Menu, X } from "lucide-react";
@@ -35,6 +35,17 @@ const flagByCountryCode: Record<
   ES,
   IT,
 };
+
+const isLocalizedDetailPath = (pathname: string) =>
+  /^\/(tours|companies)\/[^/]+$/.test(pathname);
+
+const getLocalizedPath = ({
+  locale,
+  pathname,
+}: {
+  locale: AppLocale;
+  pathname: string;
+}) => locale === routing.defaultLocale ? pathname : `/${ locale }${ pathname }`;
 
 type SocialLinkId = "instagram" | "facebook" | "linkedin" | "tiktok" | "tripadvisor";
 
@@ -242,7 +253,35 @@ export default function Header() {
     }
 
     const hash = window.location.hash;
-    router.replace(`${pathname}${hash}`, {locale: nextLocale, scroll: false});
+    const targetPath = getLocalizedPath({
+      locale: nextLocale,
+      pathname,
+    });
+
+    if (!isLocalizedDetailPath(pathname)) {
+      router.replace(`${ pathname }${ hash }`, {locale: nextLocale, scroll: false});
+      return;
+    }
+
+    const navigateToLocalizedDetail = async () => {
+      try {
+        await fetch("/api/internal/revalidate-path", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            path: targetPath,
+          }),
+        });
+      } catch (error) {
+        console.error("Unable to revalidate detail path before switching locale", error);
+      } finally {
+        window.location.assign(`${ targetPath }${ hash }`);
+      }
+    };
+
+    void navigateToLocalizedDetail();
   };
 
   const headerClassName = [
