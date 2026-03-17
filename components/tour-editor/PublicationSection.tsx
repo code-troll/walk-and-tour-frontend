@@ -46,7 +46,6 @@ const getCompletionStatus = ({
     translation.title.trim().length > 0,
     translation.cancellationType.trim().length > 0,
     translation.aboutTourDescription.trim().length > 0,
-    translation.customerSupportDescription.trim().length > 0,
     splitTextareaLines(translation.highlightsText).length > 0,
     splitTextareaLines(translation.includedText).length > 0,
     splitTextareaLines(translation.notIncludedText).length > 0,

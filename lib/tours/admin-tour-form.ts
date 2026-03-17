@@ -72,9 +72,6 @@ export const TOUR_CONTENT_SCHEMA: TourContentSchema = {
     aboutTourDescription: {
       type: "string",
     },
-    customerSupportDescription: {
-      type: "string",
-    },
     highlights: {
       type: "array",
       items: {
@@ -137,7 +134,6 @@ export const TOUR_CONTENT_SCHEMA: TourContentSchema = {
     "title",
     "cancellationType",
     "aboutTourDescription",
-    "customerSupportDescription",
     "highlights",
     "included",
     "notIncluded",
@@ -173,7 +169,6 @@ export type TourTranslationFormState = {
   title: string;
   cancellationType: string;
   aboutTourDescription: string;
-  customerSupportDescription: string;
   startPointLabel: string;
   endPointLabel: string;
   itineraryDescription: string;
@@ -380,7 +375,6 @@ export const createEmptyTranslationFormState = (languageCode: string): TourTrans
   title: "",
   cancellationType: "",
   aboutTourDescription: "",
-  customerSupportDescription: "",
   startPointLabel: "",
   endPointLabel: "",
   itineraryDescription: "",
@@ -450,7 +444,6 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
       title: asString(payload.title),
       cancellationType: asString(translation.cancellationType ?? payload.cancellationType),
       aboutTourDescription: asString(payload.aboutTourDescription ?? payload.description),
-      customerSupportDescription: asString(payload.customerSupportDescription),
       startPointLabel: asString(startPointPayload.label),
       endPointLabel: asString(endPointPayload.label),
       itineraryDescription: asString(payload.itineraryDescription),
@@ -527,7 +520,6 @@ const buildTranslationPayload = ({
     title: formState.title.trim(),
     cancellationType: formState.cancellationType.trim(),
     aboutTourDescription: formState.aboutTourDescription.trim(),
-    customerSupportDescription: formState.customerSupportDescription.trim(),
     highlights: splitTextareaLines(formState.highlightsText),
     included: splitTextareaLines(formState.includedText),
     notIncluded: splitTextareaLines(formState.notIncludedText),
@@ -957,14 +949,6 @@ const validateTranslationEntry = ({
       errors,
       languageCode,
       message: `Cancellation type must be ${ TOUR_TEXTAREA_MAX_LENGTH } characters or less.`,
-    });
-  }
-
-  if (translation.customerSupportDescription.length > TOUR_TEXTAREA_MAX_LENGTH) {
-    addTranslationError({
-      errors,
-      languageCode,
-      message: `Customer support description must be ${ TOUR_TEXTAREA_MAX_LENGTH } characters or less.`,
     });
   }
 
