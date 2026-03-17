@@ -741,7 +741,7 @@ export interface paths {
         };
         /**
          * List tours for admin management
-         * @description Returns all tours with shared data, translation diagnostics, and audit metadata, ordered by the persisted manual tour sort order.
+         * @description Returns lightweight admin tour summaries with localized readiness/publication flags and audit metadata, ordered by the persisted manual tour sort order.
          */
         get: operations["ToursController_findAll"];
         put?: never;
@@ -2117,6 +2117,61 @@ export interface components {
             /** @description Localized itinerary returned for the requested locale. */
             itinerary: components["schemas"]["PublicTourItineraryResponseDto"];
         };
+        RecordAuditMetadataDto: {
+            /**
+             * Format: uuid
+             * @description UUID of the admin that originally created the record.
+             */
+            createdBy?: Record<string, never> | null;
+            /**
+             * Format: uuid
+             * @description UUID of the admin that most recently updated the record.
+             */
+            updatedBy?: Record<string, never> | null;
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
+            updatedAt: string;
+        };
+        TourAdminListResponseDto: {
+            /**
+             * Format: uuid
+             * @description Tour UUID.
+             */
+            id: string;
+            /**
+             * @description Non-localized admin-facing name for the tour.
+             * @example Barcelona Historic Center Main Tour
+             */
+            name: string;
+            /**
+             * @description Manual display position used by the default admin and public tour list ordering. Lower values appear first.
+             * @example 0
+             */
+            sortOrder: number;
+            /**
+             * @description Stable public slug.
+             * @example historic-center
+             */
+            slug: string;
+            /**
+             * @description Tour commercial model.
+             * @enum {string}
+             */
+            tourType: "private" | "group" | "tip_based" | "company";
+            /** @description Localized translation status keyed by locale code. */
+            translations: {
+                [key: string]: components["schemas"]["TourAdminListTranslationResponseDto"];
+            };
+            /** @description Audit metadata for create and update operations. */
+            audit: components["schemas"]["RecordAuditMetadataDto"];
+        };
         TourAdminItineraryStopResponseDto: {
             /**
              * @description Stable stop identifier shared across translations.
@@ -2179,28 +2234,6 @@ export interface components {
              * @example true
              */
             publiclyAvailable: boolean;
-        };
-        RecordAuditMetadataDto: {
-            /**
-             * Format: uuid
-             * @description UUID of the admin that originally created the record.
-             */
-            createdBy?: Record<string, never> | null;
-            /**
-             * Format: uuid
-             * @description UUID of the admin that most recently updated the record.
-             */
-            updatedBy?: Record<string, never> | null;
-            /**
-             * Format: date-time
-             * @description Creation timestamp.
-             */
-            createdAt: string;
-            /**
-             * Format: date-time
-             * @description Last update timestamp.
-             */
-            updatedAt: string;
         };
         TourAdminResponseDto: {
             /**
@@ -2612,6 +2645,18 @@ export interface components {
             payload: {
                 [key: string]: unknown;
             };
+        };
+        TourAdminListTranslationResponseDto: {
+            /**
+             * @description Whether the translation currently satisfies all required completeness rules.
+             * @example true
+             */
+            isReady: boolean;
+            /**
+             * @description Whether the translation is configured to be publicly exposed.
+             * @example true
+             */
+            isPublished: boolean;
         };
         BlogAdminTranslationResponseDto: {
             /**
@@ -4848,7 +4893,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["TourAdminResponseDto"][];
+                    "application/json": components["schemas"]["TourAdminListResponseDto"][];
                 };
             };
             401: {

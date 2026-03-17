@@ -17,8 +17,9 @@ import { getAdminLanguagesClient, getAdminToursClient } from "@/lib/admin/admin-
 import { cn } from "@/lib/utils";
 import { reorderTourAction } from "./actions";
 
-type ApiTour = components["schemas"]["TourAdminResponseDto"];
+type ApiTour = components["schemas"]["TourAdminListResponseDto"];
 type ApiLanguage = components["schemas"]["LanguageResponseDto"];
+type ApiTourTranslation = components["schemas"]["TourAdminListTranslationResponseDto"];
 type DropPlacement = "before" | "after";
 
 type AdminToursListClientProps = {
@@ -59,6 +60,21 @@ const formatLabel = (value: string) =>
     .replaceAll("_", " ")
     .replaceAll("-", " ")
     .replace(/\b\w/g, (match) => match.toUpperCase());
+
+const getTranslationBadgeTone = (translation: ApiTourTranslation) => {
+  if (translation.isReady && translation.isPublished) {
+    return "border-[#cfe4d3] bg-[#f3fbf4] text-[#2f6b3f]";
+  }
+
+  if (translation.isReady) {
+    return "border-[#e3d5b4] bg-[#fbf7ea] text-[#8a6029]";
+  }
+
+  return "border-[#e8c7c1] bg-[#fbf2f0] text-[#a3483f]";
+};
+
+const getTranslationBadgeLabel = (translation: ApiTourTranslation) =>
+  translation.isPublished ? "Published" : "Draft";
 
 const getAutoScrollStep = (distanceIntoEdgePx: number) => {
   const normalizedDistance = Math.min(
@@ -244,26 +260,26 @@ function TourListRow({
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
               <span className="truncate">Slug: { tour.slug }</span>
               <span>Type: { formatLabel(tour.tourType) }</span>
-              <span>
-                Duration: { typeof tour.durationMinutes === "number"
-                ? `${ tour.durationMinutes } min`
-                : "Not set" }
-              </span>
+              <span>Sort order: { tour.sortOrder + 1 }</span>
               <span>{ Object.keys(tour.translations).length } translations</span>
+              <span>Updated: { new Date(tour.audit.updatedAt).toLocaleDateString("en-US") }</span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        { tour.translationAvailability.map((availability) => (
+        { Object.entries(tour.translations).map(([languageCode, translation]) => (
           <span
-            key={ availability.languageCode }
-            className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
+            key={ languageCode }
+            className={ cn(
+              "rounded-full border px-3 py-1 text-xs font-medium",
+              getTranslationBadgeTone(translation),
+            ) }
           >
-            { languageNameByCode[availability.languageCode] ?? availability.languageCode }
+            { languageNameByCode[languageCode] ?? languageCode }
             { ": " }
-            { availability.isPublished ? "Published" : "Not Published" }
+            { getTranslationBadgeLabel(translation) }
           </span>
         )) }
       </div>
