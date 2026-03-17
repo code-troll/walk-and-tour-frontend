@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
+import { AdminNoticeCard } from "@/components/admin/AdminUi";
 import {
   Dialog,
   DialogContent,
@@ -12,6 +13,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import {
+  getAdminLanguagesClient,
+  getAdminTagsClient,
+  getAdminTourClient,
+} from "@/lib/admin/admin-client";
 import { formatBackendErrorMessage } from "@/lib/api/core/backend-error";
 import {
   TourEditorHeader,
@@ -51,10 +57,11 @@ import {
 type TourEditorClientProps = {
   mode: "create" | "edit";
   initialTour?: ApiTour;
-  availableLanguages: ApiLanguage[];
-  availableTags: ApiTag[];
+  availableLanguages?: ApiLanguage[];
+  availableTags?: ApiTag[];
   accessToken: string;
   backendApiBaseUrl: string;
+  tourId?: string;
 };
 
 type TourMutationResult =
@@ -458,13 +465,20 @@ const getNextActiveTranslationLanguageCode = ({
 export function TourEditorClient({
                                    mode,
                                    initialTour,
-                                   availableLanguages,
-                                 availableTags,
+                                   availableLanguages: initialLanguages = [],
+                                   availableTags: initialTags = [],
                                  accessToken,
                                  backendApiBaseUrl,
+                                 tourId,
                                }: TourEditorClientProps) {
   const router = useRouter();
   const { startNavigation } = useAdminRouteProgress();
+  const [availableLanguages, setAvailableLanguages] = useState<ApiLanguage[]>(initialLanguages);
+  const [availableTags, setAvailableTags] = useState<ApiTag[]>(initialTags);
+  const [isInitialLoading, setIsInitialLoading] = useState(
+    initialLanguages.length === 0 && initialTags.length === 0 && (!initialTour || mode === "edit"),
+  );
+  const [initialLoadError, setInitialLoadError] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<TourSection>("general");
   const [activeTranslationLanguageCode, setActiveTranslationLanguageCode] = useState<string | null>(
     initialTour ? getInitialTourFormState(initialTour).translations[0]?.languageCode ?? null : null,
@@ -490,6 +504,50 @@ export function TourEditorClient({
   const canSaveInitialTour = formState.name.trim().length > 0;
   const diagnostics = savedTour?.translationAvailability ?? initialTour?.translationAvailability ?? [];
   const getLanguageName = (languageCode: string) => availableLanguages.find((lang) => lang.code === languageCode)?.name;
+
+  useEffect(() => {
+    if (
+      initialLanguages.length > 0 &&
+      initialTags.length > 0 &&
+      (mode !== "edit" || initialTour)
+    ) {
+      setIsInitialLoading(false);
+      return;
+    }
+
+    void (async () => {
+      setIsInitialLoading(true);
+      setInitialLoadError(null);
+
+      try {
+        const [languages, tags, tour] = await Promise.all([
+          getAdminLanguagesClient(),
+          getAdminTagsClient(),
+          mode === "edit" && tourId ? getAdminTourClient(tourId) : Promise.resolve(null),
+        ]);
+
+        setAvailableLanguages(languages);
+        setAvailableTags(tags);
+
+        if (mode === "edit") {
+          if (!tour) {
+            setInitialLoadError("The requested tour could not be found.");
+            return;
+          }
+
+          const nextFormState = getInitialTourFormState(tour);
+          setSavedTour(tour);
+          setFormState(nextFormState);
+          setActiveTranslationLanguageCode(nextFormState.translations[0]?.languageCode ?? null);
+          setLastSaved(tour.audit.updatedAt ? new Date(tour.audit.updatedAt) : null);
+        }
+      } catch (error) {
+        setInitialLoadError(error instanceof Error ? error.message : "Unable to load the tour editor.");
+      } finally {
+        setIsInitialLoading(false);
+      }
+    })();
+  }, [initialLanguages.length, initialTags.length, initialTour, mode, tourId]);
 
   useEffect(() => {
     if (!dirtyScope) {
@@ -1881,6 +1939,26 @@ export function TourEditorClient({
           },
         }
         : null;
+
+  if (isInitialLoading) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title={mode === "edit" ? "Loading the tour editor." : "Loading the new tour workspace."}
+        description="Resolving tags, languages, and tour content."
+      />
+    );
+  }
+
+  if (initialLoadError) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title={mode === "edit" ? "The tour editor could not be loaded." : "The new tour workspace could not be loaded."}
+        description={initialLoadError}
+      />
+    );
+  }
 
   return (
     <>

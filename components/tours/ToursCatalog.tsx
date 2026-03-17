@@ -9,7 +9,7 @@ import {
   TOUR_FILTERS,
   type PublicTourCard,
   type TourFilterId,
-} from "@/lib/public-tour-data";
+} from "@/lib/public-tour-model";
 
 const INITIAL_VISIBLE_TOURS = 6;
 const LOAD_MORE_STEP = 3;

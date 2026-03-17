@@ -2,7 +2,6 @@ import { AdminNoticeCard } from "@/components/admin/AdminUi";
 import { getAdminViewerState } from "@/lib/admin/session";
 import { getBackendApiBaseUrl } from "@/lib/api/core/backend-env";
 import { TourEditorClient } from "../tour-editor-client";
-import { loadTourEditorData } from "../loaders";
 
 type AdminEditTourPageProps = {
   params: Promise<{
@@ -30,31 +29,7 @@ export default async function AdminEditTourPage({
   }
 
   const { id } = await params;
-  const editorData = await loadTourEditorData({
-    accessToken: viewerState.accessToken,
-    id,
-  });
   const backendApiBaseUrl = getBackendApiBaseUrl();
-
-  if ("errorMessage" in editorData) {
-    return (
-      <AdminNoticeCard
-        eyebrow="Admin API"
-        title="The tour editor could not be loaded."
-        description={editorData.errorMessage ?? "Unable to load the tour editor."}
-      />
-    );
-  }
-
-  if (!editorData.tour) {
-    return (
-      <AdminNoticeCard
-        eyebrow="Tours"
-        title="The requested tour could not be found."
-        description="Refresh the tours list and reopen the editor from a valid record."
-      />
-    );
-  }
 
   if (!backendApiBaseUrl) {
     return (
@@ -69,11 +44,11 @@ export default async function AdminEditTourPage({
   return (
     <TourEditorClient
       mode="edit"
-      availableLanguages={editorData.languages}
-      availableTags={editorData.tags}
-      initialTour={editorData.tour}
+      availableLanguages={[]}
+      availableTags={[]}
       accessToken={viewerState.accessToken}
       backendApiBaseUrl={backendApiBaseUrl}
+      tourId={id}
     />
   );
 }

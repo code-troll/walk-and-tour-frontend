@@ -1,4 +1,4 @@
-import type { TourFilterId } from "@/lib/public-tour-data";
+import type { TourFilterId } from "@/lib/public-tour-model";
 import cn from "@meltdownjs/cn";
 
 type TourFilterOption = {

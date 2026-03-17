@@ -1,8 +1,10 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 
 import TourListingCard from "@/components/tours/TourListingCard";
 import { Link } from "@/i18n/navigation";
-import type { PublicTourCard } from "@/lib/public-tour-data";
+import type { PublicTourCard } from "@/lib/public-tour-model";
 
 type ToursProps = {
   tours: PublicTourCard[];

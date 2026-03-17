@@ -1,3 +1,5 @@
+"use client";
+
 import { Check, CircleAlert, X } from "lucide-react";
 import TourDetailCollapsibleSection from "@/components/tour-detail/TourDetailCollapsibleSection";
 

@@ -1,7 +1,9 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 
 import CompanyListingCard from "@/components/companies/CompanyListingCard";
-import type { PublicTourCard } from "@/lib/public-tour-data";
+import type { PublicTourCard } from "@/lib/public-tour-model";
 
 type CompaniesExperiencesSectionProps = {
   experiences: PublicTourCard[];

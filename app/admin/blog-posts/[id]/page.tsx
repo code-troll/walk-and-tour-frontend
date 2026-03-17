@@ -2,7 +2,6 @@ import { AdminNoticeCard } from "@/components/admin/AdminUi";
 import { getAdminViewerState } from "@/lib/admin/session";
 import { getBackendApiBaseUrl } from "@/lib/api/core/backend-env";
 import { BlogPostEditorClient } from "../blog-editor-client";
-import { loadBlogPostEditorData } from "../loaders";
 
 type AdminEditBlogPostPageProps = {
   params: Promise<{
@@ -30,31 +29,7 @@ export default async function AdminEditBlogPostPage({
   }
 
   const { id } = await params;
-  const editorData = await loadBlogPostEditorData({
-    accessToken: viewerState.accessToken,
-    id,
-  });
   const backendApiBaseUrl = getBackendApiBaseUrl();
-
-  if ("errorMessage" in editorData) {
-    return (
-      <AdminNoticeCard
-        eyebrow="Admin API"
-        title="The blog post editor could not be loaded."
-        description={ editorData.errorMessage ?? "Unable to load the blog post editor." }
-      />
-    );
-  }
-
-  if (!editorData.blogPost) {
-    return (
-      <AdminNoticeCard
-        eyebrow="Blog posts"
-        title="The requested blog post could not be found."
-        description="Refresh the blog posts list and reopen the editor from a valid record."
-      />
-    );
-  }
 
   if (!backendApiBaseUrl) {
     return (
@@ -69,11 +44,11 @@ export default async function AdminEditBlogPostPage({
   return (
     <BlogPostEditorClient
       mode="edit"
-      availableLanguages={ editorData.languages }
-      availableTags={ editorData.tags }
-      initialBlogPost={ editorData.blogPost }
+      availableLanguages={ [] }
+      availableTags={ [] }
       accessToken={ viewerState.accessToken }
       backendApiBaseUrl={ backendApiBaseUrl }
+      blogPostId={ id }
     />
   );
 }

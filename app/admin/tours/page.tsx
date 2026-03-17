@@ -1,6 +1,5 @@
 import { AdminNoticeCard } from "@/components/admin/AdminUi";
 import { getAdminViewerState } from "@/lib/admin/session";
-import { loadToursListData } from "./loaders";
 import { AdminToursListClient } from "./tours-list-client";
 
 export default async function AdminToursPage() {
@@ -20,24 +19,9 @@ export default async function AdminToursPage() {
     );
   }
 
-  const toursData = await loadToursListData(viewerState.accessToken);
-
-  if ("errorMessage" in toursData) {
-    return (
-      <AdminNoticeCard
-        eyebrow="Admin API"
-        title="The tours workspace could not be loaded."
-        description={ toursData.errorMessage ?? "Unable to load tours." }
-      />
-    );
-  }
-
   return (
     <div className="space-y-6">
-      <AdminToursListClient
-        initialLanguages={ toursData.languages }
-        initialTours={ toursData.tours }
-      />
+      <AdminToursListClient />
     </div>
   );
 }

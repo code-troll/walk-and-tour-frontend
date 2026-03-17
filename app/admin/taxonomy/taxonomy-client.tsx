@@ -1,12 +1,11 @@
 "use client";
 
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import type {components} from "@/lib/api/generated/backend-types";
 import {
   createLanguageAction,
   createTagAction,
   deleteTagAction,
-  fetchTaxonomyAction,
   updateLanguageAction,
   updateTagAction,
 } from "@/app/admin/taxonomy/actions";
@@ -23,7 +22,8 @@ import {
 } from "@/components/ui/dialog";
 import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Switch} from "@/components/ui/switch";
-import {AdminSectionCard} from "@/components/admin/AdminUi";
+import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {getAdminLanguagesClient, getAdminTagsClient} from "@/lib/admin/admin-client";
 
 type ApiTag = components["schemas"]["TagResponseDto"];
 type ApiLanguage = components["schemas"]["LanguageResponseDto"];
@@ -118,6 +118,10 @@ export function TaxonomyClient({
 }: TaxonomyClientProps) {
   const [tags, setTags] = useState<ApiTag[]>(initialTags);
   const [languages, setLanguages] = useState<ApiLanguage[]>(sortLanguages(initialLanguages));
+  const [isInitialLoading, setIsInitialLoading] = useState(
+    initialTags.length === 0 && (!canManageLanguages || initialLanguages.length === 0),
+  );
+  const [initialLoadError, setInitialLoadError] = useState<string | null>(null);
   const [isTagDialogOpen, setIsTagDialogOpen] = useState(false);
   const [editingTag, setEditingTag] = useState<ApiTag | null>(null);
   const [tagForm, setTagForm] = useState<TagFormState>({
@@ -178,14 +182,79 @@ export function TaxonomyClient({
     name: languageNameByCode[code] ?? code,
   }));
 
-  const refreshTaxonomy = async () => {
-    const {languages: nextLanguages, tags: nextTags} = await fetchTaxonomyAction();
+  const refreshTaxonomy = useCallback(async () => {
+    const [nextTags, nextLanguages] = await Promise.all([
+      getAdminTagsClient(),
+      canManageLanguages ? getAdminLanguagesClient() : Promise.resolve([]),
+    ]);
 
     setTags(nextTags);
     if (canManageLanguages) {
       setLanguages(sortLanguages(nextLanguages));
     }
-  };
+  }, [canManageLanguages]);
+
+  useEffect(() => {
+    if (initialTags.length > 0 || (canManageLanguages && initialLanguages.length > 0)) {
+      setIsInitialLoading(false);
+      return;
+    }
+
+    void (async () => {
+      setIsInitialLoading(true);
+      setInitialLoadError(null);
+
+      try {
+        await refreshTaxonomy();
+      } catch (error) {
+        setInitialLoadError(getErrorMessage(error, "Unable to load taxonomy data."));
+      } finally {
+        setIsInitialLoading(false);
+      }
+    })();
+  }, [canManageLanguages, initialLanguages.length, initialTags.length, refreshTaxonomy]);
+
+  if (isInitialLoading) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title="Loading the taxonomy workspace."
+        description="Resolving tags and language metadata."
+      />
+    );
+  }
+
+  if (initialLoadError) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title="The taxonomy workspace could not be loaded."
+        description={initialLoadError}
+        actions={
+          <button
+            type="button"
+            onClick={() => {
+              void (async () => {
+                setInitialLoadError(null);
+                setIsInitialLoading(true);
+
+                try {
+                  await refreshTaxonomy();
+                } catch (error) {
+                  setInitialLoadError(getErrorMessage(error, "Unable to load taxonomy data."));
+                } finally {
+                  setIsInitialLoading(false);
+                }
+              })();
+            }}
+            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+          >
+            Retry
+          </button>
+        }
+      />
+    );
+  }
 
   const openTagDialog = (tag?: ApiTag) => {
     setTagDialogError(null);

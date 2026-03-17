@@ -1,3 +1,5 @@
+"use client";
+
 import TourDetailCollapsibleSection from "@/components/tour-detail/TourDetailCollapsibleSection";
 
 type TourDetailAboutSectionProps = {

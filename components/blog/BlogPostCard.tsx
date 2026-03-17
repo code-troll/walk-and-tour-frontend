@@ -1,7 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
-import type { PublicBlogCard } from "@/lib/public-blog-data";
+import type { PublicBlogCard } from "@/lib/public-blog-model";
 
 type BlogPostCardProps = {
   post: PublicBlogCard;

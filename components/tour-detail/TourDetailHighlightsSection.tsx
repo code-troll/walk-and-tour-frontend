@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import TourDetailCollapsibleSection from "@/components/tour-detail/TourDetailCollapsibleSection";
 

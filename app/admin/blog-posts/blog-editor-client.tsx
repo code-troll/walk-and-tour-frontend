@@ -17,7 +17,7 @@ import {
   X,
 } from "lucide-react";
 import { AdminProgressLink, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
-import { AdminSectionCard } from "@/components/admin/AdminUi";
+import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
 import BlogPostArticle from "@/components/blog/BlogPostArticle";
 import { TiptapHtmlEditor, type TiptapHtmlEditorHandle } from "@/components/admin/TiptapHtmlEditor";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,11 @@ import {
   type ApiUploadedMediaAsset,
   uploadAdminMediaAsset,
 } from "@/lib/admin/media-client";
+import {
+  getAdminBlogPostClient,
+  getAdminLanguagesClient,
+  getAdminTagsClient,
+} from "@/lib/admin/admin-client";
 import {
   createBlogPreviewData,
   createEmptyBlogFormState,
@@ -79,10 +84,11 @@ const viewCountFormatter = new Intl.NumberFormat("en-US");
 
 type BlogPostEditorClientProps = {
   accessToken: string;
-  availableLanguages: ApiLanguage[];
-  availableTags: ApiTag[];
+  availableLanguages?: ApiLanguage[];
+  availableTags?: ApiTag[];
   backendApiBaseUrl: string;
   initialBlogPost?: ApiBlogPost | null;
+  blogPostId?: string;
   mode: "create" | "edit";
 };
 
@@ -107,14 +113,21 @@ const getTagLabel = (tag: ApiTag) =>
 
 export function BlogPostEditorClient({
                                        accessToken,
-                                       availableLanguages,
-                                       availableTags,
+                                       availableLanguages: initialLanguages = [],
+                                       availableTags: initialTags = [],
                                        backendApiBaseUrl,
                                        initialBlogPost = null,
+                                       blogPostId,
                                        mode,
                                      }: BlogPostEditorClientProps) {
   const router = useRouter();
   const { startNavigation } = useAdminRouteProgress();
+  const [availableLanguages, setAvailableLanguages] = useState<ApiLanguage[]>(initialLanguages);
+  const [availableTags, setAvailableTags] = useState<ApiTag[]>(initialTags);
+  const [isInitialLoading, setIsInitialLoading] = useState(
+    initialLanguages.length === 0 && initialTags.length === 0 && (!initialBlogPost || mode === "edit"),
+  );
+  const [initialLoadError, setInitialLoadError] = useState<string | null>(null);
   const editorRef = useRef<TiptapHtmlEditorHandle | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const mediaPreviewObjectUrlsRef = useRef<Map<string, string>>(new Map());
@@ -172,6 +185,48 @@ export function BlogPostEditorClient({
   const isCreated = Boolean(savedBlogPost?.id);
   const generatedSlug = generateBlogSlug(formState.name);
   const publicLocaleCount = savedBlogPost?.translationAvailability.filter((item) => item.publiclyAvailable).length ?? 0;
+
+  useEffect(() => {
+    if (
+      initialLanguages.length > 0 &&
+      initialTags.length > 0 &&
+      (mode !== "edit" || initialBlogPost)
+    ) {
+      setIsInitialLoading(false);
+      return;
+    }
+
+    void (async () => {
+      setIsInitialLoading(true);
+      setInitialLoadError(null);
+
+      try {
+        const [languages, tags, blogPost] = await Promise.all([
+          getAdminLanguagesClient(),
+          getAdminTagsClient(),
+          mode === "edit" && blogPostId ? getAdminBlogPostClient(blogPostId) : Promise.resolve(null),
+        ]);
+
+        setAvailableLanguages(languages);
+        setAvailableTags(tags);
+
+        if (mode === "edit") {
+          if (!blogPost) {
+            setInitialLoadError("The requested blog post could not be found.");
+            return;
+          }
+
+          setSavedBlogPost(blogPost);
+          setFormState(createBlogFormStateFromApi(blogPost));
+          setActiveLanguageCode(Object.keys(blogPost.translations)[0] ?? null);
+        }
+      } catch (error) {
+        setInitialLoadError(error instanceof Error ? error.message : "Unable to load the blog post editor.");
+      } finally {
+        setIsInitialLoading(false);
+      }
+    })();
+  }, [blogPostId, initialBlogPost, initialLanguages.length, initialTags.length, mode]);
 
   useEffect(() => {
     const previewUrls = mediaPreviewObjectUrlsRef.current;
@@ -796,6 +851,26 @@ export function BlogPostEditorClient({
   const mediaDialogDescription = mediaDialogMode === "cover"
     ? "Choose or upload the image used for blog listings and the hero section."
     : "Choose or upload an image to insert into the article body. After insertion, select the image in the editor to change its size and alignment.";
+
+  if (isInitialLoading) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title={mode === "edit" ? "Loading the blog post editor." : "Loading the new blog post workspace."}
+        description="Resolving tags, languages, and blog content."
+      />
+    );
+  }
+
+  if (initialLoadError) {
+    return (
+      <AdminNoticeCard
+        eyebrow="Admin API"
+        title={mode === "edit" ? "The blog post editor could not be loaded." : "The new blog post workspace could not be loaded."}
+        description={initialLoadError}
+      />
+    );
+  }
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">

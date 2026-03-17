@@ -1,3 +1,5 @@
+"use client";
+
 import ElfsightReviews from "@/components/home/ElfsightReviews";
 
 export default function TourDetailElfsightReviewsSection() {
