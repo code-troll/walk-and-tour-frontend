@@ -13,15 +13,19 @@ import {
   Globe,
   Heading2,
   Heading3,
+  Highlighter,
   ImagePlus,
   Italic,
   Link2,
   List,
   ListOrdered,
+  Palette,
   Pilcrow,
   Quote,
   RemoveFormatting,
   Settings2,
+  Strikethrough,
+  Underline,
 } from "lucide-react";
 import ImageResize from "tiptap-extension-resize-image";
 import { Button } from "@/components/ui/button";
@@ -259,6 +263,51 @@ const extractWidthFromStyle = (value: string | null | undefined) => {
   const match = value.match(/width:\s*([^;]+)/i);
   return match?.[1]?.trim() ?? null;
 };
+
+const extractStyleProperty = (value: string | null | undefined, propertyName: string) => {
+  if (!value) {
+    return null;
+  }
+
+  const escapedPropertyName = propertyName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = value.match(new RegExp(`${ escapedPropertyName }\\s*:\\s*([^;]+)`, "i"));
+  return match?.[1]?.trim() ?? null;
+};
+
+const parseRgbChannel = (value: string) => {
+  const parsed = Number.parseInt(value.trim(), 10);
+  return Number.isNaN(parsed) ? null : Math.max(0, Math.min(255, parsed));
+};
+
+const normalizeColorInputValue = (value: string | null | undefined, fallback: string) => {
+  if (!value) {
+    return fallback;
+  }
+
+  const normalizedValue = value.trim();
+  if (/^#[\da-f]{6}$/i.test(normalizedValue)) {
+    return normalizedValue.toLowerCase();
+  }
+
+  const shortHexMatch = normalizedValue.match(/^#([\da-f]{3})$/i);
+  if (shortHexMatch) {
+    return `#${ shortHexMatch[1].split("").map((character) => `${ character }${ character }`).join("") }`.toLowerCase();
+  }
+
+  const rgbMatch = normalizedValue.match(/^rgb\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*\)$/i);
+  if (rgbMatch) {
+    const channels = rgbMatch.slice(1).map((channel) => parseRgbChannel(channel));
+    if (channels.every((channel): channel is number => channel !== null)) {
+      return `#${ channels.map((channel) => channel.toString(16).padStart(2, "0")).join("") }`;
+    }
+  }
+
+  return fallback;
+};
+
+const DEFAULT_TEXT_COLOR = "#21343b";
+const DEFAULT_HIGHLIGHT_COLOR = "#fff2a8";
+const EDITOR_SCHEMA_VERSION = "blog-editor-inline-marks-v2";
 
 const inferImageAlignment = (containerStyle: string | null | undefined, wrapperStyle: string | null | undefined) => {
   const combinedStyle = `${ wrapperStyle ?? "" } ${ containerStyle ?? "" }`.toLowerCase();
@@ -2155,7 +2204,7 @@ function BlogTuritopWidgetNodeView({
       />
 
       { isResizing ? (
-        <div className="fixed inset-0 z-[999]" />
+        <div className="fixed inset-0 z-999" />
       ) : null }
     </NodeViewWrapper>
   );
@@ -2395,6 +2444,156 @@ const ItalicMark = Mark.create({
   },
   renderHTML({ HTMLAttributes }) {
     return ["em", mergeAttributes(HTMLAttributes), 0];
+  },
+});
+
+const UnderlineMark = Mark.create({
+  name: "underline",
+  parseHTML() {
+    return [
+      { tag: "u" },
+      {
+        tag: "span",
+        getAttrs: (element) => {
+          const textDecoration = extractStyleProperty((element as HTMLElement).getAttribute("style"), "text-decoration");
+          return textDecoration?.toLowerCase().includes("underline") ? null : false;
+        },
+      },
+    ];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ["u", mergeAttributes(HTMLAttributes), 0];
+  },
+});
+
+const StrikeMark = Mark.create({
+  name: "strike",
+  parseHTML() {
+    return [
+      { tag: "s" },
+      { tag: "del" },
+      { tag: "strike" },
+      {
+        tag: "span",
+        getAttrs: (element) => {
+          const textDecoration = extractStyleProperty((element as HTMLElement).getAttribute("style"), "text-decoration");
+          return textDecoration?.toLowerCase().includes("line-through") ? null : false;
+        },
+      },
+    ];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ["s", mergeAttributes(HTMLAttributes), 0];
+  },
+});
+
+const TextColorMark = Mark.create({
+  name: "textColor",
+  addAttributes() {
+    return {
+      color: {
+        default: null,
+      },
+    };
+  },
+  parseHTML() {
+    return [
+      {
+        tag: "span",
+        getAttrs: (element) => {
+          const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "color");
+          return color ? { color } : false;
+        },
+      },
+      {
+        tag: "[style]",
+        getAttrs: (element) => {
+          const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "color");
+          return color ? { color } : false;
+        },
+      },
+      {
+        tag: "font[color]",
+        getAttrs: (element) => {
+          const color = (element as HTMLElement).getAttribute("color");
+          return color ? { color } : false;
+        },
+      },
+    ];
+  },
+  renderHTML({ HTMLAttributes }) {
+    const color = typeof HTMLAttributes.color === "string" ? HTMLAttributes.color.trim() : "";
+
+    if (!color) {
+      return ["span", mergeAttributes(HTMLAttributes), 0];
+    }
+
+    const attributes = { ...HTMLAttributes };
+    delete attributes.color;
+
+    return [
+      "span",
+      mergeAttributes(attributes, {
+        style: styleObjectToString({ color }),
+      }),
+      0,
+    ];
+  },
+});
+
+const TextHighlightMark = Mark.create({
+  name: "textHighlight",
+  addAttributes() {
+    return {
+      color: {
+        default: null,
+      },
+    };
+  },
+  parseHTML() {
+    return [
+      {
+        tag: "mark",
+        getAttrs: (element) => ({
+          color: extractStyleProperty((element as HTMLElement).getAttribute("style"), "background-color") ?? DEFAULT_HIGHLIGHT_COLOR,
+        }),
+      },
+      {
+        tag: "span",
+        getAttrs: (element) => {
+          const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "background-color");
+          return color ? { color } : false;
+        },
+      },
+      {
+        tag: "[style]",
+        getAttrs: (element) => {
+          const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "background-color");
+          return color ? { color } : false;
+        },
+      },
+    ];
+  },
+  renderHTML({ HTMLAttributes }) {
+    const color = typeof HTMLAttributes.color === "string" ? HTMLAttributes.color.trim() : "";
+
+    if (!color) {
+      return ["mark", mergeAttributes(HTMLAttributes), 0];
+    }
+
+    const attributes = { ...HTMLAttributes };
+    delete attributes.color;
+
+    return [
+      "mark",
+      mergeAttributes(attributes, {
+        style: styleObjectToString({
+          backgroundColor: color,
+          color: "inherit",
+        }),
+      }),
+      0,
+    ];
   },
 });
 
@@ -2815,22 +3014,23 @@ const BlogEmbed = Node.create({
   addNodeView() {
     return ReactNodeViewRenderer(BlogEmbedNodeView);
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({ HTMLAttributes, node }) {
+    const attrs = node.attrs as Record<string, unknown>;
     const alignment = toEmbedAlignment(
-      typeof HTMLAttributes.alignment === "string" ? HTMLAttributes.alignment : "",
+      typeof attrs.alignment === "string" ? attrs.alignment : "",
     );
     const provider = toSupportedIframeProvider(
-      typeof HTMLAttributes.provider === "string" ? HTMLAttributes.provider : "",
+      typeof attrs.provider === "string" ? attrs.provider : "",
     );
-    const embedSrc = typeof HTMLAttributes.embedSrc === "string" ? HTMLAttributes.embedSrc.trim() : "";
-    const title = typeof HTMLAttributes.title === "string" ? HTMLAttributes.title.trim() : "";
-    const customHeight = getEmbedHeightFromAttrs(HTMLAttributes);
-    const customWidth = getEmbedWidthFromAttrs(HTMLAttributes);
+    const embedSrc = typeof attrs.embedSrc === "string" ? attrs.embedSrc.trim() : "";
+    const title = typeof attrs.title === "string" ? attrs.title.trim() : "";
+    const customHeight = getEmbedHeightFromAttrs(attrs);
+    const customWidth = getEmbedWidthFromAttrs(attrs);
     const widthPreset = toEmbedWidthPreset(
-      typeof HTMLAttributes.widthPreset === "string" ? HTMLAttributes.widthPreset : "",
+      typeof attrs.widthPreset === "string" ? attrs.widthPreset : "",
     );
-    const height = typeof HTMLAttributes.height === "number" && Number.isFinite(HTMLAttributes.height)
-      ? HTMLAttributes.height
+    const height = typeof attrs.height === "number" && Number.isFinite(attrs.height)
+      ? attrs.height
       : 560;
 
     if (!provider || !embedSrc) {
@@ -2976,9 +3176,10 @@ const BlogLinkCard = Node.create({
   addNodeView() {
     return ReactNodeViewRenderer(BlogLinkCardNodeView);
   },
-  renderHTML({ HTMLAttributes }) {
-    const href = typeof HTMLAttributes.href === "string" ? HTMLAttributes.href.trim() : "";
-    const title = typeof HTMLAttributes.title === "string" ? HTMLAttributes.title.trim() : href;
+  renderHTML({ HTMLAttributes, node }) {
+    const attrs = node.attrs as Record<string, unknown>;
+    const href = typeof attrs.href === "string" ? attrs.href.trim() : "";
+    const title = typeof attrs.title === "string" ? attrs.title.trim() : href;
 
     if (!href) {
       return ["div", mergeAttributes(HTMLAttributes)];
@@ -3061,6 +3262,10 @@ const editorExtensions = [
   ListItem,
   BoldMark,
   ItalicMark,
+  UnderlineMark,
+  StrikeMark,
+  TextColorMark,
+  TextHighlightMark,
   LinkMark,
   BlogImage.configure({
     minWidth: 120,
@@ -3087,6 +3292,16 @@ type ToolbarButtonProps = {
   onClick: () => void;
 };
 
+type ToolbarColorControlProps = {
+  active?: boolean;
+  currentColor: string;
+  disabled?: boolean;
+  icon: ComponentType<{ className?: string }>;
+  label: string;
+  onChange: (value: string) => void;
+  onClear: () => void;
+};
+
 function ToolbarButton({
   active = false,
   disabled = false,
@@ -3106,6 +3321,47 @@ function ToolbarButton({
       <Icon className="size-4"/>
       <span className="hidden md:inline">{ label }</span>
     </Button>
+  );
+}
+
+function ToolbarColorControl({
+  active = false,
+  currentColor,
+  disabled = false,
+  icon: Icon,
+  label,
+  onChange,
+  onClear,
+}: ToolbarColorControlProps) {
+  return (
+    <div
+      className={ cn(
+        "inline-flex h-7 shrink-0 items-center justify-center gap-1 rounded-[min(var(--radius-md),12px)] border bg-background px-2.5 text-[0.8rem] font-medium whitespace-nowrap transition-all",
+        active ? "border-primary ring-2 ring-ring/20" : "border-border",
+        disabled ? "opacity-60" : "",
+      ) }
+    >
+      <Icon className="size-4 shrink-0"/>
+      <span className="hidden md:inline">{ label }</span>
+      <input
+        type="color"
+        value={ currentColor }
+        onChange={ (event) => onChange(event.target.value) }
+        disabled={ disabled }
+        aria-label={ `${ label } color` }
+        className="h-5 w-7 cursor-pointer rounded border border-input bg-transparent p-0 disabled:cursor-not-allowed"
+      />
+      <Button
+        type="button"
+        size="sm"
+        variant="ghost"
+        onClick={ onClear }
+        disabled={ disabled || !active }
+        className="h-5 px-1.5 text-[0.8rem]"
+      >
+        Clear
+      </Button>
+    </div>
   );
 }
 
@@ -3132,6 +3388,7 @@ export const TiptapHtmlEditor = forwardRef<
   const [turitopDialogError, setTuritopDialogError] = useState<string | null>(null);
   const [turitopLanguageInput, setTuritopLanguageInput] = useState("es");
   const [turitopServiceInput, setTuritopServiceInput] = useState("");
+  const [, setToolbarVersion] = useState(0);
   const editor = useEditor({
     immediatelyRender: false,
     extensions: editorExtensions,
@@ -3139,13 +3396,17 @@ export const TiptapHtmlEditor = forwardRef<
     editorProps: {
       attributes: {
         class:
-          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [&_blockquote]:border-l-4 [&_blockquote]:border-[#d8c5a8] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[#eadfce] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-turitop=\"true\"]]:shadow-sm",
+          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [display:flow-root] after:block after:clear-both after:content-[''] [&_blockquote]:border-l-4 [&_blockquote]:border-[#d8c5a8] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[#eadfce] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-turitop=\"true\"]]:shadow-sm overflow-visible",
       },
     },
     onUpdate: ({ editor: nextEditor }) => {
       onChange(nextEditor.getHTML());
+      setToolbarVersion((current) => current + 1);
     },
-  });
+    onSelectionUpdate: () => {
+      setToolbarVersion((current) => current + 1);
+    },
+  }, [EDITOR_SCHEMA_VERSION]);
 
   useImperativeHandle(ref, () => ({
     getHtml: () => editor?.getHTML() ?? normalizeEditorValue(value),
@@ -3214,6 +3475,52 @@ export const TiptapHtmlEditor = forwardRef<
         target: "_blank",
       })
       .run();
+  };
+
+  const toggleMarkSafely = (markName: string) => {
+    if (!editor) {
+      return;
+    }
+
+    if (!editor.schema.marks[markName]) {
+      onError?.(`The ${ markName } formatter is not available in the current editor instance. Reload the page and try again.`);
+      return;
+    }
+
+    editor.chain().focus().toggleMark(markName).run();
+  };
+
+  const currentTextColor = normalizeColorInputValue(
+    editor?.getAttributes("textColor").color,
+    DEFAULT_TEXT_COLOR,
+  );
+  const currentHighlightColor = normalizeColorInputValue(
+    editor?.getAttributes("textHighlight").color,
+    DEFAULT_HIGHLIGHT_COLOR,
+  );
+
+  const setTextColor = (color: string) => {
+    if (!editor) {
+      return;
+    }
+
+    editor.chain().focus().setMark("textColor", { color }).run();
+  };
+
+  const clearTextColor = () => {
+    editor?.chain().focus().unsetMark("textColor").run();
+  };
+
+  const setHighlightColor = (color: string) => {
+    if (!editor) {
+      return;
+    }
+
+    editor.chain().focus().setMark("textHighlight", { color }).run();
+  };
+
+  const clearHighlightColor = () => {
+    editor?.chain().focus().unsetMark("textHighlight").run();
   };
 
   const submitEmbed = () => {
@@ -3378,14 +3685,46 @@ export const TiptapHtmlEditor = forwardRef<
           label="Bold"
           active={ Boolean(editor?.isActive("bold")) }
           disabled={ !editor }
-          onClick={ () => editor?.chain().focus().toggleMark("bold").run() }
+          onClick={ () => toggleMarkSafely("bold") }
         />
         <ToolbarButton
           icon={ Italic }
           label="Italic"
           active={ Boolean(editor?.isActive("italic")) }
           disabled={ !editor }
-          onClick={ () => editor?.chain().focus().toggleMark("italic").run() }
+          onClick={ () => toggleMarkSafely("italic") }
+        />
+        <ToolbarButton
+          icon={ Underline }
+          label="Underline"
+          active={ Boolean(editor?.isActive("underline")) }
+          disabled={ !editor }
+          onClick={ () => toggleMarkSafely("underline") }
+        />
+        <ToolbarButton
+          icon={ Strikethrough }
+          label="Strike"
+          active={ Boolean(editor?.isActive("strike")) }
+          disabled={ !editor }
+          onClick={ () => toggleMarkSafely("strike") }
+        />
+        <ToolbarColorControl
+          icon={ Palette }
+          label="Text"
+          active={ Boolean(editor?.isActive("textColor")) }
+          currentColor={ currentTextColor }
+          disabled={ !editor }
+          onChange={ setTextColor }
+          onClear={ clearTextColor }
+        />
+        <ToolbarColorControl
+          icon={ Highlighter }
+          label="Highlight"
+          active={ Boolean(editor?.isActive("textHighlight")) }
+          currentColor={ currentHighlightColor }
+          disabled={ !editor }
+          onChange={ setHighlightColor }
+          onClear={ clearHighlightColor }
         />
         <ToolbarButton
           icon={ List }
