@@ -1,11 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType } from "react";
 import { useRouter } from "next/navigation";
+import { ES, GB, IT } from "country-flag-icons/react/3x2";
 import {
   ArrowLeft,
   Check,
+  ChevronDown,
+  ChevronRight,
   Eye,
   Globe,
   LoaderCircle,
@@ -81,6 +84,31 @@ const selectClassName =
 const fieldLabelClassName = "text-sm font-medium text-foreground";
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 const viewCountFormatter = new Intl.NumberFormat("en-US");
+type TranslationCountryCode = "GB" | "ES" | "IT";
+
+const flagByCountryCode: Record<TranslationCountryCode, ComponentType<{ className?: string }>> = {
+  GB,
+  ES,
+  IT,
+};
+
+const getTranslationCountryCode = (languageCode: string): TranslationCountryCode | null => {
+  const normalizedLanguageCode = languageCode.trim().toLowerCase();
+
+  if (normalizedLanguageCode === "en" || normalizedLanguageCode.startsWith("en-")) {
+    return "GB";
+  }
+
+  if (normalizedLanguageCode === "es" || normalizedLanguageCode.startsWith("es-")) {
+    return "ES";
+  }
+
+  if (normalizedLanguageCode === "it" || normalizedLanguageCode.startsWith("it-")) {
+    return "IT";
+  }
+
+  return null;
+};
 
 type BlogPostEditorClientProps = {
   accessToken: string;
@@ -158,6 +186,8 @@ export function BlogPostEditorClient({
   const [isUploadingMedia, setIsUploadingMedia] = useState(false);
   const [mediaPreviewStatus, setMediaPreviewStatus] = useState<MediaPreviewStatus>({});
   const [isPreviewDialogOpen, setIsPreviewDialogOpen] = useState(false);
+  const [isTranslationDetailsCollapsed, setIsTranslationDetailsCollapsed] = useState(true);
+  const [pendingDeleteLanguageCode, setPendingDeleteLanguageCode] = useState<string | null>(null);
 
   const enabledLanguages = useMemo(
     () => [...availableLanguages]
@@ -185,6 +215,7 @@ export function BlogPostEditorClient({
   const selectedMediaAsset =
     mediaLibraryItems.find((asset) => asset.id === selectedMediaId) ?? null;
   const isCreated = Boolean(savedBlogPost?.id);
+  const canAddTranslations = isCreated && remainingLanguages.length > 0;
   const generatedSlug = generateBlogSlug(formState.name);
   const publicLocaleCount = savedBlogPost?.translationAvailability.filter((item) => item.publiclyAvailable).length ?? 0;
 
@@ -243,9 +274,15 @@ export function BlogPostEditorClient({
     };
   }, []);
 
-  const applySavedBlogPost = (blogPost: ApiBlogPost, successMessage: string) => {
+  const applySavedBlogPost = (
+    blogPost: ApiBlogPost,
+    successMessage: string,
+    options?: {
+      refreshedLanguageCodes?: string[];
+    },
+  ) => {
     setSavedBlogPost(blogPost);
-    setFormState((current) => mergeBlogFormStateWithApiPost(current, blogPost));
+    setFormState((current) => mergeBlogFormStateWithApiPost(current, blogPost, options));
     setFeedback({
       tone: "success",
       message: successMessage,
@@ -361,6 +398,7 @@ export function BlogPostEditorClient({
       translations: [...current.translations, createEmptyTranslationFormState(selectedLanguageToAdd)],
     }));
     setActiveLanguageCode(selectedLanguageToAdd);
+    setIsTranslationDetailsCollapsed(false);
     setLanguageToAdd("");
   };
 
@@ -400,6 +438,9 @@ export function BlogPostEditorClient({
     applySavedBlogPost(
       result.blogPost,
       `${ languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode } translation saved.`,
+      {
+        refreshedLanguageCodes: [activeTranslation.languageCode],
+      },
     );
   };
 
@@ -441,7 +482,13 @@ export function BlogPostEditorClient({
       }
 
       nextBlogPost = saveResult.blogPost;
-      applySavedBlogPost(nextBlogPost, `${ languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode } translation saved.`);
+      applySavedBlogPost(
+        nextBlogPost,
+        `${ languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode } translation saved.`,
+        {
+          refreshedLanguageCodes: [activeTranslation.languageCode],
+        },
+      );
     } else if (!activeTranslation.isPublished) {
       const saveResult = await updateBlogPostTranslationAction({
         body: toUpdateBlogTranslationBody(activeTranslation),
@@ -459,7 +506,13 @@ export function BlogPostEditorClient({
       }
 
       nextBlogPost = saveResult.blogPost;
-      applySavedBlogPost(nextBlogPost, `${ languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode } translation saved.`);
+      applySavedBlogPost(
+        nextBlogPost,
+        `${ languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode } translation saved.`,
+        {
+          refreshedLanguageCodes: [activeTranslation.languageCode],
+        },
+      );
     }
 
     const publishResult = activeTranslation.isPublished
@@ -487,17 +540,17 @@ export function BlogPostEditorClient({
       activeTranslation.isPublished
         ? `${ languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode } translation unpublished.`
         : `${ languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode } translation published.`,
+      {
+        refreshedLanguageCodes: [activeTranslation.languageCode],
+      },
     );
   };
 
   const removeTranslation = async (languageCode: string) => {
     const languageName = languageNameByCode[languageCode] ?? languageCode;
-    if (!window.confirm(`Delete the ${ languageName } translation?`)) {
-      return;
-    }
-
     const translation = formState.translations.find((item) => item.languageCode === languageCode);
     if (!translation) {
+      setPendingDeleteLanguageCode(null);
       return;
     }
 
@@ -514,6 +567,7 @@ export function BlogPostEditorClient({
         tone: "success",
         message: `${ languageName } draft removed.`,
       });
+      setPendingDeleteLanguageCode(null);
       return;
     }
 
@@ -565,6 +619,7 @@ export function BlogPostEditorClient({
       message: `${ languageName } translation deleted.`,
     });
     setLastSaved(new Date());
+    setPendingDeleteLanguageCode(null);
   };
 
   const ensureMediaPreview = useCallback(async ({
@@ -1072,7 +1127,7 @@ export function BlogPostEditorClient({
               : "Create the shared blog record first. Locale translations are attached after the base post exists."
           }
           actions={
-            isCreated && remainingLanguages.length > 0 ? (
+            canAddTranslations ? (
               <>
                 <select
                   value={ selectedLanguageToAdd }
@@ -1115,25 +1170,45 @@ export function BlogPostEditorClient({
                     );
                     const savedTranslation = savedBlogPost?.translations[translation.languageCode];
                     const isActive = translation.languageCode === resolvedActiveLanguageCode;
+                    const isSaved = translation.existsOnServer;
+                    const isPublished = availability?.isPublished || translation.isPublished;
+                    const statusLabel = isPublished
+                      ? "Published"
+                      : isSaved
+                        ? "Saved draft"
+                        : "Not saved";
+                    const countryCode = getTranslationCountryCode(translation.languageCode);
+                    const Flag = countryCode ? flagByCountryCode[countryCode] : null;
 
                     return (
                       <button
                         key={ translation.languageCode }
                         type="button"
-                        onClick={ () => setActiveLanguageCode(translation.languageCode) }
+                          onClick={ () => {
+                            setActiveLanguageCode(translation.languageCode);
+                            setIsTranslationDetailsCollapsed(false);
+                          } }
                         className={ cn(
                           "rounded-2xl border px-4 py-3 text-left transition",
                           isActive
                             ? "border-[#d8c5a8] bg-[#fcfaf6] ring-2 ring-[#eadfce]"
-                            : "border-[#eadfce] bg-white hover:border-[#d8c5a8]",
+                            : isSaved
+                              ? "border-[#eadfce] bg-white hover:border-[#d8c5a8]"
+                              : "border-[#e9c9c2] bg-[#fff7f5] hover:border-[#d9a89f]",
                         ) }
                       >
                         <div className="flex items-center gap-2 text-sm font-medium text-[#21343b]">
-                          <Globe className="size-4 text-[#9a6a2f]"/>
+                          { Flag ? (
+                            <span className="overflow-hidden rounded-sm border-[#dccfbf]">
+                              <Flag className="size-4"/>
+                            </span>
+                          ) : (
+                            <Globe className="size-4 text-[#9a6a2f]"/>
+                          ) }
                           { languageNameByCode[translation.languageCode] ?? translation.languageCode }
                         </div>
-                        <p className="mt-1 text-xs text-[#627176]">
-                          { availability?.isPublished || translation.isPublished ? "Published" : "Draft" }
+                        <p className={ cn("mt-1 text-xs font-medium", isSaved ? "text-[#627176]" : "text-[#a3483f]") }>
+                          { statusLabel }
                           { availability?.publiclyAvailable ? " - Public" : "" }
                         </p>
                         <p className="mt-1 text-xs font-medium text-[#8f6a3b]">
@@ -1146,19 +1221,31 @@ export function BlogPostEditorClient({
               </div>
 
               { activeTranslation ? (
-                <div className="space-y-5 rounded-lg border border-border bg-muted/30 p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <h3 className="text-lg font-semibold text-foreground">
-                        { languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode }
-                      </h3>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        Upload images from the media library, use Video for YouTube or Vimeo links, then select inserted
-                        images in the body to change size, alignment, and captions.
-                      </p>
-                    </div>
+                  <div className="space-y-5 rounded-lg border border-border bg-muted/30 p-5">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <button
+                        type="button"
+                        onClick={ () => setIsTranslationDetailsCollapsed((current) => !current) }
+                        className="flex min-w-0 flex-1 items-start gap-3 text-left"
+                        aria-expanded={ !isTranslationDetailsCollapsed }
+                      >
+                        { isTranslationDetailsCollapsed ? (
+                          <ChevronRight className="mt-1 size-4 shrink-0 text-muted-foreground"/>
+                        ) : (
+                          <ChevronDown className="mt-1 size-4 shrink-0 text-muted-foreground"/>
+                        ) }
+                        <div className="min-w-0">
+                          <h3 className="text-lg font-semibold text-foreground">
+                            { languageNameByCode[activeTranslation.languageCode] ?? activeTranslation.languageCode }
+                          </h3>
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            Upload images from the media library, use Video for YouTube or Vimeo links, then select inserted
+                            images in the body to change size, alignment, and captions.
+                          </p>
+                        </div>
+                      </button>
 
-                    <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                       <span className="rounded-full border border-[#d8c5a8] bg-[#fcfaf6] px-3 py-1 text-xs font-medium text-[#8f6a3b]">
                         Views: {
                           viewCountFormatter.format(
@@ -1167,106 +1254,110 @@ export function BlogPostEditorClient({
                         }
                       </span>
                     </div>
-                  </div>
-
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={ () => setIsPreviewDialogOpen(true) }
-                        disabled={ isMutating }
-                        className="gap-2"
-                      >
-                        <Eye className="size-4"/>
-                        Preview
-                      </Button>
-                      <Button type="button" variant="outline" onClick={ saveTranslation } disabled={ isMutating }
-                              className="gap-2">
-                        { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
-                        Save Translation
-                      </Button>
-                      <Button
-                        type="button"
-                        onClick={ togglePublishTranslation }
-                        disabled={ isMutating }
-                        className="gap-2"
-                      >
-                        { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Globe className="size-4"/> }
-                        { activeTranslation.isPublished ? "Unpublish" : "Publish" }
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={ () => void removeTranslation(activeTranslation.languageCode) }
-                        disabled={ isMutating }
-                        className="gap-2 text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="size-4"/>
-                        Delete
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="grid gap-5 lg:grid-cols-2">
-                    <div className="space-y-2">
-                      <label className={ fieldLabelClassName } htmlFor="translation-title">Title</label>
-                      <Input
-                        id="translation-title"
-                        value={ activeTranslation.title }
-                        onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "title", event.target.value) }
-                        placeholder="Barcelona Historic Center Guide"
-                        className="h-11"
-                      />
                     </div>
 
-                    <div className="space-y-2">
-                      <label className={ fieldLabelClassName } htmlFor="translation-summary">Summary</label>
-                      <textarea
-                        id="translation-summary"
-                        value={ activeTranslation.summary }
-                        onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "summary", event.target.value) }
-                        placeholder="A walking guide to the historic center of Barcelona."
-                        className={ textareaClassName }
-                      />
-                    </div>
-                  </div>
+                    { !isTranslationDetailsCollapsed ? (
+                      <>
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={ () => setIsPreviewDialogOpen(true) }
+                              disabled={ isMutating }
+                              className="gap-2"
+                            >
+                              <Eye className="size-4"/>
+                              Preview
+                            </Button>
+                            <Button type="button" variant="outline" onClick={ saveTranslation } disabled={ isMutating }
+                                    className="gap-2">
+                              { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
+                              Save Translation
+                            </Button>
+                            <Button
+                              type="button"
+                              onClick={ togglePublishTranslation }
+                              disabled={ isMutating }
+                              className="gap-2"
+                            >
+                              { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Globe className="size-4"/> }
+                              { activeTranslation.isPublished ? "Unpublish" : "Publish" }
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={ () => setPendingDeleteLanguageCode(activeTranslation.languageCode) }
+                              disabled={ isMutating }
+                              className="gap-2 text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="size-4"/>
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
 
-                  <div className="space-y-2">
-                    <label className={ fieldLabelClassName }>Body</label>
-                    <TiptapHtmlEditor
-                      ref={ editorRef }
-                      value={ activeTranslation.htmlContent }
-                      onChange={ (value) => updateTranslationHtmlContent(activeTranslation.languageCode, value) }
-                      onError={ (message) => setFeedback({tone: "error", message}) }
-                      onRequestInsertImage={ () => void openMediaDialog("inline") }
-                    />
-                  </div>
+                        <div className="grid gap-5 lg:grid-cols-2">
+                          <div className="space-y-2">
+                            <label className={ fieldLabelClassName } htmlFor="translation-title">Title</label>
+                            <Input
+                              id="translation-title"
+                              value={ activeTranslation.title }
+                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "title", event.target.value) }
+                              placeholder="Barcelona Historic Center Guide"
+                              className="h-11"
+                            />
+                          </div>
 
-                  <div className="grid gap-5 lg:grid-cols-2">
-                    <div className="space-y-2">
-                      <label className={ fieldLabelClassName } htmlFor="translation-seo-title">SEO Title</label>
-                      <Input
-                        id="translation-seo-title"
-                        value={ activeTranslation.seoTitle }
-                        onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "seoTitle", event.target.value) }
-                        placeholder="Historic Center Guide | Walk and Tour"
-                        className="h-11"
-                      />
-                    </div>
+                          <div className="space-y-2">
+                            <label className={ fieldLabelClassName } htmlFor="translation-summary">Summary</label>
+                            <textarea
+                              id="translation-summary"
+                              value={ activeTranslation.summary }
+                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "summary", event.target.value) }
+                              placeholder="A walking guide to the historic center of Barcelona."
+                              className={ textareaClassName }
+                            />
+                          </div>
+                        </div>
 
-                    <div className="space-y-2">
-                      <label className={ fieldLabelClassName } htmlFor="translation-seo-description">SEO
-                        Description</label>
-                      <textarea
-                        id="translation-seo-description"
-                        value={ activeTranslation.seoDescription }
-                        onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "seoDescription", event.target.value) }
-                        placeholder="Discover the best historic landmarks in Barcelona."
-                        className={ textareaClassName }
-                      />
-                    </div>
-                  </div>
+                        <div className="space-y-2">
+                          <label className={ fieldLabelClassName }>Body</label>
+                          <TiptapHtmlEditor
+                            ref={ editorRef }
+                            value={ activeTranslation.htmlContent }
+                            onChange={ (value) => updateTranslationHtmlContent(activeTranslation.languageCode, value) }
+                            onError={ (message) => setFeedback({tone: "error", message}) }
+                            onRequestInsertImage={ () => void openMediaDialog("inline") }
+                          />
+                        </div>
+
+                        <div className="grid gap-5 lg:grid-cols-2">
+                          <div className="space-y-2">
+                            <label className={ fieldLabelClassName } htmlFor="translation-seo-title">SEO Title</label>
+                            <Input
+                              id="translation-seo-title"
+                              value={ activeTranslation.seoTitle }
+                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "seoTitle", event.target.value) }
+                              placeholder="Historic Center Guide | Walk and Tour"
+                              className="h-11"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className={ fieldLabelClassName } htmlFor="translation-seo-description">SEO
+                              Description</label>
+                            <textarea
+                              id="translation-seo-description"
+                              value={ activeTranslation.seoDescription }
+                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "seoDescription", event.target.value) }
+                              placeholder="Discover the best historic landmarks in Barcelona."
+                              className={ textareaClassName }
+                            />
+                          </div>
+                        </div>
+                      </>
+                    ) : null }
                 </div>
               ) : null }
             </div>
@@ -1433,6 +1524,46 @@ export function BlogPostEditorClient({
               </div>
             ) }
           </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={ pendingDeleteLanguageCode !== null }
+        onOpenChange={ (open) => {
+          if (!open && !isMutating) {
+            setPendingDeleteLanguageCode(null);
+          }
+        } }
+      >
+        <DialogContent className="border border-[#eadfce] bg-white shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Delete Translation</DialogTitle>
+            <DialogDescription>
+              { pendingDeleteLanguageCode
+                ? `Delete the ${ languageNameByCode[pendingDeleteLanguageCode] ?? pendingDeleteLanguageCode } translation? This action cannot be undone.`
+                : "Delete this translation?" }
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={ () => setPendingDeleteLanguageCode(null) }
+              disabled={ isMutating }
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={ () => pendingDeleteLanguageCode ? void removeTranslation(pendingDeleteLanguageCode) : undefined }
+              disabled={ isMutating || !pendingDeleteLanguageCode }
+            >
+              { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : null }
+              Delete Translation
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

@@ -147,7 +147,13 @@ export const createBlogFormStateFromApi = (blogPost: ApiBlogPost): BlogFormState
 export const mergeBlogFormStateWithApiPost = (
   current: BlogFormState,
   blogPost: ApiBlogPost,
+  options?: {
+    refreshedLanguageCodes?: string[];
+  },
 ): BlogFormState => {
+  const refreshedLanguageCodes = options?.refreshedLanguageCodes
+    ? new Set(options.refreshedLanguageCodes)
+    : null;
   const currentByLanguage = new Map(
     current.translations.map((translation) => [translation.languageCode, translation]),
   );
@@ -157,6 +163,14 @@ export const mergeBlogFormStateWithApiPost = (
 
       if (!currentTranslation) {
         return createTranslationFormStateFromApi(languageCode, translation);
+      }
+
+      if (!refreshedLanguageCodes?.has(languageCode)) {
+        return {
+          ...currentTranslation,
+          existsOnServer: true,
+          isPublished: translation.isPublished,
+        };
       }
 
       return {
