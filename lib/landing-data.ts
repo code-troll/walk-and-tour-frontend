@@ -116,7 +116,7 @@ export const partners: Partner[] = [
   },
   {
     id: "getYourGuide",
-    logo: "/walkandtour/partners/partner-getyourguide.png",
+    logo: "/walkandtour/partners/partner-getyourguide.jpg",
   },
   {
     id: "civitatis",

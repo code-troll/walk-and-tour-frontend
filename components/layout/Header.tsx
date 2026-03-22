@@ -98,6 +98,12 @@ export default function Header() {
 
     const update = () => {
       const currentY = window.scrollY;
+      if (isMobileMenuOpen) {
+        setIsVisible(true);
+        lastScrollY.current = currentY;
+        return;
+      }
+
       const previousY = lastScrollY.current;
       const delta = currentY - previousY;
       const atTop = currentY <= 0;
@@ -141,7 +147,7 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
@@ -287,7 +293,7 @@ export default function Header() {
   const headerClassName = [
     "header-shell fixed inset-x-0 top-0 z-50 h-[var(--header-h)] border-b border-black/10 bg-white",
     isAtTop ? "" : "is-condensed",
-    isVisible ? "" : "is-hidden",
+    isVisible || isMobileMenuOpen ? "" : "is-hidden",
   ].join(" ");
   const homeHref = getInternalHref({
     locale,
@@ -454,7 +460,7 @@ export default function Header() {
         id="mobile-menu-overlay"
         aria-hidden={ !isMobileMenuOpen }
         className={ [
-          "header-mobile-overlay fixed inset-x-0 bottom-0 z-40 flex flex-col bg-[#c24343] px-6 pt-7 md:pt-9 lg:pt-11 pb-6 text-white transition-transform duration-300 ease-in-out lg:hidden",
+          "header-mobile-overlay fixed inset-x-0 bottom-0 z-40 flex flex-col bg-[#c24343] px-6 pt-7 md:pt-9 lg:pt-11 pb-6 text-white transition-transform duration-300 ease-in-out xl:hidden",
           isMobileMenuOpen ? "translate-x-0" : "pointer-events-none translate-x-full",
         ].join(" ") }
       >
@@ -491,7 +497,7 @@ export default function Header() {
           </button>
         </div>
         <nav
-          className="flex flex-1 flex-col items-center justify-center gap-8 text-center text-4xl font-semibold uppercase tracking-wide">
+          className="flex flex-1 flex-col items-center justify-center mt-8 gap-7 text-center text-3xl font-semibold uppercase tracking-wide">
           { navLinks.map((link) => {
             const isActive = isNavLinkActive(link);
 

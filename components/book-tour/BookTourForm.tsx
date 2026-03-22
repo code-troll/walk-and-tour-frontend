@@ -220,7 +220,7 @@ export default function BookTourForm({
 
   return (
     <form ref={ formRef } action={ formAction }
-          className="space-y-6 rounded-4xl bg-white p-6 shadow-[0_24px_60px_rgba(42,34,26,0.08)] ring-1 ring-black/5 sm:p-8">
+          className="space-y-6 rounded-4xl bg-white p-3.5 min-[400px]:p-6 shadow-[0_24px_60px_rgba(42,34,26,0.08)] ring-1 ring-black/5">
       <input type="hidden" name="locale" value={ locale }/>
       <input type="hidden" name="bookingType" value={ bookingType }/>
       <input type="hidden" name="bookingTypeLabel" value={ t(`bookingTypes.${ bookingType }`) }/>

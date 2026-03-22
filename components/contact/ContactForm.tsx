@@ -25,7 +25,7 @@ type LocalFeedbackReason =
     | null;
 
 const defaultFormClassName =
-    "space-y-4 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/10";
+    "space-y-4 rounded-3xl bg-white p-3.5 min-[400px]:p-6 shadow-sm ring-1 ring-black/10";
 const defaultButtonClassName =
     "w-full btn-red-black px-6 py-3 text-sm font-semibold uppercase tracking-wide transition-colors disabled:cursor-not-allowed disabled:opacity-60";
 const initialState: ContactFormActionState = {status: "idle"};

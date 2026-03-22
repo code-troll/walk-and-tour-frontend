@@ -705,6 +705,75 @@ const styleObjectToString = (style: CSSProperties) =>
     })
     .join(";");
 
+const removeStyleProperty = (value: string | null | undefined, propertyName: string) => {
+  if (!value) {
+    return "";
+  }
+
+  const normalizedPropertyName = propertyName.trim().toLowerCase();
+
+  return value
+    .split(";")
+    .map((declaration) => declaration.trim())
+    .filter(Boolean)
+    .filter((declaration) => declaration.split(":")[0]?.trim().toLowerCase() !== normalizedPropertyName)
+    .join(";");
+};
+
+const mergeStyleStrings = (...values: Array<string | null | undefined>) =>
+  values
+    .map((value) => value?.trim())
+    .filter((value): value is string => Boolean(value))
+    .join(";");
+
+const normalizeLinkTextColorMarkup = (value: string) => {
+  const trimmed = value.trim();
+  if (!trimmed || typeof window === "undefined") {
+    return trimmed;
+  }
+
+  const parser = new DOMParser();
+  const document = parser.parseFromString(trimmed, "text/html");
+
+  document.querySelectorAll("span[style]").forEach((span) => {
+    const color = extractStyleProperty(span.getAttribute("style"), "color");
+    if (!color) {
+      return;
+    }
+
+    const childNodes = Array.from(span.childNodes);
+    const nonEmptyTextNodes = childNodes.filter((node) => node.nodeType === window.Node.TEXT_NODE && node.textContent?.trim());
+    const elementChildren = childNodes.filter((node): node is HTMLElement => node instanceof HTMLElement);
+
+    if (nonEmptyTextNodes.length > 0 || elementChildren.length !== 1) {
+      return;
+    }
+
+    const [linkElement] = elementChildren;
+    if (linkElement.tagName.toLowerCase() !== "a") {
+      return;
+    }
+
+    const existingLinkStyle = removeStyleProperty(linkElement.getAttribute("style"), "color");
+    const nextLinkStyle = mergeStyleStrings(existingLinkStyle, `color:${ color }`);
+    if (nextLinkStyle) {
+      linkElement.setAttribute("style", nextLinkStyle);
+    } else {
+      linkElement.removeAttribute("style");
+    }
+
+    const spanStyleWithoutColor = removeStyleProperty(span.getAttribute("style"), "color");
+    if (spanStyleWithoutColor) {
+      span.setAttribute("style", spanStyleWithoutColor);
+      return;
+    }
+
+    span.replaceWith(linkElement);
+  });
+
+  return document.body.innerHTML.trim();
+};
+
 const buildVideoEmbedSrc = (provider: SupportedVideoProvider, videoId: string) => {
   if (!videoId) {
     return "";
@@ -2602,6 +2671,10 @@ const LinkMark = Mark.create({
   inclusive: false,
   addAttributes() {
     return {
+      color: {
+        default: null,
+        parseHTML: (element) => extractStyleProperty(element.getAttribute("style"), "color"),
+      },
       href: {
         default: null,
       },
@@ -2617,7 +2690,24 @@ const LinkMark = Mark.create({
     return [{ tag: "a[href]" }];
   },
   renderHTML({ HTMLAttributes }) {
-    return ["a", mergeAttributes(HTMLAttributes), 0];
+    const color = typeof HTMLAttributes.color === "string" ? HTMLAttributes.color.trim() : "";
+    const attributes = { ...HTMLAttributes };
+    delete attributes.color;
+
+    const baseStyle = removeStyleProperty(
+      typeof attributes.style === "string" ? attributes.style : null,
+      "color",
+    );
+
+    if (color) {
+      attributes.style = mergeStyleStrings(baseStyle, `color:${ color }`);
+    } else if (baseStyle) {
+      attributes.style = baseStyle;
+    } else {
+      delete attributes.style;
+    }
+
+    return ["a", mergeAttributes(attributes), 0];
   },
 });
 
@@ -3280,7 +3370,7 @@ const editorExtensions = [
 ];
 
 const normalizeEditorValue = (value: string) => {
-  const trimmed = value.trim();
+  const trimmed = normalizeLinkTextColorMarkup(value);
   return trimmed ? trimmed : "<p></p>";
 };
 
@@ -3400,7 +3490,7 @@ export const TiptapHtmlEditor = forwardRef<
       },
     },
     onUpdate: ({ editor: nextEditor }) => {
-      onChange(nextEditor.getHTML());
+      onChange(normalizeEditorValue(nextEditor.getHTML()));
       setToolbarVersion((current) => current + 1);
     },
     onSelectionUpdate: () => {
@@ -3409,7 +3499,7 @@ export const TiptapHtmlEditor = forwardRef<
   }, [EDITOR_SCHEMA_VERSION]);
 
   useImperativeHandle(ref, () => ({
-    getHtml: () => editor?.getHTML() ?? normalizeEditorValue(value),
+    getHtml: () => normalizeEditorValue(editor?.getHTML() ?? value),
     insertImage: ({ alt, mediaId, src, storagePath }) => {
       editor?.chain().focus().insertContent([
         {
@@ -3491,7 +3581,7 @@ export const TiptapHtmlEditor = forwardRef<
   };
 
   const currentTextColor = normalizeColorInputValue(
-    editor?.getAttributes("textColor").color,
+    editor?.getAttributes("link").color ?? editor?.getAttributes("textColor").color,
     DEFAULT_TEXT_COLOR,
   );
   const currentHighlightColor = normalizeColorInputValue(
@@ -3504,11 +3594,33 @@ export const TiptapHtmlEditor = forwardRef<
       return;
     }
 
+    if (editor.isActive("link")) {
+      const linkAttributes = editor.getAttributes("link");
+      editor.chain().focus().extendMarkRange("link").setMark("link", {
+        ...linkAttributes,
+        color,
+      }).unsetMark("textColor").run();
+      return;
+    }
+
     editor.chain().focus().setMark("textColor", { color }).run();
   };
 
   const clearTextColor = () => {
-    editor?.chain().focus().unsetMark("textColor").run();
+    if (!editor) {
+      return;
+    }
+
+    if (editor.isActive("link")) {
+      const linkAttributes = editor.getAttributes("link");
+      editor.chain().focus().extendMarkRange("link").setMark("link", {
+        ...linkAttributes,
+        color: null,
+      }).unsetMark("textColor").run();
+      return;
+    }
+
+    editor.chain().focus().unsetMark("textColor").run();
   };
 
   const setHighlightColor = (color: string) => {
