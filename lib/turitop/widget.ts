@@ -14,6 +14,19 @@ type TuritopWidgetElement = {
   service: string;
 };
 
+const turitopContainerObservers = new WeakMap<HTMLElement, MutationObserver>();
+
+const configureTuritopIframeScrolling = (container: HTMLElement) => {
+  const iframe = container.querySelector("iframe");
+  if (!iframe) {
+    return;
+  }
+
+  iframe.setAttribute("scrolling", "yes");
+  iframe.style.overflowY = "auto";
+  iframe.style.overflowX = "hidden";
+};
+
 export const renderTuritopPlaceholder = ({
   container,
   embed = TURITOP_EMBED_MODE,
@@ -55,7 +68,26 @@ export const mountTuritopWidgets = (widgets: TuritopWidgetElement[]) => {
 
   validWidgets.forEach((widget) => {
     renderTuritopPlaceholder(widget);
+
+    turitopContainerObservers.get(widget.container)?.disconnect();
+
+    const observer = new MutationObserver(() => {
+      configureTuritopIframeScrolling(widget.container);
+    });
+
+    observer.observe(widget.container, {
+      childList: true,
+      subtree: true,
+    });
+
+    turitopContainerObservers.set(widget.container, observer);
   });
 
   reloadTuritopScript();
+
+  window.setTimeout(() => {
+    validWidgets.forEach((widget) => {
+      configureTuritopIframeScrolling(widget.container);
+    });
+  }, 0);
 };
