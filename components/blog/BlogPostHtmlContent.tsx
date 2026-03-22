@@ -25,6 +25,12 @@ export default function BlogPostHtmlContent({
       return;
     }
 
+    widgetContainers.forEach((container) => {
+      container.style.overflowX = "hidden";
+      container.style.overflowY = "auto";
+      container.style.setProperty("-webkit-overflow-scrolling", "touch");
+    });
+
     mountTuritopWidgets(
       widgetContainers
         .map((container) => ({

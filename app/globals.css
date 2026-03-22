@@ -343,3 +343,8 @@ body {
     @apply font-sans;
   }
 }
+
+.flow-root a {
+  color: inherit;
+  text-decoration: underline;
+}
