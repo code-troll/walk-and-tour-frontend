@@ -421,7 +421,7 @@ export function BlogPostEditorClient({
         languageCode: activeTranslation.languageCode,
       })
       : await createBlogPostTranslationAction({
-        body: toCreateBlogTranslationBody(activeTranslation),
+        body: toCreateBlogTranslationBody(activeTranslation, formState),
         id: savedBlogPost.id,
       });
 
@@ -468,7 +468,7 @@ export function BlogPostEditorClient({
 
     if (!activeTranslation.existsOnServer) {
       const saveResult = await createBlogPostTranslationAction({
-        body: toCreateBlogTranslationBody(activeTranslation),
+        body: toCreateBlogTranslationBody(activeTranslation, formState),
         id: savedBlogPost.id,
       });
 
@@ -948,7 +948,7 @@ export function BlogPostEditorClient({
           title={ formState.name || (mode === "create" ? "New Blog Post" : "Untitled Blog Post") }
           description={
             isCreated
-              ? `Slug: ${ formState.slug || "not-set" }`
+              ? `Slug: ${ activeTranslation?.slug || generatedSlug || "not-set" }`
               : "Save the shared details once to unlock cover image and locale editing."
           }
           actions={
@@ -997,7 +997,7 @@ export function BlogPostEditorClient({
 
         <AdminSectionCard
           title="Shared Details"
-          description="The shared record defines the admin-facing name, public slug, and tags."
+          description="The shared record defines the admin-facing name and tags."
           actions={
             <Button type="button" onClick={ saveShared } disabled={ isMutating } variant="outline" className="gap-2">
               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
@@ -1005,32 +1005,15 @@ export function BlogPostEditorClient({
             </Button>
           }
         >
-          <div className="grid gap-5 lg:grid-cols-2">
-            <div className="space-y-2">
-              <label className={ fieldLabelClassName } htmlFor="blog-name">Name</label>
-              <Input
-                id="blog-name"
-                value={ formState.name }
-                onChange={ (event) => updateSharedField("name", event.target.value) }
-                placeholder="Barcelona Historic Center SEO Article"
-                className="h-11"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className={ fieldLabelClassName } htmlFor="blog-slug">Slug</label>
-              <Input
-                id="blog-slug"
-                value={ formState.slug }
-                onChange={ (event) => updateSharedField("slug", event.target.value) }
-                placeholder={ generatedSlug || "blog-post-slug" }
-                className="h-11 font-mono"
-              />
-              { !formState.slug && generatedSlug ? (
-                <p className="text-xs text-muted-foreground">Will use: <span
-                  className="font-mono">{ generatedSlug }</span></p>
-              ) : null }
-            </div>
+          <div className="space-y-2">
+            <label className={ fieldLabelClassName } htmlFor="blog-name">Name</label>
+            <Input
+              id="blog-name"
+              value={ formState.name }
+              onChange={ (event) => updateSharedField("name", event.target.value) }
+              placeholder="Barcelona Historic Center SEO Article"
+              className="h-11"
+            />
           </div>
 
           <div className="mt-6 space-y-3">
@@ -1310,15 +1293,30 @@ export function BlogPostEditorClient({
                           </div>
 
                           <div className="space-y-2">
-                            <label className={ fieldLabelClassName } htmlFor="translation-summary">Summary</label>
-                            <textarea
-                              id="translation-summary"
-                              value={ activeTranslation.summary }
-                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "summary", event.target.value) }
-                              placeholder="A walking guide to the historic center of Barcelona."
-                              className={ textareaClassName }
+                            <label className={ fieldLabelClassName } htmlFor="translation-slug">Slug</label>
+                            <Input
+                              id="translation-slug"
+                              value={ activeTranslation.slug }
+                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "slug", event.target.value) }
+                              placeholder={ generatedSlug || "blog-post-slug" }
+                              className="h-11 font-mono"
                             />
+                            { !activeTranslation.slug && generatedSlug ? (
+                              <p className="text-xs text-muted-foreground">Will use: <span
+                                className="font-mono">{ generatedSlug }</span></p>
+                            ) : null }
                           </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <label className={ fieldLabelClassName } htmlFor="translation-summary">Summary</label>
+                          <textarea
+                            id="translation-summary"
+                            value={ activeTranslation.summary }
+                            onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "summary", event.target.value) }
+                            placeholder="A walking guide to the historic center of Barcelona."
+                            className={ textareaClassName }
+                          />
                         </div>
 
                         <div className="space-y-2">

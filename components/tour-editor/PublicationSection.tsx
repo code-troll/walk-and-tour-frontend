@@ -277,8 +277,8 @@ export function PublicationSection({
 
         <div className="space-y-3">
           <ChecklistItem
-            label="Tour has a name and slug"
-            passed={ Boolean(formState.name.trim() && formState.slug.trim()) }
+            label="Tour has a name and at least one translation with a slug"
+            passed={ Boolean(formState.name.trim() && formState.translations.some((t) => t.slug.trim())) }
           />
           <ChecklistItem
             label="Duration, rating, and review count are set"

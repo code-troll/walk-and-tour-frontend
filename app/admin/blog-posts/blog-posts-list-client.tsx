@@ -112,7 +112,7 @@ export default function AdminBlogPostsListClient() {
                   <div className="min-w-0 flex-1">
                     <h3 className="truncate text-base font-semibold text-foreground">{post.name}</h3>
                     <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
-                      <span className="truncate">Slug: {post.slug}</span>
+                      <span className="truncate">Slug: {Object.values(post.translations)[0]?.slug ?? "—"}</span>
                       <span>{Object.keys(post.translations).length} translations</span>
                       <span>{post.tagKeys.length} tags</span>
                     </div>

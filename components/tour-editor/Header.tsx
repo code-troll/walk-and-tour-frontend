@@ -83,7 +83,7 @@ export function TourEditorHeader({
             <p className="mt-1 text-xs text-muted-foreground">
               { mode === "create" && !isCreated
                 ? "Save Basic Information to create the tour and unlock the remaining tabs."
-                : `Slug: ${ formState.slug || "not-set" }` }
+                : `Slug: ${ formState.translations[0]?.slug || "not-set" }` }
             </p>
           </div>
         </div>
