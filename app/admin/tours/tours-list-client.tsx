@@ -258,7 +258,7 @@ function TourListRow({
               </div>
             </div>
             <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
-              <span className="truncate">Slug: { tour.slug }</span>
+              <span className="truncate">Slug: { Object.values(tour.translations)[0]?.slug ?? "—" }</span>
               <span>Type: { formatLabel(tour.tourType) }</span>
               <span>Sort order: { tour.sortOrder + 1 }</span>
               <span>{ Object.keys(tour.translations).length } translations</span>

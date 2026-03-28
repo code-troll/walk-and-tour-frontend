@@ -1348,11 +1348,6 @@ export interface components {
              */
             name: string;
             /**
-             * @description Stable public slug.
-             * @example barcelona-historic-center-guide
-             */
-            slug: string;
-            /**
              * Format: uuid
              * @description Optional hero media asset UUID.
              */
@@ -1379,11 +1374,6 @@ export interface components {
              */
             name: string;
             /**
-             * @description Stable public slug for the blog post.
-             * @example barcelona-historic-center-guide
-             */
-            slug: string;
-            /**
              * @description Assigned tag keys.
              * @example [
              *       "history",
@@ -1399,11 +1389,6 @@ export interface components {
              */
             name?: string;
             /**
-             * @description Updated public slug.
-             * @example barcelona-historic-center-guide
-             */
-            slug?: string;
-            /**
              * @description Replacement tag key list.
              * @example [
              *       "history",
@@ -1418,6 +1403,8 @@ export interface components {
              * @example en
              */
             languageCode: string;
+            /** @description Public slug for this translation. */
+            slug: string;
             /**
              * @description Localized title.
              * @example Barcelona Historic Center Guide
@@ -1452,6 +1439,8 @@ export interface components {
             imageRefs?: string[];
         };
         UpdateBlogPostTranslationDto: {
+            /** @description Updated public slug for this translation. */
+            slug?: string;
             /**
              * @description Updated localized title.
              * @example Barcelona Historic Center Guide
@@ -2156,11 +2145,6 @@ export interface components {
              */
             sortOrder: number;
             /**
-             * @description Stable public slug.
-             * @example historic-center
-             */
-            slug: string;
-            /**
              * @description Tour commercial model.
              * @enum {string}
              */
@@ -2252,11 +2236,6 @@ export interface components {
              */
             sortOrder: number;
             /**
-             * @description Stable public slug.
-             * @example historic-center
-             */
-            slug: string;
-            /**
              * Format: uuid
              * @description Attached image asset UUID used as the tour cover.
              */
@@ -2319,11 +2298,6 @@ export interface components {
              * @example Barcelona Historic Center Main Tour
              */
             name: string;
-            /**
-             * @description Stable public slug for the tour.
-             * @example historic-center
-             */
-            slug: string;
             /**
              * @description Commercial model of the tour. Required during minimal creation.
              * @example group
@@ -2409,11 +2383,6 @@ export interface components {
              * @example Barcelona Historic Center Main Tour
              */
             name?: string;
-            /**
-             * @description Updated public slug.
-             * @example historic-center
-             */
-            slug?: string;
             /** @description Updated shared JSON Schema for localized payload validation. */
             contentSchema?: {
                 [key: string]: unknown;
@@ -2511,6 +2480,8 @@ export interface components {
              * @example en
              */
             languageCode: string;
+            /** @description Public slug for this translation. */
+            slug: string;
             /**
              * @description Optional external booking reference for this locale. Set `null` to clear it on update.
              * @example booking-ref-123
@@ -2547,6 +2518,8 @@ export interface components {
             };
         };
         UpdateTourTranslationDto: {
+            /** @description Updated public slug for this translation. */
+            slug?: string;
             /**
              * @description Updated external booking reference for this locale. Set `null` to clear it.
              * @example booking-ref-123
@@ -2598,6 +2571,11 @@ export interface components {
         };
         TourAdminTranslationResponseDto: {
             /**
+             * @description Public slug for this translation.
+             * @example historic-center
+             */
+            slug: string;
+            /**
              * @description Whether the translation currently satisfies all required completeness rules.
              * @example true
              */
@@ -2648,6 +2626,11 @@ export interface components {
         };
         TourAdminListTranslationResponseDto: {
             /**
+             * @description Public slug for this translation.
+             * @example historic-center
+             */
+            slug: string;
+            /**
              * @description Whether the translation currently satisfies all required completeness rules.
              * @example true
              */
@@ -2659,6 +2642,11 @@ export interface components {
             isPublished: boolean;
         };
         BlogAdminTranslationResponseDto: {
+            /**
+             * @description Public slug for this translation.
+             * @example barcelona-historic-center-guide
+             */
+            slug: string;
             /**
              * @description Whether the translation is published.
              * @example true

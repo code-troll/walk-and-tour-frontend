@@ -6,6 +6,7 @@ import {
   TOUR_BOOKING_REFERENCE_MAX_LENGTH,
   TOUR_TEXTAREA_MAX_LENGTH,
   TOUR_TITLE_MAX_LENGTH,
+  generateTourSlug,
   getTranslationDisplayName,
   type ApiLanguage,
   type TourFormState,
@@ -260,6 +261,27 @@ export function TranslationsSection({
                             placeholder="Enter localized title"
                             maxLength={ TOUR_TITLE_MAX_LENGTH }
                           />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-sm font-medium text-foreground">URL Slug</label>
+                          <Input
+                            value={ translation.slug }
+                            onChange={ (event) =>
+                              updateTranslationField(
+                                translation.languageCode,
+                                "slug",
+                                event.target.value,
+                              )
+                            }
+                            placeholder={ generateTourSlug(translation.title || formState.name) || "tour-url-slug" }
+                            className="font-mono text-sm"
+                          />
+                          { !translation.slug && (translation.title || formState.name) ? (
+                            <p className="text-xs text-muted-foreground">
+                              Will use: <span className="font-mono">{ generateTourSlug(translation.title || formState.name) }</span>
+                            </p>
+                          ) : null }
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2">

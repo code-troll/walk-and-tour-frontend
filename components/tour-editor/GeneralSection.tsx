@@ -17,7 +17,6 @@ import {
   type ApiLanguage,
   type ApiTag,
   type ApiUploadedMediaAsset,
-  generateTourSlug,
   TOUR_IMAGE_UPLOAD_MAX_SIZE,
   TOUR_MEDIA_ALT_TEXT_MAX_LENGTH,
   TOUR_TYPE_OPTIONS,
@@ -136,7 +135,6 @@ export function GeneralSection({
                                  availableTags,
                                  availableLanguages,
                                }: GeneralSectionProps) {
-  const generatedSlug = generateTourSlug(formState.name);
   const [expandedImageId, setExpandedImageId] = useState<string | null>(null);
   const [isMediaDialogOpen, setIsMediaDialogOpen] = useState(false);
   const [mediaSearchInput, setMediaSearchInput] = useState("");
@@ -465,21 +463,6 @@ export function GeneralSection({
               placeholder="Enter tour name"
               className="h-11"
             />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">URL Slug</label>
-            <Input
-              value={ formState.slug }
-              onChange={ (event) => updateFormStateAction("slug", event.target.value) }
-              placeholder={ generatedSlug || "tour-url-slug" }
-              className="h-11 font-mono text-sm"
-            />
-            { !formState.slug && generatedSlug ? (
-              <p className="text-xs text-muted-foreground">
-                Will use: <span className="font-mono">{ generatedSlug }</span>
-              </p>
-            ) : null }
           </div>
 
           <div className="space-y-2">

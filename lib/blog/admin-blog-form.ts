@@ -25,6 +25,7 @@ export type BlogTranslationFormState = {
   imageRefsText: string;
   isPublished: boolean;
   languageCode: string;
+  slug: string;
   seoDescription: string;
   seoTitle: string;
   summary: string;
@@ -33,7 +34,6 @@ export type BlogTranslationFormState = {
 
 export type BlogFormState = {
   name: string;
-  slug: string;
   tagKeys: string[];
   translations: BlogTranslationFormState[];
 };
@@ -114,6 +114,7 @@ export const createEmptyTranslationFormState = (
   imageRefsText: "",
   isPublished: false,
   languageCode,
+  slug: "",
   seoDescription: "",
   seoTitle: "",
   summary: "",
@@ -129,6 +130,7 @@ const createTranslationFormStateFromApi = (
   imageRefsText: translation.imageRefs.join("\n"),
   isPublished: translation.isPublished,
   languageCode,
+  slug: coerceApiString(translation.slug),
   seoDescription: coerceApiString(translation.seoDescription),
   seoTitle: coerceApiString(translation.seoTitle),
   summary: coerceApiString(translation.summary),
@@ -137,7 +139,6 @@ const createTranslationFormStateFromApi = (
 
 export const createBlogFormStateFromApi = (blogPost: ApiBlogPost): BlogFormState => ({
   name: blogPost.name,
-  slug: blogPost.slug,
   tagKeys: [...blogPost.tagKeys],
   translations: Object.entries(blogPost.translations)
     .map(([languageCode, translation]) => createTranslationFormStateFromApi(languageCode, translation))
@@ -188,7 +189,6 @@ export const mergeBlogFormStateWithApiPost = (
 
   return {
     name: blogPost.name,
-    slug: blogPost.slug,
     tagKeys: [...blogPost.tagKeys],
     translations,
   };
@@ -196,20 +196,17 @@ export const mergeBlogFormStateWithApiPost = (
 
 export const createEmptyBlogFormState = (): BlogFormState => ({
   name: "",
-  slug: "",
   tagKeys: [],
   translations: [],
 });
 
 export const toCreateBlogBody = (formState: BlogFormState): CreateBlogBody => ({
   name: formState.name.trim(),
-  slug: (formState.slug.trim() || generateBlogSlug(formState.name)).trim(),
   tagKeys: formState.tagKeys.length > 0 ? formState.tagKeys : undefined,
 });
 
 export const toUpdateBlogBody = (formState: BlogFormState): UpdateBlogBody => ({
   name: formState.name.trim(),
-  slug: (formState.slug.trim() || generateBlogSlug(formState.name)).trim(),
   tagKeys: formState.tagKeys,
 });
 
@@ -226,8 +223,10 @@ export const extractImageRefsFromHtml = (htmlContent: string) => {
 
 export const toCreateBlogTranslationBody = (
   translation: BlogTranslationFormState,
+  formState: BlogFormState,
 ): CreateBlogTranslationBody => ({
   languageCode: translation.languageCode,
+  slug: (translation.slug.trim() || generateBlogSlug(translation.title || formState.name)).trim(),
   title: normalizeOptionalString(translation.title),
   summary: normalizeOptionalString(translation.summary),
   htmlContent: isEmptyHtmlContent(translation.htmlContent)
@@ -241,6 +240,7 @@ export const toCreateBlogTranslationBody = (
 export const toUpdateBlogTranslationBody = (
   translation: BlogTranslationFormState,
 ): UpdateBlogTranslationBody => ({
+  slug: translation.slug.trim() || undefined,
   title: translation.title.trim(),
   summary: normalizeNullableString(translation.summary) as unknown as UpdateBlogTranslationBody["summary"],
   htmlContent: normalizeHtmlContent(translation.htmlContent),
@@ -260,8 +260,8 @@ export const createBlogPreviewData = ({
 }): BlogPreviewData => {
   const normalizedTranslation = translation.existsOnServer
     ? toUpdateBlogTranslationBody(translation)
-    : toCreateBlogTranslationBody(translation);
-  const slug = (formState.slug.trim() || generateBlogSlug(formState.name)).trim();
+    : toCreateBlogTranslationBody(translation, formState);
+  const slug = (translation.slug.trim() || generateBlogSlug(translation.title || formState.name)).trim();
   const title =
     normalizePreviewString(normalizedTranslation.title) ||
     formState.name.trim() ||
@@ -285,7 +285,6 @@ export const createBlogPreviewData = ({
 
 export const validateBlogSharedForm = (formState: BlogFormState) => {
   const name = formState.name.trim();
-  const slug = (formState.slug.trim() || generateBlogSlug(formState.name)).trim();
 
   if (!name) {
     return "A blog post name is required.";
@@ -295,8 +294,14 @@ export const validateBlogSharedForm = (formState: BlogFormState) => {
     return `The name must be ${ BLOG_NAME_MAX_LENGTH } characters or fewer.`;
   }
 
+  return null;
+};
+
+export const validateBlogTranslationSlug = (translation: BlogTranslationFormState, formState: BlogFormState) => {
+  const slug = (translation.slug.trim() || generateBlogSlug(translation.title || formState.name)).trim();
+
   if (!slug) {
-    return "A valid slug is required.";
+    return "A valid slug is required for this translation.";
   }
 
   if (slug.length > BLOG_SLUG_MAX_LENGTH) {

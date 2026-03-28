@@ -20,10 +20,12 @@ export type CommuteMode = NonNullable<
 >;
 export type CreateTourTranslationBody = {
   languageCode: string;
+  slug: string;
   bookingReferenceId?: string | null;
   payload: Record<string, unknown>;
 };
 export type UpdateTourTranslationBody = {
+  slug?: string;
   bookingReferenceId?: string | null;
   payload?: Record<string, unknown>;
 };
@@ -163,6 +165,7 @@ export type TourMediaItemFormState = {
 export type TourTranslationFormState = {
   existing: boolean;
   languageCode: string;
+  slug: string;
   isReady: boolean;
   isPublished: boolean;
   bookingReferenceId: string;
@@ -190,7 +193,6 @@ export type TourStopFormState = {
 
 export type TourFormState = {
   name: string;
-  slug: string;
   coverMediaId: string | null;
   mediaItems: TourMediaItemFormState[];
   tourType: TourType;
@@ -369,6 +371,7 @@ export const createEmptyStopFormState = (): TourStopFormState => ({
 export const createEmptyTranslationFormState = (languageCode: string): TourTranslationFormState => ({
   existing: false,
   languageCode,
+  slug: "",
   isReady: false,
   isPublished: false,
   bookingReferenceId: "",
@@ -386,7 +389,6 @@ export const createEmptyTranslationFormState = (languageCode: string): TourTrans
 
 export const createEmptyTourFormState = (): TourFormState => ({
   name: "",
-  slug: "",
   coverMediaId: null,
   mediaItems: [],
   tourType: "group",
@@ -438,6 +440,7 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
     return {
       existing: true,
       languageCode,
+      slug: asString(translation.slug),
       isReady: translation.isReady,
       isPublished: translation.isPublished,
       bookingReferenceId: asString(translation.bookingReferenceId),
@@ -477,7 +480,6 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
 
   return {
     name: tour.name,
-    slug: tour.slug,
     coverMediaId,
     mediaItems,
     tourType: tour.tourType,
@@ -559,6 +561,7 @@ export const buildCreateTourTranslationPayload = ({
   translation: TourTranslationFormState;
 }): CreateTourTranslationBody => ({
   languageCode: translation.languageCode,
+  slug: (translation.slug.trim() || generateTourSlug(translation.title || formState.name)).trim(),
   bookingReferenceId: translation.bookingReferenceId.trim() || null,
   payload: buildTranslationPayload({
     formState: translation,
@@ -573,6 +576,7 @@ export const buildUpdateTourTranslationPayload = ({
   formState: TourFormState;
   translation: TourTranslationFormState;
 }): UpdateTourTranslationBody => ({
+  slug: translation.slug.trim() || undefined,
   bookingReferenceId: translation.bookingReferenceId.trim() || null,
   payload: buildTranslationPayload({
     formState: translation,
@@ -632,7 +636,6 @@ export const buildInitialCreateTourPayload = ({
   formState: TourFormState;
 }): CreateTourBody => ({
   name: formState.name.trim(),
-  slug: (formState.slug.trim() || generateTourSlug(formState.name)).trim(),
   tourType: formState.tourType,
 });
 
@@ -643,7 +646,6 @@ export const buildUpdateTourPayload = ({
 }): UpdateTourBody => {
   return {
     name: formState.name.trim(),
-    slug: formState.slug.trim(),
     contentSchema: TOUR_CONTENT_SCHEMA,
     price:
       formState.tourType === "tip_based" || !formState.hasPrice
@@ -769,18 +771,6 @@ const validateSharedFields = ({
     addSharedError(errors, "Name is required.");
   } else if (formState.name.trim().length > TOUR_NAME_MAX_LENGTH) {
     addSharedError(errors, `Name must be ${ TOUR_NAME_MAX_LENGTH } characters or less.`);
-  }
-
-  if (!formState.slug.trim()) {
-    addSharedError(errors, "Slug is required.");
-  } else {
-    if (formState.slug.trim().length > TOUR_SLUG_MAX_LENGTH) {
-      addSharedError(errors, `Slug must be ${ TOUR_SLUG_MAX_LENGTH } characters or less.`);
-    }
-
-    if (!new RegExp(TOUR_SLUG_PATTERN).test(formState.slug.trim())) {
-      addSharedError(errors, "Slug must use lowercase letters, numbers, and hyphens only.");
-    }
   }
 
   const invalidAltText = formState.mediaItems.find((image) =>
@@ -918,6 +908,25 @@ const validateTranslationEntry = ({
       languageCode,
       message: "Translation locales must be unique.",
     });
+  }
+
+  const slug = translation.slug.trim();
+  if (slug) {
+    if (slug.length > TOUR_SLUG_MAX_LENGTH) {
+      addTranslationError({
+        errors,
+        languageCode,
+        message: `Slug must be ${ TOUR_SLUG_MAX_LENGTH } characters or less.`,
+      });
+    }
+
+    if (!new RegExp(TOUR_SLUG_PATTERN).test(slug)) {
+      addTranslationError({
+        errors,
+        languageCode,
+        message: "Slug must use lowercase letters, numbers, and hyphens only.",
+      });
+    }
   }
 
   if (translation.bookingReferenceId.length > TOUR_BOOKING_REFERENCE_MAX_LENGTH) {
@@ -1182,20 +1191,6 @@ export const validateInitialTourCreateForm = ({
     addSharedError(errors, "Name is required.");
   } else if (formState.name.trim().length > TOUR_NAME_MAX_LENGTH) {
     addSharedError(errors, `Name must be ${ TOUR_NAME_MAX_LENGTH } characters or less.`);
-  }
-
-  const slug = formState.slug.trim() || generateTourSlug(formState.name);
-  if (!slug) {
-    addSharedError(errors, "Slug could not be generated from the name.");
-    return errors;
-  }
-
-  if (slug.length > TOUR_SLUG_MAX_LENGTH) {
-    addSharedError(errors, `Slug must be ${ TOUR_SLUG_MAX_LENGTH } characters or less.`);
-  }
-
-  if (!new RegExp(TOUR_SLUG_PATTERN).test(slug)) {
-    addSharedError(errors, "Slug must use lowercase letters, numbers, and hyphens only.");
   }
 
   return errors;
