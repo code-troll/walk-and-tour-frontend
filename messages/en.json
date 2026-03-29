@@ -848,10 +848,12 @@
   "blogPage": {
     "title": "Latest Articles",
     "description": "Read practical guides, local tips and stories from our team to make the most of your trip.",
+    "filterLabel": "Filter by topic",
     "loadMore": "Load more",
     "readMore": "Read more",
     "views": "Views",
     "empty": "No blog posts available right now.",
+    "noResults": "No posts match the selected filters.",
     "error": "We could not load the blog posts right now."
   },
   "blogPost": {

@@ -870,10 +870,12 @@
   "blogPage": {
     "title": "Últimos artículos",
     "description": "Lee guías prácticas, recomendaciones locales e historias de nuestro equipo para aprovechar al máximo tu viaje.",
+    "filterLabel": "Filtrar por tema",
     "loadMore": "Cargar más",
     "readMore": "Leer más",
     "views": "Vistas",
     "empty": "No hay artículos disponibles por ahora.",
+    "noResults": "Ningún artículo coincide con los filtros seleccionados.",
     "error": "No hemos podido cargar los artículos en este momento."
   },
   "blogPost": {
