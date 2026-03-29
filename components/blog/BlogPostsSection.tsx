@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import BlogPostCard from "@/components/blog/BlogPostCard";
 import type { PublicBlogCard } from "@/lib/public-blog-model";
+import cn from "@meltdownjs/cn";
 
 type BlogPostsSectionProps = {
   locale: AppLocale;
@@ -16,6 +17,37 @@ type BlogPostsSectionProps = {
 
 const PAGE_SIZE = 6;
 
+const extractUniqueTagOptions = (posts: PublicBlogCard[]) => {
+  const seen = new Map<string, string>();
+
+  for (const post of posts) {
+    for (const tag of post.tagLabels) {
+      if (!seen.has(tag.key)) {
+        seen.set(tag.key, tag.label);
+      }
+    }
+  }
+
+  return [...seen.entries()]
+    .map(([key, label]) => ({ key, label }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+};
+
+const filterPostsByTags = (
+  posts: PublicBlogCard[],
+  selectedTagKeys: string[],
+) => {
+  if (selectedTagKeys.length === 0) {
+    return posts;
+  }
+
+  return posts.filter((post) =>
+    selectedTagKeys.some((key) =>
+      post.tagLabels.some((tag) => tag.key === key),
+    ),
+  );
+};
+
 export default function BlogPostsSection({
                                           locale,
                                           posts,
@@ -24,8 +56,26 @@ export default function BlogPostsSection({
   const t = useTranslations("blogPage");
   const postBasePath = getPathname({locale, href: "/post"});
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const visiblePosts = posts.slice(0, visibleCount);
-  const hasMorePosts = visibleCount < posts.length;
+  const [selectedTagKeys, setSelectedTagKeys] = useState<string[]>([]);
+
+  const tagOptions = useMemo(() => extractUniqueTagOptions(posts), [posts]);
+
+  const filteredPosts = useMemo(
+    () => filterPostsByTags(posts, selectedTagKeys),
+    [posts, selectedTagKeys],
+  );
+
+  const visiblePosts = filteredPosts.slice(0, visibleCount);
+  const hasMorePosts = visibleCount < filteredPosts.length;
+
+  const toggleTag = (key: string) => {
+    setSelectedTagKeys((current) =>
+      current.includes(key)
+        ? current.filter((k) => k !== key)
+        : [...current, key],
+    );
+    setVisibleCount(PAGE_SIZE);
+  };
 
   return (
     <section className="bg-[#fcfaf7] py-16">
@@ -39,15 +89,52 @@ export default function BlogPostsSection({
           </p>
         </div>
 
+        { tagOptions.length > 1 ? (
+          <div className="mx-auto mt-10 max-w-4xl">
+            <div className="rounded-xl border border-[#d8c8b7] bg-[#ffffff] p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8a7562]">
+                { t("filterLabel") }
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                { tagOptions.map((option) => {
+                  const isSelected = selectedTagKeys.includes(option.key);
+
+                  return (
+                    <button
+                      key={ option.key }
+                      type="button"
+                      onClick={ () => toggleTag(option.key) }
+                      className={ cn(
+                        "rounded-full border px-4 py-2 text-sm transition-colors duration-150 cursor-pointer",
+                        isSelected
+                          ? "border-[#2b666d] bg-[#2b666d] text-[#ffffff]"
+                          : "border-[#d8c8b7] bg-[#ffffff] text-[#5b4d3c] hover:border-[#2b666d]",
+                      ) }
+                    >
+                      { option.label }
+                    </button>
+                  );
+                }) }
+              </div>
+            </div>
+          </div>
+        ) : null }
+
         { didFail ? (
           <div className="mt-12 rounded-2xl border border-[#e3d8cc] bg-white p-6 text-center">
             <p className="text-sm font-medium text-[#5b4d3c]">{ t("error") }</p>
           </div>
         ) : null }
 
-        {!didFail && posts.length === 0 ? (
+        { !didFail && posts.length === 0 ? (
           <p className="mt-12 text-center text-base font-medium text-[#8a7562]">
             { t("empty") }
+          </p>
+        ) : null }
+
+        { !didFail && posts.length > 0 && filteredPosts.length === 0 ? (
+          <p className="mt-12 text-center text-base font-medium text-[#8a7562]">
+            { t("noResults") }
           </p>
         ) : null }
 

@@ -63,12 +63,19 @@ export default function ToursCatalog({tours}: ToursCatalogProps) {
     setNewlyRevealedIds(revealedIds);
   };
 
+  const availableTagKeys = useMemo(
+    () => new Set(tours.flatMap((tour) => tour.tagKeys)),
+    [tours],
+  );
+
   const filterOptions = useMemo(
-    () => TOUR_FILTERS.map((filter) => ({
-      id: filter.id,
-      label: t(`filters.items.${filter.id}`),
-    })),
-    [t]
+    () => TOUR_FILTERS
+      .filter((filter) => availableTagKeys.has(filter.tagKey))
+      .map((filter) => ({
+        id: filter.id,
+        label: t(`filters.items.${filter.id}`),
+      })),
+    [availableTagKeys, t],
   );
 
   const filteredTours = useMemo(
