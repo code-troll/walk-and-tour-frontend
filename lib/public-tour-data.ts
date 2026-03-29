@@ -94,6 +94,7 @@ export type PublicTourDetail = PublicTourCard & {
 };
 export type PublicTourDetailResult = {
   availableLocales: AppLocale[];
+  availableTranslations: { locale: string; slug: string }[];
   contentLocale: AppLocale;
   isFallbackLanguage: boolean;
   tour: PublicTourDetail;
@@ -480,70 +481,32 @@ export const getPublicTourDetailWithFallback = async ({
   slug: string;
 }): Promise<PublicTourDetailResult | null> => {
   const api = createUncachedPublicApi();
-  const requestedTour = await getLocalizedPublicTour({
-    api,
-    locale,
-    slug,
-  });
+  const resolvedTour = await getLocalizedPublicTour({ api, locale, slug });
 
-  if (requestedTour) {
-    if (!expectedTourTypes.includes(requestedTour.tourType)) {
-      return null;
-    }
-
-    return {
-      availableLocales: [locale],
-      contentLocale: locale,
-      isFallbackLanguage: false,
-      tour: normalizeTourDetail(requestedTour, locale),
-    };
-  }
-
-  const availableTours: {locale: AppLocale; tour: PublicTourResponse}[] = [];
-
-  for (const candidateLocale of routing.locales) {
-    if (candidateLocale === locale) {
-      continue;
-    }
-
-    const candidateTour = await getLocalizedPublicTour({
-      api,
-      locale: candidateLocale,
-      slug,
-    });
-
-    if (!candidateTour) {
-      continue;
-    }
-
-    if (!expectedTourTypes.includes(candidateTour.tourType)) {
-      return null;
-    }
-
-    availableTours.push({
-      locale: candidateLocale,
-      tour: candidateTour,
-    });
-  }
-
-  if (availableTours.length === 0) {
+  if (!resolvedTour) {
     return null;
   }
 
-  const availableLocales = availableTours.map((result) => result.locale);
-  const contentLocale =
-    routing.locales.find((candidateLocale) => availableLocales.includes(candidateLocale)) ?? availableLocales[0];
-  const selectedTour = availableTours.find((result) => result.locale === contentLocale)?.tour;
-
-  if (!selectedTour) {
+  if (!expectedTourTypes.includes(resolvedTour.tourType)) {
     return null;
   }
+
+  const availableTranslations = resolvedTour.availableTranslations ?? [];
+  const availableLocales = availableTranslations
+    .map((t) => t.locale as AppLocale)
+    .filter((l) => routing.locales.includes(l));
+  const localeTranslation = availableTranslations.find((t) => t.locale === locale);
+  const isFallbackLanguage = !localeTranslation || localeTranslation.slug !== slug;
+  const contentLocale = isFallbackLanguage
+    ? (resolvedTour.translation.locale as AppLocale)
+    : locale;
 
   return {
     availableLocales,
+    availableTranslations,
     contentLocale,
-    isFallbackLanguage: contentLocale !== locale,
-    tour: normalizeTourDetail(selectedTour, contentLocale),
+    isFallbackLanguage,
+    tour: normalizeTourDetail(resolvedTour, contentLocale),
   };
 };
 

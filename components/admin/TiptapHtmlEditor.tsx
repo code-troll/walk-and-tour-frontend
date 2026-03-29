@@ -19,6 +19,7 @@ import {
   Link2,
   List,
   ListOrdered,
+  MapPinned,
   Palette,
   Pilcrow,
   Quote,
@@ -3245,6 +3246,211 @@ const BlogClear = Node.create({
   },
 });
 
+type TourCardAlignment = "left" | "center" | "right";
+
+const TOUR_CARD_ALIGNMENT_OPTIONS: { label: string; value: TourCardAlignment }[] = [
+  { label: "Left", value: "left" },
+  { label: "Center", value: "center" },
+  { label: "Right", value: "right" },
+];
+
+const getTourCardContainerStyle = (alignment: TourCardAlignment): CSSProperties => {
+  if (alignment === "left") {
+    return { float: "left", marginRight: "1.5rem", marginBottom: "1rem" };
+  }
+
+  if (alignment === "right") {
+    return { float: "right", marginLeft: "1.5rem", marginBottom: "1rem" };
+  }
+
+  return { display: "flow-root", marginLeft: "auto", marginRight: "auto" };
+};
+
+type TourCardPreview = {
+  title: string;
+  price: string | null;
+  duration: string | null;
+  coverUrl: string | null;
+};
+
+function useTourCardPreview(slug: string): TourCardPreview | null {
+  const [preview, setPreview] = useState<TourCardPreview | null>(null);
+
+  useEffect(() => {
+    if (!slug) {
+      setPreview(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    fetch(`/api/internal/public/api/public/tours/${encodeURIComponent(slug)}?locale=en`)
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => {
+        if (cancelled || !data) return;
+
+        const payload = typeof data.translation?.payload === "object" ? data.translation.payload : {};
+        const title = typeof payload.title === "string" ? payload.title : slug;
+        const coverUrl = data.coverMedia?.contentUrl ?? data.galleryMedia?.[0]?.contentUrl ?? null;
+        const price = data.price ? `${data.price.amount} ${data.price.currency}` : null;
+        const minutes = typeof data.durationMinutes === "number" ? data.durationMinutes : null;
+        const duration = minutes !== null
+          ? minutes >= 60
+            ? `${(minutes / 60).toFixed(minutes % 60 === 0 ? 0 : 1)}h`
+            : `${minutes} min`
+          : null;
+
+        setPreview({ title, price, duration, coverUrl });
+      })
+      .catch(() => {
+        if (!cancelled) setPreview(null);
+      });
+
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  return preview;
+}
+
+function BlogTourCardNodeView({
+  node,
+  selected,
+  updateAttributes,
+}: NodeViewProps) {
+  const slug = typeof node.attrs.tourSlug === "string" ? node.attrs.tourSlug : "";
+  const alignment: TourCardAlignment =
+    typeof node.attrs.alignment === "string" &&
+    (node.attrs.alignment === "left" || node.attrs.alignment === "right")
+      ? node.attrs.alignment
+      : "center";
+  const [showSettings, setShowSettings] = useState(false);
+  const preview = useTourCardPreview(slug);
+
+  return (
+    <NodeViewWrapper
+      as="div"
+      className={ cn(
+        "my-4 max-w-md overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-[#e3d8cc]",
+        selected ? "ring-2 ring-[#d9c3a2] ring-offset-2 ring-offset-white" : "",
+      ) }
+      data-blog-tour-card="true"
+      contentEditable={ false }
+      style={ getTourCardContainerStyle(alignment) }
+    >
+      <div className="flex flex-row">
+        { preview?.coverUrl ? (
+          <div className="relative w-36 shrink-0 bg-[#f5efe6]">
+            <img
+              src={ preview.coverUrl }
+              alt={ preview.title }
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="flex w-36 shrink-0 items-center justify-center bg-[#f5efe6]">
+            <MapPinned className="size-8 text-[#c24343]" />
+          </div>
+        ) }
+        <div className="flex flex-1 flex-col justify-center gap-1.5 p-4 min-w-0">
+          <p className="text-base font-semibold leading-snug text-[#2a221a] truncate">
+            { preview?.title ?? (slug || "No slug set") }
+          </p>
+          { preview?.price ? (
+            <p className="text-sm font-medium text-[#5b4d3c]">{ preview.price }</p>
+          ) : null }
+          { preview?.duration ? (
+            <p className="flex items-center gap-1.5 text-sm text-[#8a7562]">
+              <CalendarDays className="h-3.5 w-3.5" />
+              { preview.duration }
+            </p>
+          ) : null }
+          <span className="mt-1 inline-flex w-fit rounded-lg bg-[#c24343] px-3 py-1.5 text-xs font-semibold text-white">
+            Book now
+          </span>
+        </div>
+        <button
+          type="button"
+          className="self-start rounded-lg p-1.5 text-[#8b7862] hover:bg-[#f5efe6] m-1"
+          onClick={ () => setShowSettings(!showSettings) }
+        >
+          <Settings2 className="size-4" />
+        </button>
+      </div>
+      { showSettings ? (
+        <div className="border-t border-[#eadfce] bg-[#fbf7f0] px-4 py-3 space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-medium text-[#627176]">Alignment:</span>
+            { TOUR_CARD_ALIGNMENT_OPTIONS.map((option) => (
+              <button
+                key={ option.value }
+                type="button"
+                className={ cn(
+                  "rounded-md px-2 py-0.5 text-xs font-medium",
+                  alignment === option.value
+                    ? "bg-[#2b666d] text-white"
+                    : "bg-white text-[#627176] ring-1 ring-[#eadfce] hover:bg-[#f5efe6]",
+                ) }
+                onClick={ () => updateAttributes({ alignment: option.value }) }
+              >
+                { option.label }
+              </button>
+            )) }
+          </div>
+        </div>
+      ) : null }
+    </NodeViewWrapper>
+  );
+}
+
+const BlogTourCard = Node.create({
+  name: "blogTourCard",
+  group: "block",
+  atom: true,
+  selectable: true,
+  draggable: false,
+  addAttributes() {
+    return {
+      tourSlug: {
+        default: "",
+        parseHTML: (element) => element.getAttribute("data-tour-slug") ?? "",
+        renderHTML: () => ({}),
+      },
+      alignment: {
+        default: "center",
+        parseHTML: (element) => {
+          const value = element.getAttribute("data-tour-card-alignment");
+          return value === "left" || value === "right" ? value : "center";
+        },
+        renderHTML: () => ({}),
+      },
+    };
+  },
+  parseHTML() {
+    return [{ tag: "div[data-blog-tour-card=\"true\"]" }];
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(BlogTourCardNodeView);
+  },
+  renderHTML({ HTMLAttributes, node }) {
+    const attrs = node.attrs as Record<string, unknown>;
+    const tourSlug = typeof attrs.tourSlug === "string" ? attrs.tourSlug.trim() : "";
+    const alignment: TourCardAlignment =
+      typeof attrs.alignment === "string" && (attrs.alignment === "left" || attrs.alignment === "right")
+        ? attrs.alignment
+        : "center";
+
+    return [
+      "div",
+      mergeAttributes(HTMLAttributes, {
+        "data-blog-tour-card": "true",
+        "data-tour-slug": tourSlug,
+        "data-tour-card-alignment": alignment,
+        style: styleObjectToString(getTourCardContainerStyle(alignment)),
+      }),
+    ];
+  },
+});
+
 const HistoryExtension = Extension.create({
   name: "history",
   addProseMirrorPlugins() {
@@ -3277,6 +3483,7 @@ const editorExtensions = [
   BlogEmbed,
   BlogTuritopWidget,
   BlogLinkCard,
+  BlogTourCard,
   BlogClear,
   HistoryExtension,
 ];
@@ -3385,11 +3592,14 @@ export const TiptapHtmlEditor = forwardRef<
 }, ref) {
   const [isEmbedDialogOpen, setIsEmbedDialogOpen] = useState(false);
   const [isTuritopDialogOpen, setIsTuritopDialogOpen] = useState(false);
+  const [isTourCardDialogOpen, setIsTourCardDialogOpen] = useState(false);
   const [embedUrlInput, setEmbedUrlInput] = useState("");
   const [embedDialogError, setEmbedDialogError] = useState<string | null>(null);
   const [turitopDialogError, setTuritopDialogError] = useState<string | null>(null);
+  const [tourCardDialogError, setTourCardDialogError] = useState<string | null>(null);
   const [turitopLanguageInput, setTuritopLanguageInput] = useState("es");
   const [turitopServiceInput, setTuritopServiceInput] = useState("");
+  const [tourCardSlugInput, setTourCardSlugInput] = useState("");
   const [, setToolbarVersion] = useState(0);
   const editor = useEditor({
     immediatelyRender: false,
@@ -3643,6 +3853,44 @@ export const TiptapHtmlEditor = forwardRef<
     handleTuritopDialogOpenChange(false);
   };
 
+  const handleTourCardDialogOpenChange = (nextOpen: boolean) => {
+    setIsTourCardDialogOpen(nextOpen);
+
+    if (!nextOpen) {
+      setTourCardDialogError(null);
+      setTourCardSlugInput("");
+    }
+  };
+
+  const submitTourCard = () => {
+    if (!editor) {
+      return;
+    }
+
+    const tourSlug = tourCardSlugInput.trim();
+
+    if (!tourSlug) {
+      const message = "Tour slug is required.";
+      setTourCardDialogError(message);
+      onError?.(message);
+      return;
+    }
+
+    editor.chain().focus().insertContent([
+      {
+        type: "blogTourCard",
+        attrs: {
+          tourSlug,
+        },
+      },
+      {
+        type: "paragraph",
+      },
+    ]).run();
+
+    handleTourCardDialogOpenChange(false);
+  };
+
   const insertClearWrap = () => {
     if (!editor) {
       return;
@@ -3788,6 +4036,12 @@ export const TiptapHtmlEditor = forwardRef<
           disabled={ !editor }
           onClick={ () => handleTuritopDialogOpenChange(true) }
         />
+        <ToolbarButton
+          icon={ MapPinned }
+          label="Tour Card"
+          disabled={ !editor }
+          onClick={ () => handleTourCardDialogOpenChange(true) }
+        />
       </div>
 
       <EditorContent editor={ editor }/>
@@ -3908,6 +4162,53 @@ export const TiptapHtmlEditor = forwardRef<
             </Button>
             <Button type="button" onClick={ submitTuritopWidget } disabled={ !editor }>
               Insert Calendar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={ isTourCardDialogOpen } onOpenChange={ handleTourCardDialogOpenChange }>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Insert Tour Card</DialogTitle>
+            <DialogDescription>
+              Embed an inline tour card in the blog post. The card shows the tour image, name, price, duration, and a booking link. Enter the tour translation slug.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-2">
+            <label htmlFor="blog-tour-card-slug" className="text-sm font-medium text-[#21343b]">
+              Tour Slug
+            </label>
+            <Input
+              id="blog-tour-card-slug"
+              value={ tourCardSlugInput }
+              onChange={ (event) => {
+                setTourCardSlugInput(event.target.value);
+                if (tourCardDialogError) {
+                  setTourCardDialogError(null);
+                }
+              } }
+              onKeyDown={ (event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  submitTourCard();
+                }
+              } }
+              placeholder="en-historic-center-highlights"
+              autoFocus
+            />
+            { tourCardDialogError ? (
+              <p className="text-sm text-[#8c3b32]">{ tourCardDialogError }</p>
+            ) : null }
+          </div>
+
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={ () => handleTourCardDialogOpenChange(false) }>
+              Cancel
+            </Button>
+            <Button type="button" onClick={ submitTourCard } disabled={ !editor }>
+              Insert Tour Card
             </Button>
           </DialogFooter>
         </DialogContent>

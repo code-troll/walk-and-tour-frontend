@@ -1,7 +1,8 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useTranslations} from "next-intl";
+import {getPathname} from "@/i18n/navigation";
 import type {AppLocale} from "@/i18n/routing";
 import NotFound from "@/app/not-found";
 import Footer from "@/components/layout/Footer";
@@ -64,6 +65,7 @@ export default function PublicTourDetailPageClient({
   const [detailResult, setDetailResult] = useState<PublicTourDetailResult | null>(null);
   const [relatedTours, setRelatedTours] = useState<PublicTourCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isMissing, setIsMissing] = useState(false);
 
@@ -85,6 +87,21 @@ export default function PublicTourDetailPageClient({
           setDetailResult(null);
           setRelatedTours([]);
           return;
+        }
+
+        // If the URL slug doesn't match the requested locale but a
+        // translation exists for that locale, redirect to the correct slug.
+        if (nextDetailResult.isFallbackLanguage) {
+          const localeTranslation = nextDetailResult.availableTranslations.find(
+            (t) => t.locale === locale,
+          );
+
+          if (localeTranslation) {
+            setIsRedirecting(true);
+            const correctPath = `${getPathname({ locale, href: hrefBasePath as "/tours" })}/${localeTranslation.slug}`;
+            window.location.replace(correctPath);
+            return;
+          }
         }
 
         setDetailResult(nextDetailResult);
@@ -129,7 +146,7 @@ export default function PublicTourDetailPageClient({
     descriptionTag.setAttribute("content", metaDescription);
   }, [detailResult, tourDetailT]);
 
-  if (isLoading) {
+  if (isLoading || isRedirecting) {
     return <PublicLoadingState label="Loading tour details..."/>;
   }
 
@@ -141,7 +158,7 @@ export default function PublicTourDetailPageClient({
     return <NotFound/>;
   }
 
-  const {availableLocales, contentLocale, isFallbackLanguage, tour} = detailResult;
+  const {availableLocales, availableTranslations, contentLocale, isFallbackLanguage, tour} = detailResult;
   const availableLanguageLabels = availableLocales.map((availableLocale) => ({
     locale: availableLocale,
     label: getLocaleLanguageLabel(availableLocale, headerT as never),
@@ -170,6 +187,7 @@ export default function PublicTourDetailPageClient({
           description={tourDetailT("languageFallback.description")}
           availableLanguagesLabel={tourDetailT("languageFallback.availableLanguages")}
           availableLanguages={availableLanguageLabels}
+          availableTranslations={availableTranslations}
           hrefBasePath={hrefBasePath}
           tourSlug={slug}
         />

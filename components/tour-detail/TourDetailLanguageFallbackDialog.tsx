@@ -28,6 +28,7 @@ type TourDetailLanguageFallbackDialogProps = {
     locale: AppLocale;
     label: string;
   }[];
+  availableTranslations: { locale: string; slug: string }[];
   availableLanguagesLabel: string;
   description: string;
   hrefBasePath?: "/tours" | "/companies";
@@ -37,6 +38,7 @@ type TourDetailLanguageFallbackDialogProps = {
 
 export default function TourDetailLanguageFallbackDialog({
                                                            availableLanguages,
+                                                           availableTranslations,
                                                            availableLanguagesLabel,
                                                            description,
                                                          hrefBasePath = "/tours",
@@ -59,7 +61,8 @@ export default function TourDetailLanguageFallbackDialog({
   }, []);
 
   const handleLanguageSelect = async (nextLocale: AppLocale) => {
-    const targetPath = `${ getPathname({locale: nextLocale, href: hrefBasePath}) }/${ tourSlug }`;
+    const translationSlug = availableTranslations.find((t) => t.locale === nextLocale)?.slug ?? tourSlug;
+    const targetPath = `${ getPathname({locale: nextLocale, href: hrefBasePath}) }/${ translationSlug }`;
     setPendingLocale(nextLocale);
 
     try {

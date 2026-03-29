@@ -1,9 +1,11 @@
 import BlogPostHtmlContent from "@/components/blog/BlogPostHtmlContent";
+import type { AppLocale } from "@/i18n/routing";
 import { sanitizeBlogContentHtml } from "@/lib/blog/sanitize-content-html";
 
 type BlogPostContentProps = {
   contentHtml: string | null;
   contentText: string;
+  locale?: string;
 };
 
 const contentClassName = [
@@ -28,11 +30,12 @@ const contentClassName = [
 export default function BlogPostContent({
                                          contentHtml,
                                          contentText,
+                                         locale,
                                        }: BlogPostContentProps) {
   const safeContentHtml = contentHtml ? sanitizeBlogContentHtml(contentHtml) : null;
 
   if (safeContentHtml) {
-    return <BlogPostHtmlContent className={ contentClassName } contentHtml={ safeContentHtml }/>;
+    return <BlogPostHtmlContent className={ contentClassName } contentHtml={ safeContentHtml } locale={ locale as AppLocale }/>;
   }
 
   return (

@@ -103,6 +103,7 @@ export default function BlogPostArticle({
       <BlogPostContent
         contentHtml={ contentHtml }
         contentText={ contentText }
+        locale={ locale }
       />
     </article>
   );
