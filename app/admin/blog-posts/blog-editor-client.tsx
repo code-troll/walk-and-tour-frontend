@@ -1297,7 +1297,7 @@ export function BlogPostEditorClient({
                             <Input
                               id="translation-slug"
                               value={ activeTranslation.slug }
-                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "slug", event.target.value) }
+                              onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "slug", event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")) }
                               placeholder={ generatedSlug || "blog-post-slug" }
                               className="h-11 font-mono"
                             />

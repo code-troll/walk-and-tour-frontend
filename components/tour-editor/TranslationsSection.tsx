@@ -271,7 +271,7 @@ export function TranslationsSection({
                               updateTranslationField(
                                 translation.languageCode,
                                 "slug",
-                                event.target.value,
+                                event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""),
                               )
                             }
                             placeholder={ generateTourSlug(translation.title || formState.name) || "tour-url-slug" }
