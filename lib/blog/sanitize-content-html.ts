@@ -15,6 +15,7 @@ const EMBED_BLOCK_PATTERNS = [
   /<div\b[^>]*data-blog-video="true"[^>]*>[\s\S]*?<\/div>/gi,
   /<div\b[^>]*data-blog-embed="true"[^>]*>[\s\S]*?<\/div>/gi,
   /<div\b[^>]*data-blog-turitop="true"[^>]*><\/div>/gi,
+  /<div\b[^>]*data-blog-tour-card="true"[^>]*><\/div>/gi,
   /<a\b[^>]*data-blog-link-card="true"[^>]*>[\s\S]*?<\/a>/gi,
 ];
 
@@ -69,6 +70,11 @@ const isSafeAllowedBlock = (markup: string) => {
     const embed = extractAttribute(markup, "data-embed");
 
     return Boolean(service && language && embed === "box");
+  }
+
+  if (markup.includes("data-blog-tour-card=\"true\"")) {
+    const tourSlug = extractAttribute(markup, "data-tour-slug");
+    return Boolean(tourSlug);
   }
 
   if (markup.includes("data-blog-link-card=\"true\"")) {

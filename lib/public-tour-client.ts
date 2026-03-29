@@ -1,7 +1,6 @@
 "use client";
 
 import type {AppLocale} from "@/i18n/routing";
-import {routing} from "@/i18n/routing";
 import {fetchJson} from "@/lib/api/client-json";
 import type {components} from "@/lib/api/generated/backend-types";
 import {
@@ -113,34 +112,18 @@ export const getPublicTourDetailWithFallbackClient = async ({
   locale: AppLocale;
   slug: string;
 }): Promise<PublicTourDetailResult | null> => {
-  const requestedTour = await getPublicTourBySlug({locale, slug});
-  const availableTours: {locale: AppLocale; tour: PublicTourResponse}[] = [];
+  const resolvedTour = await getPublicTourBySlug({locale, slug});
 
-  if (!requestedTour) {
-    for (const candidateLocale of routing.locales) {
-      if (candidateLocale === locale) {
-        continue;
-      }
-
-      const candidateTour = await getPublicTourBySlug({
-        locale: candidateLocale,
-        slug,
-      });
-
-      if (candidateTour) {
-        availableTours.push({
-          locale: candidateLocale,
-          tour: candidateTour,
-        });
-      }
-    }
+  if (!resolvedTour) {
+    return null;
   }
 
   return resolvePublicTourFallback({
     expectedTourTypes,
     locale,
-    requestedTour,
-    availableTours,
+    requestedTour: resolvedTour,
+    availableTranslations: resolvedTour.availableTranslations ?? [],
+    urlSlug: slug,
   });
 };
 

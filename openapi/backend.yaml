@@ -4357,6 +4357,21 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PublicTagResponseDto"
+        availableTranslations:
+          type: array
+          description: All published translations available for this tour, with their locale and slug.
+          items:
+            type: object
+            properties:
+              locale:
+                type: string
+                example: en
+              slug:
+                type: string
+                example: en-historic-center
+            required:
+              - locale
+              - slug
         translation:
           description: Published localized translation payload selected for the requested locale.
           allOf:
@@ -4376,6 +4391,7 @@ components:
         - startPoint
         - endPoint
         - tags
+        - availableTranslations
         - translation
         - itinerary
     RecordAuditMetadataDto:

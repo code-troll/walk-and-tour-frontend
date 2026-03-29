@@ -2101,6 +2101,13 @@ export interface components {
             endPoint: components["schemas"]["PublicPointResponseDto"];
             /** @description Localized tag labels for the requested locale. */
             tags: components["schemas"]["PublicTagResponseDto"][];
+            /** @description All published translations available for this tour, with their locale and slug. */
+            availableTranslations: {
+                /** @example en */
+                locale: string;
+                /** @example en-historic-center */
+                slug: string;
+            }[];
             /** @description Published localized translation payload selected for the requested locale. */
             translation: components["schemas"]["PublicTourTranslationResponseDto"];
             /** @description Localized itinerary returned for the requested locale. */
