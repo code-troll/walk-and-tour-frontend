@@ -1356,6 +1356,11 @@ export interface components {
             heroMedia?: components["schemas"]["MediaAssetResponseDto"] | null;
             /** @description Ordered tag keys assigned to the post. */
             tagKeys: string[];
+            /**
+             * @description Tag key shown on the public blog card. When null, the first tag is used.
+             * @example history
+             */
+            cardTagKey?: string | null;
             /** @description Expanded tag records. */
             tags: components["schemas"]["TagResponseDto"][];
             /** @description Localized translations keyed by locale code. */
@@ -1396,6 +1401,8 @@ export interface components {
              *     ]
              */
             tagKeys?: string[];
+            /** @description Tag key to display on the public blog card. Set null to clear. */
+            cardTagKey?: string | null;
         };
         CreateBlogPostTranslationDto: {
             /**
@@ -1537,6 +1544,11 @@ export interface components {
             slug: string;
             /** @description Resolved hero media asset. */
             heroMedia?: components["schemas"]["MediaAssetResponseDto"] | null;
+            /**
+             * @description Tag key shown on the public blog card. When null, the first tag is used.
+             * @example history
+             */
+            cardTagKey?: string | null;
             /** @description Localized tag labels for the requested locale. */
             tags: components["schemas"]["PublicTagResponseDto"][];
             /** @description Published localized blog translation selected for the requested locale. */

@@ -14,6 +14,7 @@ export type PublicBlogCard = {
   coverImageAlt: string;
   publishedDate: string;
   viewCount: number;
+  cardTag: string | null;
   tagLabels: PublicBlogTag[];
 };
 export type PublicBlogDetail = PublicBlogCard & {
@@ -54,6 +55,19 @@ const normalizeTag = (tag: PublicBlogResponse["tags"][number]): PublicBlogTag =>
   label: asString(tag.label).trim() || tag.key,
 });
 
+const resolveCardTag = (post: PublicBlogResponse): string | null => {
+  if (post.cardTagKey) {
+    const matched = post.tags.find((tag) => tag.key === post.cardTagKey);
+    const label = matched ? asString(matched.label).trim() : "";
+    if (label) {
+      return label;
+    }
+  }
+
+  const firstTag = post.tags[0];
+  return firstTag ? asString(firstTag.label).trim() || null : null;
+};
+
 export const normalizeBlogCard = (post: PublicBlogResponse): PublicBlogCard => {
   const bodyText = stripHtml(asString(post.translation.htmlContent));
   const excerptSource = asString(post.translation.summary).trim();
@@ -68,6 +82,7 @@ export const normalizeBlogCard = (post: PublicBlogResponse): PublicBlogCard => {
     coverImageAlt: title,
     publishedDate: post.publishedAt,
     viewCount: post.translation.viewCount,
+    cardTag: resolveCardTag(post),
     tagLabels: post.tags.map(normalizeTag),
   };
 };
