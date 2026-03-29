@@ -1033,6 +1033,25 @@ export function GeneralSection({
                 );
               }) }
             </div>
+
+            <div className="mt-4">
+              <label className="mb-1 block text-sm font-medium text-[#21343b]">Card Tag</label>
+              <p className="mb-2 text-xs text-[#627176]">
+                Tag displayed on the public tour card. By default the first tag is used.
+              </p>
+              <select
+                value={ formState.cardTagKey }
+                onChange={ (e) => updateFormStateAction("cardTagKey", e.target.value) }
+                className={ warmSelectClassName }
+              >
+                <option value="">(Auto — first tag)</option>
+                { formState.tagKeys.map((key) => (
+                  <option key={ key } value={ key }>
+                    { key }
+                  </option>
+                )) }
+              </select>
+            </div>
           </section>
         </>
       ) : null }

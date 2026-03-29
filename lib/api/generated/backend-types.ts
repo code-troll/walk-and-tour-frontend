@@ -2099,6 +2099,11 @@ export interface components {
             startPoint: components["schemas"]["PublicPointResponseDto"];
             /** @description End point data split into shared and localized portions. */
             endPoint: components["schemas"]["PublicPointResponseDto"];
+            /**
+             * @description Tag key shown on the public tour card. When null, the first tag is used.
+             * @example history
+             */
+            cardTagKey?: string | null;
             /** @description Localized tag labels for the requested locale. */
             tags: components["schemas"]["PublicTagResponseDto"][];
             /** @description All published translations available for this tour, with their locale and slug. */
@@ -2282,6 +2287,11 @@ export interface components {
             /** @description Shared itinerary structure. */
             itinerary?: components["schemas"]["TourAdminItineraryResponseDto"] | null;
             /**
+             * @description Tag key shown on the public tour card. When null, the first tag is used.
+             * @example history
+             */
+            cardTagKey?: string | null;
+            /**
              * @description Ordered tag keys assigned to the tour.
              * @example [
              *       "history"
@@ -2423,6 +2433,8 @@ export interface components {
             endPoint?: components["schemas"]["SharedPointDto"];
             /** @description Replacement itinerary definition. For stop-based itineraries the full ordered list should be provided. */
             itinerary?: components["schemas"]["TourItineraryDto"];
+            /** @description Tag key to display on the public tour card. Set null to clear. */
+            cardTagKey?: string | null;
             /** @description Replacement ordered tag key list. */
             tagKeys?: string[];
             /**

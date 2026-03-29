@@ -209,6 +209,7 @@ export type TourFormState = {
   itineraryVariant: ItineraryVariant;
   stops: TourStopFormState[];
   tagKeys: string[];
+  cardTagKey: string;
   translations: TourTranslationFormState[];
 };
 
@@ -405,6 +406,7 @@ export const createEmptyTourFormState = (): TourFormState => ({
   itineraryVariant: "description",
   stops: [],
   tagKeys: [],
+  cardTagKey: "",
   translations: [],
 });
 
@@ -507,6 +509,7 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
         }))
         : [],
     tagKeys: tour.tagKeys,
+    cardTagKey: tour.cardTagKey ?? "",
     translations,
   };
 };
@@ -694,6 +697,7 @@ export const buildUpdateTourPayload = ({
           stops: buildStopsPayload(formState.stops),
         },
     tagKeys: formState.tagKeys,
+    cardTagKey: formState.cardTagKey.trim() || null,
   };
 };
 
