@@ -4352,6 +4352,11 @@ components:
           description: End point data split into shared and localized portions.
           allOf:
             - $ref: "#/components/schemas/PublicPointResponseDto"
+        cardTagKey:
+          type: string
+          description: Tag key shown on the public tour card. When null, the first tag is used.
+          example: history
+          nullable: true
         tags:
           description: Localized tag labels for the requested locale.
           type: array
@@ -4615,6 +4620,11 @@ components:
           nullable: true
           allOf:
             - $ref: "#/components/schemas/TourAdminItineraryResponseDto"
+        cardTagKey:
+          type: string
+          description: Tag key shown on the public tour card. When null, the first tag is used.
+          example: history
+          nullable: true
         tagKeys:
           description: Ordered tag keys assigned to the tour.
           example:
@@ -4838,6 +4848,10 @@ components:
           description: Replacement itinerary definition. For stop-based itineraries the full ordered list should be provided.
           allOf:
             - $ref: "#/components/schemas/TourItineraryDto"
+        cardTagKey:
+          type: string
+          description: Tag key to display on the public tour card. Set null to clear.
+          nullable: true
         tagKeys:
           description: Replacement ordered tag key list.
           uniqueItems: true

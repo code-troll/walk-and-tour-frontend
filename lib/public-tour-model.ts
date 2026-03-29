@@ -267,11 +267,22 @@ const resolveLocation = (tour: PublicTourResponse, payload: TourPayload, locale:
   getLocalizedPointLabel(tour.endPoint) ||
   fallbackLocationByLocale[locale];
 
-const resolveTag = (tour: PublicTourResponse, locale: AppLocale) =>
-  tour.tags
-    .map((tag) => asString(tag.label).trim())
-    .find((label) => label.length > 0) ||
-  fallbackTourTypeLabelByLocale[locale][tour.tourType];
+const resolveTag = (tour: PublicTourResponse, locale: AppLocale) => {
+  if (tour.cardTagKey) {
+    const matched = tour.tags.find((tag) => tag.key === tour.cardTagKey);
+    const label = matched ? asString(matched.label).trim() : "";
+    if (label) {
+      return label;
+    }
+  }
+
+  return (
+    tour.tags
+      .map((tag) => asString(tag.label).trim())
+      .find((label) => label.length > 0) ||
+    fallbackTourTypeLabelByLocale[locale][tour.tourType]
+  );
+};
 
 const getPrimaryMedia = (tour: PublicTourResponse) => tour.coverMedia ?? tour.galleryMedia[0] ?? null;
 
