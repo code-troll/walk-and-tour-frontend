@@ -35,37 +35,97 @@ const splitTextareaLines = (value: string) =>
     .map((item) => item.trim())
     .filter((item) => item.length > 0);
 
+type CompletionCheck = {
+  label: string;
+  passed: boolean;
+};
+
+const getCompletionChecks = ({
+  formState,
+  translation,
+}: {
+  formState: TourFormState;
+  translation: TourTranslationFormState;
+}): CompletionCheck[] => {
+  const checks: CompletionCheck[] = [
+    { label: "Title", passed: translation.title.trim().length > 0 },
+    { label: "Cancellation type", passed: translation.cancellationType.trim().length > 0 },
+    { label: "About tour description", passed: translation.aboutTourDescription.trim().length > 0 },
+    { label: "Highlights (at least one)", passed: splitTextareaLines(translation.highlightsText).length > 0 },
+    { label: "Included items (at least one)", passed: splitTextareaLines(translation.includedText).length > 0 },
+    { label: "Not included items (at least one)", passed: splitTextareaLines(translation.notIncludedText).length > 0 },
+    { label: "Start point label", passed: translation.startPointLabel.trim().length > 0 },
+    { label: "End point label", passed: translation.endPointLabel.trim().length > 0 },
+  ];
+
+  if (formState.itineraryVariant === "description") {
+    checks.push({
+      label: "Itinerary description",
+      passed: translation.itineraryDescription.trim().length > 0,
+    });
+  } else {
+    formState.stops.forEach((stop, index) => {
+      const stopId = stop.id.trim();
+      const stopCopy = stopId ? translation.stopContent[stopId] : undefined;
+
+      checks.push({
+        label: `Stop ${index + 1} "${stopId || "?"}" — title and description`,
+        passed: Boolean(stopCopy?.title?.trim() && stopCopy?.description?.trim()),
+      });
+    });
+  }
+
+  return checks;
+};
+
 const getCompletionStatus = ({
-                               formState,
-                               translation,
-                             }: {
+  formState,
+  translation,
+}: {
   formState: TourFormState;
   translation: TourTranslationFormState;
 }) => {
-  const checks = [
-    translation.title.trim().length > 0,
-    translation.cancellationType.trim().length > 0,
-    translation.aboutTourDescription.trim().length > 0,
-    splitTextareaLines(translation.highlightsText).length > 0,
-    splitTextareaLines(translation.includedText).length > 0,
-    splitTextareaLines(translation.notIncludedText).length > 0,
-    translation.startPointLabel.trim().length > 0 && translation.endPointLabel.trim().length > 0,
-    formState.itineraryVariant === "description"
-      ? translation.itineraryDescription.trim().length > 0
-      : formState.stops.every((stop) => {
-        const stopId = stop.id.trim();
-        const stopCopy = stopId ? translation.stopContent[stopId] : undefined;
+  const checks = getCompletionChecks({ formState, translation });
+  const completed = checks.filter((c) => c.passed).length;
 
-        return Boolean(stopCopy?.title?.trim() && stopCopy?.description?.trim());
-      }),
-  ];
-
-  const completed = checks.filter(Boolean).length;
   return {
+    checks,
     completed,
     total: checks.length,
     percentage: Math.round((completed / checks.length) * 100),
   };
+};
+
+const getSharedBlockingReasons = (formState: TourFormState): string[] => {
+  const reasons: string[] = [];
+
+  if (!formState.durationMinutes.trim()) {
+    reasons.push("Duration is not set");
+  }
+
+  if (!formState.rating.trim()) {
+    reasons.push("Rating is not set");
+  }
+
+  if (!formState.reviewCount.trim()) {
+    reasons.push("Review count is not set");
+  }
+
+  if (formState.tourType !== "company" && formState.tourType !== "tip_based" && formState.hasPrice) {
+    const priceAmount = Number.parseFloat(formState.priceAmount);
+    if (!Number.isFinite(priceAmount) || priceAmount < 0) {
+      reasons.push("Price amount is invalid");
+    }
+    if (!formState.priceCurrency.trim()) {
+      reasons.push("Currency is not set");
+    }
+  }
+
+  if (formState.itineraryVariant === "stops" && formState.stops.length === 0) {
+    reasons.push("Stop-based itinerary has no stops");
+  }
+
+  return reasons;
 };
 
 export function PublicationSection({
@@ -83,6 +143,7 @@ export function PublicationSection({
   );
   const diagnosticsByLanguage = new Map(diagnostics.map((diagnostic) => [diagnostic.languageCode, diagnostic]));
 
+  const sharedBlockingReasons = getSharedBlockingReasons(formState);
   const publishedTranslations = formState.translations.filter(
     (translation) => translation.isPublished,
   );
@@ -201,22 +262,33 @@ export function PublicationSection({
                           </span>
                         </div>
 
-                        { diagnostic ? (
-                          <div
-                            className="mt-2 flex flex-wrap gap-2 text-xs text-[#627176]">
-                            <span>
-                              { diagnostic.publiclyAvailable ? "Publicly available" : "Not public" }
-                            </span>
-                            { diagnostic.missingRequiredLists.length > 0 ? (
-                              <span>
-                                Missing lists: { diagnostic.missingRequiredLists.join(", ") }
-                              </span>
-                            ) : null }
-                            { diagnostic.missingStopTranslations.length > 0 ? (
-                              <span>
-                                Missing stops: { diagnostic.missingStopTranslations.join(", ") }
-                              </span>
-                            ) : null }
+                        { completion.checks.some((c) => !c.passed) ? (
+                          <div className="mt-2 space-y-1">
+                            <p className="text-xs font-medium text-[#a3483f]">Missing for readiness:</p>
+                            <ul className="list-none space-y-0.5">
+                              { completion.checks
+                                .filter((c) => !c.passed)
+                                .map((c) => (
+                                  <li key={ c.label } className="flex items-center gap-1.5 text-xs text-[#a3483f]">
+                                    <X className="size-3 shrink-0" />
+                                    { c.label }
+                                  </li>
+                                ))
+                              }
+                            </ul>
+                          </div>
+                        ) : null }
+                        { sharedBlockingReasons.length > 0 ? (
+                          <div className="mt-2 space-y-1">
+                            <p className="text-xs font-medium text-[#a3483f]">Tour-level issues:</p>
+                            <ul className="list-none space-y-0.5">
+                              { sharedBlockingReasons.map((reason) => (
+                                <li key={ reason } className="flex items-center gap-1.5 text-xs text-[#a3483f]">
+                                  <X className="size-3 shrink-0" />
+                                  { reason }
+                                </li>
+                              )) }
+                            </ul>
                           </div>
                         ) : null }
                       </div>
@@ -277,39 +349,46 @@ export function PublicationSection({
 
         <div className="space-y-3">
           <ChecklistItem
-            label="Tour has a name and at least one translation with a slug"
-            passed={ Boolean(formState.name.trim() && formState.translations.some((t) => t.slug.trim())) }
+            label="Tour has a name"
+            passed={ Boolean(formState.name.trim()) }
           />
           <ChecklistItem
-            label="Duration, rating, and review count are set"
-            passed={
-              Boolean(formState.durationMinutes.trim()) &&
-              Boolean(formState.rating.trim()) &&
-              Boolean(formState.reviewCount.trim())
-            }
+            label="Duration is set"
+            passed={ Boolean(formState.durationMinutes.trim()) }
           />
           <ChecklistItem
-            label="At least one stop defined when using a stop-based itinerary"
-            passed={
-              formState.itineraryVariant === "description" || formState.stops.length > 0
-            }
+            label="Rating is set"
+            passed={ Boolean(formState.rating.trim()) }
           />
           <ChecklistItem
-            label="Start and end coordinates are set"
-            passed={
-              Boolean(formState.startPointLat) &&
-              Boolean(formState.startPointLng) &&
-              Boolean(formState.endPointLat) &&
-              Boolean(formState.endPointLng)
-            }
+            label="Review count is set"
+            passed={ Boolean(formState.reviewCount.trim()) }
+          />
+          { formState.tourType !== "company" && formState.tourType !== "tip_based" ? (
+            <ChecklistItem
+              label="Price and currency are set"
+              passed={ Boolean(formState.priceAmount.trim()) && Boolean(formState.priceCurrency.trim()) }
+            />
+          ) : null }
+          { formState.tourType === "tip_based" ? (
+            <ChecklistItem
+              label="Tip-based tour has no fixed price"
+              passed={ !formState.hasPrice || !formState.priceAmount.trim() }
+            />
+          ) : null }
+          <ChecklistItem
+            label={ formState.itineraryVariant === "stops"
+              ? "Stop-based itinerary has at least one stop"
+              : "Itinerary variant is configured" }
+            passed={ formState.itineraryVariant === "description" || formState.stops.length > 0 }
           />
           <ChecklistItem
             label="At least one translation is ready"
             passed={ formState.translations.some((translation) => translation.isReady) }
           />
           <ChecklistItem
-            label="A cover image is configured"
-            passed={ Boolean(formState.coverMediaId) }
+            label="At least one translation has a slug"
+            passed={ formState.translations.some((t) => t.slug.trim()) }
           />
         </div>
       </section>
