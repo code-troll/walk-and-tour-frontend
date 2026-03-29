@@ -1656,6 +1656,15 @@ export function TourEditorClient({
       return;
     }
 
+    const priceRequired =
+      formState.tourType !== "company" &&
+      formState.tourType !== "tip_based" &&
+      (!formState.hasPrice || !formState.priceAmount.trim() || !formState.priceCurrency.trim());
+    if (priceRequired) {
+      setSubmitError("Price and currency are required for this tour type. Set them before publishing.");
+      return;
+    }
+
     clearFeedback();
     setIsMutating(true);
 

@@ -111,14 +111,22 @@ const getSharedBlockingReasons = (formState: TourFormState): string[] => {
     reasons.push("Review count is not set");
   }
 
-  if (formState.tourType !== "company" && formState.tourType !== "tip_based" && formState.hasPrice) {
-    const priceAmount = Number.parseFloat(formState.priceAmount);
-    if (!Number.isFinite(priceAmount) || priceAmount < 0) {
-      reasons.push("Price amount is invalid");
+  if (formState.tourType !== "company" && formState.tourType !== "tip_based") {
+    if (!formState.hasPrice || !formState.priceAmount.trim()) {
+      reasons.push("Price is required for this tour type");
+    } else {
+      const priceAmount = Number.parseFloat(formState.priceAmount);
+      if (!Number.isFinite(priceAmount) || priceAmount < 0) {
+        reasons.push("Price amount is invalid");
+      }
     }
     if (!formState.priceCurrency.trim()) {
       reasons.push("Currency is not set");
     }
+  }
+
+  if (formState.tourType === "tip_based" && formState.hasPrice && formState.priceAmount.trim()) {
+    reasons.push("Tip-based tours must not have a fixed price");
   }
 
   if (formState.itineraryVariant === "stops" && formState.stops.length === 0) {
@@ -182,7 +190,7 @@ export function PublicationSection({
             <Button
               size="sm"
               onClick={ onPublishAllReadyAction }
-              disabled={ isMutating || readyUnpublished.length === 0 }
+              disabled={ isMutating || readyUnpublished.length === 0 || sharedBlockingReasons.length > 0 }
               className="gap-2 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]"
             >
               <Send className="size-4"/>
@@ -317,7 +325,7 @@ export function PublicationSection({
                             ? onUnpublishTranslationAction({languageCode: translation.languageCode})
                             : onPublishTranslationAction({languageCode: translation.languageCode})
                         }
-                        disabled={ isMutating || (!isReady && !isPublished) }
+                        disabled={ isMutating || (!isReady && !isPublished) || (!isPublished && sharedBlockingReasons.length > 0) }
                         className="min-w-24"
                       >
                         { isPublished ? (
