@@ -42,7 +42,7 @@ const filterPostsByTags = (
   }
 
   return posts.filter((post) =>
-    selectedTagKeys.some((key) =>
+    selectedTagKeys.every((key) =>
       post.tagLabels.some((tag) => tag.key === key),
     ),
   );
