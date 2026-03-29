@@ -90,7 +90,7 @@ export default function BlogPostsSection({
         </div>
 
         { tagOptions.length > 1 ? (
-          <div className="mx-auto mt-10 max-w-4xl">
+          <div className="mt-10">
             <div className="rounded-xl border border-[#d8c8b7] bg-[#ffffff] p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8a7562]">
                 { t("filterLabel") }
