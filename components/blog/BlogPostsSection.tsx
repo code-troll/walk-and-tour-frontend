@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import { getPathname } from "@/i18n/navigation";
@@ -54,9 +55,13 @@ export default function BlogPostsSection({
                                           didFail,
                                         }: BlogPostsSectionProps) {
   const t = useTranslations("blogPage");
+  const searchParams = useSearchParams();
   const postBasePath = getPathname({locale, href: "/post"});
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const [selectedTagKeys, setSelectedTagKeys] = useState<string[]>([]);
+  const [selectedTagKeys, setSelectedTagKeys] = useState<string[]>(() => {
+    const tagsParam = searchParams.get("tags");
+    return tagsParam ? tagsParam.split(",").filter(Boolean) : [];
+  });
 
   const tagOptions = useMemo(() => extractUniqueTagOptions(posts), [posts]);
 
@@ -69,11 +74,21 @@ export default function BlogPostsSection({
   const hasMorePosts = visibleCount < filteredPosts.length;
 
   const toggleTag = (key: string) => {
-    setSelectedTagKeys((current) =>
-      current.includes(key)
+    setSelectedTagKeys((current) => {
+      const next = current.includes(key)
         ? current.filter((k) => k !== key)
-        : [...current, key],
-    );
+        : [...current, key];
+
+      const url = new URL(window.location.href);
+      if (next.length > 0) {
+        url.searchParams.set("tags", next.join(","));
+      } else {
+        url.searchParams.delete("tags");
+      }
+      window.history.replaceState(null, "", url.toString());
+
+      return next;
+    });
     setVisibleCount(PAGE_SIZE);
   };
 
