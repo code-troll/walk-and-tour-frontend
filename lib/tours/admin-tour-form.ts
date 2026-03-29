@@ -112,6 +112,12 @@ export const TOUR_CONTENT_SCHEMA: TourContentSchema = {
       },
       required: ["label"],
     },
+    imageAlt: {
+      type: "string",
+    },
+    customerSupportDescription: {
+      type: "string",
+    },
     itineraryDescription: {
       type: "string",
     },
