@@ -3381,6 +3381,11 @@ components:
           type: array
           items:
             type: string
+        cardTagKey:
+          type: string
+          description: Tag key shown on the public blog card. When null, the first tag is used.
+          example: history
+          nullable: true
         tags:
           description: Expanded tag records.
           type: array
@@ -3446,6 +3451,10 @@ components:
           type: array
           items:
             type: string
+        cardTagKey:
+          type: string
+          description: Tag key to display on the public blog card. Set null to clear.
+          nullable: true
     CreateBlogPostTranslationDto:
       type: object
       properties:
@@ -3624,6 +3633,11 @@ components:
           nullable: true
           allOf:
             - $ref: "#/components/schemas/MediaAssetResponseDto"
+        cardTagKey:
+          type: string
+          description: Tag key shown on the public blog card. When null, the first tag is used.
+          example: history
+          nullable: true
         tags:
           description: Localized tag labels for the requested locale.
           type: array

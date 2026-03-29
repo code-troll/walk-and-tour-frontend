@@ -1040,6 +1040,28 @@ export function BlogPostEditorClient({
               }) }
             </div>
           </div>
+
+          <div className="mt-6 space-y-2">
+            <p className={ fieldLabelClassName }>Card Tag</p>
+            <p className="text-xs text-muted-foreground">
+              Tag displayed on the public blog card. By default the first tag is used.
+            </p>
+            <select
+              value={ formState.cardTagKey }
+              onChange={ (e) => {
+                setFeedback(null);
+                setFormState((current) => ({ ...current, cardTagKey: e.target.value }));
+              } }
+              className={ selectClassName }
+            >
+              <option value="">(Auto — first tag)</option>
+              { formState.tagKeys.map((key) => (
+                <option key={ key } value={ key }>
+                  { key }
+                </option>
+              )) }
+            </select>
+          </div>
         </AdminSectionCard>
 
         <AdminSectionCard

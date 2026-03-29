@@ -44,20 +44,28 @@ export default function BlogPostCard({
   return (
     <article
       className="flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-[0_12px_28px_-24px_rgba(0,0,0,0.9)] ring-1 ring-[#e3d8cc]">
-      <a href={ postHref } className="group block">
-        { post.coverImageUrl ? (
-          <Image
-            src={ post.coverImageUrl }
-            alt={ post.coverImageAlt }
-            width={ 1200 }
-            height={ 760 }
-            className="h-56 w-full object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04]"
-            unoptimized={ Boolean(isRemoteImage) }
-          />
-        ) : (
-          <div className="h-56 w-full bg-linear-to-br from-[#2b666d]/80 via-[#2b666d]/55 to-[#2b666d]/40"/>
-        ) }
-      </a>
+      <div className="relative">
+        <a href={ postHref } className="group block">
+          { post.coverImageUrl ? (
+            <Image
+              src={ post.coverImageUrl }
+              alt={ post.coverImageAlt }
+              width={ 1200 }
+              height={ 760 }
+              className="h-56 w-full object-cover transition-transform duration-500 ease-out will-change-transform group-hover:scale-[1.04]"
+              unoptimized={ Boolean(isRemoteImage) }
+            />
+          ) : (
+            <div className="h-56 w-full bg-linear-to-br from-[#2b666d]/80 via-[#2b666d]/55 to-[#2b666d]/40"/>
+          ) }
+        </a>
+        { post.cardTag ? (
+          <span
+            className="absolute left-4 top-4 rounded-full bg-[#2b666d]/95 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+            { post.cardTag }
+          </span>
+        ) : null }
+      </div>
       <div className="flex flex-1 flex-col p-6">
         { formattedDate || typeof post.viewCount === "number" ? (
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-[#8a7562]">

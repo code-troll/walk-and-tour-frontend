@@ -34,6 +34,7 @@ export type BlogTranslationFormState = {
 
 export type BlogFormState = {
   name: string;
+  cardTagKey: string;
   tagKeys: string[];
   translations: BlogTranslationFormState[];
 };
@@ -139,6 +140,7 @@ const createTranslationFormStateFromApi = (
 
 export const createBlogFormStateFromApi = (blogPost: ApiBlogPost): BlogFormState => ({
   name: blogPost.name,
+  cardTagKey: blogPost.cardTagKey ?? "",
   tagKeys: [...blogPost.tagKeys],
   translations: Object.entries(blogPost.translations)
     .map(([languageCode, translation]) => createTranslationFormStateFromApi(languageCode, translation))
@@ -189,6 +191,7 @@ export const mergeBlogFormStateWithApiPost = (
 
   return {
     name: blogPost.name,
+    cardTagKey: blogPost.cardTagKey ?? "",
     tagKeys: [...blogPost.tagKeys],
     translations,
   };
@@ -196,6 +199,7 @@ export const mergeBlogFormStateWithApiPost = (
 
 export const createEmptyBlogFormState = (): BlogFormState => ({
   name: "",
+  cardTagKey: "",
   tagKeys: [],
   translations: [],
 });
@@ -208,6 +212,7 @@ export const toCreateBlogBody = (formState: BlogFormState): CreateBlogBody => ({
 export const toUpdateBlogBody = (formState: BlogFormState): UpdateBlogBody => ({
   name: formState.name.trim(),
   tagKeys: formState.tagKeys,
+  cardTagKey: formState.cardTagKey.trim() || null,
 });
 
 const parseImageRefs = (imageRefsText: string) =>
