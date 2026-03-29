@@ -112,6 +112,22 @@ export default function PublicBlogPostDetailPageClient({
           </a>
 
           <div className="mx-auto mt-10 w-full max-w-7xl rounded-3xl border border-[#e8dfd4] bg-white px-6 py-2 lg:px-24">
+            { post.tagLabels.length > 0 ? (
+              <div className="mt-8 mb-2">
+                <div className="flex flex-wrap gap-2">
+                  { post.tagLabels.map((tag) => (
+                    <a
+                      key={ tag.key }
+                      href={ `${ getPathname({ locale, href: "/post" }) }?tags=${ encodeURIComponent(tag.key) }` }
+                      className="rounded-full border border-[#d8c8b7] bg-[#fcfaf6] px-4 py-1.5 text-sm font-medium text-[#5b4d3c] transition-colors hover:border-[#2b666d] hover:bg-[#2b666d] hover:text-white no-underline"
+                    >
+                      { tag.label }
+                    </a>
+                  )) }
+                </div>
+              </div>
+            ) : null }
+
             <div className="mt-12">
               <BlogPostArticle
                 contentHtml={post.contentHtml}
@@ -127,22 +143,6 @@ export default function PublicBlogPostDetailPageClient({
                 viewsLabel={tBlogPost("views")}
               />
             </div>
-
-            { post.tagLabels.length > 0 ? (
-              <div className="border-t border-[#e8dfd4] mt-6 py-6">
-                <div className="flex flex-wrap gap-2">
-                  { post.tagLabels.map((tag) => (
-                    <a
-                      key={ tag.key }
-                      href={ `${ getPathname({ locale, href: "/post" }) }?tags=${ encodeURIComponent(tag.key) }` }
-                      className="rounded-full border border-[#d8c8b7] bg-[#fcfaf6] px-4 py-1.5 text-sm font-medium text-[#5b4d3c] transition-colors hover:border-[#2b666d] hover:bg-[#2b666d] hover:text-white no-underline"
-                    >
-                      { tag.label }
-                    </a>
-                  )) }
-                </div>
-              </div>
-            ) : null }
 
             <div className="border-t border-[#e8dfd4] mt-6 py-6">
               <BlogPostShareLinks
