@@ -65,34 +65,34 @@ type TuritopAlignment = "left" | "center" | "right";
 
 type ParsedEmbedResult =
   | {
-      kind: "video";
-      provider: SupportedVideoProvider;
-      title: string;
-      videoId: string;
-    }
+  kind: "video";
+  provider: SupportedVideoProvider;
+  title: string;
+  videoId: string;
+}
   | {
-      canonicalUrl: string;
-      embedSrc: string;
-      height: number;
-      kind: "iframe";
-      provider: SupportedIframeProvider;
-      title: string;
-      widthPreset: EmbedWidthPreset;
-    }
+  canonicalUrl: string;
+  embedSrc: string;
+  height: number;
+  kind: "iframe";
+  provider: SupportedIframeProvider;
+  title: string;
+  widthPreset: EmbedWidthPreset;
+}
   | {
-      href: string;
-      kind: "linkCard";
-      title: string;
-    };
+  href: string;
+  kind: "linkCard";
+  title: string;
+};
 
 const IMAGE_ALIGNMENT_OPTIONS: Array<{ label: string; value: ImageAlignment }> = [
-  { label: "Left", value: "left" },
-  { label: "Center", value: "center" },
-  { label: "Right", value: "right" },
+  {label: "Left", value: "left"},
+  {label: "Center", value: "center"},
+  {label: "Right", value: "right"},
 ];
 const IMAGE_WIDTH_OPTIONS: Array<{ label: string; value: ImageWidthPreset }> = [
-  { label: "Custom", value: "custom" },
-  { label: "Full", value: "full" },
+  {label: "Custom", value: "custom"},
+  {label: "Full", value: "full"},
 ];
 const IMAGE_MIN_WIDTH = 120;
 const IMAGE_MAX_WIDTH = 960;
@@ -108,41 +108,41 @@ const TURITOP_DEFAULT_WIDTH = 720;
 const TURITOP_DEFAULT_HEIGHT = 760;
 
 const VIDEO_ALIGNMENT_OPTIONS: Array<{ label: string; value: VideoAlignment }> = [
-  { label: "Left", value: "left" },
-  { label: "Center", value: "center" },
-  { label: "Right", value: "right" },
+  {label: "Left", value: "left"},
+  {label: "Center", value: "center"},
+  {label: "Right", value: "right"},
 ];
 
 const VIDEO_RATIO_OPTIONS: Array<{ label: string; value: VideoAspectRatio }> = [
-  { label: "21:9", value: "21:9" },
-  { label: "16:9", value: "16:9" },
-  { label: "4:3", value: "4:3" },
-  { label: "1:1", value: "1:1" },
+  {label: "21:9", value: "21:9"},
+  {label: "16:9", value: "16:9"},
+  {label: "4:3", value: "4:3"},
+  {label: "1:1", value: "1:1"},
 ];
 
 const VIDEO_WIDTH_OPTIONS: Array<{ label: string; value: VideoWidthPreset }> = [
-  { label: "S", value: "small" },
-  { label: "M", value: "medium" },
-  { label: "W", value: "wide" },
-  { label: "Full", value: "full" },
+  {label: "S", value: "small"},
+  {label: "M", value: "medium"},
+  {label: "W", value: "wide"},
+  {label: "Full", value: "full"},
 ];
 
 const EMBED_ALIGNMENT_OPTIONS: Array<{ label: string; value: EmbedAlignment }> = [
-  { label: "Left", value: "left" },
-  { label: "Center", value: "center" },
-  { label: "Right", value: "right" },
+  {label: "Left", value: "left"},
+  {label: "Center", value: "center"},
+  {label: "Right", value: "right"},
 ];
 
 const EMBED_WIDTH_OPTIONS: Array<{ label: string; value: EmbedWidthPreset }> = [
-  { label: "M", value: "medium" },
-  { label: "W", value: "wide" },
-  { label: "Full", value: "full" },
+  {label: "M", value: "medium"},
+  {label: "W", value: "wide"},
+  {label: "Full", value: "full"},
 ];
 
 const TURITOP_ALIGNMENT_OPTIONS: Array<{ label: string; value: TuritopAlignment }> = [
-  { label: "Left", value: "left" },
-  { label: "Center", value: "center" },
-  { label: "Right", value: "right" },
+  {label: "Left", value: "left"},
+  {label: "Center", value: "center"},
+  {label: "Right", value: "right"},
 ];
 
 const toInternalAdminMediaSrc = (value: string) => {
@@ -831,7 +831,6 @@ const parseTikTokEmbedUrl = (url: URL) => {
 
 const WALK_AND_TOUR_EMBED_HOSTS = new Set([
   "walkandtour.dk",
-  "staging.walkandtour.dk",
 ]);
 
 const parseWalkAndTourEmbedUrl = (url: URL) => {
@@ -969,12 +968,12 @@ const parseSupportedEmbedUrl = (value: string): ParsedEmbedResult | null => {
 };
 
 function BlogVideoNodeView({
-  editor,
-  getPos,
-  node,
-  selected,
-  updateAttributes,
-}: NodeViewProps) {
+                             editor,
+                             getPos,
+                             node,
+                             selected,
+                             updateAttributes,
+                           }: NodeViewProps) {
   const provider = toSupportedVideoProvider(node.attrs.provider);
   const videoId = node.attrs.videoId?.trim() ?? "";
   const alignment = toVideoAlignment(node.attrs.alignment);
@@ -984,10 +983,10 @@ function BlogVideoNodeView({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const setAlignment = (nextAlignment: VideoAlignment) => {
-    updateAttributes({ alignment: nextAlignment });
+    updateAttributes({alignment: nextAlignment});
   };
   const setAspectRatio = (nextAspectRatio: VideoAspectRatio) => {
-    updateAttributes({ aspectRatio: nextAspectRatio });
+    updateAttributes({aspectRatio: nextAspectRatio});
   };
   const setWidthPreset = (nextWidthPreset: VideoWidthPreset) => {
     updateAttributes({
@@ -1093,7 +1092,8 @@ function BlogVideoNodeView({
       </Button>
 
       { isControlsVisible ? (
-        <div className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+        <div
+          className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
           <div className="flex flex-wrap items-center gap-1">
             { VIDEO_ALIGNMENT_OPTIONS.map((option) => (
               <Button
@@ -1160,12 +1160,12 @@ function BlogVideoNodeView({
 }
 
 function BlogImageNodeView({
-  editor,
-  getPos,
-  node,
-  selected,
-  updateAttributes,
-}: NodeViewProps) {
+                             editor,
+                             getPos,
+                             node,
+                             selected,
+                             updateAttributes,
+                           }: NodeViewProps) {
   const src = typeof node.attrs.src === "string" ? toInternalAdminMediaSrc(node.attrs.src) : "";
   const alt = typeof node.attrs.alt === "string" ? node.attrs.alt : "";
   const caption = getImageCaptionText(node.attrs.caption);
@@ -1180,9 +1180,9 @@ function BlogImageNodeView({
     typeof node.attrs.alignment === "string"
       ? node.attrs.alignment
       : inferImageAlignment(
-          typeof node.attrs.containerStyle === "string" ? node.attrs.containerStyle : null,
-          typeof node.attrs.wrapperStyle === "string" ? node.attrs.wrapperStyle : null,
-        ),
+        typeof node.attrs.containerStyle === "string" ? node.attrs.containerStyle : null,
+        typeof node.attrs.wrapperStyle === "string" ? node.attrs.wrapperStyle : null,
+      ),
   );
   const persistedWidth = getImageWidthFromAttrs(node.attrs);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -1253,7 +1253,7 @@ function BlogImageNodeView({
   };
 
   const setAlignment = (nextAlignment: ImageAlignment) => {
-    updateAttributes({ alignment: nextAlignment });
+    updateAttributes({alignment: nextAlignment});
   };
 
   const setWidthPreset = (nextWidthPreset: ImageWidthPreset) => {
@@ -1285,7 +1285,7 @@ function BlogImageNodeView({
       persistWidth(previewWidthRef.current);
     };
 
-    const previewWidthRef = { current: startWidth };
+    const previewWidthRef = {current: startWidth};
 
     const handleMouseMove = (event: MouseEvent) => {
       const delta = edge === "left" ? clientX - event.clientX : event.clientX - clientX;
@@ -1317,7 +1317,7 @@ function BlogImageNodeView({
     event.preventDefault();
     const startX = event.touches[0].clientX;
     const startWidth = previewWidth;
-    const previewWidthRef = { current: startWidth };
+    const previewWidthRef = {current: startWidth};
 
     const position = typeof getPos === "function" ? getPos() : null;
     if (typeof position === "number") {
@@ -1342,7 +1342,7 @@ function BlogImageNodeView({
       document.removeEventListener("touchend", handleTouchEnd);
     };
 
-    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchmove", handleTouchMove, {passive: false});
     document.addEventListener("touchend", handleTouchEnd);
   };
 
@@ -1399,7 +1399,8 @@ function BlogImageNodeView({
       </Button>
 
       { isMenuOpen ? (
-        <div className="absolute inset-x-3 top-3 z-20 flex min-w-0 flex-col gap-3 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-3 shadow-sm backdrop-blur">
+        <div
+          className="absolute inset-x-3 top-3 z-20 flex min-w-0 flex-col gap-3 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-3 shadow-sm backdrop-blur">
           <div className="flex flex-wrap items-center gap-1">
             { IMAGE_ALIGNMENT_OPTIONS.map((option) => (
               <Button
@@ -1444,7 +1445,7 @@ function BlogImageNodeView({
             <Input
               id={ captionInputId }
               value={ caption }
-              onChange={ (event) => updateAttributes({ caption: event.target.value }) }
+              onChange={ (event) => updateAttributes({caption: event.target.value}) }
               placeholder="Add an optional caption"
               className="h-9 bg-white"
             />
@@ -1453,25 +1454,25 @@ function BlogImageNodeView({
       ) : null }
 
       <div className="relative">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {/* eslint-disable-next-line @next/next/no-img-element */ }
         <img
           src={ src }
           alt={ alt }
           className="block h-auto max-w-full rounded-2xl"
-          style={ { width: widthPreset === "full" ? "100%" : `${ previewWidth }px` } }
+          style={ {width: widthPreset === "full" ? "100%" : `${ previewWidth }px`} }
         />
 
         { widthPreset === "custom" ? (
           <>
             <div
               className="absolute -bottom-1.5 -left-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
-              style={ { cursor: "nwse-resize" } }
+              style={ {cursor: "nwse-resize"} }
               onMouseDown={ handleResizeMouseDown("left") }
               onTouchStart={ handleResizeTouchStart("left") }
             />
             <div
               className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
-              style={ { cursor: "nwse-resize" } }
+              style={ {cursor: "nwse-resize"} }
               onMouseDown={ handleResizeMouseDown("right") }
               onTouchStart={ handleResizeTouchStart("right") }
             />
@@ -1489,12 +1490,12 @@ function BlogImageNodeView({
 }
 
 function BlogEmbedNodeView({
-  editor,
-  getPos,
-  node,
-  selected,
-  updateAttributes,
-}: NodeViewProps) {
+                             editor,
+                             getPos,
+                             node,
+                             selected,
+                             updateAttributes,
+                           }: NodeViewProps) {
   const resizeSessionRef = useRef<{
     startHeight: number;
     startWidth: number;
@@ -1577,7 +1578,7 @@ function BlogEmbedNodeView({
   };
 
   const setAlignment = (nextAlignment: EmbedAlignment) => {
-    updateAttributes({ alignment: nextAlignment });
+    updateAttributes({alignment: nextAlignment});
   };
 
   const setWidthPreset = (nextWidthPreset: EmbedWidthPreset) => {
@@ -1611,7 +1612,7 @@ function BlogEmbedNodeView({
     const width = clampEmbedWidth(session.startWidth + (clientX - session.startX));
     const height = clampEmbedHeight(session.startHeight + (clientY - session.startY));
 
-    return { height, width };
+    return {height, width};
   };
 
   const updateResizePreview = (clientX: number, clientY: number) => {
@@ -1624,7 +1625,7 @@ function BlogEmbedNodeView({
   const finishResize = (clientX?: number, clientY?: number) => {
     const nextSize = typeof clientX === "number" && typeof clientY === "number"
       ? updateResizePreview(clientX, clientY)
-      : { height: dragHeight ?? activeHeight, width: dragWidth ?? activeWidth };
+      : {height: dragHeight ?? activeHeight, width: dragWidth ?? activeWidth};
     persistSize(nextSize.width, nextSize.height);
     setIsResizing(false);
     resizeSessionRef.current = null;
@@ -1718,7 +1719,8 @@ function BlogEmbedNodeView({
       </Button>
 
       { isMenuOpen ? (
-        <div className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+        <div
+          className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
           <div className="flex flex-wrap items-center gap-1">
             { EMBED_ALIGNMENT_OPTIONS.map((option) => (
               <Button
@@ -1785,7 +1787,7 @@ function BlogEmbedNodeView({
       />
       <div
         className="absolute -bottom-1.5 -right-1.5 size-4 rounded-full border-2 border-[#6c6c6c] bg-white"
-        style={ { cursor: "nwse-resize" } }
+        style={ {cursor: "nwse-resize"} }
         onMouseDown={ handleResizeMouseDown }
         onTouchStart={ handleResizeTouchStart }
       />
@@ -1794,9 +1796,9 @@ function BlogEmbedNodeView({
 }
 
 function BlogLinkCardNodeView({
-  node,
-  selected,
-}: NodeViewProps) {
+                                node,
+                                selected,
+                              }: NodeViewProps) {
   const href = typeof node.attrs.href === "string" ? node.attrs.href.trim() : "";
   const title = typeof node.attrs.title === "string" ? node.attrs.title.trim() : href;
 
@@ -1837,8 +1839,8 @@ function BlogLinkCardNodeView({
 }
 
 function BlogClearNodeView({
-  selected,
-}: NodeViewProps) {
+                             selected,
+                           }: NodeViewProps) {
   return (
     <NodeViewWrapper
       as="div"
@@ -1855,12 +1857,12 @@ function BlogClearNodeView({
 }
 
 function BlogTuritopWidgetNodeView({
-  editor,
-  getPos,
-  node,
-  selected,
-  updateAttributes,
-}: NodeViewProps) {
+                                     editor,
+                                     getPos,
+                                     node,
+                                     selected,
+                                     updateAttributes,
+                                   }: NodeViewProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [alignment, setAlignment] = useState<TuritopAlignment>(
     typeof node.attrs.alignment === "string" && (node.attrs.alignment === "left" || node.attrs.alignment === "right")
@@ -1993,7 +1995,7 @@ function BlogTuritopWidgetNodeView({
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, {passive: false});
     window.addEventListener("touchend", handleTouchEnd);
     window.addEventListener("touchcancel", handleTouchEnd);
     window.addEventListener("keydown", handleEscape);
@@ -2138,7 +2140,8 @@ function BlogTuritopWidgetNodeView({
       </Button>
 
       { isMenuOpen ? (
-        <div className="absolute inset-x-3 top-3 z-20 rounded-xl border border-[#eadfce] bg-white/95 p-3 shadow-sm backdrop-blur">
+        <div
+          className="absolute inset-x-3 top-3 z-20 rounded-xl border border-[#eadfce] bg-white/95 p-3 shadow-sm backdrop-blur">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-1">
               { TURITOP_ALIGNMENT_OPTIONS.map((option) => (
@@ -2195,7 +2198,8 @@ function BlogTuritopWidgetNodeView({
           className="h-full min-h-24 w-full"
         />
       ) : (
-        <div className="flex h-full min-h-24 w-full items-center justify-center rounded-[1rem] border border-dashed border-[#d6c7a5] bg-white/70 px-4 text-sm text-[#8b7862]">
+        <div
+          className="flex h-full min-h-24 w-full items-center justify-center rounded-[1rem] border border-dashed border-[#d6c7a5] bg-white/70 px-4 text-sm text-[#8b7862]">
           <span>Set service and language to render the Turitop calendar here.</span>
         </div>
       ) }
@@ -2207,7 +2211,7 @@ function BlogTuritopWidgetNodeView({
       />
 
       { isResizing ? (
-        <div className="fixed inset-0 z-999" />
+        <div className="fixed inset-0 z-999"/>
       ) : null }
     </NodeViewWrapper>
   );
@@ -2299,9 +2303,9 @@ const Paragraph = Node.create({
   group: "block",
   content: "inline*",
   parseHTML() {
-    return [{ tag: "p" }];
+    return [{tag: "p"}];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["p", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2325,12 +2329,12 @@ const Heading = Node.create({
   parseHTML() {
     return [1, 2, 3].map((level) => ({
       tag: `h${ level }`,
-      attrs: { level },
+      attrs: {level},
     }));
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     const level = Number(HTMLAttributes.level ?? 2);
-    const attributes = { ...HTMLAttributes };
+    const attributes = {...HTMLAttributes};
     delete attributes.level;
     return [`h${ level }`, mergeAttributes(attributes), 0];
   },
@@ -2342,9 +2346,9 @@ const Blockquote = Node.create({
   content: "block+",
   defining: true,
   parseHTML() {
-    return [{ tag: "blockquote" }];
+    return [{tag: "blockquote"}];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["blockquote", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2355,9 +2359,9 @@ const HorizontalRule = Node.create({
   atom: true,
   selectable: true,
   parseHTML() {
-    return [{ tag: "hr" }];
+    return [{tag: "hr"}];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["hr", mergeAttributes(HTMLAttributes)];
   },
 });
@@ -2367,9 +2371,9 @@ const BulletList = Node.create({
   group: "block",
   content: "listItem+",
   parseHTML() {
-    return [{ tag: "ul" }];
+    return [{tag: "ul"}];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["ul", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2390,15 +2394,15 @@ const OrderedList = Node.create({
     };
   },
   parseHTML() {
-    return [{ tag: "ol" }];
+    return [{tag: "ol"}];
   },
-  renderHTML({ HTMLAttributes }) {
-    const { start, ...attributes } = HTMLAttributes;
+  renderHTML({HTMLAttributes}) {
+    const {start, ...attributes} = HTMLAttributes;
     const normalizedStart = Number(start ?? 1);
 
     return [
       "ol",
-      mergeAttributes(normalizedStart === 1 ? attributes : { ...attributes, start: normalizedStart }),
+      mergeAttributes(normalizedStart === 1 ? attributes : {...attributes, start: normalizedStart}),
       0,
     ];
   },
@@ -2409,9 +2413,9 @@ const ListItem = Node.create({
   content: "paragraph block*",
   defining: true,
   parseHTML() {
-    return [{ tag: "li" }];
+    return [{tag: "li"}];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["li", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2420,7 +2424,7 @@ const BoldMark = Mark.create({
   name: "bold",
   parseHTML() {
     return [
-      { tag: "strong" },
+      {tag: "strong"},
       {
         tag: "b",
         getAttrs: (element) =>
@@ -2428,7 +2432,7 @@ const BoldMark = Mark.create({
       },
     ];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["strong", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2437,7 +2441,7 @@ const ItalicMark = Mark.create({
   name: "italic",
   parseHTML() {
     return [
-      { tag: "em" },
+      {tag: "em"},
       {
         tag: "i",
         getAttrs: (element) =>
@@ -2445,7 +2449,7 @@ const ItalicMark = Mark.create({
       },
     ];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["em", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2454,7 +2458,7 @@ const UnderlineMark = Mark.create({
   name: "underline",
   parseHTML() {
     return [
-      { tag: "u" },
+      {tag: "u"},
       {
         tag: "span",
         getAttrs: (element) => {
@@ -2464,7 +2468,7 @@ const UnderlineMark = Mark.create({
       },
     ];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["u", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2473,9 +2477,9 @@ const StrikeMark = Mark.create({
   name: "strike",
   parseHTML() {
     return [
-      { tag: "s" },
-      { tag: "del" },
-      { tag: "strike" },
+      {tag: "s"},
+      {tag: "del"},
+      {tag: "strike"},
       {
         tag: "span",
         getAttrs: (element) => {
@@ -2485,7 +2489,7 @@ const StrikeMark = Mark.create({
       },
     ];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["s", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2505,39 +2509,39 @@ const TextColorMark = Mark.create({
         tag: "span",
         getAttrs: (element) => {
           const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "color");
-          return color ? { color } : false;
+          return color ? {color} : false;
         },
       },
       {
         tag: "[style]",
         getAttrs: (element) => {
           const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "color");
-          return color ? { color } : false;
+          return color ? {color} : false;
         },
       },
       {
         tag: "font[color]",
         getAttrs: (element) => {
           const color = (element as HTMLElement).getAttribute("color");
-          return color ? { color } : false;
+          return color ? {color} : false;
         },
       },
     ];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     const color = typeof HTMLAttributes.color === "string" ? HTMLAttributes.color.trim() : "";
 
     if (!color) {
       return ["span", mergeAttributes(HTMLAttributes), 0];
     }
 
-    const attributes = { ...HTMLAttributes };
+    const attributes = {...HTMLAttributes};
     delete attributes.color;
 
     return [
       "span",
       mergeAttributes(attributes, {
-        style: styleObjectToString({ color }),
+        style: styleObjectToString({color}),
       }),
       0,
     ];
@@ -2565,26 +2569,26 @@ const TextHighlightMark = Mark.create({
         tag: "span",
         getAttrs: (element) => {
           const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "background-color");
-          return color ? { color } : false;
+          return color ? {color} : false;
         },
       },
       {
         tag: "[style]",
         getAttrs: (element) => {
           const color = extractStyleProperty((element as HTMLElement).getAttribute("style"), "background-color");
-          return color ? { color } : false;
+          return color ? {color} : false;
         },
       },
     ];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     const color = typeof HTMLAttributes.color === "string" ? HTMLAttributes.color.trim() : "";
 
     if (!color) {
       return ["mark", mergeAttributes(HTMLAttributes), 0];
     }
 
-    const attributes = { ...HTMLAttributes };
+    const attributes = {...HTMLAttributes};
     delete attributes.color;
 
     return [
@@ -2617,9 +2621,9 @@ const LinkMark = Mark.create({
     };
   },
   parseHTML() {
-    return [{ tag: "a[href]" }];
+    return [{tag: "a[href]"}];
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return ["a", mergeAttributes(HTMLAttributes), 0];
   },
 });
@@ -2704,7 +2708,7 @@ const BlogImage = ImageResize.extend({
             element.getAttribute("wrapperstyle"),
           ),
         renderHTML: (attributes: { alignment?: string }) =>
-          attributes.alignment ? { "data-image-alignment": attributes.alignment } : {},
+          attributes.alignment ? {"data-image-alignment": attributes.alignment} : {},
       },
       widthPreset: {
         default: "custom",
@@ -2716,7 +2720,7 @@ const BlogImage = ImageResize.extend({
             ? "full"
             : "custom"),
         renderHTML: (attributes: { widthPreset?: string }) =>
-          attributes.widthPreset ? { "data-image-width-preset": attributes.widthPreset } : {},
+          attributes.widthPreset ? {"data-image-width-preset": attributes.widthPreset} : {},
       },
       mediaId: {
         default: "",
@@ -2725,7 +2729,7 @@ const BlogImage = ImageResize.extend({
           ?? (element.tagName === "FIGURE" ? element.querySelector("img")?.getAttribute("data-media-id") : null)
           ?? "",
         renderHTML: (attributes: { mediaId?: string }) =>
-          attributes.mediaId ? { "data-media-id": attributes.mediaId } : {},
+          attributes.mediaId ? {"data-media-id": attributes.mediaId} : {},
       },
       storagePath: {
         default: "",
@@ -2734,7 +2738,7 @@ const BlogImage = ImageResize.extend({
           ?? (element.tagName === "FIGURE" ? element.querySelector("img")?.getAttribute("data-storage-path") : null)
           ?? "",
         renderHTML: (attributes: { storagePath?: string }) =>
-          attributes.storagePath ? { "data-storage-path": attributes.storagePath } : {},
+          attributes.storagePath ? {"data-storage-path": attributes.storagePath} : {},
       },
       caption: {
         default: "",
@@ -2757,7 +2761,7 @@ const BlogImage = ImageResize.extend({
   addNodeView() {
     return ReactNodeViewRenderer(BlogImageNodeView);
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     const containerStyle = typeof HTMLAttributes.containerStyle === "string" ? HTMLAttributes.containerStyle : "";
     const wrapperStyle = typeof HTMLAttributes.wrapperStyle === "string" ? HTMLAttributes.wrapperStyle : "";
     const alignment = toImageAlignment(
@@ -2803,18 +2807,18 @@ const BlogImage = ImageResize.extend({
         }),
       },
       mediaId.length > 0
-        ? { "data-media-id": mediaId }
+        ? {"data-media-id": mediaId}
         : {},
       storagePath.length > 0
-        ? { "data-storage-path": storagePath }
+        ? {"data-storage-path": storagePath}
         : {},
     );
     const imageAttributes = mergeAttributes(
       typeof HTMLAttributes.src === "string" && HTMLAttributes.src.length > 0
-        ? { src: HTMLAttributes.src }
+        ? {src: HTMLAttributes.src}
         : {},
       typeof HTMLAttributes.alt === "string"
-        ? { alt: HTMLAttributes.alt }
+        ? {alt: HTMLAttributes.alt}
         : {},
       {
         style: "display: block; height: auto; margin: 0; max-width: 100%; width: 100%;",
@@ -2880,7 +2884,7 @@ const BlogVideo = Node.create({
   },
   parseHTML() {
     return [
-      { tag: "div[data-blog-video=\"true\"]" },
+      {tag: "div[data-blog-video=\"true\"]"},
       {
         tag: "div",
         getAttrs: (element) =>
@@ -2900,7 +2904,7 @@ const BlogVideo = Node.create({
   addNodeView() {
     return ReactNodeViewRenderer(BlogVideoNodeView);
   },
-  renderHTML({ HTMLAttributes, node }) {
+  renderHTML({HTMLAttributes, node}) {
     const {
       alignment: alignmentAttribute,
       aspectRatio: aspectRatioAttribute,
@@ -3012,12 +3016,12 @@ const BlogEmbed = Node.create({
     };
   },
   parseHTML() {
-    return [{ tag: "div[data-blog-embed=\"true\"]" }];
+    return [{tag: "div[data-blog-embed=\"true\"]"}];
   },
   addNodeView() {
     return ReactNodeViewRenderer(BlogEmbedNodeView);
   },
-  renderHTML({ HTMLAttributes, node }) {
+  renderHTML({HTMLAttributes, node}) {
     const attrs = node.attrs as Record<string, unknown>;
     const alignment = toEmbedAlignment(
       typeof attrs.alignment === "string" ? attrs.alignment : "",
@@ -3118,12 +3122,12 @@ const BlogTuritopWidget = Node.create({
     };
   },
   parseHTML() {
-    return [{ tag: "div[data-blog-turitop=\"true\"]" }];
+    return [{tag: "div[data-blog-turitop=\"true\"]"}];
   },
   addNodeView() {
     return ReactNodeViewRenderer(BlogTuritopWidgetNodeView);
   },
-  renderHTML({ HTMLAttributes, node }) {
+  renderHTML({HTMLAttributes, node}) {
     const attrs = node.attrs as Record<string, unknown>;
     const alignment: TuritopAlignment =
       typeof attrs.alignment === "string" && (attrs.alignment === "left" || attrs.alignment === "right")
@@ -3174,12 +3178,12 @@ const BlogLinkCard = Node.create({
     };
   },
   parseHTML() {
-    return [{ tag: "a[data-blog-link-card=\"true\"]" }];
+    return [{tag: "a[data-blog-link-card=\"true\"]"}];
   },
   addNodeView() {
     return ReactNodeViewRenderer(BlogLinkCardNodeView);
   },
-  renderHTML({ HTMLAttributes, node }) {
+  renderHTML({HTMLAttributes, node}) {
     const attrs = node.attrs as Record<string, unknown>;
     const href = typeof attrs.href === "string" ? attrs.href.trim() : "";
     const title = typeof attrs.title === "string" ? attrs.title.trim() : href;
@@ -3222,7 +3226,7 @@ const BlogClear = Node.create({
   atom: true,
   selectable: true,
   parseHTML() {
-    return [{ tag: "div[data-blog-clear=\"true\"]" }];
+    return [{tag: "div[data-blog-clear=\"true\"]"}];
   },
   addAttributes() {
     return {
@@ -3234,7 +3238,7 @@ const BlogClear = Node.create({
   addNodeView() {
     return ReactNodeViewRenderer(BlogClearNodeView);
   },
-  renderHTML({ HTMLAttributes }) {
+  renderHTML({HTMLAttributes}) {
     return [
       "div",
       mergeAttributes(HTMLAttributes, {
@@ -3249,21 +3253,21 @@ const BlogClear = Node.create({
 type TourCardAlignment = "left" | "center" | "right";
 
 const TOUR_CARD_ALIGNMENT_OPTIONS: { label: string; value: TourCardAlignment }[] = [
-  { label: "Left", value: "left" },
-  { label: "Center", value: "center" },
-  { label: "Right", value: "right" },
+  {label: "Left", value: "left"},
+  {label: "Center", value: "center"},
+  {label: "Right", value: "right"},
 ];
 
 const getTourCardContainerStyle = (alignment: TourCardAlignment): CSSProperties => {
   if (alignment === "left") {
-    return { float: "left", marginRight: "1.5rem", marginBottom: "1rem" };
+    return {float: "left", marginRight: "1.5rem", marginBottom: "1rem"};
   }
 
   if (alignment === "right") {
-    return { float: "right", marginLeft: "1.5rem", marginBottom: "1rem" };
+    return {float: "right", marginLeft: "1.5rem", marginBottom: "1rem"};
   }
 
-  return { display: "flow-root", marginLeft: "auto", marginRight: "auto" };
+  return {display: "flow-root", marginLeft: "auto", marginRight: "auto"};
 };
 
 type TourCardPreview = {
@@ -3284,7 +3288,7 @@ function useTourCardPreview(slug: string): TourCardPreview | null {
 
     let cancelled = false;
 
-    fetch(`/api/internal/public/api/public/tours/${encodeURIComponent(slug)}?locale=en`)
+    fetch(`/api/internal/public/api/public/tours/${ encodeURIComponent(slug) }?locale=en`)
       .then((response) => response.ok ? response.json() : null)
       .then((data) => {
         if (cancelled || !data) return;
@@ -3292,31 +3296,33 @@ function useTourCardPreview(slug: string): TourCardPreview | null {
         const payload = typeof data.translation?.payload === "object" ? data.translation.payload : {};
         const title = typeof payload.title === "string" ? payload.title : slug;
         const coverUrl = data.coverMedia?.contentUrl ?? data.galleryMedia?.[0]?.contentUrl ?? null;
-        const price = data.price ? `${data.price.amount} ${data.price.currency}` : null;
+        const price = data.price ? `${ data.price.amount } ${ data.price.currency }` : null;
         const minutes = typeof data.durationMinutes === "number" ? data.durationMinutes : null;
         const duration = minutes !== null
           ? minutes >= 60
-            ? `${(minutes / 60).toFixed(minutes % 60 === 0 ? 0 : 1)}h`
-            : `${minutes} min`
+            ? `${ (minutes / 60).toFixed(minutes % 60 === 0 ? 0 : 1) }h`
+            : `${ minutes } min`
           : null;
 
-        setPreview({ title, price, duration, coverUrl });
+        setPreview({title, price, duration, coverUrl});
       })
       .catch(() => {
         if (!cancelled) setPreview(null);
       });
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [slug]);
 
   return preview;
 }
 
 function BlogTourCardNodeView({
-  node,
-  selected,
-  updateAttributes,
-}: NodeViewProps) {
+                                node,
+                                selected,
+                                updateAttributes,
+                              }: NodeViewProps) {
   const slug = typeof node.attrs.tourSlug === "string" ? node.attrs.tourSlug : "";
   const alignment: TourCardAlignment =
     typeof node.attrs.alignment === "string" &&
@@ -3348,7 +3354,7 @@ function BlogTourCardNodeView({
           </div>
         ) : (
           <div className="flex w-36 shrink-0 items-center justify-center bg-[#f5efe6]">
-            <MapPinned className="size-8 text-[#c24343]" />
+            <MapPinned className="size-8 text-[#c24343]"/>
           </div>
         ) }
         <div className="flex flex-1 flex-col justify-center gap-1.5 p-4 min-w-0">
@@ -3360,7 +3366,7 @@ function BlogTourCardNodeView({
           ) : null }
           { preview?.duration ? (
             <p className="flex items-center gap-1.5 text-sm text-[#8a7562]">
-              <CalendarDays className="h-3.5 w-3.5" />
+              <CalendarDays className="h-3.5 w-3.5"/>
               { preview.duration }
             </p>
           ) : null }
@@ -3373,7 +3379,7 @@ function BlogTourCardNodeView({
           className="self-start rounded-lg p-1.5 text-[#8b7862] hover:bg-[#f5efe6] m-1"
           onClick={ () => setShowSettings(!showSettings) }
         >
-          <Settings2 className="size-4" />
+          <Settings2 className="size-4"/>
         </button>
       </div>
       { showSettings ? (
@@ -3390,7 +3396,7 @@ function BlogTourCardNodeView({
                     ? "bg-[#2b666d] text-white"
                     : "bg-white text-[#627176] ring-1 ring-[#eadfce] hover:bg-[#f5efe6]",
                 ) }
-                onClick={ () => updateAttributes({ alignment: option.value }) }
+                onClick={ () => updateAttributes({alignment: option.value}) }
               >
                 { option.label }
               </button>
@@ -3426,12 +3432,12 @@ const BlogTourCard = Node.create({
     };
   },
   parseHTML() {
-    return [{ tag: "div[data-blog-tour-card=\"true\"]" }];
+    return [{tag: "div[data-blog-tour-card=\"true\"]"}];
   },
   addNodeView() {
     return ReactNodeViewRenderer(BlogTourCardNodeView);
   },
-  renderHTML({ HTMLAttributes, node }) {
+  renderHTML({HTMLAttributes, node}) {
     const attrs = node.attrs as Record<string, unknown>;
     const tourSlug = typeof attrs.tourSlug === "string" ? attrs.tourSlug.trim() : "";
     const alignment: TourCardAlignment =
@@ -3512,12 +3518,12 @@ type ToolbarColorControlProps = {
 };
 
 function ToolbarButton({
-  active = false,
-  disabled = false,
-  icon: Icon,
-  label,
-  onClick,
-}: ToolbarButtonProps) {
+                         active = false,
+                         disabled = false,
+                         icon: Icon,
+                         label,
+                         onClick,
+                       }: ToolbarButtonProps) {
   return (
     <Button
       type="button"
@@ -3534,14 +3540,14 @@ function ToolbarButton({
 }
 
 function ToolbarColorControl({
-  active = false,
-  currentColor,
-  disabled = false,
-  icon: Icon,
-  label,
-  onChange,
-  onClear,
-}: ToolbarColorControlProps) {
+                               active = false,
+                               currentColor,
+                               disabled = false,
+                               icon: Icon,
+                               label,
+                               onChange,
+                               onClear,
+                             }: ToolbarColorControlProps) {
   return (
     <div
       className={ cn(
@@ -3584,12 +3590,12 @@ export const TiptapHtmlEditor = forwardRef<
     value: string;
   }
 >(function TiptapHtmlEditor({
-  className,
-  onChange,
-  onError,
-  onRequestInsertImage,
-  value,
-}, ref) {
+                              className,
+                              onChange,
+                              onError,
+                              onRequestInsertImage,
+                              value,
+                            }, ref) {
   const [isEmbedDialogOpen, setIsEmbedDialogOpen] = useState(false);
   const [isTuritopDialogOpen, setIsTuritopDialogOpen] = useState(false);
   const [isTourCardDialogOpen, setIsTourCardDialogOpen] = useState(false);
@@ -3611,7 +3617,7 @@ export const TiptapHtmlEditor = forwardRef<
           "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [display:flow-root] after:block after:clear-both after:content-[''] [&_blockquote]:border-l-4 [&_blockquote]:border-[#d8c5a8] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[#eadfce] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-turitop=\"true\"]]:shadow-sm overflow-visible",
       },
     },
-    onUpdate: ({ editor: nextEditor }) => {
+    onUpdate: ({editor: nextEditor}) => {
       onChange(nextEditor.getHTML());
       setToolbarVersion((current) => current + 1);
     },
@@ -3622,7 +3628,7 @@ export const TiptapHtmlEditor = forwardRef<
 
   useImperativeHandle(ref, () => ({
     getHtml: () => editor?.getHTML() ?? normalizeEditorValue(value),
-    insertImage: ({ alt, mediaId, src, storagePath }) => {
+    insertImage: ({alt, mediaId, src, storagePath}) => {
       editor?.chain().focus().insertContent([
         {
           type: "blogImage",
@@ -3654,7 +3660,7 @@ export const TiptapHtmlEditor = forwardRef<
       }
 
       if (editor.getHTML() !== nextValue) {
-        editor.commands.setContent(nextValue, { emitUpdate: false });
+        editor.commands.setContent(nextValue, {emitUpdate: false});
       }
     });
 
@@ -3716,7 +3722,7 @@ export const TiptapHtmlEditor = forwardRef<
       return;
     }
 
-    editor.chain().focus().setMark("textColor", { color }).run();
+    editor.chain().focus().setMark("textColor", {color}).run();
   };
 
   const clearTextColor = () => {
@@ -3728,7 +3734,7 @@ export const TiptapHtmlEditor = forwardRef<
       return;
     }
 
-    editor.chain().focus().setMark("textHighlight", { color }).run();
+    editor.chain().focus().setMark("textHighlight", {color}).run();
   };
 
   const clearHighlightColor = () => {
@@ -3757,40 +3763,40 @@ export const TiptapHtmlEditor = forwardRef<
     const content =
       embed.kind === "video"
         ? [
+          {
+            type: "blogVideo",
+            attrs: {
+              alignment: "center",
+              aspectRatio: "16:9",
+              provider: embed.provider,
+              title: embed.title,
+              videoId: embed.videoId,
+              widthPreset: "wide",
+            },
+          },
+        ]
+        : embed.kind === "iframe"
+          ? [
             {
-              type: "blogVideo",
+              type: "blogEmbed",
               attrs: {
-                alignment: "center",
-                aspectRatio: "16:9",
+                embedSrc: embed.embedSrc,
+                height: embed.height,
                 provider: embed.provider,
                 title: embed.title,
-                videoId: embed.videoId,
-                widthPreset: "wide",
+                widthPreset: embed.widthPreset,
               },
             },
           ]
-        : embed.kind === "iframe"
-          ? [
-              {
-                type: "blogEmbed",
-                attrs: {
-                  embedSrc: embed.embedSrc,
-                  height: embed.height,
-                  provider: embed.provider,
-                  title: embed.title,
-                  widthPreset: embed.widthPreset,
-                },
-              },
-            ]
           : [
-              {
-                type: "blogLinkCard",
-                attrs: {
-                  href: embed.href,
-                  title: embed.title,
-                },
+            {
+              type: "blogLinkCard",
+              attrs: {
+                href: embed.href,
+                title: embed.title,
               },
-            ];
+            },
+          ];
 
     editor.chain().focus().insertContent([
       ...content,
@@ -3908,7 +3914,8 @@ export const TiptapHtmlEditor = forwardRef<
 
   return (
     <div className={ cn("rounded-[1.35rem] border border-[#eadfce] bg-white overflow-clip", className) }>
-      <div className="sticky top-0 z-10 flex flex-wrap gap-2 border-b border-[#f0e6d8] bg-[#fbf7f0]/95 p-3 shadow-[0_10px_24px_-18px_rgba(42,36,25,0.35)] backdrop-blur">
+      <div
+        className="sticky top-0 z-10 flex flex-wrap gap-2 border-b border-[#f0e6d8] bg-[#fbf7f0]/95 p-3 shadow-[0_10px_24px_-18px_rgba(42,36,25,0.35)] backdrop-blur">
         <ToolbarButton
           icon={ Pilcrow }
           label="Paragraph"
@@ -3919,16 +3926,16 @@ export const TiptapHtmlEditor = forwardRef<
         <ToolbarButton
           icon={ Heading2 }
           label="Heading 2"
-          active={ Boolean(editor?.isActive("heading", { level: 2 })) }
+          active={ Boolean(editor?.isActive("heading", {level: 2})) }
           disabled={ !editor }
-          onClick={ () => editor?.chain().focus().toggleNode("heading", "paragraph", { level: 2 }).run() }
+          onClick={ () => editor?.chain().focus().toggleNode("heading", "paragraph", {level: 2}).run() }
         />
         <ToolbarButton
           icon={ Heading3 }
           label="Heading 3"
-          active={ Boolean(editor?.isActive("heading", { level: 3 })) }
+          active={ Boolean(editor?.isActive("heading", {level: 3})) }
           disabled={ !editor }
-          onClick={ () => editor?.chain().focus().toggleNode("heading", "paragraph", { level: 3 }).run() }
+          onClick={ () => editor?.chain().focus().toggleNode("heading", "paragraph", {level: 3}).run() }
         />
         <ToolbarButton
           icon={ Bold }
@@ -4008,7 +4015,7 @@ export const TiptapHtmlEditor = forwardRef<
           icon={ RemoveFormatting }
           label="Divider"
           disabled={ !editor }
-          onClick={ () => editor?.chain().focus().insertContent({ type: "horizontalRule" }).run() }
+          onClick={ () => editor?.chain().focus().insertContent({type: "horizontalRule"}).run() }
         />
         <ToolbarButton
           icon={ Pilcrow }
@@ -4101,7 +4108,8 @@ export const TiptapHtmlEditor = forwardRef<
           <DialogHeader>
             <DialogTitle>Insert Turitop Calendar</DialogTitle>
             <DialogDescription>
-              Add a Turitop calendar widget placeholder to the post. The live calendar is mounted on the public blog page.
+              Add a Turitop calendar widget placeholder to the post. The live calendar is mounted on the public blog
+              page.
             </DialogDescription>
           </DialogHeader>
 
@@ -4172,7 +4180,8 @@ export const TiptapHtmlEditor = forwardRef<
           <DialogHeader>
             <DialogTitle>Insert Tour Card</DialogTitle>
             <DialogDescription>
-              Embed an inline tour card in the blog post. The card shows the tour image, name, price, duration, and a booking link. Enter the tour translation slug.
+              Embed an inline tour card in the blog post. The card shows the tour image, name, price, duration, and a
+              booking link. Enter the tour translation slug.
             </DialogDescription>
           </DialogHeader>
 

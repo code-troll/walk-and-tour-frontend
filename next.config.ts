@@ -35,7 +35,6 @@ const nextConfig: NextConfig = {
               "https://turitop.com",
               "https://walkandtour.dk",
               "https://www.walkandtour.dk",
-              "https://staging.walkandtour.dk",
             ].join(" "),
           },
         ],

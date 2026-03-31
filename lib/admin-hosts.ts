@@ -1,12 +1,10 @@
 const ADMIN_HOSTS = new Set([
   "admin.walkandtour.dk",
-  "admin.staging.walkandtour.dk",
   "admin.dev.walkandtour.dk",
 ]);
 
 const ADMIN_ENVIRONMENT_BY_HOST: Record<string, string> = {
   "admin.walkandtour.dk": "Production",
-  "admin.staging.walkandtour.dk": "Staging",
   "admin.dev.walkandtour.dk": "Development",
 };
 
