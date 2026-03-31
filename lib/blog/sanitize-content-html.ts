@@ -8,7 +8,6 @@ const ALLOWED_FRAME_HOSTS = new Set([
   "maps.google.com",
   "turitop.com",
   "walkandtour.dk",
-  "staging.walkandtour.dk",
 ]);
 
 const EMBED_BLOCK_PATTERNS = [
