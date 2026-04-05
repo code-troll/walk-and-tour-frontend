@@ -182,6 +182,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
   const [isSending, setIsSending] = useState(false);
   const [sentDialogEmail, setSentDialogEmail] = useState<string | null>(null);
   const [versionFormErrors, setVersionFormErrors] = useState<string[]>([]);
+  const [deleteVersionTarget, setDeleteVersionTarget] = useState<LocalVersion | null>(null);
+  const [showSendConfirm, setShowSendConfirm] = useState(false);
 
   // Metadata form state
   const [language, setLanguage] = useState("en");
@@ -443,11 +445,32 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     );
   };
 
-  const handleRemoveLocalVersion = (localId: string) => {
+  const handleConfirmDeleteVersion = async () => {
+    if (!deleteVersionTarget) return;
+    const {localId, serverId} = deleteVersionTarget;
+
+    // If saved on server, delete from backend
+    if (serverId && proposalId) {
+      try {
+        await deleteProposalVersionClient(proposalId, serverId);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unable to delete the version.");
+        setDeleteVersionTarget(null);
+        return;
+      }
+    }
+
+    // Remove from local state
     setLocalVersions((prev) => prev.filter((v) => v.localId !== localId));
     if (editingLocalId === localId) {
       setEditingLocalId(null);
       setVersionForm(emptyVersionForm());
+    }
+    setDeleteVersionTarget(null);
+
+    // Reload to get updated publication status
+    if (serverId && proposalId) {
+      await load(true);
     }
   };
 
@@ -543,18 +566,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
       if (!currentProposalId) return;
 
-      // Delete removed versions first (may auto-unpublish)
-      const currentServerIds = new Set(
-        versionsToSave.filter((v) => v.serverId).map((v) => v.serverId!),
-      );
-      const previousServerIds = proposal?.versions.map((v) => v.id) ?? [];
-      const toDelete = previousServerIds.filter((id) => !currentServerIds.has(id));
-
-      for (const id of toDelete) {
-        await deleteProposalVersionClient(currentProposalId, id);
-      }
-
-      // Create or update versions
+      // Create or update versions (deletions are handled immediately via the delete button)
       for (let i = 0; i < versionsToSave.length; i++) {
         const lv = versionsToSave[i];
         const body = buildVersionBody(lv, i);
@@ -567,19 +579,15 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
       // Save metadata last (so auto-unpublish from version deletion isn't overwritten)
       if (!isNew) {
-        const metadataBody: Record<string, unknown> = {
+        await updateProposalClient(currentProposalId, {
           language,
           recipientName: recipientName || undefined,
           recipientEmail: recipientEmail || undefined,
           notes: notes || undefined,
           expiresAt: expiresAt ? new Date(expiresAt).toISOString() : null,
           acceptanceStatus,
-        };
-        // Only send publicationStatus if there are versions remaining
-        if (versionsToSave.length > 0) {
-          metadataBody.publicationStatus = publicationStatus;
-        }
-        await updateProposalClient(currentProposalId, metadataBody);
+          // Never send publicationStatus here — it's controlled only via the Publish/Unpublish button
+        });
       }
 
       if (isNew) {
@@ -617,7 +625,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     }
   };
 
-  const handleSendToRecipient = async () => {
+  const handleRequestSend = () => {
     if (!proposalId || !proposal) return;
     if (proposal.publicationStatus !== "published") {
       setError("The proposal must be published before sending it to the recipient.");
@@ -627,12 +635,12 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       setError("The proposal does not have a recipient email address. Add one and save first.");
       return;
     }
-    const hasUnsavedVersions = localVersions.some((v) => isVersionDirty(v));
-    if (hasUnsavedVersions) {
-      if (!window.confirm("Some versions have unsaved changes. Send the proposal anyway with the currently saved versions?")) {
-        return;
-      }
-    }
+    setShowSendConfirm(true);
+  };
+
+  const handleConfirmSend = async () => {
+    if (!proposalId || !proposal?.recipientEmail) return;
+    setShowSendConfirm(false);
     setIsSending(true);
     setError(null);
     try {
@@ -677,7 +685,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
           <div className="flex items-center gap-2">
             {proposal.publicationStatus === "published" && (
               <Button
-                onClick={() => void handleSendToRecipient()}
+                onClick={handleRequestSend}
                 disabled={isSending || !proposal.recipientEmail}
                 variant="outline"
                 className="inline-flex items-center gap-2"
@@ -990,7 +998,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     >
                       {isOpen ? <><ChevronUp className="mr-1 h-3 w-3"/>Close</> : <><Pencil className="mr-1 h-3 w-3"/>Edit</>}
                     </Button>
-                    <button type="button" onClick={() => handleRemoveLocalVersion(version.localId)} className="rounded-lg border border-[#e8c7c1] p-1.5 text-[#a3483f] hover:bg-[#fbf2f0]">
+                    <button type="button" onClick={() => setDeleteVersionTarget(version)} className="rounded-lg border border-[#e8c7c1] p-1.5 text-[#a3483f] hover:bg-[#fbf2f0]">
                       <Trash2 className="h-3.5 w-3.5"/>
                     </button>
                   </div>
@@ -1116,6 +1124,42 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
           </DialogHeader>
           <DialogFooter>
             <Button onClick={() => setSentDialogEmail(null)}>OK</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={deleteVersionTarget !== null} onOpenChange={(open) => { if (!open) setDeleteVersionTarget(null); }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete proposal version</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete <strong>{deleteVersionTarget?.title || "this version"}</strong>?{" "}
+              {deleteVersionTarget?.serverId ? "This will be deleted from the server immediately and cannot be undone." : "This version has not been saved yet."}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteVersionTarget(null)}>Cancel</Button>
+            <Button variant="destructive" onClick={() => void handleConfirmDeleteVersion()}>Delete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showSendConfirm} onOpenChange={setShowSendConfirm}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Send proposal to recipient</DialogTitle>
+            <DialogDescription>
+              This will send an email with the proposal link to <strong>{proposal?.recipientEmail}</strong>.
+              {localVersions.some((v) => isVersionDirty(v)) && (
+                <span className="mt-2 block text-[#8a6029]">
+                  Some versions have unsaved changes. The recipient will see the last saved version.
+                </span>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowSendConfirm(false)}>Cancel</Button>
+            <Button onClick={() => void handleConfirmSend()}>Send</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
