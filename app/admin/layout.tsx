@@ -20,6 +20,7 @@ const navigationByRole = {
     {href: "/users", label: "Users"},
     {href: "/taxonomy", label: "Taxonomy"},
     {href: "/tours", label: "Tours"},
+    {href: "/proposals", label: "Proposals"},
     {href: "/blog-posts", label: "Blog posts"},
     {href: "/newsletter", label: "Newsletter"},
   ],
@@ -27,6 +28,7 @@ const navigationByRole = {
     {href: "/", label: "Overview"},
     {href: "/taxonomy", label: "Taxonomy"},
     {href: "/tours", label: "Tours"},
+    {href: "/proposals", label: "Proposals"},
     {href: "/blog-posts", label: "Blog posts"},
   ],
   marketing: [

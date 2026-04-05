@@ -26,3 +26,7 @@ export async function POST(request: Request, context: RouteContext) {
 export async function PATCH(request: Request, context: RouteContext) {
   return handleProxyRequest(request, context);
 }
+
+export async function DELETE(request: Request, context: RouteContext) {
+  return handleProxyRequest(request, context);
+}
