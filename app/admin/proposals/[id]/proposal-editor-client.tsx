@@ -678,21 +678,32 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       )}
 
       {/* Public Link */}
-      {proposal && (
-        <AdminSectionCard title="Public Link">
-          <div className="flex items-center gap-3">
-            <code className="flex-1 truncate rounded-lg bg-[#f6f1e7] px-3 py-2 text-sm text-[#21343b]">
-              {`${getPublicOrigin()}/private-tours/proposal/${proposal.hash}`}
-            </code>
-            <button type="button" onClick={() => void handleCopyLink()} className="rounded-lg border border-[#eadfce] p-2 text-[#627176] hover:bg-[#f9f2e7]">
-              {copiedLink ? <Check className="h-4 w-4 text-[#2f6b3f]"/> : <Copy className="h-4 w-4"/>}
-            </button>
-            <a href={`${getPublicOrigin()}/private-tours/proposal/${proposal.hash}`} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-[#eadfce] p-2 text-[#627176] hover:bg-[#f9f2e7]">
-              <ExternalLink className="h-4 w-4"/>
-            </a>
-          </div>
-        </AdminSectionCard>
-      )}
+      {proposal && (() => {
+        const isPublished = proposal.publicationStatus === "published";
+        const fullUrl = `${getPublicOrigin()}/private-tours/proposal/${proposal.hash}`;
+        const maskedUrl = `${getPublicOrigin()}/private-tours/proposal/${"*".repeat(proposal.hash.length)}`;
+        return (
+          <AdminSectionCard title="Public Link">
+            <div className="flex items-center gap-3">
+              <code className={`flex-1 truncate rounded-lg px-3 py-2 text-sm ${isPublished ? "bg-[#f6f1e7] text-[#21343b]" : "bg-[#f6f1e7] text-[#9a8d7e] select-none"}`}>
+                {isPublished ? fullUrl : maskedUrl}
+              </code>
+              {isPublished ? (
+                <>
+                  <button type="button" onClick={() => void handleCopyLink()} className="rounded-lg border border-[#eadfce] p-2 text-[#627176] hover:bg-[#f9f2e7]">
+                    {copiedLink ? <Check className="h-4 w-4 text-[#2f6b3f]"/> : <Copy className="h-4 w-4"/>}
+                  </button>
+                  <a href={fullUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-[#eadfce] p-2 text-[#627176] hover:bg-[#f9f2e7]">
+                    <ExternalLink className="h-4 w-4"/>
+                  </a>
+                </>
+              ) : (
+                <span className="text-xs text-[#9a8d7e]">Publish to reveal link</span>
+              )}
+            </div>
+          </AdminSectionCard>
+        );
+      })()}
 
       {/* Metadata */}
       <AdminSectionCard title={isNew ? "New Proposal" : "Proposal Details"}>
