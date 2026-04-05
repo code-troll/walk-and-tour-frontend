@@ -404,7 +404,16 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     if (!versionForm.cancellationPolicy.trim()) errors.push("Cancellation policy is required.");
     if (!versionForm.startPointLabel.trim()) errors.push("Start point is required.");
     if (!versionForm.endPointLabel.trim()) errors.push("End point is required.");
-    if (!versionForm.stripePaymentLink.trim()) errors.push("Stripe payment link is required.");
+    if (!versionForm.stripePaymentLink.trim()) {
+      errors.push("Stripe payment link is required.");
+    } else {
+      try {
+        const url = new URL(versionForm.stripePaymentLink.trim());
+        if (!url.protocol.startsWith("http")) errors.push("Stripe payment link must be a valid URL starting with http:// or https://.");
+      } catch {
+        errors.push("Stripe payment link must be a valid URL (e.g. https://buy.stripe.com/...).");
+      }
+    }
     if (versionForm.priceAmount && Number(versionForm.priceAmount) < 0) errors.push("Price must be zero or positive.");
     if (versionForm.durationMinutes && Number(versionForm.durationMinutes) < 0) errors.push("Duration must be zero or positive.");
     return errors;
@@ -477,7 +486,16 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     if (!v.cancellationPolicy.trim()) errors.push("Cancellation policy");
     if (!v.startPointLabel.trim()) errors.push("Start point");
     if (!v.endPointLabel.trim()) errors.push("End point");
-    if (!v.stripePaymentLink.trim()) errors.push("Stripe payment link");
+    if (!v.stripePaymentLink.trim()) {
+      errors.push("Stripe payment link");
+    } else {
+      try {
+        const url = new URL(v.stripePaymentLink.trim());
+        if (!url.protocol.startsWith("http")) errors.push("Stripe payment link (invalid URL)");
+      } catch {
+        errors.push("Stripe payment link (invalid URL)");
+      }
+    }
     return errors;
   };
 
@@ -509,27 +527,23 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     setIsSaving(true);
     setError(null);
     try {
-      const metadataBody: Record<string, unknown> = {
-        language,
-        recipientName: recipientName || undefined,
-        recipientEmail: recipientEmail || undefined,
-        notes: notes || undefined,
-        expiresAt: expiresAt ? new Date(expiresAt).toISOString() : null,
-      };
-
       let currentProposalId = proposalId;
 
       if (isNew) {
+        const metadataBody: Record<string, unknown> = {
+          language,
+          recipientName: recipientName || undefined,
+          recipientEmail: recipientEmail || undefined,
+          notes: notes || undefined,
+          expiresAt: expiresAt ? new Date(expiresAt).toISOString() : null,
+        };
         const created = await createProposalClient(metadataBody);
         currentProposalId = created.id;
-      } else if (currentProposalId) {
-        metadataBody.acceptanceStatus = acceptanceStatus;
-        metadataBody.publicationStatus = publicationStatus;
-        await updateProposalClient(currentProposalId, metadataBody);
       }
 
       if (!currentProposalId) return;
 
+      // Delete removed versions first (may auto-unpublish)
       const currentServerIds = new Set(
         versionsToSave.filter((v) => v.serverId).map((v) => v.serverId!),
       );
@@ -540,6 +554,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
         await deleteProposalVersionClient(currentProposalId, id);
       }
 
+      // Create or update versions
       for (let i = 0; i < versionsToSave.length; i++) {
         const lv = versionsToSave[i];
         const body = buildVersionBody(lv, i);
@@ -548,6 +563,23 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
         } else {
           await createProposalVersionClient(currentProposalId, body);
         }
+      }
+
+      // Save metadata last (so auto-unpublish from version deletion isn't overwritten)
+      if (!isNew) {
+        const metadataBody: Record<string, unknown> = {
+          language,
+          recipientName: recipientName || undefined,
+          recipientEmail: recipientEmail || undefined,
+          notes: notes || undefined,
+          expiresAt: expiresAt ? new Date(expiresAt).toISOString() : null,
+          acceptanceStatus,
+        };
+        // Only send publicationStatus if there are versions remaining
+        if (versionsToSave.length > 0) {
+          metadataBody.publicationStatus = publicationStatus;
+        }
+        await updateProposalClient(currentProposalId, metadataBody);
       }
 
       if (isNew) {
