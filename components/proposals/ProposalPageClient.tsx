@@ -78,14 +78,14 @@ export default function ProposalPageClient({locale, proposalHash}: ProposalPageC
     ? getProposalMediaUrl(proposalHash, proposal.mediaItems[0].mediaId)
     : null;
   const activeVersion = proposal.versions[activeVersionIndex] ?? proposal.versions[0];
-  const firstTitle = proposal.versions[0]?.title ?? "Your Tour Proposal";
+  const mainTitle = proposal.name ?? proposal.versions[0]?.title ?? "Your Tour Proposal";
 
   return (
     <div className="min-h-screen bg-[#fcfaf7] text-[#2a221a]">
       <ProposalHeroSection
         recipientName={proposal.recipientName}
         imageUrl={imageUrl}
-        title={firstTitle}
+        title={mainTitle}
       />
 
       {proposal.versions.length > 1 && (

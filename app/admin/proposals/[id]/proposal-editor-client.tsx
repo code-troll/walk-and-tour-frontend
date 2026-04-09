@@ -186,6 +186,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
   const [showSendConfirm, setShowSendConfirm] = useState(false);
 
   // Metadata form state
+  const [name, setName] = useState("");
   const [language, setLanguage] = useState("en");
   const [recipientName, setRecipientName] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
@@ -228,6 +229,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
         return;
       }
       setProposal(data);
+      setName(data.name ?? "");
       setLanguage(data.language);
       setRecipientName(data.recipientName ?? "");
       setRecipientEmail(data.recipientEmail ?? "");
@@ -554,6 +556,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
       if (isNew) {
         const metadataBody: Record<string, unknown> = {
+          name: name || undefined,
           language,
           recipientName: recipientName || undefined,
           recipientEmail: recipientEmail || undefined,
@@ -580,6 +583,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       // Save metadata last (so auto-unpublish from version deletion isn't overwritten)
       if (!isNew) {
         await updateProposalClient(currentProposalId, {
+          name: name || undefined,
           language,
           recipientName: recipientName || undefined,
           recipientEmail: recipientEmail || undefined,
@@ -748,6 +752,11 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       {/* Metadata */}
       <AdminSectionCard title={isNew ? "New Proposal" : "Proposal Details"}>
         <div className="grid gap-5 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <label className="mb-1 block text-sm font-semibold text-[#21343b]">Proposal Name</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Rome Highlights Private Tour"/>
+            <p className="mt-1 text-xs text-[#9a8d7e]">General name shown as the main title of the proposal in the public page.</p>
+          </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-[#21343b]">Language</label>
             <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">

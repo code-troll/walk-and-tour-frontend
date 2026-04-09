@@ -37,6 +37,7 @@ export interface AdminProposalMediaItem {
 export interface AdminProposal {
   id: string;
   hash: string;
+  name: string | null;
   language: string;
   recipientName: string | null;
   recipientEmail: string | null;
