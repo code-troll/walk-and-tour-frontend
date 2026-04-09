@@ -15,7 +15,7 @@ export default function ProposalVersionTabs({versions, activeIndex, onTabChange}
         <div
           role="tablist"
           aria-label="Proposal options"
-          className="mx-auto inline-flex w-full max-w-2xl items-center gap-1 rounded-full border border-[#e8dfd4] bg-[#f4ece0] p-1 shadow-inner"
+          className="flex w-full items-center gap-1 rounded-full border border-[#e8dfd4] bg-[#f4ece0] p-1 shadow-inner"
         >
           {versions.map((version, index) => {
             const isActive = index === activeIndex;
