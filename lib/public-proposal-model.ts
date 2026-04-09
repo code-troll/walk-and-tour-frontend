@@ -30,6 +30,7 @@ export interface PublicProposalMediaItem {
 }
 
 export interface PublicProposal {
+  name: string | null;
   language: string;
   recipientName: string | null;
   expiresAt: string | null;
