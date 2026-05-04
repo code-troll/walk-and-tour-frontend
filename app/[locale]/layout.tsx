@@ -39,6 +39,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
+      url: `/${locale}`,
       siteName: "Walk and Tour Copenhagen",
       locale,
       type: "website",

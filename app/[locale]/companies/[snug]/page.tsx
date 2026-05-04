@@ -41,6 +41,7 @@ export async function generateMetadata({params}: CompanyDetailPageProps): Promis
     openGraph: {
       title,
       description,
+      url: `/${locale}/companies/${snug}`,
       type: "website",
       siteName: "Walk and Tour Copenhagen",
       locale,

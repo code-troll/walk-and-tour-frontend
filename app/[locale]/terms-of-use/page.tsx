@@ -34,6 +34,7 @@ export async function generateMetadata({params}: TermsOfUsePageProps): Promise<M
     openGraph: {
       title,
       description,
+      url: `/${locale}/terms-of-use`,
       siteName: "Walk and Tour Copenhagen",
       locale,
       type: "website",
