@@ -3282,7 +3282,6 @@ function useTourCardPreview(slug: string): TourCardPreview | null {
 
   useEffect(() => {
     if (!slug) {
-      setPreview(null);
       return;
     }
 
@@ -3312,6 +3311,7 @@ function useTourCardPreview(slug: string): TourCardPreview | null {
 
     return () => {
       cancelled = true;
+      setPreview(null);
     };
   }, [slug]);
 
@@ -3346,6 +3346,7 @@ function BlogTourCardNodeView({
       <div className="flex flex-row">
         { preview?.coverUrl ? (
           <div className="relative w-36 shrink-0 bg-[#f5efe6]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={ preview.coverUrl }
               alt={ preview.title }

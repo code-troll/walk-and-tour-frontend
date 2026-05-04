@@ -50,7 +50,7 @@ const ContentDivider = () => (
   </div>
 );
 
-export default function ProposalVersionContent({version, language}: ProposalVersionContentProps) {
+export default function ProposalVersionContent({version}: ProposalVersionContentProps) {
   const hasIncluded = version.included.length > 0 || version.notIncluded.length > 0;
   const hasPoints = version.startPoint || version.endPoint;
   const hasQuickInfo = version.tourDate || version.durationMinutes;
