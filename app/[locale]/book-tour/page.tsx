@@ -36,6 +36,7 @@ export async function generateMetadata({params}: BookTourPageProps): Promise<Met
     openGraph: {
       title,
       description,
+      url: `/${locale}/book-tour`,
       siteName: "Walk and Tour Copenhagen",
       locale,
       type: "website",
