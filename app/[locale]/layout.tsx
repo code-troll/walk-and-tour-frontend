@@ -39,7 +39,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `/${locale}`,
+      url: locale === routing.defaultLocale ? "/" : `/${locale}`,
       siteName: "Walk and Tour Copenhagen",
       locale,
       type: "website",

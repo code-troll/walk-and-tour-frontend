@@ -38,7 +38,7 @@ export async function generateMetadata({params}: BlogPostDetailPageProps): Promi
     openGraph: {
       title,
       description,
-      url: `/${locale}/post/${postSlug}`,
+      url: locale === routing.defaultLocale ? `/post/${postSlug}` : `/${locale}/post/${postSlug}`,
       type: "article",
       siteName: "Walk and Tour Copenhagen",
       locale,

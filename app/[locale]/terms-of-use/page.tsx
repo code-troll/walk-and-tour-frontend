@@ -34,7 +34,7 @@ export async function generateMetadata({params}: TermsOfUsePageProps): Promise<M
     openGraph: {
       title,
       description,
-      url: `/${locale}/terms-of-use`,
+      url: locale === routing.defaultLocale ? "/terms-of-use" : `/${locale}/terms-of-use`,
       siteName: "Walk and Tour Copenhagen",
       locale,
       type: "website",

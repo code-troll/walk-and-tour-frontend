@@ -41,7 +41,7 @@ export async function generateMetadata({params}: TourDetailPageProps): Promise<M
     openGraph: {
       title,
       description,
-      url: `/${locale}/tours/${snug}`,
+      url: locale === routing.defaultLocale ? `/tours/${snug}` : `/${locale}/tours/${snug}`,
       type: "website",
       siteName: "Walk and Tour Copenhagen",
       locale,
