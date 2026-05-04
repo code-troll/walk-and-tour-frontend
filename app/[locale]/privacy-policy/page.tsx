@@ -34,7 +34,7 @@ export async function generateMetadata({params}: PrivacyPolicyPageProps): Promis
     openGraph: {
       title,
       description,
-      url: `/${locale}/privacy-policy`,
+      url: locale === routing.defaultLocale ? "/privacy-policy" : `/${locale}/privacy-policy`,
       siteName: "Walk and Tour Copenhagen",
       locale,
       type: "website",
