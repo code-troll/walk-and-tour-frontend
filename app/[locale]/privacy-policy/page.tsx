@@ -25,9 +25,20 @@ export async function generateMetadata({params}: PrivacyPolicyPageProps): Promis
 
   const t = await getTranslations({locale, namespace: "meta.privacyPolicy"});
 
+  const title = t("title");
+  const description = t("description");
+
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      siteName: "Walk and Tour Copenhagen",
+      locale,
+      type: "website",
+      images: ["/walkandtour/branding/logo-transparent.png"],
+    },
   };
 }
 

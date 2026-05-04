@@ -44,7 +44,6 @@ import {
 } from "@/lib/admin/admin-proposal-client";
 import {
   type ApiAdminMediaAsset,
-  type ApiAdminMediaAssetListResponse,
   listAdminMediaAssets,
   uploadAdminMediaAsset,
 } from "@/lib/admin/media-client";
@@ -63,7 +62,6 @@ const toLocalDatetimeString = (isoString: string): string => {
 };
 
 const ACCEPTANCE_STATUSES = ["pending", "accepted", "expired"] as const;
-const PUBLICATION_STATUSES = ["published", "unpublished"] as const;
 const LANGUAGES: { code: string; name: string }[] = [
   {code: "en", name: "English"},
   {code: "es", name: "Spanish"},
@@ -191,7 +189,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
   const [recipientName, setRecipientName] = useState("");
   const [recipientEmail, setRecipientEmail] = useState("");
   const [acceptanceStatus, setAcceptanceStatus] = useState("pending");
-  const [publicationStatus, setPublicationStatus] = useState("unpublished");
+  const [, setPublicationStatus] = useState("unpublished");
   const [expiresAt, setExpiresAt] = useState("");
   const [notes, setNotes] = useState("");
 
@@ -421,30 +419,6 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     if (versionForm.priceAmount && Number(versionForm.priceAmount) < 0) errors.push("Price must be zero or positive.");
     if (versionForm.durationMinutes && Number(versionForm.durationMinutes) < 0) errors.push("Duration must be zero or positive.");
     return errors;
-  };
-
-  const handleAddVersion = () => {
-    const errors = validateVersionForm();
-    if (errors.length > 0) { setVersionFormErrors(errors); return; }
-    setVersionFormErrors([]);
-    const newLocalId = generateLocalId();
-    setLocalVersions((prev) => [
-      ...prev,
-      {...versionForm, localId: newLocalId, serverId: null, savedSnapshot: null},
-    ]);
-    setEditingLocalId(newLocalId);
-  };
-
-  const handleUpdateLocalVersion = () => {
-    if (!editingLocalId) return;
-    const errors = validateVersionForm();
-    if (errors.length > 0) { setVersionFormErrors(errors); return; }
-    setVersionFormErrors([]);
-    setLocalVersions((prev) =>
-      prev.map((v) =>
-        v.localId === editingLocalId ? {...v, ...versionForm} : v,
-      ),
-    );
   };
 
   const handleConfirmDeleteVersion = async () => {

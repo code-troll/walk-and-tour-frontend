@@ -25,9 +25,20 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 
   const t = await getTranslations({ locale, namespace: "meta.blog" });
 
+  const title = t("title");
+  const description = t("description");
+
   return {
-    title: t("title"),
-    description: t("description"),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      siteName: "Walk and Tour Copenhagen",
+      locale,
+      type: "website",
+      images: ["/walkandtour/branding/logo-transparent.png"],
+    },
   };
 }
 

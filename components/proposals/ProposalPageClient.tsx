@@ -16,7 +16,7 @@ type ProposalPageClientProps = {
   proposalHash: string;
 };
 
-export default function ProposalPageClient({locale, proposalHash}: ProposalPageClientProps) {
+export default function ProposalPageClient({proposalHash}: ProposalPageClientProps) {
   const [proposal, setProposal] = useState<PublicProposal | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

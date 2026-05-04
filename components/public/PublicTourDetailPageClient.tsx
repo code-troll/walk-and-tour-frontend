@@ -1,6 +1,6 @@
 "use client";
 
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslations} from "next-intl";
 import {getPathname} from "@/i18n/navigation";
 import type {AppLocale} from "@/i18n/routing";
@@ -123,7 +123,7 @@ export default function PublicTourDetailPageClient({
         setIsLoading(false);
       }
     })();
-  }, [expectedTourTypes, locale, showRelatedTours, slug]);
+  }, [expectedTourTypes, locale, hrefBasePath, showRelatedTours, slug]);
 
   useEffect(() => {
     if (!detailResult) {
