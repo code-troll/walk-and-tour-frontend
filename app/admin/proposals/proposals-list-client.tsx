@@ -12,6 +12,8 @@ import {
   deleteProposalClient,
   updateProposalClient,
 } from "@/lib/admin/admin-proposal-client";
+import {getLocalizedPath} from "@/i18n/locale-path";
+import type {AppLocale} from "@/i18n/routing";
 
 const getPublicOrigin = () => {
   if (typeof window === "undefined") return "";
@@ -123,8 +125,9 @@ export function AdminProposalsListClient() {
     }
   };
 
-  const handleCopyLink = async (hash: string, id: string) => {
-    const url = `${getPublicOrigin()}/private-tours/proposal/${hash}`;
+  const handleCopyLink = async (hash: string, id: string, language: string) => {
+    const path = getLocalizedPath({locale: language as AppLocale, pathname: `/private-tours/proposal/${hash}`});
+    const url = `${getPublicOrigin()}${path}`;
     await navigator.clipboard.writeText(url);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
@@ -252,14 +255,14 @@ export function AdminProposalsListClient() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => void handleCopyLink(proposal.hash, proposal.id)}
+                  onClick={() => void handleCopyLink(proposal.hash, proposal.id, proposal.language)}
                   className="rounded-lg border border-[#eadfce] p-2 text-[#627176] transition-colors hover:bg-[#f9f2e7] hover:text-[#21343b]"
                   title="Copy public link"
                 >
                   {copiedId === proposal.id ? <Check className="h-4 w-4 text-[#2f6b3f]"/> : <Copy className="h-4 w-4"/>}
                 </button>
                 <a
-                  href={`${getPublicOrigin()}/private-tours/proposal/${proposal.hash}`}
+                  href={`${getPublicOrigin()}${getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${proposal.hash}`})}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded-lg border border-[#eadfce] p-2 text-[#627176] transition-colors hover:bg-[#f9f2e7] hover:text-[#21343b]"

@@ -47,6 +47,8 @@ import {
   listAdminMediaAssets,
   uploadAdminMediaAsset,
 } from "@/lib/admin/media-client";
+import {getLocalizedPath} from "@/i18n/locale-path";
+import type {AppLocale} from "@/i18n/routing";
 
 const getPublicOrigin = () => {
   if (typeof window === "undefined") return "";
@@ -633,7 +635,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
   const handleCopyLink = async () => {
     if (!proposal) return;
-    await navigator.clipboard.writeText(`${getPublicOrigin()}/private-tours/proposal/${proposal.hash}`);
+    const path = getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${proposal.hash}`});
+    await navigator.clipboard.writeText(`${getPublicOrigin()}${path}`);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };
@@ -698,8 +701,10 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       {/* Public Link */}
       {proposal && (() => {
         const isPublished = proposal.publicationStatus === "published";
-        const fullUrl = `${getPublicOrigin()}/private-tours/proposal/${proposal.hash}`;
-        const maskedUrl = `${getPublicOrigin()}/private-tours/proposal/${"*".repeat(proposal.hash.length)}`;
+        const proposalPath = getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${proposal.hash}`});
+        const fullUrl = `${getPublicOrigin()}${proposalPath}`;
+        const maskedPath = getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${"*".repeat(proposal.hash.length)}`});
+        const maskedUrl = `${getPublicOrigin()}${maskedPath}`;
         return (
           <AdminSectionCard title="Public Link">
             <div className="flex items-center gap-3">

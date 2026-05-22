@@ -4,7 +4,8 @@ import { useEffect, useRef, useState, type ComponentType } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { routing, type AppLocale } from "@/i18n/routing";
+import { type AppLocale } from "@/i18n/routing";
+import { getLocalizedPath } from "@/i18n/locale-path";
 import { navLinks } from "@/lib/landing-data";
 import { getHomeSectionHash, getInternalHref } from "@/lib/internal-paths";
 import { CalendarCheckIcon, ChevronDown, Menu, X } from "lucide-react";
@@ -39,13 +40,6 @@ const flagByCountryCode: Record<
 const isLocalizedDetailPath = (pathname: string) =>
   /^\/(tours|companies)\/[^/]+$/.test(pathname);
 
-const getLocalizedPath = ({
-  locale,
-  pathname,
-}: {
-  locale: AppLocale;
-  pathname: string;
-}) => locale === routing.defaultLocale ? pathname : `/${ locale }${ pathname }`;
 
 type SocialLinkId = "instagram" | "facebook" | "linkedin" | "tiktok" | "tripadvisor";
 
