@@ -179,28 +179,7 @@ export async function setTeamMemberPhotoAction({
   }
 }
 
-export async function clearTeamMemberPhotoAction(id: string): Promise<TeamMemberActionResult> {
-  const ctx = await getAdminContext();
-  if (!ctx.ok) return ctx;
 
-  try {
-    await teamMemberFetch<void>(
-      `/${id}/photo`,
-      "DELETE",
-      ctx.accessToken,
-      ctx.backendApiBaseUrl,
-    );
-    const member = await teamMemberFetch<ApiTeamMember>(
-      `/${id}`,
-      "GET",
-      ctx.accessToken,
-      ctx.backendApiBaseUrl,
-    );
-    return {ok: true, member};
-  } catch (error) {
-    return toActionError(error, "Unable to clear the team member photo.");
-  }
-}
 
 export async function createTeamMemberTranslationAction({
   id,

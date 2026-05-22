@@ -77,11 +77,6 @@ export default function TeamMembersListClient() {
     languages.map((language) => [language.code, language.name]),
   );
 
-  const getDisplayName = (member: ApiTeamMember): string => {
-    const firstTranslation = Object.values(member.translations)[0];
-    return firstTranslation?.name || "Untitled Member";
-  };
-
   const getDisplayRole = (member: ApiTeamMember): string => {
     const firstTranslation = Object.values(member.translations)[0];
     return firstTranslation?.role || "";
@@ -136,7 +131,7 @@ export default function TeamMembersListClient() {
                     )}
                     <div className="min-w-0">
                       <h3 className="truncate text-base font-semibold text-foreground">
-                        {getDisplayName(member)}
+                        {member.name}
                       </h3>
                       {getDisplayRole(member) && (
                         <p className="mt-0.5 truncate text-sm text-muted-foreground">
