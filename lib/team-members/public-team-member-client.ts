@@ -10,15 +10,7 @@ export const listPublicTeamMembersClient = async ({locale}: {locale: AppLocale})
     fallbackMessage: "Unable to load team members.",
   });
 
-  return members.map((member) => ({
-    ...member,
-    photoMedia: member.photoMedia
-      ? {
-          ...member.photoMedia,
-          contentUrl: `/api/internal/public${member.photoMedia.contentUrl}`,
-        }
-      : null,
-  }));
+  return members;
 };
 
 export const listPublicTeamMembersSafeClient = async ({
