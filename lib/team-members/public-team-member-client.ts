@@ -35,7 +35,7 @@ export const listPublicTeamMembersSafeClient = async ({
     console.error("Unable to load public team members", error);
     return {
       members: [],
-      didFail: false,
+      didFail: true,
     };
   }
 };
