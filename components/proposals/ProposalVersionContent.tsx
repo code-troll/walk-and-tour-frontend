@@ -1,5 +1,6 @@
 "use client";
 
+import {useLocale, useTranslations} from "next-intl";
 import {CalendarDays, Check, CircleAlert, Clock, MapPin, Route, ScrollText, X} from "lucide-react";
 import type {PublicProposalVersion} from "@/lib/public-proposal-model";
 import ProposalPaymentCta from "@/components/proposals/ProposalPaymentCta";
@@ -9,33 +10,33 @@ type ProposalVersionContentProps = {
   language: string;
 };
 
-const formatPrice = (amount: string, currency: string) => {
+const formatPrice = (amount: string, currency: string, locale: string) => {
   const num = Number.parseFloat(amount);
   if (Number.isNaN(num)) return `${amount} ${currency}`;
   try {
-    return new Intl.NumberFormat(undefined, {style: "currency", currency}).format(num);
+    return new Intl.NumberFormat(locale, {style: "currency", currency}).format(num);
   } catch {
     return `${num.toFixed(2)} ${currency}`;
   }
 };
 
-const formatDuration = (minutes: number) => {
+const formatDuration = (minutes: number, labels: {min: string; hour: string; hours: string}) => {
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  if (hours === 0) return `${mins} min`;
-  if (mins === 0) return hours === 1 ? "1 hour" : `${hours} hours`;
-  return `${hours}h ${mins}min`;
+  if (hours === 0) return `${mins} ${labels.min}`;
+  if (mins === 0) return hours === 1 ? `1 ${labels.hour}` : `${hours} ${labels.hours}`;
+  return `${hours}h ${mins}${labels.min}`;
 };
 
-const formatDateTime = (dateStr: string) => {
+const formatDateTime = (dateStr: string, locale: string, atConnector: string) => {
   try {
     const date = new Date(dateStr);
-    return date.toLocaleDateString(undefined, {
+    return date.toLocaleDateString(locale, {
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
-    }) + " at " + date.toLocaleTimeString(undefined, {
+    }) + atConnector + date.toLocaleTimeString(locale, {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -51,10 +52,13 @@ const ContentDivider = () => (
 );
 
 export default function ProposalVersionContent({version}: ProposalVersionContentProps) {
+  const t = useTranslations("proposal");
+  const locale = useLocale();
   const hasIncluded = version.included.length > 0 || version.notIncluded.length > 0;
   const hasPoints = version.startPoint || version.endPoint;
   const hasQuickInfo = version.tourDate || version.durationMinutes;
-  const priceLabel = formatPrice(version.priceAmount, version.priceCurrency);
+  const priceLabel = formatPrice(version.priceAmount, version.priceCurrency, locale);
+  const durationLabels = {min: t("duration.min"), hour: t("duration.hour"), hours: t("duration.hours")};
 
   return (
     <div className="bg-[#fcfaf7]">
@@ -73,13 +77,13 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
               {version.tourDate && (
                 <div className="inline-flex items-center gap-2.5 text-base text-[#3d3124]">
                   <CalendarDays className="h-5 w-5 text-[#c24343]"/>
-                  <span>{formatDateTime(version.tourDate)}</span>
+                  <span>{formatDateTime(version.tourDate, locale, t("dateTimeAt"))}</span>
                 </div>
               )}
               {version.durationMinutes && (
                 <div className="inline-flex items-center gap-2.5 text-base text-[#3d3124]">
                   <Clock className="h-5 w-5 text-[#c24343]"/>
-                  <span>{formatDuration(version.durationMinutes)}</span>
+                  <span>{formatDuration(version.durationMinutes, durationLabels)}</span>
                 </div>
               )}
             </div>
@@ -98,7 +102,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
                   <ScrollText className="h-5 w-5 text-[#2b666d]"/>
                 </span>
                 <div>
-                  <h3 className="mb-3 text-lg font-semibold text-[#2a221a]">About this tour</h3>
+                  <h3 className="mb-3 text-lg font-semibold text-[#2a221a]">{t("aboutThisTour")}</h3>
                   <p className="text-base leading-relaxed text-[#3d3124] whitespace-pre-line">{version.description}</p>
                 </div>
               </div>
@@ -118,7 +122,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
                   <Route className="h-5 w-5 text-[#9a6a2f]"/>
                 </span>
                 <div>
-                  <h3 className="mb-3 text-lg font-semibold text-[#2a221a]">Itinerary</h3>
+                  <h3 className="mb-3 text-lg font-semibold text-[#2a221a]">{t("itinerary")}</h3>
                   <p className="text-base leading-relaxed text-[#3d3124] whitespace-pre-line">{version.itineraryDescription}</p>
                 </div>
               </div>
@@ -133,7 +137,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
           <ContentDivider/>
           <section className="py-8">
             <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
-              <h3 className="mb-5 text-lg font-semibold text-[#2a221a]">Meeting Points</h3>
+              <h3 className="mb-5 text-lg font-semibold text-[#2a221a]">{t("meetingPoints")}</h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 {version.startPoint && (
                   <div className="flex items-start gap-4 rounded-2xl border border-[#e8dfd4] bg-white p-5">
@@ -141,7 +145,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
                       <MapPin className="h-5 w-5 text-[#2b666d]"/>
                     </span>
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2b666d]">Start Point</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#2b666d]">{t("startPoint")}</p>
                       {version.startPoint.label && (
                         <p className="mt-1.5 text-base text-[#3d3124]">{version.startPoint.label}</p>
                       )}
@@ -154,7 +158,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
                       <MapPin className="h-5 w-5 text-[#c24343]"/>
                     </span>
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#c24343]">End Point</p>
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#c24343]">{t("endPoint")}</p>
                       {version.endPoint.label && (
                         <p className="mt-1.5 text-base text-[#3d3124]">{version.endPoint.label}</p>
                       )}
@@ -173,7 +177,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
           <ContentDivider/>
           <section className="py-8">
             <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
-              <h3 className="mb-5 text-lg font-semibold text-[#2a221a]">What&apos;s Included</h3>
+              <h3 className="mb-5 text-lg font-semibold text-[#2a221a]">{t("whatsIncluded")}</h3>
               <div className="grid gap-5 md:grid-cols-2">
                 {version.included.length > 0 && (
                   <article className="relative overflow-hidden rounded-3xl border-2 border-[#2b666d]/20 bg-[#2b666d]/5">
@@ -183,7 +187,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
                         <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2b666d] text-[#fcf8f1]">
                           <Check className="h-4 w-4" strokeWidth={2.5}/>
                         </span>
-                        <h4 className="text-base font-bold uppercase tracking-wider text-[#2b666d]">Included</h4>
+                        <h4 className="text-base font-bold uppercase tracking-wider text-[#2b666d]">{t("included")}</h4>
                       </div>
                       <ul className="space-y-4">
                         {version.included.map((item, i) => (
@@ -207,7 +211,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
                         <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#c24343]/15 text-[#c24343]">
                           <CircleAlert className="h-4 w-4" strokeWidth={2}/>
                         </span>
-                        <h4 className="text-base font-bold uppercase tracking-wider text-[#c24343]">Not Included</h4>
+                        <h4 className="text-base font-bold uppercase tracking-wider text-[#c24343]">{t("notIncluded")}</h4>
                       </div>
                       <ul className="space-y-4">
                         {version.notIncluded.map((item, i) => (
@@ -234,7 +238,7 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
           <ContentDivider/>
           <section className="py-8">
             <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
-              <h3 className="mb-3 text-lg font-semibold text-[#2a221a]">Cancellation Policy</h3>
+              <h3 className="mb-3 text-lg font-semibold text-[#2a221a]">{t("cancellationPolicy")}</h3>
               <div className="rounded-2xl border border-[#e8dfd4] bg-white p-5">
                 <p className="text-base leading-relaxed text-[#3d3124] whitespace-pre-line">{version.cancellationPolicy}</p>
               </div>

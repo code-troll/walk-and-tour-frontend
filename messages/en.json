@@ -876,5 +876,31 @@
       "whatsapp": "WhatsApp",
       "x": "X"
     }
+  },
+  "proposal": {
+    "loading": "Loading proposal...",
+    "defaultTitle": "Your Tour Proposal",
+    "error": "An unexpected error occurred.",
+    "preparedFor": "Prepared for {recipientName}",
+    "proposalTab": "Proposal {number}",
+    "proposalOptions": "Proposal options",
+    "aboutThisTour": "About this tour",
+    "itinerary": "Itinerary",
+    "meetingPoints": "Meeting Points",
+    "startPoint": "Start Point",
+    "endPoint": "End Point",
+    "whatsIncluded": "What's Included",
+    "included": "Included",
+    "notIncluded": "Not Included",
+    "cancellationPolicy": "Cancellation Policy",
+    "book": "Book \"{versionTitle}\"",
+    "proceedToPayment": "Proceed to Payment",
+    "securePayment": "Secure payment powered by Stripe",
+    "dateTimeAt": " at ",
+    "duration": {
+      "min": "min",
+      "hour": "hour",
+      "hours": "hours"
+    }
   }
 }
