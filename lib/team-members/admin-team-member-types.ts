@@ -10,12 +10,14 @@ export type ApiTeamMemberMedia = {
 
 export type ApiTeamMember = {
   id: string;
+  name: string;
   orderIndex: number;
-  photoMediaId: string | null;
-  photoMedia: ApiTeamMemberMedia | null;
+  photoMediaId: string;
+  photoMedia: ApiTeamMemberMedia;
+  imageAlt: string | null;
   linkedinUrl: string | null;
   isPublished: boolean;
-  translations: Record<string, { name: string; role: string; imageAlt: string | null }>;
+  translations: Record<string, { role: string }>;
   translationAvailability: Array<{ languageCode: string }>;
   audit: {
     createdBy: string | null;
@@ -27,9 +29,9 @@ export type ApiTeamMember = {
 
 export type PublicTeamMember = {
   id: string;
+  name: string;
   orderIndex: number;
   linkedinUrl: string | null;
-  name: string;
   role: string;
   imageAlt: string | null;
   photoMedia: {
@@ -41,12 +43,17 @@ export type PublicTeamMember = {
 };
 
 export type CreateTeamMemberBody = {
+  name: string;
+  mediaId: string;
+  imageAlt?: string;
   orderIndex?: number;
   linkedinUrl?: string;
   isPublished?: boolean;
 };
 
 export type UpdateTeamMemberBody = {
+  name?: string;
+  imageAlt?: string | null;
   orderIndex?: number;
   linkedinUrl?: string | null;
   isPublished?: boolean;
@@ -54,26 +61,22 @@ export type UpdateTeamMemberBody = {
 
 export type CreateTeamMemberTranslationBody = {
   languageCode: string;
-  name: string;
   role: string;
-  imageAlt?: string;
 };
 
 export type UpdateTeamMemberTranslationBody = {
-  name?: string;
   role?: string;
-  imageAlt?: string | null;
 };
 
 export type TeamMemberTranslationFormState = {
   languageCode: string;
-  name: string;
   role: string;
-  imageAlt: string;
   existsOnServer: boolean;
 };
 
 export type TeamMemberFormState = {
+  name: string;
+  imageAlt: string;
   orderIndex: number;
   linkedinUrl: string;
   isPublished: boolean;
@@ -81,6 +84,8 @@ export type TeamMemberFormState = {
 };
 
 export const createEmptyFormState = (): TeamMemberFormState => ({
+  name: "",
+  imageAlt: "",
   orderIndex: 0,
   linkedinUrl: "",
   isPublished: false,
@@ -88,32 +93,35 @@ export const createEmptyFormState = (): TeamMemberFormState => ({
 });
 
 export const createFormStateFromApi = (member: ApiTeamMember): TeamMemberFormState => ({
+  name: member.name,
+  imageAlt: member.imageAlt ?? "",
   orderIndex: member.orderIndex,
   linkedinUrl: member.linkedinUrl ?? "",
   isPublished: member.isPublished,
   translations: Object.entries(member.translations).map(([languageCode, t]) => ({
     languageCode,
-    name: t.name,
     role: t.role,
-    imageAlt: t.imageAlt ?? "",
     existsOnServer: true,
   })),
 });
 
 export const createEmptyTranslationFormState = (languageCode: string): TeamMemberTranslationFormState => ({
   languageCode,
-  name: "",
   role: "",
-  imageAlt: "",
   existsOnServer: false,
 });
 
-export const toCreateBody = (state: TeamMemberFormState): CreateTeamMemberBody => ({
+export const toCreateBody = (state: TeamMemberFormState, mediaId: string): CreateTeamMemberBody => ({
+  name: state.name.trim(),
+  mediaId,
+  imageAlt: state.imageAlt.trim() || undefined,
   linkedinUrl: state.linkedinUrl.trim() || undefined,
   isPublished: state.isPublished,
 });
 
 export const toUpdateBody = (state: TeamMemberFormState): UpdateTeamMemberBody => ({
+  name: state.name.trim(),
+  imageAlt: state.imageAlt.trim() || null,
   orderIndex: state.orderIndex,
   linkedinUrl: state.linkedinUrl.trim() || null,
   isPublished: state.isPublished,
@@ -121,21 +129,19 @@ export const toUpdateBody = (state: TeamMemberFormState): UpdateTeamMemberBody =
 
 export const toCreateTranslationBody = (t: TeamMemberTranslationFormState): CreateTeamMemberTranslationBody => ({
   languageCode: t.languageCode,
-  name: t.name.trim(),
   role: t.role.trim(),
-  imageAlt: t.imageAlt.trim() || undefined,
 });
 
 export const toUpdateTranslationBody = (t: TeamMemberTranslationFormState): UpdateTeamMemberTranslationBody => ({
-  name: t.name.trim(),
   role: t.role.trim(),
-  imageAlt: t.imageAlt.trim() || null,
 });
 
 export const mergeFormStateWithApi = (
   current: TeamMemberFormState,
   member: ApiTeamMember,
 ): TeamMemberFormState => ({
+  name: member.name,
+  imageAlt: member.imageAlt ?? "",
   orderIndex: member.orderIndex,
   linkedinUrl: member.linkedinUrl ?? "",
   isPublished: member.isPublished,
@@ -145,9 +151,7 @@ export const mergeFormStateWithApi = (
       ? { ...existing, existsOnServer: true }
       : {
           languageCode,
-          name: t.name,
           role: t.role,
-          imageAlt: t.imageAlt ?? "",
           existsOnServer: true,
         };
   }),
