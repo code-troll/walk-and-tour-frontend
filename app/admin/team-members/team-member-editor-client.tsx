@@ -61,7 +61,6 @@ const fieldLabelClassName = "text-sm font-medium text-foreground";
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 
 type TranslationCountryCode = "GB" | "ES" | "IT";
-
 const flagByCountryCode: Record<TranslationCountryCode, ComponentType<{className?: string}>> = {GB, ES, IT};
 
 const getTranslationCountryCode = (languageCode: string): TranslationCountryCode | null => {
@@ -94,6 +93,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
   const [savedMember, setSavedMember] = useState<ApiTeamMember | null>(null);
   const [formState, setFormState] = useState<TeamMemberFormState>(createEmptyFormState());
+  const [selectedPhotoMediaId, setSelectedPhotoMediaId] = useState<string | null>(null);
   const [activeLanguageCode, setActiveLanguageCode] = useState<string | null>(null);
   const [languageToAdd, setLanguageToAdd] = useState("");
   const [feedback, setFeedback] = useState<FeedbackState>(null);
@@ -101,13 +101,12 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
 
   const [isMediaDialogOpen, setIsMediaDialogOpen] = useState(false);
-  const [mediaDialogPurpose, setMediaDialogPurpose] = useState<"create" | "change">("create");
   const [mediaSearchInput, setMediaSearchInput] = useState("");
   const [appliedMediaSearch, setAppliedMediaSearch] = useState("");
   const [mediaLibraryItems, setMediaLibraryItems] = useState<ApiAdminMediaAsset[]>([]);
   const [mediaLibraryPage, setMediaLibraryPage] = useState(1);
   const [mediaLibraryTotal, setMediaLibraryTotal] = useState(0);
-  const [selectedMediaId, setSelectedMediaId] = useState<string | null>(null);
+  const [dialogSelectedMediaId, setDialogSelectedMediaId] = useState<string | null>(null);
   const [mediaDialogError, setMediaDialogError] = useState<string | null>(null);
   const [isLoadingMediaLibrary, setIsLoadingMediaLibrary] = useState(false);
   const [isUploadingMedia, setIsUploadingMedia] = useState(false);
@@ -139,7 +138,10 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
   const activeTranslation =
     formState.translations.find((t) => t.languageCode === resolvedActiveLanguageCode) ?? null;
   const isCreated = Boolean(savedMember?.id);
-  const canCreate = formState.name.trim().length > 0;
+
+  // The effective photo media ID: either the saved one or the one selected in the form
+  const effectivePhotoMediaId = selectedPhotoMediaId ?? savedMember?.photoMediaId ?? null;
+  const canSave = formState.name.trim().length > 0 && effectivePhotoMediaId !== null;
 
   useEffect(() => {
     void (async () => {
@@ -152,19 +154,14 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
         ]);
         setAvailableLanguages(languages);
         if (mode === "edit") {
-          if (!member) {
-            setInitialLoadError("The requested team member could not be found.");
-            return;
-          }
+          if (!member) { setInitialLoadError("The requested team member could not be found."); return; }
           setSavedMember(member);
           setFormState(createFormStateFromApi(member));
           setActiveLanguageCode(Object.keys(member.translations)[0] ?? null);
         }
       } catch (error) {
         setInitialLoadError(error instanceof Error ? error.message : "Unable to load team member data.");
-      } finally {
-        setIsInitialLoading(false);
-      }
+      } finally { setIsInitialLoading(false); }
     })();
   }, [mode, memberId]);
 
@@ -175,6 +172,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
   const applyMemberResult = useCallback((member: ApiTeamMember) => {
     setSavedMember(member);
+    setSelectedPhotoMediaId(null);
     setFormState((current) => mergeFormStateWithApi(current, member));
     setLastSaved(new Date());
   }, []);
@@ -192,10 +190,9 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
     setIsLoadingMediaLibrary(false);
   }, [accessToken, backendApiBaseUrl, mediaLibraryItems]);
 
-  const openMediaDialog = (purpose: "create" | "change") => {
-    setMediaDialogPurpose(purpose);
+  const openMediaDialog = () => {
     setIsMediaDialogOpen(true);
-    setSelectedMediaId(null);
+    setDialogSelectedMediaId(null);
     setMediaSearchInput("");
     setAppliedMediaSearch("");
     setMediaLibraryItems([]);
@@ -210,43 +207,46 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
     if (!file) return;
     setIsUploadingMedia(true);
     const result = await uploadAdminMediaAsset({accessToken, backendApiBaseUrl, file, folder: `team-members/${savedMember?.id ?? "new"}`});
-    if (result.ok) { setSelectedMediaId(result.media.id); void loadMediaLibrary(1, appliedMediaSearch); }
+    if (result.ok) { setDialogSelectedMediaId(result.media.id); void loadMediaLibrary(1, appliedMediaSearch); }
     else { setMediaDialogError(result.message); }
     setIsUploadingMedia(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const handleConfirmMediaSelection = async () => {
-    if (!selectedMediaId) return;
+  const handleConfirmMediaSelection = () => {
+    if (!dialogSelectedMediaId) return;
+    setSelectedPhotoMediaId(dialogSelectedMediaId);
     setIsMediaDialogOpen(false);
+  };
+
+  // ── Save ─────────────────────────────────────────────────────────
+
+  const handleSave = async () => {
+    if (!canSave) return;
     setIsMutating(true);
 
-    if (mediaDialogPurpose === "create") {
-      const result = await createTeamMemberAction(toCreateBody(formState, selectedMediaId));
-      if (result.ok) {
+    try {
+      if (!isCreated) {
+        const result = await createTeamMemberAction(toCreateBody(formState, effectivePhotoMediaId!));
+        if (!result.ok) { showFeedback("error", result.message); return; }
         applyMemberResult(result.member);
         showFeedback("success", "Team member created.");
         startNavigation();
         router.replace(`/team-members/${result.member.id}`);
-      } else { showFeedback("error", result.message); }
-    } else if (savedMember) {
-      const result = await setTeamMemberPhotoAction({id: savedMember.id, mediaId: selectedMediaId});
-      if (result.ok) { applyMemberResult(result.member); showFeedback("success", "Photo updated."); }
-      else { showFeedback("error", result.message); }
-    }
-
-    setIsMutating(false);
-  };
-
-  // ── Save shared details ──────────────────────────────────────────
-
-  const handleSaveShared = async () => {
-    if (!isCreated) { openMediaDialog("create"); return; }
-    setIsMutating(true);
-    const result = await updateTeamMemberAction({id: savedMember!.id, body: toUpdateBody(formState)});
-    if (result.ok) { applyMemberResult(result.member); showFeedback("success", "Team member updated."); }
-    else { showFeedback("error", result.message); }
-    setIsMutating(false);
+      } else {
+        // If photo changed, update it first
+        if (selectedPhotoMediaId && selectedPhotoMediaId !== savedMember!.photoMediaId) {
+          const photoResult = await setTeamMemberPhotoAction({id: savedMember!.id, mediaId: selectedPhotoMediaId});
+          if (!photoResult.ok) { showFeedback("error", photoResult.message); return; }
+        }
+        const result = await updateTeamMemberAction({id: savedMember!.id, body: toUpdateBody(formState)});
+        if (!result.ok) { showFeedback("error", result.message); return; }
+        applyMemberResult(result.member);
+        showFeedback("success", "Team member updated.");
+      }
+    } catch (error) {
+      showFeedback("error", error instanceof Error ? error.message : "Unable to save.");
+    } finally { setIsMutating(false); }
   };
 
   // ── Translations ─────────────────────────────────────────────────
@@ -319,6 +319,11 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
     );
   }
 
+  // Resolve the photo preview src: use proxy URL for both selected and saved photos
+  const photoPreviewSrc = effectivePhotoMediaId
+    ? `/api/internal/admin/media/${effectivePhotoMediaId}/content`
+    : null;
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -334,10 +339,10 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
         </div>
       )}
 
-      {/* Details */}
+      {/* Details — name, photo, imageAlt, linkedinUrl, orderIndex all in one card */}
       <AdminSectionCard
         title={mode === "create" ? "New Team Member" : "Team Member Details"}
-        description={mode === "create" ? "Enter a name and select a photo to create the team member." : "Manage shared team member fields."}
+        description="Name and photo are required."
       >
         <div className="space-y-5">
           <div className="flex items-center gap-3">
@@ -348,6 +353,23 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           <div>
             <label className={fieldLabelClassName}>Name *</label>
             <Input value={formState.name} onChange={(e) => setFormState((prev) => ({...prev, name: e.target.value}))} placeholder="Team member name" className="mt-1.5" disabled={isMutating} />
+          </div>
+
+          {/* Photo picker inline */}
+          <div>
+            <label className={fieldLabelClassName}>Photo *</label>
+            <div className="mt-1.5 flex items-start gap-4">
+              {photoPreviewSrc ? (
+                <Image src={photoPreviewSrc} alt="" width={96} height={96} unoptimized className="size-24 rounded-2xl object-cover ring-1 ring-[#eadfce]" />
+              ) : (
+                <div className="flex size-24 items-center justify-center rounded-2xl bg-[#f5efe5] text-xs text-muted-foreground ring-1 ring-[#eadfce]">
+                  No photo
+                </div>
+              )}
+              <Button variant="outline" type="button" onClick={openMediaDialog} disabled={isMutating}>
+                <Search className="size-4" /> {effectivePhotoMediaId ? "Change Photo" : "Select Photo"}
+              </Button>
+            </div>
           </div>
 
           <div className="grid gap-5 lg:grid-cols-2">
@@ -369,25 +391,13 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           )}
 
           <div className="flex justify-end">
-            <Button onClick={() => void handleSaveShared()} disabled={isMutating || (!isCreated && !canCreate)}>
+            <Button onClick={() => void handleSave()} disabled={isMutating || !canSave}>
               {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
-              {isCreated ? "Save Changes" : "Select Photo & Create"}
+              {isCreated ? "Save Changes" : "Create Team Member"}
             </Button>
           </div>
         </div>
       </AdminSectionCard>
-
-      {/* Photo (edit mode) */}
-      {isCreated && savedMember && (
-        <AdminSectionCard title="Photo" description="Change the team member photo.">
-          <div className="flex items-start gap-6">
-            <Image src={savedMember.photoMedia.contentUrl} alt={savedMember.imageAlt ?? ""} width={120} height={120} unoptimized className="size-28 rounded-2xl object-cover ring-1 ring-[#eadfce]" />
-            <Button variant="outline" onClick={() => openMediaDialog("change")} disabled={isMutating}>
-              <Search className="size-4" /> Change Photo
-            </Button>
-          </div>
-        </AdminSectionCard>
-      )}
 
       {/* Role Translations */}
       {isCreated && (
@@ -464,7 +474,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
       <Dialog open={isMediaDialogOpen} onOpenChange={setIsMediaDialogOpen}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle>{mediaDialogPurpose === "create" ? "Select Photo to Create" : "Change Photo"}</DialogTitle>
+            <DialogTitle>Select Photo</DialogTitle>
             <DialogDescription>Choose an image from the media library or upload a new one.</DialogDescription>
           </DialogHeader>
           <div className="flex items-center gap-2">
@@ -478,11 +488,11 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           {mediaDialogError && <div className="rounded-lg border border-[#e8c7c1] bg-[#fbf2f0] px-3 py-2 text-sm text-[#a3483f]">{mediaDialogError}</div>}
           <div className="grid max-h-80 grid-cols-4 gap-2 overflow-y-auto">
             {mediaLibraryItems.map((asset) => (
-              <button key={asset.id} type="button" onClick={() => setSelectedMediaId(asset.id)}
-                className={`relative overflow-hidden rounded-lg border-2 transition ${selectedMediaId === asset.id ? "border-[#21343b] ring-2 ring-[#21343b]/30" : "border-transparent hover:border-[#cbb390]"}`}>
+              <button key={asset.id} type="button" onClick={() => setDialogSelectedMediaId(asset.id)}
+                className={`relative overflow-hidden rounded-lg border-2 transition ${dialogSelectedMediaId === asset.id ? "border-[#21343b] ring-2 ring-[#21343b]/30" : "border-transparent hover:border-[#cbb390]"}`}>
                 <Image src={`${backendApiBaseUrl}/api/admin/media/${asset.id}/content`} alt={asset.originalFilename} width={160} height={120} unoptimized className="h-24 w-full object-cover"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                {selectedMediaId === asset.id && <div className="absolute inset-0 flex items-center justify-center bg-[#21343b]/40"><Check className="size-6 text-white" /></div>}
+                {dialogSelectedMediaId === asset.id && <div className="absolute inset-0 flex items-center justify-center bg-[#21343b]/40"><Check className="size-6 text-white" /></div>}
               </button>
             ))}
           </div>
@@ -492,8 +502,8 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           )}
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
-            <Button onClick={() => void handleConfirmMediaSelection()} disabled={!selectedMediaId}>
-              <Check className="size-4" /> {mediaDialogPurpose === "create" ? "Create with Photo" : "Confirm Selection"}
+            <Button onClick={handleConfirmMediaSelection} disabled={!dialogSelectedMediaId}>
+              <Check className="size-4" /> Select
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -117,7 +117,7 @@ export default function TeamMembersListClient() {
                   <div className="flex min-w-0 flex-1 items-start gap-4">
                     {member.photoMedia ? (
                       <Image
-                        src={member.photoMedia.contentUrl}
+                        src={`/api/internal/admin/media/${member.photoMediaId}/content`}
                         alt=""
                         width={56}
                         height={56}
