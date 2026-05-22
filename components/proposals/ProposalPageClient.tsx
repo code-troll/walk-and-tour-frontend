@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {useTranslations} from "next-intl";
 import type {AppLocale} from "@/i18n/routing";
 import NotFound from "@/app/not-found";
 import Footer from "@/components/layout/Footer";
@@ -17,6 +18,7 @@ type ProposalPageClientProps = {
 };
 
 export default function ProposalPageClient({proposalHash}: ProposalPageClientProps) {
+  const t = useTranslations("proposal");
   const [proposal, setProposal] = useState<PublicProposal | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,12 +39,12 @@ export default function ProposalPageClient({proposalHash}: ProposalPageClientPro
         }
         setProposal(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An unexpected error occurred.");
+        setError(err instanceof Error ? err.message : t("error"));
       } finally {
         setIsLoading(false);
       }
     })();
-  }, [proposalHash]);
+  }, [t, proposalHash]);
 
   useEffect(() => {
     if (proposal?.versions?.[0]) {
@@ -53,7 +55,7 @@ export default function ProposalPageClient({proposalHash}: ProposalPageClientPro
   if (isLoading) {
     return (
       <div className="min-h-screen bg-[#fcfaf7]">
-        <PublicLoadingState label="Loading proposal..."/>
+        <PublicLoadingState label={t("loading")}/>
         <Footer/>
       </div>
     );
@@ -78,7 +80,7 @@ export default function ProposalPageClient({proposalHash}: ProposalPageClientPro
     ? getProposalMediaUrl(proposalHash, proposal.mediaItems[0].mediaId)
     : null;
   const activeVersion = proposal.versions[activeVersionIndex] ?? proposal.versions[0];
-  const mainTitle = proposal.name ?? proposal.versions[0]?.title ?? "Your Tour Proposal";
+  const mainTitle = proposal.name ?? proposal.versions[0]?.title ?? t("defaultTitle");
 
   return (
     <div className="min-h-screen bg-[#fcfaf7] text-[#2a221a]">

@@ -891,5 +891,31 @@
     "shareLinkedIn": "LinkedIn",
     "shareWhatsApp": "WhatsApp",
     "latestPosts": "Publicaciones recientes"
+  },
+  "proposal": {
+    "loading": "Cargando propuesta...",
+    "defaultTitle": "Tu Propuesta de Tour",
+    "error": "Ha ocurrido un error inesperado.",
+    "preparedFor": "Preparado para {recipientName}",
+    "proposalTab": "Propuesta {number}",
+    "proposalOptions": "Opciones de propuesta",
+    "aboutThisTour": "Sobre este tour",
+    "itinerary": "Itinerario",
+    "meetingPoints": "Puntos de Encuentro",
+    "startPoint": "Punto de Inicio",
+    "endPoint": "Punto Final",
+    "whatsIncluded": "Qué Incluye",
+    "included": "Incluido",
+    "notIncluded": "No Incluido",
+    "cancellationPolicy": "Política de Cancelación",
+    "book": "Reservar \"{versionTitle}\"",
+    "proceedToPayment": "Proceder al Pago",
+    "securePayment": "Pago seguro con Stripe",
+    "dateTimeAt": " a las ",
+    "duration": {
+      "min": "min",
+      "hour": "hora",
+      "hours": "horas"
+    }
   }
 }

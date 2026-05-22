@@ -1,5 +1,6 @@
 "use client";
 
+import {useTranslations} from "next-intl";
 import {ArrowRight, ShieldCheck} from "lucide-react";
 
 type ProposalPaymentCtaProps = {
@@ -9,6 +10,7 @@ type ProposalPaymentCtaProps = {
 };
 
 export default function ProposalPaymentCta({stripePaymentLink, priceLabel, versionTitle}: ProposalPaymentCtaProps) {
+  const t = useTranslations("proposal");
   return (
     <div className="relative overflow-hidden rounded-3xl border border-[#e8dfd4] bg-white">
       <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#2b666d]/5"/>
@@ -18,7 +20,7 @@ export default function ProposalPaymentCta({stripePaymentLink, priceLabel, versi
         </div>
         <div>
           <p className="text-lg font-semibold text-[#2a221a]">
-            Book &ldquo;{versionTitle}&rdquo;
+            {t("book", {versionTitle})}
           </p>
           <p className="mt-1 text-2xl font-bold text-[#2b666d]">{priceLabel}</p>
         </div>
@@ -28,10 +30,10 @@ export default function ProposalPaymentCta({stripePaymentLink, priceLabel, versi
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2.5 rounded-full bg-[#c24343] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-[#c24343]/20 transition-all hover:bg-[#a83838] hover:shadow-[#c24343]/30"
         >
-          Proceed to Payment
+          {t("proceedToPayment")}
           <ArrowRight className="h-5 w-5"/>
         </a>
-        <p className="text-xs text-[#9a8d7e]">Secure payment powered by Stripe</p>
+        <p className="text-xs text-[#9a8d7e]">{t("securePayment")}</p>
       </div>
     </div>
   );

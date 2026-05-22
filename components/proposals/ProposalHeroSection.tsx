@@ -1,6 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {useTranslations} from "next-intl";
 
 type ProposalHeroSectionProps = {
   recipientName: string | null;
@@ -9,6 +10,7 @@ type ProposalHeroSectionProps = {
 };
 
 export default function ProposalHeroSection({recipientName, imageUrl, title}: ProposalHeroSectionProps) {
+  const t = useTranslations("proposal");
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function ProposalHeroSection({recipientName, imageUrl, title}: Pr
         <div className={imageUrl ? "-mt-16 relative z-10 pb-6" : "pt-14 pb-6 md:pt-18"}>
           {recipientName && (
             <p className="mb-2 text-sm font-medium uppercase tracking-[0.18em] text-[#9a6a2f]">
-              Prepared for {recipientName}
+              {t("preparedFor", {recipientName})}
             </p>
           )}
           <h1 className="text-3xl font-semibold leading-tight text-[#2b666d] sm:text-4xl md:text-[2.75rem]">
