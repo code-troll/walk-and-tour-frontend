@@ -85,9 +85,14 @@ export default function AboutUsTeamSection() {
                       href={member.linkedinUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 inline-block text-sm font-medium text-[#0a66c2] hover:underline"
+                      className="mt-2 inline-block"
                     >
-                      LinkedIn
+                      <Image
+                        src="/walkandtour/social/color/linkedin.png"
+                        alt="LinkedIn"
+                        width={24}
+                        height={24}
+                      />
                     </a>
                   )}
                 </div>
