@@ -22,6 +22,7 @@ const navigationByRole = {
     {href: "/tours", label: "Tours"},
     {href: "/proposals", label: "Proposals"},
     {href: "/blog-posts", label: "Blog posts"},
+    {href: "/team-members", label: "Team"},
     {href: "/newsletter", label: "Newsletter"},
   ],
   editor: [
@@ -30,6 +31,7 @@ const navigationByRole = {
     {href: "/tours", label: "Tours"},
     {href: "/proposals", label: "Proposals"},
     {href: "/blog-posts", label: "Blog posts"},
+    {href: "/team-members", label: "Team"},
   ],
   marketing: [
     {href: "/", label: "Overview"},
