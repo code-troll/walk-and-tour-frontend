@@ -75,9 +75,11 @@ export default function AboutUsTeamSection() {
                   <h3 className="text-lg font-semibold text-[#2a221a]">
                     {member.name}
                   </h3>
-                  <p className="mt-1 text-sm text-[#5c4d3e]">
-                    {member.role}
-                  </p>
+                  {member.role && (
+                    <p className="mt-1 text-sm text-[#5c4d3e]">
+                      {member.role}
+                    </p>
+                  )}
                   {member.linkedinUrl && (
                     <a
                       href={member.linkedinUrl}

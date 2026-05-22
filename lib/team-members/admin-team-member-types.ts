@@ -32,7 +32,7 @@ export type PublicTeamMember = {
   name: string;
   orderIndex: number;
   linkedinUrl: string | null;
-  role: string;
+  role: string | null;
   imageAlt: string | null;
   photoMedia: {
     id: string;
