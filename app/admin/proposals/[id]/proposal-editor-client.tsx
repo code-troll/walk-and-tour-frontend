@@ -152,7 +152,7 @@ const buildVersionBody = (v: VersionFormData, orderIndex: number): Record<string
   if (v.description) body.description = v.description;
   if (v.itineraryDescription) body.itineraryDescription = v.itineraryDescription;
   if (v.cancellationPolicy) body.cancellationPolicy = v.cancellationPolicy;
-  if (v.stripePaymentLink) body.stripePaymentLink = v.stripePaymentLink;
+  body.stripePaymentLink = v.stripePaymentLink.trim() || null;
   if (v.startPointLabel) body.startPoint = {lat: 0, lng: 0, label: v.startPointLabel};
   if (v.endPointLabel) body.endPoint = {lat: 0, lng: 0, label: v.endPointLabel};
   return body;
