@@ -485,9 +485,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     if (!v.cancellationPolicy.trim()) errors.push("Cancellation policy");
     if (!v.startPointLabel.trim()) errors.push("Start point");
     if (!v.endPointLabel.trim()) errors.push("End point");
-    if (!v.stripePaymentLink.trim()) {
-      errors.push("Stripe payment link");
-    } else {
+    if (v.stripePaymentLink.trim()) {
       try {
         const url = new URL(v.stripePaymentLink.trim());
         if (!url.protocol.startsWith("http")) errors.push("Stripe payment link (invalid URL)");
