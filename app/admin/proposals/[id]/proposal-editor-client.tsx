@@ -408,9 +408,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
     if (!versionForm.cancellationPolicy.trim()) errors.push("Cancellation policy is required.");
     if (!versionForm.startPointLabel.trim()) errors.push("Start point is required.");
     if (!versionForm.endPointLabel.trim()) errors.push("End point is required.");
-    if (!versionForm.stripePaymentLink.trim()) {
-      errors.push("Stripe payment link is required.");
-    } else {
+    if (versionForm.stripePaymentLink.trim()) {
       try {
         const url = new URL(versionForm.stripePaymentLink.trim());
         if (!url.protocol.startsWith("http")) errors.push("Stripe payment link must be a valid URL starting with http:// or https://.");
@@ -1052,7 +1050,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                         <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="La Sagrada Familia"/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Stripe Payment Link</label>
+                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Stripe Payment Link <span className="font-normal text-[#9a8d7e]">(optional)</span></label>
                         <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="https://buy.stripe.com/..."/>
                       </div>
                     </div>
