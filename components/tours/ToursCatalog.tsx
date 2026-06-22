@@ -10,6 +10,7 @@ import {
   type PublicTourCard,
   type TourFilterId,
 } from "@/lib/public-tour-model";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 
 const INITIAL_VISIBLE_TOURS = 6;
 const LOAD_MORE_STEP = 3;
@@ -42,14 +43,21 @@ const filterToursByCategories = ({
 
 export default function ToursCatalog({tours}: ToursCatalogProps) {
   const t = useTranslations("tours");
+  const track = useAnalyticsTracker();
   const [selectedCategories, setSelectedCategories] = useState<TourFilterId[]>([]);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_TOURS);
   const [newlyRevealedIds, setNewlyRevealedIds] = useState<string[]>([]);
 
   const toggleCategory = (category: TourFilterId) => {
-    const nextSelectedCategories = selectedCategories.includes(category)
-      ? selectedCategories.filter((item) => item !== category)
-      : [...selectedCategories, category];
+    const isNowSelected = !selectedCategories.includes(category);
+    const nextSelectedCategories = isNowSelected
+      ? [...selectedCategories, category]
+      : selectedCategories.filter((item) => item !== category);
+
+    track("tour_filter_applied", {
+      filter_key: category,
+      filter_selected: isNowSelected,
+    });
 
     const revealedIds = filterToursByCategories({
       categories: nextSelectedCategories,

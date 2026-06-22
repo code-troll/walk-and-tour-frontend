@@ -2,15 +2,31 @@
 
 import {useTranslations} from "next-intl";
 import {ArrowRight, ShieldCheck} from "lucide-react";
+import {useAnalyticsTracker} from "@/lib/analytics/use-analytics-tracker";
 
 type ProposalPaymentCtaProps = {
   stripePaymentLink: string;
   priceLabel: string;
   versionTitle: string;
+  proposalHash: string;
+  versionId: string;
+  priceAmount: string;
+  priceCurrency: string;
+  proposalLanguage: string;
 };
 
-export default function ProposalPaymentCta({stripePaymentLink, priceLabel, versionTitle}: ProposalPaymentCtaProps) {
+export default function ProposalPaymentCta({
+  stripePaymentLink,
+  priceLabel,
+  versionTitle,
+  proposalHash,
+  versionId,
+  priceAmount,
+  priceCurrency,
+  proposalLanguage,
+}: ProposalPaymentCtaProps) {
   const t = useTranslations("proposal");
+  const track = useAnalyticsTracker();
   return (
     <div className="relative overflow-hidden rounded-3xl border border-[#e8dfd4] bg-white">
       <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[#2b666d]/5"/>
@@ -28,6 +44,17 @@ export default function ProposalPaymentCta({stripePaymentLink, priceLabel, versi
           href={stripePaymentLink}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => {
+            track("proposal_payment_click", {
+              proposal_hash: proposalHash,
+              version_id: versionId,
+              version_title: versionTitle,
+              price_amount: priceAmount,
+              price_currency: priceCurrency,
+              proposal_language: proposalLanguage,
+              tour_type: "private",
+            });
+          }}
           className="inline-flex items-center gap-2.5 rounded-full bg-[#c24343] px-8 py-4 text-base font-semibold text-white shadow-lg shadow-[#c24343]/20 transition-all hover:bg-[#a83838] hover:shadow-[#c24343]/30"
         >
           {t("proceedToPayment")}

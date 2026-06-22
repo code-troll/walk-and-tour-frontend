@@ -8,6 +8,7 @@ import ProposalPaymentCta from "@/components/proposals/ProposalPaymentCta";
 type ProposalVersionContentProps = {
   version: PublicProposalVersion;
   language: string;
+  proposalHash: string;
 };
 
 const formatPrice = (amount: string, currency: string, locale: string) => {
@@ -51,7 +52,7 @@ const ContentDivider = () => (
   </div>
 );
 
-export default function ProposalVersionContent({version}: ProposalVersionContentProps) {
+export default function ProposalVersionContent({version, language, proposalHash}: ProposalVersionContentProps) {
   const t = useTranslations("proposal");
   const locale = useLocale();
   const hasIncluded = version.included.length > 0 || version.notIncluded.length > 0;
@@ -257,6 +258,11 @@ export default function ProposalVersionContent({version}: ProposalVersionContent
                 stripePaymentLink={version.stripePaymentLink}
                 priceLabel={priceLabel}
                 versionTitle={version.title}
+                proposalHash={proposalHash}
+                versionId={version.id}
+                priceAmount={version.priceAmount}
+                priceCurrency={version.priceCurrency}
+                proposalLanguage={language}
               />
             </div>
           </section>

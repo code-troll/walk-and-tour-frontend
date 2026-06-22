@@ -11,11 +11,11 @@ import {
   GOOGLE_TAG_MANAGER_ID,
   initializeGoogleTagManagerDataLayer,
   readAnalyticsConsent,
-  trackAnalyticsEvent,
   type AnalyticsConsentState,
   writeAnalyticsConsent,
   isGoogleTagManagerConfigured,
 } from "@/lib/analytics/public";
+import {useAnalyticsTracker} from "@/lib/analytics/use-analytics-tracker";
 
 const GTM_LOADER_SCRIPT_ID = "google-tag-manager-loader";
 
@@ -79,6 +79,7 @@ export default function PublicAnalytics() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const queryString = searchParams.toString();
+  const track = useAnalyticsTracker();
   const [consent, setConsent] = useState<AnalyticsConsentState | null | "pending">("pending");
 
   const isConfigured = isGoogleTagManagerConfigured();
@@ -115,13 +116,12 @@ export default function PublicAnalytics() {
       return;
     }
 
-    trackAnalyticsEvent("page_view", {
+    track("page_view", {
       page_path: pagePath,
       page_location: window.location.href,
       page_title: document.title,
-      page_locale: locale,
     });
-  }, [isTrackingEnabled, locale, pagePath]);
+  }, [isTrackingEnabled, pagePath, track]);
 
   const handleConsentDecision = (value: AnalyticsConsentState) => {
     writeAnalyticsConsent(value);

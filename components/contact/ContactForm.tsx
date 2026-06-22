@@ -11,6 +11,7 @@ import {
     type ContactFormActionState,
     type ContactFormFailureReason,
 } from "@/components/contact/contact-form-action";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 
 type ContactFormProps = {
     className?: string;
@@ -50,6 +51,7 @@ export default function ContactForm({
                                     }: ContactFormProps) {
     const t = useTranslations("contact");
     const locale = useLocale();
+    const track = useAnalyticsTracker();
     const [phone, setPhone] = useState<Value | undefined>();
     const [turnstileToken, setTurnstileToken] = useState("");
     const [localFeedbackReason, setLocalFeedbackReason] = useState<LocalFeedbackReason>(
@@ -57,6 +59,7 @@ export default function ContactForm({
     );
     const [state, formAction, isPending] = useActionState(submitContactForm, initialState);
     const formRef = useRef<HTMLFormElement>(null);
+    const trackedStateRef = useRef<string | null>(null);
     const turnstileRef = useRef<TurnstileInstance | undefined>(undefined);
     const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim() ?? "";
     const fieldClassName =
@@ -91,6 +94,32 @@ export default function ContactForm({
         }
     }, [state]);
 
+    useEffect(() => {
+        const trackingKey =
+            state.status === "success"
+                ? "success"
+                : state.status === "error"
+                    ? `error:${ state.reason }`
+                    : null;
+
+        if (!trackingKey || trackedStateRef.current === trackingKey) {
+            return;
+        }
+
+        trackedStateRef.current = trackingKey;
+
+        if (state.status === "success") {
+            track("contact_success");
+            return;
+        }
+
+        if (state.status === "error") {
+            track("contact_error", {
+                error_reason: state.reason,
+            });
+        }
+    }, [state, track]);
+
     const feedbackKey =
         state.status === "success"
             ? "feedback.success"
@@ -102,7 +131,15 @@ export default function ContactForm({
     const isSubmitDisabled = isPending || (Boolean(turnstileSiteKey) && turnstileToken.length === 0);
 
     return (
-        <form ref={ formRef } action={ formAction } className={ className }>
+        <form
+            ref={ formRef }
+            action={ formAction }
+            onSubmit={ () => {
+                trackedStateRef.current = null;
+                track("contact_submit");
+            } }
+            className={ className }
+        >
             <input type="hidden" name="locale" value={ locale }/>
             <div>
                 <input

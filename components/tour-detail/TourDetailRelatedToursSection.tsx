@@ -30,7 +30,7 @@ export default function TourDetailRelatedToursSection({
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           { tours.map((tour) => (
-            <TourListingCard key={ `related-${ tour.id }` } tour={ tour }/>
+            <TourListingCard key={ `related-${ tour.id }` } tour={ tour } source="related"/>
           )) }
         </div>
       </div>

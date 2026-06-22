@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
-import { trackAnalyticsEvent } from "@/lib/analytics/public";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 import {
   submitFooterNewsletterForm,
   type NewsletterSubscribeActionState,
@@ -26,6 +26,7 @@ export default function FooterNewsletterForm() {
   const t = useTranslations("footer.newsletter");
   const locale = useLocale();
   const pathname = usePathname();
+  const track = useAnalyticsTracker();
   const formRef = useRef<HTMLFormElement>(null);
   const consentCheckboxRef = useRef<HTMLInputElement>(null);
   const trackedStateRef = useRef<string | null>(null);
@@ -53,23 +54,19 @@ export default function FooterNewsletterForm() {
     trackedStateRef.current = trackingKey;
 
     if (state.status === "success") {
-      trackAnalyticsEvent("newsletter_subscribe_success", {
+      track("newsletter_subscribe_success", {
         consent_source: "footer_form",
-        page_path: pathname,
-        preferred_locale: locale,
       });
       return;
     }
 
     if (state.status === "error") {
-      trackAnalyticsEvent("newsletter_subscribe_error", {
+      track("newsletter_subscribe_error", {
         consent_source: "footer_form",
         error_reason: state.reason,
-        page_path: pathname,
-        preferred_locale: locale,
       });
     }
-  }, [locale, pathname, state]);
+  }, [state, track]);
 
   const feedbackKey =
     localFeedbackReason
@@ -91,20 +88,16 @@ export default function FooterNewsletterForm() {
         if (!consentCheckboxRef.current?.checked) {
           event.preventDefault();
           setLocalFeedbackReason("consentRequired");
-          trackAnalyticsEvent("newsletter_subscribe_error", {
+          track("newsletter_subscribe_error", {
             consent_source: "footer_form",
             error_reason: "consent_required",
-            page_path: pathname,
-            preferred_locale: locale,
           });
           return;
         }
 
         setLocalFeedbackReason(null);
-        trackAnalyticsEvent("newsletter_subscribe_submit", {
+        track("newsletter_subscribe_submit", {
           consent_source: "footer_form",
-          page_path: pathname,
-          preferred_locale: locale,
         });
       } }
     >
