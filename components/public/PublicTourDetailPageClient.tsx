@@ -1,8 +1,10 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useTranslations} from "next-intl";
 import {getPathname} from "@/i18n/navigation";
+import {normalizeTourType} from "@/lib/analytics/public";
+import {useAnalyticsTracker} from "@/lib/analytics/use-analytics-tracker";
 import type {AppLocale} from "@/i18n/routing";
 import NotFound from "@/app/not-found";
 import Footer from "@/components/layout/Footer";
@@ -62,6 +64,8 @@ export default function PublicTourDetailPageClient({
 }: PublicTourDetailPageClientProps) {
   const tourDetailT = useTranslations("tourDetail");
   const headerT = useTranslations("header");
+  const track = useAnalyticsTracker();
+  const trackedTourIdRef = useRef<string | null>(null);
   const [detailResult, setDetailResult] = useState<PublicTourDetailResult | null>(null);
   const [relatedTours, setRelatedTours] = useState<PublicTourCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -145,6 +149,23 @@ export default function PublicTourDetailPageClient({
 
     descriptionTag.setAttribute("content", metaDescription);
   }, [detailResult, tourDetailT]);
+
+  useEffect(() => {
+    if (!detailResult || trackedTourIdRef.current === detailResult.tour.id) {
+      return;
+    }
+
+    trackedTourIdRef.current = detailResult.tour.id;
+
+    track("view_tour", {
+      tour_id: detailResult.tour.id,
+      tour_slug: detailResult.tour.slug,
+      tour_title: detailResult.tour.title,
+      tour_type: normalizeTourType(detailResult.tour.tourType),
+      tour_type_raw: detailResult.tour.tourType,
+      content_locale: detailResult.contentLocale,
+    });
+  }, [detailResult, track]);
 
   if (isLoading || isRedirecting) {
     return <PublicLoadingState label="Loading tour details..."/>;

@@ -41,6 +41,7 @@ export default function BlogRecentPostsSection({
               readMoreLabel={ readMoreLabel }
               viewsLabel={ viewsLabel }
               locale={ locale }
+              source="recent"
             />
           )) }
         </div>

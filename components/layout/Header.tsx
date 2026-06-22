@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { type AppLocale } from "@/i18n/routing";
 import { getLocalizedPath } from "@/i18n/locale-path";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 import { navLinks } from "@/lib/landing-data";
 import { getHomeSectionHash, getInternalHref } from "@/lib/internal-paths";
 import { CalendarCheckIcon, ChevronDown, Menu, X } from "lucide-react";
@@ -76,6 +77,7 @@ export default function Header() {
   const locale = useLocale() as AppLocale;
   const router = useRouter();
   const pathname = usePathname();
+  const track = useAnalyticsTracker();
   const [isAtTop, setIsAtTop] = useState(true);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -251,6 +253,11 @@ export default function Header() {
     if (locale === nextLocale) {
       return;
     }
+
+    track("language_switch", {
+      previous_locale: locale,
+      new_locale: nextLocale,
+    });
 
     const hash = window.location.hash;
     const targetPath = getLocalizedPath({

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 import type { PublicBlogCard } from "@/lib/public-blog-model";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 
 type BlogPostCardProps = {
   post: PublicBlogCard;
@@ -11,6 +12,7 @@ type BlogPostCardProps = {
   readMoreLabel: string;
   viewsLabel: string;
   locale: string;
+  source?: string;
 };
 
 const getFormattedDate = (isoDate: string | null, locale: string): string | null => {
@@ -36,16 +38,27 @@ export default function BlogPostCard({
                                       readMoreLabel,
                                       viewsLabel,
                                       locale,
+                                      source = "blog_list",
                                     }: BlogPostCardProps) {
+  const track = useAnalyticsTracker();
   const formattedDate = getFormattedDate(post.publishedDate, locale);
   const formattedViewCount = new Intl.NumberFormat(locale).format(post.viewCount);
   const isRemoteImage = post.coverImageUrl?.startsWith("http://") || post.coverImageUrl?.startsWith("https://");
+
+  const handleSelect = () => {
+    track("select_article", {
+      article_id: post.id,
+      article_slug: post.slug,
+      article_title: post.title,
+      source,
+    });
+  };
 
   return (
     <article
       className="flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-[0_12px_28px_-24px_rgba(0,0,0,0.9)] ring-1 ring-[#e3d8cc]">
       <div className="relative">
-        <a href={ postHref } className="group block">
+        <a href={ postHref } onClick={ handleSelect } className="group block">
           { post.coverImageUrl ? (
             <Image
               src={ post.coverImageUrl }
@@ -84,6 +97,7 @@ export default function BlogPostCard({
         <div className="mt-auto pt-5">
           <a
             href={ postHref }
+            onClick={ handleSelect }
             className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-[#c24343] transition-colors hover:text-[#2a221a]"
           >
             { readMoreLabel }

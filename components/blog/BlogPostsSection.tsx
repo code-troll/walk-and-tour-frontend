@@ -8,6 +8,7 @@ import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import BlogPostCard from "@/components/blog/BlogPostCard";
 import type { PublicBlogCard } from "@/lib/public-blog-model";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 import cn from "@meltdownjs/cn";
 
 type BlogPostsSectionProps = {
@@ -55,6 +56,7 @@ export default function BlogPostsSection({
                                           didFail,
                                         }: BlogPostsSectionProps) {
   const t = useTranslations("blogPage");
+  const track = useAnalyticsTracker();
   const searchParams = useSearchParams();
   const postBasePath = getPathname({locale, href: "/post"});
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
@@ -74,6 +76,11 @@ export default function BlogPostsSection({
   const hasMorePosts = visibleCount < filteredPosts.length;
 
   const toggleTag = (key: string) => {
+    track("blog_filter_applied", {
+      tag_key: key,
+      filter_selected: !selectedTagKeys.includes(key),
+    });
+
     setSelectedTagKeys((current) => {
       const next = current.includes(key)
         ? current.filter((k) => k !== key)

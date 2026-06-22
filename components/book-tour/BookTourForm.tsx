@@ -1,9 +1,11 @@
 "use client";
 
-import { useActionState, useEffect, useEffectEvent, useRef, useState, type ComponentType } from "react";
+import { useActionState, useCallback, useEffect, useEffectEvent, useRef, useState, type ComponentType } from "react";
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import { ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { normalizeTourType, type AnalyticsEventParams } from "@/lib/analytics/public";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 import { ES, GB, IT } from "country-flag-icons/react/3x2";
 import PhoneInput, { type Value } from "react-phone-number-input";
 import enPhoneLabels from "react-phone-number-input/locale/en.json";
@@ -87,6 +89,7 @@ export default function BookTourForm({
 }: BookTourFormProps) {
   const t = useTranslations("bookTourPage");
   const locale = useLocale();
+  const track = useAnalyticsTracker();
   const requestedTour = privateTourOptions.find((tour) => tour.id === initialSelectedItemId);
   const [phone, setPhone] = useState<Value | undefined>();
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -96,6 +99,7 @@ export default function BookTourForm({
   );
   const [state, formAction, isPending] = useActionState(submitBookTourForm, initialState);
   const formRef = useRef<HTMLFormElement>(null);
+  const trackedStateRef = useRef<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance | undefined>(undefined);
   const tourMenuRef = useRef<HTMLDivElement>(null);
   const languageMenuRef = useRef<HTMLDivElement>(null);
@@ -149,6 +153,18 @@ export default function BookTourForm({
           ? feedbackKeyByReason[state.reason].replace("bookTourPage.", "")
           : null;
   const isTourSelectorDisabled = bookingType === "otherTours";
+  const bookingSelectedItemId = isTourSelectorDisabled ? "" : selectedItemId;
+  const bookingSelectedItemLabel = isTourSelectorDisabled ? "" : selectedOption?.label ?? "";
+  const buildBookingParams = useCallback(
+    (): AnalyticsEventParams => ({
+      tour_type: normalizeTourType(bookingType),
+      tour_type_raw: bookingType,
+      selected_item_id: bookingSelectedItemId,
+      selected_item_label: bookingSelectedItemLabel,
+      tour_language: tourLanguage || "",
+    }),
+    [bookingType, bookingSelectedItemId, bookingSelectedItemLabel, tourLanguage],
+  );
   const isSubmitDisabled = isPending || (Boolean(turnstileSiteKey) && turnstileToken.length === 0);
   const fieldClassName =
     "mt-2 w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-[#2a221a] placeholder:text-[#b5a695] focus:border-[#2a221a] focus:outline-none";
@@ -190,6 +206,33 @@ export default function BookTourForm({
   }, [state]);
 
   useEffect(() => {
+    const trackingKey =
+      state.status === "success"
+        ? "success"
+        : state.status === "error"
+          ? `error:${ state.reason }`
+          : null;
+
+    if (!trackingKey || trackedStateRef.current === trackingKey) {
+      return;
+    }
+
+    trackedStateRef.current = trackingKey;
+
+    if (state.status === "success") {
+      track("book_tour_success", buildBookingParams());
+      return;
+    }
+
+    if (state.status === "error") {
+      track("book_tour_error", {
+        ...buildBookingParams(),
+        error_reason: state.reason,
+      });
+    }
+  }, [state, track, buildBookingParams]);
+
+  useEffect(() => {
     const onPointerDown = (event: MouseEvent) => {
       const target = event.target as Node;
 
@@ -220,15 +263,19 @@ export default function BookTourForm({
 
   return (
     <form ref={ formRef } action={ formAction }
+          onSubmit={ () => {
+            trackedStateRef.current = null;
+            track("book_tour_submit", buildBookingParams());
+          } }
           className="space-y-6 rounded-4xl bg-white p-3.5 min-[400px]:p-6 shadow-[0_24px_60px_rgba(42,34,26,0.08)] ring-1 ring-black/5">
       <input type="hidden" name="locale" value={ locale }/>
       <input type="hidden" name="bookingType" value={ bookingType }/>
       <input type="hidden" name="bookingTypeLabel" value={ t(`bookingTypes.${ bookingType }`) }/>
-      <input type="hidden" name="selectedItemId" value={ isTourSelectorDisabled ? "" : selectedItemId }/>
+      <input type="hidden" name="selectedItemId" value={ bookingSelectedItemId }/>
       <input
         type="hidden"
         name="selectedItemLabel"
-        value={ isTourSelectorDisabled ? "" : selectedOption?.label ?? "" }
+        value={ bookingSelectedItemLabel }
       />
       <input type="hidden" name="tourLanguageLabel" value={ selectedTourLanguageLabel }/>
 

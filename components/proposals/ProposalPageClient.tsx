@@ -102,6 +102,7 @@ export default function ProposalPageClient({proposalHash}: ProposalPageClientPro
         <ProposalVersionContent
           version={activeVersion}
           language={proposal.language}
+          proposalHash={proposalHash}
         />
       )}
 

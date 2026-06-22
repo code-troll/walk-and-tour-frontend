@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { LinkIcon } from "lucide-react";
 import Image from "next/image";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 
 type BlogPostShareLabels = {
   title: string;
@@ -17,6 +18,7 @@ type BlogPostShareLabels = {
 type BlogPostShareLinksProps = {
   title: string;
   shareUrl: string;
+  articleSlug: string;
   labels: BlogPostShareLabels;
 };
 
@@ -67,11 +69,21 @@ const fallbackCopyText = (value: string) => {
 export default function BlogPostShareLinks({
                                              title,
                                              shareUrl,
+                                             articleSlug,
                                              labels,
                                            }: BlogPostShareLinksProps) {
+  const track = useAnalyticsTracker();
   const [copied, setCopied] = useState(false);
   const [browserUrl, setBrowserUrl] = useState("");
   const resetCopiedTimeoutRef = useRef<number | null>(null);
+
+  const trackShare = (sharePlatform: string) => {
+    track("share_article", {
+      share_platform: sharePlatform,
+      article_slug: articleSlug,
+      article_title: title,
+    });
+  };
 
   useEffect(() => {
     setBrowserUrl(window.location.href);
@@ -146,6 +158,7 @@ export default function BlogPostShareLinks({
       }
 
       setCopied(true);
+      trackShare("copy_link");
       if (resetCopiedTimeoutRef.current !== null) {
         window.clearTimeout(resetCopiedTimeoutRef.current);
       }
@@ -163,6 +176,7 @@ export default function BlogPostShareLinks({
           href={ target.href }
           target="_blank"
           rel="noopener noreferrer"
+          onClick={ () => trackShare(target.id) }
           className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#3d3124] transition-colors hover:border-[#c24343] hover:text-[#c24343]"
         >
           { target.image }

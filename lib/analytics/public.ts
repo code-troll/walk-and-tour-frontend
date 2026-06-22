@@ -9,6 +9,29 @@ type AnalyticsPrimitive = string | number | boolean | null | undefined;
 
 export type AnalyticsEventParams = Record<string, AnalyticsPrimitive>;
 
+export type NormalizedTourType = "private" | "company" | "other";
+
+/**
+ * Maps every tour-type source the app uses onto a single analytics taxonomy.
+ * Accepts both the public tour model (`private` | `group` | `tip_based` |
+ * `company`) and the booking form (`privateTours` | `companyTours` |
+ * `otherTours`). Anything unrecognised falls back to "other".
+ */
+export const normalizeTourType = (
+  value: string | null | undefined,
+): NormalizedTourType => {
+  switch (value) {
+    case "private":
+    case "privateTours":
+      return "private";
+    case "company":
+    case "companyTours":
+      return "company";
+    default:
+      return "other";
+  }
+};
+
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;

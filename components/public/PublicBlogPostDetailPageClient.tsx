@@ -1,8 +1,9 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useTranslations} from "next-intl";
 import type {AppLocale} from "@/i18n/routing";
+import {useAnalyticsTracker} from "@/lib/analytics/use-analytics-tracker";
 import NotFound from "@/app/not-found";
 import Footer from "@/components/layout/Footer";
 import BlogPostArticle from "@/components/blog/BlogPostArticle";
@@ -28,6 +29,8 @@ export default function PublicBlogPostDetailPageClient({
 }: PublicBlogPostDetailPageClientProps) {
   const tBlogPost = useTranslations("blogPost");
   const tBlogPage = useTranslations("blogPage");
+  const track = useAnalyticsTracker();
+  const trackedSlugRef = useRef<string | null>(null);
   const [post, setPost] = useState<PublicBlogDetail | null>(null);
   const [recentPosts, setRecentPosts] = useState<PublicBlogCard[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -82,6 +85,21 @@ export default function PublicBlogPostDetailPageClient({
 
     descriptionTag.setAttribute("content", description);
   }, [post]);
+
+  useEffect(() => {
+    if (!post || trackedSlugRef.current === post.slug) {
+      return;
+    }
+
+    trackedSlugRef.current = post.slug;
+
+    track("view_article", {
+      article_id: post.id,
+      article_slug: post.slug,
+      article_title: post.title,
+      article_category: post.tagLabels[0]?.key ?? null,
+    });
+  }, [post, track]);
 
   if (isLoading) {
     return <PublicLoadingState label="Loading blog post..."/>;
@@ -148,6 +166,7 @@ export default function PublicBlogPostDetailPageClient({
               <BlogPostShareLinks
                 title={post.title}
                 shareUrl={shareUrl}
+                articleSlug={post.slug}
                 labels={{
                   title: tBlogPost("share"),
                   copyLink: tBlogPost("copyLink"),

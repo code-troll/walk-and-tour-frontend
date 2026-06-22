@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { trackAnalyticsEvent } from "@/lib/analytics/public";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 
 type NewsletterResultAnalyticsProps = {
   eventName: string;
@@ -13,6 +13,7 @@ export default function NewsletterResultAnalytics({
   reason,
 }: NewsletterResultAnalyticsProps) {
   const hasTrackedRef = useRef(false);
+  const track = useAnalyticsTracker();
 
   useEffect(() => {
     if (hasTrackedRef.current) {
@@ -21,10 +22,10 @@ export default function NewsletterResultAnalytics({
 
     hasTrackedRef.current = true;
 
-    trackAnalyticsEvent(eventName, {
+    track(eventName, {
       reason,
     });
-  }, [eventName, reason]);
+  }, [eventName, reason, track]);
 
   return null;
 }

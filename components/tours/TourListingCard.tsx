@@ -7,11 +7,14 @@ import { useLocale, useTranslations } from "next-intl";
 import { getPathname } from "@/i18n/navigation";
 import { type AppLocale } from "@/i18n/routing";
 import type { PublicTourCard } from "@/lib/public-tour-model";
+import { normalizeTourType } from "@/lib/analytics/public";
+import { useAnalyticsTracker } from "@/lib/analytics/use-analytics-tracker";
 
 type TourListingCardProps = {
   tour: PublicTourCard;
   isNewlyRevealed?: boolean;
   revealDelayMs?: number;
+  source?: string;
 };
 
 const StarIcon = () => (
@@ -28,11 +31,24 @@ export default function TourListingCard({
                                           tour,
                                           isNewlyRevealed = false,
                                           revealDelayMs = 0,
+                                          source = "catalog",
                                         }: TourListingCardProps) {
   const t = useTranslations("tours.card");
   const locale = useLocale() as AppLocale;
+  const track = useAnalyticsTracker();
   const bookHref = `${ getPathname({locale, href: "/tours"}) }/${ tour.slug }`;
   const isRemoteImage = tour.heroImageSrc.startsWith("http://") || tour.heroImageSrc.startsWith("https://");
+
+  const handleSelect = () => {
+    track("select_tour", {
+      tour_id: tour.id,
+      tour_slug: tour.slug,
+      tour_title: tour.title,
+      tour_type: normalizeTourType(tour.tourType),
+      tour_type_raw: tour.tourType,
+      source,
+    });
+  };
 
   return (
     <article
@@ -40,7 +56,7 @@ export default function TourListingCard({
       style={ isNewlyRevealed ? {animationDelay: `${ revealDelayMs }ms`} : undefined }
     >
       <div className="group relative overflow-hidden">
-        <a href={ bookHref }>
+        <a href={ bookHref } onClick={ handleSelect }>
           <Image
             src={ tour.heroImageSrc }
             alt={ tour.imageAlt }
@@ -78,6 +94,7 @@ export default function TourListingCard({
             </p>
             <a
               href={ bookHref }
+              onClick={ handleSelect }
               className="btn-red-black inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-colors"
             >
               { t("book") }
