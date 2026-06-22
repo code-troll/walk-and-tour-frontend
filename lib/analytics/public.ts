@@ -1,5 +1,5 @@
-export const GOOGLE_TAG_MANAGER_ID =
-  process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID?.trim() ?? "";
+export const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() ?? "";
 
 export const ANALYTICS_CONSENT_STORAGE_KEY = "walkandtour.analytics_consent";
 
@@ -34,12 +34,14 @@ export const normalizeTourType = (
 
 declare global {
   interface Window {
-    dataLayer?: Array<Record<string, unknown>>;
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
-export const isGoogleTagManagerConfigured = () =>
-  GOOGLE_TAG_MANAGER_ID.length > 0;
+let analyticsInitialized = false;
+
+export const isAnalyticsConfigured = () => GA_MEASUREMENT_ID.length > 0;
 
 export const readAnalyticsConsent = (): AnalyticsConsentState | null => {
   if (typeof window === "undefined") {
@@ -61,49 +63,63 @@ export const writeAnalyticsConsent = (value: AnalyticsConsentState) => {
   window.localStorage.setItem(ANALYTICS_CONSENT_STORAGE_KEY, value);
 };
 
-export const ensureDataLayer = () => {
+/**
+ * Ensures the gtag.js `dataLayer` + `gtag()` shim exist so events queue even
+ * before the external gtag.js library finishes loading. Uses the canonical
+ * Google shim that pushes the live `arguments` object.
+ */
+export const ensureGtag = () => {
   if (typeof window === "undefined") {
-    return [];
+    return undefined;
   }
 
   window.dataLayer = window.dataLayer ?? [];
 
-  return window.dataLayer;
-};
-
-export const initializeGoogleTagManagerDataLayer = () => {
-  const dataLayer = ensureDataLayer();
-  const hasBootstrapEvent = dataLayer.some(
-    (entry) => entry.event === "gtm.js",
-  );
-
-  if (!hasBootstrapEvent) {
-    dataLayer.push({
-      "gtm.start": Date.now(),
-      event: "gtm.js",
-    });
+  if (!window.gtag) {
+    window.gtag = function gtag() {
+      // gtag.js expects the raw `arguments` object pushed onto the dataLayer.
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer?.push(arguments);
+    };
   }
 
-  return dataLayer;
+  return window.gtag;
 };
 
-export const isAnalyticsTrackingEnabled = () =>
-  isGoogleTagManagerConfigured() && readAnalyticsConsent() === "granted";
-
-export const pushAnalyticsPayload = (payload: Record<string, unknown>) => {
-  if (!isAnalyticsTrackingEnabled()) {
+/**
+ * Bootstraps GA4 (`js` + `config`) exactly once. `send_page_view` is disabled
+ * because we emit `page_view` manually on every (SPA) route change; see
+ * PublicAnalytics. Must run before the first tracked event so the queued
+ * commands are ordered js → config → event.
+ */
+export const initializeAnalytics = () => {
+  if (analyticsInitialized || !isAnalyticsConfigured()) {
     return;
   }
 
-  ensureDataLayer().push(payload);
+  const gtag = ensureGtag();
+
+  if (!gtag) {
+    return;
+  }
+
+  analyticsInitialized = true;
+  gtag("js", new Date());
+  gtag("config", GA_MEASUREMENT_ID, {send_page_view: false});
 };
+
+export const isAnalyticsTrackingEnabled = () =>
+  isAnalyticsConfigured() && readAnalyticsConsent() === "granted";
 
 export const trackAnalyticsEvent = (
   eventName: string,
   params: AnalyticsEventParams = {},
 ) => {
-  pushAnalyticsPayload({
-    event: eventName,
-    ...params,
-  });
+  if (!isAnalyticsTrackingEnabled()) {
+    return;
+  }
+
+  const gtag = ensureGtag();
+
+  gtag?.("event", eventName, params);
 };
