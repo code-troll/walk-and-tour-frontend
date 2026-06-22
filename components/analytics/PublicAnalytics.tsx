@@ -8,16 +8,16 @@ import {usePathname} from "@/i18n/navigation";
 import {type AppLocale} from "@/i18n/routing";
 import {getInternalHref} from "@/lib/internal-paths";
 import {
-  GOOGLE_TAG_MANAGER_ID,
-  initializeGoogleTagManagerDataLayer,
+  GA_MEASUREMENT_ID,
+  initializeAnalytics,
   readAnalyticsConsent,
   type AnalyticsConsentState,
   writeAnalyticsConsent,
-  isGoogleTagManagerConfigured,
+  isAnalyticsConfigured,
 } from "@/lib/analytics/public";
 import {useAnalyticsTracker} from "@/lib/analytics/use-analytics-tracker";
 
-const GTM_LOADER_SCRIPT_ID = "google-tag-manager-loader";
+const GTAG_LOADER_SCRIPT_ID = "google-analytics-loader";
 
 function AnalyticsConsentBanner({
   locale,
@@ -82,7 +82,7 @@ export default function PublicAnalytics() {
   const track = useAnalyticsTracker();
   const [consent, setConsent] = useState<AnalyticsConsentState | null | "pending">("pending");
 
-  const isConfigured = isGoogleTagManagerConfigured();
+  const isConfigured = isAnalyticsConfigured();
   const isTrackingEnabled = isConfigured && consent === "granted";
 
   const pagePath = useMemo(
@@ -100,7 +100,7 @@ export default function PublicAnalytics() {
       const storedConsent = readAnalyticsConsent();
 
       if (storedConsent === "granted") {
-        initializeGoogleTagManagerDataLayer();
+        initializeAnalytics();
       }
 
       setConsent(storedConsent);
@@ -127,7 +127,7 @@ export default function PublicAnalytics() {
     writeAnalyticsConsent(value);
 
     if (value === "granted") {
-      initializeGoogleTagManagerDataLayer();
+      initializeAnalytics();
     }
 
     setConsent(value);
@@ -141,8 +141,8 @@ export default function PublicAnalytics() {
     <>
       {isTrackingEnabled ? (
         <Script
-          id={ GTM_LOADER_SCRIPT_ID }
-          src={ `https://www.googletagmanager.com/gtm.js?id=${ GOOGLE_TAG_MANAGER_ID }` }
+          id={ GTAG_LOADER_SCRIPT_ID }
+          src={ `https://www.googletagmanager.com/gtag/js?id=${ GA_MEASUREMENT_ID }` }
           strategy="afterInteractive"
         />
       ) : null}
