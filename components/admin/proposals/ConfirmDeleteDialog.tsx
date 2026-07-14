@@ -28,11 +28,12 @@ export function ConfirmDeleteDialog({open, onOpenChange, onConfirm, proposalName
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" className="h-10" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
           <Button
             variant="destructive"
+            className="h-10"
             onClick={() => {
               onConfirm();
               onOpenChange(false);

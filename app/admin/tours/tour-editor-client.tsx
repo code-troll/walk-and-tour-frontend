@@ -2102,7 +2102,7 @@ export function TourEditorClient({
               variant="outline"
               onClick={ () => setPendingNavigation(null) }
               disabled={ isMutating }
-              className="border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]"
+              className="h-10 border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]"
             >
               Stay
             </Button>
@@ -2110,14 +2110,14 @@ export function TourEditorClient({
               variant="outline"
               onClick={ handleDiscardAndContinue }
               disabled={ isMutating }
-              className="border-[#e8c7c1] bg-white text-[#a3483f] hover:bg-[#fbf2f0]"
+              className="h-10 border-[#e8c7c1] bg-white text-[#a3483f] hover:bg-[#fbf2f0]"
             >
               Discard
             </Button>
             <Button
               onClick={ () => void handleSaveAndContinue() }
               disabled={ isMutating }
-              className="border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]"
+              className="h-10 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]"
             >
               Save
             </Button>

@@ -12,6 +12,11 @@
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.9",
     "@auth0/nextjs-auth0": "^4.16.0",
+    "@fullcalendar/daygrid": "^6.1.21",
+    "@fullcalendar/interaction": "^6.1.21",
+    "@fullcalendar/luxon3": "^6.1.21",
+    "@fullcalendar/react": "^6.1.21",
+    "@fullcalendar/timegrid": "^6.1.21",
     "@marsidev/react-turnstile": "^1.4.2",
     "@meltdownjs/cn": "^1.2.1",
     "@tanem/react-nprogress": "^6.0.3",
@@ -23,6 +28,7 @@
     "country-flag-icons": "^1.6.15",
     "liquidjs": "^10.25.0",
     "lucide-react": "^0.577.0",
+    "luxon": "^3.7.2",
     "next": "16.1.6",
     "next-intl": "^4.8.3",
     "openapi-fetch": "^0.17.0",
@@ -39,6 +45,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/luxon": "^3.7.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

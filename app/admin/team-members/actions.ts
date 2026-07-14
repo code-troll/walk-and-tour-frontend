@@ -10,6 +10,11 @@ import type {
   UpdateTeamMemberBody,
   UpdateTeamMemberTranslationBody,
 } from "@/lib/team-members/admin-team-member-types";
+import type {
+  ApiAvailability,
+  CreateRecurringUnavailabilityBody,
+  CreateUnavailableDateBody,
+} from "@/lib/team-members/admin-availability-types";
 
 type TeamMemberActionError = {
   ok: false;
@@ -26,8 +31,14 @@ type TeamMemberDeleteSuccess = {
   ok: true;
 };
 
+type AvailabilityActionSuccess = {
+  ok: true;
+  availability: ApiAvailability;
+};
+
 export type TeamMemberActionResult = TeamMemberActionSuccess | TeamMemberActionError;
 export type TeamMemberDeleteResult = TeamMemberDeleteSuccess | TeamMemberActionError;
+export type AvailabilityActionResult = AvailabilityActionSuccess | TeamMemberActionError;
 
 const getAdminContext = async (): Promise<
   | {ok: true; accessToken: string; backendApiBaseUrl: string}
@@ -251,5 +262,101 @@ export async function deleteTeamMemberTranslationAction({
     return {ok: true};
   } catch (error) {
     return toActionError(error, "Unable to delete the translation.");
+  }
+}
+
+// ── Availability ─────────────────────────────────────────────────
+
+export async function addUnavailableDateAction({
+  id,
+  body,
+}: {
+  id: string;
+  body: CreateUnavailableDateBody;
+}): Promise<AvailabilityActionResult> {
+  const ctx = await getAdminContext();
+  if (!ctx.ok) return ctx;
+
+  try {
+    const availability = await teamMemberFetch<ApiAvailability>(
+      `/${id}/availability/dates`,
+      "POST",
+      ctx.accessToken,
+      ctx.backendApiBaseUrl,
+      body,
+    );
+    return {ok: true, availability};
+  } catch (error) {
+    return toActionError(error, "Unable to add the unavailable date.");
+  }
+}
+
+export async function removeUnavailableDateAction({
+  id,
+  dateId,
+}: {
+  id: string;
+  dateId: string;
+}): Promise<TeamMemberDeleteResult> {
+  const ctx = await getAdminContext();
+  if (!ctx.ok) return ctx;
+
+  try {
+    await teamMemberFetch<void>(
+      `/${id}/availability/dates/${dateId}`,
+      "DELETE",
+      ctx.accessToken,
+      ctx.backendApiBaseUrl,
+    );
+    return {ok: true};
+  } catch (error) {
+    return toActionError(error, "Unable to remove the unavailable date.");
+  }
+}
+
+export async function addRecurringUnavailabilityAction({
+  id,
+  body,
+}: {
+  id: string;
+  body: CreateRecurringUnavailabilityBody;
+}): Promise<AvailabilityActionResult> {
+  const ctx = await getAdminContext();
+  if (!ctx.ok) return ctx;
+
+  try {
+    const availability = await teamMemberFetch<ApiAvailability>(
+      `/${id}/availability/recurring`,
+      "POST",
+      ctx.accessToken,
+      ctx.backendApiBaseUrl,
+      body,
+    );
+    return {ok: true, availability};
+  } catch (error) {
+    return toActionError(error, "Unable to add the recurring unavailability.");
+  }
+}
+
+export async function removeRecurringUnavailabilityAction({
+  id,
+  ruleId,
+}: {
+  id: string;
+  ruleId: string;
+}): Promise<TeamMemberDeleteResult> {
+  const ctx = await getAdminContext();
+  if (!ctx.ok) return ctx;
+
+  try {
+    await teamMemberFetch<void>(
+      `/${id}/availability/recurring/${ruleId}`,
+      "DELETE",
+      ctx.accessToken,
+      ctx.backendApiBaseUrl,
+    );
+    return {ok: true};
+  } catch (error) {
+    return toActionError(error, "Unable to remove the recurring unavailability.");
   }
 }

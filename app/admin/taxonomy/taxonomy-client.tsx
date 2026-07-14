@@ -505,7 +505,7 @@ export function TaxonomyClient({
               <Button
                 onClick={() => openTagDialog()}
                 variant="outline"
-                className="mt-4"
+                className="h-10 mt-4"
                 disabled={createTagLocales.length === 0 || isMutating}
               >
                 <Plus className="size-4" />
@@ -578,7 +578,7 @@ export function TaxonomyClient({
               <div className="py-12 text-center text-muted-foreground">
                 <Globe className="mx-auto size-12 opacity-30" />
                 <p className="mt-4">No locales configured yet.</p>
-                <Button onClick={() => openLanguageDialog()} variant="outline" className="mt-4">
+                <Button onClick={() => openLanguageDialog()} variant="outline" className="h-10 mt-4">
                   <Plus className="size-4" />
                   Add your first locale
                 </Button>
@@ -665,6 +665,7 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Tag Key</FieldLabel>
               <Input
+                className="h-10"
                 placeholder="e.g., adventure"
                 value={tagForm.key}
                 pattern={TAG_KEY_PATTERN}
@@ -693,6 +694,7 @@ export function TaxonomyClient({
                       {locale.code}
                     </span>
                     <Input
+                      className="h-10"
                       placeholder={`Label in ${ locale.name }`}
                       value={tagForm.labels[locale.code] ?? ""}
                       maxLength={TAG_LABEL_MAX_LENGTH}
@@ -718,10 +720,10 @@ export function TaxonomyClient({
             ) : null}
           </FieldGroup>
           <DialogFooter>
-            <Button variant="outline" onClick={closeTagDialog} disabled={isMutating}>
+            <Button variant="outline" className="h-10" onClick={closeTagDialog} disabled={isMutating}>
               Cancel
             </Button>
-            <Button onClick={saveTag} disabled={isMutating || visibleTagLocales.length === 0}>
+            <Button className="h-10" onClick={saveTag} disabled={isMutating || visibleTagLocales.length === 0}>
               <Check className="size-4" />
               {editingTag ? "Save Changes" : "Create Tag"}
             </Button>
@@ -746,6 +748,7 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Code</FieldLabel>
               <Input
+                className="h-10"
                 placeholder="e.g., en, es, fr"
                 value={languageForm.code}
                 pattern={LANGUAGE_CODE_PATTERN}
@@ -763,6 +766,7 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Name</FieldLabel>
               <Input
+                className="h-10"
                 placeholder="e.g., English, Spanish"
                 value={languageForm.name}
                 maxLength={LANGUAGE_NAME_MAX_LENGTH}
@@ -780,6 +784,7 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Sort Order</FieldLabel>
               <Input
+                className="h-10"
                 type="number"
                 min={0}
                 step={1}
@@ -813,10 +818,10 @@ export function TaxonomyClient({
             ) : null}
           </FieldGroup>
           <DialogFooter>
-            <Button variant="outline" onClick={closeLanguageDialog} disabled={isMutating}>
+            <Button variant="outline" className="h-10" onClick={closeLanguageDialog} disabled={isMutating}>
               Cancel
             </Button>
-            <Button onClick={saveLanguage} disabled={isMutating}>
+            <Button className="h-10" onClick={saveLanguage} disabled={isMutating}>
               <Check className="size-4" />
               {editingLanguage ? "Save Changes" : "Create Locale"}
             </Button>

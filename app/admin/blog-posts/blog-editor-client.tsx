@@ -80,7 +80,7 @@ import {
 const textareaClassName =
   "min-h-28 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20";
 const selectClassName =
-  "h-11 rounded-lg border border-input bg-background px-3 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20";
+  "h-10 rounded-lg border border-input bg-background px-3 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20";
 const fieldLabelClassName = "text-sm font-medium text-foreground";
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 const viewCountFormatter = new Intl.NumberFormat("en-US");
@@ -966,7 +966,7 @@ export function BlogPostEditorClient({
                 type="button"
                 onClick={ saveShared }
                 disabled={ isMutating }
-                className="gap-2"
+                className="h-10 gap-2"
               >
                 { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Check className="size-4"/> }
                 Save Shared
@@ -999,7 +999,7 @@ export function BlogPostEditorClient({
           title="Shared Details"
           description="The shared record defines the admin-facing name and tags."
           actions={
-            <Button type="button" onClick={ saveShared } disabled={ isMutating } variant="outline" className="gap-2">
+            <Button type="button" onClick={ saveShared } disabled={ isMutating } variant="outline" className="h-10 gap-2">
               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
               Save
             </Button>
@@ -1012,7 +1012,7 @@ export function BlogPostEditorClient({
               value={ formState.name }
               onChange={ (event) => updateSharedField("name", event.target.value) }
               placeholder="Barcelona Historic Center SEO Article"
-              className="h-11"
+              className="h-10"
             />
           </div>
 
@@ -1071,13 +1071,13 @@ export function BlogPostEditorClient({
             isCreated ? (
               <>
                 <Button type="button" onClick={ () => void openMediaDialog("cover") } disabled={ isMutating }
-                        className="gap-2">
+                        className="h-10 gap-2">
                   <Upload className="size-4"/>
                   Upload or Select
                 </Button>
                 { savedBlogPost?.heroMedia ? (
                   <Button type="button" variant="outline" onClick={ clearCoverImage } disabled={ isMutating }
-                          className="gap-2 text-destructive hover:text-destructive">
+                          className="h-10 gap-2 text-destructive hover:text-destructive">
                     <X className="size-4"/>
                     Clear
                   </Button>
@@ -1146,7 +1146,7 @@ export function BlogPostEditorClient({
                   )) }
                 </select>
                 <Button type="button" onClick={ addTranslation } disabled={ isMutating || !selectedLanguageToAdd }
-                        className="gap-2">
+                        className="h-10 gap-2">
                   <Plus className="size-4"/>
                   Add Locale
                 </Button>
@@ -1270,13 +1270,13 @@ export function BlogPostEditorClient({
                               variant="outline"
                               onClick={ () => setIsPreviewDialogOpen(true) }
                               disabled={ isMutating }
-                              className="gap-2"
+                              className="h-10 gap-2"
                             >
                               <Eye className="size-4"/>
                               Preview
                             </Button>
                             <Button type="button" variant="outline" onClick={ saveTranslation } disabled={ isMutating }
-                                    className="gap-2">
+                                    className="h-10 gap-2">
                               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
                               Save Translation
                             </Button>
@@ -1284,7 +1284,7 @@ export function BlogPostEditorClient({
                               type="button"
                               onClick={ togglePublishTranslation }
                               disabled={ isMutating }
-                              className="gap-2"
+                              className="h-10 gap-2"
                             >
                               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Globe className="size-4"/> }
                               { activeTranslation.isPublished ? "Unpublish" : "Publish" }
@@ -1294,7 +1294,7 @@ export function BlogPostEditorClient({
                               variant="outline"
                               onClick={ () => setPendingDeleteLanguageCode(activeTranslation.languageCode) }
                               disabled={ isMutating }
-                              className="gap-2 text-destructive hover:text-destructive"
+                              className="h-10 gap-2 text-destructive hover:text-destructive"
                             >
                               <Trash2 className="size-4"/>
                               Delete
@@ -1310,7 +1310,7 @@ export function BlogPostEditorClient({
                               value={ activeTranslation.title }
                               onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "title", event.target.value) }
                               placeholder="Barcelona Historic Center Guide"
-                              className="h-11"
+                              className="h-10"
                             />
                           </div>
 
@@ -1321,7 +1321,7 @@ export function BlogPostEditorClient({
                               value={ activeTranslation.slug }
                               onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "slug", event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")) }
                               placeholder={ generatedSlug || "blog-post-slug" }
-                              className="h-11 font-mono"
+                              className="h-10 font-mono"
                             />
                             { !activeTranslation.slug && generatedSlug ? (
                               <p className="text-xs text-muted-foreground">Will use: <span
@@ -1360,7 +1360,7 @@ export function BlogPostEditorClient({
                               value={ activeTranslation.seoTitle }
                               onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "seoTitle", event.target.value) }
                               placeholder="Historic Center Guide | Walk and Tour"
-                              className="h-11"
+                              className="h-10"
                             />
                           </div>
 
@@ -1399,10 +1399,10 @@ export function BlogPostEditorClient({
                 value={ mediaSearchInput }
                 onChange={ (event) => setMediaSearchInput(event.target.value) }
                 placeholder="Search media library"
-                className="h-11 pl-9"
+                className="h-10 pl-9"
               />
             </div>
-            <Button type="button" variant="outline" onClick={ () => void handleMediaSearch() }
+            <Button type="button" variant="outline" className="h-10" onClick={ () => void handleMediaSearch() }
                     disabled={ isLoadingMediaLibrary }>
               Search
             </Button>
@@ -1415,7 +1415,7 @@ export function BlogPostEditorClient({
               onChange={ (event) => void handleMediaUpload(event.target.files) }
             />
             <Button type="button" onClick={ () => fileInputRef.current?.click() } disabled={ isUploadingMedia }
-                    className="gap-2">
+                    className="h-10 gap-2">
               { isUploadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : <Upload className="size-4"/> }
               Upload
             </Button>
@@ -1481,6 +1481,7 @@ export function BlogPostEditorClient({
               <Button
                 type="button"
                 variant="outline"
+                className="h-10"
                 onClick={ () => void loadMediaPage({
                   append: true,
                   page: mediaLibraryPage + 1,
@@ -1495,10 +1496,10 @@ export function BlogPostEditorClient({
           ) : null }
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={ () => setIsMediaDialogOpen(false) }>
+            <Button type="button" variant="outline" className="h-10" onClick={ () => setIsMediaDialogOpen(false) }>
               Cancel
             </Button>
-            <Button type="button" onClick={ () => void confirmSelectedMedia() }
+            <Button type="button" className="h-10" onClick={ () => void confirmSelectedMedia() }
                     disabled={ !selectedMediaAsset || isMutating || isUploadingMedia }>
               { mediaDialogMode === "cover" ? "Use as Cover" : "Insert Image" }
             </Button>
@@ -1569,6 +1570,7 @@ export function BlogPostEditorClient({
             <Button
               type="button"
               variant="outline"
+              className="h-10"
               onClick={ () => setPendingDeleteLanguageCode(null) }
               disabled={ isMutating }
             >
@@ -1577,6 +1579,7 @@ export function BlogPostEditorClient({
             <Button
               type="button"
               variant="destructive"
+              className="h-10"
               onClick={ () => pendingDeleteLanguageCode ? void removeTranslation(pendingDeleteLanguageCode) : undefined }
               disabled={ isMutating || !pendingDeleteLanguageCode }
             >

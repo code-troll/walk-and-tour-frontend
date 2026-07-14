@@ -155,7 +155,7 @@ export function AdminProposalsListClient() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name or email..."
-            className="w-full rounded-xl border border-[#eadfce] bg-white py-2.5 pl-9 pr-9 text-sm text-[#21343b] placeholder:text-[#9a8d7e]"
+            className="h-10 w-full rounded-xl border border-[#eadfce] bg-white py-2.5 pl-9 pr-9 text-sm text-[#21343b] placeholder:text-[#9a8d7e]"
           />
           {searchQuery && (
             <button

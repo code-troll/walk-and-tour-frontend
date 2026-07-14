@@ -665,7 +665,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                 onClick={handleRequestSend}
                 disabled={isSending || !proposal.recipientEmail}
                 variant="outline"
-                className="inline-flex items-center gap-2"
+                className="h-10 inline-flex items-center gap-2"
                 title={!proposal.recipientEmail ? "Add a recipient email first" : "Send proposal link via email"}
               >
                 {isSending ? <LoaderCircle className="h-4 w-4 animate-spin"/> : <Mail className="h-4 w-4"/>}
@@ -678,8 +678,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
               variant={proposal.publicationStatus === "published" ? "outline" : "default"}
               className={
                 proposal.publicationStatus === "published"
-                  ? "inline-flex items-center gap-2 border-[#e8c7c1] text-[#a3483f] hover:bg-[#fbf2f0]"
-                  : "inline-flex items-center gap-2 bg-[#2f6b3f] hover:bg-[#265832]"
+                  ? "h-10 inline-flex items-center gap-2 border-[#e8c7c1] text-[#a3483f] hover:bg-[#fbf2f0]"
+                  : "h-10 inline-flex items-center gap-2 bg-[#2f6b3f] hover:bg-[#265832]"
               }
             >
               {proposal.publicationStatus === "published" ? "Unpublish" : "Publish"}
@@ -729,34 +729,34 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className="mb-1 block text-sm font-semibold text-[#21343b]">Proposal Name</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Rome Highlights Private Tour"/>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Rome Highlights Private Tour"/>
             <p className="mt-1 text-xs text-[#9a8d7e]">General name shown as the main title of the proposal in the public page.</p>
           </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-[#21343b]">Language</label>
-            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
+            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
               {LANGUAGES.map((l) => (<option key={l.code} value={l.code}>{l.name} ({l.code})</option>))}
             </select>
           </div>
           {!isNew && (
             <div>
               <label className="mb-1 block text-sm font-semibold text-[#21343b]">Acceptance</label>
-              <select value={acceptanceStatus} onChange={(e) => setAcceptanceStatus(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
+              <select value={acceptanceStatus} onChange={(e) => setAcceptanceStatus(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
                 {ACCEPTANCE_STATUSES.map((s) => (<option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>))}
               </select>
             </div>
           )}
           <div>
             <label className="mb-1 block text-sm font-semibold text-[#21343b]">Recipient Name</label>
-            <input type="text" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="John Doe"/>
+            <input type="text" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="John Doe"/>
           </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-[#21343b]">Recipient Email</label>
-            <input type="email" value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="john@example.com"/>
+            <input type="email" value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="john@example.com"/>
           </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-[#21343b]">Expires At</label>
-            <input type="datetime-local" value={expiresAt} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setExpiresAt(e.target.value)} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+            <input type="datetime-local" value={expiresAt} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setExpiresAt(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
           </div>
           <div className="sm:col-span-2">
             <label className="mb-1 block text-sm font-semibold text-[#21343b]">Admin Notes</label>
@@ -846,11 +846,11 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                 <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"/>
                 <Input value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} placeholder="Search by filename or path" className="h-10 pl-9"/>
               </div>
-              <Button type="submit" variant="outline" disabled={isLoadingMedia || isUploadingMedia}>
+              <Button type="submit" variant="outline" className="h-10" disabled={isLoadingMedia || isUploadingMedia}>
                 {isLoadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : <Search className="size-4"/>}
                 Search
               </Button>
-              <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
+              <Button type="button" variant="outline" className="h-10" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
                 {isUploadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : <Upload className="size-4"/>}
                 Upload
               </Button>
@@ -913,7 +913,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
             {mediaLibraryItems.length < mediaLibraryTotal && (
               <div className="flex justify-center">
-                <Button type="button" variant="outline" onClick={() => void loadMediaPage({page: mediaLibraryPage + 1, search: appliedMediaSearch, append: true})} disabled={isLoadingMedia}>
+                <Button type="button" variant="outline" className="h-10" onClick={() => void loadMediaPage({page: mediaLibraryPage + 1, search: appliedMediaSearch, append: true})} disabled={isLoadingMedia}>
                   {isLoadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : null}
                   Load more
                 </Button>
@@ -922,8 +922,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
-            <Button type="button" onClick={() => void handleAttachSelectedImage()} disabled={!selectedMediaId || selectedMediaId === attachedMediaId || isLoadingMedia}>
+            <Button type="button" variant="outline" className="h-10" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
+            <Button type="button" className="h-10" onClick={() => void handleAttachSelectedImage()} disabled={!selectedMediaId || selectedMediaId === attachedMediaId || isLoadingMedia}>
               Use selected image
             </Button>
           </DialogFooter>
@@ -998,23 +998,23 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">Title</label>
-                        <input type="text" value={versionForm.title} onChange={(e) => setVersionForm({...versionForm, title: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Classic Walking Tour"/>
+                        <input type="text" value={versionForm.title} onChange={(e) => setVersionForm({...versionForm, title: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Classic Walking Tour"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">Tour Date &amp; Time</label>
-                        <input type="datetime-local" value={versionForm.tourDate} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setVersionForm({...versionForm, tourDate: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+                        <input type="datetime-local" value={versionForm.tourDate} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setVersionForm({...versionForm, tourDate: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">Duration (minutes)</label>
-                        <input type="number" min="0" value={versionForm.durationMinutes} onChange={(e) => setVersionForm({...versionForm, durationMinutes: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="180"/>
+                        <input type="number" min="0" value={versionForm.durationMinutes} onChange={(e) => setVersionForm({...versionForm, durationMinutes: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="180"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">Price Amount</label>
-                        <input type="number" step="0.01" min="0" value={versionForm.priceAmount} onChange={(e) => setVersionForm({...versionForm, priceAmount: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+                        <input type="number" step="0.01" min="0" value={versionForm.priceAmount} onChange={(e) => setVersionForm({...versionForm, priceAmount: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">Currency</label>
-                        <select value={versionForm.priceCurrency} onChange={(e) => setVersionForm({...versionForm, priceCurrency: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
+                        <select value={versionForm.priceCurrency} onChange={(e) => setVersionForm({...versionForm, priceCurrency: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
                           <option value="EUR">EUR</option>
                           <option value="DKK">DKK</option>
                         </select>
@@ -1041,15 +1041,15 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">Start Point Label</label>
-                        <input type="text" value={versionForm.startPointLabel} onChange={(e) => setVersionForm({...versionForm, startPointLabel: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Placa Catalunya"/>
+                        <input type="text" value={versionForm.startPointLabel} onChange={(e) => setVersionForm({...versionForm, startPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Placa Catalunya"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">End Point Label</label>
-                        <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="La Sagrada Familia"/>
+                        <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="La Sagrada Familia"/>
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[#21343b]">Stripe Payment Link <span className="font-normal text-[#9a8d7e]">(optional)</span></label>
-                        <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="https://buy.stripe.com/..."/>
+                        <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="https://buy.stripe.com/..."/>
                       </div>
                     </div>
                     {versionFormErrors.length > 0 && (
@@ -1083,7 +1083,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
               setEditingLocalId(newLocalId);
               setVersionForm(newForm);
             }}
-            className="inline-flex items-center gap-2"
+            className="h-10 inline-flex items-center gap-2"
           >
             <Plus className="h-4 w-4"/>Add Proposal
           </Button>
@@ -1092,7 +1092,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
       {/* Save All */}
       <div className="flex justify-end">
-        <Button onClick={() => void handleSaveAll()} disabled={isSaving} className="inline-flex items-center gap-2">
+        <Button onClick={() => void handleSaveAll()} disabled={isSaving} className="h-10 inline-flex items-center gap-2">
           {isSaving ? <LoaderCircle className="h-4 w-4 animate-spin"/> : <Save className="h-4 w-4"/>}
           {isNew ? "Create Proposal" : "Save All Changes"}
         </Button>
@@ -1107,7 +1107,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button onClick={() => setSentDialogEmail(null)}>OK</Button>
+            <Button className="h-10" onClick={() => setSentDialogEmail(null)}>OK</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1122,8 +1122,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteVersionTarget(null)}>Cancel</Button>
-            <Button variant="destructive" onClick={() => void handleConfirmDeleteVersion()}>Delete</Button>
+            <Button variant="outline" className="h-10" onClick={() => setDeleteVersionTarget(null)}>Cancel</Button>
+            <Button variant="destructive" className="h-10" onClick={() => void handleConfirmDeleteVersion()}>Delete</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1142,8 +1142,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowSendConfirm(false)}>Cancel</Button>
-            <Button onClick={() => void handleConfirmSend()}>Send</Button>
+            <Button variant="outline" className="h-10" onClick={() => setShowSendConfirm(false)}>Cancel</Button>
+            <Button className="h-10" onClick={() => void handleConfirmSend()}>Send</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
