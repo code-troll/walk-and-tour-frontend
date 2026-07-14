@@ -88,7 +88,7 @@ export default function TeamMembersListClient() {
         title="Team Members"
         description="Manage team members shown on the About Us page. Each member can have a photo, LinkedIn profile, and localized name and role."
         actions={
-          <Button asChild>
+          <Button asChild className="h-10">
             <AdminProgressLink href="/team-members/new">
               <Plus className="size-4" />
               Create Team Member
@@ -99,7 +99,7 @@ export default function TeamMembersListClient() {
         {members.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No team members have been created yet.</p>
-            <Button asChild className="mt-4">
+            <Button asChild className="h-10 mt-4">
               <AdminProgressLink href="/team-members/new">
                 <Plus className="size-4" />
                 Create your first team member

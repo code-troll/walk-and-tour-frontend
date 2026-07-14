@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import {AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {AvailabilityEditor} from "@/components/admin/team-members/AvailabilityEditor";
 import {Button} from "@/components/ui/button";
 import {
   Dialog,
@@ -314,7 +315,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
   if (initialLoadError) {
     return (
       <AdminNoticeCard eyebrow="Admin API" title="The team member editor could not be loaded." description={initialLoadError}
-        actions={<Button asChild variant="outline"><AdminProgressLink href="/team-members">Back to list</AdminProgressLink></Button>}
+        actions={<Button asChild variant="outline" className="h-10"><AdminProgressLink href="/team-members">Back to list</AdminProgressLink></Button>}
       />
     );
   }
@@ -352,7 +353,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
           <div>
             <label className={fieldLabelClassName}>Name *</label>
-            <Input value={formState.name} onChange={(e) => setFormState((prev) => ({...prev, name: e.target.value}))} placeholder="Team member name" className="mt-1.5" disabled={isMutating} />
+            <Input value={formState.name} onChange={(e) => setFormState((prev) => ({...prev, name: e.target.value}))} placeholder="Team member name" className="h-10 mt-1.5" disabled={isMutating} />
           </div>
 
           {/* Photo picker inline */}
@@ -366,7 +367,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                   No photo
                 </div>
               )}
-              <Button variant="outline" type="button" onClick={openMediaDialog} disabled={isMutating}>
+              <Button variant="outline" type="button" className="h-10" onClick={openMediaDialog} disabled={isMutating}>
                 <Search className="size-4" /> {effectivePhotoMediaId ? "Change Photo" : "Select Photo"}
               </Button>
             </div>
@@ -375,23 +376,23 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           <div className="grid gap-5 lg:grid-cols-2">
             <div>
               <label className={fieldLabelClassName}>Image Alt Text</label>
-              <Input value={formState.imageAlt} onChange={(e) => setFormState((prev) => ({...prev, imageAlt: e.target.value}))} placeholder="Photo of..." className="mt-1.5" disabled={isMutating} />
+              <Input value={formState.imageAlt} onChange={(e) => setFormState((prev) => ({...prev, imageAlt: e.target.value}))} placeholder="Photo of..." className="h-10 mt-1.5" disabled={isMutating} />
             </div>
             <div>
               <label className={fieldLabelClassName}>LinkedIn URL</label>
-              <Input type="url" placeholder="https://linkedin.com/in/..." value={formState.linkedinUrl} onChange={(e) => setFormState((prev) => ({...prev, linkedinUrl: e.target.value}))} className="mt-1.5" disabled={isMutating} />
+              <Input type="url" placeholder="https://linkedin.com/in/..." value={formState.linkedinUrl} onChange={(e) => setFormState((prev) => ({...prev, linkedinUrl: e.target.value}))} className="h-10 mt-1.5" disabled={isMutating} />
             </div>
           </div>
 
           {isCreated && (
             <div>
               <label className={fieldLabelClassName}>Display Order</label>
-              <Input type="number" min={0} value={formState.orderIndex} onChange={(e) => setFormState((prev) => ({...prev, orderIndex: parseInt(e.target.value, 10) || 0}))} className="mt-1.5" disabled={isMutating} />
+              <Input type="number" min={0} value={formState.orderIndex} onChange={(e) => setFormState((prev) => ({...prev, orderIndex: parseInt(e.target.value, 10) || 0}))} className="h-10 mt-1.5" disabled={isMutating} />
             </div>
           )}
 
           <div className="flex justify-end">
-            <Button onClick={() => void handleSave()} disabled={isMutating || !canSave}>
+            <Button className="h-10" onClick={() => void handleSave()} disabled={isMutating || !canSave}>
               {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
               {isCreated ? "Save Changes" : "Create Team Member"}
             </Button>
@@ -426,7 +427,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                 <select value={selectedLanguageToAdd} onChange={(e) => setLanguageToAdd(e.target.value)} className="h-10 rounded-lg border border-input bg-background px-3 text-sm">
                   {remainingLanguages.map((l) => <option key={l.code} value={l.code}>{l.name}</option>)}
                 </select>
-                <Button variant="outline" size="sm" onClick={handleAddTranslation}><Plus className="size-4" /> Add</Button>
+                <Button variant="outline" className="h-10" onClick={handleAddTranslation}><Plus className="size-4" /> Add</Button>
               </div>
             )}
 
@@ -435,6 +436,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                 <div>
                   <label className={fieldLabelClassName}>Role / Title</label>
                   <Input
+                    className="h-10"
                     value={activeTranslation.role}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -448,7 +450,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                   <Button variant="outline" size="sm" onClick={() => setPendingDeleteLanguageCode(activeTranslation.languageCode)} disabled={isMutating} className="text-[#a3483f]">
                     <Trash2 className="size-4" /> Delete Translation
                   </Button>
-                  <Button onClick={() => void handleSaveTranslation()} disabled={isMutating}>
+                  <Button className="h-10" onClick={() => void handleSaveTranslation()} disabled={isMutating}>
                     {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
                     {activeTranslation.existsOnServer ? "Save Translation" : "Create Translation"}
                   </Button>
@@ -456,6 +458,16 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
               </div>
             )}
           </div>
+        </AdminSectionCard>
+      )}
+
+      {/* Availability */}
+      {isCreated && savedMember && (
+        <AdminSectionCard
+          title="Availability"
+          description="Block dates and recurring weekly times when this member cannot guide."
+        >
+          <AvailabilityEditor memberId={savedMember.id} />
         </AdminSectionCard>
       )}
 
@@ -478,10 +490,10 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <DialogDescription>Choose an image from the media library or upload a new one.</DialogDescription>
           </DialogHeader>
           <div className="flex items-center gap-2">
-            <Input placeholder="Search media..." value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleMediaSearch()} />
-            <Button variant="outline" onClick={handleMediaSearch}><Search className="size-4" /></Button>
+            <Input className="h-10" placeholder="Search media..." value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleMediaSearch()} />
+            <Button variant="outline" className="h-10" onClick={handleMediaSearch}><Search className="size-4" /></Button>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => void handleMediaUpload(e)} />
-            <Button variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
+            <Button variant="outline" className="h-10" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
               {isUploadingMedia ? <LoaderCircle className="size-4 animate-spin" /> : <Upload className="size-4" />} Upload
             </Button>
           </div>
@@ -501,8 +513,8 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <button type="button" onClick={() => void loadMediaLibrary(mediaLibraryPage + 1, appliedMediaSearch)} className="w-full rounded-lg border border-dashed border-border py-2 text-sm text-muted-foreground hover:border-[#cbb390]">Load more</button>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleConfirmMediaSelection} disabled={!dialogSelectedMediaId}>
+            <Button variant="outline" className="h-10" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
+            <Button className="h-10" onClick={handleConfirmMediaSelection} disabled={!dialogSelectedMediaId}>
               <Check className="size-4" /> Select
             </Button>
           </DialogFooter>
@@ -517,8 +529,8 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <DialogDescription>Are you sure you want to delete the &quot;{pendingDeleteLanguageCode}&quot; translation? This action cannot be undone.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setPendingDeleteLanguageCode(null)}>Cancel</Button>
-            <Button className="bg-[#a3483f] text-white hover:bg-[#8a3d36]" onClick={() => pendingDeleteLanguageCode && void handleDeleteTranslation(pendingDeleteLanguageCode)} disabled={isMutating}>
+            <Button variant="outline" className="h-10" onClick={() => setPendingDeleteLanguageCode(null)}>Cancel</Button>
+            <Button className="h-10 bg-[#a3483f] text-white hover:bg-[#8a3d36]" onClick={() => pendingDeleteLanguageCode && void handleDeleteTranslation(pendingDeleteLanguageCode)} disabled={isMutating}>
               <Trash2 className="size-4" /> Delete
             </Button>
           </DialogFooter>
@@ -533,8 +545,8 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <DialogDescription>Are you sure you want to permanently delete this team member and all its translations? This action cannot be undone.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsConfirmingDelete(false)}>Cancel</Button>
-            <Button className="bg-[#a3483f] text-white hover:bg-[#8a3d36]" onClick={() => void handleDeleteMember()} disabled={isMutating}>
+            <Button variant="outline" className="h-10" onClick={() => setIsConfirmingDelete(false)}>Cancel</Button>
+            <Button className="h-10 bg-[#a3483f] text-white hover:bg-[#8a3d36]" onClick={() => void handleDeleteMember()} disabled={isMutating}>
               {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Trash2 className="size-4" />} Delete
             </Button>
           </DialogFooter>

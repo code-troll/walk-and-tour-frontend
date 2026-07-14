@@ -5,6 +5,66 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Admin events calendar — hover behaviour for time-grid event blocks.
+ * FullCalendar pins the harness with inline `top`/`bottom` and makes the event box
+ * `position:absolute; inset:0`, so an absolutely-positioned box can never grow the
+ * harness. On hover we put the box back in flow and release the harness' bottom pin
+ * (real CSS `!important` overrides FullCalendar's inline styles) so the block grows
+ * to fit its full content, rising above and highlighted over its neighbours.
+ * Tailwind arbitrary-property utilities can't emit these overrides, hence plain CSS.
+ */
+.admin-calendar {
+  /* Lets `height: auto` animate on hover in supporting browsers; harmless elsewhere. */
+  interpolate-size: allow-keywords;
+}
+.admin-calendar .fc-event {
+  cursor: pointer;
+}
+.admin-calendar .fc-timegrid-event {
+  overflow: hidden;
+  /* Transparent outline so its colour can fade in on hover. Highlight props are safe
+     to transition on the base (FullCalendar never sets them during layout). */
+  outline: 2px solid transparent;
+  transition:
+    box-shadow 0.16s ease,
+    outline-color 0.16s ease,
+    filter 0.16s ease;
+}
+.admin-calendar .fc-event:hover {
+  filter: brightness(1.04);
+}
+.admin-calendar .fc-timegrid-event-harness:hover {
+  height: auto !important;
+  bottom: auto !important;
+  /* FullCalendar places overlapping events with inline `left`/`right` percentages;
+     collapse them so a hovered block spans the full day column width. */
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 30 !important;
+  /* Transition lives on :hover only, so the block eases OPEN on hover-in but the
+     geometry (also set inline by FullCalendar on every re-layout) never animates
+     during navigation/data loads — it just snaps back on hover-out. */
+  transition:
+    left 0.18s ease,
+    right 0.18s ease,
+    top 0.18s ease,
+    bottom 0.18s ease,
+    height 0.18s ease;
+}
+.admin-calendar .fc-timegrid-event-harness:hover > .fc-timegrid-event {
+  position: relative !important;
+  overflow: visible;
+  box-shadow: 0 12px 22px -8px rgba(33, 52, 59, 0.45);
+  outline-color: rgba(33, 52, 59, 0.25);
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-calendar .fc-timegrid-event,
+  .admin-calendar .fc-timegrid-event-harness:hover {
+    transition: none;
+  }
+}
+
 :root {
   --muted: oklch(0.97 0 0);
   --border: oklch(0.922 0 0);
