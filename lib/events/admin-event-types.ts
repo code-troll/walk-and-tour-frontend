@@ -211,6 +211,19 @@ export const createEventFormStateFromApi = (event: ApiEvent): EventFormState => 
     : emptyRecurrence(),
 });
 
+/** Shared client-side guard for the event form; returns the first problem or null. */
+export const validateEventForm = (state: EventFormState): string | null => {
+  if (!state.language) return "Select a language.";
+  if (!state.startDate) return "Set a start date and time.";
+  if (state.durationMinutes < 1) return "Duration must be at least 1 minute.";
+  if (state.frequency === "recurring") {
+    if (state.recurrence.freq === "weekly" && state.recurrence.byDay.length === 0) {
+      return "Select at least one weekday for the weekly schedule.";
+    }
+  }
+  return null;
+};
+
 /** Treats an "empty" rich-text document as no description. */
 const cleanHtml = (html: string): string => {
   const trimmed = html.trim();

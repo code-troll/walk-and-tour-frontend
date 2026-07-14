@@ -22,6 +22,7 @@ import type {ReactNode} from "react";
 export default function CalendarSurface({
   events,
   timeZone,
+  height = "75vh",
   onDatesSet,
   onEventClick,
   onDateClick,
@@ -29,6 +30,7 @@ export default function CalendarSurface({
 }: {
   events: EventInput[];
   timeZone: string;
+  height?: string | number;
   onDatesSet: (arg: DatesSetArg) => void;
   onEventClick: (arg: EventClickArg) => void;
   onDateClick: (arg: DateClickArg) => void;
@@ -53,7 +55,7 @@ export default function CalendarSurface({
       timeZone={timeZone}
       firstDay={1}
       nowIndicator
-      height="75vh"
+      height={height}
       events={events}
       datesSet={onDatesSet}
       eventClick={onEventClick}
