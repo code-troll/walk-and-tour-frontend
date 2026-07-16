@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useState} from "react";
-import {CalendarDays, Ban, Pencil, Plus, Trash2} from "lucide-react";
+import {CalendarDays, Ban, Pencil, Plus, Table, Trash2} from "lucide-react";
 import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {Button} from "@/components/ui/button";
@@ -141,6 +141,12 @@ export default function EventsListClient() {
         description="Manage scheduled walks and tours. Recurring events generate candidate dates you confirm on the calendar."
         actions={
           <div className="flex items-center gap-3">
+            <Button asChild variant="outline" className="h-10">
+              <AdminProgressLink href="/events/schedule">
+                <Table className="size-4" />
+                Schedule
+              </AdminProgressLink>
+            </Button>
             <Button asChild variant="outline" className="h-10">
               <AdminProgressLink href="/events/calendar">
                 <CalendarDays className="size-4" />
