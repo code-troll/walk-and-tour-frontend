@@ -5,7 +5,7 @@ import {createPortal} from "react-dom";
 import dynamic from "next/dynamic";
 import type {DatesSetArg, EventClickArg, EventContentArg, EventInput} from "@fullcalendar/core";
 import type {DateClickArg} from "@fullcalendar/interaction";
-import {ArrowLeft, LoaderCircle, Maximize2, Minimize2, StickyNote, Users} from "lucide-react";
+import {ArrowLeft, LoaderCircle, Maximize2, Minimize2, StickyNote, Table, Users} from "lucide-react";
 import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminSectionCard} from "@/components/admin/AdminUi";
 import {LanguageFlag} from "@/components/admin/LanguageFlag";
@@ -545,12 +545,20 @@ export default function EventsCalendarClient() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <Button asChild variant="ghost" size="sm">
-          <AdminProgressLink href="/events">
-            <ArrowLeft className="size-4" />
-            Back to events
-          </AdminProgressLink>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button asChild variant="ghost" size="sm">
+            <AdminProgressLink href="/events">
+              <ArrowLeft className="size-4" />
+              Back to events
+            </AdminProgressLink>
+          </Button>
+          <Button asChild variant="outline" size="sm" className="h-10 gap-2">
+            <AdminProgressLink href="/events/schedule">
+              <Table className="size-4" />
+              Schedule
+            </AdminProgressLink>
+          </Button>
+        </div>
         {controls}
       </div>
 
