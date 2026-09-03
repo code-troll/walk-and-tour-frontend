@@ -18,6 +18,7 @@ const navigationByRole = {
   super_admin: [
     {href: "/", label: "Overview"},
     {href: "/users", label: "Users"},
+    {href: "/hotels", label: "Hotels"},
     {href: "/taxonomy", label: "Taxonomy"},
     {href: "/tours", label: "Tours"},
     {href: "/events", label: "Events"},

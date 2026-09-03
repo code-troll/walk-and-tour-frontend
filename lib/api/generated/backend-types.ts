@@ -1551,6 +1551,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/hotels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List hotels
+         * @description Returns registered hotels ordered by name, with the number of tours each one may currently sell.
+         */
+        get: operations["HotelsController_findAll"];
+        put?: never;
+        /**
+         * Register a hotel
+         * @description Creates a hotel. Tours are granted separately through `PUT /api/admin/hotels/{id}/tours`.
+         */
+        post: operations["HotelsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotels/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a hotel
+         * @description Returns one hotel with the tours it may currently sell.
+         */
+        get: operations["HotelsController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update a hotel
+         * @description Updates hotel details or its lifecycle status.
+         */
+        patch: operations["HotelsController_update"];
+        trace?: never;
+    };
+    "/api/admin/hotels/{id}/tours": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Replace the tours a hotel may sell
+         * @description Sets the complete list of granted tours. Grants that remain keep their original grant date, tours that drop out are revoked rather than deleted, and revoked grants stay on record.
+         */
+        put: operations["HotelsController_setTours"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3677,6 +3745,230 @@ export interface components {
             teamMemberIds?: string[];
             /** @description Free-text note specific to this date. Set `null` to clear it. */
             note?: string | null;
+        };
+        HotelAuditResponseDto: {
+            /**
+             * Format: uuid
+             * @description Identifier of the admin user that created the hotel.
+             */
+            createdBy?: string | null;
+            /**
+             * Format: uuid
+             * @description Identifier of the admin user that last updated the hotel.
+             */
+            updatedBy?: string | null;
+            /**
+             * Format: date-time
+             * @description Creation timestamp.
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp.
+             */
+            updatedAt: string;
+        };
+        HotelSummaryResponseDto: {
+            /**
+             * Format: uuid
+             * @description Hotel identifier.
+             */
+            id: string;
+            /**
+             * @description Hotel name.
+             * @example Copenhagen Admiral Hotel
+             */
+            name: string;
+            /**
+             * @description Street address of the hotel.
+             * @example Toldbodgade 24-28, 1253 Kobenhavn K
+             */
+            address: string;
+            /**
+             * @description Contact telephone number.
+             * @example +45 33 74 14 14
+             */
+            phone: string;
+            /**
+             * @description Contact email address for the hotel.
+             * @example reception@example.com
+             */
+            email: string;
+            /**
+             * @description Danish company registration number, stored as eight digits.
+             * @example 12345678
+             */
+            cvr: string;
+            /**
+             * @description Lifecycle status of the hotel account.
+             * @example active
+             * @enum {string}
+             */
+            status: "active" | "disabled";
+            /**
+             * @description Number of tours this hotel may currently sell.
+             * @example 3
+             */
+            tourCount: number;
+            audit: components["schemas"]["HotelAuditResponseDto"];
+        };
+        HotelListResponseDto: {
+            /** @description Paginated hotel records ordered by name. */
+            items: components["schemas"]["HotelSummaryResponseDto"][];
+            /**
+             * @description 1-based page number.
+             * @example 1
+             */
+            page: number;
+            /**
+             * @description Page size used for the response.
+             * @example 25
+             */
+            limit: number;
+            /**
+             * @description Total number of matching records before pagination.
+             * @example 12
+             */
+            total: number;
+        };
+        HotelTourGrantResponseDto: {
+            /**
+             * Format: uuid
+             * @description Identifier of the granted tour.
+             */
+            tourId: string;
+            /**
+             * @description Non-localized tour name, for admin-side identification.
+             * @example Copenhagen Historic Center Free Tour
+             */
+            tourName: string;
+            /**
+             * Format: date-time
+             * @description When the tour was granted to this hotel.
+             */
+            grantedAt: string;
+            /**
+             * Format: uuid
+             * @description Identifier of the admin user that granted the tour.
+             */
+            grantedBy?: string | null;
+        };
+        HotelResponseDto: {
+            /**
+             * Format: uuid
+             * @description Hotel identifier.
+             */
+            id: string;
+            /**
+             * @description Hotel name.
+             * @example Copenhagen Admiral Hotel
+             */
+            name: string;
+            /**
+             * @description Street address of the hotel.
+             * @example Toldbodgade 24-28, 1253 Kobenhavn K
+             */
+            address: string;
+            /**
+             * @description Contact telephone number.
+             * @example +45 33 74 14 14
+             */
+            phone: string;
+            /**
+             * @description Contact email address for the hotel, separate from the sign-in address of its access user.
+             * @example reception@example.com
+             */
+            email: string;
+            /**
+             * @description Danish company registration number, stored as eight digits.
+             * @example 12345678
+             */
+            cvr: string;
+            /**
+             * @description Lifecycle status of the hotel account.
+             * @example active
+             * @enum {string}
+             */
+            status: "active" | "disabled";
+            /** @description Tours this hotel may currently sell. Revoked grants are not listed. */
+            tours: components["schemas"]["HotelTourGrantResponseDto"][];
+            audit: components["schemas"]["HotelAuditResponseDto"];
+        };
+        CreateHotelDto: {
+            /**
+             * @description Hotel name, as it should appear in the backoffice.
+             * @example Copenhagen Admiral Hotel
+             */
+            name: string;
+            /**
+             * @description Street address of the hotel.
+             * @example Toldbodgade 24-28, 1253 København K
+             */
+            address: string;
+            /**
+             * @description Contact telephone number.
+             * @example +45 33 74 14 14
+             */
+            phone: string;
+            /**
+             * @description Contact email address for the hotel. This is not the sign-in address of the hotel access user, which is registered separately.
+             * @example reception@example.com
+             */
+            email: string;
+            /**
+             * @description Danish company registration number. Spaces and a leading `DK` are accepted and removed before storing.
+             * @example 12345678
+             */
+            cvr: string;
+            /**
+             * @description Initial status. Defaults to `active` when omitted.
+             * @default active
+             * @example active
+             * @enum {string}
+             */
+            status: "active" | "disabled";
+        };
+        UpdateHotelDto: {
+            /**
+             * @description Hotel name, as it should appear in the backoffice.
+             * @example Copenhagen Admiral Hotel
+             */
+            name?: string;
+            /**
+             * @description Street address of the hotel.
+             * @example Toldbodgade 24-28, 1253 København K
+             */
+            address?: string;
+            /**
+             * @description Contact telephone number.
+             * @example +45 33 74 14 14
+             */
+            phone?: string;
+            /**
+             * @description Contact email address for the hotel.
+             * @example reception@example.com
+             */
+            email?: string;
+            /**
+             * @description Danish company registration number. Spaces and a leading `DK` are accepted and removed before storing.
+             * @example 12345678
+             */
+            cvr?: string;
+            /**
+             * @description Lifecycle status of the hotel account.
+             * @example disabled
+             * @enum {string}
+             */
+            status?: "active" | "disabled";
+        };
+        SetHotelToursDto: {
+            /**
+             * @description The complete set of tours this hotel may sell. Tours missing from the list have their grant revoked, tours already granted are left untouched, and the rest are granted.
+             * @example [
+             *       "0f7b8a2c-5d3e-4a1b-9c8d-2e4f6a8b0c1d"
+             *     ]
+             */
+            tourIds: string[];
         };
         AuditMetadataDto: {
             /**
@@ -8763,6 +9055,288 @@ export interface operations {
                     "application/json": components["schemas"]["ErrorResponseDto"];
                 };
             };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Case-insensitive partial match against the hotel name or CVR number. */
+                search?: string;
+                /** @description Restrict the results to one lifecycle status. */
+                status?: "active" | "disabled";
+                /** @description One-based page number. */
+                page?: number;
+                /** @description Page size. */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated hotels. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelListResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateHotelDto"];
+            };
+        };
+        responses: {
+            /** @description Created hotel. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Another hotel is already registered with this CVR number. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Hotel record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateHotelDto"];
+            };
+        };
+        responses: {
+            /** @description Updated hotel. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Another hotel is already registered with this CVR number. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_setTours: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetHotelToursDto"];
+            };
+        };
+        responses: {
+            /** @description Hotel with its updated grants. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description The hotel or one of the requested tours was not found. */
             404: {
                 headers: {
                     [name: string]: unknown;
