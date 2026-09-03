@@ -33,7 +33,7 @@ export default function BlogInlineTourCard({
     let cancelled = false;
 
     fetchJson<components["schemas"]["PublicTourResponseDto"] | null>({
-      input: `/api/internal/public/api/public/tours/${encodeURIComponent(slug)}?locale=${locale}`,
+      input: `/api/internal/public/tours/${encodeURIComponent(slug)}?locale=${locale}`,
       fallbackMessage: "Unable to load tour card.",
       notFoundFallback: null,
     })

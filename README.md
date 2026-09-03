@@ -336,6 +336,41 @@ BACKEND_AUTH0_AUDIENCE=https://api.dev.walkandtour.dk/api
 APP_BASE_URL=http://dev.walkandtour.dk:3000,http://admin.dev.walkandtour.dk:3000
 ```
 
+## Backend API Contract
+
+The typed API clients are generated from `openapi/backend.yaml`, which is a copy of `docs/backend.yaml`
+in the backend repository. Refresh both with:
+
+```bash
+npm run sync:backend-api
+```
+
+That copies the backend contract and regenerates `lib/api/generated/backend-types.ts`. It assumes the
+backend repository sits next to this one; point `BACKEND_REPO_PATH` at it otherwise:
+
+```bash
+BACKEND_REPO_PATH=../some/other/walk-and-tour-backend npm run sync:backend-api
+```
+
+Run it after any backend change that touches the API contract, and remember that the backend only
+exports controllers listed in its `src/swagger/openapi-export.module.ts`.
+
+## Internal API Proxies
+
+Browser code never calls the backend directly. It calls same-origin routes under `app/api/internal/`,
+which attach any server-held credentials and forward the request:
+
+| Route | Backend prefix | Authentication |
+| --- | --- | --- |
+| `/api/internal/public/*` | `/api/public/` | none |
+| `/api/internal/admin/*` | `/api/admin/` | Auth0 bearer token added server-side |
+
+Each proxy is locked to its own backend prefix, and every path segment is validated before the URL is
+built (`lib/api/internal/backend-path.ts`). A request whose segments fall outside the characters the
+backend routes use, or that would resolve outside the proxy's prefix, is rejected with `400` instead
+of being forwarded. Keep the prefix out of the caller's path: use `/api/internal/public/tours`, not
+`/api/internal/public/api/public/tours`.
+
 ## Build
 
 Run a production build with:

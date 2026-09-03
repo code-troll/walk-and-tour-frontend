@@ -6,7 +6,7 @@ import type {PublicTeamMember} from "@/lib/team-members/admin-team-member-types"
 
 export const listPublicTeamMembersClient = async ({locale}: {locale: AppLocale}): Promise<PublicTeamMember[]> => {
   const members = await fetchJson<PublicTeamMember[]>({
-    input: `/api/internal/public/api/public/team-members?locale=${locale}`,
+    input: `/api/internal/public/team-members?locale=${locale}`,
     fallbackMessage: "Unable to load team members.",
   });
 

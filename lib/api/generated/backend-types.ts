@@ -624,6 +624,173 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/proposals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List proposals with optional filters */
+        get: operations["ProposalsController_findAll"];
+        put?: never;
+        /** Create a proposal */
+        post: operations["ProposalsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/proposals/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get a proposal by UUID */
+        get: operations["ProposalsController_findOne"];
+        put?: never;
+        post?: never;
+        /** Delete a proposal */
+        delete: operations["ProposalsController_remove"];
+        options?: never;
+        head?: never;
+        /** Update a proposal */
+        patch: operations["ProposalsController_update"];
+        trace?: never;
+    };
+    "/api/admin/proposals/{id}/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Send proposal link to recipient
+         * @description Sends an email with the proposal link to the recipient. The proposal must be published (status "sent") and have a recipient email.
+         */
+        post: operations["ProposalsController_sendToRecipient"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/proposals/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a version to a proposal */
+        post: operations["ProposalsController_createVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/proposals/{id}/versions/{versionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a proposal version */
+        delete: operations["ProposalsController_removeVersion"];
+        options?: never;
+        head?: never;
+        /** Update a proposal version */
+        patch: operations["ProposalsController_updateVersion"];
+        trace?: never;
+    };
+    "/api/admin/proposals/{id}/media": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Attach media to a proposal */
+        post: operations["ProposalsController_attachMedia"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/proposals/{id}/media/{rowId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Detach media from a proposal */
+        delete: operations["ProposalsController_detachMedia"];
+        options?: never;
+        head?: never;
+        /** Update proposal media metadata */
+        patch: operations["ProposalsController_updateMedia"];
+        trace?: never;
+    };
+    "/api/public/proposals/{hash}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a public proposal by hash
+         * @description Returns the proposal with all versions and media only when the proposal status is "sent" and it has not expired.
+         */
+        get: operations["PublicProposalsController_findByHash"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/proposals/{hash}/media/{mediaId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Fetch public proposal media
+         * @description Streams one media asset attached to a publicly available proposal.
+         */
+        get: operations["PublicProposalsController_getMediaContent"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/admin/tags": {
         parameters: {
             query?: never;
@@ -936,6 +1103,454 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/team-members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List team members for admin management
+         * @description Returns all team members with translations and audit metadata, ordered by display index.
+         */
+        get: operations["TeamMembersController_findAllAdmin"];
+        put?: never;
+        /**
+         * Create a team member
+         * @description Creates a new team member. Translations and photo are added through nested routes.
+         */
+        post: operations["TeamMembersController_createAdmin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/available": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List team members available for an occurrence
+         * @description Returns team members who are available for the window [date, date + durationMinutes]. Intended to populate the guide picker so unavailable members are excluded.
+         */
+        get: operations["TeamMembersController_listAvailableMembers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get a team member by UUID
+         * @description Returns the full admin representation of a single team member.
+         */
+        get: operations["TeamMembersController_findOneAdmin"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete a team member
+         * @description Deletes a team member and all its translations.
+         */
+        delete: operations["TeamMembersController_removeAdmin"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a team member
+         * @description Updates shared team member fields (order, LinkedIn, publication status).
+         */
+        patch: operations["TeamMembersController_updateAdmin"];
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/photo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Set team member photo
+         * @description Attaches or replaces the photo media on the team member.
+         */
+        post: operations["TeamMembersController_setPhoto"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/translations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create a team member translation
+         * @description Creates one localized translation for a team member.
+         */
+        post: operations["TeamMembersController_createTranslation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/translations/{languageCode}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a team member translation
+         * @description Deletes one localized translation by locale code.
+         */
+        delete: operations["TeamMembersController_deleteTranslation"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a team member translation
+         * @description Updates one localized translation for a team member.
+         */
+        patch: operations["TeamMembersController_updateTranslation"];
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List team member availability
+         * @description Returns the team member unavailable date ranges and recurring weekly rules.
+         */
+        get: operations["TeamMembersController_listAvailability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/availability/dates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add an unavailable date range
+         * @description Marks a specific calendar date range (inclusive) as unavailable.
+         */
+        post: operations["TeamMembersController_addUnavailableDate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/availability/dates/{dateId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove an unavailable date range */
+        delete: operations["TeamMembersController_removeUnavailableDate"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/availability/recurring": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add a recurring weekly unavailability
+         * @description Marks a recurring weekly window (or whole weekday) as unavailable.
+         */
+        post: operations["TeamMembersController_addRecurringUnavailability"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/team-members/{id}/availability/recurring/{ruleId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove a recurring weekly unavailability */
+        delete: operations["TeamMembersController_removeRecurringUnavailability"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/public/team-members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List published team members by locale
+         * @description Returns all published team members ordered by display index. The role is resolved from the translation for the requested locale, or null when no translation exists.
+         */
+        get: operations["TeamMembersController_findAllPublic"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List events
+         * @description Returns all events with their confirmed occurrences.
+         */
+        get: operations["EventsController_findAllAdmin"];
+        put?: never;
+        /**
+         * Create an event
+         * @description Creates a single or recurring event template.
+         */
+        post: operations["EventsController_createAdmin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/events/calendar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Calendar feed across all events
+         * @description Expands and merges occurrences for every event within [from, to], each item carrying its parent event context. Unconfirmed candidate dates are only emitted for active events.
+         */
+        get: operations["EventsController_listCalendar"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/events/day-notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List day notes in a window
+         * @description Returns free-text day notes whose date falls within [from, to].
+         */
+        get: operations["EventsController_listDayNotes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/events/day-notes/{date}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Create or replace a day note
+         * @description Upserts the note for a single calendar date (YYYY-MM-DD).
+         */
+        put: operations["EventsController_upsertDayNote"];
+        post?: never;
+        /**
+         * Delete a day note
+         * @description Removes the note for a single calendar date (YYYY-MM-DD).
+         */
+        delete: operations["EventsController_removeDayNote"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/events/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get an event by UUID */
+        get: operations["EventsController_findOneAdmin"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an event
+         * @description Deletes an event and all its confirmed occurrences.
+         */
+        delete: operations["EventsController_removeAdmin"];
+        options?: never;
+        head?: never;
+        /** Update an event */
+        patch: operations["EventsController_updateAdmin"];
+        trace?: never;
+    };
+    "/api/admin/events/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel an event
+         * @description Sets the event status to `cancelled`.
+         */
+        post: operations["EventsController_cancelAdmin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/events/{id}/occurrences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List occurrences in a window
+         * @description Expands candidate dates from the event schedule within [from, to] and merges them with confirmed occurrences. Each item is flagged unconfirmed, confirmed, or cancelled.
+         */
+        get: operations["EventsController_listOccurrences"];
+        put?: never;
+        /**
+         * Confirm an occurrence
+         * @description Confirms a scheduled date, assigning guide(s) and an optional note. Rejected if an assigned guide is unavailable on that date.
+         */
+        post: operations["EventsController_confirmOccurrence"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/events/{id}/occurrences/{occurrenceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete a confirmed occurrence
+         * @description Deletes the occurrence, reverting the date to an unconfirmed candidate.
+         */
+        delete: operations["EventsController_removeOccurrence"];
+        options?: never;
+        head?: never;
+        /**
+         * Update a confirmed occurrence
+         * @description Changes the assigned guide(s) and/or note. Re-validates availability.
+         */
+        patch: operations["EventsController_updateOccurrence"];
+        trace?: never;
+    };
+    "/api/admin/events/{id}/occurrences/{occurrenceId}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel a confirmed occurrence
+         * @description Sets the occurrence status to `cancelled`.
+         */
+        post: operations["EventsController_cancelOccurrence"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1144,7 +1759,7 @@ export interface components {
              * @description Mapped Auth0 subject, if already linked.
              * @example auth0|abc123
              */
-            auth0UserId?: Record<string, never> | null;
+            auth0UserId?: string | null;
             /**
              * @description Normalized admin email address.
              * @example admin@example.com
@@ -1219,7 +1834,7 @@ export interface components {
              * @description Updated Auth0 subject. Set `null` to unlink the current identity.
              * @example auth0|abc123
              */
-            auth0UserId?: Record<string, never> | null;
+            auth0UserId?: string | null;
             /**
              * @description Updated lifecycle status.
              * @example disabled
@@ -1314,12 +1929,12 @@ export interface components {
              * Format: uuid
              * @description UUID of the admin that originally created the record.
              */
-            createdBy?: Record<string, never> | null;
+            createdBy?: string | null;
             /**
              * Format: uuid
              * @description UUID of the admin that most recently updated the record.
              */
-            updatedBy?: Record<string, never> | null;
+            updatedBy?: string | null;
             /**
              * Format: date-time
              * @description Creation timestamp.
@@ -1351,16 +1966,16 @@ export interface components {
              * Format: uuid
              * @description Optional hero media asset UUID.
              */
-            heroMediaId?: Record<string, never> | null;
+            heroMediaId?: string | null;
             /** @description Resolved hero media asset. */
             heroMedia?: components["schemas"]["MediaAssetResponseDto"] | null;
-            /** @description Ordered tag keys assigned to the post. */
-            tagKeys: string[];
             /**
-             * @description Tag key shown on the public blog card. When null, the first tag is used.
+             * @description Tag key shown on the public blog post card. When null, the first tag is used.
              * @example history
              */
             cardTagKey?: string | null;
+            /** @description Ordered tag keys assigned to the post. */
+            tagKeys: string[];
             /** @description Expanded tag records. */
             tags: components["schemas"]["TagResponseDto"][];
             /** @description Localized translations keyed by locale code. */
@@ -1401,7 +2016,10 @@ export interface components {
              *     ]
              */
             tagKeys?: string[];
-            /** @description Tag key to display on the public blog card. Set null to clear. */
+            /**
+             * @description Tag key to display on the public blog post card. Set `null` to clear (first tag is used).
+             * @example history
+             */
             cardTagKey?: string | null;
         };
         CreateBlogPostTranslationDto: {
@@ -1410,7 +2028,10 @@ export interface components {
              * @example en
              */
             languageCode: string;
-            /** @description Public slug for this translation. */
+            /**
+             * @description Public slug for this translation.
+             * @example barcelona-historic-center-guide
+             */
             slug: string;
             /**
              * @description Localized title.
@@ -1446,7 +2067,10 @@ export interface components {
             imageRefs?: string[];
         };
         UpdateBlogPostTranslationDto: {
-            /** @description Updated public slug for this translation. */
+            /**
+             * @description Updated public slug.
+             * @example barcelona-historic-center-guide
+             */
             slug?: string;
             /**
              * @description Updated localized title.
@@ -1457,7 +2081,7 @@ export interface components {
              * @description Updated localized summary or excerpt. Set `null` to clear it.
              * @example A walking guide to the historic center of Barcelona.
              */
-            summary?: Record<string, never> | null;
+            summary?: string | null;
             /**
              * @description Updated localized HTML body.
              * @example <p>Walk through centuries of history.</p>
@@ -1467,12 +2091,12 @@ export interface components {
              * @description Updated SEO title override. Set `null` to clear it.
              * @example Historic Center Guide | Walk and Tour
              */
-            seoTitle?: Record<string, never> | null;
+            seoTitle?: string | null;
             /**
              * @description Updated SEO meta description override. Set `null` to clear it.
              * @example Discover the best historic landmarks in Barcelona.
              */
-            seoDescription?: Record<string, never> | null;
+            seoDescription?: string | null;
             /**
              * @description Replacement localized image references. Omit to keep the current list.
              * @example [
@@ -1502,7 +2126,7 @@ export interface components {
              * @description Localized tag label for the requested locale, or `null` if the label is missing.
              * @example History
              */
-            label?: Record<string, never> | null;
+            label?: string | null;
         };
         PublicBlogTranslationResponseDto: {
             /**
@@ -1516,13 +2140,13 @@ export interface components {
              */
             title: string;
             /** @description Published localized summary. */
-            summary?: Record<string, never> | null;
+            summary?: string | null;
             /** @description Published localized HTML body. */
             htmlContent: string;
             /** @description SEO title override. */
-            seoTitle?: Record<string, never> | null;
+            seoTitle?: string | null;
             /** @description SEO description override. */
-            seoDescription?: Record<string, never> | null;
+            seoDescription?: string | null;
             /** @description Published localized image references. */
             imageRefs: string[];
             /**
@@ -1545,7 +2169,7 @@ export interface components {
             /** @description Resolved hero media asset. */
             heroMedia?: components["schemas"]["MediaAssetResponseDto"] | null;
             /**
-             * @description Tag key shown on the public blog card. When null, the first tag is used.
+             * @description Tag key selected for the public blog post card. When null, the first tag is used.
              * @example history
              */
             cardTagKey?: string | null;
@@ -1716,7 +2340,7 @@ export interface components {
              * @description Optional preferred locale retained for the subscriber.
              * @example en
              */
-            preferredLocale?: Record<string, never> | null;
+            preferredLocale?: string | null;
             /**
              * Format: date-time
              * @description Timestamp at which consent was captured for this subscription attempt.
@@ -1786,12 +2410,12 @@ export interface components {
              * @description Optional preferred locale captured during subscription.
              * @example en
              */
-            preferredLocale?: Record<string, never> | null;
+            preferredLocale?: string | null;
             /**
              * @description Optional consent source identifier, such as `footer_form`.
              * @example footer_form
              */
-            consentSource?: Record<string, never> | null;
+            consentSource?: string | null;
             /**
              * @description Stored source metadata captured during subscription.
              * @example {
@@ -1846,6 +2470,227 @@ export interface components {
              * @example 50
              */
             limit: number;
+        };
+        CreateProposalDto: {
+            /**
+             * @description General name of the proposal (used as its display name in the frontend).
+             * @example Rome Highlights Private Tour
+             */
+            name?: string;
+            /**
+             * @description Language code for the proposal content.
+             * @example en
+             */
+            language: string;
+            /**
+             * @description Name of the proposal recipient.
+             * @example John Doe
+             */
+            recipientName?: string;
+            /**
+             * @description Email of the proposal recipient.
+             * @example john@example.com
+             */
+            recipientEmail?: string;
+            /**
+             * @description Expiration date and time for the proposal (ISO 8601).
+             * @example 2026-05-01T23:59:59.000Z
+             */
+            expiresAt?: string;
+            /** @description Internal admin notes about this proposal. */
+            notes?: string;
+        };
+        UpdateProposalDto: {
+            /**
+             * @description General name of the proposal (used as its display name in the frontend).
+             * @example Rome Highlights Private Tour
+             */
+            name?: string;
+            /**
+             * @description Language code for the proposal content.
+             * @example en
+             */
+            language?: string;
+            /**
+             * @description Name of the proposal recipient.
+             * @example John Doe
+             */
+            recipientName?: string;
+            /**
+             * @description Email of the proposal recipient.
+             * @example john@example.com
+             */
+            recipientEmail?: string;
+            /**
+             * @description Acceptance status.
+             * @example pending
+             * @enum {string}
+             */
+            acceptanceStatus?: "pending" | "accepted" | "expired";
+            /**
+             * @description Publication status.
+             * @example published
+             * @enum {string}
+             */
+            publicationStatus?: "published" | "unpublished";
+            /**
+             * @description Expiration date and time for the proposal (ISO 8601). Pass null to remove.
+             * @example 2026-05-01T23:59:59.000Z
+             */
+            expiresAt?: string;
+            /** @description Internal admin notes about this proposal. */
+            notes?: string;
+        };
+        ProposalPointDto: {
+            /**
+             * @description Latitude in decimal degrees.
+             * @example 41.3874
+             */
+            lat: number;
+            /**
+             * @description Longitude in decimal degrees.
+             * @example 2.1686
+             */
+            lng: number;
+            /**
+             * @description Human-readable label for the point.
+             * @example Placa Catalunya
+             */
+            label?: string;
+        };
+        CreateProposalVersionDto: {
+            /**
+             * @description Display order for the version tab.
+             * @example 0
+             */
+            orderIndex?: number;
+            /**
+             * @description Tour date (ISO date string, e.g. 2026-05-15).
+             * @example 2026-05-15
+             */
+            tourDate?: string;
+            /**
+             * @description Tour duration in minutes.
+             * @example 180
+             */
+            durationMinutes?: number;
+            /**
+             * @description Title of this proposal version.
+             * @example Classic Walking Tour
+             */
+            title: string;
+            /** @description General description of the proposal version. */
+            description?: string;
+            /** @description Itinerary description for this version. */
+            itineraryDescription?: string;
+            /**
+             * @description Price amount for this version.
+             * @example 150
+             */
+            priceAmount: number;
+            /**
+             * @description Currency code for the price.
+             * @example EUR
+             */
+            priceCurrency: string;
+            /** @description List of items included in this version. */
+            included?: string[];
+            /** @description List of items not included in this version. */
+            notIncluded?: string[];
+            /** @description Cancellation policy text. */
+            cancellationPolicy?: string;
+            /** @description Tour start point. */
+            startPoint?: components["schemas"]["ProposalPointDto"];
+            /** @description Tour end point. */
+            endPoint?: components["schemas"]["ProposalPointDto"];
+            /**
+             * @description External Stripe Payment Link URL.
+             * @example https://buy.stripe.com/test_abc123
+             */
+            stripePaymentLink?: string;
+        };
+        UpdateProposalVersionDto: {
+            /**
+             * @description Display order for the version tab.
+             * @example 0
+             */
+            orderIndex?: number;
+            /**
+             * @description Tour date (ISO date string).
+             * @example 2026-05-15
+             */
+            tourDate?: string;
+            /**
+             * @description Tour duration in minutes.
+             * @example 180
+             */
+            durationMinutes?: number;
+            /**
+             * @description Title of this proposal version.
+             * @example Classic Walking Tour
+             */
+            title?: string;
+            /** @description General description of the proposal version. */
+            description?: string;
+            /** @description Itinerary description for this version. */
+            itineraryDescription?: string;
+            /**
+             * @description Price amount for this version.
+             * @example 150
+             */
+            priceAmount?: number;
+            /**
+             * @description Currency code for the price.
+             * @example EUR
+             */
+            priceCurrency?: string;
+            /** @description List of items included in this version. */
+            included?: string[];
+            /** @description List of items not included in this version. */
+            notIncluded?: string[];
+            /** @description Cancellation policy text. */
+            cancellationPolicy?: string;
+            /** @description Tour start point. */
+            startPoint?: components["schemas"]["ProposalPointDto"];
+            /** @description Tour end point. */
+            endPoint?: components["schemas"]["ProposalPointDto"];
+            /**
+             * @description External Stripe Payment Link URL. Pass null to remove.
+             * @example https://buy.stripe.com/test_abc123
+             */
+            stripePaymentLink?: string;
+        };
+        AttachProposalMediaDto: {
+            /**
+             * Format: uuid
+             * @description Uploaded media asset UUID to attach to the proposal.
+             */
+            mediaId: string;
+            /**
+             * @description Optional explicit display order. If omitted, the media is appended to the end.
+             * @example 0
+             */
+            orderIndex?: number;
+            /**
+             * @description Optional localized alt text keyed by locale code.
+             * @example {
+             *       "en": "View of the walking route"
+             *     }
+             */
+            altText?: {
+                [key: string]: string;
+            };
+        };
+        UpdateProposalMediaDto: {
+            /**
+             * @description Optional explicit display order.
+             * @example 0
+             */
+            orderIndex?: number;
+            /** @description Optional localized alt text keyed by locale code. */
+            altText?: {
+                [key: string]: string;
+            };
         };
         CreateTagDto: {
             /**
@@ -1982,7 +2827,7 @@ export interface components {
              */
             locale: string;
             /** @description External booking reference associated with the published locale. */
-            bookingReferenceId?: Record<string, never> | null;
+            bookingReferenceId?: string | null;
             /**
              * @description Localized cancellation policy text.
              * @example Free cancellation up to 24 hours before the start time.
@@ -2022,7 +2867,7 @@ export interface components {
              * @description Travel time to the next stop in minutes.
              * @example 8
              */
-            durationMinutes?: Record<string, never> | null;
+            durationMinutes?: number | null;
             /**
              * @description Commute mode used between this stop and the next stop.
              * @enum {string}
@@ -2039,7 +2884,7 @@ export interface components {
              * @description Planned stop duration in minutes.
              * @example 15
              */
-            durationMinutes?: Record<string, never> | null;
+            durationMinutes?: number | null;
             /** @description Optional stop coordinates. */
             coordinates?: components["schemas"]["GeoCoordinatesDto"] | null;
             /** @description Transport information to the next stop. The final stop must keep this field `null`. */
@@ -2048,12 +2893,12 @@ export interface components {
              * @description Localized stop title from the selected translation.
              * @example City Hall
              */
-            title?: Record<string, never> | null;
+            title?: string | null;
             /**
              * @description Localized stop description from the selected translation.
              * @example Meet at the main square.
              */
-            description?: Record<string, never> | null;
+            description?: string | null;
         };
         PublicTourItineraryResponseDto: {
             /**
@@ -2068,7 +2913,7 @@ export interface components {
              * @description Localized itinerary narrative. Present for `description` itineraries.
              * @example Walk through the old city and discover Roman, medieval, and modern landmarks.
              */
-            itineraryDescription?: Record<string, never> | null;
+            itineraryDescription?: string | null;
         };
         PublicTourResponseDto: {
             /**
@@ -2112,7 +2957,7 @@ export interface components {
             /** @description End point data split into shared and localized portions. */
             endPoint: components["schemas"]["PublicPointResponseDto"];
             /**
-             * @description Tag key shown on the public tour card. When null, the first tag is used.
+             * @description Tag key selected for the public tour card. When null, the first tag is used.
              * @example history
              */
             cardTagKey?: string | null;
@@ -2135,12 +2980,12 @@ export interface components {
              * Format: uuid
              * @description UUID of the admin that originally created the record.
              */
-            createdBy?: Record<string, never> | null;
+            createdBy?: string | null;
             /**
              * Format: uuid
              * @description UUID of the admin that most recently updated the record.
              */
-            updatedBy?: Record<string, never> | null;
+            updatedBy?: string | null;
             /**
              * Format: date-time
              * @description Creation timestamp.
@@ -2190,7 +3035,7 @@ export interface components {
              * @description Planned stop duration in minutes.
              * @example 15
              */
-            durationMinutes?: Record<string, never> | null;
+            durationMinutes?: number | null;
             /** @description Optional stop coordinates. */
             coordinates?: components["schemas"]["GeoCoordinatesDto"] | null;
             /** @description Transport information to the next stop. The final stop must keep this field `null`. */
@@ -2263,7 +3108,7 @@ export interface components {
              * Format: uuid
              * @description Attached image asset UUID used as the tour cover.
              */
-            coverMediaId?: Record<string, never> | null;
+            coverMediaId?: string | null;
             /** @description Ordered attached media items with per-tour localized alt text. */
             mediaItems: components["schemas"]["TourMediaItemResponseDto"][];
             /** @description Shared JSON Schema that localized translation payloads must satisfy. */
@@ -2276,12 +3121,12 @@ export interface components {
              * @description Average rating normalized to a numeric value.
              * @example 4.8
              */
-            rating?: Record<string, never> | null;
+            rating?: number | null;
             /**
              * @description Total review count.
              * @example 120
              */
-            reviewCount?: Record<string, never> | null;
+            reviewCount?: number | null;
             /**
              * @description Tour commercial model.
              * @enum {string}
@@ -2291,7 +3136,7 @@ export interface components {
              * @description Total duration in minutes.
              * @example 120
              */
-            durationMinutes?: Record<string, never> | null;
+            durationMinutes?: number | null;
             /** @description Shared start point object. */
             startPoint?: components["schemas"]["SharedPointResponseDto"] | null;
             /** @description Shared end point object. */
@@ -2445,10 +3290,13 @@ export interface components {
             endPoint?: components["schemas"]["SharedPointDto"];
             /** @description Replacement itinerary definition. For stop-based itineraries the full ordered list should be provided. */
             itinerary?: components["schemas"]["TourItineraryDto"];
-            /** @description Tag key to display on the public tour card. Set null to clear. */
-            cardTagKey?: string | null;
             /** @description Replacement ordered tag key list. */
             tagKeys?: string[];
+            /**
+             * @description Tag key to display on the public tour card. Set `null` to clear (first tag is used).
+             * @example history
+             */
+            cardTagKey?: string | null;
             /**
              * @description Updated manual display position used by admin and public tour lists. Values beyond the current range move the tour to the end.
              * @example 2
@@ -2511,13 +3359,16 @@ export interface components {
              * @example en
              */
             languageCode: string;
-            /** @description Public slug for this translation. */
+            /**
+             * @description Public slug for this translation.
+             * @example historic-center
+             */
             slug: string;
             /**
              * @description Optional external booking reference for this locale. Set `null` to clear it on update.
              * @example booking-ref-123
              */
-            bookingReferenceId?: Record<string, never> | null;
+            bookingReferenceId?: string | null;
             /**
              * @description Localized payload validated against the shared tour content schema when available.
              * @example {
@@ -2549,13 +3400,16 @@ export interface components {
             };
         };
         UpdateTourTranslationDto: {
-            /** @description Updated public slug for this translation. */
+            /**
+             * @description Updated public slug.
+             * @example historic-center
+             */
             slug?: string;
             /**
              * @description Updated external booking reference for this locale. Set `null` to clear it.
              * @example booking-ref-123
              */
-            bookingReferenceId?: Record<string, never> | null;
+            bookingReferenceId?: string | null;
             /** @description Replacement localized payload. Omit to keep the existing payload. */
             payload?: {
                 [key: string]: unknown;
@@ -2566,24 +3420,280 @@ export interface components {
              * @description Optional external booking reference override applied before publishing. Set `null` to clear it.
              * @example booking-ref-123
              */
-            bookingReferenceId?: Record<string, never> | null;
+            bookingReferenceId?: string | null;
+        };
+        CreateTeamMemberDto: {
+            /**
+             * @description Team member name.
+             * @example Ayelen Salazar
+             */
+            name: string;
+            /**
+             * Format: uuid
+             * @description Media asset UUID to attach as the team member photo.
+             */
+            mediaId: string;
+            /**
+             * @description Alt text for the team member photo.
+             * @example Photo of Ayelen Salazar
+             */
+            imageAlt?: string;
+            /**
+             * @description Display order index. Auto-calculated as next available if omitted.
+             * @example 0
+             */
+            orderIndex?: number;
+            /**
+             * @description LinkedIn profile URL.
+             * @example https://linkedin.com/in/example
+             */
+            linkedinUrl?: string;
+            /**
+             * @description Whether the team member is publicly visible. Defaults to false.
+             * @example false
+             */
+            isPublished?: boolean;
+        };
+        UpdateTeamMemberDto: {
+            /**
+             * @description Updated team member name.
+             * @example Ayelen Salazar
+             */
+            name?: string;
+            /**
+             * @description Updated alt text for the team member photo. Set `null` to clear it.
+             * @example Photo of Ayelen Salazar
+             */
+            imageAlt?: string | null;
+            /**
+             * @description Updated display order index.
+             * @example 1
+             */
+            orderIndex?: number;
+            /**
+             * @description LinkedIn profile URL. Set `null` to clear it.
+             * @example https://linkedin.com/in/example
+             */
+            linkedinUrl?: string | null;
+            /**
+             * @description Whether the team member is publicly visible.
+             * @example true
+             */
+            isPublished?: boolean;
+        };
+        SetTeamMemberPhotoDto: {
+            /**
+             * Format: uuid
+             * @description Media asset UUID to attach as the team member photo.
+             */
+            mediaId: string;
+        };
+        CreateTeamMemberTranslationDto: {
+            /**
+             * @description Locale code for this translation.
+             * @example en
+             */
+            languageCode: string;
+            /**
+             * @description Localized team member role or title.
+             * @example Founder & Director
+             */
+            role: string;
+        };
+        UpdateTeamMemberTranslationDto: {
+            /**
+             * @description Updated localized team member role or title.
+             * @example Founder & Director
+             */
+            role?: string;
+        };
+        CreateUnavailableDateDto: {
+            /**
+             * Format: date
+             * @description First unavailable day (inclusive), as a calendar date.
+             * @example 2026-07-01
+             */
+            startDate: string;
+            /**
+             * Format: date
+             * @description Last unavailable day (inclusive). Equal to `startDate` for a single day off.
+             * @example 2026-07-10
+             */
+            endDate: string;
+            /**
+             * @description Optional human-readable reason.
+             * @example Vacation
+             */
+            reason?: string;
+        };
+        CreateRecurringUnavailabilityDto: {
+            /**
+             * @description Weekday the team member is unavailable (0 = Sunday … 6 = Saturday).
+             * @example 0
+             */
+            dayOfWeek: number;
+            /**
+             * @description Start of the unavailable window (HH:mm, UTC). Omit with `endTime` for whole-day.
+             * @example 00:00
+             */
+            startTime?: string;
+            /**
+             * @description End of the unavailable window (HH:mm, UTC). Omit with `startTime` for whole-day.
+             * @example 09:00
+             */
+            endTime?: string;
+        };
+        UpsertDayNoteDto: {
+            /** @description Free-text note for the day. */
+            note: string;
+        };
+        RecurrenceDto: {
+            /**
+             * @description Recurrence unit.
+             * @enum {string}
+             */
+            freq: "daily" | "weekly" | "monthly";
+            /**
+             * @description Repeat every N units of `freq` (e.g. interval 2 + weekly = every other week).
+             * @example 1
+             */
+            interval: number;
+            /**
+             * @description Weekdays the event runs on for weekly rules (0 = Sunday … 6 = Saturday). Defaults to the start date weekday when omitted.
+             * @example [
+             *       1,
+             *       3,
+             *       5
+             *     ]
+             */
+            byDay?: number[];
+            /**
+             * Format: date-time
+             * @description Inclusive end of the series. Bounds how far candidate dates are generated. Omit for an open-ended series (candidate dates are still bounded by the requested window and a safety cap).
+             */
+            until?: string | null;
+        };
+        CreateEventDto: {
+            /**
+             * @description Language the event is conducted in.
+             * @example en
+             */
+            language: string;
+            /**
+             * @description Commercial model of the event.
+             * @enum {string}
+             */
+            type: "free" | "paid";
+            /**
+             * Format: uuid
+             * @description UUID of the website tour this event links to.
+             */
+            tourId?: string;
+            /** @description Optional event description. */
+            description?: string;
+            /**
+             * @description Duration of each occurrence in minutes.
+             * @example 90
+             */
+            durationMinutes: number;
+            /**
+             * @description Whether the event happens once or recurs.
+             * @enum {string}
+             */
+            frequency: "single" | "recurring";
+            /**
+             * Format: date-time
+             * @description Anchor start datetime. For single events this is the event date.
+             */
+            startDate: string;
+            /**
+             * @description IANA timezone the event is presented in (e.g. `Europe/Copenhagen`). Datetimes are stored in UTC regardless; this only controls presentation. Defaults to the configured system timezone when omitted.
+             * @example Europe/Copenhagen
+             */
+            timezone?: string;
+            /** @description Recurrence rule. Required when `frequency` is `recurring`, ignored otherwise. */
+            recurrence?: components["schemas"]["RecurrenceDto"];
+        };
+        UpdateEventDto: {
+            /**
+             * @description Language the event is conducted in.
+             * @example en
+             */
+            language?: string;
+            /**
+             * @description Commercial model of the event.
+             * @enum {string}
+             */
+            type?: "free" | "paid";
+            /**
+             * Format: uuid
+             * @description UUID of the website tour this event links to. Set `null` to clear it.
+             */
+            tourId?: string | null;
+            /** @description Optional event description. Set `null` to clear it. */
+            description?: string | null;
+            /**
+             * @description Duration of each occurrence in minutes.
+             * @example 90
+             */
+            durationMinutes?: number;
+            /**
+             * @description Whether the event happens once or recurs.
+             * @enum {string}
+             */
+            frequency?: "single" | "recurring";
+            /**
+             * Format: date-time
+             * @description Anchor start datetime. For single events this is the event date.
+             */
+            startDate?: string;
+            /**
+             * @description IANA timezone the event is presented in (e.g. `Europe/Copenhagen`). Datetimes stay stored in UTC; this only controls presentation.
+             * @example Europe/Copenhagen
+             */
+            timezone?: string;
+            /** @description Recurrence rule. Provide when the event is (or becomes) recurring. */
+            recurrence?: components["schemas"]["RecurrenceDto"];
+        };
+        ConfirmOccurrenceDto: {
+            /**
+             * Format: date-time
+             * @description Date being confirmed. Must match a candidate date produced by the event schedule.
+             */
+            date: string;
+            /** @description UUIDs of the team member(s) assigned as guide(s) for this date (0 or more). */
+            teamMemberIds?: string[];
+            /** @description Free-text note specific to this date. */
+            note?: string;
+            /**
+             * @description Status to create the occurrence with. Defaults to `confirmed`. Use `cancelled` to mark a scheduled date off without assigning a guide.
+             * @default confirmed
+             * @enum {string}
+             */
+            status: "confirmed" | "cancelled";
+        };
+        UpdateOccurrenceDto: {
+            /** @description Replacement set of assigned guide UUIDs. Replaces the existing assignment. */
+            teamMemberIds?: string[];
+            /** @description Free-text note specific to this date. Set `null` to clear it. */
+            note?: string | null;
         };
         AuditMetadataDto: {
             /**
              * Format: uuid
              * @description UUID of the admin that originally created the record.
              */
-            createdBy?: Record<string, never> | null;
+            createdBy?: string | null;
             /**
              * Format: uuid
              * @description UUID of the admin that most recently updated the record.
              */
-            updatedBy?: Record<string, never> | null;
+            updatedBy?: string | null;
             /**
              * Format: uuid
              * @description UUID of the admin that published the record, if it is currently published.
              */
-            publishedBy?: Record<string, never> | null;
+            publishedBy?: string | null;
             /**
              * Format: date-time
              * @description Creation timestamp.
@@ -2620,12 +3730,12 @@ export interface components {
              * @description External booking reference for the locale, if any.
              * @example booking-ref-123
              */
-            bookingReferenceId?: Record<string, never> | null;
+            bookingReferenceId?: string | null;
             /**
              * @description Localized cancellation policy text, or `null` when the translation is incomplete.
              * @example Free cancellation up to 24 hours before the start time.
              */
-            cancellationType?: Record<string, never> | null;
+            cancellationType?: string | null;
             /**
              * @description Localized highlight bullets in admin-defined order, or `null` when the translation is incomplete.
              * @example [
@@ -2694,16 +3804,16 @@ export interface components {
              */
             title: string;
             /** @description Localized summary copy. */
-            summary?: Record<string, never> | null;
+            summary?: string | null;
             /**
              * @description Localized rendered HTML body.
              * @example <p>Walk through centuries of history.</p>
              */
             htmlContent: string;
             /** @description SEO title override. */
-            seoTitle?: Record<string, never> | null;
+            seoTitle?: string | null;
             /** @description SEO description override. */
-            seoDescription?: Record<string, never> | null;
+            seoDescription?: string | null;
             /** @description Localized image references. */
             imageRefs: string[];
         };
@@ -3973,7 +5083,7 @@ export interface operations {
             };
             header?: never;
             path: {
-                /** @description Public blog post slug. */
+                /** @description Public blog post translation slug. */
                 slug: string;
             };
             cookie?: never;
@@ -4012,7 +5122,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description Public blog post slug. */
+                /** @description Public blog post translation slug. */
                 slug: string;
                 /** @description Attached media asset UUID. */
                 mediaId: string;
@@ -4587,6 +5697,401 @@ export interface operations {
             };
         };
     };
+    ProposalsController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Search by recipient name or email (case-insensitive partial match). */
+                search?: string;
+                /** @description Include expired proposals in the results. When false (default), proposals with status "expired" or past expires_at are excluded. */
+                includeExpired?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Filtered proposals. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProposalDto"];
+            };
+        };
+        responses: {
+            /** @description Created proposal. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Proposal record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Proposal deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProposalDto"];
+            };
+        };
+        responses: {
+            /** @description Updated proposal. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_sendToRecipient: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal UUID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Email sent successfully. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_createVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal UUID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProposalVersionDto"];
+            };
+        };
+        responses: {
+            /** @description Proposal with new version. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_removeVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal UUID */
+                id: string;
+                /** @description Version UUID */
+                versionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Version deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_updateVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal UUID */
+                id: string;
+                /** @description Version UUID */
+                versionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProposalVersionDto"];
+            };
+        };
+        responses: {
+            /** @description Proposal with updated version. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_attachMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal UUID */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachProposalMediaDto"];
+            };
+        };
+        responses: {
+            /** @description Proposal with attached media. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_detachMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal UUID */
+                id: string;
+                /** @description Media attachment row UUID */
+                rowId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Media detached. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProposalsController_updateMedia: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal UUID */
+                id: string;
+                /** @description Media attachment row UUID */
+                rowId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProposalMediaDto"];
+            };
+        };
+        responses: {
+            /** @description Proposal with updated media. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PublicProposalsController_findByHash: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal public hash. */
+                hash: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Public proposal data. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PublicProposalsController_getMediaContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Proposal public hash. */
+                hash: string;
+                /** @description Attached media asset UUID. */
+                mediaId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     TagsController_findAll: {
         parameters: {
             query?: never;
@@ -4834,7 +6339,7 @@ export interface operations {
             };
             header?: never;
             path: {
-                /** @description Public tour slug. */
+                /** @description Public tour translation slug. */
                 slug: string;
             };
             cookie?: never;
@@ -4873,7 +6378,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                /** @description Public tour slug. */
+                /** @description Public tour translation slug. */
                 slug: string;
                 /** @description Attached media asset UUID. */
                 mediaId: string;
@@ -5697,6 +7202,1550 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TourAdminResponseDto"];
                 };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_findAllAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin team member records. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_createAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTeamMemberDto"];
+            };
+        };
+        responses: {
+            /** @description Created admin team member record. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_listAvailableMembers: {
+        parameters: {
+            query: {
+                /** @description Occurrence start datetime (UTC). */
+                date: string;
+                /** @description Occurrence duration in minutes. */
+                durationMinutes: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Available team members. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_findOneAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin team member record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_removeAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Team member deleted successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_updateAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTeamMemberDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin team member record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_setPhoto: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetTeamMemberPhotoDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin team member record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_createTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateTeamMemberTranslationDto"];
+            };
+        };
+        responses: {
+            /** @description Admin team member record after translation creation. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_deleteTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+                /** @description Locale code for the translation. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Translation deleted successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_updateTranslation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+                /** @description Locale code for the translation. */
+                languageCode: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTeamMemberTranslationDto"];
+            };
+        };
+        responses: {
+            /** @description Admin team member record after translation update. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_listAvailability: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Unavailability records for the team member. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_addUnavailableDate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateUnavailableDateDto"];
+            };
+        };
+        responses: {
+            /** @description Updated availability for the team member. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_removeUnavailableDate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+                /** @description Unavailable date entry UUID. */
+                dateId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Unavailable date range removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_addRecurringUnavailability: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRecurringUnavailabilityDto"];
+            };
+        };
+        responses: {
+            /** @description Updated availability for the team member. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_removeRecurringUnavailability: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Team member UUID. */
+                id: string;
+                /** @description Recurring unavailability UUID. */
+                ruleId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Recurring unavailability removed. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    TeamMembersController_findAllPublic: {
+        parameters: {
+            query: {
+                /** @description Requested locale code. */
+                locale: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Published localized team members. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_findAllAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin event records. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_createAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateEventDto"];
+            };
+        };
+        responses: {
+            /** @description Created admin event record. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_listCalendar: {
+        parameters: {
+            query: {
+                /** @description Start of the window (inclusive) to expand candidate dates from. */
+                from: string;
+                /** @description End of the window (inclusive) to expand candidate dates to. */
+                to: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Occurrences across all events in the window. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_listDayNotes: {
+        parameters: {
+            query: {
+                /** @description Start of the window (inclusive) to expand candidate dates from. */
+                from: string;
+                /** @description End of the window (inclusive) to expand candidate dates to. */
+                to: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Day notes in the window. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_upsertDayNote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Calendar date (YYYY-MM-DD). */
+                date: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpsertDayNoteDto"];
+            };
+        };
+        responses: {
+            /** @description The stored day note. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_removeDayNote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Calendar date (YYYY-MM-DD). */
+                date: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Day note deleted successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_findOneAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Admin event record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_removeAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Event deleted successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_updateAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateEventDto"];
+            };
+        };
+        responses: {
+            /** @description Updated admin event record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_cancelAdmin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Cancelled admin event record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_listOccurrences: {
+        parameters: {
+            query: {
+                /** @description Start of the window (inclusive) to expand candidate dates from. */
+                from: string;
+                /** @description End of the window (inclusive) to expand candidate dates to. */
+                to: string;
+            };
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Candidate and confirmed occurrences in the window. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_confirmOccurrence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConfirmOccurrenceDto"];
+            };
+        };
+        responses: {
+            /** @description Confirmed occurrence record. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_removeOccurrence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+                /** @description Occurrence UUID. */
+                occurrenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Occurrence deleted successfully. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_updateOccurrence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+                /** @description Occurrence UUID. */
+                occurrenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateOccurrenceDto"];
+            };
+        };
+        responses: {
+            /** @description Updated occurrence record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    EventsController_cancelOccurrence: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Event UUID. */
+                id: string;
+                /** @description Occurrence UUID. */
+                occurrenceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Cancelled occurrence record. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             401: {
                 headers: {

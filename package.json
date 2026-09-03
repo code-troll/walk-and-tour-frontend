@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:backend-api": "openapi-typescript ./openapi/backend.yaml -o ./lib/api/generated/backend-types.ts"
+    "generate:backend-api": "openapi-typescript ./openapi/backend.yaml -o ./lib/api/generated/backend-types.ts",
+    "sync:backend-api": "cp \"${BACKEND_REPO_PATH:-../walk-and-tour-backend}/docs/backend.yaml\" ./openapi/backend.yaml && npm run generate:backend-api"
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.9",
