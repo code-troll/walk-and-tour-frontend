@@ -3289,7 +3289,7 @@ function useTourCardPreview(slug: string): TourCardPreview | null {
 
     let cancelled = false;
 
-    fetch(`/api/internal/public/api/public/tours/${ encodeURIComponent(slug) }?locale=en`)
+    fetch(`/api/internal/public/tours/${ encodeURIComponent(slug) }?locale=en`)
       .then((response) => response.ok ? response.json() : null)
       .then((data) => {
         if (cancelled || !data) return;

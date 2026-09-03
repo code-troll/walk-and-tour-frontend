@@ -1,6 +1,10 @@
 import {NextResponse} from "next/server";
 import {getBackendApiBaseUrl} from "@/lib/api/core/backend-env";
 import {formatBackendErrorMessage} from "@/lib/api/core/backend-error";
+import {
+  buildScopedBackendUrl,
+  UnsafeBackendPathError,
+} from "@/lib/api/internal/backend-path";
 import {getAuth0AccessToken, getAuth0Session, isAuth0Configured} from "@/lib/auth0";
 
 const buildBackendUrl = ({
@@ -18,10 +22,12 @@ const buildBackendUrl = ({
     );
   }
 
-  const pathname = pathSegments.join("/");
-  const backendUrl = new URL(`${backendApiBaseUrl}/api/admin/${pathname}`);
-  backendUrl.search = searchParams.toString();
-  return backendUrl;
+  return buildScopedBackendUrl({
+    backendApiBaseUrl,
+    prefix: "/api/admin/",
+    pathSegments,
+    searchParams,
+  });
 };
 
 export const getAdminProxyAuthContext = async () => {
@@ -78,6 +84,10 @@ export const proxyAdminRequest = async ({
       searchParams: new URL(request.url).searchParams,
     });
   } catch (error) {
+    if (error instanceof UnsafeBackendPathError) {
+      return NextResponse.json({message: error.message}, {status: 400});
+    }
+
     return NextResponse.json(
       {
         message: error instanceof Error ? error.message : "Backend API is not configured.",

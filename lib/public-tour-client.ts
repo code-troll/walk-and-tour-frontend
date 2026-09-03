@@ -45,7 +45,7 @@ const getPublicTourBySlug = async ({
   slug: string;
 }) =>
   fetchJson<PublicTourResponse | null>({
-    input: `/api/internal/public/api/public/tours/${slug}${buildQuery({locale})}`,
+    input: `/api/internal/public/tours/${slug}${buildQuery({locale})}`,
     fallbackMessage: "Unable to load the public tour.",
     notFoundFallback: null,
   });
@@ -60,7 +60,7 @@ export const listPublicTourCardsClient = async ({
   tourTypes?: PublicTourType[];
 }): Promise<PublicTourCard[]> => {
   const tours = await fetchJson<components["schemas"]["PublicTourResponseDto"][]>({
-    input: `/api/internal/public/api/public/tours${buildQuery({
+    input: `/api/internal/public/tours${buildQuery({
       locale,
       tagKeys,
       tourTypes,

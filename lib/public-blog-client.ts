@@ -14,7 +14,7 @@ import {
 
 export const listPublicBlogCardsClient = async ({locale}: {locale: AppLocale}): Promise<PublicBlogCard[]> => {
   const posts = await fetchJson<components["schemas"]["PublicBlogResponseDto"][]>({
-    input: `/api/internal/public/api/public/blog-posts?locale=${locale}`,
+    input: `/api/internal/public/blog-posts?locale=${locale}`,
     fallbackMessage: "Unable to load public blog posts.",
   });
 
@@ -48,7 +48,7 @@ export const getPublicBlogDetailClient = async ({
   slug: string;
 }): Promise<PublicBlogDetail | null> => {
   const post = await fetchJson<components["schemas"]["PublicBlogResponseDto"] | null>({
-    input: `/api/internal/public/api/public/blog-posts/${slug}?locale=${locale}`,
+    input: `/api/internal/public/blog-posts/${slug}?locale=${locale}`,
     fallbackMessage: "Unable to load the public blog post.",
     notFoundFallback: null,
   });
