@@ -1,7 +1,7 @@
 "use client";
 
 import {fetchJson} from "@/lib/api/client-json";
-import type {ApiHotel, ApiHotelList} from "@/lib/hotels/admin-hotel-types";
+import type {ApiHotel, ApiHotelList, ApiHotelUser} from "@/lib/hotels/admin-hotel-types";
 
 const buildQuery = (params: Record<string, string | number | undefined>) => {
   const search = new URLSearchParams();
@@ -36,5 +36,12 @@ export const getAdminHotelClient = (id: string) =>
   fetchJson<ApiHotel | null>({
     input: `/api/internal/admin/hotels/${id}`,
     fallbackMessage: "Unable to load the hotel.",
+    notFoundFallback: null,
+  });
+
+export const getAdminHotelUserClient = (hotelId: string) =>
+  fetchJson<ApiHotelUser | null>({
+    input: `/api/internal/admin/hotels/${hotelId}/user`,
+    fallbackMessage: "Unable to load the hotel access user.",
     notFoundFallback: null,
   });

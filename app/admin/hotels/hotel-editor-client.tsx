@@ -10,7 +10,7 @@ import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {getAdminHotelClient} from "@/lib/admin/admin-hotel-client";
+import {getAdminHotelClient, getAdminHotelUserClient} from "@/lib/admin/admin-hotel-client";
 import {getAdminToursClient} from "@/lib/admin/admin-client";
 import {formatAdminDate} from "@/lib/admin/format-date";
 import type {components} from "@/lib/api/generated/backend-types";
@@ -22,12 +22,22 @@ import {
   toCreateHotelBody,
   toUpdateHotelBody,
   validateHotelForm,
+  HOTEL_USER_STATUS_DESCRIPTIONS,
+  HOTEL_USER_STATUS_LABELS,
   type ApiHotel,
+  type ApiHotelUser,
   type HotelFormErrors,
   type HotelFormState,
   type HotelStatus,
 } from "@/lib/hotels/admin-hotel-types";
-import {createHotelAction, setHotelToursAction, updateHotelAction} from "./actions";
+import {
+  createHotelAction,
+  createHotelUserAction,
+  resendHotelUserInvitationAction,
+  setHotelToursAction,
+  setHotelUserEnabledAction,
+  updateHotelAction,
+} from "./actions";
 
 type TourSummary = components["schemas"]["TourAdminListResponseDto"];
 
@@ -46,6 +56,8 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
   const [hotel, setHotel] = useState<ApiHotel | null>(null);
   const [tours, setTours] = useState<TourSummary[]>([]);
   const [grantedTourIds, setGrantedTourIds] = useState<string[]>([]);
+  const [hotelUser, setHotelUser] = useState<ApiHotelUser | null>(null);
+  const [pendingUserAction, setPendingUserAction] = useState<string | null>(null);
 
   const [isLoading, setIsLoading] = useState(mode === "edit");
   const [isSaving, setIsSaving] = useState(false);
@@ -72,12 +84,14 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
     setLoadError(null);
 
     try {
-      const [loadedTours, loadedHotel] = await Promise.all([
+      const [loadedTours, loadedHotel, loadedUser] = await Promise.all([
         getAdminToursClient(),
         mode === "edit" && hotelId ? getAdminHotelClient(hotelId) : Promise.resolve(null),
+        mode === "edit" && hotelId ? getAdminHotelUserClient(hotelId) : Promise.resolve(null),
       ]);
 
       setTours(loadedTours);
+      setHotelUser(loadedUser);
 
       if (mode === "edit") {
         if (!loadedHotel) {
@@ -187,6 +201,31 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
       announce("Tour grants updated.");
     } finally {
       setIsSavingTours(false);
+    }
+  };
+
+  const runUserAction = async (
+    key: string,
+    action: () => Promise<
+      {ok: true; user: ApiHotelUser} | {ok: false; message: string; statusCode: number}
+    >,
+    successMessage: string,
+  ) => {
+    setPendingUserAction(key);
+    setFormError(null);
+
+    try {
+      const result = await action();
+
+      if (!result.ok) {
+        setFormError(result.message);
+        return;
+      }
+
+      setHotelUser(result.user);
+      announce(successMessage);
+    } finally {
+      setPendingUserAction(null);
     }
   };
 
@@ -336,6 +375,111 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           </div>
         </div>
       </AdminSectionCard>
+
+      {mode === "edit" ? (
+        <AdminSectionCard
+          title="Hotel access"
+          description="The single user this hotel signs in with. The hotel chooses its own password through an emailed link; nobody here ever sets or sees it."
+          actions={
+            hotelUser ? (
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  disabled={pendingUserAction !== null || hotelUser.status === "disabled"}
+                  onClick={() =>
+                    void runUserAction(
+                      "resend",
+                      () => resendHotelUserInvitationAction(hotelId as string),
+                      "Password link sent.",
+                    )
+                  }
+                  variant="outline"
+                >
+                  {pendingUserAction === "resend" ? (
+                    <LoaderCircle className="size-4 animate-spin" />
+                  ) : null}
+                  Send password link
+                </Button>
+                <Button
+                  disabled={pendingUserAction !== null}
+                  onClick={() =>
+                    void runUserAction(
+                      "toggle",
+                      () =>
+                        setHotelUserEnabledAction({
+                          hotelId: hotelId as string,
+                          isEnabled: hotelUser.status === "disabled",
+                        }),
+                      hotelUser.status === "disabled"
+                        ? "Access enabled."
+                        : "Access disabled.",
+                    )
+                  }
+                  variant="outline"
+                >
+                  {pendingUserAction === "toggle" ? (
+                    <LoaderCircle className="size-4 animate-spin" />
+                  ) : null}
+                  {hotelUser.status === "disabled" ? "Enable access" : "Disable access"}
+                </Button>
+              </div>
+            ) : (
+              <Button
+                disabled={pendingUserAction !== null}
+                onClick={() =>
+                  void runUserAction(
+                    "create",
+                    () => createHotelUserAction(hotelId as string),
+                    "Access user created and invitation sent.",
+                  )
+                }
+              >
+                {pendingUserAction === "create" ? (
+                  <LoaderCircle className="size-4 animate-spin" />
+                ) : null}
+                Create access user
+              </Button>
+            )
+          }
+        >
+          {hotelUser ? (
+            <dl className="grid gap-4 md:grid-cols-3">
+              <div>
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
+                  Username
+                </dt>
+                <dd className="mt-1 font-mono text-sm text-[#21343b]">{hotelUser.username}</dd>
+              </div>
+              <div>
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
+                  Sign-in email
+                </dt>
+                <dd className="mt-1 text-sm text-[#21343b]">{hotelUser.email}</dd>
+              </div>
+              <div>
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
+                  Status
+                </dt>
+                <dd className="mt-1 text-sm text-[#21343b]">
+                  {HOTEL_USER_STATUS_LABELS[hotelUser.status] ?? hotelUser.status}
+                  {hotelUser.lastLoginAt ? (
+                    <span className="block text-xs text-[#8a8477]">
+                      Last signed in {formatAdminDate(hotelUser.lastLoginAt)}
+                    </span>
+                  ) : null}
+                </dd>
+              </div>
+              <p className="text-xs text-[#8a8477] md:col-span-3">
+                {HOTEL_USER_STATUS_DESCRIPTIONS[hotelUser.status] ?? ""}
+              </p>
+            </dl>
+          ) : (
+            <p className="py-2 text-sm text-[#627176]">
+              This hotel cannot sign in yet. Creating the access user derives a username from the
+              hotel name and emails {form.email || "the contact address"} a link to set a password.
+            </p>
+          )}
+        </AdminSectionCard>
+      ) : null}
 
       {mode === "edit" ? (
         <AdminSectionCard
