@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { AdminRouteProgressProvider } from "@/components/admin/AdminRouteProgress";
 import { AdminNoticeCard } from "@/components/admin/AdminUi";
 import { AdminSidebarNav } from "@/components/admin/AdminSidebarNav";
-import { getAdminEnvironmentLabel, isAdminHostname } from "@/lib/admin-hosts";
+import { getAdminEnvironmentLabel, isAdminHostname } from "@/lib/portal-hosts";
 import { getAdminViewerState } from "@/lib/admin/session";
 import React from "react";
 

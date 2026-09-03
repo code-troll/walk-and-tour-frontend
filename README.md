@@ -1,11 +1,16 @@
 # Walk and Tour Frontend
 
-This project is a Next.js app with two runtime entry modes:
+This project is a Next.js app with three runtime entry modes, told apart by the request hostname:
 
-- Public site: any non-admin hostname
-- Backoffice: `admin.walkandtour.dk`, `admin.staging.walkandtour.dk`, or `admin.dev.walkandtour.dk`
+| Mode | Hostnames | Route tree |
+| --- | --- | --- |
+| Public site | any other hostname | `app/[locale]` |
+| Backoffice | `admin.walkandtour.dk`, `admin.dev.walkandtour.dk` | `app/admin` |
+| Hotel portal | `hotels.walkandtour.dk`, `hotels.dev.walkandtour.dk` | `app/hotel-portal` |
 
-The admin area is resolved internally through `app/admin`, but it is only activated when the request hostname matches one of the admin subdomains.
+Each portal is resolved internally through its route tree, but only activated when the request hostname matches. The hostname map lives in `lib/portal-hosts.ts` and `proxy.ts` rewrites a matching host into its tree; every tree also re-checks the hostname server-side, so it cannot be reached from anywhere else.
+
+The hotel portal tree is `app/hotel-portal` and not `app/hotels`, because `app/admin/hotels` is the backoffice section that administers hotels. Neither path is ever visible — both are rewrite targets.
 
 ## Getting Started
 
@@ -24,11 +29,13 @@ For local development:
 
 - Public site should use `dev.walkandtour.dk`
 - Backoffice should use `admin.dev.walkandtour.dk`
+- Hotel portal should use `hotels.dev.walkandtour.dk`
 
 Recommended local URLs:
 
 - Public site: `http://dev.walkandtour.dk:3000`
 - Backoffice: `http://admin.dev.walkandtour.dk:3000`
+- Hotel portal: `http://hotels.dev.walkandtour.dk:3000`
 
 ## Hosts File Setup
 
@@ -37,6 +44,7 @@ Add these entries to your local hosts file:
 ```text
 127.0.0.1 dev.walkandtour.dk
 127.0.0.1 admin.dev.walkandtour.dk
+127.0.0.1 hotels.dev.walkandtour.dk
 ```
 
 You can also map the other admin hostnames if you want to test them locally:
@@ -61,6 +69,7 @@ Add:
 ```text
 127.0.0.1 dev.walkandtour.dk
 127.0.0.1 admin.dev.walkandtour.dk
+127.0.0.1 hotels.dev.walkandtour.dk
 ```
 
 Save the file, then flush DNS:
@@ -88,6 +97,7 @@ Add:
 ```text
 127.0.0.1 dev.walkandtour.dk
 127.0.0.1 admin.dev.walkandtour.dk
+127.0.0.1 hotels.dev.walkandtour.dk
 ```
 
 In most Linux distributions, the change is available immediately. If needed, restart the resolver or NetworkManager.
@@ -110,6 +120,7 @@ Add:
 ```text
 127.0.0.1 dev.walkandtour.dk
 127.0.0.1 admin.dev.walkandtour.dk
+127.0.0.1 hotels.dev.walkandtour.dk
 ```
 
 Then flush DNS in an elevated Command Prompt:
@@ -364,6 +375,11 @@ which attach any server-held credentials and forward the request:
 | --- | --- | --- |
 | `/api/internal/public/*` | `/api/public/` | none |
 | `/api/internal/admin/*` | `/api/admin/` | Auth0 bearer token added server-side |
+| `/api/internal/hotel/*` | `/api/hotel/` | Auth0 bearer token added server-side |
+
+The hotel proxy additionally answers `404` on any hostname that is not a hotel portal host, exports
+only `GET` and `POST`, and marks every response `no-store, private` rather than forwarding the
+backend's own caching headers, so a shared cache can never serve one hotel's data to another.
 
 Each proxy is locked to its own backend prefix, and every path segment is validated before the URL is
 built (`lib/api/internal/backend-path.ts`). A request whose segments fall outside the characters the
