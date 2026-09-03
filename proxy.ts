@@ -1,7 +1,11 @@
 import {NextRequest, NextResponse} from "next/server";
 import createMiddleware from "next-intl/middleware";
 import {routing} from "@/i18n/routing";
-import {isAdminHostname, normalizeHostname} from "@/lib/admin-hosts";
+import {
+  normalizeHostname,
+  PORTAL_ROUTE_PREFIXES,
+  resolvePortalForHost,
+} from "@/lib/portal-hosts";
 import {runAuth0Middleware} from "@/lib/auth0";
 
 const intlMiddleware = createMiddleware(routing);
@@ -11,12 +15,17 @@ const PUBLIC_NEWSLETTER_RESULT_PATHS = new Set([
   "/newsletter/unsubscribe",
 ]);
 
-const stripAdminPrefix = (pathname: string): string => {
-  if (pathname === "/admin") {
+/**
+ * A portal's route tree is an internal target, so a request that names it
+ * directly is redirected to the clean path rather than being served twice under
+ * two URLs.
+ */
+const stripPortalPrefix = (pathname: string, prefix: string): string => {
+  if (pathname === prefix) {
     return "/";
   }
 
-  return pathname.replace(/^\/admin/, "") || "/";
+  return pathname.slice(prefix.length) || "/";
 };
 
 const mergeMiddlewareCookies = ({
@@ -43,10 +52,14 @@ export default async function proxy(request: NextRequest) {
     return authResponse;
   }
 
-  if (isAdminHostname(host)) {
-    if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+  const portal = resolvePortalForHost(host);
+
+  if (portal) {
+    const prefix = PORTAL_ROUTE_PREFIXES[portal];
+
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
       const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = stripAdminPrefix(pathname);
+      redirectUrl.pathname = stripPortalPrefix(pathname, prefix);
       return mergeMiddlewareCookies({
         source: authResponse,
         target: NextResponse.redirect(redirectUrl),
@@ -54,7 +67,7 @@ export default async function proxy(request: NextRequest) {
     }
 
     const rewriteUrl = request.nextUrl.clone();
-    rewriteUrl.pathname = `/admin${pathname === "/" ? "" : pathname}`;
+    rewriteUrl.pathname = `${prefix}${pathname === "/" ? "" : pathname}`;
     return mergeMiddlewareCookies({
       source: authResponse,
       target: NextResponse.rewrite(rewriteUrl),

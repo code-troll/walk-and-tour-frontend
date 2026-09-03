@@ -1703,6 +1703,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/hotel/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get the signed-in hotel
+         * @description Returns the hotel this token belongs to, its access user, and the tours it may currently sell. Everything is derived from the token; no identifier is accepted from the caller.
+         */
+        get: operations["HotelAuthController_me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -4087,6 +4107,54 @@ export interface components {
              */
             lastLoginAt?: string | null;
             audit: components["schemas"]["HotelAuditResponseDto"];
+        };
+        HotelViewerHotelDto: {
+            /**
+             * Format: uuid
+             * @description Hotel identifier.
+             */
+            id: string;
+            /**
+             * @description Hotel name.
+             * @example Copenhagen Admiral Hotel
+             */
+            name: string;
+        };
+        HotelViewerUserDto: {
+            /**
+             * @description Sign-in username.
+             * @example copenhagen-admiral-hotel
+             */
+            username: string;
+            /**
+             * @description Address this user signs in with and receives password links at.
+             * @example reception@example.com
+             */
+            email: string;
+            /**
+             * @description Lifecycle status.
+             * @example active
+             * @enum {string}
+             */
+            status: "invited" | "active" | "disabled";
+        };
+        HotelViewerTourDto: {
+            /**
+             * Format: uuid
+             * @description Tour identifier.
+             */
+            tourId: string;
+            /**
+             * @description Tour name.
+             * @example Copenhagen Historic Center Free Tour
+             */
+            tourName: string;
+        };
+        HotelViewerResponseDto: {
+            hotel: components["schemas"]["HotelViewerHotelDto"];
+            user: components["schemas"]["HotelViewerUserDto"];
+            /** @description Tours this hotel may currently sell. Revoked grants are not listed. */
+            tours: components["schemas"]["HotelViewerTourDto"][];
         };
         AuditMetadataDto: {
             /**
@@ -9705,6 +9773,44 @@ export interface operations {
                 };
             };
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelAuthController_me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The signed-in hotel. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelViewerResponseDto"];
+                };
+            };
+            /** @description The token is missing, invalid, or not mapped to a hotel access user. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description The access user or the hotel account is disabled. */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };
