@@ -6,6 +6,7 @@ export type ApiHotel = components["schemas"]["HotelResponseDto"];
 export type ApiHotelSummary = components["schemas"]["HotelSummaryResponseDto"];
 export type ApiHotelList = components["schemas"]["HotelListResponseDto"];
 export type ApiHotelTourGrant = components["schemas"]["HotelTourGrantResponseDto"];
+export type ApiHotelUser = components["schemas"]["HotelUserResponseDto"];
 
 export type HotelStatus = ApiHotel["status"];
 
@@ -14,6 +15,18 @@ export const HOTEL_STATUSES: HotelStatus[] = ["active", "disabled"];
 export const HOTEL_STATUS_LABELS: Record<string, string> = {
   active: "Active",
   disabled: "Disabled",
+};
+
+export const HOTEL_USER_STATUS_LABELS: Record<string, string> = {
+  invited: "Invited",
+  active: "Active",
+  disabled: "Disabled",
+};
+
+export const HOTEL_USER_STATUS_DESCRIPTIONS: Record<string, string> = {
+  invited: "The hotel has been emailed a link but has not set a password yet.",
+  active: "The hotel has set a password and can sign in.",
+  disabled: "Sign-in is blocked. The hotel keeps its data and can be enabled again.",
 };
 
 // ── Form state ─────────────────────────────────────────────────────────

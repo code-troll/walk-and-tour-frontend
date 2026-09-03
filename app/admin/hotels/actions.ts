@@ -5,6 +5,7 @@ import {requireBackendApiBaseUrl} from "@/lib/api/core/backend-env";
 import {formatBackendErrorMessage} from "@/lib/api/core/backend-error";
 import type {
   ApiHotel,
+  ApiHotelUser,
   CreateHotelBody,
   UpdateHotelBody,
 } from "@/lib/hotels/admin-hotel-types";
@@ -16,6 +17,7 @@ type HotelActionError = {
 };
 
 export type HotelActionResult = {ok: true; hotel: ApiHotel} | HotelActionError;
+export type HotelUserActionResult = {ok: true; user: ApiHotelUser} | HotelActionError;
 
 const getAdminContext = async (): Promise<
   {ok: true; accessToken: string; backendApiBaseUrl: string} | HotelActionError
@@ -161,4 +163,55 @@ export async function setHotelToursAction({
   } catch (error) {
     return toActionError(error, "Unable to update the tours for this hotel.");
   }
+}
+
+const hotelUserAction = async (
+  path: string,
+  fallbackMessage: string,
+): Promise<HotelUserActionResult> => {
+  const context = await getAdminContext();
+
+  if (!context.ok) {
+    return context;
+  }
+
+  try {
+    const user = await hotelFetch<ApiHotelUser>(
+      path,
+      "POST",
+      context.accessToken,
+      context.backendApiBaseUrl,
+      {},
+    );
+
+    return {ok: true, user};
+  } catch (error) {
+    return toActionError(error, fallbackMessage);
+  }
+};
+
+export async function createHotelUserAction(hotelId: string): Promise<HotelUserActionResult> {
+  return hotelUserAction(`/${hotelId}/user`, "Unable to create the access user.");
+}
+
+export async function resendHotelUserInvitationAction(
+  hotelId: string,
+): Promise<HotelUserActionResult> {
+  return hotelUserAction(
+    `/${hotelId}/user/resend-invitation`,
+    "Unable to send a new password link.",
+  );
+}
+
+export async function setHotelUserEnabledAction({
+  hotelId,
+  isEnabled,
+}: {
+  hotelId: string;
+  isEnabled: boolean;
+}): Promise<HotelUserActionResult> {
+  return hotelUserAction(
+    `/${hotelId}/user/${isEnabled ? "enable" : "disable"}`,
+    isEnabled ? "Unable to enable the access user." : "Unable to disable the access user.",
+  );
 }
