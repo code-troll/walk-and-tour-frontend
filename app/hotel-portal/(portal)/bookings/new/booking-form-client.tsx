@@ -53,6 +53,22 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
 
   const selectedTour = tours.find((tour) => tour.tourId === form.tourId) ?? null;
 
+  /**
+   * Back to the search, with nothing left over from the attempt before it.
+   *
+   * Clearing the tour alone left "Check the highlighted fields and try again."
+   * standing over a screen that no longer has any fields — the banner belongs
+   * to a submit of a form the reader has just walked away from. The field
+   * errors go with it: coming back with a different tour and finding Date
+   * already marked red would be the same staleness, one step later.
+   */
+  const chooseAnotherTour = () => {
+    update("tourId", "");
+    setQuery("");
+    setErrors({});
+    setFormError(null);
+  };
+
   const update = <K extends keyof BookingFormState>(key: K, value: BookingFormState[K]) => {
     setForm((current) => ({...current, [key]: value}));
     setErrors((current) => ({...current, [key]: undefined}));
@@ -137,10 +153,7 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
               <p className="text-base font-medium text-[var(--wt-ink)]">{selectedTour?.name}</p>
               <button
                 className={portalQuietAction}
-                onClick={() => {
-                  update("tourId", "");
-                  setQuery("");
-                }}
+                onClick={chooseAnotherTour}
                 type="button"
               >
                 Choose a different tour
