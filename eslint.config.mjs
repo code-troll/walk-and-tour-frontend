@@ -21,7 +21,6 @@ import nextTs from "eslint-config-next/typescript";
 const UNMIGRATED_FROM_BRAND_TOKENS = [
   "components/admin/TiptapHtmlEditor.tsx",
   "app/admin/blog-posts/blog-editor-client.tsx",
-  "app/admin/tours/tour-editor-client.tsx",
 ];
 
 const NO_RAW_COLOUR =
@@ -40,6 +39,9 @@ const eslintConfig = defineConfig([
       "app/hotel-portal/**/*.{ts,tsx}",
       "components/admin/**/*.{ts,tsx}",
       "components/hotel-portal/**/*.{ts,tsx}",
+      // The tour editor's actual UI lives here, outside components/admin,
+      // and was therefore uncovered while its 2,129-line client file was not.
+      "components/tour-editor/**/*.{ts,tsx}",
     ],
     ignores: UNMIGRATED_FROM_BRAND_TOKENS,
     rules: {
