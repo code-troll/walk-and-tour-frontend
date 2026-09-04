@@ -284,7 +284,6 @@ export function OccurrenceConfirmPanel({
                   tours={tours}
                 />
                 <Button
-                  className="h-10"
                   onClick={() => void handleSaveEvent()}
                   disabled={isSavingEvent || isEventLoading}
                 >
@@ -380,18 +379,17 @@ export function OccurrenceConfirmPanel({
 
             {isConfirmed ? (
               <div className="flex flex-col gap-2">
-                <Button className="h-10" onClick={() => void handleUpdate()} disabled={isSaving || item.status === "cancelled"}>
+                <Button onClick={() => void handleUpdate()} disabled={isSaving || item.status === "cancelled"}>
                   Save changes
                 </Button>
                 <div className="flex gap-2">
                   {item.status !== "cancelled" ? (
-                    <Button variant="outline" className="h-10 flex-1" onClick={() => void handleCancel()} disabled={isSaving}>
+                    <Button variant="outline" className="flex-1" onClick={() => void handleCancel()} disabled={isSaving}>
                       Cancel occurrence
                     </Button>
                   ) : null}
                   <Button
-                    variant="outline"
-                    className="h-10 flex-1 text-[var(--wt-danger)]"
+                    variant="outline" className="flex-1 text-[var(--wt-danger)]"
                     onClick={() => void handleDelete()}
                     disabled={isSaving}
                   >
@@ -401,13 +399,12 @@ export function OccurrenceConfirmPanel({
               </div>
             ) : (
               <div className="flex flex-col gap-2">
-                <Button className="h-10" onClick={() => void handleConfirm()} disabled={isSaving || isLoading}>
+                <Button onClick={() => void handleConfirm()} disabled={isSaving || isLoading}>
                   {isSaving ? <LoaderCircle className="size-4 animate-spin" /> : null}
                   Confirm occurrence
                 </Button>
                 <Button
-                  variant="outline"
-                  className="h-10 text-[var(--wt-danger)]"
+                  variant="outline" className="text-[var(--wt-danger)]"
                   onClick={() => void handleCancelDate()}
                   disabled={isSaving}
                 >

@@ -280,7 +280,7 @@ export default function EventsScheduleClient() {
           </AdminProgressLink>
         </Button>
         <div className="flex flex-wrap items-center gap-2">
-          <Button asChild variant="outline" size="sm" className="h-10 gap-2">
+          <Button asChild variant="outline" size="sm" className="gap-2">
             <AdminProgressLink href="/events/calendar">
               <CalendarDays className="size-4" />
               Calendar
@@ -317,7 +317,7 @@ export default function EventsScheduleClient() {
             <Button variant="outline" size="icon-sm" className="size-9" onClick={() => shiftWeek(-7)} aria-label="Previous week">
               <ChevronLeft className="size-4" />
             </Button>
-            <Button variant="outline" size="sm" className="h-9" onClick={goToday}>
+            <Button variant="outline" size="sm" onClick={goToday}>
               Today
             </Button>
             <Button variant="outline" size="icon-sm" className="size-9" onClick={() => shiftWeek(7)} aria-label="Next week">

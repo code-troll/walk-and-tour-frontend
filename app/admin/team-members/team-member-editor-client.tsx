@@ -14,7 +14,7 @@ import {
   Upload,
 } from "lucide-react";
 import {AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress} from "@/components/admin/AdminRouteProgress";
-import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard, AdminToggleChip} from "@/components/admin/AdminUi";
 import {controlClassName} from "@/components/ui/control-class";
 import {AvailabilityEditor} from "@/components/admin/team-members/AvailabilityEditor";
 import {Button} from "@/components/ui/button";
@@ -315,7 +315,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
   if (initialLoadError) {
     return (
       <AdminNoticeCard eyebrow="Admin API" title="The team member editor could not be loaded." description={initialLoadError}
-        actions={<Button asChild variant="outline" className="h-10"><AdminProgressLink href="/team-members">Back to list</AdminProgressLink></Button>}
+        actions={<Button asChild variant="outline"><AdminProgressLink href="/team-members">Back to list</AdminProgressLink></Button>}
       />
     );
   }
@@ -366,7 +366,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                   No photo
                 </div>
               )}
-              <Button variant="outline" type="button" className="h-10" onClick={openMediaDialog} disabled={isMutating}>
+              <Button variant="outline" type="button" onClick={openMediaDialog} disabled={isMutating}>
                 <Search className="size-4" /> {effectivePhotoMediaId ? "Change Photo" : "Select Photo"}
               </Button>
             </div>
@@ -391,7 +391,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           )}
 
           <div className="flex justify-end">
-            <Button className="h-10" onClick={() => void handleSave()} disabled={isMutating || !canSave}>
+            <Button onClick={() => void handleSave()} disabled={isMutating || !canSave}>
               {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
               {isCreated ? "Save Changes" : "Create Team Member"}
             </Button>
@@ -410,12 +410,11 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                   const FlagIcon = countryCode ? flagByCountryCode[countryCode] : null;
                   const isActive = t.languageCode === resolvedActiveLanguageCode;
                   return (
-                    <button key={t.languageCode} type="button" onClick={() => setActiveLanguageCode(t.languageCode)}
-                      className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${isActive ? "border-[var(--wt-ink)] bg-[var(--wt-ink)] text-white" : "border-[var(--wt-rule-strong)] bg-white text-foreground hover:border-[var(--wt-rule-strong)]"}`}>
+                    <AdminToggleChip key={t.languageCode} onClick={() => setActiveLanguageCode(t.languageCode)} pressed={isActive}>
                       {FlagIcon && <FlagIcon className="h-3 w-4" />}
                       {languageNameByCode[t.languageCode] ?? t.languageCode}
                       {t.existsOnServer && <Check className="size-3 opacity-50" />}
-                    </button>
+                    </AdminToggleChip>
                   );
                 })}
               </div>
@@ -426,7 +425,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                 <select value={selectedLanguageToAdd} onChange={(e) => setLanguageToAdd(e.target.value)} className={controlClassName}>
                   {remainingLanguages.map((l) => <option key={l.code} value={l.code}>{l.name}</option>)}
                 </select>
-                <Button variant="outline" className="h-10" onClick={handleAddTranslation}><Plus className="size-4" /> Add</Button>
+                <Button variant="outline" onClick={handleAddTranslation}><Plus className="size-4" /> Add</Button>
               </div>
             )}
 
@@ -448,7 +447,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                   <Button variant="outline" size="sm" onClick={() => setPendingDeleteLanguageCode(activeTranslation.languageCode)} disabled={isMutating} className="text-[var(--wt-danger)]">
                     <Trash2 className="size-4" /> Delete Translation
                   </Button>
-                  <Button className="h-10" onClick={() => void handleSaveTranslation()} disabled={isMutating}>
+                  <Button onClick={() => void handleSaveTranslation()} disabled={isMutating}>
                     {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
                     {activeTranslation.existsOnServer ? "Save Translation" : "Create Translation"}
                   </Button>
@@ -489,9 +488,9 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           </DialogHeader>
           <div className="flex items-center gap-2">
             <Input placeholder="Search media..." value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleMediaSearch()} />
-            <Button variant="outline" className="h-10" onClick={handleMediaSearch}><Search className="size-4" /></Button>
+            <Button variant="outline" onClick={handleMediaSearch}><Search className="size-4" /></Button>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => void handleMediaUpload(e)} />
-            <Button variant="outline" className="h-10" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
+            <Button variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
               {isUploadingMedia ? <LoaderCircle className="size-4 animate-spin" /> : <Upload className="size-4" />} Upload
             </Button>
           </div>
@@ -511,8 +510,8 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <button type="button" onClick={() => void loadMediaLibrary(mediaLibraryPage + 1, appliedMediaSearch)} className="w-full rounded-[var(--wt-radius-sm)] border border-dashed border-border py-2 text-sm text-muted-foreground hover:border-[var(--wt-rule-strong)]">Load more</button>
           )}
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
-            <Button className="h-10" onClick={handleConfirmMediaSelection} disabled={!dialogSelectedMediaId}>
+            <Button variant="outline" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleConfirmMediaSelection} disabled={!dialogSelectedMediaId}>
               <Check className="size-4" /> Select
             </Button>
           </DialogFooter>
@@ -527,8 +526,8 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <DialogDescription>Are you sure you want to delete the &quot;{pendingDeleteLanguageCode}&quot; translation? This action cannot be undone.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={() => setPendingDeleteLanguageCode(null)}>Cancel</Button>
-            <Button className="h-10 bg-[var(--wt-danger)] text-white transition hover:opacity-90" onClick={() => pendingDeleteLanguageCode && void handleDeleteTranslation(pendingDeleteLanguageCode)} disabled={isMutating}>
+            <Button variant="outline" onClick={() => setPendingDeleteLanguageCode(null)}>Cancel</Button>
+            <Button className="bg-[var(--wt-danger)] text-white transition hover:opacity-90" onClick={() => pendingDeleteLanguageCode && void handleDeleteTranslation(pendingDeleteLanguageCode)} disabled={isMutating}>
               <Trash2 className="size-4" /> Delete
             </Button>
           </DialogFooter>
@@ -543,8 +542,8 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <DialogDescription>Are you sure you want to permanently delete this team member and all its translations? This action cannot be undone.</DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={() => setIsConfirmingDelete(false)}>Cancel</Button>
-            <Button className="h-10 bg-[var(--wt-danger)] text-white transition hover:opacity-90" onClick={() => void handleDeleteMember()} disabled={isMutating}>
+            <Button variant="outline" onClick={() => setIsConfirmingDelete(false)}>Cancel</Button>
+            <Button className="bg-[var(--wt-danger)] text-white transition hover:opacity-90" onClick={() => void handleDeleteMember()} disabled={isMutating}>
               {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Trash2 className="size-4" />} Delete
             </Button>
           </DialogFooter>

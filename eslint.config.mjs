@@ -133,6 +133,30 @@ const CONTROL_ELEMENT =
   'JSXOpeningElement[name.name=/^(Input|Textarea|SelectTrigger|input|select|textarea)$/]' +
   ':not(:has(JSXAttribute[name.name="type"][value.value=/^(checkbox|radio)$/]))';
 
+/**
+ * The size of a button.
+ *
+ * `components/ui/button.tsx` already has a scale — 24, 28, 32 and 36 px, plus
+ * square variants for an icon on its own — and it was being ignored. A hundred
+ * and one call sites wrote their own height, `h-10` in eighty-five of them: a
+ * size that is not on the scale at all. "Create Tour", "Cancel" and "Search"
+ * were 40 px while the fields above them were 32.
+ *
+ * The fix at each site is a `size` prop, not a class. Anything the scale does
+ * not offer is a gap in the scale, and belongs in the component.
+ *
+ * Unlike the control rule this leaves `mt-*` alone: margin between a button and
+ * what is above it is layout, not shape.
+ */
+const BUTTON_SHAPE =
+  "\\b(h-\\d+!?|min-h-\\d+!?|p-\\d+!?|px-\\d+!?|py-\\d+!?|rounded|text-(xs|sm|base|lg|xl)!?)\\b";
+
+const NO_BUTTON_SHAPE =
+  "A button does not get to choose its own size. components/ui/button.tsx has " +
+  "a scale — xs, sm, default, lg and the icon variants — and it is reached " +
+  "with the `size` prop. `h-10` is not on it. If the size you need is missing, " +
+  "add it to the scale rather than to this one button.";
+
 const NO_RAW_COLOUR =
   "Raw colour literal. The backoffice and the hotel portal may only use the " +
   "brand palette through the tokens in app/design-system.css — every value " +
@@ -190,6 +214,14 @@ const eslintConfig = defineConfig([
         {
           selector: `${CONTROL_ELEMENT} JSXAttribute[name.name="className"] TemplateElement[value.raw=/${CONTROL_SHAPE}/]`,
           message: NO_CONTROL_SHAPE,
+        },
+        {
+          selector: `JSXOpeningElement[name.name="Button"] JSXAttribute[name.name="className"] Literal[value=/${BUTTON_SHAPE}/]`,
+          message: NO_BUTTON_SHAPE,
+        },
+        {
+          selector: `JSXOpeningElement[name.name="Button"] JSXAttribute[name.name="className"] TemplateElement[value.raw=/${BUTTON_SHAPE}/]`,
+          message: NO_BUTTON_SHAPE,
         },
       ],
     },

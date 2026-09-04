@@ -1107,7 +1107,6 @@ function BlogVideoNodeView({
                     : "outline"
                 }
                 disabled={ widthPreset === "full" && option.value !== "center" }
-                className="h-7"
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setAlignment(option.value) }
               >
@@ -1122,7 +1121,6 @@ function BlogVideoNodeView({
                 type="button"
                 size="xs"
                 variant={ widthPreset === option.value ? "default" : "outline" }
-                className="h-7"
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setWidthPreset(option.value) }
               >
@@ -1137,7 +1135,6 @@ function BlogVideoNodeView({
                 type="button"
                 size="xs"
                 variant={ aspectRatio === option.value ? "default" : "outline" }
-                className="h-7"
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setAspectRatio(option.value) }
               >
@@ -1413,7 +1410,6 @@ function BlogImageNodeView({
                     ? "default"
                     : "outline"
                 }
-                className="h-7"
                 disabled={ widthPreset === "full" && option.value !== "center" }
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setAlignment(option.value) }
@@ -1430,7 +1426,6 @@ function BlogImageNodeView({
                 type="button"
                 size="xs"
                 variant={ widthPreset === option.value ? "default" : "outline" }
-                className="h-7"
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setWidthPreset(option.value) }
               >
@@ -1733,7 +1728,6 @@ function BlogEmbedNodeView({
                     : "outline"
                 }
                 disabled={ widthPreset === "full" && option.value !== "center" }
-                className="h-7"
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setAlignment(option.value) }
               >
@@ -1748,7 +1742,6 @@ function BlogEmbedNodeView({
                 type="button"
                 size="xs"
                 variant={ widthPreset === option.value && persistedWidth === null ? "default" : "outline" }
-                className="h-7"
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ () => setWidthPreset(option.value) }
               >
@@ -2150,7 +2143,6 @@ function BlogTuritopWidgetNodeView({
                   type="button"
                   size="xs"
                   variant={ alignment === option.value ? "default" : "outline" }
-                  className="h-7"
                   onMouseDown={ (event) => event.preventDefault() }
                   onClick={ () => setAlignment(option.value) }
                 >
@@ -3572,8 +3564,7 @@ function ToolbarColorControl({
         size="sm"
         variant="ghost"
         onClick={ onClear }
-        disabled={ disabled || !active }
-        className="h-5 px-1.5 text-[0.8rem]"
+        disabled={ disabled || !active } className="px-1.5 text-[0.8rem]"
       >
         Clear
       </Button>
@@ -4094,10 +4085,10 @@ export const TiptapHtmlEditor = forwardRef<
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" className="h-10" onClick={ () => handleEmbedDialogOpenChange(false) }>
+            <Button type="button" variant="outline" onClick={ () => handleEmbedDialogOpenChange(false) }>
               Cancel
             </Button>
-            <Button type="button" className="h-10" onClick={ submitEmbed } disabled={ !editor }>
+            <Button type="button" onClick={ submitEmbed } disabled={ !editor }>
               Insert Embed
             </Button>
           </DialogFooter>
@@ -4166,10 +4157,10 @@ export const TiptapHtmlEditor = forwardRef<
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" className="h-10" onClick={ () => handleTuritopDialogOpenChange(false) }>
+            <Button type="button" variant="outline" onClick={ () => handleTuritopDialogOpenChange(false) }>
               Cancel
             </Button>
-            <Button type="button" className="h-10" onClick={ submitTuritopWidget } disabled={ !editor }>
+            <Button type="button" onClick={ submitTuritopWidget } disabled={ !editor }>
               Insert Calendar
             </Button>
           </DialogFooter>
@@ -4214,10 +4205,10 @@ export const TiptapHtmlEditor = forwardRef<
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" className="h-10" onClick={ () => handleTourCardDialogOpenChange(false) }>
+            <Button type="button" variant="outline" onClick={ () => handleTourCardDialogOpenChange(false) }>
               Cancel
             </Button>
-            <Button type="button" className="h-10" onClick={ submitTourCard } disabled={ !editor }>
+            <Button type="button" onClick={ submitTourCard } disabled={ !editor }>
               Insert Tour Card
             </Button>
           </DialogFooter>

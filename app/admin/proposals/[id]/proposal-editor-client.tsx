@@ -665,8 +665,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
               <Button
                 onClick={handleRequestSend}
                 disabled={isSending || !proposal.recipientEmail}
-                variant="outline"
-                className="h-10 inline-flex items-center gap-2"
+                variant="outline" className="inline-flex items-center gap-2"
                 title={!proposal.recipientEmail ? "Add a recipient email first" : "Send proposal link via email"}
               >
                 {isSending ? <LoaderCircle className="h-4 w-4 animate-spin"/> : <Mail className="h-4 w-4"/>}
@@ -679,8 +678,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
               variant={proposal.publicationStatus === "published" ? "outline" : "default"}
               className={
                 proposal.publicationStatus === "published"
-                  ? "h-10 inline-flex items-center gap-2 border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]"
-                  : "h-10 inline-flex items-center gap-2 bg-[var(--wt-ink)] transition hover:opacity-90"
+                  ? "border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]"
+                  : "bg-[var(--wt-ink)] transition hover:opacity-90"
               }
             >
               {proposal.publicationStatus === "published" ? "Unpublish" : "Publish"}
@@ -842,11 +841,11 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                 <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"/>
                 <Input value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} placeholder="Search by filename or path" className="pl-9"/>
               </div>
-              <Button type="submit" variant="outline" className="h-10" disabled={isLoadingMedia || isUploadingMedia}>
+              <Button type="submit" variant="outline" disabled={isLoadingMedia || isUploadingMedia}>
                 {isLoadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : <Search className="size-4"/>}
                 Search
               </Button>
-              <Button type="button" variant="outline" className="h-10" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
+              <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
                 {isUploadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : <Upload className="size-4"/>}
                 Upload
               </Button>
@@ -909,7 +908,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
             {mediaLibraryItems.length < mediaLibraryTotal && (
               <div className="flex justify-center">
-                <Button type="button" variant="outline" className="h-10" onClick={() => void loadMediaPage({page: mediaLibraryPage + 1, search: appliedMediaSearch, append: true})} disabled={isLoadingMedia}>
+                <Button type="button" variant="outline" onClick={() => void loadMediaPage({page: mediaLibraryPage + 1, search: appliedMediaSearch, append: true})} disabled={isLoadingMedia}>
                   {isLoadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : null}
                   Load more
                 </Button>
@@ -918,8 +917,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" className="h-10" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
-            <Button type="button" className="h-10" onClick={() => void handleAttachSelectedImage()} disabled={!selectedMediaId || selectedMediaId === attachedMediaId || isLoadingMedia}>
+            <Button type="button" variant="outline" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
+            <Button type="button" onClick={() => void handleAttachSelectedImage()} disabled={!selectedMediaId || selectedMediaId === attachedMediaId || isLoadingMedia}>
               Use selected image
             </Button>
           </DialogFooter>
@@ -1078,8 +1077,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
               setLocalVersions((prev) => [...prev, {...newForm, localId: newLocalId, serverId: null, savedSnapshot: null}]);
               setEditingLocalId(newLocalId);
               setVersionForm(newForm);
-            }}
-            className="h-10 inline-flex items-center gap-2"
+            }} className="inline-flex items-center gap-2"
           >
             <Plus className="h-4 w-4"/>Add Proposal
           </Button>
@@ -1088,7 +1086,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
       {/* Save All */}
       <div className="flex justify-end">
-        <Button onClick={() => void handleSaveAll()} disabled={isSaving} className="h-10 inline-flex items-center gap-2">
+        <Button onClick={() => void handleSaveAll()} disabled={isSaving} className="inline-flex items-center gap-2">
           {isSaving ? <LoaderCircle className="h-4 w-4 animate-spin"/> : <Save className="h-4 w-4"/>}
           {isNew ? "Create Proposal" : "Save All Changes"}
         </Button>
@@ -1103,7 +1101,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button className="h-10" onClick={() => setSentDialogEmail(null)}>OK</Button>
+            <Button onClick={() => setSentDialogEmail(null)}>OK</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1118,8 +1116,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={() => setDeleteVersionTarget(null)}>Cancel</Button>
-            <Button variant="destructive" className="h-10" onClick={() => void handleConfirmDeleteVersion()}>Delete</Button>
+            <Button variant="outline" onClick={() => setDeleteVersionTarget(null)}>Cancel</Button>
+            <Button variant="destructive" onClick={() => void handleConfirmDeleteVersion()}>Delete</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -1138,8 +1136,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={() => setShowSendConfirm(false)}>Cancel</Button>
-            <Button className="h-10" onClick={() => void handleConfirmSend()}>Send</Button>
+            <Button variant="outline" onClick={() => setShowSendConfirm(false)}>Cancel</Button>
+            <Button onClick={() => void handleConfirmSend()}>Send</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

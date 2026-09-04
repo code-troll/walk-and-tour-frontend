@@ -565,7 +565,7 @@ export function AdminToursListClient({
       title="Tours"
       description="Create, edit, validate, and manually order tours from the admin list."
       actions={
-        <Button asChild className="h-10">
+        <Button asChild>
           <AdminProgressLink href="/tours/new">
             <Plus className="size-4"/>
             Create Tour
@@ -583,7 +583,7 @@ export function AdminToursListClient({
         { tours.length === 0 ? (
           <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No tours have been created yet.</p>
-            <Button asChild className="h-10 mt-4">
+            <Button asChild className="mt-4">
               <AdminProgressLink href="/tours/new">
                 <Plus className="size-4"/>
                 Create your first tour

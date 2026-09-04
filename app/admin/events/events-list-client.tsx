@@ -137,19 +137,19 @@ export default function EventsListClient() {
         description="Manage scheduled walks and tours. Recurring events generate candidate dates you confirm on the calendar."
         actions={
           <div className="flex items-center gap-3">
-            <Button asChild variant="outline" className="h-10">
+            <Button asChild variant="outline">
               <AdminProgressLink href="/events/schedule">
                 <Table className="size-4" />
                 Schedule
               </AdminProgressLink>
             </Button>
-            <Button asChild variant="outline" className="h-10">
+            <Button asChild variant="outline">
               <AdminProgressLink href="/events/calendar">
                 <CalendarDays className="size-4" />
                 Calendar
               </AdminProgressLink>
             </Button>
-            <Button asChild className="h-10">
+            <Button asChild>
               <AdminProgressLink href="/events/new">
                 <Plus className="size-4" />
                 Create Event
@@ -167,7 +167,7 @@ export default function EventsListClient() {
         {events.length === 0 ? (
           <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No events have been created yet.</p>
-            <Button asChild className="h-10 mt-4">
+            <Button asChild className="mt-4">
               <AdminProgressLink href="/events/new">
                 <Plus className="size-4" />
                 Create your first event
@@ -244,11 +244,10 @@ export default function EventsListClient() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={() => setPendingDelete(null)} disabled={isMutating}>
+            <Button variant="outline" onClick={() => setPendingDelete(null)} disabled={isMutating}>
               Keep event
             </Button>
-            <Button
-              className="h-10 bg-[var(--wt-danger)] text-white transition hover:opacity-90"
+            <Button className="bg-[var(--wt-danger)] text-white transition hover:opacity-90"
               onClick={() => void handleConfirmDelete()}
               disabled={isMutating}
             >

@@ -11,6 +11,7 @@ import {
 import {WEEKDAY_LABELS} from "@/lib/admin/weekdays";
 import type {RecurrenceFormState, RecurrenceFrequency} from "@/lib/events/admin-event-types";
 import {fieldLabelClassName} from "@/components/ui/control-class";
+import {AdminToggleChip} from "@/components/admin/AdminUi";
 
 const FREQUENCIES: {value: RecurrenceFrequency; label: string}[] = [
   {value: "daily", label: "Daily"},
@@ -88,19 +89,9 @@ export function RecurrenceBuilder({
             {WEEKDAY_LABELS.map((day) => {
               const selected = value.byDay.includes(day.value);
               return (
-                <button
-                  key={day.value}
-                  type="button"
-                  onClick={() => toggleDay(day.value)}
-                  aria-pressed={selected}
-                  className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
-                    selected
-                      ? "border-[var(--wt-ink)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]"
-                      : "border-[var(--wt-rule-strong)] bg-white text-muted-foreground hover:border-[var(--wt-rule-strong)]"
-                  }`}
-                >
+                <AdminToggleChip key={day.value} onClick={() => toggleDay(day.value)} pressed={selected}>
                   {day.short}
-                </button>
+                </AdminToggleChip>
               );
             })}
           </div>

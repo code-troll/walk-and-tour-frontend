@@ -67,11 +67,10 @@ export function AdminBackRow({
 /**
  * A row action with no room for a label: copy, open, delete.
  *
- * It is `size="sm"` squared off rather than shadcn's `size="icon"`, and the
- * difference is the whole point. `size="icon"` is 32 px and `size="sm"` is
- * 28 px, so an icon button placed beside a labelled one — which is where these
- * always end up — stood 4 px taller than its neighbour. This is the same
- * button, minus the text.
+ * `size="icon-sm"` is 28 px square with the `sm` radius — the same button as
+ * the labelled `size="sm"` it always sits beside, minus the text. It squared
+ * off `size="sm"` by hand at first, which worked but wrote a size the scale
+ * already had.
  *
  * The label is required and becomes both the tooltip and the accessible name.
  * The four hand-written versions this replaces had a `title` and nothing else,
@@ -92,13 +91,12 @@ export function AdminIconButton({
   tone?: "neutral" | "danger";
 }) {
   const className = cn(
-    "size-7 p-0",
     tone === "danger" && "border-[var(--wt-danger)] text-[var(--wt-danger)]",
   );
 
   if (href) {
     return (
-      <Button aria-label={label} asChild className={className} size="sm" title={label} variant="outline">
+      <Button aria-label={label} asChild className={className} size="icon-sm" title={label} variant="outline">
         <a href={href} rel="noopener noreferrer" target="_blank">
           {children}
         </a>
@@ -111,7 +109,7 @@ export function AdminIconButton({
       aria-label={label}
       className={className}
       onClick={onClick}
-      size="sm"
+      size="icon-sm"
       title={label}
       type="button"
       variant="outline"
@@ -197,5 +195,44 @@ export function AdminStatCard({
         {value}
       </p>
     </div>
+  );
+}
+
+/**
+ * A pill you press to choose something: a weekday, a language, a tag.
+ *
+ * There were four of these — the recurrence builder, the event frequency, the
+ * team member's languages and the blog's tags — with three different paddings
+ * and two different ideas of what "selected" looks like. Three drew the chosen
+ * one in muted ink, which reads as the disabled one; the blog filled it with
+ * the primary colour. It is one thing now, and the chosen one is the darker.
+ *
+ * It is a `<button>` rather than the shared Button because it is a toggle:
+ * `aria-pressed` is the whole point, and a pill is one of the few shapes
+ * `rounded-full` is actually for.
+ */
+export function AdminToggleChip({
+  children,
+  onClick,
+  pressed,
+}: {
+  children: ReactNode;
+  onClick: () => void;
+  pressed: boolean;
+}) {
+  return (
+    <button
+      aria-pressed={pressed}
+      className={cn(
+        "inline-flex h-8 items-center gap-2 rounded-full border px-4 text-sm font-medium transition-colors",
+        pressed
+          ? "border-[var(--wt-ink)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink)]"
+          : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]",
+      )}
+      onClick={onClick}
+      type="button"
+    >
+      {children}
+    </button>
   );
 }
