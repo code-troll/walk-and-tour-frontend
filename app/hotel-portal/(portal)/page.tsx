@@ -1,4 +1,7 @@
-import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import Link from "next/link";
+
+import {AdminSectionCard} from "@/components/admin/AdminUi";
+import {Button} from "@/components/ui/button";
 import {getHotelViewerState} from "@/lib/hotel-portal/session";
 
 export default async function HotelPortalHomePage() {
@@ -17,6 +20,13 @@ export default async function HotelPortalHomePage() {
       <AdminSectionCard
         title="Your tours"
         description="The Walk and Tour experiences you can book for your guests."
+        actions={
+          viewer.tours.length > 0 ? (
+            <Button asChild>
+              <Link href="/bookings/new">Book a tour</Link>
+            </Button>
+          ) : null
+        }
       >
         {viewer.tours.length === 0 ? (
           <p className="py-4 text-sm text-[#627176]">
@@ -37,11 +47,21 @@ export default async function HotelPortalHomePage() {
         )}
       </AdminSectionCard>
 
-      <AdminNoticeCard
-        eyebrow="Coming next"
-        title="Booking is not open yet."
-        description="You can already see the tours available to you. Placing and tracking bookings arrives in the next release."
-      />
+      <AdminSectionCard
+        title="Your bookings"
+        description="Everything you have booked, and what it will cost."
+        actions={
+          <Button asChild variant="outline">
+            <Link href="/bookings">Open bookings</Link>
+          </Button>
+        }
+      >
+        <p className="py-2 text-sm text-[#627176]">
+          Walk and Tour confirms each booking. Prices exclude VAT and stay an estimate until
+          the booking is invoiced, because charges specific to a booking can be added along
+          the way.
+        </p>
+      </AdminSectionCard>
     </>
   );
 }

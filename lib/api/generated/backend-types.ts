@@ -1723,6 +1723,230 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/admin/hotel-bookings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List hotel bookings
+         * @description Returns bookings across all hotels, filterable by hotel and status.
+         */
+        get: operations["HotelBookingsController_findAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotel-bookings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get one hotel booking
+         * @description Returns a booking with its priced lines and full history.
+         */
+        get: operations["HotelBookingsController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotel-bookings/{id}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm a booking
+         * @description Accepts a pending booking. Only possible from `pending`.
+         */
+        post: operations["HotelBookingsController_confirm"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotel-bookings/{id}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark a booking as completed
+         * @description Records that the tour ran. Only possible from `confirmed`.
+         */
+        post: operations["HotelBookingsController_complete"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotel-bookings/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel a booking
+         * @description Cancels a booking that has not been invoiced.
+         */
+        post: operations["HotelBookingsController_cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotel-bookings/{id}/invoice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark a booking as invoiced
+         * @description Records that the hotel has been billed. This freezes the amounts: no line item can be added or removed afterwards, and the total stops being an estimate.
+         */
+        post: operations["HotelBookingsController_invoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotel-bookings/{id}/line-items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add a priced line to a booking
+         * @description Adds a charge for something specific to this hotel or this booking. Amounts exclude VAT, and a negative amount is a discount. Refused once the booking is invoiced or cancelled.
+         */
+        post: operations["HotelBookingsController_addLineItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotel-bookings/{id}/line-items/{lineItemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove a priced line
+         * @description Removes an added charge. The tour line itself cannot be removed — cancel the booking instead.
+         */
+        delete: operations["HotelBookingsController_removeLineItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/hotel/bookings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List this hotel’s bookings
+         * @description Returns the signed-in hotel’s bookings, most recent first.
+         */
+        get: operations["HotelBookingsPortalController_findAll"];
+        put?: never;
+        /**
+         * Book a tour
+         * @description Creates a booking for one of the tours granted to this hotel. It opens as `pending` until Walk and Tour confirms it, and the total is an estimate until it is invoiced.
+         */
+        post: operations["HotelBookingsPortalController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/hotel/bookings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get one booking
+         * @description Returns one of this hotel’s bookings with its priced lines and full history. A booking belonging to another hotel is reported as not found.
+         */
+        get: operations["HotelBookingsPortalController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/hotel/bookings/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel a booking
+         * @description Cancels one of this hotel’s bookings. Only possible while it is pending or confirmed; a booking that has already run can only be cancelled by Walk and Tour.
+         */
+        post: operations["HotelBookingsPortalController_cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -4155,6 +4379,194 @@ export interface components {
             user: components["schemas"]["HotelViewerUserDto"];
             /** @description Tours this hotel may currently sell. Revoked grants are not listed. */
             tours: components["schemas"]["HotelViewerTourDto"][];
+        };
+        HotelBookingGuestDto: {
+            /**
+             * @description Guest name.
+             * @example Anders Jensen
+             */
+            name: string;
+            /** @example guest@example.com */
+            email?: string | null;
+            /** @example +45 20 11 22 33 */
+            phone?: string | null;
+            /** @example 412 */
+            roomNumber?: string | null;
+        };
+        HotelBookingLineItemResponseDto: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * @description The tour itself is the `base` line; everything else is an `extra`.
+             * @enum {string}
+             */
+            kind: "base" | "extra";
+            /** @example Historic Center x 2 */
+            description: string;
+            /**
+             * @description Amount in the booking currency, excluding VAT. Negative means a discount.
+             * @example 500.00
+             */
+            amount: string;
+        };
+        HotelBookingLogResponseDto: {
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            type: "created" | "status_changed" | "updated" | "line_item_added" | "line_item_removed";
+            /** @enum {string|null} */
+            fromStatus?: "pending" | "confirmed" | "completed" | "cancelled" | "invoiced" | null;
+            /** @enum {string|null} */
+            toStatus?: "pending" | "confirmed" | "completed" | "cancelled" | "invoiced" | null;
+            /** @enum {string} */
+            actorType: "hotel" | "admin";
+            /**
+             * @description Who acted, kept as text so the history survives the account being removed.
+             * @example admin@example.com
+             */
+            actorLabel: string;
+            reason?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        HotelBookingTimestampsDto: {
+            /** Format: date-time */
+            confirmedAt?: string | null;
+            /** Format: date-time */
+            completedAt?: string | null;
+            /** Format: date-time */
+            cancelledAt?: string | null;
+            /** Format: date-time */
+            invoicedAt?: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        HotelBookingResponseDto: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * @description Human reference, short enough to read out over the phone.
+             * @example WT-2026-0042
+             */
+            reference: string;
+            /** Format: uuid */
+            hotelId: string;
+            /** Format: uuid */
+            tourId: string;
+            /**
+             * @description The tour name as it read when the booking was made.
+             * @example Copenhagen Historic Center Free Tour
+             */
+            tourName: string;
+            /** Format: date-time */
+            scheduledFor: string;
+            /** @example en */
+            languageCode: string;
+            /** @example 2 */
+            participantCount: number;
+            guest: components["schemas"]["HotelBookingGuestDto"];
+            notes?: string | null;
+            /** @enum {string} */
+            status: "pending" | "confirmed" | "completed" | "cancelled" | "invoiced";
+            /**
+             * @example DKK
+             * @enum {string}
+             */
+            currency: "DKK";
+            /**
+             * @description Per-person tour price when the booking was made, excluding VAT. Null for a tour with no price.
+             * @example 250.00
+             */
+            unitPriceAmount?: string | null;
+            /**
+             * @description Sum of the priced lines, excluding VAT. Null while the booking has no priced base.
+             * @example 650.50
+             */
+            totalAmount?: string | null;
+            /**
+             * @description True until the booking is invoiced. While true the total can still change, which is what the portal tells the hotel.
+             * @example true
+             */
+            isEstimate: boolean;
+            cancellationReason?: string | null;
+            lineItems: components["schemas"]["HotelBookingLineItemResponseDto"][];
+            /** @description Everything that has happened to this booking, oldest first. */
+            logs: components["schemas"]["HotelBookingLogResponseDto"][];
+            timestamps: components["schemas"]["HotelBookingTimestampsDto"];
+        };
+        HotelBookingListResponseDto: {
+            items: components["schemas"]["HotelBookingResponseDto"][];
+            /** @example 1 */
+            page: number;
+            /** @example 25 */
+            limit: number;
+            /** @example 12 */
+            total: number;
+        };
+        HotelBookingActionDto: {
+            /**
+             * @description Why the booking was cancelled, kept on the audit trail.
+             * @example The guest changed their plans.
+             */
+            reason?: string | null;
+        };
+        AddHotelBookingLineItemDto: {
+            /**
+             * @description What the hotel is being charged for.
+             * @example Private guide surcharge
+             */
+            description: string;
+            /**
+             * @description Amount in the booking currency, excluding VAT. Negative values are discounts.
+             * @example 150.50
+             */
+            amount: string;
+        };
+        CreateHotelBookingDto: {
+            /**
+             * Format: uuid
+             * @description Tour to book. Must be granted to the signed-in hotel.
+             */
+            tourId: string;
+            /**
+             * @description When the tour should run, as an ISO 8601 instant.
+             * @example 2026-10-01T09:00:00.000Z
+             */
+            scheduledFor: string;
+            /**
+             * @description Language the tour should be given in.
+             * @example en
+             */
+            languageCode: string;
+            /**
+             * @description Number of guests taking part.
+             * @example 2
+             */
+            participantCount: number;
+            /**
+             * @description Name of the guest the booking is for.
+             * @example Anders Jensen
+             */
+            guestName: string;
+            /**
+             * @description Guest email address, if the hotel wants to share it.
+             * @example guest@example.com
+             */
+            guestEmail?: string | null;
+            /**
+             * @description Guest telephone number.
+             * @example +45 20 11 22 33
+             */
+            guestPhone?: string | null;
+            /**
+             * @description Room the guest is staying in, to help the guide find them.
+             * @example 412
+             */
+            roomNumber?: string | null;
+            /** @description Anything the guide should know: mobility, allergies, occasion. */
+            notes?: string | null;
         };
         AuditMetadataDto: {
             /**
@@ -9811,6 +10223,485 @@ export interface operations {
             };
             /** @description The access user or the hotel account is disabled. */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Restrict the results to one status. */
+                status?: "pending" | "confirmed" | "completed" | "cancelled" | "invoiced";
+                /** @description One-based page number. */
+                page?: number;
+                /** @description Page size. */
+                limit?: number;
+                /** @description Restrict the results to one hotel. */
+                hotelId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated bookings. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingListResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The booking. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_confirm: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_complete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_cancel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HotelBookingActionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_invoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_addLineItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddHotelBookingLineItemDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsController_removeLineItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                lineItemId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsPortalController_findAll: {
+        parameters: {
+            query?: {
+                /** @description Restrict the results to one status. */
+                status?: "pending" | "confirmed" | "completed" | "cancelled" | "invoiced";
+                /** @description One-based page number. */
+                page?: number;
+                /** @description Page size. */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Paginated bookings. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingListResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsPortalController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateHotelBookingDto"];
+            };
+        };
+        responses: {
+            /** @description The created booking. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description The tour is not granted to this hotel. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsPortalController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The booking. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelBookingsPortalController_cancel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HotelBookingActionDto"];
+            };
+        };
+        responses: {
+            /** @description The cancelled booking. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelBookingResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description The booking cannot be cancelled from its current status. */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
