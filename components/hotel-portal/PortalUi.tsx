@@ -39,12 +39,15 @@ export const portalQuietAction =
  * in the same row as it. Two definitions of "what a control looks like" is how
  * the form ended up with 36 px selects beside 32 px inputs.
  *
+ * It carries no top margin, for the same reason: `Input` has none, and a
+ * margin here alone dropped every select 4 px below the input sharing its row.
+ *
  * These metrics still come from shadcn rather than from the design system: the
  * shadcn control tokens are shared with the backoffice, so aligning them with
  * the brand tokens has to happen when the backoffice migrates, not before.
  */
 export const portalControl =
-  "mt-1 h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 " +
+  "h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 " +
   "text-sm text-[var(--wt-ink)] outline-none transition-colors " +
   "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
