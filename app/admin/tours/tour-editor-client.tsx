@@ -1973,7 +1973,7 @@ export function TourEditorClient({
 
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-transparent">
+      <div className="space-y-5">
         <TourEditorHeader
           mode={ mode }
           formState={ formState }
@@ -1986,10 +1986,9 @@ export function TourEditorClient({
           onSectionChangeAction={ (section) => requestNavigation({type: "section", section}) }
         />
 
-        <main className="flex-1 overflow-auto px-2 py-6 sm:px-4">
-          {/* Full width, like every other backoffice screen: the shell already sets
-              the page gutter, and a second centred column made the tour editor the
-              only screen whose content did not line up with its own header. */}
+          {/* No wrapper of its own: the shell sets the page gutter. The padding and
+              centred column this used to add were what made the tour editor the only
+              screen whose content did not line up with its own header. */}
           <div className="space-y-5">
             { submitError ? (
               <div
@@ -2089,7 +2088,6 @@ export function TourEditorClient({
               />
             ) : null }
           </div>
-        </main>
       </div>
 
       <Dialog open={ Boolean(pendingNavigation) } onOpenChange={ () => undefined }>

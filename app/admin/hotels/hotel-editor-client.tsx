@@ -2,10 +2,10 @@
 
 import {useCallback, useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/navigation";
-import {ArrowLeft, LoaderCircle} from "lucide-react";
+import {LoaderCircle} from "lucide-react";
 
 import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
-import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Input} from "@/components/ui/input";
@@ -261,20 +261,11 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
-        <Button asChild size="sm" variant="ghost">
-          <AdminProgressLink href="/hotels">
-            <ArrowLeft className="size-4" />
-            Hotels
-          </AdminProgressLink>
-        </Button>
-
+      <AdminBackRow href="/hotels" label="Hotels">
         {hotel ? (
-          <p className="text-xs text-[var(--wt-ink-muted)]">
-            Last updated {formatAdminDate(hotel.audit.updatedAt)}
-          </p>
+          <AdminHeaderMeta>Last updated {formatAdminDate(hotel.audit.updatedAt)}</AdminHeaderMeta>
         ) : null}
-      </div>
+      </AdminBackRow>
 
       {formError ? (
         <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">

@@ -1,10 +1,10 @@
 "use client";
 
 import {useCallback, useEffect, useState} from "react";
-import {ArrowLeft, LoaderCircle, Plus, Trash2} from "lucide-react";
+import {LoaderCircle, Plus, Trash2} from "lucide-react";
 
 import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
-import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {BookingHistory, BookingStatusBadge} from "@/components/hotel-portal/BookingPieces";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
@@ -180,15 +180,9 @@ export default function HotelBookingDetailClient({bookingId}: {bookingId: string
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <Button asChild size="sm" variant="ghost">
-          <AdminProgressLink href="/hotel-bookings">
-            <ArrowLeft className="size-4" />
-            Hotel bookings
-          </AdminProgressLink>
-        </Button>
-        <span className="font-mono text-xs text-[var(--wt-ink-muted)]">{booking.reference}</span>
-      </div>
+      <AdminBackRow href="/hotel-bookings" label="Hotel bookings">
+        <AdminHeaderMeta>{booking.reference}</AdminHeaderMeta>
+      </AdminBackRow>
 
       {actionError ? (
         <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">

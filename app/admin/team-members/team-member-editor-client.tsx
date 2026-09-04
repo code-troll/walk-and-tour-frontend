@@ -5,7 +5,6 @@ import {useCallback, useEffect, useMemo, useRef, useState, type ComponentType} f
 import {useRouter} from "next/navigation";
 import {ES, GB, IT} from "country-flag-icons/react/3x2";
 import {
-  ArrowLeft,
   Check,
   LoaderCircle,
   Plus,
@@ -15,7 +14,7 @@ import {
   Upload,
 } from "lucide-react";
 import {AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress} from "@/components/admin/AdminRouteProgress";
-import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {AvailabilityEditor} from "@/components/admin/team-members/AvailabilityEditor";
 import {Button} from "@/components/ui/button";
 import {
@@ -327,15 +326,11 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <Button asChild size="sm" variant="ghost">
-          <AdminProgressLink href="/team-members">
-            <ArrowLeft className="size-4" />
-            Team
-          </AdminProgressLink>
-        </Button>
-        {lastSaved && <p className="text-xs text-muted-foreground">Last saved {lastSaved.toLocaleTimeString()}</p>}
-      </div>
+      <AdminBackRow href="/team-members" label="Team">
+        {lastSaved ? (
+          <AdminHeaderMeta>Last saved {lastSaved.toLocaleTimeString()}</AdminHeaderMeta>
+        ) : null}
+      </AdminBackRow>
 
       {feedback && (
         <div className={`rounded-xl border px-4 py-3 text-sm ${feedback.tone === "error" ? "border-[var(--wt-danger)] bg-[var(--wt-surface)] text-[var(--wt-danger)]" : "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"}`}>

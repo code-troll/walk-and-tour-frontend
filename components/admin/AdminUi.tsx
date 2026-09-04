@@ -2,6 +2,10 @@
 
 import type {ReactNode} from "react";
 
+import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
+import {Button} from "@/components/ui/button";
+import {ArrowLeft} from "lucide-react";
+
 /**
  * The backoffice's shared blocks — direction "Consola".
  *
@@ -15,6 +19,54 @@ import type {ReactNode} from "react";
  * tool. Colour appears only where it means something, which in practice is the
  * status of a booking and the position you are standing in.
  */
+
+/**
+ * The row that sits above every detail screen: a way back on the left, and
+ * whatever that screen wants to say about itself on the right.
+ *
+ * It exists because six screens had grown five different versions of it — a
+ * ghost Button, an outline Button, a bare link in semibold, a plain <button>,
+ * and labels alternating between "Back to X" and the destination. There was
+ * nothing to share, so everybody wrote their own. Now there is.
+ *
+ * `onClick` instead of `href` is for screens that cannot simply navigate: the
+ * tour editor has to run its unsaved-changes guard first.
+ */
+export function AdminBackRow({
+  href,
+  label,
+  onClick,
+  children,
+}: {
+  href?: string;
+  label: string;
+  onClick?: () => void;
+  children?: ReactNode;
+}) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-4">
+      {href ? (
+        <Button asChild size="sm" variant="ghost">
+          <AdminProgressLink href={href}>
+            <ArrowLeft className="size-4" />
+            {label}
+          </AdminProgressLink>
+        </Button>
+      ) : (
+        <Button onClick={onClick} size="sm" type="button" variant="ghost">
+          <ArrowLeft className="size-4" />
+          {label}
+        </Button>
+      )}
+      {children ? <div className="flex items-center gap-3">{children}</div> : null}
+    </div>
+  );
+}
+
+/** The muted line a detail screen puts opposite its back link. */
+export function AdminHeaderMeta({children}: {children: ReactNode}) {
+  return <p className="text-xs text-[var(--wt-ink-muted)]">{children}</p>;
+}
 
 export function AdminNoticeCard({
   eyebrow,
