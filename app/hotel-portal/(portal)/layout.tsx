@@ -4,9 +4,9 @@ import React from "react";
 
 import {
   PortalNotice,
-  portalPrimaryAction,
   portalSecondaryAction,
 } from "@/components/hotel-portal/PortalUi";
+import {PortalSignIn} from "@/components/hotel-portal/PortalSignIn";
 import {getHotelViewerState} from "@/lib/hotel-portal/session";
 
 /**
@@ -63,16 +63,7 @@ export default async function HotelPortalSessionLayout({
   if (viewerState.kind === "unauthenticated") {
     return (
       <Shell>
-        <PortalNotice
-          kicker="Sign in"
-          title="Sign in to book tours for your guests."
-          description="Use the username Walk and Tour gave you and the password you chose from the emailed link."
-          actions={
-            <a className={portalPrimaryAction} href={buildSignInHref()}>
-              Sign in
-            </a>
-          }
-        />
+        <PortalSignIn signInHref={buildSignInHref()} />
       </Shell>
     );
   }
