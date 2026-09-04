@@ -5,8 +5,13 @@ import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {ArrowLeft, LoaderCircle} from "lucide-react";
 
-import {AdminSectionCard} from "@/components/admin/AdminUi";
-import {Button} from "@/components/ui/button";
+import {
+  PortalAlert,
+  PortalSection,
+  portalPrimaryAction,
+  portalControl,
+  portalQuietAction,
+} from "@/components/hotel-portal/PortalUi";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
@@ -28,8 +33,9 @@ const LANGUAGES = [
   {value: "it", label: "Italian"},
 ];
 
+/** Field-level problems borrow the alert colour, which is the only red on this screen besides the submit. */
 const FieldError = ({message}: {message: string}) => (
-  <p className="mt-1 text-xs text-[#a3483f]">{message}</p>
+  <p className="mt-1 text-xs text-[var(--wt-danger)]">{message}</p>
 );
 
 export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
@@ -74,35 +80,34 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
   };
 
   return (
-    <div className="space-y-6">
-      <Button asChild size="sm" variant="ghost">
-        <Link href="/bookings">
-          <ArrowLeft className="size-4" />
-          Bookings
-        </Link>
-      </Button>
+    <div className="space-y-8">
+      <Link className={portalQuietAction} href="/bookings">
+        <ArrowLeft className="size-4" />
+        Bookings
+      </Link>
 
-      {formError ? (
-        <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
-          {formError}
-        </p>
-      ) : null}
+      {formError ? <PortalAlert>{formError}</PortalAlert> : null}
 
-      <AdminSectionCard
+      <PortalSection
         title="Book a tour"
         description="Walk and Tour confirms every booking. You will see the price here, and it stays an estimate until the booking is invoiced."
         actions={
-          <Button disabled={isSaving} onClick={() => void handleSubmit()}>
+          <button
+            className={portalPrimaryAction}
+            disabled={isSaving}
+            onClick={() => void handleSubmit()}
+            type="button"
+          >
             {isSaving ? <LoaderCircle className="size-4 animate-spin" /> : null}
             Place booking
-          </Button>
+          </button>
         }
       >
         <div className="grid gap-5 md:grid-cols-2">
           <div className="md:col-span-2">
             <Label htmlFor="booking-tour">Tour</Label>
             <select
-              className="mt-1 h-9 w-full rounded-md border border-[#e2d9c9] bg-white px-3 text-sm text-[#21343b]"
+              className={portalControl}
               id="booking-tour"
               onChange={(event) => update("tourId", event.target.value)}
               value={form.tourId}
@@ -142,7 +147,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           <div>
             <Label htmlFor="booking-language">Language</Label>
             <select
-              className="mt-1 h-9 w-full rounded-md border border-[#e2d9c9] bg-white px-3 text-sm text-[#21343b]"
+              className={portalControl}
               id="booking-language"
               onChange={(event) => update("languageCode", event.target.value)}
               value={form.languageCode}
@@ -188,7 +193,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
               placeholder="412"
               value={form.roomNumber}
             />
-            <p className="mt-1 text-xs text-[#8a8477]">Optional. Helps the guide find them.</p>
+            <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">Optional. Helps the guide find them.</p>
           </div>
 
           <div>
@@ -225,7 +230,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
             />
           </div>
         </div>
-      </AdminSectionCard>
+      </PortalSection>
     </div>
   );
 }

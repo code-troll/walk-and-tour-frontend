@@ -4,8 +4,19 @@ import {useCallback, useEffect, useState} from "react";
 import Link from "next/link";
 import {ArrowLeft, LoaderCircle} from "lucide-react";
 
-import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
-import {BookingBreakdown, BookingHistory, BookingStatusBadge} from "@/components/hotel-portal/BookingPieces";
+import {
+  BookingBreakdown,
+  BookingHistory,
+  BookingStatusBadge,
+} from "@/components/hotel-portal/BookingPieces";
+import {
+  PortalAlert,
+  PortalField,
+  PortalNotice,
+  PortalSection,
+  portalQuietAction,
+  portalSecondaryAction,
+} from "@/components/hotel-portal/PortalUi";
 import {Button} from "@/components/ui/button";
 import {
   Dialog,
@@ -90,24 +101,20 @@ export default function BookingDetailClient({bookingId}: {bookingId: string}) {
 
   if (isLoading) {
     return (
-      <AdminNoticeCard
-        eyebrow="Booking"
-        title="Loading…"
-        description="Fetching this booking."
-      />
+      <PortalNotice kicker="Booking" title="Loading…" description="Fetching this booking." />
     );
   }
 
   if (error || !booking) {
     return (
-      <AdminNoticeCard
-        eyebrow="Booking"
+      <PortalNotice
+        kicker="Booking"
         title="This booking could not be loaded."
         description={error ?? "It may have been removed."}
         actions={
-          <Button asChild variant="outline">
-            <Link href="/bookings">Back to bookings</Link>
-          </Button>
+          <Link className={portalSecondaryAction} href="/bookings">
+            Back to bookings
+          </Link>
         }
       />
     );
@@ -116,88 +123,75 @@ export default function BookingDetailClient({bookingId}: {bookingId: string}) {
   const canCancel = CANCELLABLE_STATUSES.includes(booking.status);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <Button asChild size="sm" variant="ghost">
-          <Link href="/bookings">
-            <ArrowLeft className="size-4" />
-            Bookings
-          </Link>
-        </Button>
-        <span className="font-mono text-xs text-[#8a8477]">{booking.reference}</span>
+        <Link className={portalQuietAction} href="/bookings">
+          <ArrowLeft className="size-4" />
+          Bookings
+        </Link>
+        <span className="text-xs uppercase tracking-[0.18em] text-[var(--wt-ink-muted)]">
+          {booking.reference}
+        </span>
       </div>
 
-      {actionError ? (
-        <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
-          {actionError}
-        </p>
-      ) : null}
+      {actionError ? <PortalAlert>{actionError}</PortalAlert> : null}
 
-      <AdminSectionCard
+      <PortalSection
         title={booking.tourName}
         description={formatWhen(booking.scheduledFor)}
         actions={
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <BookingStatusBadge
               labels={HOTEL_BOOKING_STATUS_LABELS}
               status={booking.status}
             />
             {canCancel ? (
-              <Button onClick={() => setIsCancelOpen(true)} variant="outline">
+              <button
+                className={portalSecondaryAction}
+                onClick={() => setIsCancelOpen(true)}
+                type="button"
+              >
                 Cancel booking
-              </Button>
+              </button>
             ) : null}
           </div>
         }
       >
-        <dl className="grid gap-4 sm:grid-cols-3">
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
-              Guest
-            </dt>
-            <dd className="mt-1 text-sm text-[#21343b]">
-              {booking.guest.name}
-              {booking.guest.roomNumber ? (
-                <span className="block text-xs text-[#8a8477]">
-                  Room {booking.guest.roomNumber}
-                </span>
-              ) : null}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
-              Guests
-            </dt>
-            <dd className="mt-1 text-sm text-[#21343b]">{booking.participantCount}</dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
-              Language
-            </dt>
-            <dd className="mt-1 text-sm uppercase text-[#21343b]">{booking.languageCode}</dd>
-          </div>
+        <dl className="grid gap-5 sm:grid-cols-3">
+          <PortalField label="Guest">
+            {booking.guest.name}
+            {booking.guest.roomNumber ? (
+              <span className="block text-xs text-[var(--wt-ink-muted)]">
+                Room {booking.guest.roomNumber}
+              </span>
+            ) : null}
+          </PortalField>
+          <PortalField label="Guests">{booking.participantCount}</PortalField>
+          <PortalField label="Language">
+            <span className="uppercase">{booking.languageCode}</span>
+          </PortalField>
         </dl>
 
         {booking.notes ? (
-          <p className="mt-4 rounded-xl border border-[#eadfce] bg-[#fffcf7] px-4 py-3 text-sm text-[#53656c]">
+          <p className="mt-5 max-w-prose border-l-2 border-[var(--wt-rule-strong)] py-1 pl-4 text-sm text-[var(--wt-ink-muted)]">
             {booking.notes}
           </p>
         ) : null}
 
         {booking.cancellationReason ? (
-          <p className="mt-4 rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
-            Cancelled: {booking.cancellationReason}
-          </p>
+          <div className="mt-5">
+            <PortalAlert>Cancelled: {booking.cancellationReason}</PortalAlert>
+          </div>
         ) : null}
-      </AdminSectionCard>
+      </PortalSection>
 
-      <AdminSectionCard title="Price">
+      <PortalSection title="Price">
         <BookingBreakdown booking={booking} />
-      </AdminSectionCard>
+      </PortalSection>
 
-      <AdminSectionCard title="History">
+      <PortalSection title="History">
         <BookingHistory booking={booking} />
-      </AdminSectionCard>
+      </PortalSection>
 
       <Dialog onOpenChange={setIsCancelOpen} open={isCancelOpen}>
         <DialogContent>
