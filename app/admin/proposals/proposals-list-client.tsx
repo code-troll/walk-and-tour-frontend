@@ -1,10 +1,11 @@
 "use client";
 
 import {useCallback, useEffect, useRef, useState} from "react";
-import {LoaderCircle, Plus, ExternalLink, Copy, Check, Trash2, Search, X} from "lucide-react";
+import {LoaderCircle, Plus, ExternalLink, Copy, Check, Trash2, Search} from "lucide-react";
 import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
 import {AdminSectionCard} from "@/components/admin/AdminUi";
 import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
 import {ConfirmDeleteDialog} from "@/components/admin/proposals/ConfirmDeleteDialog";
 import {
   type AdminProposal,
@@ -135,53 +136,47 @@ export function AdminProposalsListClient() {
 
   return (
     <>
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-[var(--wt-ink)]">Proposals</h2>
-        <AdminProgressLink
-          href="/admin/proposals/new"
-          className="inline-flex items-center gap-2 rounded-[var(--wt-radius-sm)] bg-[var(--wt-ink)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
-        >
-          <Plus className="h-4 w-4"/>
-          New Proposal
-        </AdminProgressLink>
-      </div>
+      <AdminSectionCard
+        title="Proposals"
+        description="Private tour proposals sent to a recipient, each with its own versions and public link."
+        actions={
+          <Button asChild>
+            <AdminProgressLink href="/admin/proposals/new">
+              <Plus className="size-4"/>
+              New proposal
+            </AdminProgressLink>
+          </Button>
+        }
+      >
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="relative min-w-0 flex-1">
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--wt-ink-muted)]"/>
+            <Input
+              aria-label="Search proposals by recipient name or email"
+              className="pl-9"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by name or email"
+              value={searchQuery}
+            />
+          </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--wt-ink-muted)]"/>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by name or email..."
-            className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white py-2.5 pl-9 pr-9 text-sm text-[var(--wt-ink)] placeholder:text-[var(--wt-ink-muted)]"
-          />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
-            >
-              <X className="h-4 w-4"/>
-            </button>
+          <button
+            className={`pb-1 text-sm transition ${
+              showExpired
+                ? "border-b-2 border-[var(--wt-nav-marker)] font-medium text-[var(--wt-ink)]"
+                : "border-b-2 border-transparent text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
+            }`}
+            onClick={() => setShowExpired(!showExpired)}
+            type="button"
+          >
+            Show expired
+          </button>
+
+          {isLoading && (
+            <LoaderCircle className="size-4 animate-spin text-[var(--wt-ink-muted)]"/>
           )}
         </div>
-
-        <label className="inline-flex items-center gap-2 rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm text-[var(--wt-ink-muted)] select-none cursor-pointer hover:bg-[var(--wt-surface)]">
-          <input
-            type="checkbox"
-            checked={showExpired}
-            onChange={(e) => setShowExpired(e.target.checked)}
-            className="h-4 w-4 rounded border-[var(--wt-rule-strong)] accent-[var(--wt-accent)]"
-          />
-          Show expired
-        </label>
-
-        {isLoading && (
-          <LoaderCircle className="h-4 w-4 animate-spin text-[var(--wt-ink-muted)]"/>
-        )}
-      </div>
+      </AdminSectionCard>
 
       {error && (
         <AdminSectionCard title="Proposals">

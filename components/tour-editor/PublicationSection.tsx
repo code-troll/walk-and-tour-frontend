@@ -163,7 +163,7 @@ export function PublicationSection({
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]">
+      <section className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-6">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 className="text-lg font-semibold text-[var(--wt-ink)]">Translation Publication</h2>
@@ -200,7 +200,7 @@ export function PublicationSection({
         </div>
 
         { formState.translations.length === 0 ? (
-          <div className="rounded-[1.25rem] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] py-8 text-center">
+          <div className="rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] py-8 text-center">
             <Globe className="mx-auto mb-3 size-10 text-[var(--wt-ink-muted)]"/>
             <p className="text-[var(--wt-ink-muted)]">
               No translations available. Add translations first.
@@ -222,7 +222,7 @@ export function PublicationSection({
                 <div
                   key={ translation.languageCode }
                   className={ cn(
-                    "rounded-xl border p-4 transition-colors",
+                    "rounded-[var(--wt-radius-sm)] border p-4 transition-colors",
                     isPublished
                       ? "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)]"
                       : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]",
@@ -231,7 +231,7 @@ export function PublicationSection({
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
                     <div className="flex items-center gap-4">
                       <div
-                        className="flex size-12 items-center justify-center rounded-[1rem] bg-[var(--wt-surface-sunk)]">
+                        className="flex size-12 items-center justify-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-surface-sunk)]">
                         <span className="text-sm font-bold uppercase text-[var(--wt-ink-muted)]">
                           { translation.languageCode }
                         </span>
@@ -349,7 +349,7 @@ export function PublicationSection({
         ) }
       </section>
 
-      <section className="rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]">
+      <section className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-6">
         <h2 className="mb-4 text-lg font-semibold text-[var(--wt-ink)]">Publication Checklist</h2>
         <p className="mb-6 text-sm text-[var(--wt-ink-muted)]">
           Ensure these requirements are met before publishing.
@@ -408,7 +408,7 @@ function ChecklistItem({label, passed}: { label: string; passed: boolean }) {
   return (
     <div
       className={ cn(
-        "flex items-center gap-3 rounded-[1rem] p-3",
+        "flex items-center gap-3 rounded-[var(--wt-radius-sm)] p-3",
         passed ? "bg-[var(--wt-status-confirmed-bg)]" : "bg-[var(--wt-surface)]",
       ) }
     >

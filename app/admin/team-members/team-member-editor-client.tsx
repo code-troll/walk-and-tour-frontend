@@ -328,9 +328,12 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <AdminProgressLink href="/team-members" className="flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-foreground">
-          <ArrowLeft className="size-4" /> Back to Team Members
-        </AdminProgressLink>
+        <Button asChild size="sm" variant="ghost">
+          <AdminProgressLink href="/team-members">
+            <ArrowLeft className="size-4" />
+            Team
+          </AdminProgressLink>
+        </Button>
         {lastSaved && <p className="text-xs text-muted-foreground">Last saved {lastSaved.toLocaleTimeString()}</p>}
       </div>
 

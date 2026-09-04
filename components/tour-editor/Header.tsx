@@ -34,7 +34,7 @@ const sections: { id: TourSection; label: string; icon: ElementType }[] = [
 ];
 
 const headerSurfaceClassName =
-  "sticky top-0 z-10 overflow-hidden rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white/95 shadow-[0_20px_50px_rgba(42,36,25,0.05)] backdrop-blur";
+  "sticky top-0 z-10 overflow-hidden rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white/95 backdrop-blur";
 
 export function TourEditorHeader({
                                    mode,
@@ -60,10 +60,12 @@ export function TourEditorHeader({
           <button
             type="button"
             onClick={ onBackAction }
-            className="flex items-center gap-2 text-sm font-medium text-[var(--wt-ink-muted)] transition-colors hover:text-[var(--wt-ink)]"
+            // Matches the ghost Button used to go back everywhere else. It stays a
+            // <button> because leaving here has to run the unsaved-changes guard.
+            className="inline-flex h-8 items-center gap-2 rounded-[var(--wt-radius-sm)] px-3 text-sm font-medium text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
           >
             <ArrowLeft className="size-4"/>
-            <span className="hidden sm:inline">Back to Tours</span>
+            <span className="hidden sm:inline">Tours</span>
           </button>
           <div className="hidden h-5 w-px bg-[var(--wt-rule-strong)] sm:block"/>
           <div className="min-w-0">
@@ -129,7 +131,7 @@ export function TourEditorHeader({
                 className={ cn(
                   "relative flex items-center gap-2 rounded-t-2xl border border-transparent px-4 py-3 text-sm font-medium transition-colors",
                   isActive
-                    ? "border-[var(--wt-rule-strong)] border-b-white bg-white text-[var(--wt-ink)] shadow-[0_-6px_18px_rgba(42,36,25,0.04)]"
+                    ? "border-[var(--wt-rule-strong)] border-b-white bg-white text-[var(--wt-ink)]"
                     : isLocked
                       ? "cursor-not-allowed text-[var(--wt-ink-muted)]"
                       : "text-[var(--wt-ink-muted)] hover:border-[var(--wt-rule-strong)] hover:bg-white/70 hover:text-[var(--wt-ink)]",

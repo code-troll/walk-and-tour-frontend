@@ -572,7 +572,7 @@ export default function EventsCalendarClient() {
           <Button asChild variant="ghost" size="sm">
             <AdminProgressLink href="/events">
               <ArrowLeft className="size-4" />
-              Back to events
+              Events
             </AdminProgressLink>
           </Button>
           <Button asChild variant="outline" size="sm" className="h-10 gap-2">

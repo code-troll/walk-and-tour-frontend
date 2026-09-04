@@ -140,7 +140,7 @@ export function EventEditorClient({mode, eventId}: EventEditorClientProps) {
           <Button asChild variant="outline" className="h-10">
             <AdminProgressLink href="/events">
               <ArrowLeft className="size-4" />
-              Back to events
+              Events
             </AdminProgressLink>
           </Button>
         }
@@ -154,7 +154,7 @@ export function EventEditorClient({mode, eventId}: EventEditorClientProps) {
         <Button asChild variant="ghost" size="sm">
           <AdminProgressLink href="/events">
             <ArrowLeft className="size-4" />
-            Back to events
+            Events
           </AdminProgressLink>
         </Button>
         <Button className="h-10" onClick={() => void handleSave()} disabled={isMutating}>
