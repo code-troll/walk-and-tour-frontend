@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
+import Link from "next/link";
 import React from "react";
 
 import {AdminNoticeCard} from "@/components/admin/AdminUi";
@@ -93,7 +94,23 @@ export default async function HotelPortalSessionLayout({
         <div className="rounded-3xl border border-[#eadfce] bg-white p-5">
           <p className="font-semibold text-[#21343b]">{viewer.hotel.name}</p>
           <p className="mt-1 font-mono text-xs text-[#8a8477]">{viewer.user.username}</p>
+          <p className="mt-1 text-xs text-[#8a8477]">{viewer.user.email}</p>
         </div>
+        <nav className="flex flex-col gap-1">
+          {[
+            {href: "/", label: "Overview"},
+            {href: "/bookings", label: "Bookings"},
+            {href: "/bookings/new", label: "Book a tour"},
+          ].map((item) => (
+            <Link
+              className="rounded-full px-4 py-2 text-sm font-medium text-[#53656c] transition hover:bg-[#f3e8d5] hover:text-[#21343b]"
+              href={item.href}
+              key={item.href}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
         <SignOutLink />
       </aside>
       <div className="min-w-0 space-y-6">{children}</div>

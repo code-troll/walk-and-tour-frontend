@@ -19,6 +19,7 @@ const navigationByRole = {
     {href: "/", label: "Overview"},
     {href: "/users", label: "Users"},
     {href: "/hotels", label: "Hotels"},
+    {href: "/hotel-bookings", label: "Hotel bookings"},
     {href: "/taxonomy", label: "Taxonomy"},
     {href: "/tours", label: "Tours"},
     {href: "/events", label: "Events"},
@@ -29,6 +30,7 @@ const navigationByRole = {
   ],
   editor: [
     {href: "/", label: "Overview"},
+    {href: "/hotel-bookings", label: "Hotel bookings"},
     {href: "/taxonomy", label: "Taxonomy"},
     {href: "/tours", label: "Tours"},
     {href: "/events", label: "Events"},
