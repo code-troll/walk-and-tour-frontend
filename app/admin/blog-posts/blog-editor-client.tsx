@@ -70,6 +70,7 @@ import {
   type BlogFormState,
 } from "@/lib/blog/admin-blog-form";
 import { cn } from "@/lib/utils";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 import {
   clearBlogPostHeroMediaAction,
   createBlogPostAction,
@@ -82,11 +83,6 @@ import {
   updateBlogPostTranslationAction,
 } from "./actions";
 
-const textareaClassName =
-  controlMultilineClassName;
-const selectClassName =
-  controlClassName;
-const fieldLabelClassName = "text-sm font-medium text-foreground";
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 const viewCountFormatter = new Intl.NumberFormat("en-US");
 type TranslationCountryCode = "GB" | "ES" | "IT";
@@ -1004,7 +1000,6 @@ export function BlogPostEditorClient({
               value={ formState.name }
               onChange={ (event) => updateSharedField("name", event.target.value) }
               placeholder="Barcelona Historic Center SEO Article"
-              className="h-10"
             />
           </div>
 
@@ -1044,7 +1039,7 @@ export function BlogPostEditorClient({
                 setFeedback(null);
                 setFormState((current) => ({ ...current, cardTagKey: e.target.value }));
               } }
-              className={ selectClassName }
+              className={ controlClassName }
             >
               <option value="">(Auto — first tag)</option>
               { formState.tagKeys.map((key) => (
@@ -1129,7 +1124,7 @@ export function BlogPostEditorClient({
                 <select
                   value={ selectedLanguageToAdd }
                   onChange={ (event) => setLanguageToAdd(event.target.value) }
-                  className={ selectClassName }
+                  className={ controlClassName }
                 >
                   { remainingLanguages.map((language) => (
                     <option key={ language.code } value={ language.code }>
@@ -1302,7 +1297,6 @@ export function BlogPostEditorClient({
                               value={ activeTranslation.title }
                               onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "title", event.target.value) }
                               placeholder="Barcelona Historic Center Guide"
-                              className="h-10"
                             />
                           </div>
 
@@ -1312,8 +1306,7 @@ export function BlogPostEditorClient({
                               id="translation-slug"
                               value={ activeTranslation.slug }
                               onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "slug", event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "")) }
-                              placeholder={ generatedSlug || "blog-post-slug" }
-                              className="h-10 font-mono"
+                              placeholder={ generatedSlug || "blog-post-slug" } className="font-mono"
                             />
                             { !activeTranslation.slug && generatedSlug ? (
                               <p className="text-xs text-muted-foreground">Will use: <span
@@ -1329,7 +1322,7 @@ export function BlogPostEditorClient({
                             value={ activeTranslation.summary }
                             onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "summary", event.target.value) }
                             placeholder="A walking guide to the historic center of Barcelona."
-                            className={ textareaClassName }
+                            className={ controlMultilineClassName }
                           />
                         </div>
 
@@ -1352,7 +1345,6 @@ export function BlogPostEditorClient({
                               value={ activeTranslation.seoTitle }
                               onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "seoTitle", event.target.value) }
                               placeholder="Historic Center Guide | Walk and Tour"
-                              className="h-10"
                             />
                           </div>
 
@@ -1364,7 +1356,7 @@ export function BlogPostEditorClient({
                               value={ activeTranslation.seoDescription }
                               onChange={ (event) => updateTranslationField(activeTranslation.languageCode, "seoDescription", event.target.value) }
                               placeholder="Discover the best historic landmarks in Barcelona."
-                              className={ textareaClassName }
+                              className={ controlMultilineClassName }
                             />
                           </div>
                         </div>
@@ -1390,8 +1382,7 @@ export function BlogPostEditorClient({
               <Input
                 value={ mediaSearchInput }
                 onChange={ (event) => setMediaSearchInput(event.target.value) }
-                placeholder="Search media library"
-                className="h-10 pl-9"
+                placeholder="Search media library" className="pl-9"
               />
             </div>
             <Button type="button" variant="outline" className="h-10" onClick={ () => void handleMediaSearch() }

@@ -20,6 +20,8 @@ import {
 } from "@/lib/events/admin-event-types";
 import type {ApiTeamMember} from "@/lib/team-members/admin-team-member-types";
 import type {components} from "@/lib/api/generated/backend-types";
+import {controlMultilineClassName} from "@/components/ui/control-class";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 import {
   cancelOccurrenceAction,
   confirmOccurrenceAction,
@@ -363,7 +365,7 @@ export function OccurrenceConfirmPanel({
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground" htmlFor="occurrence-note">
+              <label className={fieldLabelClassName} htmlFor="occurrence-note">
                 Note
               </label>
               <textarea
@@ -372,7 +374,7 @@ export function OccurrenceConfirmPanel({
                 onChange={(event) => setNote(event.target.value)}
                 rows={3}
                 placeholder="Notes specific to this date…"
-                className="w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
+                className={controlMultilineClassName}
               />
             </div>
 

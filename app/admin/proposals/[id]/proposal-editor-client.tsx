@@ -50,6 +50,7 @@ import {
 } from "@/lib/admin/media-client";
 import {getLocalizedPath} from "@/i18n/locale-path";
 import type {AppLocale} from "@/i18n/routing";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 
 const getPublicOrigin = () => {
   if (typeof window === "undefined") return "";
@@ -728,38 +729,38 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       <AdminSectionCard title={isNew ? "New Proposal" : "Proposal Details"}>
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Proposal Name</label>
+            <label className={fieldLabelClassName}>Proposal Name</label>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} className={controlClassName} placeholder="Rome Highlights Private Tour"/>
             <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">General name shown as the main title of the proposal in the public page.</p>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Language</label>
+            <label className={fieldLabelClassName}>Language</label>
             <select value={language} onChange={(e) => setLanguage(e.target.value)} className={controlClassName}>
               {LANGUAGES.map((l) => (<option key={l.code} value={l.code}>{l.name} ({l.code})</option>))}
             </select>
           </div>
           {!isNew && (
             <div>
-              <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Acceptance</label>
+              <label className={fieldLabelClassName}>Acceptance</label>
               <select value={acceptanceStatus} onChange={(e) => setAcceptanceStatus(e.target.value)} className={controlClassName}>
                 {ACCEPTANCE_STATUSES.map((s) => (<option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>))}
               </select>
             </div>
           )}
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Recipient Name</label>
+            <label className={fieldLabelClassName}>Recipient Name</label>
             <input type="text" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} className={controlClassName} placeholder="John Doe"/>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Recipient Email</label>
+            <label className={fieldLabelClassName}>Recipient Email</label>
             <input type="email" value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} className={controlClassName} placeholder="john@example.com"/>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Expires At</label>
+            <label className={fieldLabelClassName}>Expires At</label>
             <input type="datetime-local" value={expiresAt} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setExpiresAt(e.target.value)} className={controlClassName}/>
           </div>
           <div className="sm:col-span-2">
-            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Admin Notes</label>
+            <label className={fieldLabelClassName}>Admin Notes</label>
             <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className={controlMultilineClassName} placeholder="Internal notes..."/>
           </div>
         </div>
@@ -839,7 +840,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             <form className="flex flex-col gap-3 sm:flex-row" onSubmit={handleMediaSearchSubmit}>
               <div className="relative min-w-0 flex-1">
                 <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"/>
-                <Input value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} placeholder="Search by filename or path" className="h-10 pl-9"/>
+                <Input value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} placeholder="Search by filename or path" className="pl-9"/>
               </div>
               <Button type="submit" variant="outline" className="h-10" disabled={isLoadingMedia || isUploadingMedia}>
                 {isLoadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : <Search className="size-4"/>}
@@ -992,58 +993,58 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                   <div className={`border-t border-[var(--wt-rule-strong)] p-5 space-y-4 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Title</label>
+                        <label className={fieldLabelClassName}>Title</label>
                         <input type="text" value={versionForm.title} onChange={(e) => setVersionForm({...versionForm, title: e.target.value})} className={controlClassName} placeholder="Classic Walking Tour"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Tour Date &amp; Time</label>
+                        <label className={fieldLabelClassName}>Tour Date &amp; Time</label>
                         <input type="datetime-local" value={versionForm.tourDate} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setVersionForm({...versionForm, tourDate: e.target.value})} className={controlClassName}/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Duration (minutes)</label>
+                        <label className={fieldLabelClassName}>Duration (minutes)</label>
                         <input type="number" min="0" value={versionForm.durationMinutes} onChange={(e) => setVersionForm({...versionForm, durationMinutes: e.target.value})} className={controlClassName} placeholder="180"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Price Amount</label>
+                        <label className={fieldLabelClassName}>Price Amount</label>
                         <input type="number" step="0.01" min="0" value={versionForm.priceAmount} onChange={(e) => setVersionForm({...versionForm, priceAmount: e.target.value})} className={controlClassName}/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Currency</label>
+                        <label className={fieldLabelClassName}>Currency</label>
                         <select value={versionForm.priceCurrency} onChange={(e) => setVersionForm({...versionForm, priceCurrency: e.target.value})} className={controlClassName}>
                           <option value="EUR">EUR</option>
                           <option value="DKK">DKK</option>
                         </select>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Description</label>
+                        <label className={fieldLabelClassName}>Description</label>
                         <textarea value={versionForm.description} onChange={(e) => setVersionForm({...versionForm, description: e.target.value})} rows={3} className={controlMultilineClassName}/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Itinerary Description</label>
+                        <label className={fieldLabelClassName}>Itinerary Description</label>
                         <textarea value={versionForm.itineraryDescription} onChange={(e) => setVersionForm({...versionForm, itineraryDescription: e.target.value})} rows={3} className={controlMultilineClassName}/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Included (one per line)</label>
+                        <label className={fieldLabelClassName}>Included (one per line)</label>
                         <textarea value={versionForm.included} onChange={(e) => setVersionForm({...versionForm, included: e.target.value})} rows={3} className={controlMultilineClassName} placeholder={"Professional guide\nMuseum tickets\nSnacks"}/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Not Included (one per line)</label>
+                        <label className={fieldLabelClassName}>Not Included (one per line)</label>
                         <textarea value={versionForm.notIncluded} onChange={(e) => setVersionForm({...versionForm, notIncluded: e.target.value})} rows={3} className={controlMultilineClassName} placeholder={"Transport\nLunch"}/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Cancellation Policy</label>
+                        <label className={fieldLabelClassName}>Cancellation Policy</label>
                         <textarea value={versionForm.cancellationPolicy} onChange={(e) => setVersionForm({...versionForm, cancellationPolicy: e.target.value})} rows={2} className={controlMultilineClassName}/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Start Point Label</label>
+                        <label className={fieldLabelClassName}>Start Point Label</label>
                         <input type="text" value={versionForm.startPointLabel} onChange={(e) => setVersionForm({...versionForm, startPointLabel: e.target.value})} className={controlClassName} placeholder="Placa Catalunya"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">End Point Label</label>
+                        <label className={fieldLabelClassName}>End Point Label</label>
                         <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className={controlClassName} placeholder="La Sagrada Familia"/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Stripe Payment Link <span className="font-normal text-[var(--wt-ink-muted)]">(optional)</span></label>
+                        <label className={fieldLabelClassName}>Stripe Payment Link <span className="font-normal text-[var(--wt-ink-muted)]">(optional)</span></label>
                         <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className={controlClassName} placeholder="https://buy.stripe.com/..."/>
                       </div>
                     </div>

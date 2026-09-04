@@ -664,7 +664,6 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Tag Key</FieldLabel>
               <Input
-                className="h-10"
                 placeholder="e.g., adventure"
                 value={tagForm.key}
                 pattern={TAG_KEY_PATTERN}
@@ -693,7 +692,6 @@ export function TaxonomyClient({
                       {locale.code}
                     </span>
                     <Input
-                      className="h-10"
                       placeholder={`Label in ${ locale.name }`}
                       value={tagForm.labels[locale.code] ?? ""}
                       maxLength={TAG_LABEL_MAX_LENGTH}
@@ -747,7 +745,6 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Code</FieldLabel>
               <Input
-                className="h-10"
                 placeholder="e.g., en, es, fr"
                 value={languageForm.code}
                 pattern={LANGUAGE_CODE_PATTERN}
@@ -765,7 +762,6 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Name</FieldLabel>
               <Input
-                className="h-10"
                 placeholder="e.g., English, Spanish"
                 value={languageForm.name}
                 maxLength={LANGUAGE_NAME_MAX_LENGTH}
@@ -783,7 +779,6 @@ export function TaxonomyClient({
             <Field>
               <FieldLabel>Sort Order</FieldLabel>
               <Input
-                className="h-10"
                 type="number"
                 min={0}
                 step={1}

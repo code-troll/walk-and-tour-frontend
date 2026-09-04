@@ -13,6 +13,8 @@ import {
   type TourTranslationFormState,
 } from "@/lib/tours/admin-tour-form";
 import { cn } from "@/lib/utils";
+import {controlClassName, controlMultilineClassName} from "@/components/ui/control-class";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 import {
   Check,
   ChevronDown,
@@ -25,8 +27,6 @@ import {
   Trash2,
 } from "lucide-react";
 
-const textareaClassName =
-  "flex min-h-24 w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-ink)] outline-none transition-colors placeholder:text-[var(--wt-ink-muted)] focus-visible:border-[var(--wt-rule-strong)] focus-visible:ring-2 focus-visible:ring-[var(--wt-rule-strong)] disabled:cursor-not-allowed disabled:opacity-50";
 const sectionClassName =
   "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-6 max-[520px]:p-4";
 
@@ -114,7 +114,7 @@ export function TranslationsSection({
 
                 onAddTranslationAction(event.target.value);
               } }
-              className="h-10 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 text-sm text-[var(--wt-ink)] outline-none transition focus:border-[var(--wt-rule-strong)] focus:ring-2 focus:ring-[var(--wt-rule-strong)] max-[520px]:w-full"
+              className={controlClassName}
               disabled={ availableToAdd.length === 0 }
             >
               <option value="">Select language</option>
@@ -248,7 +248,7 @@ export function TranslationsSection({
 
                       <div className="space-y-4">
                         <div className="space-y-1.5">
-                          <label className="text-sm font-medium text-foreground">Title</label>
+                          <label className={fieldLabelClassName}>Title</label>
                           <Input
                             value={ translation.title }
                             onChange={ (event) =>
@@ -264,7 +264,7 @@ export function TranslationsSection({
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-sm font-medium text-foreground">URL Slug</label>
+                          <label className={fieldLabelClassName}>URL Slug</label>
                           <Input
                             value={ translation.slug }
                             onChange={ (event) =>
@@ -274,8 +274,7 @@ export function TranslationsSection({
                                 event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""),
                               )
                             }
-                            placeholder={ generateTourSlug(translation.title || formState.name) || "tour-url-slug" }
-                            className="font-mono text-sm"
+                            placeholder={ generateTourSlug(translation.title || formState.name) || "tour-url-slug" } className="font-mono"
                           />
                           { !translation.slug && (translation.title || formState.name) ? (
                             <p className="text-xs text-muted-foreground">
@@ -286,7 +285,7 @@ export function TranslationsSection({
 
                         <div className="grid gap-4 md:grid-cols-2">
                           <div className="space-y-1.5">
-                            <label className="text-sm font-medium text-foreground">
+                            <label className={fieldLabelClassName}>
                               Cancellation Type
                             </label>
                             <Input
@@ -304,7 +303,7 @@ export function TranslationsSection({
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-sm font-medium text-foreground">
+                            <label className={fieldLabelClassName}>
                               Booking Reference ID
                             </label>
                             <Input
@@ -324,7 +323,7 @@ export function TranslationsSection({
 
                         <div className="grid gap-4 xl:grid-cols-2">
                           <div className="space-y-1.5">
-                            <label className="text-sm font-medium text-foreground">
+                            <label className={fieldLabelClassName}>
                               About Tour Description
                             </label>
                             <textarea
@@ -339,12 +338,12 @@ export function TranslationsSection({
                               placeholder="Describe the tour for this language"
                               rows={ 5 }
                               maxLength={ TOUR_TEXTAREA_MAX_LENGTH }
-                              className={ textareaClassName }
+                              className={ controlMultilineClassName }
                             />
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-sm font-medium text-foreground">
+                            <label className={fieldLabelClassName}>
                               Highlights
                             </label>
                             <textarea
@@ -359,14 +358,14 @@ export function TranslationsSection({
                               placeholder="One item per line"
                               rows={ 5 }
                               maxLength={ TOUR_TEXTAREA_MAX_LENGTH }
-                              className={ textareaClassName }
+                              className={ controlMultilineClassName }
                             />
                           </div>
                         </div>
 
                         <div className="grid gap-4 md:grid-cols-2">
                           <div className="space-y-1.5">
-                            <label className="text-sm font-medium text-foreground">Included</label>
+                            <label className={fieldLabelClassName}>Included</label>
                             <textarea
                               value={ translation.includedText }
                               onChange={ (event) =>
@@ -378,13 +377,13 @@ export function TranslationsSection({
                               }
                               placeholder="One item per line"
                               rows={ 5 }
-                              className={ textareaClassName }
+                              className={ controlMultilineClassName }
                               maxLength={ TOUR_TEXTAREA_MAX_LENGTH }
                             />
                           </div>
 
                           <div className="space-y-1.5">
-                            <label className="text-sm font-medium text-foreground">
+                            <label className={fieldLabelClassName}>
                               Not Included
                             </label>
                             <textarea
@@ -398,7 +397,7 @@ export function TranslationsSection({
                               }
                               placeholder="One item per line"
                               rows={ 5 }
-                              className={ textareaClassName }
+                              className={ controlMultilineClassName }
                               maxLength={ TOUR_TEXTAREA_MAX_LENGTH }
                             />
                           </div>
@@ -414,7 +413,7 @@ export function TranslationsSection({
 
                       <div className="grid gap-4 md:grid-cols-2">
                         <div className="space-y-1.5">
-                          <label className="text-sm font-medium text-foreground">
+                          <label className={fieldLabelClassName}>
                             Start Point Label
                           </label>
                           <Input
@@ -431,7 +430,7 @@ export function TranslationsSection({
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-sm font-medium text-foreground">
+                          <label className={fieldLabelClassName}>
                             End Point Label
                           </label>
                           <Input
@@ -457,7 +456,7 @@ export function TranslationsSection({
                         </h3>
 
                         <div className="space-y-1.5">
-                          <label className="text-sm font-medium text-foreground">
+                          <label className={fieldLabelClassName}>
                             Tour Route Description
                           </label>
                           <textarea
@@ -472,7 +471,7 @@ export function TranslationsSection({
                             placeholder="Describe the route, what guests will see, and how the tour flows."
                             rows={ 6 }
                             maxLength={ TOUR_TEXTAREA_MAX_LENGTH }
-                            className={ textareaClassName }
+                            className={ controlMultilineClassName }
                           />
                         </div>
                       </div>
@@ -536,7 +535,7 @@ export function TranslationsSection({
                                     }
                                     placeholder="Stop description"
                                     rows={ 4 }
-                                    className={ textareaClassName }
+                                    className={ controlMultilineClassName }
                                     disabled={ !stopId }
                                   />
                                 </div>

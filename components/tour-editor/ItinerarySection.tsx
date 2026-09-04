@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { COMMUTE_MODE_OPTIONS, type CommuteMode, type TourFormState } from "@/lib/tours/admin-tour-form";
 import { cn } from "@/lib/utils";
+import {controlBareClassName, fieldLabelClassName} from "@/components/ui/control-class";
 import {
   ArrowDown,
   ArrowUp,
@@ -179,8 +180,7 @@ export function ItinerarySection({
                               value: event.target.value,
                             })
                           }
-                          placeholder="stop-1"
-                          className="h-8 flex-1 border-0 bg-transparent px-0 font-medium focus-visible:ring-0"
+                          placeholder="stop-1" className={cn(controlBareClassName, "flex-1")}
                         />
 
                         <div className="flex items-center gap-1">
@@ -215,7 +215,7 @@ export function ItinerarySection({
 
                       <div className="grid gap-4 p-4 sm:grid-cols-2 lg:grid-cols-4">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">
+                          <label className={fieldLabelClassName}>
                             Duration (min)
                           </label>
                           <Input
@@ -230,12 +230,11 @@ export function ItinerarySection({
                             }
                             placeholder="30"
                             min={ 0 }
-                            className="h-9"
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">Latitude</label>
+                          <label className={fieldLabelClassName}>Latitude</label>
                           <Input
                             type="number"
                             value={ stop.latitude }
@@ -247,13 +246,12 @@ export function ItinerarySection({
                               })
                             }
                             placeholder="40.7128"
-                            step="any"
-                            className="h-9 font-mono text-sm"
+                            step="any" className="font-mono"
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">Longitude</label>
+                          <label className={fieldLabelClassName}>Longitude</label>
                           <Input
                             type="number"
                             value={ stop.longitude }
@@ -265,8 +263,7 @@ export function ItinerarySection({
                               })
                             }
                             placeholder="-74.0060"
-                            step="any"
-                            className="h-9 font-mono text-sm"
+                            step="any" className="font-mono"
                           />
                         </div>
 
@@ -289,7 +286,7 @@ export function ItinerarySection({
                                   value: event.target.value,
                                 })
                               }
-                              className="bg-transparent text-sm font-medium text-[var(--wt-ink)] focus:outline-none"
+                              className={controlBareClassName}
                             >
                               { commuteModes.map((mode) => (
                                 <option key={ mode.value } value={ mode.value }>
@@ -311,8 +308,7 @@ export function ItinerarySection({
                                 })
                               }
                               placeholder="10"
-                              min={ 0 }
-                              className="h-8 w-20 text-center"
+                              min={ 0 } className="w-20 text-center"
                             />
                             <span className="text-xs text-[var(--wt-ink-muted)]">min</span>
                           </div>

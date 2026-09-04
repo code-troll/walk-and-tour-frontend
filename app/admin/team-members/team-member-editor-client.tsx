@@ -48,6 +48,7 @@ import {
   type TeamMemberFormState,
 } from "@/lib/team-members/admin-team-member-types";
 import type {components} from "@/lib/api/generated/backend-types";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 import {
   createTeamMemberAction,
   createTeamMemberTranslationAction,
@@ -58,7 +59,6 @@ import {
   updateTeamMemberTranslationAction,
 } from "./actions";
 
-const fieldLabelClassName = "text-sm font-medium text-foreground";
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 
 type TranslationCountryCode = "GB" | "ES" | "IT";
@@ -352,7 +352,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
           <div>
             <label className={fieldLabelClassName}>Name *</label>
-            <Input value={formState.name} onChange={(e) => setFormState((prev) => ({...prev, name: e.target.value}))} placeholder="Team member name" className="h-10 mt-1.5" disabled={isMutating} />
+            <Input value={formState.name} onChange={(e) => setFormState((prev) => ({...prev, name: e.target.value}))} placeholder="Team member name" disabled={isMutating} />
           </div>
 
           {/* Photo picker inline */}
@@ -375,18 +375,18 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           <div className="grid gap-5 lg:grid-cols-2">
             <div>
               <label className={fieldLabelClassName}>Image Alt Text</label>
-              <Input value={formState.imageAlt} onChange={(e) => setFormState((prev) => ({...prev, imageAlt: e.target.value}))} placeholder="Photo of..." className="h-10 mt-1.5" disabled={isMutating} />
+              <Input value={formState.imageAlt} onChange={(e) => setFormState((prev) => ({...prev, imageAlt: e.target.value}))} placeholder="Photo of..." disabled={isMutating} />
             </div>
             <div>
               <label className={fieldLabelClassName}>LinkedIn URL</label>
-              <Input type="url" placeholder="https://linkedin.com/in/..." value={formState.linkedinUrl} onChange={(e) => setFormState((prev) => ({...prev, linkedinUrl: e.target.value}))} className="h-10 mt-1.5" disabled={isMutating} />
+              <Input type="url" placeholder="https://linkedin.com/in/..." value={formState.linkedinUrl} onChange={(e) => setFormState((prev) => ({...prev, linkedinUrl: e.target.value}))} disabled={isMutating} />
             </div>
           </div>
 
           {isCreated && (
             <div>
               <label className={fieldLabelClassName}>Display Order</label>
-              <Input type="number" min={0} value={formState.orderIndex} onChange={(e) => setFormState((prev) => ({...prev, orderIndex: parseInt(e.target.value, 10) || 0}))} className="h-10 mt-1.5" disabled={isMutating} />
+              <Input type="number" min={0} value={formState.orderIndex} onChange={(e) => setFormState((prev) => ({...prev, orderIndex: parseInt(e.target.value, 10) || 0}))} disabled={isMutating} />
             </div>
           )}
 
@@ -435,7 +435,6 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                 <div>
                   <label className={fieldLabelClassName}>Role / Title</label>
                   <Input
-                    className="h-10"
                     value={activeTranslation.role}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -489,7 +488,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <DialogDescription>Choose an image from the media library or upload a new one.</DialogDescription>
           </DialogHeader>
           <div className="flex items-center gap-2">
-            <Input className="h-10" placeholder="Search media..." value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleMediaSearch()} />
+            <Input placeholder="Search media..." value={mediaSearchInput} onChange={(e) => setMediaSearchInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleMediaSearch()} />
             <Button variant="outline" className="h-10" onClick={handleMediaSearch}><Search className="size-4" /></Button>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => void handleMediaUpload(e)} />
             <Button variant="outline" className="h-10" onClick={() => fileInputRef.current?.click()} disabled={isUploadingMedia}>
