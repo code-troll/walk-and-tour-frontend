@@ -16,6 +16,16 @@ const isItemActive = (pathname: string, href: string) => {
   return pathname === href || pathname.startsWith(`${ href }/`);
 };
 
+/**
+ * The backoffice navigation — direction "Consola".
+ *
+ * Compact rows rather than pills: with eleven destinations for a super admin,
+ * padding is the difference between a list you scan and a list you scroll.
+ *
+ * The active item is marked with a 2 px inset rule in the brand red. That is
+ * one of only two places red appears in the backoffice — this, and destructive
+ * actions — because a colour that shows up everywhere stops meaning anything.
+ */
 export function AdminSidebarNav({
   items,
 }: {
@@ -24,7 +34,7 @@ export function AdminSidebarNav({
   const pathname = usePathname();
 
   return (
-    <nav className="mt-5 flex flex-wrap gap-2 lg:block lg:space-y-2">
+    <nav className="flex flex-wrap gap-0.5 lg:block">
       {items.map((item) => {
         const isActive = isItemActive(pathname, item.href);
 
@@ -35,8 +45,8 @@ export function AdminSidebarNav({
             aria-current={isActive ? "page" : undefined}
             className={
               isActive
-                ? "inline-flex rounded-2xl bg-[#21343b] px-4 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(33,52,59,0.18)] transition lg:flex"
-                : "inline-flex rounded-2xl px-4 py-3 text-sm font-medium text-[#294049] transition hover:bg-white hover:text-[#102129] lg:flex"
+                ? "inline-flex w-full items-center px-3 py-1.5 text-sm font-medium text-[var(--wt-nav-ink-on)] shadow-[inset_2px_0_0_var(--wt-nav-marker)] transition lg:flex"
+                : "inline-flex w-full items-center px-3 py-1.5 text-sm text-[var(--wt-nav-ink)] transition hover:text-[var(--wt-nav-ink-on)] lg:flex"
             }
           >
             {item.label}
