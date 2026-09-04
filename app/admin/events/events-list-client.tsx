@@ -25,10 +25,10 @@ type ApiLanguage = components["schemas"]["LanguageResponseDto"];
 
 const badge = (tone: "green" | "amber" | "slate" | "red") =>
   ({
-    green: "border border-[#cfe4d3] bg-[#f3fbf4] text-[#2f6b3f]",
-    amber: "border border-[#eadfce] bg-[#fbf7f0] text-[#8a6029]",
-    slate: "border border-[#dbe3e6] bg-[#f4f7f8] text-[#4a5b62]",
-    red: "border border-[#e7c1bd] bg-[#fbf1ef] text-[#a3483f]",
+    green: "border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]",
+    amber: "border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]",
+    slate: "border border-[var(--wt-rule)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]",
+    red: "border border-[var(--wt-danger)] bg-[var(--wt-surface)] text-[var(--wt-danger)]",
   })[tone];
 
 const describeSchedule = (event: ApiEvent): string => {
@@ -123,7 +123,7 @@ export default function EventsListClient() {
           <button
             type="button"
             onClick={() => void loadWorkspace()}
-            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
           </button>
@@ -163,7 +163,7 @@ export default function EventsListClient() {
         }
       >
         {error ? (
-          <p className="mb-4 rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+          <p className="mb-4 rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
             {error}
           </p>
         ) : null}
@@ -181,7 +181,7 @@ export default function EventsListClient() {
         ) : (
           <div className="space-y-4">
             {events.map((event) => (
-              <article key={event.id} className="rounded-2xl border border-[#f0e6d8] bg-white p-5">
+              <article key={event.id} className="rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
@@ -252,7 +252,7 @@ export default function EventsListClient() {
               Keep event
             </Button>
             <Button
-              className="h-10 bg-[#a3483f] text-white hover:bg-[#8a3d36]"
+              className="h-10 bg-[var(--wt-danger)] text-white transition hover:opacity-90"
               onClick={() => void handleConfirmDelete()}
               disabled={isMutating}
             >

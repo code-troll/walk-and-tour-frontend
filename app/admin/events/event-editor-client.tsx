@@ -167,8 +167,8 @@ export function EventEditorClient({mode, eventId}: EventEditorClientProps) {
         <p
           className={`rounded-xl px-4 py-3 text-sm ${
             feedback.tone === "error"
-              ? "border border-[#e7c1bd] bg-[#fbf1ef] text-[#a3483f]"
-              : "border border-[#cfe4d3] bg-[#f3fbf4] text-[#2f6b3f]"
+              ? "border border-[var(--wt-danger)] bg-[var(--wt-surface)] text-[var(--wt-danger)]"
+              : "border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"
           }`}
         >
           {feedback.message}

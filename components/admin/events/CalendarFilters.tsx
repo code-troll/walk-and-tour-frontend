@@ -31,7 +31,7 @@ export function CalendarFilters({groups, excluded, onToggle, onToggleAll}: Calen
           <SlidersHorizontal className="size-4" />
           Filters
           {activeCount > 0 ? (
-            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[#7a5424] px-1.5 text-xs font-medium text-white">
+            <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-[var(--wt-ink)] px-1.5 text-xs font-medium text-white">
               {activeCount}
             </span>
           ) : null}
@@ -51,7 +51,7 @@ export function CalendarFilters({groups, excluded, onToggle, onToggleAll}: Calen
                 {group.options.length > 0 ? (
                   <button
                     type="button"
-                    className="text-xs text-[#7a5424] hover:underline"
+                    className="text-xs text-[var(--wt-ink-muted)] hover:underline"
                     onClick={() => onToggleAll(group.key, allValues, !allChecked)}
                   >
                     {allChecked ? "Clear" : "Select all"}

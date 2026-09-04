@@ -63,7 +63,7 @@ export function DayNotePanel({date, initialNote, onClose, onChanged}: DayNotePan
 
       <div className="flex-1 space-y-4 overflow-y-auto px-4 py-2">
         {error ? (
-          <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+          <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
             {error}
           </p>
         ) : null}
@@ -74,7 +74,7 @@ export function DayNotePanel({date, initialNote, onClose, onChanged}: DayNotePan
           rows={4}
           autoFocus
           placeholder="e.g. Public holiday — reduced staff"
-          className="w-full rounded-xl border border-[#e2d5bf] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[#cbb390]"
+          className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
         />
       </div>
 
@@ -82,7 +82,7 @@ export function DayNotePanel({date, initialNote, onClose, onChanged}: DayNotePan
         {hadNote ? (
           <Button
             variant="outline"
-            className="h-10 text-[#a3483f]"
+            className="h-10 text-[var(--wt-danger)]"
             onClick={() => void handleDelete()}
             disabled={isSaving}
           >
