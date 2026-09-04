@@ -68,6 +68,32 @@ const NO_TAILWIND_PALETTE =
   "approved.";
 
 
+/**
+ * Corner radii.
+ *
+ * Colour was not the only thing drifting. The inner boxes of the backoffice had
+ * grown seven different corners — `rounded-xl`, `2xl`, `3xl`, `lg`, `md`, `sm`
+ * and a few arbitrary rem values — while the section containers around them
+ * were on the token. The insides of a section never matched its outside, and
+ * nothing in the build noticed.
+ *
+ * Approved: the `--wt-radius-*` tokens, `rounded-full` for things that are round
+ * by shape (pills, avatars), and `rounded-none`.
+ *
+ * Form controls are the exception and they live outside these trees on purpose:
+ * `components/ui/control-class.ts` holds the one definition of a control, and
+ * its radius follows shadcn because those tokens are shared with the whole
+ * application rather than with one surface.
+ */
+const AD_HOC_RADIUS =
+  "\\brounded(?:-(?:t|b|l|r|tl|tr|bl|br|s|e|ss|se|es|ee))?-(?!full\\b|none\\b|\\[var\\(--wt-)";
+
+const NO_AD_HOC_RADIUS =
+  "Ad-hoc corner radius. Boxes in the backoffice and the hotel portal use the " +
+  "--wt-radius-* tokens; `rounded-full` is for things that are round by shape. " +
+  "A form control should take its shape from components/ui/control-class.ts " +
+  "rather than spelling its own.";
+
 const NO_RAW_COLOUR =
   "Raw colour literal. The backoffice and the hotel portal may only use the " +
   "brand palette through the tokens in app/design-system.css — every value " +
@@ -109,6 +135,14 @@ const eslintConfig = defineConfig([
         {
           selector: `TemplateElement[value.raw=/\\b${TAILWIND_PALETTE}\\b/]`,
           message: NO_TAILWIND_PALETTE,
+        },
+        {
+          selector: `Literal[value=/${AD_HOC_RADIUS}/]`,
+          message: NO_AD_HOC_RADIUS,
+        },
+        {
+          selector: `TemplateElement[value.raw=/${AD_HOC_RADIUS}/]`,
+          message: NO_AD_HOC_RADIUS,
         },
       ],
     },
