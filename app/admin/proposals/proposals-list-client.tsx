@@ -202,7 +202,7 @@ export function AdminProposalsListClient() {
           {proposals.map((proposal) => (
             <div
               key={proposal.id}
-              className="flex items-center gap-4 rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5 transition-colors hover:bg-[var(--wt-surface)]"
+              className="flex items-center gap-4 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-5 transition-colors hover:bg-[var(--wt-surface)]"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3">
@@ -239,7 +239,7 @@ export function AdminProposalsListClient() {
                 <button
                   type="button"
                   onClick={() => void handleTogglePublish(proposal)}
-                  className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${
+                  className={`rounded-[var(--wt-radius-sm)] border px-3 py-2 text-xs font-semibold transition-colors ${
                     proposal.publicationStatus === "published"
                       ? "border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]"
                       : "border-[var(--wt-status-confirmed)] text-[var(--wt-status-confirmed)] hover:bg-[var(--wt-status-confirmed-bg)]"
@@ -251,7 +251,7 @@ export function AdminProposalsListClient() {
                 <button
                   type="button"
                   onClick={() => void handleCopyLink(proposal.hash, proposal.id, proposal.language)}
-                  className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
+                  className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
                   title="Copy public link"
                 >
                   {copiedId === proposal.id ? <Check className="h-4 w-4 text-[var(--wt-status-confirmed)]"/> : <Copy className="h-4 w-4"/>}
@@ -260,7 +260,7 @@ export function AdminProposalsListClient() {
                   href={`${getPublicOrigin()}${getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${proposal.hash}`})}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
+                  className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
                   title="Open public link"
                 >
                   <ExternalLink className="h-4 w-4"/>
@@ -268,7 +268,7 @@ export function AdminProposalsListClient() {
                 <button
                   type="button"
                   onClick={() => setDeleteTarget(proposal)}
-                  className="rounded-lg border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
+                  className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
                   title="Delete proposal"
                 >
                   <Trash2 className="h-4 w-4"/>

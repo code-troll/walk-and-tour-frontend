@@ -64,7 +64,7 @@ export function CalendarFilters({groups, excluded, onToggle, onToggleAll}: Calen
               {group.options.map((option) => (
                 <label
                   key={option.value}
-                  className="flex cursor-pointer items-center gap-2 rounded-md px-1 py-1 text-sm hover:bg-muted"
+                  className="flex cursor-pointer items-center gap-2 rounded-[var(--wt-radius-sm)] px-1 py-1 text-sm hover:bg-muted"
                 >
                   <Checkbox
                     checked={!excludedSet.has(option.value)}

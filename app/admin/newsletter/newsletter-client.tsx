@@ -106,7 +106,7 @@ export default function AdminNewsletterClient() {
                 <tr key={subscriber.id} className="border-b border-border/50 text-foreground">
                   <td className="py-4 pr-4">{subscriber.email}</td>
                   <td className="py-4 pr-4">
-                    <span className={`rounded-lg px-2 py-1 text-xs font-semibold ${
+                    <span className={`rounded-[var(--wt-radius-sm)] px-2 py-1 text-xs font-semibold ${
                       subscriber.subscriptionStatus === "subscribed"
                         ? "bg-primary/10 text-primary"
                         : subscriber.subscriptionStatus === "pending_confirmation"

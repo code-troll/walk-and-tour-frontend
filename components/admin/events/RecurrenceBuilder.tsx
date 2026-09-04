@@ -41,7 +41,7 @@ export function RecurrenceBuilder({
   const unit = value.freq === "daily" ? "day(s)" : value.freq === "weekly" ? "week(s)" : "month(s)";
 
   return (
-    <div className="space-y-5 rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
+    <div className="space-y-5 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <label className={fieldLabelClassName}>Frequency</label>

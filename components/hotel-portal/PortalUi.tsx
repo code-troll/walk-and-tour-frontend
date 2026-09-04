@@ -1,5 +1,7 @@
 import type {ReactNode} from "react";
 
+import {controlClassName} from "@/components/ui/control-class";
+
 /**
  * The hotel portal's own primitives — direction "Skilt".
  *
@@ -32,24 +34,12 @@ export const portalQuietAction =
   "transition hover:text-[var(--wt-ink)]";
 
 /**
- * The shape of a form control, defined once.
- *
- * It deliberately mirrors `components/ui/input.tsx` — height, radius, border and
- * padding — because a native `<select>` cannot use that component but has to sit
- * in the same row as it. Two definitions of "what a control looks like" is how
- * the form ended up with 36 px selects beside 32 px inputs.
- *
- * It carries no top margin, for the same reason: `Input` has none, and a
- * margin here alone dropped every select 4 px below the input sharing its row.
- *
- * These metrics still come from shadcn rather than from the design system: the
- * shadcn control tokens are shared with the backoffice, so aligning them with
- * the brand tokens has to happen when the backoffice migrates, not before.
+ * The portal's form control. The shape itself lives in
+ * `components/ui/control-class.ts`, shared with the backoffice, because both
+ * surfaces needed the same thing and each having its own copy is exactly how
+ * this got out of step in the first place.
  */
-export const portalControl =
-  "h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 " +
-  "text-sm text-[var(--wt-ink)] outline-none transition-colors " +
-  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
+export const portalControl = controlClassName;
 
 /**
  * A titled block of content.

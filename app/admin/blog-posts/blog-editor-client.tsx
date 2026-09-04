@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
 import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
+import { controlClassName, controlMultilineClassName } from "@/components/ui/control-class";
 // The preview below renders with the public site's palette on purpose:
 // BlogPostArticle is the same component the reader sees, shared with
 // components/public/PublicBlogPostDetailPageClient. Giving it the backoffice
@@ -83,9 +84,9 @@ import {
 } from "./actions";
 
 const textareaClassName =
-  "min-h-28 w-full rounded-lg border border-input bg-background px-4 py-3 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20";
+  controlMultilineClassName;
 const selectClassName =
-  "h-10 rounded-lg border border-input bg-background px-3 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-ring/20";
+  controlClassName;
 const fieldLabelClassName = "text-sm font-medium text-foreground";
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 const viewCountFormatter = new Intl.NumberFormat("en-US");
@@ -939,7 +940,7 @@ export function BlogPostEditorClient({
         { feedback ? (
           <div
             className={ cn(
-              "whitespace-pre-line rounded-2xl border px-4 py-3 text-sm",
+              "whitespace-pre-line rounded-[var(--wt-radius-sm)] border px-4 py-3 text-sm",
               feedback.tone === "error"
                 ? "border-[var(--wt-danger)] text-[var(--wt-danger)]"
                 : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]",
@@ -1094,12 +1095,12 @@ export function BlogPostEditorClient({
 
           { !isCreated ? (
             <div
-              className="rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
+              className="rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
               Save the shared blog post before selecting a cover image.
             </div>
           ) : savedBlogPost?.heroMedia ? (
             <div className="flex flex-wrap items-start gap-5">
-              <div className="overflow-hidden rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]">
+              <div className="overflow-hidden rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]">
                 { coverPreviewUrl ? (
                   <Image
                     src={ coverPreviewUrl }
@@ -1123,7 +1124,7 @@ export function BlogPostEditorClient({
             </div>
           ) : (
             <div
-              className="rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
+              className="rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
               No cover image selected yet.
             </div>
           ) }
@@ -1162,7 +1163,7 @@ export function BlogPostEditorClient({
 
           { !isCreated ? (
             <div
-              className="rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
+              className="rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
               Save the shared details to start adding localized blog content.
             </div>
           ) : (
@@ -1170,7 +1171,7 @@ export function BlogPostEditorClient({
               <div className="flex flex-wrap gap-2">
                 { formState.translations.length === 0 ? (
                   <div
-                    className="w-full rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
+                    className="w-full rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
                     No translations yet. Add a locale to start writing the blog content.
                   </div>
                 ) : (
@@ -1199,7 +1200,7 @@ export function BlogPostEditorClient({
                             setIsTranslationDetailsCollapsed(false);
                           } }
                         className={ cn(
-                          "rounded-2xl border px-4 py-3 text-left transition",
+                          "rounded-[var(--wt-radius-sm)] border px-4 py-3 text-left transition",
                           isActive
                             ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-rule-strong)]"
                             : isSaved
@@ -1209,7 +1210,7 @@ export function BlogPostEditorClient({
                       >
                         <div className="flex items-center gap-2 text-sm font-medium text-[var(--wt-ink)]">
                           { Flag ? (
-                            <span className="overflow-hidden rounded-sm border-[var(--wt-rule-strong)]">
+                            <span className="overflow-hidden rounded-[var(--wt-radius-sm)] border-[var(--wt-rule-strong)]">
                               <Flag className="size-4"/>
                             </span>
                           ) : (
@@ -1231,7 +1232,7 @@ export function BlogPostEditorClient({
               </div>
 
               { activeTranslation ? (
-                  <div className="space-y-5 rounded-lg border border-border bg-muted/30 p-5">
+                  <div className="space-y-5 rounded-[var(--wt-radius-sm)] border border-border bg-muted/30 p-5">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <button
                         type="button"
@@ -1428,12 +1429,12 @@ export function BlogPostEditorClient({
 
           { mediaDialogError ? (
             <div
-              className="whitespace-pre-line rounded-2xl border border-[var(--wt-danger)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+              className="whitespace-pre-line rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] px-4 py-3 text-sm text-[var(--wt-danger)]">
               { mediaDialogError }
             </div>
           ) : null }
 
-          <div className="max-h-112 overflow-y-auto rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4">
+          <div className="max-h-112 overflow-y-auto rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4">
             { mediaLibraryItems.length === 0 && !isLoadingMediaLibrary ? (
               <div className="flex min-h-48 items-center justify-center text-sm text-[var(--wt-ink-muted)]">
                 No media assets found.
@@ -1450,7 +1451,7 @@ export function BlogPostEditorClient({
                       type="button"
                       onClick={ () => setSelectedMediaId(asset.id) }
                       className={ cn(
-                        "overflow-hidden rounded-2xl border bg-white text-left transition",
+                        "overflow-hidden rounded-[var(--wt-radius-sm)] border bg-white text-left transition",
                         isSelected
                           ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-rule-strong)]"
                           : "border-[var(--wt-rule-strong)] hover:border-[var(--wt-rule-strong)]",
@@ -1523,7 +1524,7 @@ export function BlogPostEditorClient({
 
           <div className="min-h-0 overflow-y-auto px-6 py-6">
             { previewData ? (
-              <div className="mx-auto w-full max-w-4xl rounded-3xl border border-[var(--wt-rule-strong)] bg-white px-6 py-8 lg:px-12">
+              <div className="mx-auto w-full max-w-4xl rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white px-6 py-8 lg:px-12">
                 <BlogPostArticle
                   contentHtml={ previewData.contentHtml }
                   contentText={ previewData.contentText }
@@ -1545,7 +1546,7 @@ export function BlogPostEditorClient({
                 />
               </div>
             ) : (
-              <div className="rounded-2xl border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
+              <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
                 Select a translation to preview the rendered post.
               </div>
             ) }

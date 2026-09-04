@@ -116,7 +116,7 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
           onChange={(event) => update({description: event.target.value})}
           rows={3}
           placeholder="Meeting point, what to bring, notes for guides…"
-          className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
+          className="w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
         />
       </div>
 

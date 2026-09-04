@@ -198,7 +198,7 @@ function TourListRow({
     <article
       ref={ rowRef }
       className={ cn(
-        "rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5 transition-[background-color,border-color,box-shadow,opacity] duration-150",
+        "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-5 transition-[background-color,border-color,box-shadow,opacity] duration-150",
         dropTargetHighlightClass,
         isDragged && "opacity-70",
       ) }
@@ -208,7 +208,7 @@ function TourListRow({
           <div
             ref={ dragHandleRef }
             className={ cn(
-              "mt-0.5 flex shrink-0 cursor-grab rounded-xl hover:bg-[var(--wt-surface)] p-2 text-[var(--wt-ink-muted)]",
+              "mt-0.5 flex shrink-0 cursor-grab rounded-[var(--wt-radius-sm)] hover:bg-[var(--wt-surface)] p-2 text-[var(--wt-ink-muted)]",
               isReordering && "cursor-not-allowed opacity-50",
             ) }
             aria-label={ `Drag to reorder ${ tour.name }` }
@@ -579,13 +579,13 @@ export function AdminToursListClient({
     >
       <div className="space-y-4">
         { reorderError ? (
-          <div className="rounded-2xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+          <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
             { reorderError }
           </div>
         ) : null }
 
         { tours.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
+          <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No tours have been created yet.</p>
             <Button asChild className="h-10 mt-4">
               <AdminProgressLink href="/tours/new">
@@ -601,7 +601,7 @@ export function AdminToursListClient({
             return (
               <div
                 key={ tour.id }
-                className="rounded-2xl"
+                className="rounded-[var(--wt-radius-sm)]"
               >
                 <TourListRow
                   dropPlacement={ isDropTarget ? dropIndicator?.placement ?? null : null }

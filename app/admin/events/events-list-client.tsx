@@ -163,13 +163,13 @@ export default function EventsListClient() {
         }
       >
         {error ? (
-          <p className="mb-4 rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+          <p className="mb-4 rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
             {error}
           </p>
         ) : null}
 
         {events.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
+          <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No events have been created yet.</p>
             <Button asChild className="h-10 mt-4">
               <AdminProgressLink href="/events/new">
@@ -181,7 +181,7 @@ export default function EventsListClient() {
         ) : (
           <div className="space-y-4">
             {events.map((event) => (
-              <article key={event.id} className="rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5">
+              <article key={event.id} className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-5">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
