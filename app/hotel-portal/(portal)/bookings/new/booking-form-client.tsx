@@ -9,7 +9,6 @@ import {
   PortalAlert,
   PortalSection,
   portalPrimaryAction,
-  portalControl,
   portalQuietAction,
 } from "@/components/hotel-portal/PortalUi";
 import {Input} from "@/components/ui/input";
@@ -24,6 +23,7 @@ import {
   type BookingFormState,
 } from "@/lib/hotel-portal/booking-types";
 import {createBookingAction} from "../../actions";
+import {controlClassName} from "@/components/ui/control-class";
 
 type ViewerTour = components["schemas"]["HotelViewerTourDto"];
 
@@ -107,7 +107,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           <div className="md:col-span-2">
             <Label htmlFor="booking-tour">Tour</Label>
             <select
-              className={portalControl}
+              className={controlClassName}
               id="booking-tour"
               onChange={(event) => update("tourId", event.target.value)}
               value={form.tourId}
@@ -147,7 +147,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           <div>
             <Label htmlFor="booking-language">Language</Label>
             <select
-              className={portalControl}
+              className={controlClassName}
               id="booking-language"
               onChange={(event) => update("languageCode", event.target.value)}
               value={form.languageCode}

@@ -25,6 +25,8 @@ import {
   type TourType,
 } from "@/lib/tours/admin-tour-form";
 import { cn } from "@/lib/utils";
+import {controlClassName} from "@/components/ui/control-class";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 import {
   ArrowDown,
   ArrowUp,
@@ -97,8 +99,6 @@ const MEDIA_LIBRARY_PAGE_SIZE = 24;
 const sectionClassName =
   "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-6 max-[520px]:p-4";
 const subCardClassName = "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4";
-const warmSelectClassName =
-  "h-11 w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 text-sm text-[var(--wt-ink)] outline-none transition focus:border-[var(--wt-rule-strong)] focus:ring-2 focus:ring-[var(--wt-rule-strong)]";
 
 const formatFileSize = (sizeInBytes: number) => {
   if (sizeInBytes < 1024 * 1024) {
@@ -456,21 +456,20 @@ export function GeneralSection({
 
         <div className="grid gap-4 lg:grid-cols-2">
           <div className="space-y-2 lg:col-span-2">
-            <label className="text-sm font-medium text-foreground">Tour Name</label>
+            <label className={fieldLabelClassName}>Tour Name</label>
             <Input
               value={ formState.name }
               onChange={ (event) => updateFormStateAction("name", event.target.value) }
               placeholder="Enter tour name"
-              className="h-11"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Tour Type</label>
+            <label className={fieldLabelClassName}>Tour Type</label>
             <select
               value={ formState.tourType }
               onChange={ (event) => handleTourTypeChange(event.target.value) }
-              className={ warmSelectClassName }
+              className={ controlClassName }
             >
               { TOUR_TYPE_OPTIONS.map((tourType) => (
                 <option key={ tourType } value={ tourType }>
@@ -500,7 +499,7 @@ export function GeneralSection({
 
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex">
+                <label className={cn(fieldLabelClassName, "flex")}>
                   <Clock className="size-4"/>
                   <span className="text-xs font-medium uppercase tracking-wide ml-2">Duration (min)</span>
                 </label>
@@ -513,8 +512,7 @@ export function GeneralSection({
                         "durationMinutes",
                         normalizePositiveIntegerInput(event.target.value),
                       )
-                    }
-                    className="h-9 text-lg font-semibold"
+                    } className="font-semibold"
                     inputMode="numeric"
                     pattern="[1-9][0-9]*"
                     placeholder="90"
@@ -523,7 +521,7 @@ export function GeneralSection({
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex">
+                <label className={cn(fieldLabelClassName, "flex")}>
                   <Star className="size-4"/>
                   <span className="text-xs font-medium uppercase tracking-wide ml-2">Rating (1/5)</span>
                 </label>
@@ -531,8 +529,7 @@ export function GeneralSection({
                   <Input
                     type="number"
                     value={ formState.rating }
-                    onChange={ (event) => updateFormStateAction("rating", event.target.value) }
-                    className="h-9 text-lg font-semibold"
+                    onChange={ (event) => updateFormStateAction("rating", event.target.value) } className="font-semibold"
                     min={ 1 }
                     max={ 5 }
                     step={ 0.1 }
@@ -541,7 +538,7 @@ export function GeneralSection({
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex">
+                <label className={cn(fieldLabelClassName, "flex")}>
                   <Star className="size-4"/>
                   <span className="text-xs font-medium uppercase tracking-wide ml-2">Reviews</span>
                 </label>
@@ -553,8 +550,7 @@ export function GeneralSection({
                       "reviewCount",
                       normalizePositiveIntegerInput(event.target.value),
                     )
-                  }
-                  className="h-9 text-lg font-semibold"
+                  } className="font-semibold"
                   inputMode="numeric"
                   pattern="[1-9][0-9]*"
                   placeholder="120"
@@ -667,7 +663,7 @@ export function GeneralSection({
                         <div className="grid gap-3 lg:grid-cols-2">
                           { enabledLanguages.map((language) => (
                             <div key={ language.code } className="space-y-1">
-                              <label className="text-xs font-medium text-muted-foreground">
+                              <label className={fieldLabelClassName}>
                                 { language.name }
                               </label>
                               <Input
@@ -680,7 +676,6 @@ export function GeneralSection({
                                 } }
                                 placeholder={ `Alt text in ${ language.name }...` }
                                 maxLength={ TOUR_MEDIA_ALT_TEXT_MAX_LENGTH }
-                                className="h-8 text-sm"
                                 disabled={ isMutating }
                               />
                             </div>
@@ -710,8 +705,7 @@ export function GeneralSection({
                     <Input
                       value={ mediaSearchInput }
                       onChange={ (event) => setMediaSearchInput(event.target.value) }
-                      placeholder="Search by filename or path"
-                      className="h-10 pl-9"
+                      placeholder="Search by filename or path" className="pl-9"
                     />
                   </div>
                     <Button
@@ -884,15 +878,14 @@ export function GeneralSection({
                 <div className="flex flex-1 flex-col gap-3 md:max-w-lg">
                   <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_120px]">
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-muted-foreground">Amount</label>
+                      <label className={fieldLabelClassName}>Amount</label>
                       <div className="relative">
                         <DollarSign
                           className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"/>
                         <Input
                           type="number"
                           value={ formState.priceAmount }
-                          onChange={ (event) => updateFormStateAction("priceAmount", event.target.value) }
-                          className="h-11 pl-9"
+                          onChange={ (event) => updateFormStateAction("priceAmount", event.target.value) } className="pl-9"
                           placeholder="0.00"
                           step={ 0.01 }
                           min={ 0 }
@@ -901,11 +894,11 @@ export function GeneralSection({
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-muted-foreground">Currency</label>
+                      <label className={fieldLabelClassName}>Currency</label>
                       <select
                         value={ formState.priceCurrency }
                         onChange={ (event) => updateFormStateAction("priceCurrency", event.target.value) }
-                        className={ warmSelectClassName }
+                        className={ controlClassName }
                       >
                         { PRICE_CURRENCY_OPTIONS.map((currency) => (
                           <option key={ currency } value={ currency }>
@@ -934,7 +927,7 @@ export function GeneralSection({
 
             <div className="grid gap-6 md:grid-cols-2">
               <div className={ subCardClassName }>
-                <label className="text-sm font-medium text-foreground flex items-center">
+                <label className={cn(fieldLabelClassName, "flex items-center")}>
                   <div className="flex size-8 items-center justify-center rounded-full bg-[var(--wt-status-confirmed)]/10">
                     <MapPin className="size-4 text-[var(--wt-status-confirmed)]"/>
                   </div>
@@ -943,30 +936,28 @@ export function GeneralSection({
 
                 <div className="grid gap-3 lg:grid-cols-2">
                   <div className="space-y-1.5">
-                    <label className="text-xs text-muted-foreground">Latitude</label>
+                    <label className={fieldLabelClassName}>Latitude</label>
                     <Input
                       type="number"
                       value={ formState.startPointLat }
                       onChange={ (event) => updateFormStateAction("startPointLat", event.target.value) }
-                      step="any"
-                      className="h-9 font-mono text-sm"
+                      step="any" className="font-mono"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs text-muted-foreground">Longitude</label>
+                    <label className={fieldLabelClassName}>Longitude</label>
                     <Input
                       type="number"
                       value={ formState.startPointLng }
                       onChange={ (event) => updateFormStateAction("startPointLng", event.target.value) }
-                      step="any"
-                      className="h-9 font-mono text-sm"
+                      step="any" className="font-mono"
                     />
                   </div>
                 </div>
               </div>
 
               <div className={ subCardClassName }>
-                <label className="text-sm font-medium text-foreground flex items-center">
+                <label className={cn(fieldLabelClassName, "flex items-center")}>
                   <div className="flex size-8 items-center justify-center rounded-full bg-destructive/10">
                     <Flag className="size-4 text-destructive"/>
                   </div>
@@ -975,23 +966,21 @@ export function GeneralSection({
 
                 <div className="grid gap-3 lg:grid-cols-2">
                   <div className="space-y-1.5">
-                    <label className="text-xs text-muted-foreground">Latitude</label>
+                    <label className={fieldLabelClassName}>Latitude</label>
                     <Input
                       type="number"
                       value={ formState.endPointLat }
                       onChange={ (event) => updateFormStateAction("endPointLat", event.target.value) }
-                      step="any"
-                      className="h-9 font-mono text-sm"
+                      step="any" className="font-mono"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs text-muted-foreground">Longitude</label>
+                    <label className={fieldLabelClassName}>Longitude</label>
                     <Input
                       type="number"
                       value={ formState.endPointLng }
                       onChange={ (event) => updateFormStateAction("endPointLng", event.target.value) }
-                      step="any"
-                      className="h-9 font-mono text-sm"
+                      step="any" className="font-mono"
                     />
                   </div>
                 </div>
@@ -1035,14 +1024,14 @@ export function GeneralSection({
             </div>
 
             <div className="mt-4">
-              <label className="mb-1 block text-sm font-medium text-[var(--wt-ink)]">Card Tag</label>
+              <label className={fieldLabelClassName}>Card Tag</label>
               <p className="mb-2 text-xs text-[var(--wt-ink-muted)]">
                 Tag displayed on the public tour card. By default the first tag is used.
               </p>
               <select
                 value={ formState.cardTagKey }
                 onChange={ (e) => updateFormStateAction("cardTagKey", e.target.value) }
-                className={ warmSelectClassName }
+                className={ controlClassName }
               >
                 <option value="">(Auto — first tag)</option>
                 { formState.tagKeys.map((key) => (

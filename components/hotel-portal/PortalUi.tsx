@@ -1,7 +1,5 @@
 import type {ReactNode} from "react";
 
-import {controlClassName} from "@/components/ui/control-class";
-
 /**
  * The hotel portal's own primitives — direction "Skilt".
  *
@@ -33,13 +31,6 @@ export const portalQuietAction =
   "inline-flex items-center gap-1.5 text-sm font-medium text-[var(--wt-ink-muted)] " +
   "transition hover:text-[var(--wt-ink)]";
 
-/**
- * The portal's form control. The shape itself lives in
- * `components/ui/control-class.ts`, shared with the backoffice, because both
- * surfaces needed the same thing and each having its own copy is exactly how
- * this got out of step in the first place.
- */
-export const portalControl = controlClassName;
 
 /**
  * A titled block of content.

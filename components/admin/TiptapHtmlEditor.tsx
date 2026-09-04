@@ -1446,8 +1446,7 @@ function BlogImageNodeView({
               id={ captionInputId }
               value={ caption }
               onChange={ (event) => updateAttributes({caption: event.target.value}) }
-              placeholder="Add an optional caption"
-              className="h-10 bg-white"
+              placeholder="Add an optional caption" className="bg-white"
             />
           </div>
         </div>
@@ -2161,7 +2160,6 @@ function BlogTuritopWidgetNodeView({
             <div className="space-y-1">
               <label className="text-xs font-medium uppercase tracking-wide text-[#8b7862]">Service</label>
               <Input
-                className="h-10"
                 value={ service }
                 onChange={ (event) => setService(event.target.value) }
                 placeholder="P1"
@@ -2171,7 +2169,6 @@ function BlogTuritopWidgetNodeView({
             <div className="space-y-1">
               <label className="text-xs font-medium uppercase tracking-wide text-[#8b7862]">Language</label>
               <Input
-                className="h-10"
                 value={ language }
                 onChange={ (event) => setLanguage(event.target.value) }
                 placeholder="es"
@@ -4072,7 +4069,6 @@ export const TiptapHtmlEditor = forwardRef<
               Embed URL
             </label>
             <Input
-              className="h-10"
               id="blog-embed-url"
               type="url"
               value={ embedUrlInput }
@@ -4123,7 +4119,6 @@ export const TiptapHtmlEditor = forwardRef<
                 Service
               </label>
               <Input
-                className="h-10"
                 id="blog-turitop-service"
                 value={ turitopServiceInput }
                 onChange={ (event) => {
@@ -4142,7 +4137,6 @@ export const TiptapHtmlEditor = forwardRef<
                 Language
               </label>
               <Input
-                className="h-10"
                 id="blog-turitop-language"
                 value={ turitopLanguageInput }
                 onChange={ (event) => {
@@ -4196,7 +4190,6 @@ export const TiptapHtmlEditor = forwardRef<
               Tour Slug
             </label>
             <Input
-              className="h-10"
               id="blog-tour-card-slug"
               value={ tourCardSlugInput }
               onChange={ (event) => {

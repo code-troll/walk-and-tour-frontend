@@ -13,11 +13,12 @@ import {
 import {timezoneOptionsWith, utcWeekday, wallTimeToUtcIso} from "@/lib/admin/timezone";
 import type {EventFormState, EventFrequency, EventType} from "@/lib/events/admin-event-types";
 import type {components} from "@/lib/api/generated/backend-types";
+import {controlMultilineClassName} from "@/components/ui/control-class";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 
 type ApiLanguage = components["schemas"]["LanguageResponseDto"];
 type ApiTour = components["schemas"]["TourAdminListResponseDto"];
 
-const fieldLabelClassName = "text-sm font-medium text-foreground";
 const NO_TOUR_VALUE = "__none__";
 
 type EventFormFieldsProps = {
@@ -116,7 +117,7 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
           onChange={(event) => update({description: event.target.value})}
           rows={3}
           placeholder="Meeting point, what to bring, notes for guides…"
-          className="w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
+          className={controlMultilineClassName}
         />
       </div>
 
@@ -146,7 +147,6 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
             type="datetime-local"
             value={formState.startDate}
             onChange={(event) => update({startDate: event.target.value})}
-            className="h-10"
           />
         </div>
 
@@ -160,7 +160,6 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
             min={1}
             value={formState.durationMinutes}
             onChange={(event) => update({durationMinutes: Math.max(1, Number(event.target.value) || 1)})}
-            className="h-10"
           />
         </div>
       </div>

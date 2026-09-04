@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import {WEEKDAY_LABELS} from "@/lib/admin/weekdays";
 import type {RecurrenceFormState, RecurrenceFrequency} from "@/lib/events/admin-event-types";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 
 const FREQUENCIES: {value: RecurrenceFrequency; label: string}[] = [
   {value: "daily", label: "Daily"},
@@ -17,7 +18,6 @@ const FREQUENCIES: {value: RecurrenceFrequency; label: string}[] = [
   {value: "monthly", label: "Monthly"},
 ];
 
-const fieldLabelClassName = "text-sm font-medium text-foreground";
 
 export function RecurrenceBuilder({
   value,
@@ -74,8 +74,7 @@ export function RecurrenceBuilder({
               value={value.interval}
               onChange={(event) =>
                 update({interval: Math.max(1, Number(event.target.value) || 1)})
-              }
-              className="h-10 w-24"
+              } className="w-24"
             />
             <span className="text-sm text-muted-foreground">{unit}</span>
           </div>
@@ -127,7 +126,6 @@ export function RecurrenceBuilder({
           ) : null}
         </div>
         <Input
-          className="h-10"
           id="recurrence-until"
           type="datetime-local"
           value={value.until}

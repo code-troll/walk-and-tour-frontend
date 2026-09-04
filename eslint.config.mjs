@@ -94,6 +94,40 @@ const NO_AD_HOC_RADIUS =
   "A form control should take its shape from components/ui/control-class.ts " +
   "rather than spelling its own.";
 
+/**
+ * The shape of a form control.
+ *
+ * `components/ui/control-class.ts` holds the one definition of a control and a
+ * field label, and `input.tsx`, `textarea.tsx` and `label.tsx` are built from
+ * it. This stops a call site from re-deciding.
+ *
+ * It was needed. The component says 32 px and fifty call sites overrode it —
+ * `h-9`, `h-10`, `h-11`, with no pattern; one screen had four heights in one
+ * form. Native `<select>` and `<textarea>` had five more spellings of the same
+ * box, and a `text-sm` override quietly cancelled the `text-base md:text-sm`
+ * step that keeps iOS from zooming when a field takes focus.
+ *
+ * Banned on a control: its own height, its own radius, its own box padding, its
+ * own text size, and the `mt-*` that used to fake the gap under a label — the
+ * label carries that now. Width, icon padding (`pl-9`), `font-mono` and colour
+ * are none of this rule's business.
+ */
+const CONTROL_SHAPE =
+  "\\b(h-\\d+|min-h-\\d+|mt-[0-9.]+|rounded|px-\\d+|py-\\d+|text-(xs|sm|base|lg|xl))\\b";
+
+const NO_CONTROL_SHAPE =
+  "A form control does not get to choose its own shape. Height, radius, box " +
+  "padding and text size come from components/ui/control-class.ts, through " +
+  "<Input>, <Textarea>, <Label> or the exported class names. If this control " +
+  "genuinely needs to differ, change the definition so every control changes " +
+  "with it.";
+
+// A checkbox or a radio is a different widget: it has no height to inherit and
+// no text inside it, so the shape rule would only ever be noise there.
+const CONTROL_ELEMENT =
+  'JSXOpeningElement[name.name=/^(Input|Textarea|input|select|textarea)$/]' +
+  ':not(:has(JSXAttribute[name.name="type"][value.value=/^(checkbox|radio)$/]))';
+
 const NO_RAW_COLOUR =
   "Raw colour literal. The backoffice and the hotel portal may only use the " +
   "brand palette through the tokens in app/design-system.css — every value " +
@@ -143,6 +177,14 @@ const eslintConfig = defineConfig([
         {
           selector: `TemplateElement[value.raw=/${AD_HOC_RADIUS}/]`,
           message: NO_AD_HOC_RADIUS,
+        },
+        {
+          selector: `${CONTROL_ELEMENT} JSXAttribute[name.name="className"] Literal[value=/${CONTROL_SHAPE}/]`,
+          message: NO_CONTROL_SHAPE,
+        },
+        {
+          selector: `${CONTROL_ELEMENT} JSXAttribute[name.name="className"] TemplateElement[value.raw=/${CONTROL_SHAPE}/]`,
+          message: NO_CONTROL_SHAPE,
         },
       ],
     },

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import {getMemberAvailabilityClient} from "@/lib/admin/admin-availability-client";
 import {WEEKDAY_LABELS, weekdayShort} from "@/lib/admin/weekdays";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 import {
   type ApiAvailability,
   toHourMinute,
@@ -25,7 +26,6 @@ import {
   removeUnavailableDateAction,
 } from "@/app/admin/team-members/actions";
 
-const fieldLabelClassName = "text-sm font-medium text-foreground";
 
 const emptyAvailability: ApiAvailability = {unavailableDates: [], recurringUnavailability: []};
 
@@ -193,15 +193,15 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
         <div className="grid gap-3 rounded-[var(--wt-radius-sm)] border border-dashed border-[var(--wt-rule-strong)] p-4 sm:grid-cols-[1fr_1fr_1fr_auto]">
           <div className="space-y-1">
             <label className={fieldLabelClassName} htmlFor="date-start">From</label>
-            <Input id="date-start" type="date" value={dateStart} onChange={(e) => setDateStart(e.target.value)} className="h-10" />
+            <Input id="date-start" type="date" value={dateStart} onChange={(e) => setDateStart(e.target.value)} />
           </div>
           <div className="space-y-1">
             <label className={fieldLabelClassName} htmlFor="date-end">To</label>
-            <Input id="date-end" type="date" value={dateEnd} onChange={(e) => setDateEnd(e.target.value)} className="h-10" />
+            <Input id="date-end" type="date" value={dateEnd} onChange={(e) => setDateEnd(e.target.value)} />
           </div>
           <div className="space-y-1">
             <label className={fieldLabelClassName} htmlFor="date-reason">Reason (optional)</label>
-            <Input id="date-reason" value={dateReason} onChange={(e) => setDateReason(e.target.value)} placeholder="Vacation" className="h-10" />
+            <Input id="date-reason" value={dateReason} onChange={(e) => setDateReason(e.target.value)} placeholder="Vacation" />
           </div>
           <div className="flex items-end">
             <Button className="h-10" onClick={() => void handleAddDate()} disabled={isMutating}>
@@ -264,11 +264,11 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
             </div>
             <div className="space-y-1">
               <label className={fieldLabelClassName} htmlFor="rule-start">From</label>
-              <Input id="rule-start" type="time" value={ruleStart} disabled={ruleWholeDay} onChange={(e) => setRuleStart(e.target.value)} className="h-10" />
+              <Input id="rule-start" type="time" value={ruleStart} disabled={ruleWholeDay} onChange={(e) => setRuleStart(e.target.value)} />
             </div>
             <div className="space-y-1">
               <label className={fieldLabelClassName} htmlFor="rule-end">To</label>
-              <Input id="rule-end" type="time" value={ruleEnd} disabled={ruleWholeDay} onChange={(e) => setRuleEnd(e.target.value)} className="h-10" />
+              <Input id="rule-end" type="time" value={ruleEnd} disabled={ruleWholeDay} onChange={(e) => setRuleEnd(e.target.value)} />
             </div>
           </div>
           <Button className="h-10" onClick={() => void handleAddRule()} disabled={isMutating}>

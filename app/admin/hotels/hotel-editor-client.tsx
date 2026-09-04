@@ -353,7 +353,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           <div>
             <Label htmlFor="hotel-status">Status</Label>
             <select
-              className={`mt-1 ${controlClassName}`}
+              className={controlClassName}
               id="hotel-status"
               onChange={(event) => updateField("status", event.target.value as HotelStatus)}
               value={form.status}

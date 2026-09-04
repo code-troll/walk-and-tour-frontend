@@ -10,6 +10,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import {deleteDayNoteAction, upsertDayNoteAction} from "@/app/admin/events/actions";
+import {controlMultilineClassName} from "@/components/ui/control-class";
 
 type DayNotePanelProps = {
   /** `YYYY-MM-DD`. */
@@ -74,7 +75,7 @@ export function DayNotePanel({date, initialNote, onClose, onChanged}: DayNotePan
           rows={4}
           autoFocus
           placeholder="e.g. Public holiday — reduced staff"
-          className="w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
+          className={controlMultilineClassName}
         />
       </div>
 
