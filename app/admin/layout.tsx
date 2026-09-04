@@ -171,10 +171,33 @@ export default async function AdminLayout({
               </div>
             </aside>
 
-            {/* On narrow screens the sidebar collapses to a row above the content. */}
+            {/*
+              On narrow screens the sidebar collapses to a bar above the content.
+              It carries the account block too: the <aside> is `hidden` below
+              `lg`, so on a phone there was no way to sign out at all — the link
+              was in the DOM and never on screen.
+            */}
             <div className="min-w-0 flex-1">
-              <div className="border-b border-[var(--wt-rule-strong)] bg-[var(--wt-nav-bg)] px-4 py-2 lg:hidden">
-                <AdminSidebarNav items={ navigationByRole[viewerState.backendAdmin.roleName] }/>
+              <div className="border-b border-[var(--wt-rule-strong)] bg-[var(--wt-nav-bg)] lg:hidden">
+                <div className="flex items-center justify-between gap-3 border-b border-[var(--wt-rule)] px-4 py-2">
+                  <p className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--wt-nav-marker)]">
+                    { environmentLabel ?? "Admin" }
+                  </p>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <p className="truncate text-xs text-[var(--wt-ink-muted)]">
+                      { viewerState.auth0User.name ?? viewerState.backendAdmin.email }
+                    </p>
+                    <a
+                      href="/auth/logout"
+                      className="shrink-0 text-xs text-[var(--wt-ink-muted)] transition hover:text-[var(--wt-ink)]"
+                    >
+                      Sign out
+                    </a>
+                  </div>
+                </div>
+                <div className="px-2 py-1.5">
+                  <AdminSidebarNav items={ navigationByRole[viewerState.backendAdmin.roleName] }/>
+                </div>
               </div>
               <div className="space-y-5 p-5">{ children }</div>
             </div>
