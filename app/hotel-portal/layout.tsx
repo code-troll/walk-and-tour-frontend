@@ -44,7 +44,7 @@ export default async function HotelPortalLayout({
       className="min-h-screen bg-[var(--bg)] text-[var(--ink)]"
       data-surface="portal"
     >
-      <header className="flex flex-wrap items-center justify-between gap-3 px-6 pb-3 pt-5 sm:px-10">
+      <header className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-6 pb-3 pt-5 sm:px-10">
         <p className="text-base font-medium tracking-tight text-[var(--nav-marker)]">
           Walk&amp;Tour{" "}
           <span className="font-normal text-[var(--ink-muted)]">Partners</span>

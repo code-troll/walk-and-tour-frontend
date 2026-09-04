@@ -111,8 +111,8 @@ export default async function HotelPortalSessionLayout({
         The navigation row. Sky blue is structural here — a 3 px band closing the
         header — and never a background: at its contrast it cannot carry text.
       */}
-      <div className="border-b-[3px] border-[var(--nav-rule)] px-6 sm:px-10">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-x-6 gap-y-2 pb-3">
+      <div className="border-b-[3px] border-[var(--nav-rule)]">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 pb-3 sm:px-10">
           <nav className="flex flex-wrap gap-5">
             {NAV_ITEMS.map((item) => (
               <Link

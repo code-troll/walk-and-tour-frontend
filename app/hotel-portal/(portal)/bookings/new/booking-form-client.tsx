@@ -106,7 +106,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           <div className="md:col-span-2">
             <Label htmlFor="booking-tour">Tour</Label>
             <select
-              className="mt-1 h-9 w-full rounded-[var(--radius-control)] border border-[var(--rule-strong)] bg-[var(--surface)] px-3 text-sm text-[var(--ink)]"
+              className="mt-1 h-9 w-full rounded-[var(--radius-control)] border border-input bg-[var(--surface)] px-3 text-sm text-[var(--ink)]"
               id="booking-tour"
               onChange={(event) => update("tourId", event.target.value)}
               value={form.tourId}
@@ -146,7 +146,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           <div>
             <Label htmlFor="booking-language">Language</Label>
             <select
-              className="mt-1 h-9 w-full rounded-[var(--radius-control)] border border-[var(--rule-strong)] bg-[var(--surface)] px-3 text-sm text-[var(--ink)]"
+              className="mt-1 h-9 w-full rounded-[var(--radius-control)] border border-input bg-[var(--surface)] px-3 text-sm text-[var(--ink)]"
               id="booking-language"
               onChange={(event) => update("languageCode", event.target.value)}
               value={form.languageCode}
