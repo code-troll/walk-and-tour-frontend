@@ -116,7 +116,7 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
           onChange={(event) => update({description: event.target.value})}
           rows={3}
           placeholder="Meeting point, what to bring, notes for guides…"
-          className="w-full rounded-xl border border-[#e2d5bf] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[#cbb390]"
+          className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
         />
       </div>
 
@@ -176,8 +176,8 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
               aria-pressed={formState.frequency === frequency}
               className={`rounded-full border px-5 py-2 text-sm font-medium capitalize transition ${
                 formState.frequency === frequency
-                  ? "border-[#9a6a2f] bg-[#f9f2e7] text-[#7a5424]"
-                  : "border-[#eadfce] bg-white text-muted-foreground hover:border-[#cbb390]"
+                  ? "border-[var(--wt-ink)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]"
+                  : "border-[var(--wt-rule-strong)] bg-white text-muted-foreground hover:border-[var(--wt-rule-strong)]"
               }`}
             >
               {frequency}

@@ -41,7 +41,7 @@ export function RecurrenceBuilder({
   const unit = value.freq === "daily" ? "day(s)" : value.freq === "weekly" ? "week(s)" : "month(s)";
 
   return (
-    <div className="space-y-5 rounded-2xl border border-[#eadfce] bg-[#fffdf9] p-5">
+    <div className="space-y-5 rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <label className={fieldLabelClassName}>Frequency</label>
@@ -96,8 +96,8 @@ export function RecurrenceBuilder({
                   aria-pressed={selected}
                   className={`rounded-full border px-4 py-2 text-sm font-medium transition ${
                     selected
-                      ? "border-[#9a6a2f] bg-[#f9f2e7] text-[#7a5424]"
-                      : "border-[#eadfce] bg-white text-muted-foreground hover:border-[#cbb390]"
+                      ? "border-[var(--wt-ink)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]"
+                      : "border-[var(--wt-rule-strong)] bg-white text-muted-foreground hover:border-[var(--wt-rule-strong)]"
                   }`}
                 >
                   {day.short}
@@ -106,7 +106,7 @@ export function RecurrenceBuilder({
             })}
           </div>
           {value.byDay.length === 0 ? (
-            <p className="text-xs text-[#a3483f]">Select at least one weekday.</p>
+            <p className="text-xs text-[var(--wt-danger)]">Select at least one weekday.</p>
           ) : null}
         </div>
       ) : null}
@@ -120,7 +120,7 @@ export function RecurrenceBuilder({
             <button
               type="button"
               onClick={() => update({until: ""})}
-              className="text-xs font-medium text-[#9a6a2f] hover:underline"
+              className="text-xs font-medium text-[var(--wt-ink-muted)] hover:underline"
             >
               Clear (no end date)
             </button>

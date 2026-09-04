@@ -250,7 +250,7 @@ export function OccurrenceConfirmPanel({
           type="button"
           onClick={() => setOpenTab("event")}
           aria-expanded={openTab === "event"}
-          className="flex w-full shrink-0 items-center justify-between gap-4 border-b border-[#f0e6d8] px-4 py-4 text-left text-sm font-medium text-foreground outline-none hover:bg-[#faf7f1]"
+          className="flex w-full shrink-0 items-center justify-between gap-4 border-b border-[var(--wt-rule-strong)] px-4 py-4 text-left text-sm font-medium text-foreground outline-none hover:bg-[var(--wt-surface)]"
         >
           <span className="flex items-center gap-2">
             Event details
@@ -268,7 +268,7 @@ export function OccurrenceConfirmPanel({
             <p className="text-xs text-muted-foreground">Applies to every occurrence of this event.</p>
 
             {eventError ? (
-              <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+              <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
                 {eventError}
               </p>
             ) : null}
@@ -299,7 +299,7 @@ export function OccurrenceConfirmPanel({
           type="button"
           onClick={() => setOpenTab("occurrence")}
           aria-expanded={openTab === "occurrence"}
-          className="flex w-full shrink-0 items-center justify-between gap-4 border-y border-[#f0e6d8] px-4 py-4 text-left text-sm font-medium text-foreground outline-none hover:bg-[#faf7f1]"
+          className="flex w-full shrink-0 items-center justify-between gap-4 border-y border-[var(--wt-rule-strong)] px-4 py-4 text-left text-sm font-medium text-foreground outline-none hover:bg-[var(--wt-surface)]"
         >
           <span className="flex items-center gap-2">
             This occurrence
@@ -315,13 +315,13 @@ export function OccurrenceConfirmPanel({
         {openTab === "occurrence" ? (
           <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-4 py-4 duration-200 animate-in fade-in">
             {item.status === "cancelled" ? (
-              <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+              <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
                 This occurrence is cancelled.
               </p>
             ) : null}
 
             {error ? (
-              <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+              <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
                 {error}
               </p>
             ) : null}
@@ -339,8 +339,8 @@ export function OccurrenceConfirmPanel({
                       key={row.id}
                       className={`flex items-center justify-between gap-3 rounded-lg border px-3 py-2 text-sm ${
                         disabled
-                          ? "cursor-not-allowed border-[#f0e6d8] bg-[#faf7f1] text-muted-foreground"
-                          : "cursor-pointer border-[#eadfce] bg-white"
+                          ? "cursor-not-allowed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-muted-foreground"
+                          : "cursor-pointer border-[var(--wt-rule-strong)] bg-white"
                       }`}
                     >
                       <span className="flex items-center gap-3">
@@ -352,7 +352,7 @@ export function OccurrenceConfirmPanel({
                         {memberName(row.id)}
                       </span>
                       {!row.available ? (
-                        <span className="rounded-full border border-[#e7c1bd] bg-[#fbf1ef] px-2 py-0.5 text-xs text-[#a3483f]">
+                        <span className="rounded-full border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-2 py-0.5 text-xs text-[var(--wt-danger)]">
                           Unavailable
                         </span>
                       ) : null}
@@ -372,7 +372,7 @@ export function OccurrenceConfirmPanel({
                 onChange={(event) => setNote(event.target.value)}
                 rows={3}
                 placeholder="Notes specific to this date…"
-                className="w-full rounded-xl border border-[#e2d5bf] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[#cbb390]"
+                className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
               />
             </div>
 
@@ -389,7 +389,7 @@ export function OccurrenceConfirmPanel({
                   ) : null}
                   <Button
                     variant="outline"
-                    className="h-10 flex-1 text-[#a3483f]"
+                    className="h-10 flex-1 text-[var(--wt-danger)]"
                     onClick={() => void handleDelete()}
                     disabled={isSaving}
                   >
@@ -405,7 +405,7 @@ export function OccurrenceConfirmPanel({
                 </Button>
                 <Button
                   variant="outline"
-                  className="h-10 text-[#a3483f]"
+                  className="h-10 text-[var(--wt-danger)]"
                   onClick={() => void handleCancelDate()}
                   disabled={isSaving}
                 >

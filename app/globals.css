@@ -15,6 +15,30 @@
  * and applied as inline height/left/right on the harness; the rules below only handle
  * the visual highlight and ease the JS-driven size change.
  */
+/*
+ * FullCalendar ships its own palette — a yellow "today" column, blue buttons,
+ * its own border grey — and none of it knows about the brand. These bind its
+ * variables to the design system so the calendar belongs to the backoffice
+ * instead of looking like a widget dropped into it.
+ */
+.admin-calendar {
+  --fc-today-bg-color: var(--wt-surface-sunk);
+  --fc-border-color: var(--wt-rule-strong);
+  --fc-page-bg-color: var(--wt-surface);
+  --fc-neutral-bg-color: var(--wt-surface-sunk);
+  /* The view switcher marks its selection by getting darker, not by turning red.
+     Red in the backoffice means the position you are standing in or something
+     destructive; a view toggle is neither, and a red fill here would shout over
+     the 2 px marker the navigation uses for exactly that job. */
+  --fc-button-bg-color: var(--wt-ink-muted);
+  --fc-button-border-color: var(--wt-ink-muted);
+  --fc-button-hover-bg-color: var(--wt-ink);
+  --fc-button-hover-border-color: var(--wt-ink);
+  --fc-button-active-bg-color: var(--wt-ink);
+  --fc-button-active-border-color: var(--wt-ink);
+  --fc-button-text-color: var(--wt-white);
+}
+
 .admin-calendar .fc-event {
   cursor: pointer;
 }
@@ -48,8 +72,11 @@
 }
 .admin-calendar .fc-timegrid-event-harness.evt-expanded > .fc-timegrid-event {
   overflow: visible;
-  box-shadow: 0 12px 22px -8px rgba(33, 52, 59, 0.45);
-  outline-color: rgba(33, 52, 59, 0.25);
+  /* The one place the backoffice uses a shadow: it lifts the block being hovered
+     above its neighbours, which a rule cannot do. Both come from the ink token
+     rather than the old slate literal, so they follow the palette. */
+  box-shadow: 0 12px 22px -8px color-mix(in srgb, var(--wt-ink) 45%, transparent);
+  outline-color: color-mix(in srgb, var(--wt-ink) 25%, transparent);
 }
 .admin-calendar .fc-timegrid-event-harness.evt-expanded .evt-title {
   display: block;

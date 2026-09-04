@@ -51,13 +51,36 @@ const CalendarSurface = dynamic(() => import("@/components/admin/events/Calendar
   ),
 });
 
+/**
+ * Occurrence states, drawn with the design system's status tokens.
+ *
+ * These are inline styles because FullCalendar takes colours as values, not
+ * classes, so they reference the CSS variables directly — which resolves the
+ * same way and keeps the calendar inside the palette.
+ *
+ * An unconfirmed occurrence is the calendar's "pending": something Walk and
+ * Tour has not decided yet. It takes the same sky blue a pending booking does,
+ * so one status vocabulary covers both.
+ */
 const STATUS_STYLE: Record<
   CalendarItemStatus,
   {backgroundColor: string; borderColor: string; textColor: string}
 > = {
-  unconfirmed: {backgroundColor: "#f5efe5", borderColor: "#cbb390", textColor: "#7a5424"},
-  confirmed: {backgroundColor: "#eaf4ec", borderColor: "#2f6b3f", textColor: "#2f6b3f"},
-  cancelled: {backgroundColor: "#fbf1ef", borderColor: "#a3483f", textColor: "#a3483f"},
+  unconfirmed: {
+    backgroundColor: "var(--wt-status-pending-bg)",
+    borderColor: "var(--wt-status-pending)",
+    textColor: "var(--wt-ink)",
+  },
+  confirmed: {
+    backgroundColor: "var(--wt-status-confirmed-bg)",
+    borderColor: "var(--wt-status-confirmed)",
+    textColor: "var(--wt-status-confirmed)",
+  },
+  cancelled: {
+    backgroundColor: "var(--wt-surface-sunk)",
+    borderColor: "var(--wt-status-cancelled)",
+    textColor: "var(--wt-status-cancelled)",
+  },
 };
 
 const itemKey = (item: ApiCalendarItem): string =>
@@ -298,9 +321,9 @@ export default function EventsCalendarClient() {
       start: note.date,
       allDay: true,
       display: "block",
-      backgroundColor: "#fdf6e3",
-      borderColor: "#e0c789",
-      textColor: "#7a5424",
+      backgroundColor: "var(--wt-surface-sunk)",
+      borderColor: "var(--wt-rule-strong)",
+      textColor: "var(--wt-ink-muted)",
       extendedProps: {dayNote: note},
     }));
 
@@ -474,22 +497,22 @@ export default function EventsCalendarClient() {
   const legend = (
     <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[#cbb390] bg-[#f5efe5]" /> Unconfirmed
+        <span className="inline-block size-3 rounded-sm border border-[var(--wt-rule-strong)] bg-[var(--wt-status-pending-bg)]" /> Unconfirmed
       </span>
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[#2f6b3f] bg-[#eaf4ec]" /> Confirmed
+        <span className="inline-block size-3 rounded-sm border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)]" /> Confirmed
       </span>
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[#a3483f] bg-[#fbf1ef]" /> Cancelled
+        <span className="inline-block size-3 rounded-sm border border-[var(--wt-status-cancelled)] bg-[var(--wt-surface-sunk)]" /> Cancelled
       </span>
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[#e0c789] bg-[#fdf6e3]" /> Day note
+        <span className="inline-block size-3 rounded-sm border border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)]" /> Day note
       </span>
     </div>
   );
 
   const errorBanner = error ? (
-    <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+    <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
       {error}
     </p>
   ) : null;
@@ -512,9 +535,9 @@ export default function EventsCalendarClient() {
   if (isFullscreen && typeof document !== "undefined") {
     return createPortal(
       <div className="fixed inset-0 z-50 flex flex-col overflow-hidden bg-white">
-        <div className="flex shrink-0 flex-col gap-3 border-b border-[#f0e6d8] p-4">
+        <div className="flex shrink-0 flex-col gap-3 border-b border-[var(--wt-rule-strong)] p-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <h2 className="text-xl font-semibold text-[#21343b]">Calendar</h2>
+            <h2 className="text-xl font-semibold text-[var(--wt-ink)]">Calendar</h2>
             {controls}
           </div>
           {legend}

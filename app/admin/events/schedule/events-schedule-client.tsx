@@ -43,10 +43,21 @@ import type {components} from "@/lib/api/generated/backend-types";
 type ApiLanguage = components["schemas"]["LanguageResponseDto"];
 type ApiTour = components["schemas"]["TourAdminListResponseDto"];
 
+/**
+ * Occurrence states, drawn with the design system's status tokens.
+ *
+ * These are inline styles because FullCalendar takes colours as values, not
+ * classes, so they reference the CSS variables directly — which resolves the
+ * same way and keeps the calendar inside the palette.
+ *
+ * An unconfirmed occurrence is the calendar's "pending": something Walk and
+ * Tour has not decided yet. It takes the same sky blue a pending booking does,
+ * so one status vocabulary covers both.
+ */
 const STATUS_STYLE: Record<CalendarItemStatus, {backgroundColor: string; color: string}> = {
-  unconfirmed: {backgroundColor: "#f5efe5", color: "#7a5424"},
-  confirmed: {backgroundColor: "#eaf4ec", color: "#2f6b3f"},
-  cancelled: {backgroundColor: "#fbf1ef", color: "#a3483f"},
+  unconfirmed: {backgroundColor: "var(--wt-status-pending-bg)", color: "var(--wt-ink)"},
+  confirmed: {backgroundColor: "var(--wt-status-confirmed-bg)", color: "var(--wt-status-confirmed)"},
+  cancelled: {backgroundColor: "var(--wt-surface-sunk)", color: "var(--wt-status-cancelled)"},
 };
 
 /** luxon weekday (1=Mon…7=Sun) → backend convention (0=Sun…6=Sat). */
@@ -292,7 +303,7 @@ export default function EventsScheduleClient() {
       </div>
 
       {error ? (
-        <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+        <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
           {error}
         </p>
       ) : null}
@@ -325,14 +336,14 @@ export default function EventsScheduleClient() {
             <table className="w-full min-w-[820px] border-separate border-spacing-0 text-sm">
               <thead>
                 <tr>
-                  <th className="sticky left-0 z-10 w-44 border-b border-[#eadfce] bg-white px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  <th className="sticky left-0 z-10 w-44 border-b border-[var(--wt-rule-strong)] bg-white px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                     Tour
                   </th>
                   {days.map((day) => (
                     <th
                       key={day.key}
-                      className={`min-w-28 border-b border-[#eadfce] px-2 py-2 text-center text-xs font-semibold ${
-                        day.isToday ? "bg-[#f9f2e7] text-[#7a5424]" : "bg-white text-foreground"
+                      className={`min-w-28 border-b border-[var(--wt-rule-strong)] px-2 py-2 text-center text-xs font-semibold ${
+                        day.isToday ? "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]" : "bg-white text-foreground"
                       }`}
                     >
                       {day.label}
@@ -343,7 +354,7 @@ export default function EventsScheduleClient() {
               <tbody>
                 {/* Day notes row */}
                 <tr>
-                  <th className="sticky left-0 z-10 border-b border-[#f0e6d8] bg-white px-3 py-1.5 text-left align-top">
+                  <th className="sticky left-0 z-10 border-b border-[var(--wt-rule-strong)] bg-white px-3 py-1.5 text-left align-top">
                     <span className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                       <StickyNote className="size-3.5" />
                       Notes
@@ -352,14 +363,14 @@ export default function EventsScheduleClient() {
                   {days.map((day) => {
                     const note = noteByDay.get(day.key);
                     return (
-                      <td key={day.key} className="border-b border-[#f0e6d8] p-1 align-top">
+                      <td key={day.key} className="border-b border-[var(--wt-rule-strong)] p-1 align-top">
                         <button
                           type="button"
                           onClick={() => setPanel({mode: "day-note", date: day.key, note: note?.note ?? ""})}
                           className={`flex min-h-8 w-full items-start gap-1 rounded-md px-2 py-1 text-left text-xs ${
                             note
-                              ? "bg-[#fdf6e3] text-[#7a5424] hover:brightness-95"
-                              : "text-muted-foreground hover:bg-[#faf7f1]"
+                              ? "bg-[var(--wt-status-pending-bg)] text-[var(--wt-ink-muted)] hover:brightness-95"
+                              : "text-muted-foreground hover:bg-[var(--wt-surface)]"
                           }`}
                         >
                           {note ? note.note : <Plus className="size-3.5 opacity-60" />}
@@ -374,7 +385,7 @@ export default function EventsScheduleClient() {
                   <tr>
                     <td
                       colSpan={days.length + 1}
-                      className="border-b border-[#f0e6d8] px-3 py-8 text-center text-sm text-muted-foreground"
+                      className="border-b border-[var(--wt-rule-strong)] px-3 py-8 text-center text-sm text-muted-foreground"
                     >
                       No events scheduled this week.
                     </td>
@@ -382,7 +393,7 @@ export default function EventsScheduleClient() {
                 ) : (
                   rows.map((row) => (
                     <tr key={row.event.id}>
-                      <th className="sticky left-0 z-10 border-b border-[#f0e6d8] bg-white px-3 py-1.5 text-left align-top">
+                      <th className="sticky left-0 z-10 border-b border-[var(--wt-rule-strong)] bg-white px-3 py-1.5 text-left align-top">
                         <span className="flex items-start gap-1.5">
                           <span className="mt-0.5 shrink-0 font-mono text-xs text-muted-foreground">{row.time}</span>
                           <LanguageFlag language={row.event.language} className="mt-0.5 h-2.5 w-3.5 shrink-0 rounded-[1px]" />
@@ -390,7 +401,7 @@ export default function EventsScheduleClient() {
                         </span>
                       </th>
                       {days.map((day) => (
-                        <td key={day.key} className="border-b border-[#f0e6d8] p-1 align-top">
+                        <td key={day.key} className="border-b border-[var(--wt-rule-strong)] p-1 align-top">
                           {renderEventCell(row.cells.get(day.key))}
                         </td>
                       ))}
@@ -407,7 +418,7 @@ export default function EventsScheduleClient() {
                     const names = unavailableByDay.get(day.key) ?? [];
                     return (
                       <td key={day.key} className="p-1 align-top">
-                        <div className="min-h-8 px-2 py-1 text-xs text-[#a3483f]">
+                        <div className="min-h-8 px-2 py-1 text-xs text-[var(--wt-danger)]">
                           {names.length ? names.join(", ") : <span className="text-muted-foreground opacity-50">—</span>}
                         </div>
                       </td>
