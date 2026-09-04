@@ -14,7 +14,6 @@ import {
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
-import type {components} from "@/lib/api/generated/backend-types";
 import {
   createEmptyBookingFormState,
   toCreateBookingBody,
@@ -22,10 +21,13 @@ import {
   type BookingFormErrors,
   type BookingFormState,
 } from "@/lib/hotel-portal/booking-types";
+import {PortalTourDetail} from "@/components/hotel-portal/PortalTourDetail";
+import {PortalTourFinder} from "@/components/hotel-portal/PortalTourFinder";
 import {createBookingAction} from "../../actions";
+import type {ApiHotelTourDetail} from "@/lib/hotel-portal/booking-types";
 import {controlClassName} from "@/components/ui/control-class";
 
-type ViewerTour = components["schemas"]["HotelViewerTourDto"];
+
 
 const LANGUAGES = [
   {value: "en", label: "English"},
@@ -38,8 +40,9 @@ const FieldError = ({message}: {message: string}) => (
   <p className="mt-1 text-xs text-[var(--wt-danger)]">{message}</p>
 );
 
-export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
+export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}) {
   const router = useRouter();
+  const [query, setQuery] = useState("");
   const [form, setForm] = useState<BookingFormState>(() => ({
     ...createEmptyBookingFormState(),
     tourId: tours.length === 1 ? tours[0].tourId : "",
@@ -47,6 +50,8 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
   const [errors, setErrors] = useState<BookingFormErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  const selectedTour = tours.find((tour) => tour.tourId === form.tourId) ?? null;
 
   const update = <K extends keyof BookingFormState>(key: K, value: BookingFormState[K]) => {
     setForm((current) => ({...current, [key]: value}));
@@ -88,6 +93,25 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
 
       {formError ? <PortalAlert>{formError}</PortalAlert> : null}
 
+      {/*
+        Two steps, in the order the conversation actually happens: find the tour
+        the guest is asking for, then book it. The form does not appear until
+        there is something to book — a dozen empty fields under an unanswered
+        question is the shape that made people pick a name and hope.
+      */}
+      {selectedTour === null ? (
+        <PortalSection
+          title="Book a tour"
+          description="Find the tour your guest is asking for. You can search by a place on the itinerary, a theme or a landmark."
+        >
+          <PortalTourFinder
+            onQueryChange={setQuery}
+            onSelect={(tourId) => update("tourId", tourId)}
+            query={query}
+            tours={tours}
+          />
+        </PortalSection>
+      ) : (
       <PortalSection
         title="Book a tour"
         description="Walk and Tour confirms every booking. You will see the price here, and it stays an estimate until the booking is invoiced."
@@ -105,21 +129,25 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
       >
         <div className="grid gap-5 md:grid-cols-2">
           <div className="md:col-span-2">
-            <Label htmlFor="booking-tour">Tour</Label>
-            <select
-              className={controlClassName}
-              id="booking-tour"
-              onChange={(event) => update("tourId", event.target.value)}
-              value={form.tourId}
-            >
-              <option value="">Choose a tour…</option>
-              {tours.map((tour) => (
-                <option key={tour.tourId} value={tour.tourId}>
-                  {tour.tourName}
-                </option>
-              ))}
-            </select>
+            {/*
+              The tour is chosen, not typed into a field, so it is shown as what
+              it is — a decision already made — with the way back beside it.
+            */}
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <p className="text-base font-medium text-[var(--wt-ink)]">{selectedTour?.name}</p>
+              <button
+                className={portalQuietAction}
+                onClick={() => {
+                  update("tourId", "");
+                  setQuery("");
+                }}
+                type="button"
+              >
+                Choose a different tour
+              </button>
+            </div>
             {errors.tourId ? <FieldError message={errors.tourId} /> : null}
+            {selectedTour ? <PortalTourDetail tour={selectedTour} /> : null}
           </div>
 
           <div>
@@ -231,6 +259,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           </div>
         </div>
       </PortalSection>
+      )}
     </div>
   );
 }

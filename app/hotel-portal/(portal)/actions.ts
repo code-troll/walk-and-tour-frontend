@@ -6,6 +6,7 @@ import {getAuth0AccessToken} from "@/lib/auth0";
 import {getHotelViewerState} from "@/lib/hotel-portal/session";
 import type {
   ApiHotelBooking,
+  ApiHotelTourDetail,
   CreateBookingBody,
 } from "@/lib/hotel-portal/booking-types";
 
@@ -88,6 +89,86 @@ const toActionError = (error: unknown, fallbackMessage: string): BookingActionEr
   statusCode: 500,
   message: error instanceof Error ? error.message : fallbackMessage,
 });
+
+export type TourListResult =
+  | {ok: true; tours: ApiHotelTourDetail[]}
+  | BookingActionError;
+
+/**
+ * Every tour this hotel may sell, in full.
+ *
+ * The whole set rather than a page of it, because the portal searches these in
+ * the browser: a hotel holds a handful of grants, and filtering locally matches
+ * an itinerary stop, a highlight and a tag at once without a request per
+ * keystroke.
+ */
+export async function getTourListAction(): Promise<TourListResult> {
+  const context = await getPortalContext();
+
+  if (!context.ok) {
+    return context;
+  }
+
+  try {
+    const response = await fetch(`${context.backendApiBaseUrl}/api/hotel/tours`, {
+      headers: {Authorization: `Bearer ${context.accessToken}`},
+      cache: "no-store",
+    });
+
+    const payload = (await response.json()) as unknown;
+
+    if (!response.ok) {
+      throw new Error(formatBackendErrorMessage(payload, "The request failed."));
+    }
+
+    return {ok: true, tours: payload as ApiHotelTourDetail[]};
+  } catch (error) {
+    return toActionError(error, "Unable to load the tours you can book.");
+  }
+}
+
+export type TourDetailResult =
+  | {ok: true; tour: ApiHotelTourDetail}
+  | BookingActionError;
+
+/**
+ * One granted tour, with the content needed to describe it to a guest.
+ *
+ * Fetched when a tour is chosen rather than shipped with the booking form: it
+ * is a tour's worth of text, and a hotel with a dozen grants would carry eleven
+ * of them for nothing.
+ *
+ * The tour id is the only thing the caller supplies, and the backend filters it
+ * by the hotel on the token — so a tour granted to somebody else comes back as
+ * a 404 rather than as content.
+ */
+export async function getTourDetailAction(tourId: string): Promise<TourDetailResult> {
+  const context = await getPortalContext();
+
+  if (!context.ok) {
+    return context;
+  }
+
+  try {
+    const response = await fetch(
+      `${context.backendApiBaseUrl}/api/hotel/tours/${encodeURIComponent(tourId)}`,
+      {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+        cache: "no-store",
+      },
+    );
+
+    const payload = (await response.json()) as unknown;
+
+    if (!response.ok) {
+      throw new Error(formatBackendErrorMessage(payload, "The request failed."));
+    }
+
+    return {ok: true, tour: payload as ApiHotelTourDetail};
+  } catch (error) {
+    return toActionError(error, "Unable to load this tour.");
+  }
+}
 
 export async function createBookingAction(
   body: CreateBookingBody,

@@ -1,5 +1,9 @@
 import type {components} from "@/lib/api/generated/backend-types";
 
+/** One granted tour with its content, as `/api/hotel/tours/:tourId` returns it. */
+export type ApiHotelTourDetail =
+  components["schemas"]["HotelTourDetailResponseDto"];
+
 export type ApiHotelBooking = components["schemas"]["HotelBookingResponseDto"];
 export type ApiHotelBookingList = components["schemas"]["HotelBookingListResponseDto"];
 export type ApiHotelBookingLineItem =
