@@ -169,6 +169,7 @@ export async function setHotelToursAction({
 const hotelUserAction = async (
   path: string,
   fallbackMessage: string,
+  body: Record<string, unknown> = {},
 ): Promise<HotelUserActionResult> => {
   const context = await getAdminContext();
 
@@ -182,7 +183,7 @@ const hotelUserAction = async (
       "POST",
       context.accessToken,
       context.backendApiBaseUrl,
-      {},
+      body,
     );
 
     return {ok: true, user};
@@ -191,8 +192,20 @@ const hotelUserAction = async (
   }
 };
 
-export async function createHotelUserAction(hotelId: string): Promise<HotelUserActionResult> {
-  return hotelUserAction(`/${hotelId}/user`, "Unable to create the access user.");
+export async function createHotelUserAction(
+  hotelId: string,
+  /**
+   * The address the hotel signs in with. Omitted means the hotel's contact
+   * email, which the backend applies — sending an empty string instead would
+   * fail validation rather than fall back.
+   */
+  email?: string,
+): Promise<HotelUserActionResult> {
+  return hotelUserAction(
+    `/${hotelId}/user`,
+    "Unable to create the access user.",
+    email ? {email} : {},
+  );
 }
 
 export async function resendHotelUserInvitationAction(
