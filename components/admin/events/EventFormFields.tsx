@@ -60,7 +60,7 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
         <div className="space-y-2">
           <label className={fieldLabelClassName}>Language</label>
           <Select value={formState.language} onValueChange={(language) => update({language})}>
-            <SelectTrigger className="h-10!">
+            <SelectTrigger>
               <SelectValue placeholder="Select a language" />
             </SelectTrigger>
             <SelectContent>
@@ -76,7 +76,7 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
         <div className="space-y-2">
           <label className={fieldLabelClassName}>Type</label>
           <Select value={formState.type} onValueChange={(type) => update({type: type as EventType})}>
-            <SelectTrigger className="h-10!">
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -93,7 +93,7 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
           value={formState.tourId || NO_TOUR_VALUE}
           onValueChange={(value) => update({tourId: value === NO_TOUR_VALUE ? "" : value})}
         >
-          <SelectTrigger className="h-10!">
+          <SelectTrigger>
             <SelectValue placeholder="No linked tour" />
           </SelectTrigger>
           <SelectContent>
@@ -124,7 +124,7 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
       <div className="space-y-2">
         <label className={fieldLabelClassName}>Timezone</label>
         <Select value={formState.timezone} onValueChange={(timezone) => update({timezone})}>
-          <SelectTrigger className="h-10!">
+          <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

@@ -49,7 +49,7 @@ export function RecurrenceBuilder({
             value={value.freq}
             onValueChange={(freq) => update({freq: freq as RecurrenceFrequency})}
           >
-            <SelectTrigger className="h-10">
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

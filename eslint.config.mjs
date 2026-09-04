@@ -107,6 +107,11 @@ const NO_AD_HOC_RADIUS =
  * box, and a `text-sm` override quietly cancelled the `text-base md:text-sm`
  * step that keeps iOS from zooming when a field takes focus.
  *
+ * `SelectTrigger` is in the list because leaving it out cost a round: every
+ * one of the eight Radix selects in the backoffice carried `h-10`, five of
+ * them with `!`, so the events screens kept 40 px dropdowns beside 32 px
+ * fields after everything else had been unified.
+ *
  * Banned on a control: its own height, its own radius, its own box padding, its
  * own text size, and the `mt-*` that used to fake the gap under a label — the
  * label carries that now. Width, icon padding (`pl-9`), `font-mono` and colour
@@ -125,7 +130,7 @@ const NO_CONTROL_SHAPE =
 // A checkbox or a radio is a different widget: it has no height to inherit and
 // no text inside it, so the shape rule would only ever be noise there.
 const CONTROL_ELEMENT =
-  'JSXOpeningElement[name.name=/^(Input|Textarea|input|select|textarea)$/]' +
+  'JSXOpeningElement[name.name=/^(Input|Textarea|SelectTrigger|input|select|textarea)$/]' +
   ':not(:has(JSXAttribute[name.name="type"][value.value=/^(checkbox|radio)$/]))';
 
 const NO_RAW_COLOUR =

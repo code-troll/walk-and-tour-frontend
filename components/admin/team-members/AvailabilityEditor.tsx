@@ -244,7 +244,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
             <div className="space-y-1">
               <label className={fieldLabelClassName}>Weekday</label>
               <Select value={ruleDay} onValueChange={setRuleDay}>
-                <SelectTrigger className="h-10!">
+                <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
