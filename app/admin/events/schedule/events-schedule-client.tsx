@@ -256,7 +256,7 @@ export default function EventsScheduleClient() {
         type="button"
         onClick={() => setPanel({mode: "confirm", item})}
         style={{backgroundColor: style.backgroundColor, color: style.color}}
-        className="flex h-full min-h-9 w-full flex-col items-start gap-0.5 rounded-md px-2 py-1 text-left text-xs hover:brightness-95"
+        className="flex h-full min-h-9 w-full flex-col items-start gap-0.5 rounded-[var(--wt-radius-sm)] px-2 py-1 text-left text-xs hover:brightness-95"
       >
         {item.status === "cancelled" ? (
           <span className="font-medium line-through">Cancelled</span>
@@ -303,7 +303,7 @@ export default function EventsScheduleClient() {
       </div>
 
       {error ? (
-        <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+        <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
           {error}
         </p>
       ) : null}
@@ -367,7 +367,7 @@ export default function EventsScheduleClient() {
                         <button
                           type="button"
                           onClick={() => setPanel({mode: "day-note", date: day.key, note: note?.note ?? ""})}
-                          className={`flex min-h-8 w-full items-start gap-1 rounded-md px-2 py-1 text-left text-xs ${
+                          className={`flex min-h-8 w-full items-start gap-1 rounded-[var(--wt-radius-sm)] px-2 py-1 text-left text-xs ${
                             note
                               ? "bg-[var(--wt-status-pending-bg)] text-[var(--wt-ink-muted)] hover:brightness-95"
                               : "text-muted-foreground hover:bg-[var(--wt-surface)]"

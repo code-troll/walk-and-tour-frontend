@@ -106,7 +106,7 @@ export default function AdminUsersClient() {
       >
         <div className="grid gap-4 md:grid-cols-3">
           {roles.map((role) => (
-            <div key={role.name} className="rounded-[1.25rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
+            <div key={role.name} className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
               <h3 className="text-lg font-semibold text-[var(--wt-ink)]">{role.name}</h3>
               <p className="mt-2 text-sm leading-6 text-[var(--wt-ink-muted)]">{role.description}</p>
               <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--wt-ink-muted)]">

@@ -497,22 +497,22 @@ export default function EventsCalendarClient() {
   const legend = (
     <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[var(--wt-rule-strong)] bg-[var(--wt-status-pending-bg)]" /> Unconfirmed
+        <span className="inline-block size-3 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-status-pending-bg)]" /> Unconfirmed
       </span>
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)]" /> Confirmed
+        <span className="inline-block size-3 rounded-[var(--wt-radius-sm)] border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)]" /> Confirmed
       </span>
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[var(--wt-status-cancelled)] bg-[var(--wt-surface-sunk)]" /> Cancelled
+        <span className="inline-block size-3 rounded-[var(--wt-radius-sm)] border border-[var(--wt-status-cancelled)] bg-[var(--wt-surface-sunk)]" /> Cancelled
       </span>
       <span className="flex items-center gap-2">
-        <span className="inline-block size-3 rounded-sm border border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)]" /> Day note
+        <span className="inline-block size-3 rounded-[var(--wt-radius-sm)] border border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)]" /> Day note
       </span>
     </div>
   );
 
   const errorBanner = error ? (
-    <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+    <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
       {error}
     </p>
   ) : null;

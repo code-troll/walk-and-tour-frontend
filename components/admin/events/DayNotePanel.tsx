@@ -63,7 +63,7 @@ export function DayNotePanel({date, initialNote, onClose, onChanged}: DayNotePan
 
       <div className="flex-1 space-y-4 overflow-y-auto px-4 py-2">
         {error ? (
-          <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+          <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
             {error}
           </p>
         ) : null}
@@ -74,7 +74,7 @@ export function DayNotePanel({date, initialNote, onClose, onChanged}: DayNotePan
           rows={4}
           autoFocus
           placeholder="e.g. Public holiday — reduced staff"
-          className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
+          className="w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
         />
       </div>
 

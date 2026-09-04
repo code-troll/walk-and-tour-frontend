@@ -97,7 +97,7 @@ export default function TeamMembersListClient() {
         }
       >
         {members.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
+          <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No team members have been created yet.</p>
             <Button asChild className="h-10 mt-4">
               <AdminProgressLink href="/team-members/new">
@@ -111,7 +111,7 @@ export default function TeamMembersListClient() {
             {members.map((member) => (
               <article
                 key={member.id}
-                className="rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5"
+                className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="flex min-w-0 flex-1 items-start gap-4">
@@ -122,10 +122,10 @@ export default function TeamMembersListClient() {
                         width={56}
                         height={56}
                         unoptimized
-                        className="size-14 shrink-0 rounded-xl object-cover"
+                        className="size-14 shrink-0 rounded-[var(--wt-radius-sm)] object-cover"
                       />
                     ) : (
-                      <div className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-[var(--wt-surface-sunk)] text-xs text-muted-foreground">
+                      <div className="flex size-14 shrink-0 items-center justify-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-surface-sunk)] text-xs text-muted-foreground">
                         No photo
                       </div>
                     )}

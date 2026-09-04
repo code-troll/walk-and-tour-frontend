@@ -517,7 +517,7 @@ export function TaxonomyClient({
               {tags.map((tag) => (
                 <div
                   key={tag.key}
-                  className="group rounded-xl border border-border bg-muted/30 p-5 transition-colors hover:bg-muted/50"
+                  className="group rounded-[var(--wt-radius-sm)] border border-border bg-muted/30 p-5 transition-colors hover:bg-muted/50"
                 >
                   <div className="flex items-center justify-between gap-4">
                     <h3 className="text-lg font-semibold text-foreground">{tag.key}</h3>
@@ -551,7 +551,7 @@ export function TaxonomyClient({
                     {Object.entries(tag.labels).map(([locale, label]) => (
                       <span
                         key={locale}
-                        className="rounded-lg bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground"
+                        className="rounded-[var(--wt-radius-sm)] bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground"
                       >
                         {locale}: {label}
                       </span>
@@ -605,7 +605,7 @@ export function TaxonomyClient({
                         <td className="py-4 pr-4">{language.name}</td>
                         <td className="py-4 pr-4">
                           <span
-                            className={`rounded-lg px-2 py-1 text-xs font-semibold ${
+                            className={`rounded-[var(--wt-radius-sm)] px-2 py-1 text-xs font-semibold ${
                               language.isEnabled
                                 ? "bg-primary/10 text-primary"
                                 : "bg-muted text-muted-foreground"

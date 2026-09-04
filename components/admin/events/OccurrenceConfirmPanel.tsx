@@ -268,7 +268,7 @@ export function OccurrenceConfirmPanel({
             <p className="text-xs text-muted-foreground">Applies to every occurrence of this event.</p>
 
             {eventError ? (
-              <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+              <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
                 {eventError}
               </p>
             ) : null}
@@ -315,13 +315,13 @@ export function OccurrenceConfirmPanel({
         {openTab === "occurrence" ? (
           <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-4 py-4 duration-200 animate-in fade-in">
             {item.status === "cancelled" ? (
-              <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+              <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
                 This occurrence is cancelled.
               </p>
             ) : null}
 
             {error ? (
-              <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+              <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
                 {error}
               </p>
             ) : null}
@@ -337,7 +337,7 @@ export function OccurrenceConfirmPanel({
                   return (
                     <label
                       key={row.id}
-                      className={`flex items-center justify-between gap-3 rounded-lg border px-3 py-2 text-sm ${
+                      className={`flex items-center justify-between gap-3 rounded-[var(--wt-radius-sm)] border px-3 py-2 text-sm ${
                         disabled
                           ? "cursor-not-allowed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-muted-foreground"
                           : "cursor-pointer border-[var(--wt-rule-strong)] bg-white"
@@ -372,7 +372,7 @@ export function OccurrenceConfirmPanel({
                 onChange={(event) => setNote(event.target.value)}
                 rows={3}
                 placeholder="Notes specific to this date…"
-                className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
+                className="w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none focus:border-[var(--wt-rule-strong)]"
               />
             </div>
 

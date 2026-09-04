@@ -92,7 +92,7 @@ export default function AdminBlogPostsListClient() {
         }
       >
         {blogPosts.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
+          <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No blog posts have been created yet.</p>
             <Button asChild className="h-10 mt-4">
               <AdminProgressLink href="/blog-posts/new">
@@ -106,7 +106,7 @@ export default function AdminBlogPostsListClient() {
             {blogPosts.map((post) => (
               <article
                 key={post.id}
-                className="rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5"
+                className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">

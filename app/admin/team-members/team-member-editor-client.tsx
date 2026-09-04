@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import {AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress} from "@/components/admin/AdminRouteProgress";
 import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {controlClassName} from "@/components/ui/control-class";
 import {AvailabilityEditor} from "@/components/admin/team-members/AvailabilityEditor";
 import {Button} from "@/components/ui/button";
 import {
@@ -333,7 +334,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
       </AdminBackRow>
 
       {feedback && (
-        <div className={`rounded-xl border px-4 py-3 text-sm ${feedback.tone === "error" ? "border-[var(--wt-danger)] bg-[var(--wt-surface)] text-[var(--wt-danger)]" : "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"}`}>
+        <div className={`rounded-[var(--wt-radius-sm)] border px-4 py-3 text-sm ${feedback.tone === "error" ? "border-[var(--wt-danger)] bg-[var(--wt-surface)] text-[var(--wt-danger)]" : "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"}`}>
           {feedback.message}
         </div>
       )}
@@ -359,9 +360,9 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <label className={fieldLabelClassName}>Photo *</label>
             <div className="mt-1.5 flex items-start gap-4">
               {photoPreviewSrc ? (
-                <Image src={photoPreviewSrc} alt="" width={96} height={96} unoptimized className="size-24 rounded-2xl object-cover ring-1 ring-[var(--wt-rule-strong)]" />
+                <Image src={photoPreviewSrc} alt="" width={96} height={96} unoptimized className="size-24 rounded-[var(--wt-radius-sm)] object-cover ring-1 ring-[var(--wt-rule-strong)]" />
               ) : (
-                <div className="flex size-24 items-center justify-center rounded-2xl bg-[var(--wt-surface-sunk)] text-xs text-muted-foreground ring-1 ring-[var(--wt-rule-strong)]">
+                <div className="flex size-24 items-center justify-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-surface-sunk)] text-xs text-muted-foreground ring-1 ring-[var(--wt-rule-strong)]">
                   No photo
                 </div>
               )}
@@ -422,7 +423,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
             {remainingLanguages.length > 0 && (
               <div className="flex items-center gap-2">
-                <select value={selectedLanguageToAdd} onChange={(e) => setLanguageToAdd(e.target.value)} className="h-10 rounded-lg border border-input bg-background px-3 text-sm">
+                <select value={selectedLanguageToAdd} onChange={(e) => setLanguageToAdd(e.target.value)} className={controlClassName}>
                   {remainingLanguages.map((l) => <option key={l.code} value={l.code}>{l.name}</option>)}
                 </select>
                 <Button variant="outline" className="h-10" onClick={handleAddTranslation}><Plus className="size-4" /> Add</Button>
@@ -430,7 +431,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             )}
 
             {activeTranslation && (
-              <div className="space-y-4 rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
+              <div className="space-y-4 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
                 <div>
                   <label className={fieldLabelClassName}>Role / Title</label>
                   <Input
@@ -471,7 +472,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
       {/* Delete member */}
       {isCreated && (
-        <div className="rounded-2xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-5">
+        <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-5">
           <h3 className="text-sm font-semibold text-[var(--wt-danger)]">Danger Zone</h3>
           <p className="mt-1 text-sm text-[var(--wt-danger)]/70">Permanently delete this team member and all its translations.</p>
           <Button variant="outline" size="sm" className="mt-3 border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface-sunk)]" onClick={() => setIsConfirmingDelete(true)} disabled={isMutating}>
@@ -495,11 +496,11 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
               {isUploadingMedia ? <LoaderCircle className="size-4 animate-spin" /> : <Upload className="size-4" />} Upload
             </Button>
           </div>
-          {mediaDialogError && <div className="rounded-lg border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-danger)]">{mediaDialogError}</div>}
+          {mediaDialogError && <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-danger)]">{mediaDialogError}</div>}
           <div className="grid max-h-80 grid-cols-4 gap-2 overflow-y-auto">
             {mediaLibraryItems.map((asset) => (
               <button key={asset.id} type="button" onClick={() => setDialogSelectedMediaId(asset.id)}
-                className={`relative overflow-hidden rounded-lg border-2 transition ${dialogSelectedMediaId === asset.id ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-ink)]/30" : "border-transparent hover:border-[var(--wt-rule-strong)]"}`}>
+                className={`relative overflow-hidden rounded-[var(--wt-radius-sm)] border-2 transition ${dialogSelectedMediaId === asset.id ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-ink)]/30" : "border-transparent hover:border-[var(--wt-rule-strong)]"}`}>
                 <Image src={`${backendApiBaseUrl}/api/admin/media/${asset.id}/content`} alt={asset.originalFilename} width={160} height={120} unoptimized className="h-24 w-full object-cover"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                 {dialogSelectedMediaId === asset.id && <div className="absolute inset-0 flex items-center justify-center bg-[var(--wt-ink)]/40"><Check className="size-6 text-white" /></div>}
@@ -508,7 +509,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           </div>
           {isLoadingMediaLibrary && <div className="flex justify-center py-4"><LoaderCircle className="size-6 animate-spin text-muted-foreground" /></div>}
           {!isLoadingMediaLibrary && mediaLibraryItems.length < mediaLibraryTotal && (
-            <button type="button" onClick={() => void loadMediaLibrary(mediaLibraryPage + 1, appliedMediaSearch)} className="w-full rounded-lg border border-dashed border-border py-2 text-sm text-muted-foreground hover:border-[var(--wt-rule-strong)]">Load more</button>
+            <button type="button" onClick={() => void loadMediaLibrary(mediaLibraryPage + 1, appliedMediaSearch)} className="w-full rounded-[var(--wt-radius-sm)] border border-dashed border-border py-2 text-sm text-muted-foreground hover:border-[var(--wt-rule-strong)]">Load more</button>
           )}
           <DialogFooter>
             <Button variant="outline" className="h-10" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>

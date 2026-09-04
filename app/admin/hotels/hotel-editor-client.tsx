@@ -6,6 +6,7 @@ import {LoaderCircle} from "lucide-react";
 
 import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {controlClassName} from "@/components/ui/control-class";
 import {Button} from "@/components/ui/button";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Input} from "@/components/ui/input";
@@ -268,13 +269,13 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
       </AdminBackRow>
 
       {formError ? (
-        <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
+        <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
           {formError}
         </p>
       ) : null}
 
       {successMessage ? (
-        <p className="rounded-xl border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] px-4 py-3 text-sm text-[var(--wt-status-confirmed)]">
+        <p className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] px-4 py-3 text-sm text-[var(--wt-status-confirmed)]">
           {successMessage}
         </p>
       ) : null}
@@ -352,7 +353,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           <div>
             <Label htmlFor="hotel-status">Status</Label>
             <select
-              className="mt-1 h-9 w-full rounded-md border border-[var(--wt-rule-strong)] bg-white px-3 text-sm text-[var(--wt-ink)]"
+              className={`mt-1 ${controlClassName}`}
               id="hotel-status"
               onChange={(event) => updateField("status", event.target.value as HotelStatus)}
               value={form.status}

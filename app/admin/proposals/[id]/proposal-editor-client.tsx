@@ -21,6 +21,7 @@ import {
 import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
 import {AdminSectionCard} from "@/components/admin/AdminUi";
 import {Button} from "@/components/ui/button";
+import {controlClassName, controlMultilineClassName} from "@/components/ui/control-class";
 import {Input} from "@/components/ui/input";
 import {
   Dialog,
@@ -688,7 +689,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       </div>
 
       {error && (
-        <div className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-4 text-sm text-[var(--wt-danger)]">
+        <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-4 text-sm text-[var(--wt-danger)]">
           {error}
         </div>
       )}
@@ -703,15 +704,15 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
         return (
           <AdminSectionCard title="Public Link">
             <div className="flex items-center gap-3">
-              <code className={`flex-1 truncate rounded-lg px-3 py-2 text-sm ${isPublished ? "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink)]" : "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)] select-none"}`}>
+              <code className={`flex-1 truncate rounded-[var(--wt-radius-sm)] px-3 py-2 text-sm ${isPublished ? "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink)]" : "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)] select-none"}`}>
                 {isPublished ? fullUrl : maskedUrl}
               </code>
               {isPublished ? (
                 <>
-                  <button type="button" onClick={() => void handleCopyLink()} className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
+                  <button type="button" onClick={() => void handleCopyLink()} className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
                     {copiedLink ? <Check className="h-4 w-4 text-[var(--wt-status-confirmed)]"/> : <Copy className="h-4 w-4"/>}
                   </button>
-                  <a href={fullUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
+                  <a href={fullUrl} target="_blank" rel="noopener noreferrer" className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
                     <ExternalLink className="h-4 w-4"/>
                   </a>
                 </>
@@ -728,38 +729,38 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Proposal Name</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Rome Highlights Private Tour"/>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className={controlClassName} placeholder="Rome Highlights Private Tour"/>
             <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">General name shown as the main title of the proposal in the public page.</p>
           </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Language</label>
-            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm">
+            <select value={language} onChange={(e) => setLanguage(e.target.value)} className={controlClassName}>
               {LANGUAGES.map((l) => (<option key={l.code} value={l.code}>{l.name} ({l.code})</option>))}
             </select>
           </div>
           {!isNew && (
             <div>
               <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Acceptance</label>
-              <select value={acceptanceStatus} onChange={(e) => setAcceptanceStatus(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm">
+              <select value={acceptanceStatus} onChange={(e) => setAcceptanceStatus(e.target.value)} className={controlClassName}>
                 {ACCEPTANCE_STATUSES.map((s) => (<option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>))}
               </select>
             </div>
           )}
           <div>
             <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Recipient Name</label>
-            <input type="text" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="John Doe"/>
+            <input type="text" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} className={controlClassName} placeholder="John Doe"/>
           </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Recipient Email</label>
-            <input type="email" value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="john@example.com"/>
+            <input type="email" value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} className={controlClassName} placeholder="john@example.com"/>
           </div>
           <div>
             <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Expires At</label>
-            <input type="datetime-local" value={expiresAt} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setExpiresAt(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
+            <input type="datetime-local" value={expiresAt} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setExpiresAt(e.target.value)} className={controlClassName}/>
           </div>
           <div className="sm:col-span-2">
             <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Admin Notes</label>
-            <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Internal notes..."/>
+            <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className={controlMultilineClassName} placeholder="Internal notes..."/>
           </div>
         </div>
       </AdminSectionCard>
@@ -768,7 +769,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       {!isNew && (
         <AdminSectionCard title="Proposal Image">
           {currentMedia ? (
-            <div className="overflow-hidden rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]">
+            <div className="overflow-hidden rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]">
               <div className="relative aspect-video w-full bg-[var(--wt-surface-sunk)]">
                 {currentImagePreview ? (
                   <>
@@ -805,7 +806,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                   <button
                     type="button"
                     onClick={() => void handleRemoveImage()}
-                    className="rounded-lg border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
+                    className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
                     title="Remove image"
                   >
                     <Trash2 className="h-3.5 w-3.5"/>
@@ -817,9 +818,9 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             <button
               type="button"
               onClick={openMediaDialog}
-              className="group flex w-full flex-col items-center gap-4 rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-8 py-12 transition-colors hover:border-[var(--wt-rule-strong)] hover:bg-[var(--wt-surface-sunk)]"
+              className="group flex w-full flex-col items-center gap-4 rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-8 py-12 transition-colors hover:border-[var(--wt-rule-strong)] hover:bg-[var(--wt-surface-sunk)]"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--wt-surface-sunk)] transition-colors group-hover:bg-[var(--wt-rule-strong)]">
+              <div className="flex h-14 w-14 items-center justify-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-surface-sunk)] transition-colors group-hover:bg-[var(--wt-rule-strong)]">
                 <ImageIcon className="h-7 w-7 text-[var(--wt-ink-muted)]"/>
               </div>
               <div className="text-center">
@@ -857,7 +858,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </form>
 
             {mediaDialogError && (
-              <div className="rounded-[1rem] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-danger)]">
+              <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-danger)]">
                 {mediaDialogError}
               </div>
             )}
@@ -873,7 +874,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     disabled={isAttached}
                     onClick={() => setSelectedMediaId(isSelected ? null : asset.id)}
                     className={[
-                      "overflow-hidden rounded-lg border text-left transition-colors",
+                      "overflow-hidden rounded-[var(--wt-radius-sm)] border text-left transition-colors",
                       isSelected ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-rule-strong)]" : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]",
                       isAttached ? "cursor-not-allowed opacity-60" : "hover:bg-[var(--wt-surface)]",
                     ].join(" ")}
@@ -905,7 +906,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </div>
 
             {!isLoadingMedia && mediaLibraryItems.length === 0 && (
-              <div className="rounded-[1.25rem] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-[var(--wt-ink-muted)]">
+              <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-[var(--wt-ink-muted)]">
                 No images found.
               </div>
             )}
@@ -935,7 +936,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
           {localVersions.map((version, vIndex) => {
             const isOpen = editingLocalId === version.localId;
             return (
-              <div key={version.localId} className="rounded-xl border border-[var(--wt-rule-strong)] bg-white overflow-hidden">
+              <div key={version.localId} className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white overflow-hidden">
                 {/* Collapsed header */}
                 <div className="flex items-center justify-between p-4 bg-[var(--wt-surface)]">
                   <div>
@@ -981,7 +982,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     >
                       {isOpen ? <><ChevronUp className="mr-1 h-3 w-3"/>Close</> : <><Pencil className="mr-1 h-3 w-3"/>Edit</>}
                     </Button>
-                    <button type="button" onClick={() => setDeleteVersionTarget(version)} className="rounded-lg border border-[var(--wt-danger)] p-1.5 text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]">
+                    <button type="button" onClick={() => setDeleteVersionTarget(version)} className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] p-1.5 text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]">
                       <Trash2 className="h-3.5 w-3.5"/>
                     </button>
                   </div>
@@ -997,62 +998,62 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Title</label>
-                        <input type="text" value={versionForm.title} onChange={(e) => setVersionForm({...versionForm, title: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Classic Walking Tour"/>
+                        <input type="text" value={versionForm.title} onChange={(e) => setVersionForm({...versionForm, title: e.target.value})} className={controlClassName} placeholder="Classic Walking Tour"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Tour Date &amp; Time</label>
-                        <input type="datetime-local" value={versionForm.tourDate} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setVersionForm({...versionForm, tourDate: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
+                        <input type="datetime-local" value={versionForm.tourDate} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setVersionForm({...versionForm, tourDate: e.target.value})} className={controlClassName}/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Duration (minutes)</label>
-                        <input type="number" min="0" value={versionForm.durationMinutes} onChange={(e) => setVersionForm({...versionForm, durationMinutes: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="180"/>
+                        <input type="number" min="0" value={versionForm.durationMinutes} onChange={(e) => setVersionForm({...versionForm, durationMinutes: e.target.value})} className={controlClassName} placeholder="180"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Price Amount</label>
-                        <input type="number" step="0.01" min="0" value={versionForm.priceAmount} onChange={(e) => setVersionForm({...versionForm, priceAmount: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
+                        <input type="number" step="0.01" min="0" value={versionForm.priceAmount} onChange={(e) => setVersionForm({...versionForm, priceAmount: e.target.value})} className={controlClassName}/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Currency</label>
-                        <select value={versionForm.priceCurrency} onChange={(e) => setVersionForm({...versionForm, priceCurrency: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm">
+                        <select value={versionForm.priceCurrency} onChange={(e) => setVersionForm({...versionForm, priceCurrency: e.target.value})} className={controlClassName}>
                           <option value="EUR">EUR</option>
                           <option value="DKK">DKK</option>
                         </select>
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Description</label>
-                        <textarea value={versionForm.description} onChange={(e) => setVersionForm({...versionForm, description: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
+                        <textarea value={versionForm.description} onChange={(e) => setVersionForm({...versionForm, description: e.target.value})} rows={3} className={controlMultilineClassName}/>
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Itinerary Description</label>
-                        <textarea value={versionForm.itineraryDescription} onChange={(e) => setVersionForm({...versionForm, itineraryDescription: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
+                        <textarea value={versionForm.itineraryDescription} onChange={(e) => setVersionForm({...versionForm, itineraryDescription: e.target.value})} rows={3} className={controlMultilineClassName}/>
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Included (one per line)</label>
-                        <textarea value={versionForm.included} onChange={(e) => setVersionForm({...versionForm, included: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder={"Professional guide\nMuseum tickets\nSnacks"}/>
+                        <textarea value={versionForm.included} onChange={(e) => setVersionForm({...versionForm, included: e.target.value})} rows={3} className={controlMultilineClassName} placeholder={"Professional guide\nMuseum tickets\nSnacks"}/>
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Not Included (one per line)</label>
-                        <textarea value={versionForm.notIncluded} onChange={(e) => setVersionForm({...versionForm, notIncluded: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder={"Transport\nLunch"}/>
+                        <textarea value={versionForm.notIncluded} onChange={(e) => setVersionForm({...versionForm, notIncluded: e.target.value})} rows={3} className={controlMultilineClassName} placeholder={"Transport\nLunch"}/>
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Cancellation Policy</label>
-                        <textarea value={versionForm.cancellationPolicy} onChange={(e) => setVersionForm({...versionForm, cancellationPolicy: e.target.value})} rows={2} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
+                        <textarea value={versionForm.cancellationPolicy} onChange={(e) => setVersionForm({...versionForm, cancellationPolicy: e.target.value})} rows={2} className={controlMultilineClassName}/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Start Point Label</label>
-                        <input type="text" value={versionForm.startPointLabel} onChange={(e) => setVersionForm({...versionForm, startPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Placa Catalunya"/>
+                        <input type="text" value={versionForm.startPointLabel} onChange={(e) => setVersionForm({...versionForm, startPointLabel: e.target.value})} className={controlClassName} placeholder="Placa Catalunya"/>
                       </div>
                       <div>
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">End Point Label</label>
-                        <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="La Sagrada Familia"/>
+                        <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className={controlClassName} placeholder="La Sagrada Familia"/>
                       </div>
                       <div className="sm:col-span-2">
                         <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Stripe Payment Link <span className="font-normal text-[var(--wt-ink-muted)]">(optional)</span></label>
-                        <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="https://buy.stripe.com/..."/>
+                        <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className={controlClassName} placeholder="https://buy.stripe.com/..."/>
                       </div>
                     </div>
                     {versionFormErrors.length > 0 && (
-                      <div className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-3">
+                      <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-3">
                         <ul className="list-disc pl-4 text-sm text-[var(--wt-danger)] space-y-1">
                           {versionFormErrors.map((err, i) => <li key={i}>{err}</li>)}
                         </ul>

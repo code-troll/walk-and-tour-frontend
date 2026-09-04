@@ -165,7 +165,7 @@ export function EventEditorClient({mode, eventId}: EventEditorClientProps) {
 
       {feedback ? (
         <p
-          className={`rounded-xl px-4 py-3 text-sm ${
+          className={`rounded-[var(--wt-radius-sm)] px-4 py-3 text-sm ${
             feedback.tone === "error"
               ? "border border-[var(--wt-danger)] bg-[var(--wt-surface)] text-[var(--wt-danger)]"
               : "border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"
