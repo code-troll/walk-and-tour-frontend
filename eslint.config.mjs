@@ -19,6 +19,15 @@ import nextTs from "eslint-config-next/typescript";
  * dynamic-route path only matches when its brackets are escaped.
  */
 const UNMIGRATED_FROM_BRAND_TOKENS = [
+  "components/admin/AdminRouteProgress.tsx",
+  "components/admin/events/CalendarFilters.tsx",
+  "components/admin/events/CreateEventPanel.tsx",
+  "components/admin/events/DayNotePanel.tsx",
+  "components/admin/events/EventFormFields.tsx",
+  "components/admin/events/OccurrenceConfirmPanel.tsx",
+  "components/admin/events/RecurrenceBuilder.tsx",
+  "components/admin/team-members/AvailabilityEditor.tsx",
+  "components/admin/TiptapHtmlEditor.tsx",
   "app/admin/blog-posts/blog-editor-client.tsx",
   "app/admin/blog-posts/blog-posts-list-client.tsx",
   "app/admin/events/calendar/events-calendar-client.tsx",
@@ -26,10 +35,8 @@ const UNMIGRATED_FROM_BRAND_TOKENS = [
   "app/admin/events/events-list-client.tsx",
   "app/admin/events/schedule/events-schedule-client.tsx",
   "app/admin/hotel-bookings/hotel-booking-detail-client.tsx",
-  "app/admin/hotel-bookings/hotel-bookings-list-client.tsx",
   "app/admin/hotels/hotel-editor-client.tsx",
   "app/admin/hotels/hotels-list-client.tsx",
-  "app/admin/layout.tsx",
   "app/admin/newsletter/newsletter-client.tsx",
   "app/admin/overview-client.tsx",
   "app/admin/proposals/\\[id\\]/proposal-editor-client.tsx",
@@ -53,7 +60,12 @@ const eslintConfig = defineConfig([
   ...nextTs,
 
   {
-    files: ["app/admin/**/*.{ts,tsx}", "app/hotel-portal/**/*.{ts,tsx}"],
+    files: [
+      "app/admin/**/*.{ts,tsx}",
+      "app/hotel-portal/**/*.{ts,tsx}",
+      "components/admin/**/*.{ts,tsx}",
+      "components/hotel-portal/**/*.{ts,tsx}",
+    ],
     ignores: UNMIGRATED_FROM_BRAND_TOKENS,
     rules: {
       "no-restricted-syntax": [

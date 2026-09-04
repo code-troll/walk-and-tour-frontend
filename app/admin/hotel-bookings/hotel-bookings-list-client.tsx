@@ -69,13 +69,13 @@ export default function HotelBookingsListClient() {
       title="Hotel bookings"
       description="Tours hotels have booked for their guests. Confirm, complete and invoice them here."
     >
-      <div className="mb-5 flex flex-wrap items-center gap-1 rounded-full border border-[#eadfce] bg-[#fffcf7] p-1">
+      <div className="mb-4 flex flex-wrap items-center gap-5">
         {BOOKING_STATUS_FILTERS.map((filter) => (
           <button
-            className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+            className={`pb-1 text-sm transition ${
               status === filter.value
-                ? "bg-[#21343b] text-white"
-                : "text-[#627176] hover:text-[#21343b]"
+                ? "border-b-2 border-[var(--wt-nav-marker)] font-medium text-[var(--wt-ink)]"
+                : "border-b-2 border-transparent text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
             }`}
             key={filter.value || "all"}
             onClick={() => setStatus(filter.value)}
@@ -87,19 +87,19 @@ export default function HotelBookingsListClient() {
       </div>
 
       {isLoading ? (
-        <p className="flex items-center gap-2 py-8 text-sm text-[#627176]">
+        <p className="flex items-center gap-2 py-8 text-sm text-[var(--wt-ink-muted)]">
           <LoaderCircle className="size-4 animate-spin" />
           Loading bookings…
         </p>
       ) : items.length === 0 ? (
-        <p className="py-8 text-sm text-[#627176]">
+        <p className="py-8 text-sm text-[var(--wt-ink-muted)]">
           {status ? "No bookings match this filter." : "No hotel has booked anything yet."}
         </p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-[#f0e6d8] text-xs uppercase tracking-[0.14em] text-[#9a8f7d]">
+              <tr className="border-b border-[var(--wt-rule-strong)] text-xs uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
                 <th className="py-3 pr-4 font-semibold">Reference</th>
                 <th className="py-3 pr-4 font-semibold">Tour</th>
                 <th className="py-3 pr-4 font-semibold">When</th>
@@ -111,24 +111,24 @@ export default function HotelBookingsListClient() {
             </thead>
             <tbody>
               {items.map((booking) => (
-                <tr className="border-b border-[#f6f0e6] last:border-b-0" key={booking.id}>
-                  <td className="py-3 pr-4 font-mono text-xs text-[#53656c]">
+                <tr className="border-b border-[var(--wt-rule)] last:border-b-0" key={booking.id}>
+                  <td className="py-3 pr-4 font-mono text-xs text-[var(--wt-ink-muted)]">
                     {booking.reference}
                   </td>
                   <td className="py-3 pr-4">
-                    <p className="font-medium text-[#21343b]">{booking.tourName}</p>
-                    <p className="text-xs text-[#8a8477]">{booking.guest.name}</p>
+                    <p className="font-medium text-[var(--wt-ink)]">{booking.tourName}</p>
+                    <p className="text-xs text-[var(--wt-ink-muted)]">{booking.guest.name}</p>
                   </td>
-                  <td className="py-3 pr-4 text-xs text-[#53656c]">
+                  <td className="py-3 pr-4 text-xs text-[var(--wt-ink-muted)]">
                     {formatWhen(booking.scheduledFor)}
                   </td>
-                  <td className="py-3 pr-4 tabular-nums text-[#53656c]">
+                  <td className="py-3 pr-4 tabular-nums text-[var(--wt-ink-muted)]">
                     {booking.participantCount}
                   </td>
-                  <td className="py-3 pr-4 font-mono text-xs tabular-nums text-[#21343b]">
+                  <td className="py-3 pr-4 font-mono text-xs tabular-nums text-[var(--wt-ink)]">
                     {formatBookingAmount(booking.totalAmount, booking.currency)}
                     {booking.isEstimate && booking.totalAmount ? (
-                      <span className="ml-1 text-[#8a8477]">est.</span>
+                      <span className="ml-1 text-[var(--wt-ink-muted)]">est.</span>
                     ) : null}
                   </td>
                   <td className="py-3 pr-4">

@@ -14,6 +14,15 @@ export const metadata: Metadata = {
   description: "Backoffice administration for Walk and Tour.",
 };
 
+/**
+ * The backoffice shell — direction "Consola".
+ *
+ * It is deliberately not a card floating on a tinted ground. This is a tool
+ * someone has open all day: the sidebar is pinned, the content fills the
+ * window, and nothing is spent on framing. `data-surface="admin"` binds the
+ * tree to the backoffice half of `app/design-system.css`.
+ */
+
 const navigationByRole = {
   super_admin: [
     {href: "/", label: "Overview"},
@@ -44,6 +53,14 @@ const navigationByRole = {
   ],
 } as const;
 
+/** The signed-out and misconfigured states share one narrow column. */
+const Gate = ({children}: {children: React.ReactNode}) => (
+  <div className="mx-auto max-w-2xl px-6 py-12">{children}</div>
+);
+
+const quietAction =
+  "inline-flex items-center rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] px-4 py-2 text-sm font-medium text-[var(--wt-ink)] transition hover:bg-[var(--wt-surface-sunk)]";
+
 export default async function AdminLayout({
                                             children,
                                           }: Readonly<{
@@ -61,115 +78,101 @@ export default async function AdminLayout({
 
   return (
     <main
-      className="min-h-screen bg-[radial-gradient(circle_at_top,#efe2cc_0%,#fcf8f1_50%,#f6f1e7_100%)] px-6 py-10 text-[#1c2c33]">
+      className="min-h-screen bg-[var(--wt-bg)] text-[var(--wt-ink)]"
+      data-surface="admin"
+    >
       <AdminRouteProgressProvider>
-        <div
-          className="mx-auto flex min-h-[calc(100vh-5rem)] w-full min-w-120 max-w-7xl flex-col rounded-[2rem] border border-[#d8c5a8] bg-white/85 p-8 shadow-[0_30px_80px_rgba(61,45,27,0.10)] backdrop-blur md:p-10">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#eadfce] pb-6">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#9a6a2f]">
-                Walk and Tour
-              </p>
-              <h1 className="mt-3 font-serif text-3xl text-[#21343b] md:text-4xl">
-                Backoffice Administration
-              </h1>
-            </div>
+        { viewerState.kind === "auth0-not-configured" ? (
+          <Gate>
+            <AdminNoticeCard
+              eyebrow="Configuration"
+              title="Auth0 is not configured in this frontend environment."
+              description="Set AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_SECRET, and BACKEND_AUTH0_AUDIENCE before using the backoffice."
+            />
+          </Gate>
+        ) : null }
 
-            <div
-              className="rounded-full border border-[#d8c5a8] bg-[#f9f2e7] px-4 py-2 text-sm font-semibold text-[#7a5424]">
-              { environmentLabel ?? "Admin" }
-            </div>
-          </div>
+        { viewerState.kind === "unauthenticated" ? (
+          <Gate>
+            <AdminNoticeCard
+              eyebrow="Authentication"
+              title="Sign in to access the backoffice."
+              description="The admin routes are protected by Auth0, and the backend role mapping is resolved after login."
+              actions={
+                <a
+                  href="/auth/login?returnTo=/"
+                  className="inline-flex items-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-ink)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
+                >
+                  Sign in with Auth0
+                </a>
+              }
+            />
+          </Gate>
+        ) : null }
 
-          <div className="flex-1 pt-8">
-            { viewerState.kind === "auth0-not-configured" ? (
-              <AdminNoticeCard
-                eyebrow="Configuration"
-                title="Auth0 is not configured in this frontend environment."
-                description="Set AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_SECRET, and BACKEND_AUTH0_AUDIENCE before using the backoffice."
-              />
-            ) : null }
+        { viewerState.kind === "access-token-error" ? (
+          <Gate>
+            <AdminNoticeCard
+              eyebrow="Authentication"
+              title="The frontend session could not obtain a backend token."
+              description={ viewerState.message }
+              actions={<a href="/auth/logout" className={quietAction}>Clear session</a>}
+            />
+          </Gate>
+        ) : null }
 
-            { viewerState.kind === "unauthenticated" ? (
-              <AdminNoticeCard
-                eyebrow="Authentication"
-                title="Sign in to access the backoffice."
-                description="The admin routes are protected by Auth0, and the backend role mapping is resolved after login."
-                actions={
-                  <a
-                    href="/auth/login?returnTo=/"
-                    className="rounded-full bg-[#21343b] px-5 py-3 text-sm font-semibold text-white"
-                  >
-                    Sign in with Auth0
-                  </a>
-                }
-              />
-            ) : null }
+        { viewerState.kind === "backend-error" ? (
+          <Gate>
+            <AdminNoticeCard
+              eyebrow="Authorization"
+              title="The backend rejected the admin session."
+              description={ `Status ${ viewerState.statusCode }. ${ viewerState.message }` }
+              actions={<a href="/auth/logout" className={quietAction}>Sign out</a>}
+            />
+          </Gate>
+        ) : null }
 
-            { viewerState.kind === "access-token-error" ? (
-              <AdminNoticeCard
-                eyebrow="Authentication"
-                title="The frontend session could not obtain a backend token."
-                description={ viewerState.message }
-                actions={
-                  <a
-                    href="/auth/logout"
-                    className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
-                  >
-                    Clear session
-                  </a>
-                }
-              />
-            ) : null }
-
-            { viewerState.kind === "backend-error" ? (
-              <AdminNoticeCard
-                eyebrow="Authorization"
-                title="The backend rejected the admin session."
-                description={ `Status ${ viewerState.statusCode }. ${ viewerState.message }` }
-                actions={
-                  <a
-                    href="/auth/logout"
-                    className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
-                  >
-                    Sign out
-                  </a>
-                }
-              />
-            ) : null }
-
-            { viewerState.kind === "authenticated" ? (
-              <div className="grid gap-8 lg:grid-cols-[240px_minmax(0,1fr)]">
-                <aside className="rounded-[1.5rem] border border-[#eadfce] bg-[#fbf7f0] p-5 lg:block">
-                  <div
-                    className="flex flex-col gap-4 border-b border-[#eadfce] pb-4 sm:flex-row sm:items-start sm:justify-between lg:block">
-                    <p
-                      className="text-sm font-semibold text-[#21343b]">{ viewerState.auth0User.name ?? viewerState.backendAdmin.email }</p>
-                    <div className="sm:text-right lg:mt-0 lg:text-left">
-                      <p className="mt-1 text-sm text-[#627176]">{ viewerState.backendAdmin.email }</p>
-                      <p
-                        className="mt-3 inline-flex rounded-full bg-[#f2e7d6] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#8a6029]">
-                        { viewerState.backendAdmin.roleName.replace("_", " ") }
-                      </p>
-                    </div>
-                  </div>
-                  <AdminSidebarNav items={ navigationByRole[viewerState.backendAdmin.roleName] }/>
-
-                  <div className="mt-5 border-t border-[#eadfce] pt-4 lg:mt-6 lg:pt-5">
-                    <a
-                      href="/auth/logout"
-                      className="inline-flex rounded-full border border-[#cbb390] px-4 py-2 text-sm font-semibold text-[#7a5424]"
-                    >
-                      Sign out
-                    </a>
-                  </div>
-                </aside>
-
-                <div className="space-y-6">{ children }</div>
+        { viewerState.kind === "authenticated" ? (
+          <div className="flex min-h-screen">
+            <aside className="hidden w-56 shrink-0 flex-col border-r border-[var(--wt-rule-strong)] bg-[var(--wt-nav-bg)] lg:flex">
+              <div className="px-4 py-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
+                  W&amp;T Admin
+                </p>
+                <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--wt-nav-marker)]">
+                  { environmentLabel ?? "Admin" }
+                </p>
               </div>
-            ) : null }
+
+              <div className="flex-1 pb-4">
+                <AdminSidebarNav items={ navigationByRole[viewerState.backendAdmin.roleName] }/>
+              </div>
+
+              <div className="border-t border-[var(--wt-rule-strong)] px-4 py-3">
+                <p className="truncate text-sm text-[var(--wt-ink)]">
+                  { viewerState.auth0User.name ?? viewerState.backendAdmin.email }
+                </p>
+                <p className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--wt-ink-muted)]">
+                  { viewerState.backendAdmin.roleName.replace("_", " ") }
+                </p>
+                <a
+                  href="/auth/logout"
+                  className="mt-2 inline-flex text-xs text-[var(--wt-ink-muted)] transition hover:text-[var(--wt-ink)]"
+                >
+                  Sign out
+                </a>
+              </div>
+            </aside>
+
+            {/* On narrow screens the sidebar collapses to a row above the content. */}
+            <div className="min-w-0 flex-1">
+              <div className="border-b border-[var(--wt-rule-strong)] bg-[var(--wt-nav-bg)] px-4 py-2 lg:hidden">
+                <AdminSidebarNav items={ navigationByRole[viewerState.backendAdmin.roleName] }/>
+              </div>
+              <div className="space-y-5 p-5">{ children }</div>
+            </div>
           </div>
-        </div>
+        ) : null }
       </AdminRouteProgressProvider>
     </main>
   );
