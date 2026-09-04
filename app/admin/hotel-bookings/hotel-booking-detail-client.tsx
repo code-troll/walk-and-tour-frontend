@@ -187,16 +187,16 @@ export default function HotelBookingDetailClient({bookingId}: {bookingId: string
             Hotel bookings
           </AdminProgressLink>
         </Button>
-        <span className="font-mono text-xs text-[#8a8477]">{booking.reference}</span>
+        <span className="font-mono text-xs text-[var(--wt-ink-muted)]">{booking.reference}</span>
       </div>
 
       {actionError ? (
-        <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+        <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
           {actionError}
         </p>
       ) : null}
       {success ? (
-        <p className="rounded-xl border border-[#cfe4d3] bg-[#f3fbf4] px-4 py-3 text-sm text-[#2f6b3f]">
+        <p className="rounded-xl border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] px-4 py-3 text-sm text-[var(--wt-status-confirmed)]">
           {success}
         </p>
       ) : null}
@@ -237,25 +237,25 @@ export default function HotelBookingDetailClient({bookingId}: {bookingId: string
       >
         <dl className="grid gap-4 sm:grid-cols-4">
           <div>
-            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">Guest</dt>
-            <dd className="mt-1 text-sm text-[#21343b]">
+            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">Guest</dt>
+            <dd className="mt-1 text-sm text-[var(--wt-ink)]">
               {booking.guest.name}
               {booking.guest.roomNumber ? (
-                <span className="block text-xs text-[#8a8477]">Room {booking.guest.roomNumber}</span>
+                <span className="block text-xs text-[var(--wt-ink-muted)]">Room {booking.guest.roomNumber}</span>
               ) : null}
             </dd>
           </div>
           <div>
-            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">Guests</dt>
-            <dd className="mt-1 text-sm text-[#21343b]">{booking.participantCount}</dd>
+            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">Guests</dt>
+            <dd className="mt-1 text-sm text-[var(--wt-ink)]">{booking.participantCount}</dd>
           </div>
           <div>
-            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">Language</dt>
-            <dd className="mt-1 text-sm uppercase text-[#21343b]">{booking.languageCode}</dd>
+            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">Language</dt>
+            <dd className="mt-1 text-sm uppercase text-[var(--wt-ink)]">{booking.languageCode}</dd>
           </div>
           <div>
-            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">Contact</dt>
-            <dd className="mt-1 text-xs text-[#53656c]">
+            <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">Contact</dt>
+            <dd className="mt-1 text-xs text-[var(--wt-ink-muted)]">
               {booking.guest.email ?? "—"}
               <span className="block">{booking.guest.phone ?? ""}</span>
             </dd>
@@ -263,7 +263,7 @@ export default function HotelBookingDetailClient({bookingId}: {bookingId: string
         </dl>
 
         {booking.notes ? (
-          <p className="mt-4 rounded-xl border border-[#eadfce] bg-[#fffcf7] px-4 py-3 text-sm text-[#53656c]">
+          <p className="mt-4 border-l-2 border-[var(--wt-rule-strong)] px-4 py-3 text-sm text-[var(--wt-ink-muted)]">
             {booking.notes}
           </p>
         ) : null}
@@ -280,17 +280,17 @@ export default function HotelBookingDetailClient({bookingId}: {bookingId: string
         <ul className="space-y-2">
           {booking.lineItems.map((lineItem) => (
             <li
-              className="flex items-center justify-between gap-4 rounded-2xl border border-[#eadfce] bg-[#fffcf7] px-4 py-3"
+              className="flex items-center justify-between gap-4 border-b border-[var(--wt-rule)] px-4 py-3"
               key={lineItem.id}
             >
-              <span className="min-w-0 text-sm text-[#21343b]">
+              <span className="min-w-0 text-sm text-[var(--wt-ink)]">
                 {lineItem.description}
                 {lineItem.kind === "base" ? (
-                  <span className="ml-2 text-xs text-[#8a8477]">the tour</span>
+                  <span className="ml-2 text-xs text-[var(--wt-ink-muted)]">the tour</span>
                 ) : null}
               </span>
               <span className="flex shrink-0 items-center gap-3">
-                <span className="font-mono text-sm tabular-nums text-[#21343b]">
+                <span className="font-mono text-sm tabular-nums text-[var(--wt-ink)]">
                   {formatBookingAmount(lineItem.amount, booking.currency)}
                 </span>
                 {canEditMoney && lineItem.kind !== "base" ? (
@@ -315,23 +315,23 @@ export default function HotelBookingDetailClient({bookingId}: {bookingId: string
             </li>
           ))}
           {booking.lineItems.length === 0 ? (
-            <li className="text-sm text-[#627176]">
+            <li className="text-sm text-[var(--wt-ink-muted)]">
               This tour has no set price, so the booking has no charges yet.
             </li>
           ) : null}
         </ul>
 
-        <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-[#eadfce] pt-4">
-          <span className="font-semibold text-[#21343b]">
+        <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-[var(--wt-rule-strong)] pt-4">
+          <span className="font-semibold text-[var(--wt-ink)]">
             Total{booking.isEstimate ? " (estimate)" : ""}
           </span>
-          <span className="font-mono text-lg font-semibold tabular-nums text-[#21343b]">
+          <span className="font-mono text-lg font-semibold tabular-nums text-[var(--wt-ink)]">
             {formatBookingAmount(booking.totalAmount, booking.currency)}
           </span>
         </div>
 
         {canEditMoney ? (
-          <div className="mt-5 grid gap-3 border-t border-[#f0e6d8] pt-5 sm:grid-cols-[minmax(0,1fr)_140px_auto]">
+          <div className="mt-5 grid gap-3 border-t border-[var(--wt-rule-strong)] pt-5 sm:grid-cols-[minmax(0,1fr)_140px_auto]">
             <div>
               <Label htmlFor="charge-description">Add a charge</Label>
               <Input
