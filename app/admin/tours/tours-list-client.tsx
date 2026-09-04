@@ -552,13 +552,9 @@ export function AdminToursListClient({
         title="The tours workspace could not be loaded."
         description={initialLoadError}
         actions={
-          <button
-            type="button"
-            onClick={() => void loadToursWorkspace()}
-            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
-          >
-            Retry
-          </button>
+          <Button type="button" variant="outline" onClick={() => void loadToursWorkspace()}>
+              Retry
+            </Button>
         }
       />
     );

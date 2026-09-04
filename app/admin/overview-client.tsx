@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard, AdminStatCard} from "@/components/admin/AdminUi";
+import {Button} from "@/components/ui/button";
 import {
   getAdminBlogPostsClient,
   getAdminLanguagesClient,
@@ -84,13 +85,9 @@ export default function OverviewClient({roleName}: OverviewClientProps) {
         title="The overview dashboard could not be loaded."
         description={error ?? "Unable to load the overview dashboard."}
         actions={
-          <button
-            type="button"
-            onClick={() => window.location.reload()}
-            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
-          >
-            Retry
-          </button>
+          <Button type="button" variant="outline" onClick={() => window.location.reload()}>
+              Retry
+            </Button>
         }
       />
     );

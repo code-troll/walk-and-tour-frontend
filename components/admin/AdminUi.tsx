@@ -4,6 +4,7 @@ import type {ReactNode} from "react";
 
 import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
 import {Button} from "@/components/ui/button";
+import {cn} from "@/lib/utils";
 import {ArrowLeft} from "lucide-react";
 
 /**
@@ -60,6 +61,63 @@ export function AdminBackRow({
       )}
       {children ? <div className="flex items-center gap-3">{children}</div> : null}
     </div>
+  );
+}
+
+/**
+ * A row action with no room for a label: copy, open, delete.
+ *
+ * It is `size="sm"` squared off rather than shadcn's `size="icon"`, and the
+ * difference is the whole point. `size="icon"` is 32 px and `size="sm"` is
+ * 28 px, so an icon button placed beside a labelled one — which is where these
+ * always end up — stood 4 px taller than its neighbour. This is the same
+ * button, minus the text.
+ *
+ * The label is required and becomes both the tooltip and the accessible name.
+ * The four hand-written versions this replaces had a `title` and nothing else,
+ * so a screen reader announced them as "button".
+ */
+export function AdminIconButton({
+  children,
+  href,
+  label,
+  onClick,
+  tone = "neutral",
+}: {
+  children: ReactNode;
+  /** An external destination. Internal navigation belongs in a normal link. */
+  href?: string;
+  label: string;
+  onClick?: () => void;
+  tone?: "neutral" | "danger";
+}) {
+  const className = cn(
+    "size-7 p-0",
+    tone === "danger" && "border-[var(--wt-danger)] text-[var(--wt-danger)]",
+  );
+
+  if (href) {
+    return (
+      <Button aria-label={label} asChild className={className} size="sm" title={label} variant="outline">
+        <a href={href} rel="noopener noreferrer" target="_blank">
+          {children}
+        </a>
+      </Button>
+    );
+  }
+
+  return (
+    <Button
+      aria-label={label}
+      className={className}
+      onClick={onClick}
+      size="sm"
+      title={label}
+      type="button"
+      variant="outline"
+    >
+      {children}
+    </Button>
   );
 }
 

@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import {useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
 import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
+import {Button} from "@/components/ui/button";
 import {getAdminRolesClient, getAdminUsersClient} from "@/lib/admin/admin-client";
 import {formatAdminDate} from "@/lib/admin/format-date";
 import type {components} from "@/lib/api/generated/backend-types";
@@ -58,13 +59,9 @@ export default function AdminUsersClient() {
         title="The users workspace could not be loaded."
         description={error}
         actions={
-          <button
-            type="button"
-            onClick={() => void loadUsersWorkspace()}
-            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
-          >
-            Retry
-          </button>
+          <Button type="button" variant="outline" onClick={() => void loadUsersWorkspace()}>
+              Retry
+            </Button>
         }
       />
     );

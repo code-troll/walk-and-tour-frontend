@@ -3,7 +3,7 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 import {LoaderCircle, Plus, ExternalLink, Copy, Check, Trash2, Search} from "lucide-react";
 import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
-import {AdminSectionCard} from "@/components/admin/AdminUi";
+import {AdminIconButton, AdminSectionCard} from "@/components/admin/AdminUi";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {ConfirmDeleteDialog} from "@/components/admin/proposals/ConfirmDeleteDialog";
@@ -233,43 +233,41 @@ export function AdminProposalsListClient() {
               </div>
 
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => void handleTogglePublish(proposal)}
-                  className={`rounded-[var(--wt-radius-sm)] border px-3 py-2 text-xs font-semibold transition-colors ${
-                    proposal.publicationStatus === "published"
-                      ? "border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]"
-                      : "border-[var(--wt-status-confirmed)] text-[var(--wt-status-confirmed)] hover:bg-[var(--wt-status-confirmed-bg)]"
-                  }`}
-                  title={proposal.publicationStatus === "published" ? "Unpublish proposal" : "Publish proposal"}
-                >
-                  {proposal.publicationStatus === "published" ? "Unpublish" : "Publish"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => void handleCopyLink(proposal.hash, proposal.id, proposal.language)}
-                  className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
-                  title="Copy public link"
-                >
-                  {copiedId === proposal.id ? <Check className="h-4 w-4 text-[var(--wt-status-confirmed)]"/> : <Copy className="h-4 w-4"/>}
-                </button>
-                <a
-                  href={`${getPublicOrigin()}${getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${proposal.hash}`})}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
-                  title="Open public link"
-                >
-                  <ExternalLink className="h-4 w-4"/>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setDeleteTarget(proposal)}
-                  className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
-                  title="Delete proposal"
-                >
-                  <Trash2 className="h-4 w-4"/>
-                </button>
+                  {/*
+                    The same shared Button the tours list uses, so a row of
+                    actions has one height and one border everywhere. These were
+                    four hand-written elements with their own padding and text
+                    size, which is why they never matched.
+                  */}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => void handleTogglePublish(proposal)}
+                  >
+                    {proposal.publicationStatus === "published" ? "Unpublish" : "Publish"}
+                  </Button>
+                  <AdminIconButton
+                    label="Copy public link"
+                    onClick={() => void handleCopyLink(proposal.hash, proposal.id, proposal.language)}
+                  >
+                    {copiedId === proposal.id
+                      ? <Check className="size-4 text-[var(--wt-status-confirmed)]"/>
+                      : <Copy className="size-4"/>}
+                  </AdminIconButton>
+                  <AdminIconButton
+                    href={`${getPublicOrigin()}${getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${proposal.hash}`})}`}
+                    label="Open public link"
+                  >
+                    <ExternalLink className="size-4"/>
+                  </AdminIconButton>
+                  <AdminIconButton
+                    label="Delete proposal"
+                    onClick={() => setDeleteTarget(proposal)}
+                    tone="danger"
+                  >
+                    <Trash2 className="size-4"/>
+                  </AdminIconButton>
               </div>
             </div>
           ))}

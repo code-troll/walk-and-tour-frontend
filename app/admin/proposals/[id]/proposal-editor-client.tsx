@@ -19,7 +19,7 @@ import {
   Upload,
 } from "lucide-react";
 import {AdminProgressLink} from "@/components/admin/AdminRouteProgress";
-import {AdminSectionCard} from "@/components/admin/AdminUi";
+import {AdminIconButton, AdminSectionCard} from "@/components/admin/AdminUi";
 import {Button} from "@/components/ui/button";
 import {controlClassName, controlMultilineClassName} from "@/components/ui/control-class";
 import {Input} from "@/components/ui/input";
@@ -709,12 +709,12 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
               </code>
               {isPublished ? (
                 <>
-                  <button type="button" onClick={() => void handleCopyLink()} className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
+                  <AdminIconButton label="Copy public link" onClick={() => void handleCopyLink()}>
                     {copiedLink ? <Check className="h-4 w-4 text-[var(--wt-status-confirmed)]"/> : <Copy className="h-4 w-4"/>}
-                  </button>
-                  <a href={fullUrl} target="_blank" rel="noopener noreferrer" className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
+                  </AdminIconButton>
+                  <AdminIconButton href={fullUrl} label="Open public link">
                     <ExternalLink className="h-4 w-4"/>
-                  </a>
+                  </AdminIconButton>
                 </>
               ) : (
                 <span className="text-xs text-[var(--wt-ink-muted)]">Publish to reveal link</span>
@@ -803,14 +803,9 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     <ImageIcon className="mr-1.5 h-3.5 w-3.5"/>
                     Replace
                   </Button>
-                  <button
-                    type="button"
-                    onClick={() => void handleRemoveImage()}
-                    className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
-                    title="Remove image"
-                  >
+                  <AdminIconButton label="Remove image" onClick={() => void handleRemoveImage()} tone="danger">
                     <Trash2 className="h-3.5 w-3.5"/>
-                  </button>
+                  </AdminIconButton>
                 </div>
               </div>
             </div>
@@ -982,9 +977,9 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     >
                       {isOpen ? <><ChevronUp className="mr-1 h-3 w-3"/>Close</> : <><Pencil className="mr-1 h-3 w-3"/>Edit</>}
                     </Button>
-                    <button type="button" onClick={() => setDeleteVersionTarget(version)} className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] p-1.5 text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]">
+                    <AdminIconButton label="Delete version" onClick={() => setDeleteVersionTarget(version)} tone="danger">
                       <Trash2 className="h-3.5 w-3.5"/>
-                    </button>
+                    </AdminIconButton>
                   </div>
                 </div>
 
