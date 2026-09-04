@@ -1999,7 +1999,7 @@ export function TourEditorClient({
             ) : null }
 
             { successMessage ? (
-              <div className="rounded-[var(--wt-radius-sm)] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+              <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-status-confirmed)] px-4 py-3 text-sm text-[var(--wt-status-confirmed)]">
                 { successMessage }
               </div>
             ) : null }

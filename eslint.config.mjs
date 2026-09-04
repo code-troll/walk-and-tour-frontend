@@ -39,6 +39,35 @@ const RENDERS_PUBLISHED_CONTENT = [
   "components/admin/TiptapHtmlEditor.tsx",
 ];
 
+/**
+ * Tailwind's own palette — `bg-emerald-50`, `text-red-500`, `border-slate-200`.
+ *
+ * Banning hex was not enough. Twice a colour reached these trees without ever
+ * being written as `#rrggbb`: three `emerald-*` classes in the tour editor and
+ * two `rgba()` literals in the calendar's hover rules. A rule that catches only
+ * one spelling of "a colour I made up" is a rule with a hole in it.
+ *
+ * This deliberately leaves `white`, `black`, `transparent`, `current` and the
+ * shadcn semantic names (`muted-foreground`, `input`, `ring`) alone: those are
+ * either absolutes or already part of a system.
+ *
+ * Still not covered: `rgba()` and `hsl()` in CSS. A selector over class names
+ * cannot see a stylesheet. Those live in app/globals.css, which is small enough
+ * to review by hand.
+ */
+const TAILWIND_PALETTE =
+  "(bg|text|border|ring|from|via|to|fill|stroke|decoration|outline|accent|caret|divide|placeholder)" +
+  "-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue" +
+  "|indigo|violet|purple|fuchsia|pink|rose)-(50|[1-9]00|950)";
+
+const NO_TAILWIND_PALETTE =
+  "Tailwind palette colour. The backoffice and the hotel portal use the brand " +
+  "palette through the tokens in app/design-system.css, and Tailwind's own scale " +
+  "is not part of it. If you need a green, the approved one is the teal a " +
+  "confirmed booking uses; if you need something that is not there, it is not " +
+  "approved.";
+
+
 const NO_RAW_COLOUR =
   "Raw colour literal. The backoffice and the hotel portal may only use the " +
   "brand palette through the tokens in app/design-system.css — every value " +
@@ -72,6 +101,14 @@ const eslintConfig = defineConfig([
           // The same, hidden inside a template literal.
           selector: "TemplateElement[value.raw=/#[0-9a-fA-F]{3,8}\\b/]",
           message: NO_RAW_COLOUR,
+        },
+        {
+          selector: `Literal[value=/\\b${TAILWIND_PALETTE}\\b/]`,
+          message: NO_TAILWIND_PALETTE,
+        },
+        {
+          selector: `TemplateElement[value.raw=/\\b${TAILWIND_PALETTE}\\b/]`,
+          message: NO_TAILWIND_PALETTE,
         },
       ],
     },
