@@ -1990,7 +1990,7 @@ export function TourEditorClient({
           <div className="mx-auto max-w-5xl space-y-6">
             { submitError ? (
               <div
-                className="rounded-[1.25rem] border border-[#e8c7c1] bg-[#fbf2f0] px-4 py-3 text-sm text-[#a3483f] shadow-[0_10px_24px_rgba(163,72,63,0.08)]">
+                className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] px-4 py-3 text-sm text-[var(--wt-danger)]">
                 { submitError }
               </div>
             ) : null }
@@ -2002,11 +2002,11 @@ export function TourEditorClient({
             ) : null }
 
             { visibleErrors.length > 0 ? (
-              <div className="rounded-[1.25rem] border border-[#e8c7c1] bg-[#fbf2f0] px-4 py-3 shadow-[0_10px_24px_rgba(163,72,63,0.08)]">
-                <p className="text-sm font-medium text-[#a3483f]">
+              <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] px-4 py-3">
+                <p className="text-sm font-medium text-[var(--wt-danger)]">
                   Fix the following issues before saving:
                 </p>
-                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[#a3483f]">
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-[var(--wt-danger)]">
                   { visibleErrors.map((message) => (
                     <li key={ message }>{ message }</li>
                   )) }
@@ -2090,19 +2090,19 @@ export function TourEditorClient({
       </div>
 
       <Dialog open={ Boolean(pendingNavigation) } onOpenChange={ () => undefined }>
-        <DialogContent showCloseButton={ false } className="border border-[#eadfce] bg-[#fffdfa] shadow-[0_30px_80px_rgba(61,45,27,0.14)]">
+        <DialogContent showCloseButton={ false } className="border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]">
           <DialogHeader>
-            <DialogTitle className="text-[#21343b]">Unsaved changes</DialogTitle>
-            <DialogDescription className="text-[#627176]">
+            <DialogTitle className="text-[var(--wt-ink)]">Unsaved changes</DialogTitle>
+            <DialogDescription className="text-[var(--wt-ink-muted)]">
               Save or discard your current changes before leaving this part of the editor.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="border-t border-[#f0e6d8] bg-[#fbf7f0]">
+          <DialogFooter className="border-t border-[var(--wt-rule-strong)]">
             <Button
               variant="outline"
               onClick={ () => setPendingNavigation(null) }
               disabled={ isMutating }
-              className="h-10 border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]"
+              className="h-10 border-[var(--wt-rule-strong)] text-[var(--wt-ink)] transition hover:bg-[var(--wt-surface-sunk)]"
             >
               Stay
             </Button>
@@ -2110,14 +2110,14 @@ export function TourEditorClient({
               variant="outline"
               onClick={ handleDiscardAndContinue }
               disabled={ isMutating }
-              className="h-10 border-[#e8c7c1] bg-white text-[#a3483f] hover:bg-[#fbf2f0]"
+              className="h-10 border-[var(--wt-danger)] text-[var(--wt-danger)] transition hover:bg-[var(--wt-surface-sunk)]"
             >
               Discard
             </Button>
             <Button
               onClick={ () => void handleSaveAndContinue() }
               disabled={ isMutating }
-              className="h-10 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]"
+              className="h-10 border border-[var(--wt-ink)] bg-[var(--wt-ink)] text-white transition hover:opacity-90"
             >
               Save
             </Button>

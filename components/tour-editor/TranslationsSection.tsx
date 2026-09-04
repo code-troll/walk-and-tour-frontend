@@ -26,9 +26,9 @@ import {
 } from "lucide-react";
 
 const textareaClassName =
-  "flex min-h-24 w-full rounded-2xl border border-[#ddd0bf] bg-[#fdfbf7] px-3 py-2 text-sm text-[#21343b] outline-none transition-colors placeholder:text-[#a39482] focus-visible:border-[#cfb48f] focus-visible:ring-2 focus-visible:ring-[#eadfce] disabled:cursor-not-allowed disabled:opacity-50";
+  "flex min-h-24 w-full rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-ink)] outline-none transition-colors placeholder:text-[var(--wt-ink-muted)] focus-visible:border-[var(--wt-rule-strong)] focus-visible:ring-2 focus-visible:ring-[var(--wt-rule-strong)] disabled:cursor-not-allowed disabled:opacity-50";
 const sectionClassName =
-  "rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)] max-[520px]:p-4";
+  "rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)] max-[520px]:p-4";
 
 type TranslationsSectionProps = {
   formState: TourFormState;
@@ -98,8 +98,8 @@ export function TranslationsSection({
       <section className={ sectionClassName }>
         <div className="flex flex-wrap items-center justify-between gap-4 max-[520px]:items-stretch">
           <div>
-            <h2 className="text-lg font-semibold text-[#21343b]">Translations</h2>
-            <p className="mt-1 text-sm text-[#627176]">
+            <h2 className="text-lg font-semibold text-[var(--wt-ink)]">Translations</h2>
+            <p className="mt-1 text-sm text-[var(--wt-ink-muted)]">
               Manage localized content and save each locale independently.
             </p>
           </div>
@@ -114,7 +114,7 @@ export function TranslationsSection({
 
                 onAddTranslationAction(event.target.value);
               } }
-              className="h-10 rounded-2xl border border-[#ddd0bf] bg-[#fdfbf7] px-3 text-sm text-[#21343b] shadow-sm outline-none transition focus:border-[#cfb48f] focus:ring-2 focus:ring-[#eadfce] max-[520px]:w-full"
+              className="h-10 rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 text-sm text-[var(--wt-ink)] shadow-sm outline-none transition focus:border-[var(--wt-rule-strong)] focus:ring-2 focus:ring-[var(--wt-rule-strong)] max-[520px]:w-full"
               disabled={ availableToAdd.length === 0 }
             >
               <option value="">Select language</option>
@@ -129,10 +129,10 @@ export function TranslationsSection({
       </section>
 
       { orderedTranslations.length === 0 ? (
-        <div className="rounded-[1.75rem] border border-dashed border-[#d8c5a8] bg-[#fcfaf6] p-12 text-center">
-          <Globe className="mx-auto mb-4 size-12 text-[#8f7e67]"/>
-          <h3 className="mb-2 font-semibold text-[#21343b]">No Translations</h3>
-          <p className="text-sm text-[#627176]">
+        <div className="rounded-[1.75rem] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-12 text-center">
+          <Globe className="mx-auto mb-4 size-12 text-[var(--wt-ink-muted)]"/>
+          <h3 className="mb-2 font-semibold text-[var(--wt-ink)]">No Translations</h3>
+          <p className="text-sm text-[var(--wt-ink-muted)]">
             Add a language to start creating localized tour content.
           </p>
         </div>
@@ -151,9 +151,9 @@ export function TranslationsSection({
             return (
               <div
                 key={ translation.languageCode }
-                className="overflow-hidden rounded-[1.5rem] border border-[#eadfce] bg-white shadow-[0_14px_32px_rgba(42,36,25,0.04)]"
+                className="overflow-hidden rounded-[1.5rem] border border-[var(--wt-rule-strong)] bg-white shadow-[0_14px_32px_rgba(42,36,25,0.04)]"
               >
-                <div className="flex items-center gap-3 px-6 py-4 transition-colors hover:bg-[#fcfaf6] max-[520px]:flex-col max-[520px]:items-stretch max-[520px]:px-4">
+                <div className="flex items-center gap-3 px-6 py-4 transition-colors hover:bg-[var(--wt-surface)] max-[520px]:flex-col max-[520px]:items-stretch max-[520px]:px-4">
                   <button
                     type="button"
                     onClick={ () => onSelectTranslationAction(isExpanded ? null : translation.languageCode) }
@@ -166,15 +166,15 @@ export function TranslationsSection({
                         <ChevronRight className="size-5 text-muted-foreground"/>
                       ) }
 
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-[1rem] bg-[#f3e5cf]">
-                        <span className="text-sm font-bold uppercase text-[#9a6a2f]">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-[1rem] bg-[var(--wt-surface-sunk)]">
+                        <span className="text-sm font-bold uppercase text-[var(--wt-ink-muted)]">
                           { translation.languageCode }
                         </span>
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <div className="font-semibold text-[#21343b]">{ languageName }</div>
-                        <div className="truncate text-sm text-[#627176]">
+                        <div className="font-semibold text-[var(--wt-ink)]">{ languageName }</div>
+                        <div className="truncate text-sm text-[var(--wt-ink-muted)]">
                           { translation.title || "No title set" }
                         </div>
                       </div>
@@ -185,13 +185,13 @@ export function TranslationsSection({
                     <span
                       className={ cn(
                         "rounded-full px-2.5 py-1 text-center text-xs font-medium max-[520px]:w-full",
-                        isReady ? "bg-[#ecf6ef] text-[#2f6f45]" : "bg-[#f4ede3] text-[#7c6a54]",
+                        isReady ? "bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]" : "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]",
                       ) }
                     >
                       { isReady ? "Ready" : "Not ready" }
                     </span>
                     { translation.isPublished ? (
-                      <span className="flex items-center gap-1 text-xs font-medium text-[#2f6f45] max-[520px]:justify-center">
+                      <span className="flex items-center gap-1 text-xs font-medium text-[var(--wt-status-confirmed)] max-[520px]:justify-center">
                         <Check className="size-3.5"/>
                         Published
                       </span>
@@ -220,7 +220,7 @@ export function TranslationsSection({
                           event.stopPropagation();
                           onRemoveTranslationAction(translation.languageCode);
                         } }
-                        className="gap-2 whitespace-normal text-[#b3574a] hover:bg-[#fbf2f0] hover:text-[#b3574a] max-[520px]:w-full"
+                        className="gap-2 whitespace-normal text-[var(--wt-danger)] hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-danger)] max-[520px]:w-full"
                         disabled={ isSavingTranslation }
                       >
                         <Trash2 className="size-4"/>
@@ -231,18 +231,18 @@ export function TranslationsSection({
                 </div>
 
                 { isExpanded ? (
-                  <div className="space-y-6 border-t border-[#f0e6d8] px-6 pt-4 pb-6 max-[520px]:px-4">
+                  <div className="space-y-6 border-t border-[var(--wt-rule-strong)] px-6 pt-4 pb-6 max-[520px]:px-4">
                     { translationError ? (
-                      <div className="rounded-[1rem] border border-[#e8c7c1] bg-[#fbf2f0] p-4">
+                      <div className="rounded-[1rem] border border-[var(--wt-danger)] bg-[var(--wt-surface-sunk)] p-4">
                         <div className="space-y-4">
-                          <p className="text-sm font-medium text-[#a3483f]">{ translationError }</p>
+                          <p className="text-sm font-medium text-[var(--wt-danger)]">{ translationError }</p>
                         </div>
                       </div>
                     ) : null }
 
                     <div className="space-y-4 mt-4">
                       <h3 className="flex items-center gap-2 font-semibold text-foreground">
-                        <FileText className="size-4 text-[#9a6a2f]"/>
+                        <FileText className="size-4 text-[var(--wt-ink-muted)]"/>
                         Content
                       </h3>
 
@@ -408,7 +408,7 @@ export function TranslationsSection({
 
                     <div className="space-y-4">
                       <h3 className="flex items-center gap-2 font-semibold text-foreground">
-                        <MapPin className="size-4 text-[#9a6a2f]"/>
+                        <MapPin className="size-4 text-[var(--wt-ink-muted)]"/>
                         Location Labels
                       </h3>
 
@@ -452,7 +452,7 @@ export function TranslationsSection({
                     { formState.itineraryVariant === "description" ? (
                       <div className="space-y-4">
                         <h3 className="flex items-center gap-2 font-semibold text-foreground">
-                          <MapPin className="size-4 text-[#9a6a2f]"/>
+                          <MapPin className="size-4 text-[var(--wt-ink-muted)]"/>
                           Itinerary Description
                         </h3>
 
@@ -481,7 +481,7 @@ export function TranslationsSection({
                     { formState.itineraryVariant === "stops" && formState.stops.length > 0 ? (
                       <div className="space-y-4">
                         <h3 className="flex items-center gap-2 font-semibold text-foreground">
-                          <MapPin className="size-4 text-[#9a6a2f]"/>
+                          <MapPin className="size-4 text-[var(--wt-ink-muted)]"/>
                           Stop Translations
                         </h3>
 
@@ -493,18 +493,18 @@ export function TranslationsSection({
                             return (
                               <div
                                 key={ stop.clientId }
-                                className="space-y-3 rounded-[1rem] border border-[#efe4d5] bg-[#fffcf7] p-4"
+                                className="space-y-3 rounded-[1rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4"
                               >
                                 <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                                   <span
-                                    className="flex size-6 items-center justify-center rounded-full bg-[#21343b] text-xs text-white">
+                                    className="flex size-6 items-center justify-center rounded-full bg-[var(--wt-ink)] text-xs text-white">
                                     { index + 1 }
                                   </span>
                                   { stopId || `Stop ${ index + 1 }` }
                                 </div>
 
                                 { !stopId ? (
-                                  <p className="text-xs text-[#627176]">
+                                  <p className="text-xs text-[var(--wt-ink-muted)]">
                                     Set the stop ID in the Itinerary section before entering localized stop copy.
                                   </p>
                                 ) : null }

@@ -60,8 +60,8 @@ const commuteModeIcons: Partial<Record<CommuteMode, ElementType>> = {
 };
 
 const sectionClassName =
-  "rounded-[1.75rem] border border-[#eadfce] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]";
-const stopCardClassName = "overflow-hidden rounded-[1.25rem] border border-[#efe4d5] bg-[#fffcf7]";
+  "rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]";
+const stopCardClassName = "overflow-hidden rounded-[1.25rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]";
 
 export function ItinerarySection({
                                    formState,
@@ -83,7 +83,7 @@ export function ItinerarySection({
   return (
     <div className="space-y-6">
       <section className={ sectionClassName }>
-        <h2 className="mb-4 text-lg font-semibold text-[#21343b]">Itinerary Type</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--wt-ink)]">Itinerary Type</h2>
 
         <div className="flex flex-col gap-3 md:flex-row">
           <button
@@ -92,15 +92,15 @@ export function ItinerarySection({
             className={ cn(
               "flex-1 rounded-lg border-2 px-6 py-4 text-left transition-all",
               formState.itineraryVariant === "stops"
-                ? "border-[#d5b588] bg-[#fcf4e6]"
-                : "border-[#eadfce] bg-[#fffcf7] hover:border-[#d8c5a8]",
+                ? "border-[var(--wt-rule-strong)] bg-[var(--wt-surface-sunk)]"
+                : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] hover:border-[var(--wt-rule-strong)]",
             ) }
           >
             <div className="mb-2 flex items-center gap-3">
-              <MapPin className="size-5 text-[#9a6a2f]"/>
-              <span className="font-semibold text-[#21343b]">Stops-Based</span>
+              <MapPin className="size-5 text-[var(--wt-ink-muted)]"/>
+              <span className="font-semibold text-[var(--wt-ink)]">Stops-Based</span>
             </div>
-            <p className="text-sm text-[#627176]">
+            <p className="text-sm text-[var(--wt-ink-muted)]">
               Define individual stops with coordinates, durations, and connections.
             </p>
           </button>
@@ -111,15 +111,15 @@ export function ItinerarySection({
             className={ cn(
               "flex-1 rounded-lg border-2 px-6 py-4 text-left transition-all",
               formState.itineraryVariant === "description"
-                ? "border-[#d5b588] bg-[#fcf4e6]"
-                : "border-[#eadfce] bg-[#fffcf7] hover:border-[#d8c5a8]",
+                ? "border-[var(--wt-rule-strong)] bg-[var(--wt-surface-sunk)]"
+                : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] hover:border-[var(--wt-rule-strong)]",
             ) }
           >
             <div className="mb-2 flex items-center gap-3">
-              <span className="text-lg font-bold text-[#9a6a2f]">¶</span>
-              <span className="font-semibold text-[#21343b]">Description-Based</span>
+              <span className="text-lg font-bold text-[var(--wt-ink-muted)]">¶</span>
+              <span className="font-semibold text-[var(--wt-ink)]">Description-Based</span>
             </div>
-            <p className="text-sm text-[#627176]">
+            <p className="text-sm text-[var(--wt-ink-muted)]">
               Write a free-form itinerary description in each translation.
             </p>
           </button>
@@ -130,23 +130,23 @@ export function ItinerarySection({
         <section className={ sectionClassName }>
           <div className="mb-6 flex items-center justify-between gap-4">
             <div>
-              <h2 className="text-lg font-semibold text-[#21343b]">Tour Stops</h2>
-              <p className="mt-1 text-sm text-[#627176]">
+              <h2 className="text-lg font-semibold text-[var(--wt-ink)]">Tour Stops</h2>
+              <p className="mt-1 text-sm text-[var(--wt-ink-muted)]">
                 Build the shared itinerary route and keep stop IDs stable for localized copy.
               </p>
             </div>
 
-            <Button onClick={ onAddStopAction } className="gap-2 border border-[#21343b] bg-[#21343b] text-white hover:bg-[#2c454d]">
+            <Button onClick={ onAddStopAction } className="gap-2 border border-[var(--wt-ink)] bg-[var(--wt-ink)] text-white hover:bg-[var(--wt-ink)]">
               <Plus className="size-4"/>
               Add Stop
             </Button>
           </div>
 
           { formState.stops.length === 0 ? (
-            <div className="rounded-[1.25rem] border-2 border-dashed border-[#d8c5a8] bg-[#fcfaf6] py-12 text-center">
-              <MapPin className="mx-auto mb-3 size-10 text-[#8f7e67]"/>
-              <p className="mb-4 text-[#627176]">No stops added yet.</p>
-              <Button onClick={ onAddStopAction } variant="outline" className="gap-2 border-[#d8c5a8] bg-white text-[#7a5424] hover:bg-[#f4ebde]">
+            <div className="rounded-[1.25rem] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] py-12 text-center">
+              <MapPin className="mx-auto mb-3 size-10 text-[var(--wt-ink-muted)]"/>
+              <p className="mb-4 text-[var(--wt-ink-muted)]">No stops added yet.</p>
+              <Button onClick={ onAddStopAction } variant="outline" className="gap-2 border-[var(--wt-rule-strong)] bg-white text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
                 <Plus className="size-4"/>
                 Add Your First Stop
               </Button>
@@ -161,11 +161,11 @@ export function ItinerarySection({
                 return (
                   <div key={ stop.clientId } className="group">
                     <div className={ stopCardClassName }>
-                      <div className="flex items-center gap-3 border-b border-[#f0e6d8] bg-[#fcfaf6] px-4 py-3">
+                      <div className="flex items-center gap-3 border-b border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <GripVertical className="size-4 text-[#8f7e67]"/>
+                          <GripVertical className="size-4 text-[var(--wt-ink-muted)]"/>
                           <div
-                            className="flex size-8 items-center justify-center rounded-full bg-[#21343b] text-sm font-bold text-white">
+                            className="flex size-8 items-center justify-center rounded-full bg-[var(--wt-ink)] text-sm font-bold text-white">
                             { index + 1 }
                           </div>
                         </div>
@@ -189,7 +189,7 @@ export function ItinerarySection({
                             size="icon-sm"
                             onClick={ () => onMoveStopAction({clientId: stop.clientId, direction: "up"}) }
                             disabled={ index === 0 }
-                            className="opacity-0 text-[#627176] transition-opacity group-hover:opacity-100 hover:bg-[#f2eadf] hover:text-[#21343b]"
+                            className="opacity-0 text-[var(--wt-ink-muted)] transition-opacity group-hover:opacity-100 hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
                           >
                             <ArrowUp className="size-4"/>
                           </Button>
@@ -198,7 +198,7 @@ export function ItinerarySection({
                             size="icon-sm"
                             onClick={ () => onMoveStopAction({clientId: stop.clientId, direction: "down"}) }
                             disabled={ isLast }
-                            className="opacity-0 text-[#627176] transition-opacity group-hover:opacity-100 hover:bg-[#f2eadf] hover:text-[#21343b]"
+                            className="opacity-0 text-[var(--wt-ink-muted)] transition-opacity group-hover:opacity-100 hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
                           >
                             <ArrowDown className="size-4"/>
                           </Button>
@@ -206,7 +206,7 @@ export function ItinerarySection({
                             variant="ghost"
                             size="icon-sm"
                             onClick={ () => onRemoveStopAction(stop.clientId) }
-                            className="opacity-0 text-[#b3574a] transition-opacity group-hover:opacity-100 hover:bg-[#fbf2f0] hover:text-[#b3574a]"
+                            className="opacity-0 text-[var(--wt-danger)] transition-opacity group-hover:opacity-100 hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-danger)]"
                           >
                             <Trash2 className="size-4"/>
                           </Button>
@@ -276,10 +276,10 @@ export function ItinerarySection({
 
                     { !isLast ? (
                       <div className="flex items-center gap-3 py-3 pl-6">
-                        <div className="-my-3 h-8 w-0.5 bg-[#eadfce]"/>
+                        <div className="-my-3 h-8 w-0.5 bg-[var(--wt-rule-strong)]"/>
                         <div className="flex flex-1 flex-wrap items-center gap-3">
-                          <div className="flex items-center gap-2 rounded-[1rem] border border-[#eadfce] bg-[#fbf7f0] px-3 py-2">
-                            { CommuteIcon ? <CommuteIcon className="size-4 text-[#627176]"/> : null }
+                          <div className="flex items-center gap-2 rounded-[1rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-2">
+                            { CommuteIcon ? <CommuteIcon className="size-4 text-[var(--wt-ink-muted)]"/> : null }
                             <select
                               value={ stop.nextCommuteMode }
                               onChange={ (event) =>
@@ -289,7 +289,7 @@ export function ItinerarySection({
                                   value: event.target.value,
                                 })
                               }
-                              className="bg-transparent text-sm font-medium text-[#21343b] focus:outline-none"
+                              className="bg-transparent text-sm font-medium text-[var(--wt-ink)] focus:outline-none"
                             >
                               { commuteModes.map((mode) => (
                                 <option key={ mode.value } value={ mode.value }>
@@ -314,7 +314,7 @@ export function ItinerarySection({
                               min={ 0 }
                               className="h-8 w-20 text-center"
                             />
-                            <span className="text-xs text-[#627176]">min</span>
+                            <span className="text-xs text-[var(--wt-ink-muted)]">min</span>
                           </div>
                         </div>
                       </div>
@@ -328,12 +328,12 @@ export function ItinerarySection({
       ) : (
         <section className={ sectionClassName }>
           <div className="flex items-start gap-4">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-[1rem] bg-[#f3e5cf]">
-              <span className="text-lg font-bold text-[#9a6a2f]">¶</span>
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-[1rem] bg-[var(--wt-surface-sunk)]">
+              <span className="text-lg font-bold text-[var(--wt-ink-muted)]">¶</span>
             </div>
             <div>
-              <h3 className="font-semibold text-[#21343b]">Description-Based Itinerary</h3>
-              <p className="mt-1 text-sm text-[#627176]">
+              <h3 className="font-semibold text-[var(--wt-ink)]">Description-Based Itinerary</h3>
+              <p className="mt-1 text-sm text-[var(--wt-ink-muted)]">
                 In this mode, the itinerary is authored as free-form text inside each translation.
                 Use the Translations section to edit localized itinerary descriptions.
               </p>
