@@ -21,7 +21,6 @@ import nextTs from "eslint-config-next/typescript";
 const UNMIGRATED_FROM_BRAND_TOKENS = [
   "components/admin/TiptapHtmlEditor.tsx",
   "app/admin/blog-posts/blog-editor-client.tsx",
-  "app/admin/proposals/\\[id\\]/proposal-editor-client.tsx",
   "app/admin/tours/tour-editor-client.tsx",
 ];
 

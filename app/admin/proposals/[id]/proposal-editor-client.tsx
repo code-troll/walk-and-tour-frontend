@@ -640,7 +640,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <LoaderCircle className="h-5 w-5 animate-spin text-[#9a6a2f]"/>
+        <LoaderCircle className="h-5 w-5 animate-spin text-[var(--wt-ink-muted)]"/>
       </div>
     );
   }
@@ -652,7 +652,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       <div className="flex items-center justify-between">
         <AdminProgressLink
           href="/admin/proposals"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-[#627176] hover:text-[#21343b]"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
         >
           <ArrowLeft className="h-4 w-4"/>
           Back to Proposals
@@ -678,8 +678,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
               variant={proposal.publicationStatus === "published" ? "outline" : "default"}
               className={
                 proposal.publicationStatus === "published"
-                  ? "h-10 inline-flex items-center gap-2 border-[#e8c7c1] text-[#a3483f] hover:bg-[#fbf2f0]"
-                  : "h-10 inline-flex items-center gap-2 bg-[#2f6b3f] hover:bg-[#265832]"
+                  ? "h-10 inline-flex items-center gap-2 border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]"
+                  : "h-10 inline-flex items-center gap-2 bg-[var(--wt-ink)] transition hover:opacity-90"
               }
             >
               {proposal.publicationStatus === "published" ? "Unpublish" : "Publish"}
@@ -689,7 +689,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       </div>
 
       {error && (
-        <div className="rounded-xl border border-[#e8c7c1] bg-[#fbf2f0] p-4 text-sm text-[#a3483f]">
+        <div className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-4 text-sm text-[var(--wt-danger)]">
           {error}
         </div>
       )}
@@ -704,20 +704,20 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
         return (
           <AdminSectionCard title="Public Link">
             <div className="flex items-center gap-3">
-              <code className={`flex-1 truncate rounded-lg px-3 py-2 text-sm ${isPublished ? "bg-[#f6f1e7] text-[#21343b]" : "bg-[#f6f1e7] text-[#9a8d7e] select-none"}`}>
+              <code className={`flex-1 truncate rounded-lg px-3 py-2 text-sm ${isPublished ? "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink)]" : "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)] select-none"}`}>
                 {isPublished ? fullUrl : maskedUrl}
               </code>
               {isPublished ? (
                 <>
-                  <button type="button" onClick={() => void handleCopyLink()} className="rounded-lg border border-[#eadfce] p-2 text-[#627176] hover:bg-[#f9f2e7]">
-                    {copiedLink ? <Check className="h-4 w-4 text-[#2f6b3f]"/> : <Copy className="h-4 w-4"/>}
+                  <button type="button" onClick={() => void handleCopyLink()} className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
+                    {copiedLink ? <Check className="h-4 w-4 text-[var(--wt-status-confirmed)]"/> : <Copy className="h-4 w-4"/>}
                   </button>
-                  <a href={fullUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-[#eadfce] p-2 text-[#627176] hover:bg-[#f9f2e7]">
+                  <a href={fullUrl} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
                     <ExternalLink className="h-4 w-4"/>
                   </a>
                 </>
               ) : (
-                <span className="text-xs text-[#9a8d7e]">Publish to reveal link</span>
+                <span className="text-xs text-[var(--wt-ink-muted)]">Publish to reveal link</span>
               )}
             </div>
           </AdminSectionCard>
@@ -728,39 +728,39 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       <AdminSectionCard title={isNew ? "New Proposal" : "Proposal Details"}>
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label className="mb-1 block text-sm font-semibold text-[#21343b]">Proposal Name</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Rome Highlights Private Tour"/>
-            <p className="mt-1 text-xs text-[#9a8d7e]">General name shown as the main title of the proposal in the public page.</p>
+            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Proposal Name</label>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Rome Highlights Private Tour"/>
+            <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">General name shown as the main title of the proposal in the public page.</p>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[#21343b]">Language</label>
-            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
+            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Language</label>
+            <select value={language} onChange={(e) => setLanguage(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm">
               {LANGUAGES.map((l) => (<option key={l.code} value={l.code}>{l.name} ({l.code})</option>))}
             </select>
           </div>
           {!isNew && (
             <div>
-              <label className="mb-1 block text-sm font-semibold text-[#21343b]">Acceptance</label>
-              <select value={acceptanceStatus} onChange={(e) => setAcceptanceStatus(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
+              <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Acceptance</label>
+              <select value={acceptanceStatus} onChange={(e) => setAcceptanceStatus(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm">
                 {ACCEPTANCE_STATUSES.map((s) => (<option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>))}
               </select>
             </div>
           )}
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[#21343b]">Recipient Name</label>
-            <input type="text" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="John Doe"/>
+            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Recipient Name</label>
+            <input type="text" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="John Doe"/>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[#21343b]">Recipient Email</label>
-            <input type="email" value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="john@example.com"/>
+            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Recipient Email</label>
+            <input type="email" value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="john@example.com"/>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-semibold text-[#21343b]">Expires At</label>
-            <input type="datetime-local" value={expiresAt} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setExpiresAt(e.target.value)} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Expires At</label>
+            <input type="datetime-local" value={expiresAt} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setExpiresAt(e.target.value)} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
           </div>
           <div className="sm:col-span-2">
-            <label className="mb-1 block text-sm font-semibold text-[#21343b]">Admin Notes</label>
-            <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Internal notes..."/>
+            <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Admin Notes</label>
+            <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Internal notes..."/>
           </div>
         </div>
       </AdminSectionCard>
@@ -769,8 +769,8 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
       {!isNew && (
         <AdminSectionCard title="Proposal Image">
           {currentMedia ? (
-            <div className="overflow-hidden rounded-2xl border border-[#eadfce] bg-[#f9f5ef]">
-              <div className="relative aspect-video w-full bg-[#f3ede4]">
+            <div className="overflow-hidden rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]">
+              <div className="relative aspect-video w-full bg-[var(--wt-surface-sunk)]">
                 {currentImagePreview ? (
                   <>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -783,17 +783,17 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                   </>
                 ) : (
                   <div className="flex h-full items-center justify-center">
-                    <LoaderCircle className="h-6 w-6 animate-spin text-[#9a8d7e]"/>
+                    <LoaderCircle className="h-6 w-6 animate-spin text-[var(--wt-ink-muted)]"/>
                   </div>
                 )}
               </div>
               <div className="flex items-center justify-between gap-4 px-5 py-4">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-[#21343b]">
+                  <p className="truncate text-sm font-medium text-[var(--wt-ink)]">
                     {currentMedia.media?.originalFilename ?? "Image"}
                   </p>
                   {currentMedia.media && (
-                    <p className="mt-0.5 text-xs text-[#9a8d7e]">
+                    <p className="mt-0.5 text-xs text-[var(--wt-ink-muted)]">
                       {formatFileSize(currentMedia.media.size)} &middot; {currentMedia.media.contentType}
                     </p>
                   )}
@@ -806,7 +806,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                   <button
                     type="button"
                     onClick={() => void handleRemoveImage()}
-                    className="rounded-lg border border-[#e8c7c1] p-2 text-[#a3483f] transition-colors hover:bg-[#fbf2f0]"
+                    className="rounded-lg border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
                     title="Remove image"
                   >
                     <Trash2 className="h-3.5 w-3.5"/>
@@ -818,14 +818,14 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             <button
               type="button"
               onClick={openMediaDialog}
-              className="group flex w-full flex-col items-center gap-4 rounded-2xl border-2 border-dashed border-[#d8c5a8] bg-[#fcfaf6] px-8 py-12 transition-colors hover:border-[#c4a87a] hover:bg-[#f9f2e7]"
+              className="group flex w-full flex-col items-center gap-4 rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-8 py-12 transition-colors hover:border-[var(--wt-rule-strong)] hover:bg-[var(--wt-surface-sunk)]"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#efe4d5] transition-colors group-hover:bg-[#e4d5be]">
-                <ImageIcon className="h-7 w-7 text-[#9a8d7e]"/>
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--wt-surface-sunk)] transition-colors group-hover:bg-[var(--wt-rule-strong)]">
+                <ImageIcon className="h-7 w-7 text-[var(--wt-ink-muted)]"/>
               </div>
               <div className="text-center">
-                <p className="text-sm font-semibold text-[#21343b]">Add an image</p>
-                <p className="mt-1 text-xs text-[#9a8d7e]">Select from the media library or upload a new one</p>
+                <p className="text-sm font-semibold text-[var(--wt-ink)]">Add an image</p>
+                <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">Select from the media library or upload a new one</p>
               </div>
             </button>
           )}
@@ -834,7 +834,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
 
       {/* Media Picker Dialog */}
       <Dialog open={isMediaDialogOpen} onOpenChange={setIsMediaDialogOpen}>
-        <DialogContent className="border border-[#eadfce] bg-[#fffdfa] shadow-[0_30px_80px_rgba(61,45,27,0.14)] sm:max-w-3xl">
+        <DialogContent className="border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] shadow-[0_30px_80px_rgba(61,45,27,0.14)] sm:max-w-3xl">
           <DialogHeader>
             <DialogTitle>Select Image</DialogTitle>
             <DialogDescription>Search the media library or upload a new image.</DialogDescription>
@@ -858,7 +858,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </form>
 
             {mediaDialogError && (
-              <div className="rounded-[1rem] border border-[#e8c7c1] bg-[#fbf2f0] px-3 py-2 text-sm text-[#a3483f]">
+              <div className="rounded-[1rem] border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-danger)]">
                 {mediaDialogError}
               </div>
             )}
@@ -875,22 +875,22 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     onClick={() => setSelectedMediaId(isSelected ? null : asset.id)}
                     className={[
                       "overflow-hidden rounded-lg border text-left transition-colors",
-                      isSelected ? "border-[#d5b588] ring-2 ring-[#ead7b8]" : "border-[#efe4d5] bg-[#fffcf7]",
-                      isAttached ? "cursor-not-allowed opacity-60" : "hover:bg-[#fcf7ef]",
+                      isSelected ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-rule-strong)]" : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]",
+                      isAttached ? "cursor-not-allowed opacity-60" : "hover:bg-[var(--wt-surface)]",
                     ].join(" ")}
                   >
-                    <div className="relative aspect-4/3 bg-[#f3ede4]">
+                    <div className="relative aspect-4/3 bg-[var(--wt-surface-sunk)]">
                       {mediaPreviewUrls[asset.id] ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={mediaPreviewUrls[asset.id]} alt={asset.originalFilename} className="h-full w-full object-cover"/>
                       ) : (
                         <div className="flex h-full items-center justify-center">
-                          <ImageIcon className="size-8 text-[#9b8a73]"/>
+                          <ImageIcon className="size-8 text-[var(--wt-ink-muted)]"/>
                         </div>
                       )}
                       <div className="absolute top-2 left-2 flex gap-2">
-                        {isAttached && <span className="rounded-full bg-white/90 px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#21343b]">Current</span>}
-                        {isSelected && <span className="rounded-full bg-[#9a6a2f] px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-white">Selected</span>}
+                        {isAttached && <span className="rounded-full bg-white/90 px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--wt-ink)]">Current</span>}
+                        {isSelected && <span className="rounded-full bg-[var(--wt-ink)] px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-white">Selected</span>}
                       </div>
                     </div>
                     <div className="space-y-1 p-3">
@@ -906,7 +906,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             </div>
 
             {!isLoadingMedia && mediaLibraryItems.length === 0 && (
-              <div className="rounded-[1.25rem] border border-dashed border-[#d8c5a8] bg-[#fcfaf6] px-6 py-10 text-center text-[#627176]">
+              <div className="rounded-[1.25rem] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-[var(--wt-ink-muted)]">
                 No images found.
               </div>
             )}
@@ -936,20 +936,20 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
           {localVersions.map((version, vIndex) => {
             const isOpen = editingLocalId === version.localId;
             return (
-              <div key={version.localId} className="rounded-xl border border-[#eadfce] bg-white overflow-hidden">
+              <div key={version.localId} className="rounded-xl border border-[var(--wt-rule-strong)] bg-white overflow-hidden">
                 {/* Collapsed header */}
-                <div className="flex items-center justify-between p-4 bg-[#fbf7f0]">
+                <div className="flex items-center justify-between p-4 bg-[var(--wt-surface)]">
                   <div>
                     <div className="flex items-center gap-3">
-                      <p className="font-semibold text-[#21343b]">{version.title || `Proposal ${vIndex + 1}`}</p>
+                      <p className="font-semibold text-[var(--wt-ink)]">{version.title || `Proposal ${vIndex + 1}`}</p>
                       {isVersionDirty(version) ? (
-                        <span className="inline-flex rounded-full border border-[#e3d5b4] bg-[#fbf7ea] px-2.5 py-0.5 text-xs font-semibold text-[#8a6029]">Unsaved</span>
+                        <span className="inline-flex rounded-full border border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--wt-ink-muted)]">Unsaved</span>
                       ) : (
-                        <span className="inline-flex rounded-full border border-[#cfe4d3] bg-[#f3fbf4] px-2.5 py-0.5 text-xs font-semibold text-[#2f6b3f]">Saved</span>
+                        <span className="inline-flex rounded-full border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] px-2.5 py-0.5 text-xs font-semibold text-[var(--wt-status-confirmed)]">Saved</span>
                       )}
                     </div>
                     {!isOpen && (
-                      <p className="mt-1 text-sm text-[#627176]">
+                      <p className="mt-1 text-sm text-[var(--wt-ink-muted)]">
                         {version.priceAmount} {version.priceCurrency}
                         {version.tourDate && ` \u00b7 ${version.tourDate.replace("T", " ").slice(0, 16)}`}
                         {version.durationMinutes && ` \u00b7 ${version.durationMinutes} min`}
@@ -982,7 +982,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                     >
                       {isOpen ? <><ChevronUp className="mr-1 h-3 w-3"/>Close</> : <><Pencil className="mr-1 h-3 w-3"/>Edit</>}
                     </Button>
-                    <button type="button" onClick={() => setDeleteVersionTarget(version)} className="rounded-lg border border-[#e8c7c1] p-1.5 text-[#a3483f] hover:bg-[#fbf2f0]">
+                    <button type="button" onClick={() => setDeleteVersionTarget(version)} className="rounded-lg border border-[var(--wt-danger)] p-1.5 text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]">
                       <Trash2 className="h-3.5 w-3.5"/>
                     </button>
                   </div>
@@ -994,67 +994,67 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
                   style={{gridTemplateRows: isOpen ? "1fr" : "0fr"}}
                 >
                   <div className="overflow-hidden">
-                  <div className={`border-t border-[#eadfce] p-5 space-y-4 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}>
+                  <div className={`border-t border-[var(--wt-rule-strong)] p-5 space-y-4 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}>
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Title</label>
-                        <input type="text" value={versionForm.title} onChange={(e) => setVersionForm({...versionForm, title: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Classic Walking Tour"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Title</label>
+                        <input type="text" value={versionForm.title} onChange={(e) => setVersionForm({...versionForm, title: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Classic Walking Tour"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Tour Date &amp; Time</label>
-                        <input type="datetime-local" value={versionForm.tourDate} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setVersionForm({...versionForm, tourDate: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Tour Date &amp; Time</label>
+                        <input type="datetime-local" value={versionForm.tourDate} min={toLocalDatetimeString(new Date().toISOString())} onChange={(e) => setVersionForm({...versionForm, tourDate: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Duration (minutes)</label>
-                        <input type="number" min="0" value={versionForm.durationMinutes} onChange={(e) => setVersionForm({...versionForm, durationMinutes: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="180"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Duration (minutes)</label>
+                        <input type="number" min="0" value={versionForm.durationMinutes} onChange={(e) => setVersionForm({...versionForm, durationMinutes: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="180"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Price Amount</label>
-                        <input type="number" step="0.01" min="0" value={versionForm.priceAmount} onChange={(e) => setVersionForm({...versionForm, priceAmount: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Price Amount</label>
+                        <input type="number" step="0.01" min="0" value={versionForm.priceAmount} onChange={(e) => setVersionForm({...versionForm, priceAmount: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Currency</label>
-                        <select value={versionForm.priceCurrency} onChange={(e) => setVersionForm({...versionForm, priceCurrency: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm">
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Currency</label>
+                        <select value={versionForm.priceCurrency} onChange={(e) => setVersionForm({...versionForm, priceCurrency: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm">
                           <option value="EUR">EUR</option>
                           <option value="DKK">DKK</option>
                         </select>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Description</label>
-                        <textarea value={versionForm.description} onChange={(e) => setVersionForm({...versionForm, description: e.target.value})} rows={3} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Description</label>
+                        <textarea value={versionForm.description} onChange={(e) => setVersionForm({...versionForm, description: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Itinerary Description</label>
-                        <textarea value={versionForm.itineraryDescription} onChange={(e) => setVersionForm({...versionForm, itineraryDescription: e.target.value})} rows={3} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Itinerary Description</label>
+                        <textarea value={versionForm.itineraryDescription} onChange={(e) => setVersionForm({...versionForm, itineraryDescription: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Included (one per line)</label>
-                        <textarea value={versionForm.included} onChange={(e) => setVersionForm({...versionForm, included: e.target.value})} rows={3} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder={"Professional guide\nMuseum tickets\nSnacks"}/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Included (one per line)</label>
+                        <textarea value={versionForm.included} onChange={(e) => setVersionForm({...versionForm, included: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder={"Professional guide\nMuseum tickets\nSnacks"}/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Not Included (one per line)</label>
-                        <textarea value={versionForm.notIncluded} onChange={(e) => setVersionForm({...versionForm, notIncluded: e.target.value})} rows={3} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder={"Transport\nLunch"}/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Not Included (one per line)</label>
+                        <textarea value={versionForm.notIncluded} onChange={(e) => setVersionForm({...versionForm, notIncluded: e.target.value})} rows={3} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder={"Transport\nLunch"}/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Cancellation Policy</label>
-                        <textarea value={versionForm.cancellationPolicy} onChange={(e) => setVersionForm({...versionForm, cancellationPolicy: e.target.value})} rows={2} className="w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Cancellation Policy</label>
+                        <textarea value={versionForm.cancellationPolicy} onChange={(e) => setVersionForm({...versionForm, cancellationPolicy: e.target.value})} rows={2} className="w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Start Point Label</label>
-                        <input type="text" value={versionForm.startPointLabel} onChange={(e) => setVersionForm({...versionForm, startPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="Placa Catalunya"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Start Point Label</label>
+                        <input type="text" value={versionForm.startPointLabel} onChange={(e) => setVersionForm({...versionForm, startPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="Placa Catalunya"/>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">End Point Label</label>
-                        <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="La Sagrada Familia"/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">End Point Label</label>
+                        <input type="text" value={versionForm.endPointLabel} onChange={(e) => setVersionForm({...versionForm, endPointLabel: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="La Sagrada Familia"/>
                       </div>
                       <div className="sm:col-span-2">
-                        <label className="mb-1 block text-sm font-semibold text-[#21343b]">Stripe Payment Link <span className="font-normal text-[#9a8d7e]">(optional)</span></label>
-                        <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className="h-10 w-full rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm" placeholder="https://buy.stripe.com/..."/>
+                        <label className="mb-1 block text-sm font-semibold text-[var(--wt-ink)]">Stripe Payment Link <span className="font-normal text-[var(--wt-ink-muted)]">(optional)</span></label>
+                        <input type="url" value={versionForm.stripePaymentLink} onChange={(e) => setVersionForm({...versionForm, stripePaymentLink: e.target.value})} className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm" placeholder="https://buy.stripe.com/..."/>
                       </div>
                     </div>
                     {versionFormErrors.length > 0 && (
-                      <div className="rounded-xl border border-[#e8c7c1] bg-[#fbf2f0] p-3">
-                        <ul className="list-disc pl-4 text-sm text-[#a3483f] space-y-1">
+                      <div className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-3">
+                        <ul className="list-disc pl-4 text-sm text-[var(--wt-danger)] space-y-1">
                           {versionFormErrors.map((err, i) => <li key={i}>{err}</li>)}
                         </ul>
                       </div>
@@ -1135,7 +1135,7 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
             <DialogDescription>
               This will send an email with the proposal link to <strong>{proposal?.recipientEmail}</strong>.
               {localVersions.some((v) => isVersionDirty(v)) && (
-                <span className="mt-2 block text-[#8a6029]">
+                <span className="mt-2 block text-[var(--wt-ink-muted)]">
                   Some versions have unsaved changes. The recipient will see the last saved version.
                 </span>
               )}
