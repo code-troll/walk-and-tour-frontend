@@ -176,29 +176,26 @@ export function AdminProposalsListClient() {
             <LoaderCircle className="size-4 animate-spin text-[var(--wt-ink-muted)]"/>
           )}
         </div>
-      </AdminSectionCard>
 
-      {error && (
-        <AdminSectionCard title="Proposals">
-          <p className="text-sm text-[var(--wt-danger)]">{error}</p>
-          <Button variant="outline" size="sm" className="mt-3" onClick={() => void fetchProposals(searchQuery, showExpired)}>
-            Retry
-          </Button>
-        </AdminSectionCard>
-      )}
+        {error && (
+          <div className="pt-5">
+            <p className="text-sm text-[var(--wt-danger)]">{error}</p>
+            <Button variant="outline" size="sm" className="mt-3" onClick={() => void fetchProposals(searchQuery, showExpired)}>
+              Retry
+            </Button>
+          </div>
+        )}
 
-      {!error && !isLoading && proposals.length === 0 ? (
-        <AdminSectionCard title={searchQuery || showExpired ? "No matching proposals" : "No proposals yet"}>
-          <p className="text-sm text-[var(--wt-ink-muted)]">
+        {!error && !isLoading && proposals.length === 0 ? (
+          <p className="pt-5 text-sm text-[var(--wt-ink-muted)]">
             {searchQuery || showExpired
-              ? "Try adjusting your search or filters."
+              ? "No proposals match this search."
               : "Create your first proposal to get started."}
           </p>
-        </AdminSectionCard>
-      ) : null}
+        ) : null}
 
-      {!error && proposals.length > 0 && (
-        <div className="space-y-3">
+        {!error && proposals.length > 0 && (
+          <div className="space-y-3 pt-5">
           {proposals.map((proposal) => (
             <div
               key={proposal.id}
@@ -276,8 +273,9 @@ export function AdminProposalsListClient() {
               </div>
             </div>
           ))}
-        </div>
-      )}
+          </div>
+        )}
+      </AdminSectionCard>
 
       <ConfirmDeleteDialog
         open={deleteTarget !== null}
