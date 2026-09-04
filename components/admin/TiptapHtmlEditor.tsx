@@ -1050,7 +1050,7 @@ function BlogVideoNodeView({
       <NodeViewWrapper
         as="div"
         ref={ rootRef }
-        className="my-6 rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
+        className="my-6 rounded-[var(--wt-radius-sm)] border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
         data-blog-video="true"
         contentEditable={ false }
       >
@@ -1093,7 +1093,7 @@ function BlogVideoNodeView({
 
       { isControlsVisible ? (
         <div
-          className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+          className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-[var(--wt-radius-sm)] border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
           <div className="flex flex-wrap items-center gap-1">
             { VIDEO_ALIGNMENT_OPTIONS.map((option) => (
               <Button
@@ -1351,7 +1351,7 @@ function BlogImageNodeView({
       <NodeViewWrapper
         as="div"
         ref={ rootRef }
-        className="my-6 rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
+        className="my-6 rounded-[var(--wt-radius-sm)] border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
         data-blog-image="true"
         contentEditable={ false }
       >
@@ -1400,7 +1400,7 @@ function BlogImageNodeView({
 
       { isMenuOpen ? (
         <div
-          className="absolute inset-x-3 top-3 z-20 flex min-w-0 flex-col gap-3 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-3 shadow-sm backdrop-blur">
+          className="absolute inset-x-3 top-3 z-20 flex min-w-0 flex-col gap-3 rounded-[var(--wt-radius-sm)] border border-[#eadfce] bg-white/95 px-3 py-3 shadow-sm backdrop-blur">
           <div className="flex flex-wrap items-center gap-1">
             { IMAGE_ALIGNMENT_OPTIONS.map((option) => (
               <Button
@@ -1668,7 +1668,7 @@ function BlogEmbedNodeView({
       <NodeViewWrapper
         as="div"
         ref={ rootRef }
-        className="my-6 rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
+        className="my-6 rounded-[var(--wt-radius-sm)] border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
         data-blog-embed="true"
         contentEditable={ false }
       >
@@ -1720,7 +1720,7 @@ function BlogEmbedNodeView({
 
       { isMenuOpen ? (
         <div
-          className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-xl border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+          className="absolute inset-x-3 top-3 z-20 flex flex-wrap items-center gap-2 rounded-[var(--wt-radius-sm)] border border-[#eadfce] bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
           <div className="flex flex-wrap items-center gap-1">
             { EMBED_ALIGNMENT_OPTIONS.map((option) => (
               <Button
@@ -1806,7 +1806,7 @@ function BlogLinkCardNodeView({
     return (
       <NodeViewWrapper
         as="div"
-        className="my-6 rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
+        className="my-6 rounded-[var(--wt-radius-sm)] border border-dashed border-[#eadfce] bg-[#fbf7f0] px-4 py-6 text-center text-sm text-[#8b7862]"
         contentEditable={ false }
       >
         Invalid link
@@ -1845,7 +1845,7 @@ function BlogClearNodeView({
     <NodeViewWrapper
       as="div"
       className={ cn(
-        "clear-both my-4 rounded-xl border border-dashed border-[#d8c5a8] bg-[#fbf7f0] px-3 py-2 text-xs font-medium uppercase tracking-[0.18em] text-[#8b7862]",
+        "clear-both my-4 rounded-[var(--wt-radius-sm)] border border-dashed border-[#d8c5a8] bg-[#fbf7f0] px-3 py-2 text-xs font-medium uppercase tracking-[0.18em] text-[#8b7862]",
         selected ? "ring-2 ring-[#d9c3a2] ring-offset-2 ring-offset-white" : "",
       ) }
       data-blog-clear="true"
@@ -2141,7 +2141,7 @@ function BlogTuritopWidgetNodeView({
 
       { isMenuOpen ? (
         <div
-          className="absolute inset-x-3 top-3 z-20 rounded-xl border border-[#eadfce] bg-white/95 p-3 shadow-sm backdrop-blur">
+          className="absolute inset-x-3 top-3 z-20 rounded-[var(--wt-radius-sm)] border border-[#eadfce] bg-white/95 p-3 shadow-sm backdrop-blur">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-1">
               { TURITOP_ALIGNMENT_OPTIONS.map((option) => (
@@ -2201,13 +2201,13 @@ function BlogTuritopWidgetNodeView({
         />
       ) : (
         <div
-          className="flex h-full min-h-24 w-full items-center justify-center rounded-[1rem] border border-dashed border-[#d6c7a5] bg-white/70 px-4 text-sm text-[#8b7862]">
+          className="flex h-full min-h-24 w-full items-center justify-center rounded-[var(--wt-radius-sm)] border border-dashed border-[#d6c7a5] bg-white/70 px-4 text-sm text-[#8b7862]">
           <span>Set service and language to render the Turitop calendar here.</span>
         </div>
       ) }
 
       <div
-        className="absolute bottom-2 right-2 z-30 h-4 w-4 cursor-se-resize rounded-sm border border-[#d6c7a5] bg-white/90 shadow-sm"
+        className="absolute bottom-2 right-2 z-30 h-4 w-4 cursor-se-resize rounded-[var(--wt-radius-sm)] border border-[#d6c7a5] bg-white/90 shadow-sm"
         onMouseDown={ handleResizeMouseDown }
         onTouchStart={ handleResizeTouchStart }
       />
@@ -3554,7 +3554,7 @@ function ToolbarColorControl({
   return (
     <div
       className={ cn(
-        "inline-flex h-7 shrink-0 items-center justify-center gap-1 rounded-[min(var(--radius-md),12px)] border bg-background px-2.5 text-[0.8rem] font-medium whitespace-nowrap transition-all",
+        "inline-flex h-7 shrink-0 items-center justify-center gap-1 rounded-[var(--wt-radius-sm)] border bg-background px-2.5 text-[0.8rem] font-medium whitespace-nowrap transition-all",
         active ? "border-primary ring-2 ring-ring/20" : "border-border",
         disabled ? "opacity-60" : "",
       ) }
@@ -3916,7 +3916,7 @@ export const TiptapHtmlEditor = forwardRef<
   };
 
   return (
-    <div className={ cn("rounded-[1.35rem] border border-[var(--wt-rule-strong)] bg-white overflow-clip", className) }>
+    <div className={ cn("rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white overflow-clip", className) }>
       <div
         className="sticky top-0 z-10 flex flex-wrap gap-2 border-b border-[var(--wt-rule)] bg-[var(--wt-surface)]/95 p-3 shadow-[0_10px_24px_-18px_rgba(42,36,25,0.35)] backdrop-blur">
         <ToolbarButton
@@ -4161,7 +4161,7 @@ export const TiptapHtmlEditor = forwardRef<
               />
             </div>
 
-            <div className="rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-ink-muted)]">
+            <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-ink-muted)]">
               Embed mode: <span className="font-medium text-[var(--wt-ink)]">{ TURITOP_EMBED_MODE }</span>
             </div>
 

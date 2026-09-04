@@ -134,7 +134,14 @@ export default async function AdminLayout({
 
         { viewerState.kind === "authenticated" ? (
           <div className="flex min-h-screen">
-            <aside className="hidden w-56 shrink-0 flex-col border-r border-[var(--wt-rule-strong)] bg-[var(--wt-nav-bg)] lg:flex">
+            {/*
+              Pinned to the viewport, not to the page. The sidebar is how you leave
+              the screen you are on, and on a long editor it used to scroll away —
+              taking the navigation and Sign out with it. `h-screen` plus a
+              scrollable nav keeps the account block on the bottom edge even when
+              the destinations outgrow the window.
+            */}
+            <aside className="sticky top-0 hidden h-screen w-56 shrink-0 flex-col border-r border-[var(--wt-rule-strong)] bg-[var(--wt-nav-bg)] lg:flex">
               <div className="px-4 py-4">
                 <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
                   W&amp;T Admin
@@ -144,7 +151,7 @@ export default async function AdminLayout({
                 </p>
               </div>
 
-              <div className="flex-1 pb-4">
+              <div className="min-h-0 flex-1 overflow-y-auto pb-4">
                 <AdminSidebarNav items={ navigationByRole[viewerState.backendAdmin.roleName] }/>
               </div>
 
