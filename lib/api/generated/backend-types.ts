@@ -1947,7 +1947,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/hotel/tours/{tourId}": {
+    "/api/hotel/tours": {
         parameters: {
             query?: never;
             header?: never;
@@ -1958,6 +1958,22 @@ export interface paths {
          * Read one granted tour
          * @description Returns a tour this hotel has been granted, with the price this partner is charged and the content needed to describe it to a guest: what the tour is, its itinerary, and what is and is not included. Publication to the public site is not required — the grant is the authorisation.
          */
+        get: operations["HotelToursPortalController_findAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/hotel/tours/{tourId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
         get: operations["HotelToursPortalController_findOne"];
         put?: never;
         post?: never;
@@ -4681,6 +4697,12 @@ export interface components {
             /** @description What the price does not include. */
             notIncluded: string[];
             itineraryDescription?: string | null;
+            /** @description Where the walk starts, localized. A place a hotel searches by. */
+            startPoint?: string | null;
+            /** @description Where it ends. */
+            endPoint?: string | null;
+            /** @description Tag labels in the content locale, falling back to the tag key. */
+            tags: string[];
             /** @description Stops in order. */
             stops: components["schemas"]["HotelTourStopResponseDto"][];
         };
@@ -10827,13 +10849,11 @@ export interface operations {
             };
         };
     };
-    HotelToursPortalController_findOne: {
+    HotelToursPortalController_findAll: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                tourId: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -10871,6 +10891,25 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ErrorResponseDto"];
                 };
+            };
+        };
+    };
+    HotelToursPortalController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tourId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
