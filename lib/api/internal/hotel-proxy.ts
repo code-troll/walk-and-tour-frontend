@@ -147,6 +147,28 @@ export const proxyHotelRequest = async ({
     cache: "no-store",
   });
 
+  /**
+   * An image comes back as bytes, and everything else as JSON.
+   *
+   * The allowance is deliberately `image/` and nothing wider. The one non-JSON
+   * response the hotel API produces is a tour photograph; matching on "not
+   * JSON" instead would quietly turn this route into a general file tunnel out
+   * of the backend the first time somebody added an endpoint that streams
+   * something else.
+   *
+   * The cache headers do not change. `no-store, private` matters more here than
+   * for JSON, not less: a CDN that cached one hotel's tour image under a shared
+   * key would serve it to another.
+   */
+  const backendContentType = backendResponse.headers.get("content-type") ?? "";
+
+  if (backendResponse.ok && backendContentType.startsWith("image/")) {
+    return new NextResponse(await backendResponse.arrayBuffer(), {
+      status: backendResponse.status,
+      headers: {...NO_STORE_HEADERS, "content-type": backendContentType},
+    });
+  }
+
   const payload = (await backendResponse.json().catch(() => null)) as unknown;
 
   if (!backendResponse.ok) {
