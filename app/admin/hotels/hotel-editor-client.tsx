@@ -64,6 +64,8 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
    * raw string rather than a number is what lets the field be emptied at all.
    */
   const [grants, setGrants] = useState<Map<string, string>>(new Map());
+  /** Empty means "the hotel's contact address", which the backend fills in. */
+  const [signInEmail, setSignInEmail] = useState("");
   const [hotelUser, setHotelUser] = useState<ApiHotelUser | null>(null);
   const [pendingUserAction, setPendingUserAction] = useState<string | null>(null);
 
@@ -441,7 +443,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
                 onClick={() =>
                   void runUserAction(
                     "create",
-                    () => createHotelUserAction(hotelId as string),
+                    () => createHotelUserAction(hotelId as string, signInEmail.trim()),
                     "Access user created and invitation sent.",
                   )
                 }
@@ -454,6 +456,31 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
             )
           }
         >
+          {hotelUser ? null : (
+            <div className="mb-5 max-w-md">
+              {/*
+                Shown before the button rather than after a failure. The address
+                is what the invitation goes to, so an administrator should see it
+                before sending — and when the hotel's own address is already
+                spoken for, this field is the only way the user can be created
+                at all.
+              */}
+              <Label htmlFor="hotel-signin-email">Sign-in email</Label>
+              <Input
+                id="hotel-signin-email"
+                onChange={(event) => setSignInEmail(event.target.value)}
+                placeholder={form.email || "reception@hotel.dk"}
+                type="email"
+                value={signInEmail}
+              />
+              <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">
+                Defaults to the hotel&apos;s contact address. It has to be unique
+                across every account, so give a different one if that address is
+                already in use.
+              </p>
+            </div>
+          )}
+
           {hotelUser ? (
             <dl className="grid gap-4 md:grid-cols-3">
               <div>
