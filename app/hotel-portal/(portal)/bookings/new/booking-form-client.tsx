@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {ArrowLeft, LoaderCircle} from "lucide-react";
@@ -22,7 +22,9 @@ import {
   type BookingFormErrors,
   type BookingFormState,
 } from "@/lib/hotel-portal/booking-types";
-import {createBookingAction} from "../../actions";
+import {PortalTourDetail} from "@/components/hotel-portal/PortalTourDetail";
+import {createBookingAction, getTourDetailAction} from "../../actions";
+import type {ApiHotelTourDetail} from "@/lib/hotel-portal/booking-types";
 import {controlClassName} from "@/components/ui/control-class";
 
 type ViewerTour = components["schemas"]["HotelViewerTourDto"];
@@ -40,6 +42,9 @@ const FieldError = ({message}: {message: string}) => (
 
 export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
   const router = useRouter();
+  const [tourDetail, setTourDetail] = useState<ApiHotelTourDetail | null>(null);
+  const [isLoadingTour, setIsLoadingTour] = useState(false);
+  const [tourError, setTourError] = useState<string | null>(null);
   const [form, setForm] = useState<BookingFormState>(() => ({
     ...createEmptyBookingFormState(),
     tourId: tours.length === 1 ? tours[0].tourId : "",
@@ -47,6 +52,45 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
   const [errors, setErrors] = useState<BookingFormErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+
+  /**
+   * Load the chosen tour's content.
+   *
+   * `cancelled` rather than an AbortController because the request goes through
+   * a server action: switching tours twice quickly would otherwise let the first
+   * response land last and describe the wrong tour.
+   */
+  useEffect(() => {
+    if (!form.tourId) {
+      setTourDetail(null);
+      setTourError(null);
+      return;
+    }
+
+    let cancelled = false;
+
+    setIsLoadingTour(true);
+    setTourError(null);
+
+    void getTourDetailAction(form.tourId).then((result) => {
+      if (cancelled) {
+        return;
+      }
+
+      setIsLoadingTour(false);
+
+      if (result.ok) {
+        setTourDetail(result.tour);
+      } else {
+        setTourDetail(null);
+        setTourError("Tour details are unavailable right now.");
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [form.tourId]);
 
   const update = <K extends keyof BookingFormState>(key: K, value: BookingFormState[K]) => {
     setForm((current) => ({...current, [key]: value}));
@@ -116,10 +160,24 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
               {tours.map((tour) => (
                 <option key={tour.tourId} value={tour.tourId}>
                   {tour.tourName}
+                  {tour.priceAmount ? ` — ${tour.priceAmount} ${tour.currency}` : ""}
                 </option>
               ))}
             </select>
             {errors.tourId ? <FieldError message={errors.tourId} /> : null}
+
+            {isLoadingTour ? (
+              <p className="mt-6 text-sm text-[var(--wt-ink-muted)]">Loading tour details…</p>
+            ) : null}
+            {tourDetail ? <PortalTourDetail tour={tourDetail} /> : null}
+            {/*
+              A tour that will not load is not a reason to block the booking:
+              the hotel already knows which tour it wants, and the detail is
+              there to help describe it, not to authorise it.
+            */}
+            {tourError ? (
+              <p className="mt-6 text-sm text-[var(--wt-ink-muted)]">{tourError}</p>
+            ) : null}
           </div>
 
           <div>

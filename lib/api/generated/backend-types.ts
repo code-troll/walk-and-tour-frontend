@@ -1947,6 +1947,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/hotel/tours/{tourId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read one granted tour
+         * @description Returns a tour this hotel has been granted, with the price this partner is charged and the content needed to describe it to a guest: what the tour is, its itinerary, and what is and is not included. Publication to the public site is not required — the grant is the authorisation.
+         */
+        get: operations["HotelToursPortalController_findOne"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3420,6 +3440,16 @@ export interface components {
             };
             /** @description Audit metadata for create and update operations. */
             audit: components["schemas"]["RecordAuditMetadataDto"];
+            /**
+             * @description The tour's own price per person. Carried in the list so a screen can show what a partner pays by default before any override is set.
+             * @example 249.00
+             */
+            priceAmount?: string | null;
+            /**
+             * @description The tour's currency as stored, unnormalised.
+             * @example DKK
+             */
+            priceCurrency?: string | null;
         };
         TourAdminItineraryStopResponseDto: {
             /**
@@ -4180,6 +4210,22 @@ export interface components {
              * @description Identifier of the admin user that granted the tour.
              */
             grantedBy?: string | null;
+            /**
+             * @description Price per person charged to this partner, in `currency`. Null means the partner pays the tour's own price and keeps following it when the tour is repriced, which is not the same as having that number copied here.
+             * @example 199.00
+             */
+            priceAmount?: string | null;
+            /**
+             * @description The tour's own price per person, so a screen can show what the default is without fetching the tour. Null when the tour has no price at all.
+             * @example 249.00
+             */
+            tourPriceAmount?: string | null;
+            /**
+             * @description The currency both prices are in. It comes from the tour, never from the grant, so a partner cannot be quoted in a currency the tour is not sold in.
+             * @example DKK
+             * @enum {string}
+             */
+            currency: "DKK" | "EUR";
         };
         HotelResponseDto: {
             /**
@@ -4289,14 +4335,22 @@ export interface components {
              */
             status?: "active" | "disabled";
         };
-        SetHotelToursDto: {
+        HotelTourGrantInputDto: {
             /**
-             * @description The complete set of tours this hotel may sell. Tours missing from the list have their grant revoked, tours already granted are left untouched, and the rest are granted.
-             * @example [
-             *       "0f7b8a2c-5d3e-4a1b-9c8d-2e4f6a8b0c1d"
-             *     ]
+             * Format: uuid
+             * @description Identifier of a tour this hotel may sell.
+             * @example 0f7b8a2c-5d3e-4a1b-9c8d-2e4f6a8b0c1d
              */
-            tourIds: string[];
+            tourId: string;
+            /**
+             * @description Price per person for this partner, in the tour's own currency. Omit it, or send null, to charge the tour's own price — which is not the same as copying that price, because the partner then follows it when the tour is repriced.
+             * @example 199.00
+             */
+            priceAmount?: Record<string, never> | null;
+        };
+        SetHotelToursDto: {
+            /** @description The complete set of tours this hotel may sell, each with an optional partner price. Tours missing from the list have their grant revoked; tours already granted keep their grant and take the price sent here. */
+            tours: components["schemas"]["HotelTourGrantInputDto"][];
         };
         HotelUserResponseDto: {
             /**
@@ -4373,6 +4427,17 @@ export interface components {
              * @example Copenhagen Historic Center Free Tour
              */
             tourName: string;
+            /**
+             * @description Price per person this partner is charged, already resolved: the grant price if it has one, the tour's own otherwise. Null when neither has a price, which the portal shows as "price on request".
+             * @example 199.00
+             */
+            priceAmount?: string | null;
+            /**
+             * @description Currency of `priceAmount`, taken from the tour.
+             * @example DKK
+             * @enum {string}
+             */
+            currency: "DKK" | "EUR";
         };
         HotelViewerResponseDto: {
             hotel: components["schemas"]["HotelViewerHotelDto"];
@@ -4474,7 +4539,7 @@ export interface components {
              * @example DKK
              * @enum {string}
              */
-            currency: "DKK";
+            currency: "DKK" | "EUR";
             /**
              * @description Per-person tour price when the booking was made, excluding VAT. Null for a tour with no price.
              * @example 250.00
@@ -4567,6 +4632,57 @@ export interface components {
             roomNumber?: string | null;
             /** @description Anything the guide should know: mobility, allergies, occasion. */
             notes?: string | null;
+        };
+        HotelTourStopResponseDto: {
+            /** @description Stable identifier of the stop within the tour. */
+            stopId: string;
+            /** @description Localized stop title. */
+            title?: string | null;
+            /** @description Localized stop description. */
+            description?: string | null;
+            /** @description Minutes spent at this stop, when the tour records it. */
+            durationMinutes?: number | null;
+        };
+        HotelTourDetailResponseDto: {
+            /**
+             * Format: uuid
+             * @description Tour identifier.
+             */
+            tourId: string;
+            /** @description Non-localized tour name. */
+            name: string;
+            /**
+             * @description Price per person for this partner, the grant's or the tour's.
+             * @example 199.00
+             */
+            priceAmount?: string | null;
+            /**
+             * @example DKK
+             * @enum {string}
+             */
+            currency: "DKK" | "EUR";
+            durationMinutes?: number | null;
+            tourType?: string | null;
+            /**
+             * @description The locale the content below is written in. The portal asks for English and falls back to whatever the tour has, so this may not be `en` — a screen can use it to say which language it is showing.
+             * @example en
+             */
+            locale?: string | null;
+            /** @description Localized tour title. */
+            title?: string | null;
+            /** @description The "about the tour" text, as the public page shows it. */
+            about?: string | null;
+            /** @description Cancellation policy text. */
+            cancellationType?: string | null;
+            /** @description Highlight bullets, in display order. */
+            highlights: string[];
+            /** @description What the price includes. */
+            included: string[];
+            /** @description What the price does not include. */
+            notIncluded: string[];
+            itineraryDescription?: string | null;
+            /** @description Stops in order. */
+            stops: components["schemas"]["HotelTourStopResponseDto"][];
         };
         AuditMetadataDto: {
             /**
@@ -10702,6 +10818,53 @@ export interface operations {
             };
             /** @description The booking cannot be cancelled from its current status. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelToursPortalController_findOne: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tourId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The granted tour. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelTourDetailResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description No live grant for this tour and this hotel. */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

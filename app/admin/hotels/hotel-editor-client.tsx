@@ -56,7 +56,14 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
   const [errors, setErrors] = useState<HotelFormErrors>({});
   const [hotel, setHotel] = useState<ApiHotel | null>(null);
   const [tours, setTours] = useState<TourSummary[]>([]);
-  const [grantedTourIds, setGrantedTourIds] = useState<string[]>([]);
+  /**
+   * The granted tours, keyed by id, with the partner price as typed.
+   *
+   * An empty string is not zero: it means this partner has no price of its own
+   * and pays the tour's, which is what the backend stores as null. Keeping the
+   * raw string rather than a number is what lets the field be emptied at all.
+   */
+  const [grants, setGrants] = useState<Map<string, string>>(new Map());
   const [hotelUser, setHotelUser] = useState<ApiHotelUser | null>(null);
   const [pendingUserAction, setPendingUserAction] = useState<string | null>(null);
 
@@ -77,7 +84,11 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
   const applyHotel = useCallback((loaded: ApiHotel) => {
     setHotel(loaded);
     setForm(createHotelFormStateFromApi(loaded));
-    setGrantedTourIds(loaded.tours.map((grant) => grant.tourId));
+    setGrants(
+      new Map(
+        loaded.tours.map((grant) => [grant.tourId, grant.priceAmount ?? ""]),
+      ),
+    );
   }, []);
 
   const loadWorkspace = useCallback(async () => {
@@ -113,26 +124,29 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
     void loadWorkspace();
   }, [loadWorkspace]);
 
-  const grantedSet = useMemo(() => new Set(grantedTourIds), [grantedTourIds]);
-
-  const savedGrantIds = useMemo(
-    () => new Set((hotel?.tours ?? []).map((grant) => grant.tourId)),
+  const savedGrants = useMemo(
+    () =>
+      new Map(
+        (hotel?.tours ?? []).map((grant) => [grant.tourId, grant.priceAmount ?? ""]),
+      ),
     [hotel],
   );
 
+  // A changed price counts as a change, not just a changed set of tours: the
+  // save button is the only way to commit either.
   const hasTourChanges = useMemo(() => {
-    if (savedGrantIds.size !== grantedSet.size) {
+    if (savedGrants.size !== grants.size) {
       return true;
     }
 
-    for (const tourId of grantedSet) {
-      if (!savedGrantIds.has(tourId)) {
+    for (const [tourId, price] of grants) {
+      if (!savedGrants.has(tourId) || savedGrants.get(tourId) !== price.trim()) {
         return true;
       }
     }
 
     return false;
-  }, [grantedSet, savedGrantIds]);
+  }, [grants, savedGrants]);
 
   const updateField = <K extends keyof HotelFormState>(key: K, value: HotelFormState[K]) => {
     setForm((current) => ({...current, [key]: value}));
@@ -191,7 +205,14 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
     setFormError(null);
 
     try {
-      const result = await setHotelToursAction({id: hotelId, tourIds: grantedTourIds});
+      const result = await setHotelToursAction({
+        id: hotelId,
+        tours: [...grants].map(([tourId, price]) => ({
+          tourId,
+          // Empty means "the tour's price", which the backend stores as null.
+          priceAmount: price.trim() === "" ? null : price.trim(),
+        })),
+      });
 
       if (!result.ok) {
         setFormError(result.message);
@@ -494,27 +515,63 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           ) : (
             <ul className="grid gap-2 md:grid-cols-2">
               {tours.map((tour) => {
-                const isGranted = grantedSet.has(tour.id);
+                const isGranted = grants.has(tour.id);
+                const price = grants.get(tour.id) ?? "";
+                const currency = tour.priceCurrency?.trim().toUpperCase() || "DKK";
 
                 return (
                   <li key={tour.id}>
-                    <label className="flex cursor-pointer items-start gap-3 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] px-4 py-3 transition hover:border-[var(--wt-rule-strong)]">
-                      <Checkbox
-                        checked={isGranted}
-                        className="mt-0.5"
-                        onCheckedChange={(checked) =>
-                          setGrantedTourIds((current) =>
-                            checked === true
-                              ? [...current, tour.id]
-                              : current.filter((id) => id !== tour.id),
-                          )
-                        }
-                      />
-                      <span className="min-w-0">
-                        <span className="block text-sm font-medium text-[var(--wt-ink)]">{tour.name}</span>
-                        <span className="block text-xs text-[var(--wt-ink-muted)]">{tour.tourType}</span>
-                      </span>
-                    </label>
+                    <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] p-3">
+                      <label className="flex cursor-pointer items-start gap-3">
+                        <Checkbox
+                          checked={isGranted}
+                          className="mt-0.5"
+                          onCheckedChange={(checked) =>
+                            setGrants((current) => {
+                              const next = new Map(current);
+
+                              if (checked === true) {
+                                next.set(tour.id, "");
+                              } else {
+                                next.delete(tour.id);
+                              }
+
+                              return next;
+                            })
+                          }
+                        />
+                        <span className="min-w-0">
+                          <span className="block text-sm font-medium text-[var(--wt-ink)]">{tour.name}</span>
+                          <span className="block text-xs text-[var(--wt-ink-muted)]">{tour.tourType}</span>
+                        </span>
+                      </label>
+
+                      {isGranted ? (
+                        <div className="mt-3 flex items-end gap-3 pl-7">
+                          <div className="w-36">
+                            <Label htmlFor={`price-${tour.id}`}>Price per person</Label>
+                            <Input
+                              id={`price-${tour.id}`}
+                              inputMode="decimal"
+                              onChange={(event) =>
+                                setGrants((current) =>
+                                  new Map(current).set(tour.id, event.target.value),
+                                )
+                              }
+                              // The tour's own price is the placeholder rather than
+                              // the value: typing nothing has to keep meaning "the
+                              // tour's price", including after it changes.
+                              placeholder={tour.priceAmount ?? "No price"}
+                              value={price}
+                            />
+                          </div>
+                          <p className="pb-2 text-xs text-[var(--wt-ink-muted)]">
+                            {currency}
+                            {price.trim() === "" ? " · tour price" : ""}
+                          </p>
+                        </div>
+                      ) : null}
+                    </div>
                   </li>
                 );
               })}

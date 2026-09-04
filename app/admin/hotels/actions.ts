@@ -139,10 +139,11 @@ export async function updateHotelAction({
 
 export async function setHotelToursAction({
   id,
-  tourIds,
+  tours,
 }: {
   id: string;
-  tourIds: string[];
+  /** `priceAmount: null` means this partner pays the tour's own price. */
+  tours: {tourId: string; priceAmount: string | null}[];
 }): Promise<HotelActionResult> {
   const context = await getAdminContext();
 
@@ -156,7 +157,7 @@ export async function setHotelToursAction({
       "PUT",
       context.accessToken,
       context.backendApiBaseUrl,
-      {tourIds},
+      {tours},
     );
 
     return {ok: true, hotel};
