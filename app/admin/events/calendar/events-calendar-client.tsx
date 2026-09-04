@@ -283,7 +283,7 @@ export default function EventsCalendarClient() {
           value: code,
           label: (
             <>
-              <LanguageFlag language={code} className="h-2.5 w-3.5 rounded-[1px]" />
+              <LanguageFlag language={code} className="h-2.5 w-3.5 rounded-[var(--wt-radius-hairline)]" />
               {code.toUpperCase()}
             </>
           ),
@@ -376,7 +376,7 @@ export default function EventsCalendarClient() {
       if (!isTimeGrid) {
         return (
           <div className="flex items-center gap-1 overflow-hidden px-0.5" title={title}>
-            <LanguageFlag language={item.event.language} className="h-2.5 w-3.5 shrink-0 rounded-[1px]" />
+            <LanguageFlag language={item.event.language} className="h-2.5 w-3.5 shrink-0 rounded-[var(--wt-radius-hairline)]" />
             <span className="truncate text-xs">{title}</span>
           </div>
         );
@@ -392,7 +392,7 @@ export default function EventsCalendarClient() {
       return (
         <div className="flex flex-col gap-0.5 p-1 text-[0.7rem] leading-tight" title={title}>
           <div className="flex items-start gap-1">
-            <LanguageFlag language={item.event.language} className="mt-0.5 h-2.5 w-3.5 shrink-0 rounded-[1px]" />
+            <LanguageFlag language={item.event.language} className="mt-0.5 h-2.5 w-3.5 shrink-0 rounded-[var(--wt-radius-hairline)]" />
             <span className="evt-title line-clamp-2 font-semibold">{title}</span>
           </div>
           {arg.timeText ? (

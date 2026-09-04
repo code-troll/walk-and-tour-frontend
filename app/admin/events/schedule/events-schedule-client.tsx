@@ -396,7 +396,7 @@ export default function EventsScheduleClient() {
                       <th className="sticky left-0 z-10 border-b border-[var(--wt-rule-strong)] bg-white px-3 py-1.5 text-left align-top">
                         <span className="flex items-start gap-1.5">
                           <span className="mt-0.5 shrink-0 font-mono text-xs text-muted-foreground">{row.time}</span>
-                          <LanguageFlag language={row.event.language} className="mt-0.5 h-2.5 w-3.5 shrink-0 rounded-[1px]" />
+                          <LanguageFlag language={row.event.language} className="mt-0.5 h-2.5 w-3.5 shrink-0 rounded-[var(--wt-radius-hairline)]" />
                           <span className="text-xs font-medium text-foreground">{eventTitle(row.event)}</span>
                         </span>
                       </th>

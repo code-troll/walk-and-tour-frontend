@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType }
 import { useRouter } from "next/navigation";
 import { ES, GB, IT } from "country-flag-icons/react/3x2";
 import {
-  ArrowLeft,
   Check,
   ChevronDown,
   ChevronRight,
@@ -19,8 +18,8 @@ import {
   Upload,
   X,
 } from "lucide-react";
-import { AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
-import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
+import { useAdminRouteLoadingBoundary, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
+import { AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
 import { controlClassName, controlMultilineClassName } from "@/components/ui/control-class";
 // The preview below renders with the public site's palette on purpose:
 // BlogPostArticle is the same component the reader sees, shared with
@@ -936,7 +935,13 @@ export function BlogPostEditorClient({
   }
 
   return (
-    <div className="mx-auto max-w-6xl space-y-6">
+    <div className="space-y-5">
+        <AdminBackRow href="/blog-posts" label="Blog posts">
+          <AdminHeaderMeta>
+            { publicLocaleCount > 0 ? `${ publicLocaleCount } public locale${ publicLocaleCount === 1 ? "" : "s" }` : "No public locales" }
+          </AdminHeaderMeta>
+        </AdminBackRow>
+
         { feedback ? (
           <div
             className={ cn(
@@ -980,25 +985,6 @@ export function BlogPostEditorClient({
             </>
           }
         >
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <AdminProgressLink
-              href="/blog-posts"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[var(--wt-ink-muted)] transition-colors hover:text-[var(--wt-ink)]"
-            >
-              <ArrowLeft className="size-4"/>
-              <span>Blog posts</span>
-            </AdminProgressLink>
-            <span
-              className={ cn(
-                "rounded-full border px-3 py-1 text-xs font-medium",
-                publicLocaleCount > 0
-                  ? "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]"
-                  : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]",
-              ) }
-            >
-              { publicLocaleCount > 0 ? `${ publicLocaleCount } public locale${ publicLocaleCount === 1 ? "" : "s" }` : "No public locales" }
-            </span>
-          </div>
         </AdminSectionCard>
 
         <AdminSectionCard

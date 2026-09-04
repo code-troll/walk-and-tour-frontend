@@ -98,7 +98,8 @@ export function AdminSectionCard({
   title,
 }: {
   actions?: ReactNode;
-  children: ReactNode;
+  /** Optional: a section that is only a heading and its actions is a valid shape. */
+  children?: ReactNode;
   description?: string;
   title: string;
 }) {
@@ -113,7 +114,7 @@ export function AdminSectionCard({
         </div>
         {actions ? <div className="flex shrink-0 items-center gap-3">{actions}</div> : null}
       </div>
-      <div className="px-5 py-4">{children}</div>
+      {children ? <div className="px-5 py-4">{children}</div> : null}
     </section>
   );
 }

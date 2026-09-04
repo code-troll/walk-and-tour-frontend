@@ -81,6 +81,9 @@
   --wt-space-6: 32px;
   --wt-space-7: 48px;
 
+  /* A hairline, for things too small to take the box radius: a 14 px wide
+     language flag with 3 px corners reads as a mistake, not as a system. */
+  --wt-radius-hairline: 1px;
   --wt-radius-sm: 3px;
   --wt-radius-md: 5px;
   --wt-radius-lg: 8px;
