@@ -21,6 +21,11 @@ import {
 } from "lucide-react";
 import { AdminProgressLink, useAdminRouteLoadingBoundary, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
 import { AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
+// The preview below renders with the public site's palette on purpose:
+// BlogPostArticle is the same component the reader sees, shared with
+// components/public/PublicBlogPostDetailPageClient. Giving it the backoffice
+// tokens would make the preview stop matching the published article, which is
+// the only thing a preview has to do. It is excluded from the brand migration.
 import BlogPostArticle from "@/components/blog/BlogPostArticle";
 import { TiptapHtmlEditor, type TiptapHtmlEditorHandle } from "@/components/admin/TiptapHtmlEditor";
 import { Button } from "@/components/ui/button";
@@ -936,8 +941,8 @@ export function BlogPostEditorClient({
             className={ cn(
               "whitespace-pre-line rounded-2xl border px-4 py-3 text-sm",
               feedback.tone === "error"
-                ? "border-[#e7c9c2] bg-[#fdf2ef] text-[#8c3b32]"
-                : "border-[#d8c5a8] bg-[#fcfaf6] text-[#8f6a3b]",
+                ? "border-[var(--wt-danger)] text-[var(--wt-danger)]"
+                : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]",
             ) }
           >
             { feedback.message }
@@ -957,7 +962,7 @@ export function BlogPostEditorClient({
                 <time
                   dateTime={ lastSaved.toISOString() }
                   suppressHydrationWarning
-                  className="hidden text-xs text-[#627176] md:block"
+                  className="hidden text-xs text-[var(--wt-ink-muted)] md:block"
                 >
                   Saved { lastSaved.toLocaleTimeString(undefined, {hourCycle: "h12"}) }
                 </time>
@@ -977,7 +982,7 @@ export function BlogPostEditorClient({
           <div className="flex flex-wrap items-center justify-between gap-4">
             <AdminProgressLink
               href="/blog-posts"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#627176] transition-colors hover:text-[#21343b]"
+              className="inline-flex items-center gap-2 text-sm font-medium text-[var(--wt-ink-muted)] transition-colors hover:text-[var(--wt-ink)]"
             >
               <ArrowLeft className="size-4"/>
               <span>Back to Blog Posts</span>
@@ -986,8 +991,8 @@ export function BlogPostEditorClient({
               className={ cn(
                 "rounded-full border px-3 py-1 text-xs font-medium",
                 publicLocaleCount > 0
-                  ? "border-[#d8c5a8] bg-[#fcfaf6] text-[#8f6a3b]"
-                  : "border-[#eadfce] bg-[#fbf7f0] text-[#627176]",
+                  ? "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]"
+                  : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]",
               ) }
             >
               { publicLocaleCount > 0 ? `${ publicLocaleCount } public locale${ publicLocaleCount === 1 ? "" : "s" }` : "No public locales" }
@@ -1089,12 +1094,12 @@ export function BlogPostEditorClient({
 
           { !isCreated ? (
             <div
-              className="rounded-2xl border-2 border-dashed border-[#eadfce] bg-[#fbf7f0] px-6 py-10 text-center text-sm text-[#627176]">
+              className="rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
               Save the shared blog post before selecting a cover image.
             </div>
           ) : savedBlogPost?.heroMedia ? (
             <div className="flex flex-wrap items-start gap-5">
-              <div className="overflow-hidden rounded-2xl border border-[#eadfce] bg-[#fbf7f0]">
+              <div className="overflow-hidden rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]">
                 { coverPreviewUrl ? (
                   <Image
                     src={ coverPreviewUrl }
@@ -1105,20 +1110,20 @@ export function BlogPostEditorClient({
                     className="h-48 w-72 object-cover"
                   />
                 ) : (
-                  <div className="flex h-48 w-72 items-center justify-center text-sm text-[#627176]">
+                  <div className="flex h-48 w-72 items-center justify-center text-sm text-[var(--wt-ink-muted)]">
                     Loading preview...
                   </div>
                 ) }
               </div>
-              <div className="min-w-0 flex-1 space-y-2 text-sm text-[#627176]">
-                <p className="font-medium text-[#21343b]">{ savedBlogPost.heroMedia.originalFilename }</p>
+              <div className="min-w-0 flex-1 space-y-2 text-sm text-[var(--wt-ink-muted)]">
+                <p className="font-medium text-[var(--wt-ink)]">{ savedBlogPost.heroMedia.originalFilename }</p>
                 <p className="truncate font-mono text-xs">{ savedBlogPost.heroMedia.storagePath }</p>
                 <p>{ Math.round(savedBlogPost.heroMedia.size / 1024) } KB</p>
               </div>
             </div>
           ) : (
             <div
-              className="rounded-2xl border-2 border-dashed border-[#eadfce] bg-[#fbf7f0] px-6 py-10 text-center text-sm text-[#627176]">
+              className="rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
               No cover image selected yet.
             </div>
           ) }
@@ -1157,7 +1162,7 @@ export function BlogPostEditorClient({
 
           { !isCreated ? (
             <div
-              className="rounded-2xl border-2 border-dashed border-[#eadfce] bg-[#fbf7f0] px-6 py-10 text-center text-sm text-[#627176]">
+              className="rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
               Save the shared details to start adding localized blog content.
             </div>
           ) : (
@@ -1165,7 +1170,7 @@ export function BlogPostEditorClient({
               <div className="flex flex-wrap gap-2">
                 { formState.translations.length === 0 ? (
                   <div
-                    className="w-full rounded-2xl border-2 border-dashed border-[#eadfce] bg-[#fbf7f0] px-6 py-10 text-center text-sm text-[#627176]">
+                    className="w-full rounded-2xl border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
                     No translations yet. Add a locale to start writing the blog content.
                   </div>
                 ) : (
@@ -1196,27 +1201,27 @@ export function BlogPostEditorClient({
                         className={ cn(
                           "rounded-2xl border px-4 py-3 text-left transition",
                           isActive
-                            ? "border-[#d8c5a8] bg-[#fcfaf6] ring-2 ring-[#eadfce]"
+                            ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-rule-strong)]"
                             : isSaved
-                              ? "border-[#eadfce] bg-white hover:border-[#d8c5a8]"
-                              : "border-[#e9c9c2] bg-[#fff7f5] hover:border-[#d9a89f]",
+                              ? "border-[var(--wt-rule-strong)] bg-white hover:border-[var(--wt-rule-strong)]"
+                              : "border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)]",
                         ) }
                       >
-                        <div className="flex items-center gap-2 text-sm font-medium text-[#21343b]">
+                        <div className="flex items-center gap-2 text-sm font-medium text-[var(--wt-ink)]">
                           { Flag ? (
-                            <span className="overflow-hidden rounded-sm border-[#dccfbf]">
+                            <span className="overflow-hidden rounded-sm border-[var(--wt-rule-strong)]">
                               <Flag className="size-4"/>
                             </span>
                           ) : (
-                            <Globe className="size-4 text-[#9a6a2f]"/>
+                            <Globe className="size-4 text-[var(--wt-ink-muted)]"/>
                           ) }
                           { languageNameByCode[translation.languageCode] ?? translation.languageCode }
                         </div>
-                        <p className={ cn("mt-1 text-xs font-medium", isSaved ? "text-[#627176]" : "text-[#a3483f]") }>
+                        <p className={ cn("mt-1 text-xs font-medium", isSaved ? "text-[var(--wt-ink-muted)]" : "text-[var(--wt-ink)]") }>
                           { statusLabel }
                           { availability?.publiclyAvailable ? " - Public" : "" }
                         </p>
-                        <p className="mt-1 text-xs font-medium text-[#8f6a3b]">
+                        <p className="mt-1 text-xs font-medium text-[var(--wt-ink-muted)]">
                           Views: { viewCountFormatter.format(savedTranslation?.viewCount ?? 0) }
                         </p>
                       </button>
@@ -1251,7 +1256,7 @@ export function BlogPostEditorClient({
                       </button>
 
                       <div className="flex flex-wrap items-center gap-2">
-                      <span className="rounded-full border border-[#d8c5a8] bg-[#fcfaf6] px-3 py-1 text-xs font-medium text-[#8f6a3b]">
+                      <span className="rounded-full border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-1 text-xs font-medium text-[var(--wt-ink-muted)]">
                         Views: {
                           viewCountFormatter.format(
                             savedBlogPost?.translations[activeTranslation.languageCode]?.viewCount ?? 0,
@@ -1385,7 +1390,7 @@ export function BlogPostEditorClient({
         </AdminSectionCard>
 
       <Dialog open={ isMediaDialogOpen } onOpenChange={ setIsMediaDialogOpen }>
-        <DialogContent showCloseButton={ false } className="border border-[#eadfce] bg-white shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-4xl">
+        <DialogContent showCloseButton={ false } className="border border-[var(--wt-rule-strong)] bg-white shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-4xl">
           <DialogHeader>
             <DialogTitle>{ mediaDialogTitle }</DialogTitle>
             <DialogDescription>{ mediaDialogDescription }</DialogDescription>
@@ -1423,14 +1428,14 @@ export function BlogPostEditorClient({
 
           { mediaDialogError ? (
             <div
-              className="whitespace-pre-line rounded-2xl border border-[#e7c9c2] bg-[#fdf2ef] px-4 py-3 text-sm text-[#8c3b32]">
+              className="whitespace-pre-line rounded-2xl border border-[var(--wt-danger)] px-4 py-3 text-sm text-[var(--wt-danger)]">
               { mediaDialogError }
             </div>
           ) : null }
 
-          <div className="max-h-112 overflow-y-auto rounded-2xl border border-[#eadfce] bg-[#fbf7f0] p-4">
+          <div className="max-h-112 overflow-y-auto rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4">
             { mediaLibraryItems.length === 0 && !isLoadingMediaLibrary ? (
-              <div className="flex min-h-48 items-center justify-center text-sm text-[#627176]">
+              <div className="flex min-h-48 items-center justify-center text-sm text-[var(--wt-ink-muted)]">
                 No media assets found.
               </div>
             ) : (
@@ -1447,11 +1452,11 @@ export function BlogPostEditorClient({
                       className={ cn(
                         "overflow-hidden rounded-2xl border bg-white text-left transition",
                         isSelected
-                          ? "border-[#d8c5a8] ring-2 ring-[#eadfce] shadow-md"
-                          : "border-[#eadfce] hover:border-[#d8c5a8]",
+                          ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-rule-strong)]"
+                          : "border-[var(--wt-rule-strong)] hover:border-[var(--wt-rule-strong)]",
                       ) }
                     >
-                      <div className="flex h-40 items-center justify-center bg-[#fbf7f0]">
+                      <div className="flex h-40 items-center justify-center bg-[var(--wt-surface)]">
                         { preview ? (
                           <Image
                             src={ preview }
@@ -1462,12 +1467,12 @@ export function BlogPostEditorClient({
                             className="h-full w-full object-cover"
                           />
                         ) : (
-                          <span className="text-sm text-[#627176]">Loading preview...</span>
+                          <span className="text-sm text-[var(--wt-ink-muted)]">Loading preview...</span>
                         ) }
                       </div>
                       <div className="space-y-1 p-3">
-                        <p className="truncate text-sm font-medium text-[#21343b]">{ asset.originalFilename }</p>
-                        <p className="truncate font-mono text-xs text-[#627176]">{ asset.storagePath }</p>
+                        <p className="truncate text-sm font-medium text-[var(--wt-ink)]">{ asset.originalFilename }</p>
+                        <p className="truncate font-mono text-xs text-[var(--wt-ink-muted)]">{ asset.storagePath }</p>
                       </div>
                     </button>
                   );
@@ -1508,8 +1513,8 @@ export function BlogPostEditorClient({
       </Dialog>
 
       <Dialog open={ isPreviewDialogOpen } onOpenChange={ setIsPreviewDialogOpen }>
-        <DialogContent className="grid max-h-[90vh] grid-rows-[auto_minmax(0,1fr)] overflow-hidden border border-[#eadfce] bg-white p-0 shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-5xl">
-          <DialogHeader className="border-b border-[#f0e6d8] px-6 py-5">
+        <DialogContent className="grid max-h-[90vh] grid-rows-[auto_minmax(0,1fr)] overflow-hidden border border-[var(--wt-rule-strong)] bg-white p-0 shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-5xl">
+          <DialogHeader className="border-b border-[var(--wt-rule)] px-6 py-5">
             <DialogTitle>Preview Post</DialogTitle>
             <DialogDescription>
               This preview reflects the current draft after the same translation normalization used by save, without publishing or persisting changes.
@@ -1518,7 +1523,7 @@ export function BlogPostEditorClient({
 
           <div className="min-h-0 overflow-y-auto px-6 py-6">
             { previewData ? (
-              <div className="mx-auto w-full max-w-4xl rounded-3xl border border-[#e8dfd4] bg-white px-6 py-8 lg:px-12">
+              <div className="mx-auto w-full max-w-4xl rounded-3xl border border-[var(--wt-rule-strong)] bg-white px-6 py-8 lg:px-12">
                 <BlogPostArticle
                   contentHtml={ previewData.contentHtml }
                   contentText={ previewData.contentText }
@@ -1540,7 +1545,7 @@ export function BlogPostEditorClient({
                 />
               </div>
             ) : (
-              <div className="rounded-2xl border border-dashed border-[#eadfce] bg-[#fbf7f0] px-6 py-10 text-center text-sm text-[#627176]">
+              <div className="rounded-2xl border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-sm text-[var(--wt-ink-muted)]">
                 Select a translation to preview the rendered post.
               </div>
             ) }
@@ -1556,7 +1561,7 @@ export function BlogPostEditorClient({
           }
         } }
       >
-        <DialogContent className="border border-[#eadfce] bg-white shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-lg">
+        <DialogContent className="border border-[var(--wt-rule-strong)] bg-white shadow-[0_20px_50px_rgba(42,36,25,0.05)] sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Delete Translation</DialogTitle>
             <DialogDescription>
