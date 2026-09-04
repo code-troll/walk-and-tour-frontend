@@ -335,7 +335,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
       </div>
 
       {feedback && (
-        <div className={`rounded-xl border px-4 py-3 text-sm ${feedback.tone === "error" ? "border-[#e8c7c1] bg-[#fbf2f0] text-[#a3483f]" : "border-[#cfe4d3] bg-[#f3fbf4] text-[#2f6b3f]"}`}>
+        <div className={`rounded-xl border px-4 py-3 text-sm ${feedback.tone === "error" ? "border-[var(--wt-danger)] bg-[var(--wt-surface)] text-[var(--wt-danger)]" : "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"}`}>
           {feedback.message}
         </div>
       )}
@@ -361,9 +361,9 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             <label className={fieldLabelClassName}>Photo *</label>
             <div className="mt-1.5 flex items-start gap-4">
               {photoPreviewSrc ? (
-                <Image src={photoPreviewSrc} alt="" width={96} height={96} unoptimized className="size-24 rounded-2xl object-cover ring-1 ring-[#eadfce]" />
+                <Image src={photoPreviewSrc} alt="" width={96} height={96} unoptimized className="size-24 rounded-2xl object-cover ring-1 ring-[var(--wt-rule-strong)]" />
               ) : (
-                <div className="flex size-24 items-center justify-center rounded-2xl bg-[#f5efe5] text-xs text-muted-foreground ring-1 ring-[#eadfce]">
+                <div className="flex size-24 items-center justify-center rounded-2xl bg-[var(--wt-surface-sunk)] text-xs text-muted-foreground ring-1 ring-[var(--wt-rule-strong)]">
                   No photo
                 </div>
               )}
@@ -412,7 +412,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                   const isActive = t.languageCode === resolvedActiveLanguageCode;
                   return (
                     <button key={t.languageCode} type="button" onClick={() => setActiveLanguageCode(t.languageCode)}
-                      className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${isActive ? "border-[#21343b] bg-[#21343b] text-white" : "border-[#eadfce] bg-white text-foreground hover:border-[#cbb390]"}`}>
+                      className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${isActive ? "border-[var(--wt-ink)] bg-[var(--wt-ink)] text-white" : "border-[var(--wt-rule-strong)] bg-white text-foreground hover:border-[var(--wt-rule-strong)]"}`}>
                       {FlagIcon && <FlagIcon className="h-3 w-4" />}
                       {languageNameByCode[t.languageCode] ?? t.languageCode}
                       {t.existsOnServer && <Check className="size-3 opacity-50" />}
@@ -432,7 +432,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
             )}
 
             {activeTranslation && (
-              <div className="space-y-4 rounded-2xl border border-[#f0e6d8] bg-[#fdfaf5] p-5">
+              <div className="space-y-4 rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
                 <div>
                   <label className={fieldLabelClassName}>Role / Title</label>
                   <Input
@@ -447,7 +447,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <Button variant="outline" size="sm" onClick={() => setPendingDeleteLanguageCode(activeTranslation.languageCode)} disabled={isMutating} className="text-[#a3483f]">
+                  <Button variant="outline" size="sm" onClick={() => setPendingDeleteLanguageCode(activeTranslation.languageCode)} disabled={isMutating} className="text-[var(--wt-danger)]">
                     <Trash2 className="size-4" /> Delete Translation
                   </Button>
                   <Button className="h-10" onClick={() => void handleSaveTranslation()} disabled={isMutating}>
@@ -473,10 +473,10 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
 
       {/* Delete member */}
       {isCreated && (
-        <div className="rounded-2xl border border-[#e8c7c1] bg-[#fbf2f0] p-5">
-          <h3 className="text-sm font-semibold text-[#a3483f]">Danger Zone</h3>
-          <p className="mt-1 text-sm text-[#a3483f]/70">Permanently delete this team member and all its translations.</p>
-          <Button variant="outline" size="sm" className="mt-3 border-[#e8c7c1] text-[#a3483f] hover:bg-[#f5e0dc]" onClick={() => setIsConfirmingDelete(true)} disabled={isMutating}>
+        <div className="rounded-2xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] p-5">
+          <h3 className="text-sm font-semibold text-[var(--wt-danger)]">Danger Zone</h3>
+          <p className="mt-1 text-sm text-[var(--wt-danger)]/70">Permanently delete this team member and all its translations.</p>
+          <Button variant="outline" size="sm" className="mt-3 border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface-sunk)]" onClick={() => setIsConfirmingDelete(true)} disabled={isMutating}>
             <Trash2 className="size-4" /> Delete Team Member
           </Button>
         </div>
@@ -497,20 +497,20 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
               {isUploadingMedia ? <LoaderCircle className="size-4 animate-spin" /> : <Upload className="size-4" />} Upload
             </Button>
           </div>
-          {mediaDialogError && <div className="rounded-lg border border-[#e8c7c1] bg-[#fbf2f0] px-3 py-2 text-sm text-[#a3483f]">{mediaDialogError}</div>}
+          {mediaDialogError && <div className="rounded-lg border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-danger)]">{mediaDialogError}</div>}
           <div className="grid max-h-80 grid-cols-4 gap-2 overflow-y-auto">
             {mediaLibraryItems.map((asset) => (
               <button key={asset.id} type="button" onClick={() => setDialogSelectedMediaId(asset.id)}
-                className={`relative overflow-hidden rounded-lg border-2 transition ${dialogSelectedMediaId === asset.id ? "border-[#21343b] ring-2 ring-[#21343b]/30" : "border-transparent hover:border-[#cbb390]"}`}>
+                className={`relative overflow-hidden rounded-lg border-2 transition ${dialogSelectedMediaId === asset.id ? "border-[var(--wt-ink)] ring-2 ring-[var(--wt-ink)]/30" : "border-transparent hover:border-[var(--wt-rule-strong)]"}`}>
                 <Image src={`${backendApiBaseUrl}/api/admin/media/${asset.id}/content`} alt={asset.originalFilename} width={160} height={120} unoptimized className="h-24 w-full object-cover"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                {dialogSelectedMediaId === asset.id && <div className="absolute inset-0 flex items-center justify-center bg-[#21343b]/40"><Check className="size-6 text-white" /></div>}
+                {dialogSelectedMediaId === asset.id && <div className="absolute inset-0 flex items-center justify-center bg-[var(--wt-ink)]/40"><Check className="size-6 text-white" /></div>}
               </button>
             ))}
           </div>
           {isLoadingMediaLibrary && <div className="flex justify-center py-4"><LoaderCircle className="size-6 animate-spin text-muted-foreground" /></div>}
           {!isLoadingMediaLibrary && mediaLibraryItems.length < mediaLibraryTotal && (
-            <button type="button" onClick={() => void loadMediaLibrary(mediaLibraryPage + 1, appliedMediaSearch)} className="w-full rounded-lg border border-dashed border-border py-2 text-sm text-muted-foreground hover:border-[#cbb390]">Load more</button>
+            <button type="button" onClick={() => void loadMediaLibrary(mediaLibraryPage + 1, appliedMediaSearch)} className="w-full rounded-lg border border-dashed border-border py-2 text-sm text-muted-foreground hover:border-[var(--wt-rule-strong)]">Load more</button>
           )}
           <DialogFooter>
             <Button variant="outline" className="h-10" onClick={() => setIsMediaDialogOpen(false)}>Cancel</Button>
@@ -530,7 +530,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" className="h-10" onClick={() => setPendingDeleteLanguageCode(null)}>Cancel</Button>
-            <Button className="h-10 bg-[#a3483f] text-white hover:bg-[#8a3d36]" onClick={() => pendingDeleteLanguageCode && void handleDeleteTranslation(pendingDeleteLanguageCode)} disabled={isMutating}>
+            <Button className="h-10 bg-[var(--wt-danger)] text-white transition hover:opacity-90" onClick={() => pendingDeleteLanguageCode && void handleDeleteTranslation(pendingDeleteLanguageCode)} disabled={isMutating}>
               <Trash2 className="size-4" /> Delete
             </Button>
           </DialogFooter>
@@ -546,7 +546,7 @@ export function TeamMemberEditorClient({accessToken, backendApiBaseUrl, memberId
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" className="h-10" onClick={() => setIsConfirmingDelete(false)}>Cancel</Button>
-            <Button className="h-10 bg-[#a3483f] text-white hover:bg-[#8a3d36]" onClick={() => void handleDeleteMember()} disabled={isMutating}>
+            <Button className="h-10 bg-[var(--wt-danger)] text-white transition hover:opacity-90" onClick={() => void handleDeleteMember()} disabled={isMutating}>
               {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Trash2 className="size-4" />} Delete
             </Button>
           </DialogFooter>

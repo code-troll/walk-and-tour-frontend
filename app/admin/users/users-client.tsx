@@ -61,7 +61,7 @@ export default function AdminUsersClient() {
           <button
             type="button"
             onClick={() => void loadUsersWorkspace()}
-            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
           </button>
@@ -78,8 +78,8 @@ export default function AdminUsersClient() {
       >
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
-            <thead className="text-[#6a7b80]">
-              <tr className="border-b border-[#efe6d8]">
+            <thead className="text-[var(--wt-ink-muted)]">
+              <tr className="border-b border-[var(--wt-rule-strong)]">
                 <th className="py-3 pr-4 font-semibold">Email</th>
                 <th className="py-3 pr-4 font-semibold">Role</th>
                 <th className="py-3 pr-4 font-semibold">Status</th>
@@ -88,7 +88,7 @@ export default function AdminUsersClient() {
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.id} className="border-b border-[#f4ecdf] text-[#294049]">
+                <tr key={user.id} className="border-b border-[var(--wt-rule)] text-[var(--wt-ink)]">
                   <td className="py-4 pr-4">{user.email}</td>
                   <td className="py-4 pr-4">{user.roleName}</td>
                   <td className="py-4 pr-4 capitalize">{user.status}</td>
@@ -106,10 +106,10 @@ export default function AdminUsersClient() {
       >
         <div className="grid gap-4 md:grid-cols-3">
           {roles.map((role) => (
-            <div key={role.name} className="rounded-[1.25rem] border border-[#efe6d8] bg-[#fffcf7] p-5">
-              <h3 className="text-lg font-semibold text-[#21343b]">{role.name}</h3>
-              <p className="mt-2 text-sm leading-6 text-[#5b6d72]">{role.description}</p>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#9a6a2f]">
+            <div key={role.name} className="rounded-[1.25rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-5">
+              <h3 className="text-lg font-semibold text-[var(--wt-ink)]">{role.name}</h3>
+              <p className="mt-2 text-sm leading-6 text-[var(--wt-ink-muted)]">{role.description}</p>
+              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--wt-ink-muted)]">
                 {role.permissions.length} permissions
               </p>
             </div>

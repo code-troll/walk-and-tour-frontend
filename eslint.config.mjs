@@ -26,7 +26,6 @@ const UNMIGRATED_FROM_BRAND_TOKENS = [
   "components/admin/events/EventFormFields.tsx",
   "components/admin/events/OccurrenceConfirmPanel.tsx",
   "components/admin/events/RecurrenceBuilder.tsx",
-  "components/admin/team-members/AvailabilityEditor.tsx",
   "components/admin/TiptapHtmlEditor.tsx",
   "app/admin/blog-posts/blog-editor-client.tsx",
   "app/admin/blog-posts/blog-posts-list-client.tsx",
@@ -34,16 +33,11 @@ const UNMIGRATED_FROM_BRAND_TOKENS = [
   "app/admin/events/event-editor-client.tsx",
   "app/admin/events/events-list-client.tsx",
   "app/admin/events/schedule/events-schedule-client.tsx",
-  "app/admin/newsletter/newsletter-client.tsx",
-  "app/admin/overview-client.tsx",
   "app/admin/proposals/\\[id\\]/proposal-editor-client.tsx",
   "app/admin/proposals/proposals-list-client.tsx",
   "app/admin/taxonomy/taxonomy-client.tsx",
-  "app/admin/team-members/team-member-editor-client.tsx",
-  "app/admin/team-members/team-members-list-client.tsx",
   "app/admin/tours/tour-editor-client.tsx",
   "app/admin/tours/tours-list-client.tsx",
-  "app/admin/users/users-client.tsx",
 ];
 
 const NO_RAW_COLOUR =
