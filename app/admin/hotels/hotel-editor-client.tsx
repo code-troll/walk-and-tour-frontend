@@ -270,20 +270,20 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
         </Button>
 
         {hotel ? (
-          <p className="text-xs text-[#8a8477]">
+          <p className="text-xs text-[var(--wt-ink-muted)]">
             Last updated {formatAdminDate(hotel.audit.updatedAt)}
           </p>
         ) : null}
       </div>
 
       {formError ? (
-        <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+        <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
           {formError}
         </p>
       ) : null}
 
       {successMessage ? (
-        <p className="rounded-xl border border-[#cfe4d3] bg-[#f3fbf4] px-4 py-3 text-sm text-[#2f6b3f]">
+        <p className="rounded-xl border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] px-4 py-3 text-sm text-[var(--wt-status-confirmed)]">
           {successMessage}
         </p>
       ) : null}
@@ -352,7 +352,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
               placeholder="12345678"
               value={form.cvr}
             />
-            <p className="mt-1 text-xs text-[#8a8477]">
+            <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">
               Eight digits. Spaces and a leading DK are removed automatically.
             </p>
             {errors.cvr ? <FieldError message={errors.cvr} /> : null}
@@ -361,7 +361,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           <div>
             <Label htmlFor="hotel-status">Status</Label>
             <select
-              className="mt-1 h-9 w-full rounded-md border border-[#e2d9c9] bg-white px-3 text-sm text-[#21343b]"
+              className="mt-1 h-9 w-full rounded-md border border-[var(--wt-rule-strong)] bg-white px-3 text-sm text-[var(--wt-ink)]"
               id="hotel-status"
               onChange={(event) => updateField("status", event.target.value as HotelStatus)}
               value={form.status}
@@ -444,36 +444,36 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           {hotelUser ? (
             <dl className="grid gap-4 md:grid-cols-3">
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
                   Username
                 </dt>
-                <dd className="mt-1 font-mono text-sm text-[#21343b]">{hotelUser.username}</dd>
+                <dd className="mt-1 font-mono text-sm text-[var(--wt-ink)]">{hotelUser.username}</dd>
               </div>
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
                   Sign-in email
                 </dt>
-                <dd className="mt-1 text-sm text-[#21343b]">{hotelUser.email}</dd>
+                <dd className="mt-1 text-sm text-[var(--wt-ink)]">{hotelUser.email}</dd>
               </div>
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[#9a8f7d]">
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
                   Status
                 </dt>
-                <dd className="mt-1 text-sm text-[#21343b]">
+                <dd className="mt-1 text-sm text-[var(--wt-ink)]">
                   {HOTEL_USER_STATUS_LABELS[hotelUser.status] ?? hotelUser.status}
                   {hotelUser.lastLoginAt ? (
-                    <span className="block text-xs text-[#8a8477]">
+                    <span className="block text-xs text-[var(--wt-ink-muted)]">
                       Last signed in {formatAdminDate(hotelUser.lastLoginAt)}
                     </span>
                   ) : null}
                 </dd>
               </div>
-              <p className="text-xs text-[#8a8477] md:col-span-3">
+              <p className="text-xs text-[var(--wt-ink-muted)] md:col-span-3">
                 {HOTEL_USER_STATUS_DESCRIPTIONS[hotelUser.status] ?? ""}
               </p>
             </dl>
           ) : (
-            <p className="py-2 text-sm text-[#627176]">
+            <p className="py-2 text-sm text-[var(--wt-ink-muted)]">
               This hotel cannot sign in yet. Creating the access user derives a username from the
               hotel name and emails {form.email || "the contact address"} a link to set a password.
             </p>
@@ -496,7 +496,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           }
         >
           {tours.length === 0 ? (
-            <p className="py-6 text-sm text-[#627176]">
+            <p className="py-6 text-sm text-[var(--wt-ink-muted)]">
               There are no tours in the catalogue yet.
             </p>
           ) : (
@@ -506,7 +506,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
 
                 return (
                   <li key={tour.id}>
-                    <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#eadfce] bg-[#fffcf7] px-4 py-3 transition hover:border-[#d8c5a8]">
+                    <label className="flex cursor-pointer items-start gap-3 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] px-4 py-3 transition hover:border-[var(--wt-rule-strong)]">
                       <Checkbox
                         checked={isGranted}
                         className="mt-0.5"
@@ -519,8 +519,8 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
                         }
                       />
                       <span className="min-w-0">
-                        <span className="block text-sm font-medium text-[#21343b]">{tour.name}</span>
-                        <span className="block text-xs text-[#8a8477]">{tour.tourType}</span>
+                        <span className="block text-sm font-medium text-[var(--wt-ink)]">{tour.name}</span>
+                        <span className="block text-xs text-[var(--wt-ink-muted)]">{tour.tourType}</span>
                       </span>
                     </label>
                   </li>
@@ -530,7 +530,7 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
           )}
 
           {hasTourChanges ? (
-            <p className="mt-4 text-xs text-[#9a6a2f]">
+            <p className="mt-4 text-xs text-[var(--wt-ink-muted)]">
               You have unsaved changes to the tour grants.
             </p>
           ) : null}
@@ -541,5 +541,5 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
 }
 
 const FieldError = ({message}: {message: string}) => (
-  <p className="mt-1 text-xs text-[#a3483f]">{message}</p>
+  <p className="mt-1 text-xs text-[var(--wt-danger)]">{message}</p>
 );

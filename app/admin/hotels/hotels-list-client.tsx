@@ -28,8 +28,8 @@ const StatusBadge = ({status}: {status: string}) => {
     <span
       className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
         isActive
-          ? "bg-[#e9f2ea] text-[#2f6b3f]"
-          : "bg-[#f4efe5] text-[#7a6a55]"
+          ? "bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"
+          : "bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]"
       }`}
     >
       {HOTEL_STATUS_LABELS[status] ?? status}
@@ -118,7 +118,7 @@ export default function HotelsListClient() {
           }}
         >
           <div className="relative min-w-0 flex-1">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#9a8f7d]" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[var(--wt-ink-muted)]" />
             <Input
               aria-label="Search hotels by name or CVR number"
               className="pl-9"
@@ -132,13 +132,13 @@ export default function HotelsListClient() {
           </Button>
         </form>
 
-        <div className="flex items-center gap-1 rounded-full border border-[#eadfce] bg-[#fffcf7] p-1">
+        <div className="flex flex-wrap items-center gap-5">
           {STATUS_FILTERS.map((filter) => (
             <button
-              className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+              className={`pb-1 text-sm transition ${
                 status === filter.value
-                  ? "bg-[#21343b] text-white"
-                  : "text-[#627176] hover:text-[#21343b]"
+                  ? "border-b-2 border-[var(--wt-nav-marker)] font-medium text-[var(--wt-ink)]"
+                  : "border-b-2 border-transparent text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
               }`}
               key={filter.value || "all"}
               onClick={() => setStatus(filter.value)}
@@ -151,12 +151,12 @@ export default function HotelsListClient() {
       </div>
 
       {isLoading ? (
-        <p className="flex items-center gap-2 py-8 text-sm text-[#627176]">
+        <p className="flex items-center gap-2 py-8 text-sm text-[var(--wt-ink-muted)]">
           <LoaderCircle className="size-4 animate-spin" />
           Loading hotels…
         </p>
       ) : items.length === 0 ? (
-        <p className="py-8 text-sm text-[#627176]">
+        <p className="py-8 text-sm text-[var(--wt-ink-muted)]">
           {appliedSearch || status
             ? "No hotels match these filters."
             : "No hotels are registered yet. Register the first one to get started."}
@@ -165,7 +165,7 @@ export default function HotelsListClient() {
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-[#f0e6d8] text-xs uppercase tracking-[0.14em] text-[#9a8f7d]">
+              <tr className="border-b border-[var(--wt-rule-strong)] text-xs uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
                 <th className="py-3 pr-4 font-semibold">Hotel</th>
                 <th className="py-3 pr-4 font-semibold">CVR</th>
                 <th className="py-3 pr-4 font-semibold">Contact</th>
@@ -177,21 +177,21 @@ export default function HotelsListClient() {
             </thead>
             <tbody>
               {items.map((hotel) => (
-                <tr className="border-b border-[#f6f0e6] last:border-b-0" key={hotel.id}>
+                <tr className="border-b border-[var(--wt-rule)] last:border-b-0" key={hotel.id}>
                   <td className="py-3 pr-4">
-                    <p className="font-semibold text-[#21343b]">{hotel.name}</p>
-                    <p className="text-xs text-[#8a8477]">{hotel.address}</p>
+                    <p className="font-semibold text-[var(--wt-ink)]">{hotel.name}</p>
+                    <p className="text-xs text-[var(--wt-ink-muted)]">{hotel.address}</p>
                   </td>
-                  <td className="py-3 pr-4 font-mono text-xs text-[#53656c]">{hotel.cvr}</td>
-                  <td className="py-3 pr-4 text-xs text-[#53656c]">
+                  <td className="py-3 pr-4 font-mono text-xs text-[var(--wt-ink-muted)]">{hotel.cvr}</td>
+                  <td className="py-3 pr-4 text-xs text-[var(--wt-ink-muted)]">
                     <p>{hotel.email}</p>
-                    <p className="text-[#8a8477]">{hotel.phone}</p>
+                    <p className="text-[var(--wt-ink-muted)]">{hotel.phone}</p>
                   </td>
-                  <td className="py-3 pr-4 tabular-nums text-[#53656c]">{hotel.tourCount}</td>
+                  <td className="py-3 pr-4 tabular-nums text-[var(--wt-ink-muted)]">{hotel.tourCount}</td>
                   <td className="py-3 pr-4">
                     <StatusBadge status={hotel.status} />
                   </td>
-                  <td className="py-3 pr-4 text-xs text-[#8a8477]">
+                  <td className="py-3 pr-4 text-xs text-[var(--wt-ink-muted)]">
                     {formatAdminDate(hotel.audit.updatedAt)}
                   </td>
                   <td className="py-3 text-right">
@@ -205,7 +205,7 @@ export default function HotelsListClient() {
           </table>
 
           {hotels && hotels.total > items.length ? (
-            <p className="pt-4 text-xs text-[#8a8477]">
+            <p className="pt-4 text-xs text-[var(--wt-ink-muted)]">
               Showing {items.length} of {hotels.total} hotels. Narrow the search to see the rest.
             </p>
           ) : null}
