@@ -3617,7 +3617,7 @@ export const TiptapHtmlEditor = forwardRef<
     editorProps: {
       attributes: {
         class:
-          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [display:flow-root] after:block after:clear-both after:content-[''] [&_blockquote]:border-l-4 [&_blockquote]:border-[#d8c5a8] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[#eadfce] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-turitop=\"true\"]]:shadow-sm overflow-visible",
+          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [display:flow-root] after:block after:clear-both after:content-[''] [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--wt-rule-strong)] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[var(--wt-rule-strong)] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-turitop=\"true\"]]:shadow-sm overflow-visible",
       },
     },
     onUpdate: ({editor: nextEditor}) => {
@@ -3916,9 +3916,9 @@ export const TiptapHtmlEditor = forwardRef<
   };
 
   return (
-    <div className={ cn("rounded-[1.35rem] border border-[#eadfce] bg-white overflow-clip", className) }>
+    <div className={ cn("rounded-[1.35rem] border border-[var(--wt-rule-strong)] bg-white overflow-clip", className) }>
       <div
-        className="sticky top-0 z-10 flex flex-wrap gap-2 border-b border-[#f0e6d8] bg-[#fbf7f0]/95 p-3 shadow-[0_10px_24px_-18px_rgba(42,36,25,0.35)] backdrop-blur">
+        className="sticky top-0 z-10 flex flex-wrap gap-2 border-b border-[var(--wt-rule)] bg-[var(--wt-surface)]/95 p-3 shadow-[0_10px_24px_-18px_rgba(42,36,25,0.35)] backdrop-blur">
         <ToolbarButton
           icon={ Pilcrow }
           label="Paragraph"
@@ -4068,7 +4068,7 @@ export const TiptapHtmlEditor = forwardRef<
           </DialogHeader>
 
           <div className="space-y-2">
-            <label htmlFor="blog-embed-url" className="text-sm font-medium text-[#21343b]">
+            <label htmlFor="blog-embed-url" className="text-sm font-medium text-[var(--wt-ink)]">
               Embed URL
             </label>
             <Input
@@ -4092,7 +4092,7 @@ export const TiptapHtmlEditor = forwardRef<
               autoFocus
             />
             { embedDialogError ? (
-              <p className="text-sm text-[#8c3b32]">{ embedDialogError }</p>
+              <p className="text-sm text-[var(--wt-danger)]">{ embedDialogError }</p>
             ) : null }
           </div>
 
@@ -4119,7 +4119,7 @@ export const TiptapHtmlEditor = forwardRef<
 
           <div className="space-y-3">
             <div className="space-y-2">
-              <label htmlFor="blog-turitop-service" className="text-sm font-medium text-[#21343b]">
+              <label htmlFor="blog-turitop-service" className="text-sm font-medium text-[var(--wt-ink)]">
                 Service
               </label>
               <Input
@@ -4138,7 +4138,7 @@ export const TiptapHtmlEditor = forwardRef<
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="blog-turitop-language" className="text-sm font-medium text-[#21343b]">
+              <label htmlFor="blog-turitop-language" className="text-sm font-medium text-[var(--wt-ink)]">
                 Language
               </label>
               <Input
@@ -4161,12 +4161,12 @@ export const TiptapHtmlEditor = forwardRef<
               />
             </div>
 
-            <div className="rounded-2xl border border-[#eadfce] bg-[#fbf7f0] px-4 py-3 text-sm text-[#627176]">
-              Embed mode: <span className="font-medium text-[#21343b]">{ TURITOP_EMBED_MODE }</span>
+            <div className="rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-ink-muted)]">
+              Embed mode: <span className="font-medium text-[var(--wt-ink)]">{ TURITOP_EMBED_MODE }</span>
             </div>
 
             { turitopDialogError ? (
-              <p className="text-sm text-[#8c3b32]">{ turitopDialogError }</p>
+              <p className="text-sm text-[var(--wt-danger)]">{ turitopDialogError }</p>
             ) : null }
           </div>
 
@@ -4192,7 +4192,7 @@ export const TiptapHtmlEditor = forwardRef<
           </DialogHeader>
 
           <div className="space-y-2">
-            <label htmlFor="blog-tour-card-slug" className="text-sm font-medium text-[#21343b]">
+            <label htmlFor="blog-tour-card-slug" className="text-sm font-medium text-[var(--wt-ink)]">
               Tour Slug
             </label>
             <Input
@@ -4215,7 +4215,7 @@ export const TiptapHtmlEditor = forwardRef<
               autoFocus
             />
             { tourCardDialogError ? (
-              <p className="text-sm text-[#8c3b32]">{ tourCardDialogError }</p>
+              <p className="text-sm text-[var(--wt-danger)]">{ tourCardDialogError }</p>
             ) : null }
           </div>
 
