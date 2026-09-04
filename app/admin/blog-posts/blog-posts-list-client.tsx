@@ -61,13 +61,9 @@ export default function AdminBlogPostsListClient() {
         title="The blog posts workspace could not be loaded."
         description={error}
         actions={
-          <button
-            type="button"
-            onClick={() => void loadBlogPostsWorkspace()}
-            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
-          >
-            Retry
-          </button>
+          <Button type="button" variant="outline" onClick={() => void loadBlogPostsWorkspace()}>
+              Retry
+            </Button>
         }
       />
     );

@@ -234,7 +234,7 @@ export function TaxonomyClient({
         title="The taxonomy workspace could not be loaded."
         description={initialLoadError}
         actions={
-          <button
+          <Button variant="outline"
             type="button"
             onClick={() => {
               void (async () => {
@@ -250,10 +250,9 @@ export function TaxonomyClient({
                 }
               })();
             }}
-            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
-          </button>
+          </Button>
         }
       />
     );
