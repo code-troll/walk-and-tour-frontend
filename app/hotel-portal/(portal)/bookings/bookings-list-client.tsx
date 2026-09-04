@@ -4,9 +4,13 @@ import {useCallback, useEffect, useState} from "react";
 import Link from "next/link";
 import {LoaderCircle, Plus} from "lucide-react";
 
-import {AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {BookingStatusBadge} from "@/components/hotel-portal/BookingPieces";
-import {Button} from "@/components/ui/button";
+import {
+  PortalNotice,
+  PortalSection,
+  portalPrimaryAction,
+  portalSecondaryAction,
+} from "@/components/hotel-portal/PortalUi";
 import {getHotelBookingsClient} from "@/lib/hotel-portal/booking-client";
 import {
   BOOKING_STATUS_FILTERS,
@@ -47,14 +51,18 @@ export default function BookingsListClient() {
 
   if (error) {
     return (
-      <AdminNoticeCard
-        eyebrow="Bookings"
+      <PortalNotice
+        kicker="Bookings"
         title="Your bookings could not be loaded."
         description={error}
         actions={
-          <Button onClick={() => void loadBookings()} variant="outline">
+          <button
+            className={portalSecondaryAction}
+            onClick={() => void loadBookings()}
+            type="button"
+          >
             Retry
-          </Button>
+          </button>
         }
       />
     );
@@ -63,25 +71,28 @@ export default function BookingsListClient() {
   const items = bookings?.items ?? [];
 
   return (
-    <AdminSectionCard
+    <PortalSection
       title="Bookings"
       description="Tours you have booked for your guests."
       actions={
-        <Button asChild>
-          <Link href="/bookings/new">
-            <Plus className="size-4" />
-            Book a tour
-          </Link>
-        </Button>
+        <Link className={portalPrimaryAction} href="/bookings/new">
+          <Plus className="size-4" />
+          Book a tour
+        </Link>
       }
     >
-      <div className="mb-5 flex flex-wrap items-center gap-1 rounded-full border border-[#eadfce] bg-[#fffcf7] p-1">
+      {/*
+        The filter is a row of text, not a segmented control. Skilt draws state
+        with a rule under the active item, the same device the navigation uses,
+        so the two read as one language.
+      */}
+      <div className="mb-6 flex flex-wrap items-center gap-5">
         {BOOKING_STATUS_FILTERS.map((filter) => (
           <button
-            className={`rounded-full px-3 py-1 text-xs font-semibold transition ${
+            className={`pb-1 text-sm transition ${
               status === filter.value
-                ? "bg-[#21343b] text-white"
-                : "text-[#627176] hover:text-[#21343b]"
+                ? "border-b-2 border-[var(--rule-strong)] font-medium text-[var(--ink)]"
+                : "border-b-2 border-transparent text-[var(--ink-muted)] hover:text-[var(--ink)]"
             }`}
             key={filter.value || "all"}
             onClick={() => setStatus(filter.value)}
@@ -93,37 +104,37 @@ export default function BookingsListClient() {
       </div>
 
       {isLoading ? (
-        <p className="flex items-center gap-2 py-8 text-sm text-[#627176]">
+        <p className="flex items-center gap-2 py-8 text-sm text-[var(--ink-muted)]">
           <LoaderCircle className="size-4 animate-spin" />
           Loading your bookings…
         </p>
       ) : items.length === 0 ? (
-        <p className="py-8 text-sm text-[#627176]">
+        <p className="py-8 text-sm text-[var(--ink-muted)]">
           {status
             ? "No bookings match this filter."
             : "You have not booked anything yet. Book a tour to get started."}
         </p>
       ) : (
-        <ul className="space-y-2">
+        <ul>
           {items.map((booking) => (
-            <li key={booking.id}>
+            <li className="border-b border-[var(--rule)]" key={booking.id}>
               <Link
-                className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#eadfce] bg-white px-4 py-3 transition hover:border-[#d8c5a8]"
+                className="flex flex-wrap items-center justify-between gap-3 py-3.5 transition hover:bg-[var(--surface-sunk)]"
                 href={`/bookings/${booking.id}`}
               >
                 <div className="min-w-0">
-                  <p className="font-semibold text-[#21343b]">{booking.tourName}</p>
-                  <p className="text-xs text-[#8a8477]">
+                  <p className="font-medium text-[var(--ink)]">{booking.tourName}</p>
+                  <p className="text-xs text-[var(--ink-muted)]">
                     {formatWhen(booking.scheduledFor)} · {booking.participantCount}{" "}
                     {booking.participantCount === 1 ? "guest" : "guests"} ·{" "}
                     {booking.guest.name}
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-4">
-                  <span className="font-mono text-sm tabular-nums text-[#21343b]">
+                  <span className="text-sm tabular-nums text-[var(--ink)]">
                     {formatBookingAmount(booking.totalAmount, booking.currency)}
                     {booking.isEstimate && booking.totalAmount ? (
-                      <span className="ml-1 text-xs text-[#8a8477]">est.</span>
+                      <span className="ml-1 text-xs text-[var(--ink-muted)]">est.</span>
                     ) : null}
                   </span>
                   <BookingStatusBadge
@@ -136,6 +147,6 @@ export default function BookingsListClient() {
           ))}
         </ul>
       )}
-    </AdminSectionCard>
+    </PortalSection>
   );
 }

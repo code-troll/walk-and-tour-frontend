@@ -40,13 +40,6 @@ const UNMIGRATED_FROM_BRAND_TOKENS = [
   "app/admin/tours/tour-editor-client.tsx",
   "app/admin/tours/tours-list-client.tsx",
   "app/admin/users/users-client.tsx",
-  "app/hotel-portal/(portal)/bookings/\\[id\\]/booking-detail-client.tsx",
-  "app/hotel-portal/(portal)/bookings/bookings-list-client.tsx",
-  "app/hotel-portal/(portal)/bookings/new/booking-form-client.tsx",
-  "app/hotel-portal/(portal)/layout.tsx",
-  "app/hotel-portal/(portal)/page.tsx",
-  "app/hotel-portal/layout.tsx",
-  "app/hotel-portal/password-updated/page.tsx",
 ];
 
 const NO_RAW_COLOUR =

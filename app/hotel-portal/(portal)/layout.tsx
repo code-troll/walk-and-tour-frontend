@@ -2,7 +2,11 @@
 import Link from "next/link";
 import React from "react";
 
-import {AdminNoticeCard} from "@/components/admin/AdminUi";
+import {
+  PortalNotice,
+  portalPrimaryAction,
+  portalSecondaryAction,
+} from "@/components/hotel-portal/PortalUi";
 import {getHotelViewerState} from "@/lib/hotel-portal/session";
 
 /**
@@ -22,13 +26,21 @@ const buildSignInHref = () => {
   return `/auth/login?${params.toString()}`;
 };
 
+const NAV_ITEMS = [
+  {href: "/", label: "Overview"},
+  {href: "/bookings", label: "Bookings"},
+  {href: "/bookings/new", label: "Book a tour"},
+];
+
 const SignOutLink = () => (
-  <a
-    className="inline-flex items-center rounded-full border border-[#d8c5a8] px-5 py-2.5 text-sm font-semibold text-[#7a5424]"
-    href="/auth/logout"
-  >
+  <a className={portalSecondaryAction} href="/auth/logout">
     Sign out
   </a>
+);
+
+/** Everything that is not a signed-in hotel gets the same centred column. */
+const Shell = ({children}: {children: React.ReactNode}) => (
+  <div className="mx-auto max-w-4xl px-6 pb-16 sm:px-10">{children}</div>
 );
 
 export default async function HotelPortalSessionLayout({
@@ -38,82 +50,93 @@ export default async function HotelPortalSessionLayout({
 
   if (viewerState.kind === "auth0-not-configured") {
     return (
-      <AdminNoticeCard
-        eyebrow="Configuration"
-        title="The hotel portal is not configured."
-        description="Auth0 environment variables are missing, so signing in is unavailable."
-      />
+      <Shell>
+        <PortalNotice
+          kicker="Configuration"
+          title="The hotel portal is not configured."
+          description="Auth0 environment variables are missing, so signing in is unavailable."
+        />
+      </Shell>
     );
   }
 
   if (viewerState.kind === "unauthenticated") {
     return (
-      <AdminNoticeCard
-        eyebrow="Sign in"
-        title="Sign in to book tours for your guests."
-        description="Use the username Walk and Tour gave you and the password you chose from the emailed link."
-        actions={
-          <a
-            className="inline-flex items-center rounded-full bg-[#2b666d] px-5 py-2.5 text-sm font-semibold text-white"
-            href={buildSignInHref()}
-          >
-            Sign in
-          </a>
-        }
-      />
+      <Shell>
+        <PortalNotice
+          kicker="Sign in"
+          title="Sign in to book tours for your guests."
+          description="Use the username Walk and Tour gave you and the password you chose from the emailed link."
+          actions={
+            <a className={portalPrimaryAction} href={buildSignInHref()}>
+              Sign in
+            </a>
+          }
+        />
+      </Shell>
     );
   }
 
   if (viewerState.kind === "not-a-hotel-user") {
     return (
-      <AdminNoticeCard
-        eyebrow="Access"
-        title="This account cannot use the hotel portal."
-        description={`${viewerState.message} If you administer Walk and Tour, use the backoffice instead.`}
-        actions={<SignOutLink />}
-      />
+      <Shell>
+        <PortalNotice
+          kicker="Access"
+          title="This account cannot use the hotel portal."
+          description={`${viewerState.message} If you administer Walk and Tour, use the backoffice instead.`}
+          actions={<SignOutLink />}
+        />
+      </Shell>
     );
   }
 
   if (viewerState.kind !== "authenticated") {
     return (
-      <AdminNoticeCard
-        eyebrow="Portal"
-        title="The portal session could not be established."
-        description={viewerState.message}
-        actions={<SignOutLink />}
-      />
+      <Shell>
+        <PortalNotice
+          kicker="Portal"
+          title="The portal session could not be established."
+          description={viewerState.message}
+          actions={<SignOutLink />}
+        />
+      </Shell>
     );
   }
 
   const {viewer} = viewerState;
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[220px_minmax(0,1fr)]">
-      <aside className="space-y-4">
-        <div className="rounded-3xl border border-[#eadfce] bg-white p-5">
-          <p className="font-semibold text-[#21343b]">{viewer.hotel.name}</p>
-          <p className="mt-1 font-mono text-xs text-[#8a8477]">{viewer.user.username}</p>
-          <p className="mt-1 text-xs text-[#8a8477]">{viewer.user.email}</p>
-        </div>
-        <nav className="flex flex-col gap-1">
-          {[
-            {href: "/", label: "Overview"},
-            {href: "/bookings", label: "Bookings"},
-            {href: "/bookings/new", label: "Book a tour"},
-          ].map((item) => (
-            <Link
-              className="rounded-full px-4 py-2 text-sm font-medium text-[#53656c] transition hover:bg-[#f3e8d5] hover:text-[#21343b]"
-              href={item.href}
-              key={item.href}
+    <>
+      {/*
+        The navigation row. Sky blue is structural here — a 3 px band closing the
+        header — and never a background: at its contrast it cannot carry text.
+      */}
+      <div className="border-b-[3px] border-[var(--nav-rule)] px-6 sm:px-10">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-x-6 gap-y-2 pb-3">
+          <nav className="flex flex-wrap gap-5">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                className="pb-0.5 text-sm text-[var(--nav-ink)] transition hover:text-[var(--nav-ink-on)]"
+                href={item.href}
+                key={item.href}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex items-center gap-4 text-sm">
+            <span className="text-[var(--ink)]">{viewer.hotel.name}</span>
+            <a
+              className="text-[var(--ink-muted)] transition hover:text-[var(--ink)]"
+              href="/auth/logout"
             >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
-        <SignOutLink />
-      </aside>
-      <div className="min-w-0 space-y-6">{children}</div>
-    </div>
+              Sign out
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-4xl space-y-10 px-6 pb-16 pt-8 sm:px-10">{children}</div>
+    </>
   );
 }
