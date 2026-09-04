@@ -128,7 +128,21 @@
  * active position in the sidebar, and destructive actions. It is never a
  * status and never decoration.
  */
-[data-surface="admin"] {
+/* Both surfaces are declared twice, and the second selector is the load-bearing
+ * one. A dialog, a popover and a select menu render through a portal attached
+ * to <body>, which is outside the element carrying `data-surface` — so inside
+ * one of those, `var(--wt-…)` resolved to nothing. The declaration then became
+ * invalid at computed-value time and the property fell back to its initial
+ * value: a dialog painted `bg-[var(--wt-surface)]` came out transparent, and a
+ * button painted `bg-[var(--wt-ink)] text-white` came out white on white.
+ *
+ * There were 105 of these across eight files, all invisible in review because
+ * the class name looked right. Matching `:root` when a surface exists anywhere
+ * in the document puts the tokens above the portal as well. The two blocks
+ * never collide: a document is either the backoffice or the portal, never both.
+ */
+[data-surface="admin"],
+:root:has([data-surface="admin"]) {
   --wt-bg:            var(--wt-white);
   --wt-surface:       #fbfbfa;              /* white warmed by the grey ramp, for table zebra */
   --wt-surface-sunk:  var(--wt-grey-light);
@@ -159,7 +173,8 @@
  * never a background, because its contrast is too low to carry text.
  * Red appears once per screen, on the primary action.
  */
-[data-surface="portal"] {
+[data-surface="portal"],
+:root:has([data-surface="portal"]) {
   --wt-bg:            var(--wt-white);
   --wt-surface:       var(--wt-white);
   --wt-surface-sunk:  var(--wt-sky-20);
