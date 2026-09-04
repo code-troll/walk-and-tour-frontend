@@ -1967,6 +1967,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/hotel/tours/{tourId}/media/{mediaId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Fetch one image of a granted tour
+         * @description Streams the bytes of an image attached to a tour this hotel may sell. The grant is checked on every request: an image id is guessable in a way a booking id is not.
+         */
+        get: operations["HotelToursPortalController_findImage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/hotel/tours/{tourId}": {
         parameters: {
             query?: never;
@@ -4649,6 +4669,17 @@ export interface components {
             /** @description Anything the guide should know: mobility, allergies, occasion. */
             notes?: string | null;
         };
+        HotelTourImageResponseDto: {
+            /**
+             * Format: uuid
+             * @description Media asset identifier.
+             */
+            mediaId: string;
+            /** @description Localized alternative text, when the tour records one. */
+            alt?: string | null;
+            /** @description Whether this is the tour's cover image. */
+            isCover: boolean;
+        };
         HotelTourStopResponseDto: {
             /** @description Stable identifier of the stop within the tour. */
             stopId: string;
@@ -4703,6 +4734,8 @@ export interface components {
             endPoint?: string | null;
             /** @description Tag labels in the content locale, falling back to the tag key. */
             tags: string[];
+            /** @description The tour's images, cover first. Ids rather than URLs: the bytes come from `/api/hotel/tours/{tourId}/media/{mediaId}`, which re-checks the grant, so a private tour's photographs are not addressable without one. */
+            images: components["schemas"]["HotelTourImageResponseDto"][];
             /** @description Stops in order. */
             stops: components["schemas"]["HotelTourStopResponseDto"][];
         };
@@ -10884,6 +10917,44 @@ export interface operations {
                 };
             };
             /** @description No live grant for this tour and this hotel. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelToursPortalController_findImage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tourId: string;
+                mediaId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The image bytes. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description No live grant, or no such image on that tour. */
             404: {
                 headers: {
                     [name: string]: unknown;

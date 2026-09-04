@@ -5,6 +5,7 @@ import {Search} from "lucide-react";
 import {controlClassName} from "@/components/ui/control-class";
 import {Label} from "@/components/ui/label";
 import type {ApiHotelTourDetail} from "@/lib/hotel-portal/booking-types";
+import {tourImageUrl} from "@/components/hotel-portal/PortalTourDetail";
 
 /**
  * Finding the tour, before booking it.
@@ -120,14 +121,32 @@ export function PortalTourFinder({
         <ul className="mt-4">
           {results.map((tour) => {
             const duration = formatDuration(tour.durationMinutes);
+            const cover = (tour.images ?? [])[0] ?? null;
 
             return (
               <li className="border-t border-[var(--wt-rule)]" key={tour.tourId}>
                 <button
-                  className="w-full py-4 text-left transition-colors hover:bg-[var(--wt-surface-sunk)]"
+                  className="flex w-full gap-4 py-4 text-left transition-colors hover:bg-[var(--wt-surface-sunk)]"
                   onClick={() => onSelect(tour.tourId)}
                   type="button"
                 >
+                  {/*
+                    The cover, when there is one. A guest deciding between two
+                    walks looks at the picture before the words, and a row that
+                    reserved space for an image the tour does not have would
+                    leave a grey hole down the whole list instead.
+                  */}
+                  {cover ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- see PortalTourDetail
+                    <img
+                      alt={cover.alt ?? ""}
+                      className="h-20 w-28 shrink-0 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule)] object-cover"
+                      loading="lazy"
+                      src={tourImageUrl(tour.tourId, cover.mediaId)}
+                    />
+                  ) : null}
+
+                  <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                     <span className="text-sm font-medium text-[var(--wt-ink)]">{tour.name}</span>
                     <span className="text-sm text-[var(--wt-ink-muted)]">
@@ -156,6 +175,7 @@ export function PortalTourFinder({
                       ))}
                     </span>
                   ) : null}
+                  </span>
                 </button>
               </li>
             );

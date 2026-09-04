@@ -1,6 +1,15 @@
 import type {ApiHotelTourDetail} from "@/lib/hotel-portal/booking-types";
 
 /**
+ * Through the portal's own proxy, never the backend origin.
+ *
+ * The route re-checks the grant, so this URL is only useful to a hotel that was
+ * granted the tour — which is why the payload carries ids and not links.
+ */
+export const tourImageUrl = (tourId: string, mediaId: string) =>
+  `/api/internal/hotel/tours/${tourId}/media/${mediaId}`;
+
+/**
  * What a partner needs to know about a tour, while booking it.
  *
  * A receptionist has a guest in front of them asking what the walk actually is,
@@ -56,6 +65,7 @@ export function PortalTourDetail({tour}: {tour: ApiHotelTourDetail}) {
       : `${tour.priceAmount} ${tour.currency} per person`;
 
   const stops = (tour.stops ?? []).filter((stop) => stop.title || stop.description);
+  const images = tour.images ?? [];
 
   return (
     <div className="mt-6 border-t border-[var(--wt-rule)] pt-6">
@@ -75,6 +85,35 @@ export function PortalTourDetail({tour}: {tour: ApiHotelTourDetail}) {
           </p>
         ) : null}
       </div>
+
+      {images.length > 0 ? (
+        <div className="mt-5">
+          {/*
+            A strip rather than a hero: this sits inside a form, and a picture
+            large enough to be the page would push the fields the receptionist
+            came for below the fold. It scrolls, so a tour with nine photographs
+            costs the same vertical space as one with two.
+          */}
+          <ul className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-1">
+            {images.map((image) => (
+              <li className="shrink-0" key={image.mediaId}>
+                {/*
+                  eslint-disable-next-line @next/next/no-img-element --
+                  next/image would need the backend host in remotePatterns, and
+                  these bytes come through the portal's proxy precisely so that
+                  host is never named on the client.
+                */}
+                <img
+                  alt={image.alt ?? ""}
+                  className="h-32 w-48 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule)] object-cover"
+                  loading="lazy"
+                  src={tourImageUrl(tour.tourId, image.mediaId)}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       {tour.about ? (
         <div className="mt-5">
