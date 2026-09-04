@@ -41,6 +41,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { mountTuritopWidgets, TURITOP_EMBED_MODE } from "@/lib/turitop/widget";
 import { cn } from "@/lib/utils";
+import {fieldLabelClassName} from "@/components/ui/control-class";
 
 export type TiptapHtmlEditorHandle = {
   getHtml: () => string;
@@ -1439,7 +1440,7 @@ function BlogImageNodeView({
           </div>
 
           <div className="space-y-1">
-            <label className="block text-xs font-medium text-[#5d4d3f]" htmlFor={ captionInputId }>
+            <label className={fieldLabelClassName} htmlFor={ captionInputId }>
               Caption
             </label>
             <Input
@@ -2158,7 +2159,7 @@ function BlogTuritopWidgetNodeView({
               )) }
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium uppercase tracking-wide text-[#8b7862]">Service</label>
+              <label className={fieldLabelClassName}>Service</label>
               <Input
                 value={ service }
                 onChange={ (event) => setService(event.target.value) }
@@ -2167,7 +2168,7 @@ function BlogTuritopWidgetNodeView({
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium uppercase tracking-wide text-[#8b7862]">Language</label>
+              <label className={fieldLabelClassName}>Language</label>
               <Input
                 value={ language }
                 onChange={ (event) => setLanguage(event.target.value) }
@@ -4065,7 +4066,7 @@ export const TiptapHtmlEditor = forwardRef<
           </DialogHeader>
 
           <div className="space-y-2">
-            <label htmlFor="blog-embed-url" className="text-sm font-medium text-[var(--wt-ink)]">
+            <label htmlFor="blog-embed-url" className={fieldLabelClassName}>
               Embed URL
             </label>
             <Input
@@ -4115,7 +4116,7 @@ export const TiptapHtmlEditor = forwardRef<
 
           <div className="space-y-3">
             <div className="space-y-2">
-              <label htmlFor="blog-turitop-service" className="text-sm font-medium text-[var(--wt-ink)]">
+              <label htmlFor="blog-turitop-service" className={fieldLabelClassName}>
                 Service
               </label>
               <Input
@@ -4133,7 +4134,7 @@ export const TiptapHtmlEditor = forwardRef<
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="blog-turitop-language" className="text-sm font-medium text-[var(--wt-ink)]">
+              <label htmlFor="blog-turitop-language" className={fieldLabelClassName}>
                 Language
               </label>
               <Input
@@ -4186,7 +4187,7 @@ export const TiptapHtmlEditor = forwardRef<
           </DialogHeader>
 
           <div className="space-y-2">
-            <label htmlFor="blog-tour-card-slug" className="text-sm font-medium text-[var(--wt-ink)]">
+            <label htmlFor="blog-tour-card-slug" className={fieldLabelClassName}>
               Tour Slug
             </label>
             <Input

@@ -288,7 +288,7 @@ export default function EventsScheduleClient() {
           </Button>
           <span className="text-sm text-muted-foreground">Timezone</span>
           <Select value={displayTimezone} onValueChange={setDisplayTimezone}>
-            <SelectTrigger className="h-10 w-56">
+            <SelectTrigger className="w-56">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
