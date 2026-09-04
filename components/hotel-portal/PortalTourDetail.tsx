@@ -1,3 +1,8 @@
+"use client";
+
+import {useState} from "react";
+
+import {PortalImageViewer} from "@/components/hotel-portal/PortalImageViewer";
 import type {ApiHotelTourDetail} from "@/lib/hotel-portal/booking-types";
 
 /**
@@ -66,6 +71,7 @@ export function PortalTourDetail({tour}: {tour: ApiHotelTourDetail}) {
 
   const stops = (tour.stops ?? []).filter((stop) => stop.title || stop.description);
   const images = tour.images ?? [];
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <div className="mt-6 border-t border-[var(--wt-rule)] pt-6">
@@ -95,8 +101,14 @@ export function PortalTourDetail({tour}: {tour: ApiHotelTourDetail}) {
             costs the same vertical space as one with two.
           */}
           <ul className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-1">
-            {images.map((image) => (
+            {images.map((image, index) => (
               <li className="shrink-0" key={image.mediaId}>
+                <button
+                  aria-label={`Enlarge ${image.alt ?? "this picture"}`}
+                  className="block cursor-zoom-in rounded-[var(--wt-radius-sm)] transition hover:opacity-90"
+                  onClick={() => setOpenIndex(index)}
+                  type="button"
+                >
                 {/*
                   eslint-disable-next-line @next/next/no-img-element --
                   next/image would need the backend host in remotePatterns, and
@@ -109,9 +121,18 @@ export function PortalTourDetail({tour}: {tour: ApiHotelTourDetail}) {
                   loading="lazy"
                   src={tourImageUrl(tour.tourId, image.mediaId)}
                 />
+                </button>
               </li>
             ))}
           </ul>
+
+          <PortalImageViewer
+            images={images}
+            index={openIndex}
+            onIndexChange={setOpenIndex}
+            srcFor={(mediaId) => tourImageUrl(tour.tourId, mediaId)}
+            tourName={tour.name}
+          />
         </div>
       ) : null}
 
