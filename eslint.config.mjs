@@ -20,7 +20,6 @@ import nextTs from "eslint-config-next/typescript";
  */
 const UNMIGRATED_FROM_BRAND_TOKENS = [
   "components/admin/TiptapHtmlEditor.tsx",
-  "app/admin/blog-posts/blog-editor-client.tsx",
 ];
 
 const NO_RAW_COLOUR =
