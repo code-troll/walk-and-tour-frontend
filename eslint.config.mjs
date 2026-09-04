@@ -3,22 +3,39 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
 /**
- * Files inside the two branded trees that still carry hand-written colours.
+ * The migration backlog is empty.
  *
- * This list is the migration backlog for the redesign, and it is allowed to do
- * exactly one thing: get shorter. A file leaves the list when its colours come
- * from `app/design-system.css`; nothing may ever be added to it, because a new
- * file has no excuse — the tokens already exist.
+ * This list held the files that still carried hand-written colours when the
+ * brand tokens were introduced. It started at 28, grew to 37 as widening the
+ * rule to `components/**` and `components/tour-editor/**` found files nobody
+ * was counting, and is now done. It may only ever shrink: a new file has no
+ * excuse, because the tokens already exist.
  *
- * Why a list rather than a warning: a warning that fires 622 times is read by
- * nobody, and the point of the rule is that the *next* colour written by hand
- * fails the build. Grandfathering the 28 known offenders keeps the rule honest
- * from day one instead of "once we finish the migration".
- *
- * The backslashes are load-bearing: `[id]` is a character class in a glob, so a
- * dynamic-route path only matches when its brackets are escaped.
+ * If it is ever non-empty again, the backslashes are load-bearing — `[id]` is a
+ * character class in a glob, so a dynamic-route path only matches when its
+ * brackets are escaped.
  */
-const UNMIGRATED_FROM_BRAND_TOKENS = [
+const UNMIGRATED_FROM_BRAND_TOKENS = [];
+
+/**
+ * Files excluded for good, because their colours are not the interface.
+ *
+ * This is a different thing from the backlog above, and the distinction matters:
+ * these will never be migrated, so counting them as debt would make the number
+ * lie forever.
+ *
+ * `TiptapHtmlEditor` writes inline styles into the HTML that is stored and later
+ * published — `getLinkCardStyle`, `getTuritopContainerStyle` and the tour-card
+ * node all serialise colours into the article itself, and
+ * `DEFAULT_TEXT_COLOR` / `DEFAULT_HIGHLIGHT_COLOR` are applied to the author's
+ * text. Of the 83 colour occurrences in that file, 67 are content and 14 were
+ * chrome; the chrome is migrated, and the rest must not be touched. Changing
+ * them would not be a redesign, it would be editing published articles.
+ *
+ * Adding anything here needs the same test: does this colour end up in the page
+ * a reader sees, rather than in the tool an operator uses?
+ */
+const RENDERS_PUBLISHED_CONTENT = [
   "components/admin/TiptapHtmlEditor.tsx",
 ];
 
@@ -42,7 +59,7 @@ const eslintConfig = defineConfig([
       // and was therefore uncovered while its 2,129-line client file was not.
       "components/tour-editor/**/*.{ts,tsx}",
     ],
-    ignores: UNMIGRATED_FROM_BRAND_TOKENS,
+    ignores: [...UNMIGRATED_FROM_BRAND_TOKENS, ...RENDERS_PUBLISHED_CONTENT],
     rules: {
       "no-restricted-syntax": [
         "error",
