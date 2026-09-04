@@ -43,3 +43,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /.claude/settings.local.json
+
+# design source material
+# The brand manual arrived here as a 499 MB PDF. Reference documents live in
+# Drive; only what the app serves belongs in public/. Root level only, so a
+# real asset under public/ is unaffected.
+/*.pdf
