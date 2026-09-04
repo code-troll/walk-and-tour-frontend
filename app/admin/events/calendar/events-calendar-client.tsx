@@ -484,8 +484,7 @@ export default function EventsCalendarClient() {
       </Select>
       <Button
         variant="outline"
-        size="sm"
-        className="h-10 gap-2"
+        size="sm" className="gap-2"
         onClick={() => setIsFullscreen((value) => !value)}
       >
         {isFullscreen ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
@@ -575,7 +574,7 @@ export default function EventsCalendarClient() {
               Events
             </AdminProgressLink>
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-10 gap-2">
+          <Button asChild variant="outline" size="sm" className="gap-2">
             <AdminProgressLink href="/events/schedule">
               <Table className="size-4" />
               Schedule

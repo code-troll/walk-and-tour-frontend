@@ -79,7 +79,7 @@ export default function AdminBlogPostsListClient() {
         title="Blog posts"
         description="Create shared blog records, manage localized content, and publish each locale independently from the backend contract."
         actions={
-          <Button asChild className="h-10">
+          <Button asChild>
             <AdminProgressLink href="/blog-posts/new">
               <Plus className="size-4"/>
               Create Blog Post
@@ -90,7 +90,7 @@ export default function AdminBlogPostsListClient() {
         {blogPosts.length === 0 ? (
           <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-border px-6 py-12 text-center text-muted-foreground">
             <p>No blog posts have been created yet.</p>
-            <Button asChild className="h-10 mt-4">
+            <Button asChild className="mt-4">
               <AdminProgressLink href="/blog-posts/new">
                 <Plus className="size-4"/>
                 Create your first blog post

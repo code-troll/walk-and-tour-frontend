@@ -137,7 +137,7 @@ export function EventEditorClient({mode, eventId}: EventEditorClientProps) {
         title="The event editor could not be loaded."
         description={initialLoadError}
         actions={
-          <Button asChild variant="outline" className="h-10">
+          <Button asChild variant="outline">
             <AdminProgressLink href="/events">
               <ArrowLeft className="size-4" />
               Events
@@ -157,7 +157,7 @@ export function EventEditorClient({mode, eventId}: EventEditorClientProps) {
             Events
           </AdminProgressLink>
         </Button>
-        <Button className="h-10" onClick={() => void handleSave()} disabled={isMutating}>
+        <Button onClick={() => void handleSave()} disabled={isMutating}>
           {isMutating ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
           {mode === "create" ? "Create event" : "Save changes"}
         </Button>

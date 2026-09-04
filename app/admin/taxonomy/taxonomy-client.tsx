@@ -503,8 +503,7 @@ export function TaxonomyClient({
               <p className="mt-4">No tags created yet.</p>
               <Button
                 onClick={() => openTagDialog()}
-                variant="outline"
-                className="h-10 mt-4"
+                variant="outline" className="mt-4"
                 disabled={createTagLocales.length === 0 || isMutating}
               >
                 <Plus className="size-4" />
@@ -577,7 +576,7 @@ export function TaxonomyClient({
               <div className="py-12 text-center text-muted-foreground">
                 <Globe className="mx-auto size-12 opacity-30" />
                 <p className="mt-4">No locales configured yet.</p>
-                <Button onClick={() => openLanguageDialog()} variant="outline" className="h-10 mt-4">
+                <Button onClick={() => openLanguageDialog()} variant="outline" className="mt-4">
                   <Plus className="size-4" />
                   Add your first locale
                 </Button>
@@ -717,10 +716,10 @@ export function TaxonomyClient({
             ) : null}
           </FieldGroup>
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={closeTagDialog} disabled={isMutating}>
+            <Button variant="outline" onClick={closeTagDialog} disabled={isMutating}>
               Cancel
             </Button>
-            <Button className="h-10" onClick={saveTag} disabled={isMutating || visibleTagLocales.length === 0}>
+            <Button onClick={saveTag} disabled={isMutating || visibleTagLocales.length === 0}>
               <Check className="size-4" />
               {editingTag ? "Save Changes" : "Create Tag"}
             </Button>
@@ -812,10 +811,10 @@ export function TaxonomyClient({
             ) : null}
           </FieldGroup>
           <DialogFooter>
-            <Button variant="outline" className="h-10" onClick={closeLanguageDialog} disabled={isMutating}>
+            <Button variant="outline" onClick={closeLanguageDialog} disabled={isMutating}>
               Cancel
             </Button>
-            <Button className="h-10" onClick={saveLanguage} disabled={isMutating}>
+            <Button onClick={saveLanguage} disabled={isMutating}>
               <Check className="size-4" />
               {editingLanguage ? "Save Changes" : "Create Locale"}
             </Button>

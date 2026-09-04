@@ -94,11 +94,11 @@ export function CreateEventPanel({
       </div>
 
       <SheetFooter>
-        <Button className="h-10" onClick={() => void handleSave()} disabled={isSaving}>
+        <Button onClick={() => void handleSave()} disabled={isSaving}>
           {isSaving ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
           Create event
         </Button>
-        <Button variant="outline" className="h-10" onClick={onClose} disabled={isSaving}>
+        <Button variant="outline" onClick={onClose} disabled={isSaving}>
           Cancel
         </Button>
       </SheetFooter>

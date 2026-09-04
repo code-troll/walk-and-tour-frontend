@@ -204,7 +204,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
             <Input id="date-reason" value={dateReason} onChange={(e) => setDateReason(e.target.value)} placeholder="Vacation" />
           </div>
           <div className="flex items-end">
-            <Button className="h-10" onClick={() => void handleAddDate()} disabled={isMutating}>
+            <Button onClick={() => void handleAddDate()} disabled={isMutating}>
               <Plus className="size-4" />
               Add
             </Button>
@@ -271,7 +271,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
               <Input id="rule-end" type="time" value={ruleEnd} disabled={ruleWholeDay} onChange={(e) => setRuleEnd(e.target.value)} />
             </div>
           </div>
-          <Button className="h-10" onClick={() => void handleAddRule()} disabled={isMutating}>
+          <Button onClick={() => void handleAddRule()} disabled={isMutating}>
             <Plus className="size-4" />
             Add rule
           </Button>

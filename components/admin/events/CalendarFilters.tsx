@@ -27,7 +27,7 @@ export function CalendarFilters({groups, excluded, onToggle, onToggleAll}: Calen
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="h-10 gap-2">
+        <Button variant="outline" size="sm" className="gap-2">
           <SlidersHorizontal className="size-4" />
           Filters
           {activeCount > 0 ? (

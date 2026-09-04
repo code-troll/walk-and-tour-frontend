@@ -82,19 +82,18 @@ export function DayNotePanel({date, initialNote, onClose, onChanged}: DayNotePan
       <SheetFooter>
         {hadNote ? (
           <Button
-            variant="outline"
-            className="h-10 text-[var(--wt-danger)]"
+            variant="outline" className="text-[var(--wt-danger)]"
             onClick={() => void handleDelete()}
             disabled={isSaving}
           >
             Delete
           </Button>
         ) : null}
-        <Button className="h-10" onClick={() => void handleSave()} disabled={isSaving || !note.trim()}>
+        <Button onClick={() => void handleSave()} disabled={isSaving || !note.trim()}>
           {isSaving ? <LoaderCircle className="size-4 animate-spin" /> : null}
           Save note
         </Button>
-        <Button variant="outline" className="h-10" onClick={onClose} disabled={isSaving}>
+        <Button variant="outline" onClick={onClose} disabled={isSaving}>
           Cancel
         </Button>
       </SheetFooter>

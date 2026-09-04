@@ -90,8 +90,7 @@ export function TourEditorHeader({
               <Button
                 onClick={ primaryAction.onClick }
                 disabled={ isMutating || primaryAction.disabled }
-                size="sm"
-                className="gap-2 bg-[var(--wt-ink)] px-4 text-white transition hover:opacity-90"
+                size="sm" className="gap-2 bg-[var(--wt-ink)] text-white transition hover:opacity-90"
               >
                 { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Check className="size-4"/> }
                 { primaryAction.label }

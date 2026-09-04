@@ -19,7 +19,7 @@ import {
   X,
 } from "lucide-react";
 import { useAdminRouteLoadingBoundary, useAdminRouteProgress } from "@/components/admin/AdminRouteProgress";
-import { AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard } from "@/components/admin/AdminUi";
+import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard, AdminToggleChip} from "@/components/admin/AdminUi";
 import { controlClassName, controlMultilineClassName } from "@/components/ui/control-class";
 // The preview below renders with the public site's palette on purpose:
 // BlogPostArticle is the same component the reader sees, shared with
@@ -972,8 +972,7 @@ export function BlogPostEditorClient({
               <Button
                 type="button"
                 onClick={ saveShared }
-                disabled={ isMutating }
-                className="h-10 gap-2"
+                disabled={ isMutating } className="gap-2"
               >
                 { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Check className="size-4"/> }
                 Save Shared
@@ -987,7 +986,7 @@ export function BlogPostEditorClient({
           title="Shared Details"
           description="The shared record defines the admin-facing name and tags."
           actions={
-            <Button type="button" onClick={ saveShared } disabled={ isMutating } variant="outline" className="h-10 gap-2">
+            <Button type="button" onClick={ saveShared } disabled={ isMutating } variant="outline" className="gap-2">
               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
               Save
             </Button>
@@ -1010,19 +1009,13 @@ export function BlogPostEditorClient({
                 const isSelected = formState.tagKeys.includes(tag.key);
 
                 return (
-                  <button
+                  <AdminToggleChip
                     key={ tag.key }
-                    type="button"
                     onClick={ () => toggleTag(tag.key) }
-                    className={ cn(
-                      "rounded-full border px-4 py-2 text-sm font-medium transition",
-                      isSelected
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-foreground",
-                    ) }
+                    pressed={ isSelected }
                   >
                     { getTagLabel(tag) }
-                  </button>
+                  </AdminToggleChip>
                 );
               }) }
             </div>
@@ -1057,14 +1050,12 @@ export function BlogPostEditorClient({
           actions={
             isCreated ? (
               <>
-                <Button type="button" onClick={ () => void openMediaDialog("cover") } disabled={ isMutating }
-                        className="h-10 gap-2">
+                <Button type="button" onClick={ () => void openMediaDialog("cover") } disabled={ isMutating } className="gap-2">
                   <Upload className="size-4"/>
                   Upload or Select
                 </Button>
                 { savedBlogPost?.heroMedia ? (
-                  <Button type="button" variant="outline" onClick={ clearCoverImage } disabled={ isMutating }
-                          className="h-10 gap-2 text-destructive hover:text-destructive">
+                  <Button type="button" variant="outline" onClick={ clearCoverImage } disabled={ isMutating } className="gap-2 text-destructive hover:text-destructive">
                     <X className="size-4"/>
                     Clear
                   </Button>
@@ -1132,8 +1123,7 @@ export function BlogPostEditorClient({
                     </option>
                   )) }
                 </select>
-                <Button type="button" onClick={ addTranslation } disabled={ isMutating || !selectedLanguageToAdd }
-                        className="h-10 gap-2">
+                <Button type="button" onClick={ addTranslation } disabled={ isMutating || !selectedLanguageToAdd } className="gap-2">
                   <Plus className="size-4"/>
                   Add Locale
                 </Button>
@@ -1256,22 +1246,19 @@ export function BlogPostEditorClient({
                               type="button"
                               variant="outline"
                               onClick={ () => setIsPreviewDialogOpen(true) }
-                              disabled={ isMutating }
-                              className="h-10 gap-2"
+                              disabled={ isMutating } className="gap-2"
                             >
                               <Eye className="size-4"/>
                               Preview
                             </Button>
-                            <Button type="button" variant="outline" onClick={ saveTranslation } disabled={ isMutating }
-                                    className="h-10 gap-2">
+                            <Button type="button" variant="outline" onClick={ saveTranslation } disabled={ isMutating } className="gap-2">
                               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Save className="size-4"/> }
                               Save Translation
                             </Button>
                             <Button
                               type="button"
                               onClick={ togglePublishTranslation }
-                              disabled={ isMutating }
-                              className="h-10 gap-2"
+                              disabled={ isMutating } className="gap-2"
                             >
                               { isMutating ? <LoaderCircle className="size-4 animate-spin"/> : <Globe className="size-4"/> }
                               { activeTranslation.isPublished ? "Unpublish" : "Publish" }
@@ -1280,8 +1267,7 @@ export function BlogPostEditorClient({
                               type="button"
                               variant="outline"
                               onClick={ () => setPendingDeleteLanguageCode(activeTranslation.languageCode) }
-                              disabled={ isMutating }
-                              className="h-10 gap-2 text-destructive hover:text-destructive"
+                              disabled={ isMutating } className="gap-2 text-destructive hover:text-destructive"
                             >
                               <Trash2 className="size-4"/>
                               Delete
@@ -1385,7 +1371,7 @@ export function BlogPostEditorClient({
                 placeholder="Search media library" className="pl-9"
               />
             </div>
-            <Button type="button" variant="outline" className="h-10" onClick={ () => void handleMediaSearch() }
+            <Button type="button" variant="outline" onClick={ () => void handleMediaSearch() }
                     disabled={ isLoadingMediaLibrary }>
               Search
             </Button>
@@ -1397,8 +1383,7 @@ export function BlogPostEditorClient({
               className="hidden"
               onChange={ (event) => void handleMediaUpload(event.target.files) }
             />
-            <Button type="button" onClick={ () => fileInputRef.current?.click() } disabled={ isUploadingMedia }
-                    className="h-10 gap-2">
+            <Button type="button" onClick={ () => fileInputRef.current?.click() } disabled={ isUploadingMedia } className="gap-2">
               { isUploadingMedia ? <LoaderCircle className="size-4 animate-spin"/> : <Upload className="size-4"/> }
               Upload
             </Button>
@@ -1464,7 +1449,6 @@ export function BlogPostEditorClient({
               <Button
                 type="button"
                 variant="outline"
-                className="h-10"
                 onClick={ () => void loadMediaPage({
                   append: true,
                   page: mediaLibraryPage + 1,
@@ -1479,10 +1463,10 @@ export function BlogPostEditorClient({
           ) : null }
 
           <DialogFooter>
-            <Button type="button" variant="outline" className="h-10" onClick={ () => setIsMediaDialogOpen(false) }>
+            <Button type="button" variant="outline" onClick={ () => setIsMediaDialogOpen(false) }>
               Cancel
             </Button>
-            <Button type="button" className="h-10" onClick={ () => void confirmSelectedMedia() }
+            <Button type="button" onClick={ () => void confirmSelectedMedia() }
                     disabled={ !selectedMediaAsset || isMutating || isUploadingMedia }>
               { mediaDialogMode === "cover" ? "Use as Cover" : "Insert Image" }
             </Button>
@@ -1553,7 +1537,6 @@ export function BlogPostEditorClient({
             <Button
               type="button"
               variant="outline"
-              className="h-10"
               onClick={ () => setPendingDeleteLanguageCode(null) }
               disabled={ isMutating }
             >
@@ -1562,7 +1545,6 @@ export function BlogPostEditorClient({
             <Button
               type="button"
               variant="destructive"
-              className="h-10"
               onClick={ () => pendingDeleteLanguageCode ? void removeTranslation(pendingDeleteLanguageCode) : undefined }
               disabled={ isMutating || !pendingDeleteLanguageCode }
             >

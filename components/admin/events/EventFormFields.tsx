@@ -15,6 +15,7 @@ import type {EventFormState, EventFrequency, EventType} from "@/lib/events/admin
 import type {components} from "@/lib/api/generated/backend-types";
 import {controlMultilineClassName} from "@/components/ui/control-class";
 import {fieldLabelClassName} from "@/components/ui/control-class";
+import {AdminToggleChip} from "@/components/admin/AdminUi";
 
 type ApiLanguage = components["schemas"]["LanguageResponseDto"];
 type ApiTour = components["schemas"]["TourAdminListResponseDto"];
@@ -168,19 +169,9 @@ export function EventFormFields({formState, setFormState, languages, tours}: Eve
         <label className={fieldLabelClassName}>Frequency</label>
         <div className="flex gap-2">
           {(["single", "recurring"] as EventFrequency[]).map((frequency) => (
-            <button
-              key={frequency}
-              type="button"
-              onClick={() => handleFrequencyChange(frequency)}
-              aria-pressed={formState.frequency === frequency}
-              className={`rounded-full border px-5 py-2 text-sm font-medium capitalize transition ${
-                formState.frequency === frequency
-                  ? "border-[var(--wt-ink)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]"
-                  : "border-[var(--wt-rule-strong)] bg-white text-muted-foreground hover:border-[var(--wt-rule-strong)]"
-              }`}
-            >
-              {frequency}
-            </button>
+            <AdminToggleChip key={frequency} onClick={() => handleFrequencyChange(frequency)} pressed={formState.frequency === frequency}>
+              <span className="capitalize">{frequency}</span>
+            </AdminToggleChip>
           ))}
         </div>
       </div>
