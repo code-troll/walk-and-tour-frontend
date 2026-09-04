@@ -985,7 +985,7 @@ export function BlogPostEditorClient({
               className="inline-flex items-center gap-2 text-sm font-medium text-[var(--wt-ink-muted)] transition-colors hover:text-[var(--wt-ink)]"
             >
               <ArrowLeft className="size-4"/>
-              <span>Back to Blog Posts</span>
+              <span>Blog posts</span>
             </AdminProgressLink>
             <span
               className={ cn(

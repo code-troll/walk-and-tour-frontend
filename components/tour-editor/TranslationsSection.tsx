@@ -26,9 +26,9 @@ import {
 } from "lucide-react";
 
 const textareaClassName =
-  "flex min-h-24 w-full rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-ink)] outline-none transition-colors placeholder:text-[var(--wt-ink-muted)] focus-visible:border-[var(--wt-rule-strong)] focus-visible:ring-2 focus-visible:ring-[var(--wt-rule-strong)] disabled:cursor-not-allowed disabled:opacity-50";
+  "flex min-h-24 w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-2 text-sm text-[var(--wt-ink)] outline-none transition-colors placeholder:text-[var(--wt-ink-muted)] focus-visible:border-[var(--wt-rule-strong)] focus-visible:ring-2 focus-visible:ring-[var(--wt-rule-strong)] disabled:cursor-not-allowed disabled:opacity-50";
 const sectionClassName =
-  "rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)] max-[520px]:p-4";
+  "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-6 max-[520px]:p-4";
 
 type TranslationsSectionProps = {
   formState: TourFormState;
@@ -114,7 +114,7 @@ export function TranslationsSection({
 
                 onAddTranslationAction(event.target.value);
               } }
-              className="h-10 rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 text-sm text-[var(--wt-ink)] shadow-sm outline-none transition focus:border-[var(--wt-rule-strong)] focus:ring-2 focus:ring-[var(--wt-rule-strong)] max-[520px]:w-full"
+              className="h-10 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 text-sm text-[var(--wt-ink)] outline-none transition focus:border-[var(--wt-rule-strong)] focus:ring-2 focus:ring-[var(--wt-rule-strong)] max-[520px]:w-full"
               disabled={ availableToAdd.length === 0 }
             >
               <option value="">Select language</option>
@@ -129,7 +129,7 @@ export function TranslationsSection({
       </section>
 
       { orderedTranslations.length === 0 ? (
-        <div className="rounded-[1.75rem] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-12 text-center">
+        <div className="rounded-[var(--wt-radius-sm)] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-12 text-center">
           <Globe className="mx-auto mb-4 size-12 text-[var(--wt-ink-muted)]"/>
           <h3 className="mb-2 font-semibold text-[var(--wt-ink)]">No Translations</h3>
           <p className="text-sm text-[var(--wt-ink-muted)]">
@@ -151,7 +151,7 @@ export function TranslationsSection({
             return (
               <div
                 key={ translation.languageCode }
-                className="overflow-hidden rounded-[1.5rem] border border-[var(--wt-rule-strong)] bg-white shadow-[0_14px_32px_rgba(42,36,25,0.04)]"
+                className="overflow-hidden rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white"
               >
                 <div className="flex items-center gap-3 px-6 py-4 transition-colors hover:bg-[var(--wt-surface)] max-[520px]:flex-col max-[520px]:items-stretch max-[520px]:px-4">
                   <button
@@ -166,7 +166,7 @@ export function TranslationsSection({
                         <ChevronRight className="size-5 text-muted-foreground"/>
                       ) }
 
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-[1rem] bg-[var(--wt-surface-sunk)]">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-surface-sunk)]">
                         <span className="text-sm font-bold uppercase text-[var(--wt-ink-muted)]">
                           { translation.languageCode }
                         </span>
@@ -233,7 +233,7 @@ export function TranslationsSection({
                 { isExpanded ? (
                   <div className="space-y-6 border-t border-[var(--wt-rule-strong)] px-6 pt-4 pb-6 max-[520px]:px-4">
                     { translationError ? (
-                      <div className="rounded-[1rem] border border-[var(--wt-danger)] bg-[var(--wt-surface-sunk)] p-4">
+                      <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface-sunk)] p-4">
                         <div className="space-y-4">
                           <p className="text-sm font-medium text-[var(--wt-danger)]">{ translationError }</p>
                         </div>
@@ -493,7 +493,7 @@ export function TranslationsSection({
                             return (
                               <div
                                 key={ stop.clientId }
-                                className="space-y-3 rounded-[1rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4"
+                                className="space-y-3 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4"
                               >
                                 <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                                   <span

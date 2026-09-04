@@ -95,10 +95,10 @@ const normalizePositiveIntegerInput = (value: string) => {
 const PRICE_CURRENCY_OPTIONS = ["DKK", "EUR"] as const;
 const MEDIA_LIBRARY_PAGE_SIZE = 24;
 const sectionClassName =
-  "rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)] max-[520px]:p-4";
-const subCardClassName = "rounded-[1.25rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4";
+  "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-6 max-[520px]:p-4";
+const subCardClassName = "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-4";
 const warmSelectClassName =
-  "h-11 w-full rounded-2xl border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 text-sm text-[var(--wt-ink)] shadow-sm outline-none transition focus:border-[var(--wt-rule-strong)] focus:ring-2 focus:ring-[var(--wt-rule-strong)]";
+  "h-11 w-full rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 text-sm text-[var(--wt-ink)] outline-none transition focus:border-[var(--wt-rule-strong)] focus:ring-2 focus:ring-[var(--wt-rule-strong)]";
 
 const formatFileSize = (sizeInBytes: number) => {
   if (sizeInBytes < 1024 * 1024) {
@@ -289,7 +289,7 @@ export function GeneralSection({
         onClick={ () => {
           void moveImage(image.clientId, "up");
         } }
-        className="rounded-xl p-1.5 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] disabled:opacity-40"
+        className="rounded-[var(--wt-radius-sm)] p-1.5 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] disabled:opacity-40"
         title="Move image up"
         disabled={ index === 0 || isMutating }
       >
@@ -300,7 +300,7 @@ export function GeneralSection({
         onClick={ () => {
           void moveImage(image.clientId, "down");
         } }
-        className="rounded-xl p-1.5 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] disabled:opacity-40"
+        className="rounded-[var(--wt-radius-sm)] p-1.5 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] disabled:opacity-40"
         title="Move image down"
         disabled={ index === mediaItems.length - 1 || isMutating }
       >
@@ -312,7 +312,7 @@ export function GeneralSection({
           void setCoverImage(image.mediaId);
         } }
         className={ cn(
-          "rounded-md p-1.5 transition-colors",
+          "rounded-[var(--wt-radius-sm)] p-1.5 transition-colors",
           image.isCover
             ? "bg-[var(--wt-ink)] text-white"
             : "text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]",
@@ -327,7 +327,7 @@ export function GeneralSection({
         onClick={ () =>
           setExpandedImageId(expandedImageId === image.clientId ? null : image.clientId)
         }
-        className="rounded-xl p-1.5 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)]"
+        className="rounded-[var(--wt-radius-sm)] p-1.5 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)]"
         title="Edit media details"
       >
         { expandedImageId === image.clientId ? (
@@ -341,7 +341,7 @@ export function GeneralSection({
         onClick={ () => {
           void removeImage(image.mediaId, image.clientId);
         } }
-        className="rounded-xl p-1.5 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface-sunk)]"
+        className="rounded-[var(--wt-radius-sm)] p-1.5 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface-sunk)]"
         title="Remove image"
         disabled={ isMutating }
       >
@@ -483,7 +483,7 @@ export function GeneralSection({
       </section>
 
       { !isCreated ? (
-        <section className="rounded-[1.5rem] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-6">
+        <section className="rounded-[var(--wt-radius-sm)] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] p-6">
           <h2 className="text-lg font-semibold text-[var(--wt-ink)]">Complete Initial Setup</h2>
           <p className="mt-2 text-sm text-[var(--wt-ink-muted)]">
             Save the tour after entering Basic Information to unlock the remaining
@@ -586,7 +586,7 @@ export function GeneralSection({
 
             { mediaItems.length === 0 ? (
               <div
-                className="rounded-[1.25rem] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-[var(--wt-ink-muted)]">
+                className="rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-[var(--wt-ink-muted)]">
                 <ImageIcon className="mx-auto mb-3 size-10 text-[var(--wt-ink-muted)] opacity-80"/>
                 <p className="text-sm">No images attached yet.</p>
                 <Button
@@ -606,14 +606,14 @@ export function GeneralSection({
                   <div
                     key={ image.clientId }
                     className={ cn(
-                      "overflow-hidden rounded-[1.25rem] border transition-all shadow-[0_8px_22px_rgba(42,36,25,0.04)]",
+                      "overflow-hidden rounded-[var(--wt-radius-sm)] border transition-all",
                       image.isCover ? "border-[var(--wt-rule-strong)] ring-2 ring-[var(--wt-rule-strong)]" : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]",
                     ) }
                   >
                     <div className="flex flex-col gap-4 p-3 lg:flex-row lg:items-start">
                       <div className="flex items-start gap-3 lg:block">
                         <div
-                          className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[1rem] bg-[var(--wt-surface-sunk)]">
+                          className="relative flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[var(--wt-radius-sm)] bg-[var(--wt-surface-sunk)]">
                           { mediaPreviewStatus[image.mediaId]?.previewUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
@@ -695,7 +695,7 @@ export function GeneralSection({
           </section>
 
           <Dialog open={ isMediaDialogOpen } onOpenChange={ setIsMediaDialogOpen }>
-            <DialogContent className="border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] shadow-[0_30px_80px_rgba(61,45,27,0.14)] sm:max-w-3xl">
+            <DialogContent className="border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] sm:max-w-3xl">
               <DialogHeader>
                 <DialogTitle>Select Images</DialogTitle>
                 <DialogDescription>
@@ -753,7 +753,7 @@ export function GeneralSection({
 
                 { mediaDialogError ? (
                   <div
-                    className="rounded-[1rem] border border-[var(--wt-danger)] bg-[var(--wt-surface-sunk)] px-3 py-2 text-sm text-[var(--wt-danger)]">
+                    className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] bg-[var(--wt-surface-sunk)] px-3 py-2 text-sm text-[var(--wt-danger)]">
                     { mediaDialogError }
                   </div>
                 ) : null }
@@ -770,7 +770,7 @@ export function GeneralSection({
                         disabled={ isAttached }
                         onClick={ () => toggleSelectedMediaId(asset.id) }
                         className={ cn(
-                          "overflow-hidden rounded-lg border text-left transition-colors",
+                          "overflow-hidden rounded-[var(--wt-radius-sm)] border text-left transition-colors",
                           isSelected ? "border-primary ring-2 ring-primary/20" : "border-border",
                           isSelected ? "border-[var(--wt-rule-strong)] ring-2 ring-[var(--wt-rule-strong)]" : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]",
                           isAttached ? "cursor-not-allowed opacity-60" : "hover:bg-[var(--wt-surface)]",
@@ -819,7 +819,7 @@ export function GeneralSection({
 
                 { !isLoadingMediaLibrary && mediaLibraryItems.length === 0 ? (
                   <div
-                    className="rounded-[1.25rem] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-[var(--wt-ink-muted)]">
+                    className="rounded-[var(--wt-radius-sm)] border border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-6 py-10 text-center text-[var(--wt-ink-muted)]">
                     No images found for this search.
                   </div>
                 ) : null }

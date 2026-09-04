@@ -650,13 +650,12 @@ export function ProposalEditorClient({proposalId, accessToken, backendApiBaseUrl
   return (
     <>
       <div className="flex items-center justify-between">
-        <AdminProgressLink
-          href="/admin/proposals"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
-        >
-          <ArrowLeft className="h-4 w-4"/>
-          Back to Proposals
-        </AdminProgressLink>
+        <Button asChild size="sm" variant="ghost">
+          <AdminProgressLink href="/admin/proposals">
+            <ArrowLeft className="size-4"/>
+            Proposals
+          </AdminProgressLink>
+        </Button>
 
         {!isNew && proposal && (
           <div className="flex items-center gap-2">

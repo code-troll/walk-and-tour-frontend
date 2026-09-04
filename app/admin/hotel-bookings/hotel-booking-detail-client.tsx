@@ -168,7 +168,7 @@ export default function HotelBookingDetailClient({bookingId}: {bookingId: string
         description={loadError ?? "It may have been removed."}
         actions={
           <Button asChild variant="outline">
-            <AdminProgressLink href="/hotel-bookings">Back to bookings</AdminProgressLink>
+            <AdminProgressLink href="/hotel-bookings">Hotel bookings</AdminProgressLink>
           </Button>
         }
       />

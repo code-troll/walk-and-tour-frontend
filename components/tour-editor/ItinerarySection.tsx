@@ -60,8 +60,8 @@ const commuteModeIcons: Partial<Record<CommuteMode, ElementType>> = {
 };
 
 const sectionClassName =
-  "rounded-[1.75rem] border border-[var(--wt-rule-strong)] bg-white p-6 shadow-[0_20px_50px_rgba(42,36,25,0.05)]";
-const stopCardClassName = "overflow-hidden rounded-[1.25rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]";
+  "rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-white p-6";
+const stopCardClassName = "overflow-hidden rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)]";
 
 export function ItinerarySection({
                                    formState,
@@ -90,7 +90,7 @@ export function ItinerarySection({
             type="button"
             onClick={ () => updateFormStateAction("itineraryVariant", "stops") }
             className={ cn(
-              "flex-1 rounded-lg border-2 px-6 py-4 text-left transition-all",
+              "flex-1 rounded-[var(--wt-radius-sm)] border-2 px-6 py-4 text-left transition-all",
               formState.itineraryVariant === "stops"
                 ? "border-[var(--wt-rule-strong)] bg-[var(--wt-surface-sunk)]"
                 : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] hover:border-[var(--wt-rule-strong)]",
@@ -109,7 +109,7 @@ export function ItinerarySection({
             type="button"
             onClick={ () => updateFormStateAction("itineraryVariant", "description") }
             className={ cn(
-              "flex-1 rounded-lg border-2 px-6 py-4 text-left transition-all",
+              "flex-1 rounded-[var(--wt-radius-sm)] border-2 px-6 py-4 text-left transition-all",
               formState.itineraryVariant === "description"
                 ? "border-[var(--wt-rule-strong)] bg-[var(--wt-surface-sunk)]"
                 : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] hover:border-[var(--wt-rule-strong)]",
@@ -143,7 +143,7 @@ export function ItinerarySection({
           </div>
 
           { formState.stops.length === 0 ? (
-            <div className="rounded-[1.25rem] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] py-12 text-center">
+            <div className="rounded-[var(--wt-radius-sm)] border-2 border-dashed border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] py-12 text-center">
               <MapPin className="mx-auto mb-3 size-10 text-[var(--wt-ink-muted)]"/>
               <p className="mb-4 text-[var(--wt-ink-muted)]">No stops added yet.</p>
               <Button onClick={ onAddStopAction } variant="outline" className="gap-2 border-[var(--wt-rule-strong)] bg-white text-[var(--wt-ink-muted)] hover:bg-[var(--wt-surface-sunk)]">
@@ -278,7 +278,7 @@ export function ItinerarySection({
                       <div className="flex items-center gap-3 py-3 pl-6">
                         <div className="-my-3 h-8 w-0.5 bg-[var(--wt-rule-strong)]"/>
                         <div className="flex flex-1 flex-wrap items-center gap-3">
-                          <div className="flex items-center gap-2 rounded-[1rem] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-2">
+                          <div className="flex items-center gap-2 rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-3 py-2">
                             { CommuteIcon ? <CommuteIcon className="size-4 text-[var(--wt-ink-muted)]"/> : null }
                             <select
                               value={ stop.nextCommuteMode }
@@ -328,7 +328,7 @@ export function ItinerarySection({
       ) : (
         <section className={ sectionClassName }>
           <div className="flex items-start gap-4">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-[1rem] bg-[var(--wt-surface-sunk)]">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-surface-sunk)]">
               <span className="text-lg font-bold text-[var(--wt-ink-muted)]">¶</span>
             </div>
             <div>

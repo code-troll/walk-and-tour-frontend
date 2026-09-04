@@ -1987,7 +1987,10 @@ export function TourEditorClient({
         />
 
         <main className="flex-1 overflow-auto px-2 py-6 sm:px-4">
-          <div className="mx-auto max-w-5xl space-y-6">
+          {/* Full width, like every other backoffice screen: the shell already sets
+              the page gutter, and a second centred column made the tour editor the
+              only screen whose content did not line up with its own header. */}
+          <div className="space-y-5">
             { submitError ? (
               <div
                 className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-danger)] px-4 py-3 text-sm text-[var(--wt-danger)]">
@@ -1996,7 +1999,7 @@ export function TourEditorClient({
             ) : null }
 
             { successMessage ? (
-              <div className="rounded-[1.25rem] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-[0_10px_24px_rgba(47,111,69,0.08)]">
+              <div className="rounded-[var(--wt-radius-sm)] border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
                 { successMessage }
               </div>
             ) : null }
