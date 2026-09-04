@@ -1,0 +1,192 @@
+/*
+ * Walk and Tour — design system
+ * =============================
+ *
+ * Every value here comes from the brand identity manual (RebrandingW&T.pdf).
+ * Nothing in this file was chosen by eye, and nothing outside it may introduce
+ * a colour: `eslint.config.mjs` fails the build on a raw hex literal inside
+ * `app/admin` and `app/hotel-portal`.
+ *
+ * The file has three parts, in this order:
+ *
+ *   1. Brand primitives — the seven approved colours and their tint ramps.
+ *      These name *pigments*. Components never reference them directly.
+ *   2. Shared foundations — spacing, radii, motion, and the booking statuses,
+ *      which mean the same thing in both interfaces.
+ *   3. Interface themes — the two `[data-surface]` blocks. These name *roles*
+ *      (`--bg`, `--accent`, …). A component asks for a role and gets whichever
+ *      pigment that interface assigns to it, so the same component is correct
+ *      in the backoffice and in the hotel portal without knowing where it is.
+ *
+ * The direction chosen for each interface (2026-09-04):
+ *   admin  → "Consola": dense, near-neutral, colour only where it carries meaning.
+ *   portal → "Skilt":   top navigation, wide airy column, sky blue as a structural
+ *                       rule and never as a background.
+ */
+
+/* ── 1 · Brand primitives ──────────────────────────────────────────────────
+ * Manual p. 11 (approved palette, validated for colour blindness) and p. 10
+ * (six-step tint ramps). The ramps are the base mixed with white at 80/60/40/
+ * 20/10 %, which is how the manual builds them.
+ */
+:root {
+  --wt-red-100: #c22827;
+  --wt-red-80:  #ce5352;
+  --wt-red-60:  #da7e7d;
+  --wt-red-40:  #e7a9a9;
+  --wt-red-20:  #f3d4d4;
+  --wt-red-10:  #f9eae9;
+
+  --wt-sky-100: #a9dee8;
+  --wt-sky-80:  #bae5ed;
+  --wt-sky-60:  #cbebf1;
+  --wt-sky-40:  #ddf2f6;
+  --wt-sky-20:  #eef8fa;
+  --wt-sky-10:  #f6fcfd;
+
+  --wt-teal-100: #2b666d;
+  --wt-teal-80:  #55858a;
+  --wt-teal-60:  #80a3a7;
+  --wt-teal-40:  #aac2c5;
+  --wt-teal-20:  #d5e0e2;
+  --wt-teal-10:  #eaf0f0;
+
+  --wt-grey-100: #6d6e71;
+  --wt-grey-80:  #8a8b8d;
+  --wt-grey-60:  #a7a8aa;
+  --wt-grey-40:  #c5c5c6;
+  --wt-grey-20:  #e2e2e3;
+
+  --wt-black: #000000;
+  --wt-white: #ffffff;
+  /* The manual lists this grey explicitly; it is not a step of the ramp above. */
+  --wt-grey-light: #e6e6e5;
+}
+
+/* ── 2 · Shared foundations ────────────────────────────────────────────────
+ * Everything that does not depend on who is looking at the screen.
+ */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --easing: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /*
+   * Booking statuses.
+   *
+   * The manual has no status colours — it was written for print and signage,
+   * not for a state machine — so these are derived from the approved palette
+   * rather than invented outside it.
+   *
+   * Red is deliberately absent. It is the brand's primary colour; if it also
+   * meant "cancelled", every error would read as branding and every logo as an
+   * alarm. Cancelled is grey, which is what it actually is: inert.
+   */
+  --status-pending:   var(--wt-sky-100);
+  --status-confirmed: var(--wt-teal-100);
+  --status-completed: var(--wt-teal-80);
+  --status-invoiced:  var(--wt-black);
+  --status-cancelled: var(--wt-grey-100);
+
+  /* Tinted grounds for the same five, for chips and row highlights. */
+  --status-pending-bg:   var(--wt-sky-20);
+  --status-confirmed-bg: var(--wt-teal-10);
+  --status-completed-bg: var(--wt-teal-10);
+  --status-invoiced-bg:  var(--wt-grey-20);
+  --status-cancelled-bg: var(--wt-grey-20);
+}
+
+/* ── 3 · Interface themes ──────────────────────────────────────────────────
+ * Same seven pigments, two different jobs.
+ */
+
+/* Backoffice — "Consola".
+ * Near-neutral by design: an operator is in here for hours, and colour that
+ * does not carry meaning is noise. Red appears twice and only twice — the
+ * active position in the sidebar, and destructive actions. It is never a
+ * status and never decoration.
+ */
+[data-surface="admin"] {
+  --bg:            var(--wt-white);
+  --surface:       #fbfbfa;              /* white warmed by the grey ramp, for table zebra */
+  --surface-sunk:  var(--wt-grey-light);
+  --nav-bg:        var(--wt-grey-light);
+  --nav-ink:       #3f4042;
+  --nav-ink-on:    var(--wt-black);
+  --nav-marker:    var(--wt-red-100);
+
+  --ink:           var(--wt-black);
+  --ink-muted:     var(--wt-grey-100);
+  --ink-faint:     var(--wt-grey-80);
+
+  --rule:          #ededec;
+  --rule-strong:   var(--wt-grey-light);
+
+  --accent:        var(--wt-teal-100);   /* links and non-destructive emphasis */
+  --danger:        var(--wt-red-100);    /* destructive only */
+  --focus:         var(--wt-teal-100);
+
+  --radius-control: var(--radius-sm);
+  --density: 1;                          /* compact rows */
+}
+
+/* Hotel portal — "Skilt".
+ * A partner visits occasionally, often with a guest waiting. Top navigation,
+ * one wide column, no cards: hierarchy comes from air and rules. Sky blue is
+ * structural — the rule under the bar, the marker beside a status — and is
+ * never a background, because its contrast is too low to carry text.
+ * Red appears once per screen, on the primary action.
+ */
+[data-surface="portal"] {
+  --bg:            var(--wt-white);
+  --surface:       var(--wt-white);
+  --surface-sunk:  var(--wt-sky-20);
+  --nav-bg:        var(--wt-white);
+  --nav-ink:       var(--wt-grey-100);
+  --nav-ink-on:    var(--wt-black);
+  --nav-marker:    var(--wt-teal-100);
+  --nav-rule:      var(--wt-sky-100);    /* the 3px band under the bar */
+
+  --ink:           var(--wt-black);
+  --ink-muted:     var(--wt-grey-100);
+  --ink-faint:     var(--wt-grey-80);
+
+  --rule:          #ededec;
+  --rule-strong:   var(--wt-teal-100);   /* the rule above a total */
+
+  --accent:        var(--wt-red-100);    /* the primary action, once per screen */
+  --danger:        var(--wt-red-100);
+  --focus:         var(--wt-teal-100);
+
+  --radius-control: var(--radius-md);
+  --density: 1.35;                       /* roomier than the backoffice */
+}
+
+/*
+ * Focus is a system-level concern, not a per-interface one: it must be visible
+ * in both, and it must survive any theme.
+ */
+[data-surface] :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-surface] * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
