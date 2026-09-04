@@ -19,15 +19,10 @@ import nextTs from "eslint-config-next/typescript";
  * dynamic-route path only matches when its brackets are escaped.
  */
 const UNMIGRATED_FROM_BRAND_TOKENS = [
-  "components/admin/AdminRouteProgress.tsx",
   "components/admin/TiptapHtmlEditor.tsx",
   "app/admin/blog-posts/blog-editor-client.tsx",
-  "app/admin/blog-posts/blog-posts-list-client.tsx",
   "app/admin/proposals/\\[id\\]/proposal-editor-client.tsx",
-  "app/admin/proposals/proposals-list-client.tsx",
-  "app/admin/taxonomy/taxonomy-client.tsx",
   "app/admin/tours/tour-editor-client.tsx",
-  "app/admin/tours/tours-list-client.tsx",
 ];
 
 const NO_RAW_COLOUR =
