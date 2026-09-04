@@ -41,16 +41,16 @@ export default async function HotelPortalLayout({
 
   return (
     <div
-      className="min-h-screen bg-[var(--bg)] text-[var(--ink)]"
+      className="min-h-screen bg-[var(--wt-bg)] text-[var(--wt-ink)]"
       data-surface="portal"
     >
       <header className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-3 px-6 pb-3 pt-5 sm:px-10">
-        <p className="text-base font-medium tracking-tight text-[var(--nav-marker)]">
+        <p className="text-base font-medium tracking-tight text-[var(--wt-nav-marker)]">
           Walk&amp;Tour{" "}
-          <span className="font-normal text-[var(--ink-muted)]">Partners</span>
+          <span className="font-normal text-[var(--wt-ink-muted)]">Partners</span>
         </p>
         {environmentLabel && environmentLabel !== "Production" ? (
-          <span className="rounded-[var(--radius-control)] bg-[var(--surface-sunk)] px-3 py-1 text-xs font-medium text-[var(--nav-marker)]">
+          <span className="rounded-[var(--wt-radius-control)] bg-[var(--wt-surface-sunk)] px-3 py-1 text-xs font-medium text-[var(--wt-nav-marker)]">
             {environmentLabel}
           </span>
         ) : null}

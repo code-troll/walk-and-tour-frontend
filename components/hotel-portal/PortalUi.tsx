@@ -15,21 +15,38 @@ import type {ReactNode} from "react";
 
 /** Primary action. One per screen — it is the brand red, and it stops meaning "the way forward" if it repeats. */
 export const portalPrimaryAction =
-  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] " +
-  "bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white transition " +
+  "inline-flex items-center justify-center gap-2 rounded-[var(--wt-radius-control)] " +
+  "bg-[var(--wt-accent)] px-5 py-2.5 text-sm font-medium text-white transition " +
   "hover:opacity-90 disabled:pointer-events-none disabled:opacity-50";
 
 /** Everything else: the same shape, drawn with a rule instead of a fill. */
 export const portalSecondaryAction =
-  "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] " +
-  "border border-[var(--rule-strong)] px-5 py-2.5 text-sm font-medium " +
-  "text-[var(--ink)] transition hover:bg-[var(--surface-sunk)] " +
+  "inline-flex items-center justify-center gap-2 rounded-[var(--wt-radius-control)] " +
+  "border border-[var(--wt-rule-strong)] px-5 py-2.5 text-sm font-medium " +
+  "text-[var(--wt-ink)] transition hover:bg-[var(--wt-surface-sunk)] " +
   "disabled:pointer-events-none disabled:opacity-50";
 
 /** For navigating back, where a bordered button would be too loud. */
 export const portalQuietAction =
-  "inline-flex items-center gap-1.5 text-sm font-medium text-[var(--ink-muted)] " +
-  "transition hover:text-[var(--ink)]";
+  "inline-flex items-center gap-1.5 text-sm font-medium text-[var(--wt-ink-muted)] " +
+  "transition hover:text-[var(--wt-ink)]";
+
+/**
+ * The shape of a form control, defined once.
+ *
+ * It deliberately mirrors `components/ui/input.tsx` — height, radius, border and
+ * padding — because a native `<select>` cannot use that component but has to sit
+ * in the same row as it. Two definitions of "what a control looks like" is how
+ * the form ended up with 36 px selects beside 32 px inputs.
+ *
+ * These metrics still come from shadcn rather than from the design system: the
+ * shadcn control tokens are shared with the backoffice, so aligning them with
+ * the brand tokens has to happen when the backoffice migrates, not before.
+ */
+export const portalControl =
+  "mt-1 h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 " +
+  "text-sm text-[var(--wt-ink)] outline-none transition-colors " +
+  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
 /**
  * A titled block of content.
@@ -51,11 +68,11 @@ export function PortalSection({
 }) {
   return (
     <section>
-      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--rule)] pb-3">
+      <div className="flex flex-wrap items-end justify-between gap-4 border-b border-[var(--wt-rule)] pb-3">
         <div className="min-w-0 flex-1">
-          <h2 className="text-xl font-medium tracking-tight text-[var(--ink)]">{title}</h2>
+          <h2 className="text-xl font-medium tracking-tight text-[var(--wt-ink)]">{title}</h2>
           {description ? (
-            <p className="mt-1 text-sm text-[var(--ink-muted)]">{description}</p>
+            <p className="mt-1 text-sm text-[var(--wt-ink-muted)]">{description}</p>
           ) : null}
         </div>
         {actions ? <div className="flex shrink-0 items-center gap-3">{actions}</div> : null}
@@ -84,11 +101,11 @@ export function PortalNotice({
 }) {
   return (
     <section className="max-w-xl py-6">
-      <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--ink-muted)]">
+      <p className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--wt-ink-muted)]">
         {kicker}
       </p>
-      <h2 className="mt-3 text-3xl font-normal tracking-tight text-[var(--ink)]">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)]">{description}</p>
+      <h2 className="mt-3 text-3xl font-normal tracking-tight text-[var(--wt-ink)]">{title}</h2>
+      <p className="mt-3 text-sm leading-6 text-[var(--wt-ink-muted)]">{description}</p>
       {actions ? <div className="mt-6 flex flex-wrap gap-3">{actions}</div> : null}
     </section>
   );
@@ -100,10 +117,10 @@ export function PortalNotice({
 export function PortalField({label, children}: {label: string; children: ReactNode}) {
   return (
     <div>
-      <dt className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--ink-muted)]">
+      <dt className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--wt-ink-muted)]">
         {label}
       </dt>
-      <dd className="mt-1 text-sm text-[var(--ink)]">{children}</dd>
+      <dd className="mt-1 text-sm text-[var(--wt-ink)]">{children}</dd>
     </div>
   );
 }
@@ -115,7 +132,7 @@ export function PortalField({label, children}: {label: string; children: ReactNo
  */
 export function PortalAlert({children}: {children: ReactNode}) {
   return (
-    <p className="border-l-2 border-[var(--danger)] py-1 pl-4 text-sm text-[var(--ink)]">
+    <p className="border-l-2 border-[var(--wt-danger)] py-1 pl-4 text-sm text-[var(--wt-ink)]">
       {children}
     </p>
   );

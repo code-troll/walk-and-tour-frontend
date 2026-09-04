@@ -32,7 +32,7 @@ export default async function HotelPortalHomePage() {
         }
       >
         {viewer.tours.length === 0 ? (
-          <p className="text-sm text-[var(--ink-muted)]">
+          <p className="text-sm text-[var(--wt-ink-muted)]">
             No tours have been assigned to you yet. Walk and Tour will let you know once they
             are available.
           </p>
@@ -40,7 +40,7 @@ export default async function HotelPortalHomePage() {
           <ul className="grid gap-x-8 sm:grid-cols-2">
             {viewer.tours.map((tour) => (
               <li
-                className="border-b border-[var(--rule)] py-2.5 text-sm text-[var(--ink)]"
+                className="border-b border-[var(--wt-rule)] py-2.5 text-sm text-[var(--wt-ink)]"
                 key={tour.tourId}
               >
                 {tour.tourName}
@@ -59,7 +59,7 @@ export default async function HotelPortalHomePage() {
           </Link>
         }
       >
-        <p className="max-w-prose text-sm leading-6 text-[var(--ink-muted)]">
+        <p className="max-w-prose text-sm leading-6 text-[var(--wt-ink-muted)]">
           Walk and Tour confirms each booking. Prices exclude VAT and stay an estimate until
           the booking is invoiced, because charges specific to a booking can be added along
           the way.

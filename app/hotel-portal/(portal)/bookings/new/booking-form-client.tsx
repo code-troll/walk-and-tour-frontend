@@ -9,6 +9,7 @@ import {
   PortalAlert,
   PortalSection,
   portalPrimaryAction,
+  portalControl,
   portalQuietAction,
 } from "@/components/hotel-portal/PortalUi";
 import {Input} from "@/components/ui/input";
@@ -34,7 +35,7 @@ const LANGUAGES = [
 
 /** Field-level problems borrow the alert colour, which is the only red on this screen besides the submit. */
 const FieldError = ({message}: {message: string}) => (
-  <p className="mt-1 text-xs text-[var(--danger)]">{message}</p>
+  <p className="mt-1 text-xs text-[var(--wt-danger)]">{message}</p>
 );
 
 export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
@@ -106,7 +107,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           <div className="md:col-span-2">
             <Label htmlFor="booking-tour">Tour</Label>
             <select
-              className="mt-1 h-9 w-full rounded-[var(--radius-control)] border border-input bg-[var(--surface)] px-3 text-sm text-[var(--ink)]"
+              className={portalControl}
               id="booking-tour"
               onChange={(event) => update("tourId", event.target.value)}
               value={form.tourId}
@@ -146,7 +147,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
           <div>
             <Label htmlFor="booking-language">Language</Label>
             <select
-              className="mt-1 h-9 w-full rounded-[var(--radius-control)] border border-input bg-[var(--surface)] px-3 text-sm text-[var(--ink)]"
+              className={portalControl}
               id="booking-language"
               onChange={(event) => update("languageCode", event.target.value)}
               value={form.languageCode}
@@ -192,7 +193,7 @@ export default function BookingFormClient({tours}: {tours: ViewerTour[]}) {
               placeholder="412"
               value={form.roomNumber}
             />
-            <p className="mt-1 text-xs text-[var(--ink-muted)]">Optional. Helps the guide find them.</p>
+            <p className="mt-1 text-xs text-[var(--wt-ink-muted)]">Optional. Helps the guide find them.</p>
           </div>
 
           <div>

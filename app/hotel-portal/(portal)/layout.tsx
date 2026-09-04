@@ -111,12 +111,12 @@ export default async function HotelPortalSessionLayout({
         The navigation row. Sky blue is structural here — a 3 px band closing the
         header — and never a background: at its contrast it cannot carry text.
       */}
-      <div className="border-b-[3px] border-[var(--nav-rule)]">
+      <div className="border-b-[3px] border-[var(--wt-nav-rule)]">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 pb-3 sm:px-10">
           <nav className="flex flex-wrap gap-5">
             {NAV_ITEMS.map((item) => (
               <Link
-                className="pb-0.5 text-sm text-[var(--nav-ink)] transition hover:text-[var(--nav-ink-on)]"
+                className="pb-0.5 text-sm text-[var(--wt-nav-ink)] transition hover:text-[var(--wt-nav-ink-on)]"
                 href={item.href}
                 key={item.href}
               >
@@ -125,9 +125,9 @@ export default async function HotelPortalSessionLayout({
             ))}
           </nav>
           <div className="flex items-center gap-4 text-sm">
-            <span className="text-[var(--ink)]">{viewer.hotel.name}</span>
+            <span className="text-[var(--wt-ink)]">{viewer.hotel.name}</span>
             <a
-              className="text-[var(--ink-muted)] transition hover:text-[var(--ink)]"
+              className="text-[var(--wt-ink-muted)] transition hover:text-[var(--wt-ink)]"
               href="/auth/logout"
             >
               Sign out

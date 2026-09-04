@@ -7,6 +7,12 @@
  * a colour: `eslint.config.mjs` fails the build on a raw hex literal inside
  * `app/admin` and `app/hotel-portal`.
  *
+ * Every token this file defines is prefixed `--wt-`. That is not decoration:
+ * shadcn/ui owns `--accent` and the `--radius-*` scale in globals.css, and an
+ * unprefixed name here silently redefined them for the whole application —
+ * every `rounded-md` in the codebase changed width because of this file. The
+ * prefix is what keeps a brand token from being mistaken for a shadcn one.
+ *
  * The file has three parts, in this order:
  *
  *   1. Brand primitives — the seven approved colours and their tint ramps.
@@ -14,7 +20,7 @@
  *   2. Shared foundations — spacing, radii, motion, and the booking statuses,
  *      which mean the same thing in both interfaces.
  *   3. Interface themes — the two `[data-surface]` blocks. These name *roles*
- *      (`--bg`, `--accent`, …). A component asks for a role and gets whichever
+ *      (`--wt-bg`, `--wt-accent`, …). A component asks for a role and gets whichever
  *      pigment that interface assigns to it, so the same component is correct
  *      in the backoffice and in the hotel portal without knowing where it is.
  *
@@ -67,22 +73,22 @@
  * Everything that does not depend on who is looking at the screen.
  */
 :root {
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
+  --wt-space-1: 4px;
+  --wt-space-2: 8px;
+  --wt-space-3: 12px;
+  --wt-space-4: 16px;
+  --wt-space-5: 24px;
+  --wt-space-6: 32px;
+  --wt-space-7: 48px;
 
-  --radius-sm: 3px;
-  --radius-md: 5px;
-  --radius-lg: 8px;
-  --radius-pill: 999px;
+  --wt-radius-sm: 3px;
+  --wt-radius-md: 5px;
+  --wt-radius-lg: 8px;
+  --wt-radius-pill: 999px;
 
-  --motion-fast: 120ms;
-  --motion-base: 180ms;
-  --easing: cubic-bezier(0.2, 0, 0.2, 1);
+  --wt-motion-fast: 120ms;
+  --wt-motion-base: 180ms;
+  --wt-easing: cubic-bezier(0.2, 0, 0.2, 1);
 
   /*
    * Booking statuses.
@@ -95,18 +101,18 @@
    * meant "cancelled", every error would read as branding and every logo as an
    * alarm. Cancelled is grey, which is what it actually is: inert.
    */
-  --status-pending:   var(--wt-sky-100);
-  --status-confirmed: var(--wt-teal-100);
-  --status-completed: var(--wt-teal-80);
-  --status-invoiced:  var(--wt-black);
-  --status-cancelled: var(--wt-grey-100);
+  --wt-status-pending:   var(--wt-sky-100);
+  --wt-status-confirmed: var(--wt-teal-100);
+  --wt-status-completed: var(--wt-teal-80);
+  --wt-status-invoiced:  var(--wt-black);
+  --wt-status-cancelled: var(--wt-grey-100);
 
   /* Tinted grounds for the same five, for chips and row highlights. */
-  --status-pending-bg:   var(--wt-sky-20);
-  --status-confirmed-bg: var(--wt-teal-10);
-  --status-completed-bg: var(--wt-teal-10);
-  --status-invoiced-bg:  var(--wt-grey-20);
-  --status-cancelled-bg: var(--wt-grey-20);
+  --wt-status-pending-bg:   var(--wt-sky-20);
+  --wt-status-confirmed-bg: var(--wt-teal-10);
+  --wt-status-completed-bg: var(--wt-teal-10);
+  --wt-status-invoiced-bg:  var(--wt-grey-20);
+  --wt-status-cancelled-bg: var(--wt-grey-20);
 }
 
 /* ── 3 · Interface themes ──────────────────────────────────────────────────
@@ -120,27 +126,27 @@
  * status and never decoration.
  */
 [data-surface="admin"] {
-  --bg:            var(--wt-white);
-  --surface:       #fbfbfa;              /* white warmed by the grey ramp, for table zebra */
-  --surface-sunk:  var(--wt-grey-light);
-  --nav-bg:        var(--wt-grey-light);
-  --nav-ink:       #3f4042;
-  --nav-ink-on:    var(--wt-black);
-  --nav-marker:    var(--wt-red-100);
+  --wt-bg:            var(--wt-white);
+  --wt-surface:       #fbfbfa;              /* white warmed by the grey ramp, for table zebra */
+  --wt-surface-sunk:  var(--wt-grey-light);
+  --wt-nav-bg:        var(--wt-grey-light);
+  --wt-nav-ink:       #3f4042;
+  --wt-nav-ink-on:    var(--wt-black);
+  --wt-nav-marker:    var(--wt-red-100);
 
-  --ink:           var(--wt-black);
-  --ink-muted:     var(--wt-grey-100);
-  --ink-faint:     var(--wt-grey-80);
+  --wt-ink:           var(--wt-black);
+  --wt-ink-muted:     var(--wt-grey-100);
+  --wt-ink-faint:     var(--wt-grey-80);
 
-  --rule:          #ededec;
-  --rule-strong:   var(--wt-grey-light);
+  --wt-rule:          #ededec;
+  --wt-rule-strong:   var(--wt-grey-light);
 
-  --accent:        var(--wt-teal-100);   /* links and non-destructive emphasis */
-  --danger:        var(--wt-red-100);    /* destructive only */
-  --focus:         var(--wt-teal-100);
+  --wt-accent:        var(--wt-teal-100);   /* links and non-destructive emphasis */
+  --wt-danger:        var(--wt-red-100);    /* destructive only */
+  --wt-focus:         var(--wt-teal-100);
 
-  --radius-control: var(--radius-sm);
-  --density: 1;                          /* compact rows */
+  --wt-radius-control: var(--wt-radius-sm);
+  --wt-density: 1;                          /* compact rows */
 }
 
 /* Hotel portal — "Skilt".
@@ -151,28 +157,28 @@
  * Red appears once per screen, on the primary action.
  */
 [data-surface="portal"] {
-  --bg:            var(--wt-white);
-  --surface:       var(--wt-white);
-  --surface-sunk:  var(--wt-sky-20);
-  --nav-bg:        var(--wt-white);
-  --nav-ink:       var(--wt-grey-100);
-  --nav-ink-on:    var(--wt-black);
-  --nav-marker:    var(--wt-teal-100);
-  --nav-rule:      var(--wt-sky-100);    /* the 3px band under the bar */
+  --wt-bg:            var(--wt-white);
+  --wt-surface:       var(--wt-white);
+  --wt-surface-sunk:  var(--wt-sky-20);
+  --wt-nav-bg:        var(--wt-white);
+  --wt-nav-ink:       var(--wt-grey-100);
+  --wt-nav-ink-on:    var(--wt-black);
+  --wt-nav-marker:    var(--wt-teal-100);
+  --wt-nav-rule:      var(--wt-sky-100);    /* the 3px band under the bar */
 
-  --ink:           var(--wt-black);
-  --ink-muted:     var(--wt-grey-100);
-  --ink-faint:     var(--wt-grey-80);
+  --wt-ink:           var(--wt-black);
+  --wt-ink-muted:     var(--wt-grey-100);
+  --wt-ink-faint:     var(--wt-grey-80);
 
-  --rule:          #ededec;
-  --rule-strong:   var(--wt-teal-100);   /* the rule above a total */
+  --wt-rule:          #ededec;
+  --wt-rule-strong:   var(--wt-teal-100);   /* the rule above a total */
 
-  --accent:        var(--wt-red-100);    /* the primary action, once per screen */
-  --danger:        var(--wt-red-100);
-  --focus:         var(--wt-teal-100);
+  --wt-accent:        var(--wt-red-100);    /* the primary action, once per screen */
+  --wt-danger:        var(--wt-red-100);
+  --wt-focus:         var(--wt-teal-100);
 
-  --radius-control: var(--radius-md);
-  --density: 1.35;                       /* roomier than the backoffice */
+  --wt-radius-control: var(--wt-radius-md);
+  --wt-density: 1.35;                       /* roomier than the backoffice */
 }
 
 /*
@@ -180,7 +186,7 @@
  * in both, and it must survive any theme.
  */
 [data-surface] :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--wt-focus);
   outline-offset: 2px;
 }
 

@@ -15,11 +15,11 @@ import {formatBookingAmount, type ApiHotelBooking} from "@/lib/hotel-portal/book
  * booking is not an error, it is inert, so it is grey.
  */
 const STATUS_MARKER: Record<string, string> = {
-  pending: "border-[var(--status-pending)]",
-  confirmed: "border-[var(--status-confirmed)]",
-  completed: "border-[var(--status-completed)]",
-  invoiced: "border-[var(--status-invoiced)]",
-  cancelled: "border-[var(--status-cancelled)]",
+  pending: "border-[var(--wt-status-pending)]",
+  confirmed: "border-[var(--wt-status-confirmed)]",
+  completed: "border-[var(--wt-status-completed)]",
+  invoiced: "border-[var(--wt-status-invoiced)]",
+  cancelled: "border-[var(--wt-status-cancelled)]",
 };
 
 export function BookingStatusBadge({
@@ -29,11 +29,11 @@ export function BookingStatusBadge({
   status: string;
   labels: Record<string, string>;
 }) {
-  const marker = STATUS_MARKER[status] ?? "border-[var(--status-cancelled)]";
+  const marker = STATUS_MARKER[status] ?? "border-[var(--wt-status-cancelled)]";
 
   return (
     <span
-      className={`inline-flex items-center border-l-[3px] pl-2 text-xs font-medium uppercase tracking-[0.06em] text-[var(--ink-muted)] ${marker}`}
+      className={`inline-flex items-center border-l-[3px] pl-2 text-xs font-medium uppercase tracking-[0.06em] text-[var(--wt-ink-muted)] ${marker}`}
     >
       {labels[status] ?? status}
     </span>
@@ -53,37 +53,37 @@ export function BookingBreakdown({booking}: {booking: ApiHotelBooking}) {
       <ul>
         {booking.lineItems.map((lineItem) => (
           <li
-            className="flex items-baseline justify-between gap-4 border-b border-[var(--rule)] py-2.5 text-sm"
+            className="flex items-baseline justify-between gap-4 border-b border-[var(--wt-rule)] py-2.5 text-sm"
             key={lineItem.id}
           >
             <span
               className={
-                lineItem.kind === "base" ? "text-[var(--ink)]" : "text-[var(--ink-muted)]"
+                lineItem.kind === "base" ? "text-[var(--wt-ink)]" : "text-[var(--wt-ink-muted)]"
               }
             >
               {lineItem.description}
             </span>
-            <span className="shrink-0 tabular-nums text-[var(--ink)]">
+            <span className="shrink-0 tabular-nums text-[var(--wt-ink)]">
               {formatBookingAmount(lineItem.amount, booking.currency)}
             </span>
           </li>
         ))}
         {booking.lineItems.length === 0 ? (
-          <li className="py-2.5 text-sm text-[var(--ink-muted)]">
+          <li className="py-2.5 text-sm text-[var(--wt-ink-muted)]">
             This tour has no set price. Walk and Tour will confirm the amount with you.
           </li>
         ) : null}
       </ul>
 
       {/* The heavy rule above the total is teal — the one structural accent Skilt allows. */}
-      <div className="mt-3 flex items-baseline justify-between gap-4 border-t-[3px] border-[var(--rule-strong)] pt-3">
-        <span className="text-lg font-medium text-[var(--ink)]">Total</span>
-        <span className="text-lg font-medium tabular-nums text-[var(--ink)]">
+      <div className="mt-3 flex items-baseline justify-between gap-4 border-t-[3px] border-[var(--wt-rule-strong)] pt-3">
+        <span className="text-lg font-medium text-[var(--wt-ink)]">Total</span>
+        <span className="text-lg font-medium tabular-nums text-[var(--wt-ink)]">
           {formatBookingAmount(booking.totalAmount, booking.currency)}
         </span>
       </div>
 
-      <p className="mt-3 max-w-prose text-xs leading-5 text-[var(--ink-muted)]">
+      <p className="mt-3 max-w-prose text-xs leading-5 text-[var(--wt-ink-muted)]">
         {booking.isEstimate
           ? "Amounts exclude VAT and are an estimate. Walk and Tour may add charges for anything specific to this booking, so the total can still change until it is invoiced."
           : "Amounts exclude VAT. This booking has been invoiced, so the total is final."}
@@ -94,19 +94,19 @@ export function BookingBreakdown({booking}: {booking: ApiHotelBooking}) {
 
 export function BookingHistory({booking}: {booking: ApiHotelBooking}) {
   if (booking.logs.length === 0) {
-    return <p className="text-sm text-[var(--ink-muted)]">Nothing has happened yet.</p>;
+    return <p className="text-sm text-[var(--wt-ink-muted)]">Nothing has happened yet.</p>;
   }
 
   return (
     <ol className="space-y-3">
       {[...booking.logs].reverse().map((log) => (
         <li className="flex gap-3 text-sm" key={log.id}>
-          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[var(--status-confirmed)]" />
+          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[var(--wt-status-confirmed)]" />
           <div className="min-w-0">
-            <p className="text-[var(--ink)]">
+            <p className="text-[var(--wt-ink)]">
               {describeLog(log.type, log.fromStatus, log.toStatus)}
             </p>
-            <p className="text-xs text-[var(--ink-muted)]">
+            <p className="text-xs text-[var(--wt-ink-muted)]">
               {log.actorLabel} ·{" "}
               {new Intl.DateTimeFormat("en-GB", {
                 dateStyle: "medium",
@@ -114,7 +114,7 @@ export function BookingHistory({booking}: {booking: ApiHotelBooking}) {
               }).format(new Date(log.createdAt))}
             </p>
             {log.reason ? (
-              <p className="mt-1 text-xs italic text-[var(--ink-muted)]">“{log.reason}”</p>
+              <p className="mt-1 text-xs italic text-[var(--wt-ink-muted)]">“{log.reason}”</p>
             ) : null}
           </div>
         </li>

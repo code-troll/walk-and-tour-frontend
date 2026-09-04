@@ -129,7 +129,7 @@ export default function BookingDetailClient({bookingId}: {bookingId: string}) {
           <ArrowLeft className="size-4" />
           Bookings
         </Link>
-        <span className="text-xs uppercase tracking-[0.18em] text-[var(--ink-muted)]">
+        <span className="text-xs uppercase tracking-[0.18em] text-[var(--wt-ink-muted)]">
           {booking.reference}
         </span>
       </div>
@@ -161,7 +161,7 @@ export default function BookingDetailClient({bookingId}: {bookingId: string}) {
           <PortalField label="Guest">
             {booking.guest.name}
             {booking.guest.roomNumber ? (
-              <span className="block text-xs text-[var(--ink-muted)]">
+              <span className="block text-xs text-[var(--wt-ink-muted)]">
                 Room {booking.guest.roomNumber}
               </span>
             ) : null}
@@ -173,7 +173,7 @@ export default function BookingDetailClient({bookingId}: {bookingId: string}) {
         </dl>
 
         {booking.notes ? (
-          <p className="mt-5 max-w-prose border-l-2 border-[var(--rule-strong)] py-1 pl-4 text-sm text-[var(--ink-muted)]">
+          <p className="mt-5 max-w-prose border-l-2 border-[var(--wt-rule-strong)] py-1 pl-4 text-sm text-[var(--wt-ink-muted)]">
             {booking.notes}
           </p>
         ) : null}

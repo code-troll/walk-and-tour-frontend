@@ -91,8 +91,8 @@ export default function BookingsListClient() {
           <button
             className={`pb-1 text-sm transition ${
               status === filter.value
-                ? "border-b-2 border-[var(--rule-strong)] font-medium text-[var(--ink)]"
-                : "border-b-2 border-transparent text-[var(--ink-muted)] hover:text-[var(--ink)]"
+                ? "border-b-2 border-[var(--wt-rule-strong)] font-medium text-[var(--wt-ink)]"
+                : "border-b-2 border-transparent text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
             }`}
             key={filter.value || "all"}
             onClick={() => setStatus(filter.value)}
@@ -104,12 +104,12 @@ export default function BookingsListClient() {
       </div>
 
       {isLoading ? (
-        <p className="flex items-center gap-2 py-8 text-sm text-[var(--ink-muted)]">
+        <p className="flex items-center gap-2 py-8 text-sm text-[var(--wt-ink-muted)]">
           <LoaderCircle className="size-4 animate-spin" />
           Loading your bookings…
         </p>
       ) : items.length === 0 ? (
-        <p className="py-8 text-sm text-[var(--ink-muted)]">
+        <p className="py-8 text-sm text-[var(--wt-ink-muted)]">
           {status
             ? "No bookings match this filter."
             : "You have not booked anything yet. Book a tour to get started."}
@@ -117,24 +117,24 @@ export default function BookingsListClient() {
       ) : (
         <ul>
           {items.map((booking) => (
-            <li className="border-b border-[var(--rule)]" key={booking.id}>
+            <li className="border-b border-[var(--wt-rule)]" key={booking.id}>
               <Link
-                className="flex flex-wrap items-center justify-between gap-3 py-3.5 transition hover:bg-[var(--surface-sunk)]"
+                className="flex flex-wrap items-center justify-between gap-3 py-3.5 transition hover:bg-[var(--wt-surface-sunk)]"
                 href={`/bookings/${booking.id}`}
               >
                 <div className="min-w-0">
-                  <p className="font-medium text-[var(--ink)]">{booking.tourName}</p>
-                  <p className="text-xs text-[var(--ink-muted)]">
+                  <p className="font-medium text-[var(--wt-ink)]">{booking.tourName}</p>
+                  <p className="text-xs text-[var(--wt-ink-muted)]">
                     {formatWhen(booking.scheduledFor)} · {booking.participantCount}{" "}
                     {booking.participantCount === 1 ? "guest" : "guests"} ·{" "}
                     {booking.guest.name}
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-4">
-                  <span className="text-sm tabular-nums text-[var(--ink)]">
+                  <span className="text-sm tabular-nums text-[var(--wt-ink)]">
                     {formatBookingAmount(booking.totalAmount, booking.currency)}
                     {booking.isEstimate && booking.totalAmount ? (
-                      <span className="ml-1 text-xs text-[var(--ink-muted)]">est.</span>
+                      <span className="ml-1 text-xs text-[var(--wt-ink-muted)]">est.</span>
                     ) : null}
                   </span>
                   <BookingStatusBadge
