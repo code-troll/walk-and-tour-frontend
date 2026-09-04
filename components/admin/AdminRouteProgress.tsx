@@ -222,7 +222,7 @@ export function AdminRouteProgressProvider({
       >
         <div className="h-1 bg-transparent">
           <div
-            className="h-full bg-[#9a6a2f] shadow-[0_0_14px_rgba(154,106,47,0.35)] transition-[width]"
+            className="h-full bg-[var(--wt-nav-marker)] transition-[width]"
             style={{
               transitionDuration: `${ animationDuration }ms`,
               width: `${ Math.max(progress, 0) * 100 }%`,

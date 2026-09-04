@@ -63,14 +63,16 @@ const formatLabel = (value: string) =>
 
 const getTranslationBadgeTone = (translation: ApiTourTranslation) => {
   if (translation.isReady && translation.isPublished) {
-    return "border-[#cfe4d3] bg-[#f3fbf4] text-[#2f6b3f]";
+    return "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]";
   }
 
   if (translation.isReady) {
-    return "border-[#e3d5b4] bg-[#fbf7ea] text-[#8a6029]";
+    return "border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)] text-[var(--wt-ink)]";
   }
 
-  return "border-[#e8c7c1] bg-[#fbf2f0] text-[#a3483f]";
+  // A draft is unfinished work, not a failure. Grey is what the system uses for
+  // inert; red would make every unpublished translation read as an error.
+  return "border-[var(--wt-status-cancelled)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]";
 };
 
 const getTranslationBadgeLabel = (translation: ApiTourTranslation) =>
@@ -131,8 +133,8 @@ function TourListRow({
   const dropTargetHighlightClass = !isDropTarget
     ? null
     : dropPlacement === "before"
-      ? "border-[#d5b588] bg-[#fcf4e6] shadow-[inset_0_4px_0_0_#9a6a2f,0_0_0_1px_rgba(154,106,47,0.08),0_16px_32px_rgba(42,36,25,0.08)]"
-      : "border-[#d5b588] bg-[#fcf4e6] shadow-[inset_0_-4px_0_0_#9a6a2f,0_0_0_1px_rgba(154,106,47,0.08),0_16px_32px_rgba(42,36,25,0.08)]";
+      ? "border-[var(--wt-rule-strong)] bg-[var(--wt-surface-sunk)] shadow-[inset_0_3px_0_0_var(--wt-ink)]"
+      : "border-[var(--wt-rule-strong)] bg-[var(--wt-surface-sunk)] shadow-[inset_0_-3px_0_0_var(--wt-ink)]";
 
   useEffect(() => {
     const rowElement = rowRef.current;
@@ -196,7 +198,7 @@ function TourListRow({
     <article
       ref={ rowRef }
       className={ cn(
-        "rounded-2xl border border-[#f0e6d8] bg-white p-5 transition-[background-color,border-color,box-shadow,opacity] duration-150",
+        "rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5 transition-[background-color,border-color,box-shadow,opacity] duration-150",
         dropTargetHighlightClass,
         isDragged && "opacity-70",
       ) }
@@ -206,7 +208,7 @@ function TourListRow({
           <div
             ref={ dragHandleRef }
             className={ cn(
-              "mt-0.5 flex shrink-0 cursor-grab rounded-xl hover:bg-[#fbf7f0] p-2 text-[#8b7862]",
+              "mt-0.5 flex shrink-0 cursor-grab rounded-xl hover:bg-[var(--wt-surface)] p-2 text-[var(--wt-ink-muted)]",
               isReordering && "cursor-not-allowed opacity-50",
             ) }
             aria-label={ `Drag to reorder ${ tour.name }` }
@@ -222,7 +224,7 @@ function TourListRow({
               <div className="flex items-center gap-2">
                 <div className="flex mb-1 md:mb-0 flex-wrap items-center gap-2">
                   <span
-                    className="relative inline-flex size-6 items-center justify-center rounded-full bg-[#f4ede3] text-xs font-semibold text-[#6a5743]">
+                    className="relative inline-flex size-6 items-center justify-center rounded-full bg-[var(--wt-surface-sunk)] text-xs font-semibold text-[var(--wt-ink-muted)]">
                     <span className="absolute inset-0 flex items-center justify-center">
                       { index + 1 }
                     </span>
@@ -553,7 +555,7 @@ export function AdminToursListClient({
           <button
             type="button"
             onClick={() => void loadToursWorkspace()}
-            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
           </button>
@@ -577,7 +579,7 @@ export function AdminToursListClient({
     >
       <div className="space-y-4">
         { reorderError ? (
-          <div className="rounded-2xl border border-[#e8c7c1] bg-[#fbf2f0] px-4 py-3 text-sm text-[#a3483f]">
+          <div className="rounded-2xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
             { reorderError }
           </div>
         ) : null }

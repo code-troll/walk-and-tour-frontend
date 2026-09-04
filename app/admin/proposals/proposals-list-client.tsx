@@ -23,14 +23,14 @@ const getPublicOrigin = () => {
 };
 
 const PUBLICATION_COLORS: Record<string, string> = {
-  published: "border-[#cfe4d3] bg-[#f3fbf4] text-[#2f6b3f]",
-  unpublished: "border-[#e3d5b4] bg-[#fbf7ea] text-[#8a6029]",
+  published: "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]",
+  unpublished: "border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)] text-[var(--wt-ink)]",
 };
 
 const ACCEPTANCE_COLORS: Record<string, string> = {
-  pending: "border-[#e3d5b4] bg-[#fbf7ea] text-[#8a6029]",
-  accepted: "border-[#b4cde3] bg-[#eaf3fb] text-[#295e8a]",
-  expired: "border-[#e8c7c1] bg-[#fbf2f0] text-[#a3483f]",
+  pending: "border-[var(--wt-status-pending)] bg-[var(--wt-status-pending-bg)] text-[var(--wt-ink)]",
+  accepted: "border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]",
+  expired: "border-[var(--wt-status-cancelled)] bg-[var(--wt-surface-sunk)] text-[var(--wt-ink-muted)]",
 };
 
 const formatDate = (dateString: string) => {
@@ -136,10 +136,10 @@ export function AdminProposalsListClient() {
   return (
     <>
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-[#21343b]">Proposals</h2>
+        <h2 className="text-xl font-semibold text-[var(--wt-ink)]">Proposals</h2>
         <AdminProgressLink
           href="/admin/proposals/new"
-          className="inline-flex items-center gap-2 rounded-full bg-[#21343b] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#1a2a30]"
+          className="inline-flex items-center gap-2 rounded-[var(--wt-radius-sm)] bg-[var(--wt-ink)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
         >
           <Plus className="h-4 w-4"/>
           New Proposal
@@ -149,43 +149,43 @@ export function AdminProposalsListClient() {
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 min-w-[200px]">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9a8d7e]"/>
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--wt-ink-muted)]"/>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name or email..."
-            className="h-10 w-full rounded-xl border border-[#eadfce] bg-white py-2.5 pl-9 pr-9 text-sm text-[#21343b] placeholder:text-[#9a8d7e]"
+            className="h-10 w-full rounded-xl border border-[var(--wt-rule-strong)] bg-white py-2.5 pl-9 pr-9 text-sm text-[var(--wt-ink)] placeholder:text-[var(--wt-ink-muted)]"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9a8d7e] hover:text-[#21343b]"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--wt-ink-muted)] hover:text-[var(--wt-ink)]"
             >
               <X className="h-4 w-4"/>
             </button>
           )}
         </div>
 
-        <label className="inline-flex items-center gap-2 rounded-xl border border-[#eadfce] bg-white px-3 py-2.5 text-sm text-[#627176] select-none cursor-pointer hover:bg-[#fbf7f0]">
+        <label className="inline-flex items-center gap-2 rounded-xl border border-[var(--wt-rule-strong)] bg-white px-3 py-2.5 text-sm text-[var(--wt-ink-muted)] select-none cursor-pointer hover:bg-[var(--wt-surface)]">
           <input
             type="checkbox"
             checked={showExpired}
             onChange={(e) => setShowExpired(e.target.checked)}
-            className="h-4 w-4 rounded border-[#eadfce] accent-[#2b666d]"
+            className="h-4 w-4 rounded border-[var(--wt-rule-strong)] accent-[var(--wt-accent)]"
           />
           Show expired
         </label>
 
         {isLoading && (
-          <LoaderCircle className="h-4 w-4 animate-spin text-[#9a6a2f]"/>
+          <LoaderCircle className="h-4 w-4 animate-spin text-[var(--wt-ink-muted)]"/>
         )}
       </div>
 
       {error && (
         <AdminSectionCard title="Proposals">
-          <p className="text-sm text-[#a3483f]">{error}</p>
+          <p className="text-sm text-[var(--wt-danger)]">{error}</p>
           <Button variant="outline" size="sm" className="mt-3" onClick={() => void fetchProposals(searchQuery, showExpired)}>
             Retry
           </Button>
@@ -194,7 +194,7 @@ export function AdminProposalsListClient() {
 
       {!error && !isLoading && proposals.length === 0 ? (
         <AdminSectionCard title={searchQuery || showExpired ? "No matching proposals" : "No proposals yet"}>
-          <p className="text-sm text-[#627176]">
+          <p className="text-sm text-[var(--wt-ink-muted)]">
             {searchQuery || showExpired
               ? "Try adjusting your search or filters."
               : "Create your first proposal to get started."}
@@ -207,13 +207,13 @@ export function AdminProposalsListClient() {
           {proposals.map((proposal) => (
             <div
               key={proposal.id}
-              className="flex items-center gap-4 rounded-2xl border border-[#eadfce] bg-white p-5 transition-colors hover:bg-[#fbf7f0]"
+              className="flex items-center gap-4 rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5 transition-colors hover:bg-[var(--wt-surface)]"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3">
                   <AdminProgressLink
                     href={`/admin/proposals/${proposal.id}`}
-                    className="text-base font-semibold text-[#21343b] hover:text-[#2b666d]"
+                    className="text-base font-semibold text-[var(--wt-ink)] hover:text-[var(--wt-accent)]"
                   >
                     {proposal.recipientName || proposal.recipientEmail || "Unnamed Proposal"}
                   </AdminProgressLink>
@@ -228,12 +228,12 @@ export function AdminProposalsListClient() {
                     {proposal.acceptanceStatus}
                   </span>
                 </div>
-                <div className="mt-1.5 flex items-center gap-4 text-sm text-[#627176]">
+                <div className="mt-1.5 flex items-center gap-4 text-sm text-[var(--wt-ink-muted)]">
                   <span>{proposal.language.toUpperCase()}</span>
                   <span>{proposal.versionsCount} version{proposal.versionsCount !== 1 ? "s" : ""}</span>
                   <span>{formatDate(proposal.createdAt)}</span>
                   {proposal.expiresAt && (
-                    <span className={isExpired(proposal) ? "text-[#a3483f]" : "text-[#627176]"}>
+                    <span className={isExpired(proposal) ? "text-[var(--wt-danger)]" : "text-[var(--wt-ink-muted)]"}>
                       {isExpired(proposal) ? "Expired" : "Expires"} {formatDate(proposal.expiresAt)}
                     </span>
                   )}
@@ -246,8 +246,8 @@ export function AdminProposalsListClient() {
                   onClick={() => void handleTogglePublish(proposal)}
                   className={`rounded-lg border px-3 py-2 text-xs font-semibold transition-colors ${
                     proposal.publicationStatus === "published"
-                      ? "border-[#e8c7c1] text-[#a3483f] hover:bg-[#fbf2f0]"
-                      : "border-[#cfe4d3] text-[#2f6b3f] hover:bg-[#f3fbf4]"
+                      ? "border-[var(--wt-danger)] text-[var(--wt-danger)] hover:bg-[var(--wt-surface)]"
+                      : "border-[var(--wt-status-confirmed)] text-[var(--wt-status-confirmed)] hover:bg-[var(--wt-status-confirmed-bg)]"
                   }`}
                   title={proposal.publicationStatus === "published" ? "Unpublish proposal" : "Publish proposal"}
                 >
@@ -256,16 +256,16 @@ export function AdminProposalsListClient() {
                 <button
                   type="button"
                   onClick={() => void handleCopyLink(proposal.hash, proposal.id, proposal.language)}
-                  className="rounded-lg border border-[#eadfce] p-2 text-[#627176] transition-colors hover:bg-[#f9f2e7] hover:text-[#21343b]"
+                  className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
                   title="Copy public link"
                 >
-                  {copiedId === proposal.id ? <Check className="h-4 w-4 text-[#2f6b3f]"/> : <Copy className="h-4 w-4"/>}
+                  {copiedId === proposal.id ? <Check className="h-4 w-4 text-[var(--wt-status-confirmed)]"/> : <Copy className="h-4 w-4"/>}
                 </button>
                 <a
                   href={`${getPublicOrigin()}${getLocalizedPath({locale: proposal.language as AppLocale, pathname: `/private-tours/proposal/${proposal.hash}`})}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-[#eadfce] p-2 text-[#627176] transition-colors hover:bg-[#f9f2e7] hover:text-[#21343b]"
+                  className="rounded-lg border border-[var(--wt-rule-strong)] p-2 text-[var(--wt-ink-muted)] transition-colors hover:bg-[var(--wt-surface-sunk)] hover:text-[var(--wt-ink)]"
                   title="Open public link"
                 >
                   <ExternalLink className="h-4 w-4"/>
@@ -273,7 +273,7 @@ export function AdminProposalsListClient() {
                 <button
                   type="button"
                   onClick={() => setDeleteTarget(proposal)}
-                  className="rounded-lg border border-[#e8c7c1] p-2 text-[#a3483f] transition-colors hover:bg-[#fbf2f0]"
+                  className="rounded-lg border border-[var(--wt-danger)] p-2 text-[var(--wt-danger)] transition-colors hover:bg-[var(--wt-surface)]"
                   title="Delete proposal"
                 >
                   <Trash2 className="h-4 w-4"/>

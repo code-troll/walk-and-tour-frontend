@@ -64,7 +64,7 @@ export default function AdminBlogPostsListClient() {
           <button
             type="button"
             onClick={() => void loadBlogPostsWorkspace()}
-            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
           </button>
@@ -106,7 +106,7 @@ export default function AdminBlogPostsListClient() {
             {blogPosts.map((post) => (
               <article
                 key={post.id}
-                className="rounded-2xl border border-[#f0e6d8] bg-white p-5"
+                className="rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
@@ -133,7 +133,7 @@ export default function AdminBlogPostsListClient() {
                     return (
                       <span
                         key={availability.languageCode}
-                        className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
+                        className="rounded-full border border-[var(--wt-rule-strong)] px-3 py-1 text-xs text-muted-foreground"
                       >
                         {languageNameByCode[availability.languageCode] ?? availability.languageCode}
                         {": "}
