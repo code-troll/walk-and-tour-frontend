@@ -2098,7 +2098,7 @@ export function TourEditorClient({
               Save or discard your current changes before leaving this part of the editor.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="border-t border-[var(--wt-rule-strong)]">
+          <DialogFooter>
             <Button
               variant="outline"
               onClick={ () => setPendingNavigation(null) }
