@@ -61,7 +61,7 @@ export default function AdminNewsletterClient() {
           <button
             type="button"
             onClick={() => void loadNewsletterWorkspace()}
-            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
           </button>

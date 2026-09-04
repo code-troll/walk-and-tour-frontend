@@ -64,7 +64,7 @@ export default function TeamMembersListClient() {
           <button
             type="button"
             onClick={() => void loadWorkspace()}
-            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
           </button>
@@ -111,7 +111,7 @@ export default function TeamMembersListClient() {
             {members.map((member) => (
               <article
                 key={member.id}
-                className="rounded-2xl border border-[#f0e6d8] bg-white p-5"
+                className="rounded-2xl border border-[var(--wt-rule-strong)] bg-white p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div className="flex min-w-0 flex-1 items-start gap-4">
@@ -125,7 +125,7 @@ export default function TeamMembersListClient() {
                         className="size-14 shrink-0 rounded-xl object-cover"
                       />
                     ) : (
-                      <div className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-[#f5efe5] text-xs text-muted-foreground">
+                      <div className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-[var(--wt-surface-sunk)] text-xs text-muted-foreground">
                         No photo
                       </div>
                     )}
@@ -149,8 +149,8 @@ export default function TeamMembersListClient() {
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-semibold ${
                         member.isPublished
-                          ? "border border-[#cfe4d3] bg-[#f3fbf4] text-[#2f6b3f]"
-                          : "border border-[#eadfce] bg-[#fbf7f0] text-[#8a6029]"
+                          ? "border border-[var(--wt-status-confirmed)] bg-[var(--wt-status-confirmed-bg)] text-[var(--wt-status-confirmed)]"
+                          : "border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] text-[var(--wt-ink-muted)]"
                       }`}
                     >
                       {member.isPublished ? "Published" : "Draft"}
@@ -169,7 +169,7 @@ export default function TeamMembersListClient() {
                     {member.translationAvailability.map((availability) => (
                       <span
                         key={availability.languageCode}
-                        className="rounded-full border border-[#eadfce] px-3 py-1 text-xs text-muted-foreground"
+                        className="rounded-full border border-[var(--wt-rule-strong)] px-3 py-1 text-xs text-muted-foreground"
                       >
                         {languageNameByCode[availability.languageCode] ?? availability.languageCode}
                       </span>

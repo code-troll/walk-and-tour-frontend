@@ -87,7 +87,7 @@ export default function OverviewClient({roleName}: OverviewClientProps) {
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="rounded-full border border-[#cbb390] px-5 py-3 text-sm font-semibold text-[#7a5424]"
+            className="rounded-full border border-[var(--wt-rule-strong)] px-5 py-3 text-sm font-semibold text-[var(--wt-ink-muted)]"
           >
             Retry
           </button>
@@ -105,7 +105,7 @@ export default function OverviewClient({roleName}: OverviewClientProps) {
         actions={
           <AdminProgressLink
             href="/tours"
-            className="rounded-full bg-[#21343b] px-5 py-3 text-sm font-semibold text-white"
+            className="inline-flex items-center rounded-[var(--wt-radius-sm)] bg-[var(--wt-ink)] px-4 py-2 text-sm font-medium text-white transition hover:opacity-90"
           >
             Open tours workspace
           </AdminProgressLink>
@@ -125,18 +125,18 @@ export default function OverviewClient({roleName}: OverviewClientProps) {
           title="Session"
           description="The admin UI treats the backend role mapping as the source of truth."
         >
-          <dl className="grid gap-4 text-sm text-[#4c6066]">
+          <dl className="grid gap-4 text-sm text-[var(--wt-ink-muted)]">
             <div className="flex items-center justify-between gap-4">
               <dt>Auth0 identity</dt>
-              <dd className="font-medium text-[#21343b]">{data.auth0UserSub}</dd>
+              <dd className="font-medium text-[var(--wt-ink)]">{data.auth0UserSub}</dd>
             </div>
             <div className="flex items-center justify-between gap-4">
               <dt>Backend status</dt>
-              <dd className="font-medium capitalize text-[#21343b]">{data.backendStatus}</dd>
+              <dd className="font-medium capitalize text-[var(--wt-ink)]">{data.backendStatus}</dd>
             </div>
             <div className="flex items-center justify-between gap-4">
               <dt>Backend role</dt>
-              <dd className="font-medium text-[#21343b]">{data.backendRoleName}</dd>
+              <dd className="font-medium text-[var(--wt-ink)]">{data.backendRoleName}</dd>
             </div>
           </dl>
         </AdminSectionCard>
@@ -145,7 +145,7 @@ export default function OverviewClient({roleName}: OverviewClientProps) {
           title="Public API readiness"
           description="The same contract layer already includes typed public tours, blog posts, and newsletter endpoints for the later migration."
         >
-          <ul className="space-y-3 text-sm leading-6 text-[#4c6066]">
+          <ul className="space-y-3 text-sm leading-6 text-[var(--wt-ink-muted)]">
             <li>Public API clients are scaffolded under `lib/api/public.ts`.</li>
             <li>Backend contract types are generated from `openapi/backend.yaml`.</li>
             <li>Admin pages now load their workspace data from browser-initiated BFF requests.</li>

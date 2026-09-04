@@ -159,7 +159,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
       </p>
 
       {error ? (
-        <p className="rounded-xl border border-[#e7c1bd] bg-[#fbf1ef] px-4 py-3 text-sm text-[#a3483f]">
+        <p className="rounded-xl border border-[var(--wt-danger)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-danger)]">
           {error}
         </p>
       ) : null}
@@ -175,7 +175,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
             {sortedDates.map((entry) => (
               <div
                 key={entry.id}
-                className="flex items-center justify-between gap-3 rounded-lg border border-[#eadfce] bg-white px-4 py-2 text-sm"
+                className="flex items-center justify-between gap-3 rounded-lg border border-[var(--wt-rule-strong)] bg-white px-4 py-2 text-sm"
               >
                 <span>
                   {entry.startDate}
@@ -190,7 +190,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
           </div>
         )}
 
-        <div className="grid gap-3 rounded-xl border border-dashed border-[#eadfce] p-4 sm:grid-cols-[1fr_1fr_1fr_auto]">
+        <div className="grid gap-3 rounded-xl border border-dashed border-[var(--wt-rule-strong)] p-4 sm:grid-cols-[1fr_1fr_1fr_auto]">
           <div className="space-y-1">
             <label className={fieldLabelClassName} htmlFor="date-start">From</label>
             <Input id="date-start" type="date" value={dateStart} onChange={(e) => setDateStart(e.target.value)} className="h-10" />
@@ -223,7 +223,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
             {sortedRules.map((entry) => (
               <div
                 key={entry.id}
-                className="flex items-center justify-between gap-3 rounded-lg border border-[#eadfce] bg-white px-4 py-2 text-sm"
+                className="flex items-center justify-between gap-3 rounded-lg border border-[var(--wt-rule-strong)] bg-white px-4 py-2 text-sm"
               >
                 <span>
                   {weekdayShort(entry.dayOfWeek)}
@@ -239,7 +239,7 @@ export function AvailabilityEditor({memberId}: {memberId: string}) {
           </div>
         )}
 
-        <div className="space-y-3 rounded-xl border border-dashed border-[#eadfce] p-4">
+        <div className="space-y-3 rounded-xl border border-dashed border-[var(--wt-rule-strong)] p-4">
           <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr_1fr]">
             <div className="space-y-1">
               <label className={fieldLabelClassName}>Weekday</label>
