@@ -1589,7 +1589,11 @@ export interface paths {
         get: operations["HotelsController_findOne"];
         put?: never;
         post?: never;
-        delete?: never;
+        /**
+         * Delete a hotel that has never booked
+         * @description Removes the hotel, its access user and its tour grants. Refused when the hotel holds any booking — archive it instead, which keeps them.
+         */
+        delete: operations["HotelsController_remove"];
         options?: never;
         head?: never;
         /**
@@ -1637,6 +1641,30 @@ export interface paths {
          * @description Derives a unique username from the hotel name, creates the sign-in identity, and emails the hotel a link to choose its own password. A hotel has exactly one access user.
          */
         post: operations["HotelsController_createUser"];
+        /**
+         * Release the hotel access user
+         * @description Deletes the sign-in identity and the local record, freeing the address and the username for another hotel. The hotel and its bookings are untouched, and a new access user can be created straight away. This is irreversible: the identity is gone, not blocked.
+         */
+        delete: operations["HotelsController_releaseUser"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/admin/hotels/{id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Archive the hotel
+         * @description Ends the partnership without losing its history. Releases the access user and the CVR, revokes the live tour grants, and keeps every booking. Use this rather than deleting whenever the hotel has ever booked.
+         */
+        post: operations["HotelsController_archive"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4198,7 +4226,7 @@ export interface components {
              * @example active
              * @enum {string}
              */
-            status: "active" | "disabled";
+            status: "active" | "disabled" | "archived";
             /**
              * @description Number of tours this hotel may currently sell.
              * @example 3
@@ -4299,7 +4327,7 @@ export interface components {
              * @example active
              * @enum {string}
              */
-            status: "active" | "disabled";
+            status: "active" | "disabled" | "archived";
             /** @description Tours this hotel may currently sell. Revoked grants are not listed. */
             tours: components["schemas"]["HotelTourGrantResponseDto"][];
             audit: components["schemas"]["HotelAuditResponseDto"];
@@ -4336,7 +4364,7 @@ export interface components {
              * @example active
              * @enum {string}
              */
-            status: "active" | "disabled";
+            status: "active" | "disabled" | "archived";
         };
         UpdateHotelDto: {
             /**
@@ -4369,7 +4397,7 @@ export interface components {
              * @example disabled
              * @enum {string}
              */
-            status?: "active" | "disabled";
+            status?: "active" | "disabled" | "archived";
         };
         HotelTourGrantInputDto: {
             /**
@@ -9848,7 +9876,7 @@ export interface operations {
                 /** @description Case-insensitive partial match against the hotel name or CVR number. */
                 search?: string;
                 /** @description Restrict the results to one lifecycle status. */
-                status?: "active" | "disabled";
+                status?: "active" | "disabled" | "archived";
                 /** @description One-based page number. */
                 page?: number;
                 /** @description Page size. */
@@ -9989,6 +10017,59 @@ export interface operations {
                 };
             };
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_remove: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The hotel was deleted. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description The hotel has bookings and must be archived instead. */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -10221,6 +10302,96 @@ export interface operations {
             };
             /** @description The hotel already has an access user, or the identity provider refused the derived username or email. */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_releaseUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The access user was released. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    HotelsController_archive: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The archived hotel. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HotelResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
