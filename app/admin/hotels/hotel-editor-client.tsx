@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation";
 import {LoaderCircle} from "lucide-react";
 
 import {AdminProgressLink, useAdminRouteLoadingBoundary} from "@/components/admin/AdminRouteProgress";
+import {AdminConfirmDialog} from "@/components/admin/AdminConfirmDialog";
 import {AdminBackRow, AdminHeaderMeta, AdminNoticeCard, AdminSectionCard} from "@/components/admin/AdminUi";
 import {controlClassName} from "@/components/ui/control-class";
 import {Button} from "@/components/ui/button";
@@ -33,7 +34,10 @@ import {
 } from "@/lib/hotels/admin-hotel-types";
 import {
   createHotelAction,
+  archiveHotelAction,
   createHotelUserAction,
+  deleteHotelAction,
+  releaseHotelUserAction,
   resendHotelUserInvitationAction,
   setHotelToursAction,
   setHotelUserEnabledAction,
@@ -66,6 +70,8 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
   const [grants, setGrants] = useState<Map<string, string>>(new Map());
   /** Empty means "the hotel's contact address", which the backend fills in. */
   const [signInEmail, setSignInEmail] = useState("");
+  /** Which irreversible question is on screen, if any. */
+  const [confirming, setConfirming] = useState<"release" | "archive" | "delete" | null>(null);
   const [hotelUser, setHotelUser] = useState<ApiHotelUser | null>(null);
   const [pendingUserAction, setPendingUserAction] = useState<string | null>(null);
 
@@ -196,6 +202,46 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const runLifecycleAction = async () => {
+    if (!hotelId || !confirming) {
+      return;
+    }
+
+    if (confirming === "delete") {
+      const result = await deleteHotelAction(hotelId);
+
+      if (!result.ok) {
+        setFormError(result.message);
+        setConfirming(null);
+        return;
+      }
+
+      // Nothing left to show: the hotel this screen is about is gone.
+      router.push("/hotels");
+      return;
+    }
+
+    const result =
+      confirming === "release"
+        ? await releaseHotelUserAction(hotelId)
+        : await archiveHotelAction(hotelId);
+
+    setConfirming(null);
+
+    if (!result.ok) {
+      setFormError(result.message);
+      return;
+    }
+
+    applyHotel(result.hotel);
+    setHotelUser(null);
+    announce(
+      confirming === "release"
+        ? "Access user released. The address and username are free again."
+        : "Hotel archived. Its bookings are kept.",
+    );
   };
 
   const handleSaveTours = async () => {
@@ -611,6 +657,76 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
             </p>
           ) : null}
         </AdminSectionCard>
+      ) : null}
+
+      {mode === "edit" && hotel ? (
+        <AdminSectionCard
+          title="Ending the partnership"
+          description="Archiving keeps the bookings and gives back the sign-in address, the username and the CVR, so the same company can be registered again. Deleting is only for a hotel that never booked."
+        >
+          <div className="flex flex-wrap gap-3">
+            {hotelUser ? (
+              <Button
+                className="border-[var(--wt-danger)] text-[var(--wt-danger)]"
+                onClick={() => setConfirming("release")}
+                size="sm"
+                variant="outline"
+              >
+                Release access user
+              </Button>
+            ) : null}
+            {hotel.status === "archived" ? (
+              <p className="text-sm text-[var(--wt-ink-muted)]">
+                This hotel is archived. Its bookings are kept; its address, username and CVR are free.
+              </p>
+            ) : (
+              <Button
+                className="border-[var(--wt-danger)] text-[var(--wt-danger)]"
+                onClick={() => setConfirming("archive")}
+                size="sm"
+                variant="outline"
+              >
+                Archive hotel
+              </Button>
+            )}
+            <Button
+              className="border-[var(--wt-danger)] text-[var(--wt-danger)]"
+              onClick={() => setConfirming("delete")}
+              size="sm"
+              variant="outline"
+            >
+              Delete hotel
+            </Button>
+          </div>
+        </AdminSectionCard>
+      ) : null}
+
+      {/*
+        One dialog, three questions. Only the two that reach the identity
+        provider ask for the name to be typed — archiving and deleting both end
+        with an account gone from Auth0, and no later click brings it back.
+      */}
+      {confirming ? (
+      <AdminConfirmDialog
+        confirmLabel={
+          confirming === "release" ? "Release user" : confirming === "archive" ? "Archive hotel" : "Delete hotel"
+        }
+        confirmPhrase={hotel?.name}
+        description={
+          confirming === "release"
+            ? "The sign-in identity is deleted, freeing the address and the username for another hotel. The hotel and its bookings are untouched, and you can create a new access user straight away."
+            : confirming === "archive"
+              ? "The hotel stops being a partner. Its bookings are kept, its tour grants are revoked, and its address, username and CVR become available again."
+              : "The hotel, its access user and its tour grants are removed for good. This is refused if it has ever had a booking — archive it instead."
+        }
+        isPending={pendingUserAction !== null}
+        onConfirm={() => void runLifecycleAction()}
+        onOpenChange={(next: boolean) => setConfirming(next ? confirming : null)}
+        open={confirming !== null}
+        title={
+          confirming === "release" ? "Release the access user" : confirming === "archive" ? "Archive this hotel" : "Delete this hotel"
+        }
+      />
       ) : null}
     </div>
   );

@@ -208,6 +208,78 @@ export async function createHotelUserAction(
   );
 }
 
+/** Frees the address and the username by deleting the identity, not blocking it. */
+export async function releaseHotelUserAction(hotelId: string): Promise<HotelActionResult> {
+  const context = await getAdminContext();
+
+  if (!context.ok) {
+    return context;
+  }
+
+  try {
+    await hotelFetch<void>(
+      `/${hotelId}/user`,
+      "DELETE",
+      context.accessToken,
+      context.backendApiBaseUrl,
+    );
+
+    return {ok: true, hotel: await hotelFetch<ApiHotel>(
+      `/${hotelId}`,
+      "GET",
+      context.accessToken,
+      context.backendApiBaseUrl,
+    )};
+  } catch (error) {
+    return toActionError(error, "Unable to release the access user.");
+  }
+}
+
+export async function archiveHotelAction(hotelId: string): Promise<HotelActionResult> {
+  const context = await getAdminContext();
+
+  if (!context.ok) {
+    return context;
+  }
+
+  try {
+    const hotel = await hotelFetch<ApiHotel>(
+      `/${hotelId}/archive`,
+      "POST",
+      context.accessToken,
+      context.backendApiBaseUrl,
+      {},
+    );
+
+    return {ok: true, hotel};
+  } catch (error) {
+    return toActionError(error, "Unable to archive this hotel.");
+  }
+}
+
+export async function deleteHotelAction(
+  hotelId: string,
+): Promise<{ok: true} | {ok: false; statusCode: number; message: string}> {
+  const context = await getAdminContext();
+
+  if (!context.ok) {
+    return context;
+  }
+
+  try {
+    await hotelFetch<void>(
+      `/${hotelId}`,
+      "DELETE",
+      context.accessToken,
+      context.backendApiBaseUrl,
+    );
+
+    return {ok: true};
+  } catch (error) {
+    return toActionError(error, "Unable to delete this hotel.");
+  }
+}
+
 export async function resendHotelUserInvitationAction(
   hotelId: string,
 ): Promise<HotelUserActionResult> {
