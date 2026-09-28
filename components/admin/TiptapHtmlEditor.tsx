@@ -39,7 +39,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { mountTuritopWidgets, TURITOP_EMBED_MODE } from "@/lib/turitop/widget";
+import { mountTuritopWidgets, TURITOP_EMBED_MODE, unmountTuritopWidgets } from "@/lib/booking-widgets/turitop";
 import { cn } from "@/lib/utils";
 import {fieldLabelClassName} from "@/components/ui/control-class";
 
@@ -2062,7 +2062,7 @@ function BlogTuritopWidgetNodeView({
     ]);
 
     return () => {
-      host.innerHTML = "";
+      unmountTuritopWidgets([host]);
     };
   }, [currentLanguage, currentService]);
 

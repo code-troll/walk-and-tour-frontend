@@ -148,7 +148,7 @@ Copy `.env.template` into `.env` and then add the remaining values used by the a
 cp .env.template .env
 ```
 
-The app currently uses four groups of environment variables:
+The app currently uses five groups of environment variables:
 
 ### Admin API and Auth0
 
@@ -185,6 +185,16 @@ These are used by the public contact and book-tour forms:
 | `BOOKING_REQUEST_TO_EMAIL` | Yes for booking form | Recipient address for booking-request emails |
 | `CONTACT_FORM_FROM_EMAIL` | Optional | Sender address for contact-form emails. Falls back to `BOOKING_REQUEST_FROM_EMAIL` |
 | `CONTACT_FORM_TO_EMAIL` | Optional | Recipient address for contact-form emails. Falls back to `BOOKING_REQUEST_TO_EMAIL` |
+
+### Booking widgets
+
+Tour pages and blog posts embed the Turitop booking calendar. The account it books against comes from these variables. They are inlined at build time, so a change needs a rebuild:
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_TURITOP_COMPANY` | Yes for Turitop | Turitop company code (`W420`). Without it no Turitop calendar renders and tour pages show the booking-request form |
+| `NEXT_PUBLIC_TURITOP_BUTTON_COLOR` | Optional | Button colour passed to the Turitop script (`green`) |
+| `NEXT_PUBLIC_TURITOP_AFFILIATE_TAG` | Optional | Affiliate tag passed to the Turitop script (`ttafid`) |
 
 ### Public analytics
 

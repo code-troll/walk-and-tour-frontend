@@ -2,6 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { getBookingWidgetFrameHosts } from "./lib/booking-widgets/providers";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
@@ -30,9 +31,7 @@ const nextConfig: NextConfig = {
               "https://www.google.com",
               "https://maps.google.com",
               "https://challenges.cloudflare.com",
-              "https://app.turitop.com",
-              "https://www.turitop.com",
-              "https://turitop.com",
+              ...getBookingWidgetFrameHosts(),
               "https://walkandtour.dk",
               "https://www.walkandtour.dk",
             ].join(" "),
