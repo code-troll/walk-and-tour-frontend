@@ -61,6 +61,7 @@ export type TourFilterId =
   | "history"
   | "privateTour"
   | "royalPalaces";
+export type PublicTourPriceBasis = NonNullable<PublicTourResponse["price"]>["basis"];
 export type PublicTourCard = {
   id: string;
   slug: string;
@@ -69,6 +70,8 @@ export type PublicTourCard = {
   rating: string;
   reviews: string;
   price?: string;
+  /** Set only when the tour has a fixed price; a tip-based tour has none. */
+  priceBasis?: PublicTourPriceBasis;
   duration: string;
   location: string;
   heroImageSrc: string;
@@ -366,6 +369,7 @@ export const normalizeTourCard = (tour: PublicTourResponse, locale: AppLocale): 
     rating: formatRating(tour.rating),
     reviews: formatReviewCount(tour.reviewCount, locale),
     price: formatPrice(tour),
+    priceBasis: tour.tourType === "tip_based" ? undefined : tour.price?.basis,
     duration: formatDuration(tour.durationMinutes, locale),
     location: resolveLocation(tour, payload, locale),
     heroImageSrc: getPrimaryImageSrc(tour),

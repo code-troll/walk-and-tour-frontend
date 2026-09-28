@@ -62,6 +62,12 @@ const formatDuration = (minutes: number | null | undefined) => {
   return rest === 0 ? `${hours} h` : `${hours} h ${rest} min`;
 };
 
+/** A tour's price for this partner, with what it buys: one person, or the whole group. */
+export const formatTourPrice = (tour: ApiHotelTourDetail) =>
+  tour.priceAmount === null || tour.priceAmount === undefined
+    ? "Price on request"
+    : `${tour.priceAmount} ${tour.currency} ${tour.priceBasis === "per_group" ? "per group" : "per person"}`;
+
 export function PortalTourDetail({
   className = "mt-6 border-t border-[var(--wt-rule)] pt-6",
   tour,
@@ -71,10 +77,7 @@ export function PortalTourDetail({
   tour: ApiHotelTourDetail;
 }) {
   const duration = formatDuration(tour.durationMinutes);
-  const price =
-    tour.priceAmount === null || tour.priceAmount === undefined
-      ? "Price on request"
-      : `${tour.priceAmount} ${tour.currency} per person`;
+  const price = formatTourPrice(tour);
 
   const stops = (tour.stops ?? []).filter((stop) => stop.title || stop.description);
   const images = tour.images ?? [];

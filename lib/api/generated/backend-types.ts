@@ -3270,6 +3270,12 @@ export interface components {
              * @example EUR
              */
             currency: string;
+            /**
+             * @description Whether the amount is charged per person or once for the whole group.
+             * @example per_person
+             * @enum {string}
+             */
+            basis: "per_person" | "per_group";
         };
         GeoCoordinatesDto: {
             /**
@@ -3505,7 +3511,7 @@ export interface components {
             /** @description Audit metadata for create and update operations. */
             audit: components["schemas"]["RecordAuditMetadataDto"];
             /**
-             * @description The tour's own price per person. Carried in the list so a screen can show what a partner pays by default before any override is set.
+             * @description The tour's own price, on `priceBasis`. Carried in the list so a screen can show what a partner pays by default before any override is set.
              * @example 249.00
              */
             priceAmount?: string | null;
@@ -3514,6 +3520,12 @@ export interface components {
              * @example DKK
              */
             priceCurrency?: string | null;
+            /**
+             * @description Whether `priceAmount` is per person or per group. `per_person` for a tour with no price.
+             * @example per_person
+             * @enum {string}
+             */
+            priceBasis: "per_person" | "per_group";
         };
         TourAdminItineraryStopResponseDto: {
             /**
@@ -3685,6 +3697,12 @@ export interface components {
              * @example EUR
              */
             currency: string;
+            /**
+             * @description Whether the amount is charged per person or once for the whole group. When omitted, the tour keeps the basis it has, which is `per_person` for a tour that had no price.
+             * @example per_person
+             * @enum {string}
+             */
+            basis?: "per_person" | "per_group";
         };
         TourCoordinatesDto: {
             /**
@@ -4275,12 +4293,12 @@ export interface components {
              */
             grantedBy?: string | null;
             /**
-             * @description Price per person charged to this partner, in `currency`. Null means the partner pays the tour's own price and keeps following it when the tour is repriced, which is not the same as having that number copied here.
+             * @description Price charged to this partner, in `currency` and on `priceBasis`. Null means the partner pays the tour's own price and keeps following it when the tour is repriced, which is not the same as having that number copied here.
              * @example 199.00
              */
             priceAmount?: string | null;
             /**
-             * @description The tour's own price per person, so a screen can show what the default is without fetching the tour. Null when the tour has no price at all.
+             * @description The tour's own price, so a screen can show what the default is without fetching the tour. Null when the tour has no price at all.
              * @example 249.00
              */
             tourPriceAmount?: string | null;
@@ -4290,6 +4308,12 @@ export interface components {
              * @enum {string}
              */
             currency: "DKK" | "EUR";
+            /**
+             * @description Whether both prices are per person or per group. It comes from the tour: a grant changes the amount, never the basis.
+             * @example per_person
+             * @enum {string}
+             */
+            priceBasis: "per_person" | "per_group";
         };
         HotelResponseDto: {
             /**
@@ -4407,7 +4431,7 @@ export interface components {
              */
             tourId: string;
             /**
-             * @description Price per person for this partner, in the tour's own currency. Omit it, or send null, to charge the tour's own price — which is not the same as copying that price, because the partner then follows it when the tour is repriced.
+             * @description Price for this partner, in the tour's own currency and on its price basis. Omit it, or send null, to charge the tour's own price — which is not the same as copying that price, because the partner then follows it when the tour is repriced.
              * @example 199.00
              */
             priceAmount?: Record<string, never> | null;
@@ -4500,7 +4524,7 @@ export interface components {
              */
             tourName: string;
             /**
-             * @description Price per person this partner is charged, already resolved: the grant price if it has one, the tour's own otherwise. Null when neither has a price, which the portal shows as "price on request".
+             * @description Price this partner is charged, on `priceBasis`, already resolved: the grant price if it has one, the tour's own otherwise. Null when neither has a price, which the portal shows as "price on request".
              * @example 199.00
              */
             priceAmount?: string | null;
@@ -4510,6 +4534,12 @@ export interface components {
              * @enum {string}
              */
             currency: "DKK" | "EUR";
+            /**
+             * @description Whether `priceAmount` is per person or per group, taken from the tour.
+             * @example per_person
+             * @enum {string}
+             */
+            priceBasis: "per_person" | "per_group";
         };
         HotelViewerResponseDto: {
             hotel: components["schemas"]["HotelViewerHotelDto"];
@@ -4613,10 +4643,16 @@ export interface components {
              */
             currency: "DKK" | "EUR";
             /**
-             * @description Per-person tour price when the booking was made, excluding VAT. Null for a tour with no price.
+             * @description Tour price when the booking was made, excluding VAT, on `priceBasis`. Null for a tour with no price.
              * @example 250.00
              */
             unitPriceAmount?: string | null;
+            /**
+             * @description Whether `unitPriceAmount` was per person or per group, snapshotted with it. A per-group price is the whole base line; a per-person one is multiplied by `participantCount`.
+             * @example per_person
+             * @enum {string}
+             */
+            priceBasis: "per_person" | "per_group";
             /**
              * @description Sum of the priced lines, excluding VAT. Null while the booking has no priced base.
              * @example 650.50
@@ -4735,7 +4771,7 @@ export interface components {
             /** @description Non-localized tour name. */
             name: string;
             /**
-             * @description Price per person for this partner, the grant's or the tour's.
+             * @description Price for this partner, the grant's or the tour's, on `priceBasis`.
              * @example 199.00
              */
             priceAmount?: string | null;
@@ -4744,6 +4780,12 @@ export interface components {
              * @enum {string}
              */
             currency: "DKK" | "EUR";
+            /**
+             * @description Whether `priceAmount` is per person or per group, taken from the tour.
+             * @example per_person
+             * @enum {string}
+             */
+            priceBasis: "per_person" | "per_group";
             durationMinutes?: number | null;
             tourType?: string | null;
             /**

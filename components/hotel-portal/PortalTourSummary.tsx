@@ -1,7 +1,7 @@
 import type {ReactNode} from "react";
 
 import type {ApiHotelTourDetail} from "@/lib/hotel-portal/booking-types";
-import {tourImageUrl} from "@/components/hotel-portal/PortalTourDetail";
+import {formatTourPrice, tourImageUrl} from "@/components/hotel-portal/PortalTourDetail";
 
 const formatDuration = (minutes: number | null | undefined) => {
   if (!minutes) {
@@ -56,7 +56,7 @@ export function PortalTourSummary({
         <span className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <span className="text-sm font-medium text-[var(--wt-ink)]">{tour.name}</span>
           <span className="text-sm text-[var(--wt-ink-muted)]">
-            {tour.priceAmount ? `${tour.priceAmount} ${tour.currency}` : "Price on request"}
+            {formatTourPrice(tour)}
             {duration ? ` · ${duration}` : ""}
           </span>
         </span>

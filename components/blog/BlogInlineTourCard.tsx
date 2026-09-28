@@ -15,6 +15,12 @@ const BOOK_NOW_LABELS: Record<AppLocale, string> = {
   it: "Prenota ora",
 };
 
+const PER_GROUP_LABELS: Record<AppLocale, string> = {
+  en: "/ group",
+  es: "/ grupo",
+  it: "/ gruppo",
+};
+
 type BlogInlineTourCardProps = {
   slug: string;
   locale: AppLocale;
@@ -110,6 +116,7 @@ export default function BlogInlineTourCard({
           {tour.price ? (
             <p className="!m-0 text-sm font-medium text-[#5b4d3c]">
               {tour.price}
+              {tour.priceBasis === "per_group" ? ` ${PER_GROUP_LABELS[locale]}` : null}
             </p>
           ) : null}
 

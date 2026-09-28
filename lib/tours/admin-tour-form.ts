@@ -13,6 +13,7 @@ export type UpdateTourMediaBody = components["schemas"]["UpdateTourMediaDto"];
 export type SetTourCoverMediaBody = components["schemas"]["SetTourCoverMediaDto"];
 export type TourContentSchema = NonNullable<UpdateTourBody["contentSchema"]>;
 export type TourType = CreateTourBody["tourType"];
+export type PriceBasis = NonNullable<NonNullable<UpdateTourBody["price"]>["basis"]>;
 export type MediaType = ApiAdminMediaAsset["mediaType"];
 export type ItineraryVariant = components["schemas"]["TourItineraryDto"]["variant"];
 export type CommuteMode = NonNullable<
@@ -34,6 +35,10 @@ export type PublishTourTranslationBody = {
 };
 
 export const TOUR_TYPE_OPTIONS: TourType[] = ["private", "group", "tip_based", "company"];
+export const PRICE_BASIS_OPTIONS: { value: PriceBasis; label: string }[] = [
+  {value: "per_person", label: "Per person"},
+  {value: "per_group", label: "Per group"},
+];
 export const COMMUTE_MODE_OPTIONS: CommuteMode[] = [
   "walk",
   "bike",
@@ -208,6 +213,7 @@ export type TourFormState = {
   hasPrice: boolean;
   priceAmount: string;
   priceCurrency: string;
+  priceBasis: PriceBasis;
   startPointLat: string;
   startPointLng: string;
   endPointLat: string;
@@ -405,6 +411,7 @@ export const createEmptyTourFormState = (): TourFormState => ({
   hasPrice: true,
   priceAmount: "",
   priceCurrency: "EUR",
+  priceBasis: "per_person",
   startPointLat: "",
   startPointLng: "",
   endPointLat: "",
@@ -497,6 +504,7 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
     hasPrice: Boolean(tour.price),
     priceAmount: asNumberString(tour.price?.amount),
     priceCurrency: typeof tour.price?.currency === "string" ? tour.price.currency : "EUR",
+    priceBasis: tour.price?.basis ?? "per_person",
     startPointLat: asNumberString(tour.startPoint?.coordinates?.lat),
     startPointLng: asNumberString(tour.startPoint?.coordinates?.lng),
     endPointLat: asNumberString(tour.endPoint?.coordinates?.lat),
@@ -662,6 +670,7 @@ export const buildUpdateTourPayload = ({
         : {
           amount: Number.parseFloat(formState.priceAmount),
           currency: formState.priceCurrency.trim(),
+          basis: formState.priceBasis,
         },
     rating: Number.parseFloat(formState.rating),
     reviewCount: Number.parseInt(formState.reviewCount, 10),

@@ -102,6 +102,7 @@
       "duration": "Durata",
       "location": "Luogo",
       "price": "Prezzo",
+      "perGroup": "/ gruppo",
       "book": "Prenotare",
       "ratingOutOfFive": "/5",
       "reviews": "recensioni",
@@ -177,6 +178,7 @@
     "sidebarFallback": {
       "eyebrow": "Miglior valore",
       "priceSuffix": "/ persona",
+      "priceSuffixGroup": "/ gruppo",
       "priceFootnote": "Tasse e commissioni incluse",
       "quoteTitle": "Richiedi un preventivo su misura",
       "quoteDescription": "Contatta Walk and Tour per ricevere prezzi e disponibilità in base al tuo gruppo e alle tue preferenze.",

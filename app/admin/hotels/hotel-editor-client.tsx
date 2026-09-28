@@ -622,7 +622,9 @@ export default function HotelEditorClient({mode, hotelId}: HotelEditorClientProp
                       {isGranted ? (
                         <div className="mt-3 flex items-end gap-3 pl-7">
                           <div className="w-36">
-                            <Label htmlFor={`price-${tour.id}`}>Price per person</Label>
+                            <Label htmlFor={`price-${tour.id}`}>
+                              {tour.priceBasis === "per_group" ? "Price per group" : "Price per person"}
+                            </Label>
                             <Input
                               id={`price-${tour.id}`}
                               inputMode="decimal"
