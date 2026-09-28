@@ -111,14 +111,10 @@ const getSharedBlockingReasons = (formState: TourFormState): string[] => {
     reasons.push("Review count is not set");
   }
 
-  if (formState.tourType !== "company" && formState.tourType !== "tip_based") {
-    if (!formState.hasPrice || !formState.priceAmount.trim()) {
-      reasons.push("Price is required for this tour type");
-    } else {
-      const priceAmount = Number.parseFloat(formState.priceAmount);
-      if (!Number.isFinite(priceAmount) || priceAmount < 0) {
-        reasons.push("Price amount is invalid");
-      }
+  if (formState.tourType !== "tip_based" && formState.hasPrice) {
+    const priceAmount = Number.parseFloat(formState.priceAmount);
+    if (!formState.priceAmount.trim() || !Number.isFinite(priceAmount) || priceAmount < 0) {
+      reasons.push("Price amount is invalid");
     }
     if (!formState.priceCurrency.trim()) {
       reasons.push("Currency is not set");
@@ -372,12 +368,6 @@ export function PublicationSection({
             label="Review count is set"
             passed={ Boolean(formState.reviewCount.trim()) }
           />
-          { formState.tourType !== "company" && formState.tourType !== "tip_based" ? (
-            <ChecklistItem
-              label="Price and currency are set"
-              passed={ Boolean(formState.priceAmount.trim()) && Boolean(formState.priceCurrency.trim()) }
-            />
-          ) : null }
           { formState.tourType === "tip_based" ? (
             <ChecklistItem
               label="Tip-based tour has no fixed price"
