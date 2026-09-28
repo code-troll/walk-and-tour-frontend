@@ -33,18 +33,29 @@ export default function BookTourOptionsClient({
       setError(null);
 
       try {
-        const [privateOptions, companyOptions] = await Promise.all([
+        const publicTourTypes = getExpectedTourTypesForPublicTours();
+        const isRequestingPublicTour = initialBookingType === "privateTours" && Boolean(initialSelectedItemId);
+        const [privateOptions, companyOptions, otherPublicOptions] = await Promise.all([
           listBookingOptionsSafeClient({
             locale,
-            tourTypes: getExpectedTourTypesForPublicTours().filter((tourType) => tourType === "private"),
+            tourTypes: publicTourTypes.filter((tourType) => tourType === "private"),
           }),
           listBookingOptionsSafeClient({
             locale,
             tourTypes: getExpectedTourTypesForCompanyTours(),
           }),
+          // Group and tip-based tours without a booking widget send their
+          // visitors here too, so the requested one has to be selectable.
+          isRequestingPublicTour
+            ? listBookingOptionsSafeClient({
+              locale,
+              tourTypes: publicTourTypes.filter((tourType) => tourType !== "private"),
+            })
+            : Promise.resolve([]),
         ]);
+        const requestedOption = otherPublicOptions.find((option) => option.id === initialSelectedItemId);
 
-        setPrivateTourOptions(privateOptions);
+        setPrivateTourOptions(requestedOption ? [requestedOption, ...privateOptions] : privateOptions);
         setCompanyTourOptions(companyOptions);
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : "Unable to load booking options.");
@@ -52,7 +63,7 @@ export default function BookTourOptionsClient({
         setIsLoading(false);
       }
     })();
-  }, [locale]);
+  }, [initialBookingType, initialSelectedItemId, locale]);
 
   if (isLoading) {
     return <PublicLoadingState label="Loading booking options..."/>;

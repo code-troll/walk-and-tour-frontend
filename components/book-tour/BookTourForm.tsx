@@ -90,7 +90,6 @@ export default function BookTourForm({
   const t = useTranslations("bookTourPage");
   const locale = useLocale();
   const track = useAnalyticsTracker();
-  const requestedTour = privateTourOptions.find((tour) => tour.id === initialSelectedItemId);
   const [phone, setPhone] = useState<Value | undefined>();
   const [turnstileToken, setTurnstileToken] = useState("");
   const [tourLanguage, setTourLanguage] = useState<TourLanguageOptionId | "">("");
@@ -107,21 +106,9 @@ export default function BookTourForm({
   const now = new Date();
   const todayIsoDate = `${ now.getFullYear() }-${ String(now.getMonth() + 1).padStart(2, "0") }-${ String(now.getDate()).padStart(2, "0") }`;
 
-  const privateTourOptionsWithRequested: SelectOption[] =
-    initialBookingType === "privateTours" &&
-    requestedTour &&
-    !privateTourOptions.some((option) => option.id === requestedTour.id)
-      ? [
-          {
-            id: requestedTour.id,
-            label: requestedTour.label,
-          },
-          ...privateTourOptions,
-        ]
-      : privateTourOptions;
   const requestedItemId =
     initialBookingType === "privateTours"
-      ? privateTourOptionsWithRequested.some((option) => option.id === initialSelectedItemId)
+      ? privateTourOptions.some((option) => option.id === initialSelectedItemId)
         ? initialSelectedItemId
         : ""
       : initialBookingType === "companyTours"
@@ -135,7 +122,7 @@ export default function BookTourForm({
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const activeOptions =
     bookingType === "privateTours"
-      ? privateTourOptionsWithRequested
+      ? privateTourOptions
       : bookingType === "companyTours"
         ? companyTourOptions
         : [];

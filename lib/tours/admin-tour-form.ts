@@ -1,4 +1,5 @@
 import type { components } from "@/lib/api/generated/backend-types";
+import { isBookingWidgetProviderId, type BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
 
 export type ApiTour = components["schemas"]["TourAdminResponseDto"];
 export type ApiLanguage = components["schemas"]["LanguageResponseDto"];
@@ -214,6 +215,8 @@ export type TourFormState = {
   priceAmount: string;
   priceCurrency: string;
   priceBasis: PriceBasis;
+  bookingProvider: BookingWidgetProviderId | "";
+  bookingEnabled: boolean;
   startPointLat: string;
   startPointLng: string;
   endPointLat: string;
@@ -412,6 +415,8 @@ export const createEmptyTourFormState = (): TourFormState => ({
   priceAmount: "",
   priceCurrency: "EUR",
   priceBasis: "per_person",
+  bookingProvider: "",
+  bookingEnabled: false,
   startPointLat: "",
   startPointLng: "",
   endPointLat: "",
@@ -505,6 +510,8 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
     priceAmount: asNumberString(tour.price?.amount),
     priceCurrency: typeof tour.price?.currency === "string" ? tour.price.currency : "EUR",
     priceBasis: tour.price?.basis ?? "per_person",
+    bookingProvider: isBookingWidgetProviderId(tour.booking.provider) ? tour.booking.provider : "",
+    bookingEnabled: tour.booking.enabled,
     startPointLat: asNumberString(tour.startPoint?.coordinates?.lat),
     startPointLng: asNumberString(tour.startPoint?.coordinates?.lng),
     endPointLat: asNumberString(tour.endPoint?.coordinates?.lat),
@@ -672,6 +679,10 @@ export const buildUpdateTourPayload = ({
           currency: formState.priceCurrency.trim(),
           basis: formState.priceBasis,
         },
+    booking: {
+      provider: formState.bookingProvider || null,
+      enabled: Boolean(formState.bookingProvider) && formState.bookingEnabled,
+    },
     rating: Number.parseFloat(formState.rating),
     reviewCount: Number.parseInt(formState.reviewCount, 10),
     tourType: formState.tourType,

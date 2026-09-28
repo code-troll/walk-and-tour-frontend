@@ -12,6 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
+  BOOKING_WIDGET_PROVIDER_INFO,
+  BOOKING_WIDGET_PROVIDERS,
+  isBookingWidgetProviderId,
+} from "@/lib/booking-widgets/providers";
+import {
   type ApiAdminMediaAsset,
   type ApiAdminMediaAssetListResponse,
   type ApiLanguage,
@@ -936,6 +941,45 @@ export function GeneralSection({
               Tip-based tours do not have a fixed price.
             </span>
               ) : null }
+            </div>
+          </section>
+
+          <section className={ sectionClassName }>
+            <h2 className="mb-6 text-lg font-semibold text-[var(--wt-ink)]">Booking</h2>
+
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:gap-6">
+              <div className="space-y-1.5 md:w-60">
+                <label className={fieldLabelClassName}>Widget</label>
+                <select
+                  value={ formState.bookingProvider }
+                  onChange={ (event) => {
+                    const provider = event.target.value;
+                    updateFormStateAction("bookingProvider", isBookingWidgetProviderId(provider) ? provider : "");
+                    if (!provider) {
+                      updateFormStateAction("bookingEnabled", false);
+                    }
+                  } }
+                  className={ controlClassName }
+                >
+                  <option value="">None</option>
+                  { BOOKING_WIDGET_PROVIDERS.map((provider) => (
+                    <option key={ provider } value={ provider }>
+                      { BOOKING_WIDGET_PROVIDER_INFO[provider].label }
+                    </option>
+                  )) }
+                </select>
+              </div>
+
+              <label className="flex items-center gap-3 md:h-8">
+                <input
+                  type="checkbox"
+                  checked={ formState.bookingEnabled }
+                  onChange={ (event) => updateFormStateAction("bookingEnabled", event.target.checked) }
+                  className="size-5 rounded border-input accent-primary"
+                  disabled={ !formState.bookingProvider }
+                />
+                <span className="text-sm font-medium text-foreground">Show on the tour page</span>
+              </label>
             </div>
           </section>
 

@@ -380,6 +380,12 @@ export function PublicationSection({
               : "Itinerary variant is configured" }
             passed={ formState.itineraryVariant === "description" || formState.stops.length > 0 }
           />
+          { formState.bookingEnabled ? (
+            <ChecklistItem
+              label="Every translation has a booking code"
+              passed={ formState.translations.every((translation) => translation.bookingReferenceId.trim()) }
+            />
+          ) : null }
           <ChecklistItem
             label="At least one translation is ready"
             passed={ formState.translations.some((translation) => translation.isReady) }
