@@ -91,6 +91,9 @@ export default function TourListingCard({
           <div className="flex items-center justify-between gap-4">
             <p className="text-xl font-semibold text-[#2a221a]">
               { tour.price ?? "—" }
+              { tour.price && tour.priceBasis === "per_group" ? (
+                <span className="ml-1 text-sm font-normal text-[#7a6a58]">{ t("perGroup") }</span>
+              ) : null }
             </p>
             <a
               href={ bookHref }

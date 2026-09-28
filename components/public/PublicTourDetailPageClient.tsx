@@ -232,6 +232,7 @@ export default function PublicTourDetailPageClient({
             bookingReferenceId={tour.bookingReferenceId}
             language={contentLocale}
             price={tour.price}
+            priceBasis={tour.priceBasis}
             duration={tour.duration}
             cancellationType={tour.cancellationType}
             requestedBookingType={requestedBookingType}

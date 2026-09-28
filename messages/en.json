@@ -102,6 +102,7 @@
       "duration": "Duration",
       "location": "Location",
       "price": "Price",
+      "perGroup": "/ group",
       "book": "Book",
       "ratingOutOfFive": "/5",
       "reviews": "reviews",
@@ -177,6 +178,7 @@
     "sidebarFallback": {
       "eyebrow": "Best Value",
       "priceSuffix": "/ person",
+      "priceSuffixGroup": "/ group",
       "priceFootnote": "All taxes and fees included",
       "quoteTitle": "Request a tailored quote",
       "quoteDescription": "Contact Walk and Tour for pricing and availability based on your group and preferences.",

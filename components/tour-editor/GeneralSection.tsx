@@ -17,6 +17,8 @@ import {
   type ApiLanguage,
   type ApiTag,
   type ApiUploadedMediaAsset,
+  PRICE_BASIS_OPTIONS,
+  type PriceBasis,
   TOUR_IMAGE_UPLOAD_MAX_SIZE,
   TOUR_MEDIA_ALT_TEXT_MAX_LENGTH,
   TOUR_TYPE_OPTIONS,
@@ -876,7 +878,7 @@ export function GeneralSection({
 
               { formState.hasPrice && formState.tourType !== "tip_based" ? (
                 <div className="flex flex-1 flex-col gap-3 md:max-w-lg">
-                  <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_120px]">
+                  <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_120px_150px]">
                     <div className="space-y-1.5">
                       <label className={fieldLabelClassName}>Amount</label>
                       <div className="relative">
@@ -903,6 +905,21 @@ export function GeneralSection({
                         { PRICE_CURRENCY_OPTIONS.map((currency) => (
                           <option key={ currency } value={ currency }>
                             { currency }
+                          </option>
+                        )) }
+                      </select>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className={fieldLabelClassName}>Charged</label>
+                      <select
+                        value={ formState.priceBasis }
+                        onChange={ (event) => updateFormStateAction("priceBasis", event.target.value as PriceBasis) }
+                        className={ controlClassName }
+                      >
+                        { PRICE_BASIS_OPTIONS.map((option) => (
+                          <option key={ option.value } value={ option.value }>
+                            { option.label }
                           </option>
                         )) }
                       </select>

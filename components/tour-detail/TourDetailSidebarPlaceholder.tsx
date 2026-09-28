@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { mountTuritopWidgets } from "@/lib/turitop/widget";
+import type { PublicTourPriceBasis } from "@/lib/public-tour-model";
 import TourDetailSidebarFallback from "./TourDetailSidebarFallback";
 
 type TourDetailSidebarPlaceholderProps = {
   bookingReferenceId?: string;
   language?: string;
   price?: string;
+  priceBasis?: PublicTourPriceBasis;
   duration?: string;
   cancellationType?: string;
   requestedBookingType?: "privateTours" | "companyTours";
@@ -18,6 +20,7 @@ export default function TourDetailSidebarPlaceholder({
   bookingReferenceId,
   language,
   price,
+  priceBasis,
   duration,
   cancellationType,
   requestedBookingType,
@@ -53,6 +56,7 @@ export default function TourDetailSidebarPlaceholder({
           ? (
             <TourDetailSidebarFallback
               price={ price }
+              priceBasis={ priceBasis }
               duration={ duration }
               cancellationType={ cancellationType }
               requestedBookingType={ requestedBookingType }

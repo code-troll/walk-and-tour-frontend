@@ -3287,7 +3287,9 @@ function useTourCardPreview(slug: string): TourCardPreview | null {
         const payload = typeof data.translation?.payload === "object" ? data.translation.payload : {};
         const title = typeof payload.title === "string" ? payload.title : slug;
         const coverUrl = data.coverMedia?.contentUrl ?? data.galleryMedia?.[0]?.contentUrl ?? null;
-        const price = data.price ? `${ data.price.amount } ${ data.price.currency }` : null;
+        const price = data.price
+          ? `${ data.price.amount } ${ data.price.currency }${ data.price.basis === "per_group" ? " / group" : "" }`
+          : null;
         const minutes = typeof data.durationMinutes === "number" ? data.durationMinutes : null;
         const duration = minutes !== null
           ? minutes >= 60

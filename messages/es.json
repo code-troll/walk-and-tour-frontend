@@ -102,6 +102,7 @@
       "duration": "Duración",
       "location": "Ubicación",
       "price": "Precio",
+      "perGroup": "/ grupo",
       "book": "Reservar",
       "ratingOutOfFive": "/5",
       "reviews": "reseñas",
@@ -177,6 +178,7 @@
     "sidebarFallback": {
       "eyebrow": "Mejor valor",
       "priceSuffix": "/ persona",
+      "priceSuffixGroup": "/ grupo",
       "priceFootnote": "Todos los impuestos y tasas incluidos",
       "quoteTitle": "Solicita una cotización personalizada",
       "quoteDescription": "Contacta con Walk and Tour para recibir precios y disponibilidad según tu grupo y tus preferencias.",

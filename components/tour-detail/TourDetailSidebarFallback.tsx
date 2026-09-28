@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
+import type { PublicTourPriceBasis } from "@/lib/public-tour-model";
 
 type TourDetailSidebarFallbackProps = {
   price?: string;
+  priceBasis?: PublicTourPriceBasis;
   duration?: string;
   cancellationType?: string;
   requestedBookingType?: "privateTours" | "companyTours";
@@ -16,6 +18,7 @@ type TourDetailSidebarFallbackProps = {
 
 export default function TourDetailSidebarFallback({
   price,
+  priceBasis,
   duration,
   cancellationType,
   requestedBookingType,
@@ -53,7 +56,11 @@ export default function TourDetailSidebarFallback({
               <span className="text-4xl font-bold tracking-tight text-[#2a221a]">
                 {price}
               </span>
-              <span className="text-sm text-[#7a6a58]">{t("priceSuffix")}</span>
+              {priceBasis ? (
+                <span className="text-sm text-[#7a6a58]">
+                  {t(priceBasis === "per_group" ? "priceSuffixGroup" : "priceSuffix")}
+                </span>
+              ) : null}
             </>
           ) : (
             <div className="space-y-1">
