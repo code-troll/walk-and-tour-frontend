@@ -62,7 +62,14 @@ const formatDuration = (minutes: number | null | undefined) => {
   return rest === 0 ? `${hours} h` : `${hours} h ${rest} min`;
 };
 
-export function PortalTourDetail({tour}: {tour: ApiHotelTourDetail}) {
+export function PortalTourDetail({
+  className = "mt-6 border-t border-[var(--wt-rule)] pt-6",
+  tour,
+}: {
+  /** The separation from what comes before it, which a page of its own already has. */
+  className?: string;
+  tour: ApiHotelTourDetail;
+}) {
   const duration = formatDuration(tour.durationMinutes);
   const price =
     tour.priceAmount === null || tour.priceAmount === undefined
@@ -74,7 +81,7 @@ export function PortalTourDetail({tour}: {tour: ApiHotelTourDetail}) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <div className="mt-6 border-t border-[var(--wt-rule)] pt-6">
+    <div className={className}>
       <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
         <p className="text-sm font-medium text-[var(--wt-ink)]">{price}</p>
         {duration ? (

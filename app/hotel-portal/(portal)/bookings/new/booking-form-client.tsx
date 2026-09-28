@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
 import {ArrowLeft, LoaderCircle} from "lucide-react";
@@ -27,8 +27,6 @@ import {createBookingAction} from "../../actions";
 import type {ApiHotelTourDetail} from "@/lib/hotel-portal/booking-types";
 import {controlClassName} from "@/components/ui/control-class";
 
-
-
 const LANGUAGES = [
   {value: "en", label: "English"},
   {value: "es", label: "Spanish"},
@@ -40,12 +38,21 @@ const FieldError = ({message}: {message: string}) => (
   <p className="mt-1 text-xs text-[var(--wt-danger)]">{message}</p>
 );
 
-export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}) {
+export default function BookingFormClient({
+  initialForm,
+  tours,
+}: {
+  /** A tour already chosen elsewhere, and the guest of an earlier booking, when there is one. */
+  initialForm?: Partial<BookingFormState>;
+  tours: ApiHotelTourDetail[];
+}) {
   const router = useRouter();
+  const fieldsRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
   const [form, setForm] = useState<BookingFormState>(() => ({
     ...createEmptyBookingFormState(),
     tourId: tours.length === 1 ? tours[0].tourId : "",
+    ...initialForm,
   }));
   const [errors, setErrors] = useState<BookingFormErrors>({});
   const [formError, setFormError] = useState<string | null>(null);
@@ -80,6 +87,11 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
 
     if (Object.keys(validation).length > 0) {
       setFormError("Check the highlighted fields and try again.");
+      // The submit is at the foot of the form, so the first thing to fix is
+      // usually above the fold the reader is looking at.
+      fieldsRef.current
+        ?.querySelector<HTMLElement>("[aria-invalid='true']")
+        ?.focus();
       return;
     }
 
@@ -94,7 +106,9 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
         return;
       }
 
-      router.push(`/bookings/${result.booking.id}`);
+      // `placed` is what lets the booking page offer the guest's next tour once,
+      // on arrival, and not every time the booking is opened afterwards.
+      router.push(`/bookings/${result.booking.id}?placed=1`);
     } finally {
       setIsSaving(false);
     }
@@ -106,8 +120,6 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
         <ArrowLeft className="size-4" />
         Bookings
       </Link>
-
-      {formError ? <PortalAlert>{formError}</PortalAlert> : null}
 
       {/*
         Two steps, in the order the conversation actually happens: find the tour
@@ -131,19 +143,8 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
       <PortalSection
         title="Book a tour"
         description="Walk and Tour confirms every booking. You will see the price here, and it stays an estimate until the booking is invoiced."
-        actions={
-          <button
-            className={portalPrimaryAction}
-            disabled={isSaving}
-            onClick={() => void handleSubmit()}
-            type="button"
-          >
-            {isSaving ? <LoaderCircle className="size-4 animate-spin" /> : null}
-            Place booking
-          </button>
-        }
       >
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2" ref={fieldsRef}>
           <div className="md:col-span-2">
             {/*
               The tour is chosen, not typed into a field, so it is shown as what
@@ -166,6 +167,7 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
           <div>
             <Label htmlFor="booking-date">Date</Label>
             <Input
+              aria-invalid={errors.date ? true : undefined}
               id="booking-date"
               onChange={(event) => update("date", event.target.value)}
               type="date"
@@ -177,6 +179,7 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
           <div>
             <Label htmlFor="booking-time">Start time</Label>
             <Input
+              aria-invalid={errors.time ? true : undefined}
               id="booking-time"
               onChange={(event) => update("time", event.target.value)}
               type="time"
@@ -204,6 +207,7 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
           <div>
             <Label htmlFor="booking-participants">Guests</Label>
             <Input
+              aria-invalid={errors.participantCount ? true : undefined}
               id="booking-participants"
               min={1}
               onChange={(event) => update("participantCount", event.target.value)}
@@ -218,6 +222,7 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
           <div>
             <Label htmlFor="booking-guest">Guest name</Label>
             <Input
+              aria-invalid={errors.guestName ? true : undefined}
               id="booking-guest"
               onChange={(event) => update("guestName", event.target.value)}
               placeholder="Anders Jensen"
@@ -240,6 +245,7 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
           <div>
             <Label htmlFor="booking-email">Guest email</Label>
             <Input
+              aria-invalid={errors.guestEmail ? true : undefined}
               id="booking-email"
               onChange={(event) => update("guestEmail", event.target.value)}
               placeholder="guest@example.com"
@@ -252,6 +258,7 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
           <div>
             <Label htmlFor="booking-phone">Guest telephone</Label>
             <Input
+              aria-invalid={errors.guestPhone ? true : undefined}
               id="booking-phone"
               onChange={(event) => update("guestPhone", event.target.value)}
               placeholder="+45 20 11 22 33"
@@ -270,6 +277,28 @@ export default function BookingFormClient({tours}: {tours: ApiHotelTourDetail[]}
               value={form.notes}
             />
           </div>
+        </div>
+
+        {/*
+          The submit closes the form: it is reached after the tour has been
+          described and every field filled in, which is the order the booking
+          is actually made in.
+        */}
+        <div className="mt-8 flex flex-wrap items-center justify-end gap-x-6 gap-y-3 border-t border-[var(--wt-rule)] pt-5">
+          {formError ? (
+            <div className="min-w-0 flex-1">
+              <PortalAlert>{formError}</PortalAlert>
+            </div>
+          ) : null}
+          <button
+            className={portalPrimaryAction}
+            disabled={isSaving}
+            onClick={() => void handleSubmit()}
+            type="button"
+          >
+            {isSaving ? <LoaderCircle className="size-4 animate-spin" /> : null}
+            Place booking
+          </button>
         </div>
       </PortalSection>
       )}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {ChevronRight} from "lucide-react";
 
 import {
   PortalSection,
@@ -39,11 +40,17 @@ export default async function HotelPortalHomePage() {
         ) : (
           <ul className="grid gap-x-8 sm:grid-cols-2">
             {viewer.tours.map((tour) => (
-              <li
-                className="border-b border-[var(--wt-rule)] py-2.5 text-sm text-[var(--wt-ink)]"
-                key={tour.tourId}
-              >
-                {tour.tourName}
+              <li className="border-b border-[var(--wt-rule)]" key={tour.tourId}>
+                <Link
+                  className="flex items-center justify-between gap-3 py-2.5 text-sm text-[var(--wt-ink)] transition-colors hover:bg-[var(--wt-surface-sunk)]"
+                  href={`/tours/${tour.tourId}`}
+                >
+                  {tour.tourName}
+                  <ChevronRight
+                    aria-hidden
+                    className="size-4 shrink-0 text-[var(--wt-ink-muted)]"
+                  />
+                </Link>
               </li>
             ))}
           </ul>
