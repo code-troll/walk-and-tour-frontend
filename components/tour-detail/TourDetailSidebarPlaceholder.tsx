@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { mountTuritopWidgets } from "@/lib/turitop/widget";
+import BookingWidget from "@/components/booking-widgets/BookingWidget";
+import type { BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
 import type { PublicTourPriceBasis } from "@/lib/public-tour-model";
 import TourDetailSidebarFallback from "./TourDetailSidebarFallback";
 
@@ -26,34 +26,20 @@ export default function TourDetailSidebarPlaceholder({
   requestedBookingType,
   requestedItemId,
 }: TourDetailSidebarPlaceholderProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-
-    if (!bookingReferenceId || !language || !container) {
-      return;
-    }
-
-    mountTuritopWidgets([
-      {
-        container,
-        language,
-        service: bookingReferenceId,
-      },
-    ]);
-
-    return () => {
-      container.innerHTML = "";
-    };
-  }, [bookingReferenceId, language]);
+  // Every booking reference is a Turitop service code until tours carry their
+  // own provider.
+  const bookingProvider: BookingWidgetProviderId | undefined = bookingReferenceId ? "turitop" : undefined;
 
   return (
     <div className="pt-6 px-0 md:px-6 lg:pt-0 lg:px-12 lg:pl-0">
       <div
         className="rounded-3xl bg-[#fcfaf7] md:bg-white p-0 md:shadow-sm ring-0 md:ring-1 md:ring-[#e8ddd2] overflow-hidden">
-        { !bookingReferenceId || !language
-          ? (
+        <BookingWidget
+          className="my-4 md:my-0"
+          provider={ bookingProvider }
+          productId={ bookingReferenceId }
+          language={ language }
+          fallback={ (
             <TourDetailSidebarFallback
               price={ price }
               priceBasis={ priceBasis }
@@ -62,8 +48,8 @@ export default function TourDetailSidebarPlaceholder({
               requestedBookingType={ requestedBookingType }
               requestedItemId={ requestedItemId }
             />
-          )
-          : <div ref={ containerRef } className="my-4 md:my-0"/> }
+          ) }
+        />
       </div>
     </div>
   );

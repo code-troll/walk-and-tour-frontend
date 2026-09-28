@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 
 import BlogInlineTourCard from "@/components/blog/BlogInlineTourCard";
 import type { AppLocale } from "@/i18n/routing";
-import { mountTuritopWidgets, TURITOP_EMBED_MODE } from "@/lib/turitop/widget";
+import { mountTuritopWidgets, TURITOP_EMBED_MODE, unmountTuritopWidgets } from "@/lib/booking-widgets/turitop";
 
 type TourCardEntry = {
   slug: string;
@@ -106,9 +106,7 @@ function HtmlSegment({
     );
 
     return () => {
-      widgetContainers.forEach((container) => {
-        container.innerHTML = "";
-      });
+      unmountTuritopWidgets(widgetContainers);
     };
   }, [html]);
 
