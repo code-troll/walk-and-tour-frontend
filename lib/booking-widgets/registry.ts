@@ -35,13 +35,12 @@ const understoryAdapter: BookingWidgetAdapter = {
   // The account is the tour's, in its settings, which the backend requires
   // before the widget can be enabled.
   isConfigured: () => true,
-  mount: ({ container, language, productId, settings }) =>
+  mount: ({ container, language, settings }) =>
     mountUnderstoryWidget({
       container,
       companyId: settings.companyId ?? "",
       storefrontId: settings.storefrontId ?? "",
       language,
-      experienceId: productId,
     }),
 };
 

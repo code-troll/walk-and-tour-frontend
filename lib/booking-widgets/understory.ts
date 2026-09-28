@@ -9,7 +9,6 @@ type UnderstoryWidgetElement = {
   companyId: string;
   storefrontId: string;
   language: string;
-  experienceId?: string;
 };
 
 // Loaded once: the widget watches the page for `.understory-booking-widget`
@@ -33,16 +32,12 @@ export const mountUnderstoryWidget = ({
   companyId,
   storefrontId,
   language,
-  experienceId,
 }: UnderstoryWidgetElement) => {
   const widget = document.createElement("div");
   widget.className = UNDERSTORY_WIDGET_CLASS;
   widget.dataset.companyId = companyId;
   widget.dataset.storefrontId = storefrontId;
   widget.dataset.language = language;
-  if (experienceId) {
-    widget.dataset.experienceId = experienceId;
-  }
 
   container.replaceChildren(widget);
   ensureUnderstoryScript();

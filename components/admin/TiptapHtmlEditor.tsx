@@ -55,6 +55,7 @@ import {
   BLOG_BOOKING_WIDGET_PROVIDERS,
   BOOKING_WIDGET_PROVIDER_INFO,
   type BookingWidgetProviderId,
+  getBlogProductIdField,
 } from "@/lib/booking-widgets/providers";
 import { BOOKING_WIDGET_ADAPTERS } from "@/lib/booking-widgets/registry";
 import { cn } from "@/lib/utils";
@@ -1954,7 +1955,7 @@ function BlogBookingWidgetNodeView({
   const persistedHeight = typeof node.attrs.customHeight === "number"
     ? clampBlogBookingWidgetHeight(node.attrs.customHeight)
     : BLOG_BOOKING_WIDGET_DEFAULT_HEIGHT;
-  const productIdLabel = BOOKING_WIDGET_PROVIDER_INFO[provider].productIdLabel;
+  const productIdField = getBlogProductIdField(provider);
   const activeWidth = dragWidth ?? persistedWidth;
   const activeHeight = dragHeight ?? persistedHeight;
 
@@ -2074,11 +2075,11 @@ function BlogBookingWidgetNodeView({
               </select>
             </div>
             <div className="space-y-1">
-              <label className={fieldLabelClassName}>{ productIdLabel }</label>
+              <label className={fieldLabelClassName}>{ productIdField.label }</label>
               <Input
                 value={ productId }
                 onChange={ (event) => setProductId(event.target.value) }
-                placeholder={ BOOKING_WIDGET_PROVIDER_INFO[provider].productIdPlaceholder }
+                placeholder={ productIdField.placeholder }
                 onMouseDown={ (event) => event.stopPropagation() }
               />
             </div>
@@ -2114,7 +2115,7 @@ function BlogBookingWidgetNodeView({
       ) : (
         <div
           className="flex h-full min-h-24 w-full items-center justify-center rounded-[var(--wt-radius-sm)] border border-dashed border-[#d6c7a5] bg-white/70 px-4 text-sm text-[#8b7862]">
-          <span>Set { BOOKING_WIDGET_PROVIDER_INFO[currentProvider].productIdLabel.toLowerCase() } and language to render the calendar here.</span>
+          <span>Set { getBlogProductIdField(currentProvider).label.toLowerCase() } and language to render the calendar here.</span>
         </div>
       ) }
 
@@ -3742,7 +3743,7 @@ export const TiptapHtmlEditor = forwardRef<
     const language = bookingWidgetLanguageInput.trim();
 
     if (!productId || !language) {
-      const message = `${ BOOKING_WIDGET_PROVIDER_INFO[bookingWidgetProviderInput].productIdLabel } and language are required.`;
+      const message = `${ getBlogProductIdField(bookingWidgetProviderInput).label } and language are required.`;
       setBookingWidgetDialogError(message);
       onError?.(message);
       return;
@@ -4039,7 +4040,7 @@ export const TiptapHtmlEditor = forwardRef<
 
             <div className="space-y-2">
               <label htmlFor="blog-booking-widget-product-id" className={fieldLabelClassName}>
-                { BOOKING_WIDGET_PROVIDER_INFO[bookingWidgetProviderInput].productIdLabel }
+                { getBlogProductIdField(bookingWidgetProviderInput).label }
               </label>
               <Input
                 id="blog-booking-widget-product-id"
@@ -4050,7 +4051,7 @@ export const TiptapHtmlEditor = forwardRef<
                     setBookingWidgetDialogError(null);
                   }
                 } }
-                placeholder={ BOOKING_WIDGET_PROVIDER_INFO[bookingWidgetProviderInput].productIdPlaceholder }
+                placeholder={ getBlogProductIdField(bookingWidgetProviderInput).placeholder }
                 autoFocus
               />
             </div>

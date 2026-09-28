@@ -3285,7 +3285,7 @@ export interface components {
              */
             provider: "turitop" | "understory";
             /**
-             * @description The provider's product id for the requested locale. Always set for `turitop`; for `understory` it is an optional experience id, null to show the whole storefront.
+             * @description The provider's product id for the requested locale. Always set for `turitop`; always null for `understory`, which shows the partner's whole storefront.
              * @example P7
              */
             productId?: string | null;
@@ -3753,7 +3753,7 @@ export interface components {
         };
         TourBookingDto: {
             /**
-             * @description Booking widget the public page embeds. Each translation's `bookingReferenceId` is this provider's product id: required for `turitop`, optional for `understory`, where it names one experience. Set `null` to remove it, which also requires `enabled` to be false. When omitted, the tour keeps its provider.
+             * @description Booking widget the public page embeds. Each translation's `bookingReferenceId` is this provider's product id: required for `turitop`; `understory` ignores it. Set `null` to remove it, which also requires `enabled` to be false. When omitted, the tour keeps its provider.
              * @example turitop
              * @enum {string|null}
              */
@@ -4938,7 +4938,7 @@ export interface components {
              */
             isPublished: boolean;
             /**
-             * @description The booking provider's product id for the locale, if any: a Turitop service code such as `P7`, or an optional Understory experience id.
+             * @description The booking provider's product id for the locale, if any: a Turitop service code such as `P7`. Understory ignores it.
              * @example P7
              */
             bookingReferenceId?: string | null;

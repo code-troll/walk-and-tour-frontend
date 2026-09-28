@@ -383,7 +383,7 @@ export function PublicationSection({
           />
           { formState.bookingProvider &&
             formState.bookingEnabled &&
-            BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider].requiresProductId ? (
+            BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider].productId ? (
             <ChecklistItem
               label="Every translation has a booking code"
               passed={ formState.translations.every((translation) => translation.bookingReferenceId.trim()) }

@@ -27,7 +27,7 @@ export default function BookingWidget({
 }: BookingWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const adapter = provider ? BOOKING_WIDGET_ADAPTERS[provider] : undefined;
-  const hasRequiredProductId = Boolean(productId || (provider && !BOOKING_WIDGET_PROVIDER_INFO[provider].requiresProductId));
+  const hasRequiredProductId = Boolean(productId || (provider && BOOKING_WIDGET_PROVIDER_INFO[provider].productId === null));
   const canRender = Boolean(adapter && hasRequiredProductId && language && adapter.isConfigured());
 
   useEffect(() => {

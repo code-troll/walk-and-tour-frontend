@@ -8,18 +8,13 @@ export type BookingWidgetProviderId = (typeof BOOKING_WIDGET_PROVIDERS)[number];
 type BookingWidgetProviderInfo = {
   id: BookingWidgetProviderId;
   label: string;
-  // How the admin labels the per-locale product id (a translation's bookingReferenceId).
-  productIdLabel: string;
-  productIdPlaceholder: string;
-  // Without a product id a locale shows the booking-request form. Understory
-  // shows the whole storefront instead.
-  requiresProductId: boolean;
-  // Settings stored on the tour, all required to enable the widget. They must
-  // match the backend's TOUR_BOOKING_PROVIDER_RULES.
+  // How the admin labels the per-locale product id (a translation's
+  // bookingReferenceId). Null for a provider that ignores it; one that uses it
+  // shows the booking-request form in a locale without one.
+  productId: { label: string; placeholder: string } | null;
+  // Settings stored on the tour, all required to enable the widget. With
+  // productId, they must match the backend's TOUR_BOOKING_PROVIDER_RULES.
   settingFields: { key: string; label: string }[];
-  // Whether a blog post can place this widget. The blog block carries only a
-  // product id, so a provider that needs settings is left out.
-  isAvailableInBlog: boolean;
   // Origins the provider loads its booking iframe from. They feed the CSP frame-src.
   frameHosts: string[];
 };
@@ -28,11 +23,8 @@ export const BOOKING_WIDGET_PROVIDER_INFO: Record<BookingWidgetProviderId, Booki
   turitop: {
     id: "turitop",
     label: "Turitop",
-    productIdLabel: "Turitop service code",
-    productIdPlaceholder: "P7",
-    requiresProductId: true,
+    productId: { label: "Turitop service code", placeholder: "P7" },
     settingFields: [],
-    isAvailableInBlog: true,
     frameHosts: [
       "https://app.turitop.com",
       "https://www.turitop.com",
@@ -40,19 +32,17 @@ export const BOOKING_WIDGET_PROVIDER_INFO: Record<BookingWidgetProviderId, Booki
     ],
   },
   // Books against a partner's account (The Silvers' storefront for our guests),
-  // which is why its ids live on the tour rather than in the environment. The
-  // widget renders in a shadow root on the page, not in an iframe.
+  // which is why its ids live on the tour rather than in the environment. It
+  // shows the whole storefront, so the Turitop codes a tour kept are ignored.
+  // The widget renders in a shadow root on the page, not in an iframe.
   understory: {
     id: "understory",
     label: "Understory",
-    productIdLabel: "Understory experience ID",
-    productIdPlaceholder: "Optional",
-    requiresProductId: false,
+    productId: null,
     settingFields: [
       { key: "companyId", label: "Company ID" },
       { key: "storefrontId", label: "Storefront ID" },
     ],
-    isAvailableInBlog: false,
     frameHosts: [],
   },
 };
@@ -60,9 +50,17 @@ export const BOOKING_WIDGET_PROVIDER_INFO: Record<BookingWidgetProviderId, Booki
 export const isBookingWidgetProviderId = (value: unknown): value is BookingWidgetProviderId =>
   typeof value === "string" && (BOOKING_WIDGET_PROVIDERS as readonly string[]).includes(value);
 
+// A blog block carries a product id and nothing else, so a post can place only
+// a provider that uses one and needs no settings.
 export const BLOG_BOOKING_WIDGET_PROVIDERS = BOOKING_WIDGET_PROVIDERS.filter(
-  (provider) => BOOKING_WIDGET_PROVIDER_INFO[provider].isAvailableInBlog,
+  (provider) =>
+    BOOKING_WIDGET_PROVIDER_INFO[provider].productId !== null &&
+    BOOKING_WIDGET_PROVIDER_INFO[provider].settingFields.length === 0,
 );
+
+// For a blog provider, which always has a product id field.
+export const getBlogProductIdField = (provider: BookingWidgetProviderId) =>
+  BOOKING_WIDGET_PROVIDER_INFO[provider].productId ?? { label: "Booking code", placeholder: "" };
 
 export const getBookingWidgetFrameHosts = () =>
   BOOKING_WIDGET_PROVIDERS.flatMap((provider) => BOOKING_WIDGET_PROVIDER_INFO[provider].frameHosts);
@@ -82,8 +80,9 @@ export const toTourBooking = (
     return undefined;
   }
 
-  const productId = value.productId?.trim() || undefined;
-  if (!productId && BOOKING_WIDGET_PROVIDER_INFO[value.provider].requiresProductId) {
+  const usesProductId = BOOKING_WIDGET_PROVIDER_INFO[value.provider].productId !== null;
+  const productId = usesProductId ? value.productId?.trim() || undefined : undefined;
+  if (usesProductId && !productId) {
     return undefined;
   }
 
