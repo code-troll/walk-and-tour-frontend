@@ -50,13 +50,15 @@ export default function TourDetailContentWithSidebar({
           { children }
           <aside
             className={ cn(
-              "hidden lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:w-[calc(25rem)] lg:transition-[padding-top] lg:duration-300 lg:ease-in-out lg:pt-30",
+              // bottom-6 matches the last section's py-6, so a sidebar tall enough to
+              // reach the end stops level with the last card rather than its padding.
+              "hidden lg:absolute lg:top-0 lg:bottom-6 lg:right-0 lg:block lg:w-[calc(25rem)] lg:transition-[padding-top] lg:duration-300 lg:ease-in-out lg:pt-30",
             ) }
           >
             <div
               id="sidebar-container"
               className={ cn(
-                "mb-1 transition-[top] duration-300 ease-in-out lg:self-start lg:sticky",
+                "transition-[top] duration-300 ease-in-out lg:self-start lg:sticky",
                 isHeaderVisible ? "lg:top-24" : "lg:top-8",
                 sidebarContainerClassName
               ) }

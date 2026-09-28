@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { BOOKING_WIDGET_ADAPTERS } from "@/lib/booking-widgets/registry";
-import type { BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
+import { BOOKING_WIDGET_PROVIDER_INFO, type BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
 
 type BookingWidgetProps = {
   className?: string;
@@ -10,7 +10,10 @@ type BookingWidgetProps = {
   language?: string;
   productId?: string;
   provider?: BookingWidgetProviderId;
+  settings?: Record<string, string>;
 };
+
+const NO_SETTINGS: Record<string, string> = {};
 
 const isDisplayed = (element: HTMLElement) => element.getClientRects().length > 0;
 
@@ -20,15 +23,17 @@ export default function BookingWidget({
   language,
   productId,
   provider,
+  settings = NO_SETTINGS,
 }: BookingWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const adapter = provider ? BOOKING_WIDGET_ADAPTERS[provider] : undefined;
-  const canRender = Boolean(adapter && productId && language && adapter.isConfigured());
+  const hasRequiredProductId = Boolean(productId || (provider && BOOKING_WIDGET_PROVIDER_INFO[provider].productId === null));
+  const canRender = Boolean(adapter && hasRequiredProductId && language && adapter.isConfigured());
 
   useEffect(() => {
     const container = containerRef.current;
 
-    if (!canRender || !adapter || !productId || !language || !container) {
+    if (!canRender || !adapter || !language || !container) {
       return;
     }
 
@@ -42,7 +47,7 @@ export default function BookingWidget({
         return;
       }
 
-      unmount = adapter.mount({ container, language, productId });
+      unmount = adapter.mount({ container, language, productId, settings });
       resizeObserver.disconnect();
     });
 
@@ -52,7 +57,7 @@ export default function BookingWidget({
       resizeObserver.disconnect();
       unmount?.();
     };
-  }, [adapter, canRender, language, productId]);
+  }, [adapter, canRender, language, productId, settings]);
 
   if (!canRender) {
     return fallback;

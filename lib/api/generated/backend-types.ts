@@ -3283,12 +3283,19 @@ export interface components {
              * @example turitop
              * @enum {string}
              */
-            provider: "turitop";
+            provider: "turitop" | "understory";
             /**
-             * @description The provider's product id for the requested locale.
+             * @description The provider's product id for the requested locale. Always set for `turitop`; always null for `understory`, which shows the partner's whole storefront.
              * @example P7
              */
-            productId: string;
+            productId?: string | null;
+            /**
+             * @description Provider settings the widget needs. `understory` has `companyId` and `storefrontId`; `turitop` has none.
+             * @example {}
+             */
+            settings: {
+                [key: string]: string;
+            };
         };
         GeoCoordinatesDto: {
             /**
@@ -3431,7 +3438,7 @@ export interface components {
             galleryMedia: components["schemas"]["TourMediaItemResponseDto"][];
             /** @description Fixed price data. `null` for tip-based tours. */
             price?: components["schemas"]["PriceResponseDto"] | null;
-            /** @description Booking widget to embed for this locale. `null` when the widget is disabled or the locale has no product id, in which case the page offers the booking-request form. */
+            /** @description Booking widget to embed for this locale. `null` when the widget is disabled or the locale lacks a product id the provider requires, in which case the page offers the booking-request form. */
             booking?: components["schemas"]["PublicTourBookingResponseDto"] | null;
             /**
              * @description Average rating normalized to a numeric value.
@@ -3548,12 +3555,22 @@ export interface components {
              * @example turitop
              * @enum {string|null}
              */
-            provider?: "turitop" | null;
+            provider?: "turitop" | "understory" | null;
             /**
              * @description Whether the public page shows the widget.
              * @example true
              */
             enabled: boolean;
+            /**
+             * @description Provider settings. `understory` has `companyId` and `storefrontId`; `turitop` has none.
+             * @example {
+             *       "companyId": "4a0fbe7f6af34bffac943578ffbfa0e4",
+             *       "storefrontId": "bd88f0cea152483c9a45b8b4437b85ca"
+             *     }
+             */
+            settings: {
+                [key: string]: string;
+            };
         };
         TourAdminItineraryStopResponseDto: {
             /**
@@ -3736,16 +3753,26 @@ export interface components {
         };
         TourBookingDto: {
             /**
-             * @description Booking widget the public page embeds. Each translation's `bookingReferenceId` is this provider's product id. Set `null` to remove it, which also requires `enabled` to be false. When omitted, the tour keeps its provider.
+             * @description Booking widget the public page embeds. Each translation's `bookingReferenceId` is this provider's product id: required for `turitop`; `understory` ignores it. Set `null` to remove it, which also requires `enabled` to be false. When omitted, the tour keeps its provider.
              * @example turitop
              * @enum {string|null}
              */
-            provider?: "turitop" | null;
+            provider?: "turitop" | "understory" | null;
             /**
              * @description Whether the public page shows the widget. Enabling it requires a provider. Disabling it keeps the provider. When omitted, the tour keeps its current state.
              * @example true
              */
             enabled?: boolean;
+            /**
+             * @description Provider settings, all strings. `turitop` takes none; `understory` takes `companyId` and `storefrontId`, both required once the widget is enabled. Replaces the stored settings. When omitted, the tour keeps them, unless the provider changes, which clears them.
+             * @example {
+             *       "companyId": "4a0fbe7f6af34bffac943578ffbfa0e4",
+             *       "storefrontId": "bd88f0cea152483c9a45b8b4437b85ca"
+             *     }
+             */
+            settings?: {
+                [key: string]: string;
+            };
         };
         TourCoordinatesDto: {
             /**
@@ -4911,7 +4938,7 @@ export interface components {
              */
             isPublished: boolean;
             /**
-             * @description The booking provider's product id for the locale, if any (a Turitop service code such as `P7`).
+             * @description The booking provider's product id for the locale, if any: a Turitop service code such as `P7`. Understory ignores it.
              * @example P7
              */
             bookingReferenceId?: string | null;

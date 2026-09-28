@@ -1,5 +1,9 @@
 import type { components } from "@/lib/api/generated/backend-types";
-import { isBookingWidgetProviderId, type BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
+import {
+  BOOKING_WIDGET_PROVIDER_INFO,
+  isBookingWidgetProviderId,
+  type BookingWidgetProviderId,
+} from "@/lib/booking-widgets/providers";
 
 export type ApiTour = components["schemas"]["TourAdminResponseDto"];
 export type ApiLanguage = components["schemas"]["LanguageResponseDto"];
@@ -217,6 +221,7 @@ export type TourFormState = {
   priceBasis: PriceBasis;
   bookingProvider: BookingWidgetProviderId | "";
   bookingEnabled: boolean;
+  bookingSettings: Record<string, string>;
   startPointLat: string;
   startPointLng: string;
   endPointLat: string;
@@ -417,6 +422,7 @@ export const createEmptyTourFormState = (): TourFormState => ({
   priceBasis: "per_person",
   bookingProvider: "",
   bookingEnabled: false,
+  bookingSettings: {},
   startPointLat: "",
   startPointLng: "",
   endPointLat: "",
@@ -512,6 +518,7 @@ export const getInitialTourFormState = (tour?: ApiTour): TourFormState => {
     priceBasis: tour.price?.basis ?? "per_person",
     bookingProvider: isBookingWidgetProviderId(tour.booking.provider) ? tour.booking.provider : "",
     bookingEnabled: tour.booking.enabled,
+    bookingSettings: tour.booking.settings,
     startPointLat: asNumberString(tour.startPoint?.coordinates?.lat),
     startPointLng: asNumberString(tour.startPoint?.coordinates?.lng),
     endPointLat: asNumberString(tour.endPoint?.coordinates?.lat),
@@ -682,6 +689,7 @@ export const buildUpdateTourPayload = ({
     booking: {
       provider: formState.bookingProvider || null,
       enabled: Boolean(formState.bookingProvider) && formState.bookingEnabled,
+      settings: getBookingSettingsPayload(formState),
     },
     rating: Number.parseFloat(formState.rating),
     reviewCount: Number.parseInt(formState.reviewCount, 10),
@@ -790,6 +798,14 @@ export const hasTourFormErrors = (errors: TourFormErrors) =>
   errors.itinerary.length > 0 ||
   Object.values(errors.translations).some((translationErrors) => translationErrors.length > 0);
 
+// Only the selected provider's settings, and only the ones filled in.
+const getBookingSettingsPayload = (formState: TourFormState) =>
+  Object.fromEntries(
+    (formState.bookingProvider ? BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider].settingFields : [])
+      .map((field) => [field.key, formState.bookingSettings[field.key]?.trim() ?? ""])
+      .filter(([, value]) => value),
+  );
+
 const validateSharedFields = ({
   errors,
   formState,
@@ -801,6 +817,15 @@ const validateSharedFields = ({
     addSharedError(errors, "Name is required.");
   } else if (formState.name.trim().length > TOUR_NAME_MAX_LENGTH) {
     addSharedError(errors, `Name must be ${ TOUR_NAME_MAX_LENGTH } characters or less.`);
+  }
+
+  if (formState.bookingProvider && formState.bookingEnabled) {
+    const provider = BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider];
+    const settings = getBookingSettingsPayload(formState);
+
+    provider.settingFields
+      .filter((field) => !settings[field.key])
+      .forEach((field) => addSharedError(errors, `${ provider.label } ${ field.label } is required to show the widget.`));
   }
 
   const invalidAltText = formState.mediaItems.find((image) =>

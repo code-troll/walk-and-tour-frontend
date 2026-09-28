@@ -70,8 +70,10 @@ export function TranslationsSection({
     (left, right) => left.sortOrder - right.sortOrder || left.code.localeCompare(right.code),
   );
   const usedLangCodes = new Set(formState.translations.map((translation) => translation.languageCode));
-  const bookingProviderInfo = formState.bookingProvider
-    ? BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider]
+  // Undefined without a provider, null for one that ignores the code (the
+  // field is hidden, and whatever a translation kept stays stored).
+  const bookingProductIdField = formState.bookingProvider
+    ? BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider].productId
     : undefined;
   const availableToAdd = orderedLanguages.filter(
     (language) => language.isEnabled && !usedLangCodes.has(language.code),
@@ -306,23 +308,25 @@ export function TranslationsSection({
                             />
                           </div>
 
-                          <div className="space-y-1.5">
-                            <label className={fieldLabelClassName}>
-                              { bookingProviderInfo?.productIdLabel ?? "Booking Reference ID" }
-                            </label>
-                            <Input
-                              value={ translation.bookingReferenceId }
-                              onChange={ (event) =>
-                                updateTranslationField(
-                                  translation.languageCode,
-                                  "bookingReferenceId",
-                                  event.target.value,
-                                )
-                              }
-                              maxLength={ TOUR_BOOKING_REFERENCE_MAX_LENGTH }
-                              placeholder={ bookingProviderInfo?.productIdPlaceholder }
-                            />
-                          </div>
+                          { bookingProductIdField !== null ? (
+                            <div className="space-y-1.5">
+                              <label className={fieldLabelClassName}>
+                                { bookingProductIdField?.label ?? "Booking Reference ID" }
+                              </label>
+                              <Input
+                                value={ translation.bookingReferenceId }
+                                onChange={ (event) =>
+                                  updateTranslationField(
+                                    translation.languageCode,
+                                    "bookingReferenceId",
+                                    event.target.value,
+                                  )
+                                }
+                                maxLength={ TOUR_BOOKING_REFERENCE_MAX_LENGTH }
+                                placeholder={ bookingProductIdField?.placeholder }
+                              />
+                            </div>
+                          ) : null }
                         </div>
 
                         <div className="grid gap-4 xl:grid-cols-2">

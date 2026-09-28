@@ -955,6 +955,7 @@ export function GeneralSection({
                   onChange={ (event) => {
                     const provider = event.target.value;
                     updateFormStateAction("bookingProvider", isBookingWidgetProviderId(provider) ? provider : "");
+                    updateFormStateAction("bookingSettings", {});
                     if (!provider) {
                       updateFormStateAction("bookingEnabled", false);
                     }
@@ -981,6 +982,26 @@ export function GeneralSection({
                 <span className="text-sm font-medium text-foreground">Show on the tour page</span>
               </label>
             </div>
+
+            { formState.bookingProvider && BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider].settingFields.length ? (
+              <div className="mt-4 grid gap-3 md:max-w-2xl md:grid-cols-2">
+                { BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider].settingFields.map((field) => (
+                  <div key={ field.key } className="space-y-1.5">
+                    <label className={fieldLabelClassName}>{ field.label }</label>
+                    <Input
+                      value={ formState.bookingSettings[field.key] ?? "" }
+                      onChange={ (event) =>
+                        updateFormStateAction("bookingSettings", {
+                          ...formState.bookingSettings,
+                          [field.key]: event.target.value,
+                        }) }
+                      maxLength={ 100 }
+                      className="font-mono"
+                    />
+                  </div>
+                )) }
+              </div>
+            ) : null }
           </section>
 
           <section className={ sectionClassName }>

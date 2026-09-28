@@ -8,6 +8,7 @@ import {
   type TourFormState,
   type TourTranslationFormState,
 } from "@/lib/tours/admin-tour-form";
+import { BOOKING_WIDGET_PROVIDER_INFO } from "@/lib/booking-widgets/providers";
 import { cn } from "@/lib/utils";
 import {
   AlertCircle,
@@ -380,7 +381,9 @@ export function PublicationSection({
               : "Itinerary variant is configured" }
             passed={ formState.itineraryVariant === "description" || formState.stops.length > 0 }
           />
-          { formState.bookingEnabled ? (
+          { formState.bookingProvider &&
+            formState.bookingEnabled &&
+            BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider].productId ? (
             <ChecklistItem
               label="Every translation has a booking code"
               passed={ formState.translations.every((translation) => translation.bookingReferenceId.trim()) }
