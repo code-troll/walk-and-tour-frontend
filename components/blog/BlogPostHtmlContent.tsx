@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef } from "react";
 
 import BlogInlineTourCard from "@/components/blog/BlogInlineTourCard";
 import type { AppLocale } from "@/i18n/routing";
-import { mountTuritopWidgets, TURITOP_EMBED_MODE, unmountTuritopWidgets } from "@/lib/booking-widgets/turitop";
+import { BLOG_BOOKING_WIDGET_ELEMENT_SELECTOR, readBlogBookingWidgetBlock } from "@/lib/blog/booking-widget-block";
+import { BOOKING_WIDGET_ADAPTERS } from "@/lib/booking-widgets/registry";
 
 type TourCardEntry = {
   slug: string;
@@ -83,30 +84,24 @@ function HtmlSegment({
     const root = rootRef.current;
     if (!root) return;
 
-    const widgetContainers = [
-      ...root.querySelectorAll<HTMLElement>('[data-blog-turitop="true"]'),
-    ];
-    if (!widgetContainers.length) return;
+    const unmountWidgets = [
+      ...root.querySelectorAll<HTMLElement>(BLOG_BOOKING_WIDGET_ELEMENT_SELECTOR),
+    ].flatMap((container) => {
+      const block = readBlogBookingWidgetBlock((name) => container.getAttribute(name));
+      const adapter = block ? BOOKING_WIDGET_ADAPTERS[block.provider] : undefined;
+      if (!block || !adapter?.isConfigured()) {
+        return [];
+      }
 
-    widgetContainers.forEach((container) => {
       container.style.overflowX = "hidden";
       container.style.overflowY = "auto";
       container.style.setProperty("-webkit-overflow-scrolling", "touch");
+
+      return [adapter.mount({ container, language: block.language, productId: block.productId })];
     });
 
-    mountTuritopWidgets(
-      widgetContainers
-        .map((container) => ({
-          container,
-          embed: container.dataset.embed || TURITOP_EMBED_MODE,
-          language: container.dataset.lang || "",
-          service: container.dataset.service || "",
-        }))
-        .filter((widget) => widget.language && widget.service),
-    );
-
     return () => {
-      unmountTuritopWidgets(widgetContainers);
+      unmountWidgets.forEach((unmount) => unmount());
     };
   }, [html]);
 

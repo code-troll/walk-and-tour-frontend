@@ -1,3 +1,5 @@
+import { readBlogBookingWidgetBlock, renderBlogBookingWidgetMarkup } from "@/lib/blog/booking-widget-block";
+
 const ALLOWED_FRAME_HOSTS = new Set([
   "youtube.com",
   "youtube-nocookie.com",
@@ -13,6 +15,7 @@ const ALLOWED_FRAME_HOSTS = new Set([
 const EMBED_BLOCK_PATTERNS = [
   /<div\b[^>]*data-blog-video="true"[^>]*>[\s\S]*?<\/div>/gi,
   /<div\b[^>]*data-blog-embed="true"[^>]*>[\s\S]*?<\/div>/gi,
+  /<div\b[^>]*data-blog-booking-widget="true"[^>]*><\/div>/gi,
   /<div\b[^>]*data-blog-turitop="true"[^>]*><\/div>/gi,
   /<div\b[^>]*data-blog-tour-card="true"[^>]*><\/div>/gi,
   /<a\b[^>]*data-blog-link-card="true"[^>]*>[\s\S]*?<\/a>/gi,
@@ -30,6 +33,14 @@ const extractAttribute = (markup: string, attributeName: string) => {
   const singleQuotedMatch = markup.match(new RegExp(`${ attributeName }\\s*=\\s*'([^']*)'`, "i"));
   return singleQuotedMatch?.[1] ?? null;
 };
+
+const decodeAttributeValue = (value: string) =>
+  value
+    .replace(/&quot;/g, "\"")
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 
 const isSafeHttpUrl = (value: string | null | undefined) => {
   if (!value) {
@@ -63,14 +74,6 @@ const isSafeAllowedBlock = (markup: string) => {
     return isAllowedFrameSrc(extractAttribute(markup, "src"));
   }
 
-  if (markup.includes("data-blog-turitop=\"true\"")) {
-    const service = extractAttribute(markup, "data-service");
-    const language = extractAttribute(markup, "data-lang");
-    const embed = extractAttribute(markup, "data-embed");
-
-    return Boolean(service && language && embed === "box");
-  }
-
   if (markup.includes("data-blog-tour-card=\"true\"")) {
     const tourSlug = extractAttribute(markup, "data-tour-slug");
     return Boolean(tourSlug);
@@ -83,18 +86,36 @@ const isSafeAllowedBlock = (markup: string) => {
   return false;
 };
 
+const isBookingWidgetMarkup = (markup: string) =>
+  markup.includes("data-blog-booking-widget=\"true\"") || markup.includes("data-blog-turitop=\"true\"");
+
+// Booking widgets are rebuilt rather than kept as written, so only the
+// attributes the block defines survive, in the current markup even for posts
+// saved with the Turitop-only one.
+const toSafeBookingWidgetMarkup = (markup: string) => {
+  const block = readBlogBookingWidgetBlock((name) => {
+    const value = extractAttribute(markup, name);
+    return value === null ? null : decodeAttributeValue(value);
+  });
+
+  return block ? renderBlogBookingWidgetMarkup(block) : null;
+};
+
 const preserveAllowedBlocks = (html: string) => {
   const preservedBlocks: string[] = [];
   let nextHtml = html;
 
   EMBED_BLOCK_PATTERNS.forEach((pattern) => {
     nextHtml = nextHtml.replace(pattern, (match) => {
-      if (!isSafeAllowedBlock(match)) {
+      const safeBlock = isBookingWidgetMarkup(match)
+        ? toSafeBookingWidgetMarkup(match)
+        : isSafeAllowedBlock(match) ? match : null;
+      if (!safeBlock) {
         return "";
       }
 
       const token = `__BLOG_EMBED_BLOCK_${ preservedBlocks.length }__`;
-      preservedBlocks.push(match);
+      preservedBlocks.push(safeBlock);
       return token;
     });
   });

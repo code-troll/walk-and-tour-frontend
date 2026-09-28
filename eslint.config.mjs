@@ -25,8 +25,9 @@ const UNMIGRATED_FROM_BRAND_TOKENS = [];
  * lie forever.
  *
  * `TiptapHtmlEditor` writes inline styles into the HTML that is stored and later
- * published — `getLinkCardStyle`, `getTuritopContainerStyle` and the tour-card
- * node all serialise colours into the article itself, and
+ * published — `getLinkCardStyle` and the tour-card node serialise colours into
+ * the article itself (as does `getBlogBookingWidgetStyle`, which lives in
+ * lib/blog and so outside these rules), and
  * `DEFAULT_TEXT_COLOR` / `DEFAULT_HIGHLIGHT_COLOR` are applied to the author's
  * text. Of the 83 colour occurrences in that file, 67 are content and 14 were
  * chrome; the chrome is migrated, and the rest must not be touched. Changing

@@ -8,6 +8,9 @@ export type BookingWidgetProviderId = (typeof BOOKING_WIDGET_PROVIDERS)[number];
 type BookingWidgetProviderInfo = {
   id: BookingWidgetProviderId;
   label: string;
+  // How the admin labels the per-locale product id (a translation's bookingReferenceId).
+  productIdLabel: string;
+  productIdPlaceholder: string;
   // Origins the provider loads its booking iframe from. They feed the CSP frame-src.
   frameHosts: string[];
 };
@@ -16,6 +19,8 @@ export const BOOKING_WIDGET_PROVIDER_INFO: Record<BookingWidgetProviderId, Booki
   turitop: {
     id: "turitop",
     label: "Turitop",
+    productIdLabel: "Turitop service code",
+    productIdPlaceholder: "P7",
     frameHosts: [
       "https://app.turitop.com",
       "https://www.turitop.com",
