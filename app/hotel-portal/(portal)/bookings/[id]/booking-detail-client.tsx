@@ -27,10 +27,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {Textarea} from "@/components/ui/textarea";
+import {PortalTourSummary} from "@/components/hotel-portal/PortalTourSummary";
 import {getHotelBookingClient} from "@/lib/hotel-portal/booking-client";
 import {
   HOTEL_BOOKING_STATUS_LABELS,
   type ApiHotelBooking,
+  type ApiHotelTourDetail,
 } from "@/lib/hotel-portal/booking-types";
 import {cancelBookingAction} from "../../actions";
 
@@ -41,7 +43,16 @@ const formatWhen = (value: string) =>
     new Date(value),
   );
 
-export default function BookingDetailClient({bookingId}: {bookingId: string}) {
+export default function BookingDetailClient({
+  bookingId,
+  suggestionCount,
+  suggestions,
+}: {
+  bookingId: string;
+  suggestionCount: number;
+  /** Other tours to offer this guest, already drawn. Empty unless the booking was just placed. */
+  suggestions: ApiHotelTourDetail[];
+}) {
   const [booking, setBooking] = useState<ApiHotelBooking | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -121,6 +132,9 @@ export default function BookingDetailClient({bookingId}: {bookingId: string}) {
   }
 
   const canCancel = CANCELLABLE_STATUSES.includes(booking.status);
+  const otherTours = suggestions
+    .filter((tour) => tour.tourId !== booking.tourId)
+    .slice(0, suggestionCount);
 
   return (
     <div className="space-y-10">
@@ -184,6 +198,33 @@ export default function BookingDetailClient({bookingId}: {bookingId: string}) {
           </div>
         ) : null}
       </PortalSection>
+
+      {otherTours.length > 0 ? (
+        <PortalSection title="Other tours for this guest">
+          <ul>
+            {otherTours.map((tour) => (
+              <li
+                className="flex gap-4 border-t border-[var(--wt-rule)] py-4 first:border-t-0 first:pt-0"
+                key={tour.tourId}
+              >
+                <PortalTourSummary tour={tour}>
+                  <span className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                    <Link
+                      className={portalSecondaryAction}
+                      href={`/bookings/new?tourId=${encodeURIComponent(tour.tourId)}&sameGuestAs=${encodeURIComponent(booking.id)}`}
+                    >
+                      Book for this guest
+                    </Link>
+                    <Link className={portalQuietAction} href={`/tours/${tour.tourId}`}>
+                      View tour
+                    </Link>
+                  </span>
+                </PortalTourSummary>
+              </li>
+            ))}
+          </ul>
+        </PortalSection>
+      ) : null}
 
       <PortalSection title="Price">
         <BookingBreakdown booking={booking} />

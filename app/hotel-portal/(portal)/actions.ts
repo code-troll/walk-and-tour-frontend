@@ -170,6 +170,42 @@ export async function getTourDetailAction(tourId: string): Promise<TourDetailRes
   }
 }
 
+/**
+ * One of this hotel's bookings, read on the server.
+ *
+ * The booking form uses it to book a second tour for the guest of the first,
+ * so the guest's contact details travel as a booking id in the URL rather than
+ * as an email address and a telephone number in it. The backend scopes the id
+ * to the hotel on the token, so another hotel's booking is a 404.
+ */
+export async function getBookingAction(id: string): Promise<BookingActionResult> {
+  const context = await getPortalContext();
+
+  if (!context.ok) {
+    return context;
+  }
+
+  try {
+    const response = await fetch(
+      `${context.backendApiBaseUrl}/api/hotel/bookings/${encodeURIComponent(id)}`,
+      {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+        cache: "no-store",
+      },
+    );
+
+    const payload = (await response.json()) as unknown;
+
+    if (!response.ok) {
+      throw new Error(formatBackendErrorMessage(payload, "The request failed."));
+    }
+
+    return {ok: true, booking: payload as ApiHotelBooking};
+  } catch (error) {
+    return toActionError(error, "Unable to load this booking.");
+  }
+}
+
 export async function createBookingAction(
   body: CreateBookingBody,
 ): Promise<BookingActionResult> {
