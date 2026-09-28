@@ -3277,6 +3277,19 @@ export interface components {
              */
             basis: "per_person" | "per_group";
         };
+        PublicTourBookingResponseDto: {
+            /**
+             * @description Booking widget to embed.
+             * @example turitop
+             * @enum {string}
+             */
+            provider: "turitop";
+            /**
+             * @description The provider's product id for the requested locale.
+             * @example P7
+             */
+            productId: string;
+        };
         GeoCoordinatesDto: {
             /**
              * @description Latitude in decimal degrees.
@@ -3312,7 +3325,7 @@ export interface components {
              * @example en
              */
             locale: string;
-            /** @description External booking reference associated with the published locale. */
+            /** @description The booking provider's product id for the locale. Prefer `booking`, which is null when the widget is disabled. */
             bookingReferenceId?: string | null;
             /**
              * @description Localized cancellation policy text.
@@ -3418,6 +3431,8 @@ export interface components {
             galleryMedia: components["schemas"]["TourMediaItemResponseDto"][];
             /** @description Fixed price data. `null` for tip-based tours. */
             price?: components["schemas"]["PriceResponseDto"] | null;
+            /** @description Booking widget to embed for this locale. `null` when the widget is disabled or the locale has no product id, in which case the page offers the booking-request form. */
+            booking?: components["schemas"]["PublicTourBookingResponseDto"] | null;
             /**
              * @description Average rating normalized to a numeric value.
              * @example 4.8
@@ -3527,6 +3542,19 @@ export interface components {
              */
             priceBasis: "per_person" | "per_group";
         };
+        TourBookingResponseDto: {
+            /**
+             * @description Booking widget the public page embeds. Kept while the widget is disabled.
+             * @example turitop
+             * @enum {string|null}
+             */
+            provider?: "turitop" | null;
+            /**
+             * @description Whether the public page shows the widget.
+             * @example true
+             */
+            enabled: boolean;
+        };
         TourAdminItineraryStopResponseDto: {
             /**
              * @description Stable stop identifier shared across translations.
@@ -3619,6 +3647,8 @@ export interface components {
             } | null;
             /** @description Fixed price data. `null` for tip-based tours. */
             price?: components["schemas"]["PriceResponseDto"] | null;
+            /** @description Booking widget configuration. */
+            booking: components["schemas"]["TourBookingResponseDto"];
             /**
              * @description Average rating normalized to a numeric value.
              * @example 4.8
@@ -3704,6 +3734,19 @@ export interface components {
              */
             basis?: "per_person" | "per_group";
         };
+        TourBookingDto: {
+            /**
+             * @description Booking widget the public page embeds. Each translation's `bookingReferenceId` is this provider's product id. Set `null` to remove it, which also requires `enabled` to be false. When omitted, the tour keeps its provider.
+             * @example turitop
+             * @enum {string|null}
+             */
+            provider?: "turitop" | null;
+            /**
+             * @description Whether the public page shows the widget. Enabling it requires a provider. Disabling it keeps the provider. When omitted, the tour keeps its current state.
+             * @example true
+             */
+            enabled?: boolean;
+        };
         TourCoordinatesDto: {
             /**
              * @description Latitude in decimal degrees.
@@ -3771,6 +3814,8 @@ export interface components {
             };
             /** @description Updated fixed price. Set `null` to remove price data. */
             price?: components["schemas"]["PriceDto"] | null;
+            /** @description Updated booking widget. Omitted fields keep their value. Set `null` to remove the provider and disable the widget. */
+            booking?: components["schemas"]["TourBookingDto"] | null;
             /**
              * @description Updated average rating.
              * @example 4.9
@@ -3873,8 +3918,8 @@ export interface components {
              */
             slug: string;
             /**
-             * @description Optional external booking reference for this locale. Set `null` to clear it on update.
-             * @example booking-ref-123
+             * @description Optional booking provider product id for this locale, such as a Turitop service code (`P7`). Set `null` to clear it on update.
+             * @example P7
              */
             bookingReferenceId?: string | null;
             /**
@@ -3914,8 +3959,8 @@ export interface components {
              */
             slug?: string;
             /**
-             * @description Updated external booking reference for this locale. Set `null` to clear it.
-             * @example booking-ref-123
+             * @description Updated booking provider product id for this locale. Set `null` to clear it.
+             * @example P7
              */
             bookingReferenceId?: string | null;
             /** @description Replacement localized payload. Omit to keep the existing payload. */
@@ -3925,8 +3970,8 @@ export interface components {
         };
         PublishTourTranslationDto: {
             /**
-             * @description Optional external booking reference override applied before publishing. Set `null` to clear it.
-             * @example booking-ref-123
+             * @description Optional booking provider product id override applied before publishing. Set `null` to clear it.
+             * @example P7
              */
             bookingReferenceId?: string | null;
         };
@@ -4866,8 +4911,8 @@ export interface components {
              */
             isPublished: boolean;
             /**
-             * @description External booking reference for the locale, if any.
-             * @example booking-ref-123
+             * @description The booking provider's product id for the locale, if any (a Turitop service code such as `P7`).
+             * @example P7
              */
             bookingReferenceId?: string | null;
             /**

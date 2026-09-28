@@ -1,12 +1,12 @@
 "use client";
 
 import BookingWidget from "@/components/booking-widgets/BookingWidget";
-import type { BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
+import type { TourBooking } from "@/lib/booking-widgets/providers";
 import type { PublicTourPriceBasis } from "@/lib/public-tour-model";
 import TourDetailSidebarFallback from "./TourDetailSidebarFallback";
 
 type TourDetailSidebarPlaceholderProps = {
-  bookingReferenceId?: string;
+  booking?: TourBooking;
   language?: string;
   price?: string;
   priceBasis?: PublicTourPriceBasis;
@@ -17,7 +17,7 @@ type TourDetailSidebarPlaceholderProps = {
 };
 
 export default function TourDetailSidebarPlaceholder({
-  bookingReferenceId,
+  booking,
   language,
   price,
   priceBasis,
@@ -26,18 +26,14 @@ export default function TourDetailSidebarPlaceholder({
   requestedBookingType,
   requestedItemId,
 }: TourDetailSidebarPlaceholderProps) {
-  // Every booking reference is a Turitop service code until tours carry their
-  // own provider.
-  const bookingProvider: BookingWidgetProviderId | undefined = bookingReferenceId ? "turitop" : undefined;
-
   return (
     <div className="pt-6 px-0 md:px-6 lg:pt-0 lg:px-12 lg:pl-0">
       <div
         className="rounded-3xl bg-[#fcfaf7] md:bg-white p-0 md:shadow-sm ring-0 md:ring-1 md:ring-[#e8ddd2] overflow-hidden">
         <BookingWidget
           className="my-4 md:my-0"
-          provider={ bookingProvider }
-          productId={ bookingReferenceId }
+          provider={ booking?.provider }
+          productId={ booking?.productId }
           language={ language }
           fallback={ (
             <TourDetailSidebarFallback

@@ -2,6 +2,7 @@ import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
 import { isBackendApiError } from "@/lib/api/core/backend-client";
 import type { components } from "@/lib/api/generated/backend-types";
+import { toTourBooking, type TourBooking } from "@/lib/booking-widgets/providers";
 import { createPublicApi } from "@/lib/api/public";
 
 export type PublicTourResponse = components["schemas"]["PublicTourResponseDto"];
@@ -82,7 +83,7 @@ export type PublicTourCard = {
   tourType: PublicTourType;
 };
 export type PublicTourDetail = PublicTourCard & {
-  bookingReferenceId?: string;
+  booking?: TourBooking;
   tourImages: string[];
   highlights: string[];
   aboutTourDescription: string;
@@ -380,7 +381,7 @@ const normalizeTourDetail = (tour: PublicTourResponse, locale: AppLocale): Publi
 
   return {
     ...card,
-    bookingReferenceId: asString(tour.translation.bookingReferenceId).trim() || undefined,
+    booking: toTourBooking(tour.booking),
     tourImages: resolveHeroImages(tour),
     highlights: tour.translation.highlights,
     aboutTourDescription: payload.aboutTourDescription || "",

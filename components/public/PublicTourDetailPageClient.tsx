@@ -229,7 +229,7 @@ export default function PublicTourDetailPageClient({
       <TourDetailContentWithSidebar
         sidebar={
           <TourDetailSidebarPlaceholder
-            bookingReferenceId={tour.bookingReferenceId}
+            booking={tour.booking}
             language={contentLocale}
             price={tour.price}
             priceBasis={tour.priceBasis}

@@ -12,6 +12,7 @@ import {
   type TourFormState,
   type TourTranslationFormState,
 } from "@/lib/tours/admin-tour-form";
+import { BOOKING_WIDGET_PROVIDER_INFO } from "@/lib/booking-widgets/providers";
 import { cn } from "@/lib/utils";
 import {controlClassName, controlMultilineClassName} from "@/components/ui/control-class";
 import {fieldLabelClassName} from "@/components/ui/control-class";
@@ -69,6 +70,9 @@ export function TranslationsSection({
     (left, right) => left.sortOrder - right.sortOrder || left.code.localeCompare(right.code),
   );
   const usedLangCodes = new Set(formState.translations.map((translation) => translation.languageCode));
+  const bookingProviderInfo = formState.bookingProvider
+    ? BOOKING_WIDGET_PROVIDER_INFO[formState.bookingProvider]
+    : undefined;
   const availableToAdd = orderedLanguages.filter(
     (language) => language.isEnabled && !usedLangCodes.has(language.code),
   );
@@ -304,7 +308,7 @@ export function TranslationsSection({
 
                           <div className="space-y-1.5">
                             <label className={fieldLabelClassName}>
-                              Booking Reference ID
+                              { bookingProviderInfo?.productIdLabel ?? "Booking Reference ID" }
                             </label>
                             <Input
                               value={ translation.bookingReferenceId }
@@ -316,7 +320,7 @@ export function TranslationsSection({
                                 )
                               }
                               maxLength={ TOUR_BOOKING_REFERENCE_MAX_LENGTH }
-                              placeholder="booking-ref-123"
+                              placeholder={ bookingProviderInfo?.productIdPlaceholder }
                             />
                           </div>
                         </div>
