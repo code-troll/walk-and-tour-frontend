@@ -39,9 +39,27 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { mountTuritopWidgets, TURITOP_EMBED_MODE, unmountTuritopWidgets } from "@/lib/booking-widgets/turitop";
+import {
+  BLOG_BOOKING_WIDGET_DEFAULT_HEIGHT,
+  BLOG_BOOKING_WIDGET_DEFAULT_WIDTH,
+  type BlogBookingWidgetAlignment,
+  clampBlogBookingWidgetHeight,
+  clampBlogBookingWidgetWidth,
+  getBlogBookingWidgetAttributes,
+  getBlogBookingWidgetStyle,
+  readBlogBookingWidgetFields,
+  toBlogBookingWidgetAlignment,
+} from "@/lib/blog/booking-widget-block";
+import { styleObjectToString } from "@/lib/blog/inline-style";
+import {
+  BOOKING_WIDGET_PROVIDER_INFO,
+  BOOKING_WIDGET_PROVIDERS,
+  type BookingWidgetProviderId,
+  isBookingWidgetProviderId,
+} from "@/lib/booking-widgets/providers";
+import { BOOKING_WIDGET_ADAPTERS } from "@/lib/booking-widgets/registry";
 import { cn } from "@/lib/utils";
-import {fieldLabelClassName} from "@/components/ui/control-class";
+import {controlClassName, fieldLabelClassName} from "@/components/ui/control-class";
 
 export type TiptapHtmlEditorHandle = {
   getHtml: () => string;
@@ -62,7 +80,6 @@ type VideoAspectRatio = "21:9" | "16:9" | "4:3" | "1:1";
 type VideoWidthPreset = "small" | "medium" | "wide" | "full";
 type EmbedAlignment = "left" | "center" | "right";
 type EmbedWidthPreset = "medium" | "wide" | "full";
-type TuritopAlignment = "left" | "center" | "right";
 
 type ParsedEmbedResult =
   | {
@@ -101,12 +118,6 @@ const EMBED_MIN_WIDTH = 240;
 const EMBED_MAX_WIDTH = 960;
 const EMBED_MIN_HEIGHT = 240;
 const EMBED_MAX_HEIGHT = 1400;
-const TURITOP_MIN_WIDTH = 320;
-const TURITOP_MAX_WIDTH = 960;
-const TURITOP_MIN_HEIGHT = 320;
-const TURITOP_MAX_HEIGHT = 1400;
-const TURITOP_DEFAULT_WIDTH = 720;
-const TURITOP_DEFAULT_HEIGHT = 760;
 
 const VIDEO_ALIGNMENT_OPTIONS: Array<{ label: string; value: VideoAlignment }> = [
   {label: "Left", value: "left"},
@@ -140,7 +151,10 @@ const EMBED_WIDTH_OPTIONS: Array<{ label: string; value: EmbedWidthPreset }> = [
   {label: "Full", value: "full"},
 ];
 
-const TURITOP_ALIGNMENT_OPTIONS: Array<{ label: string; value: TuritopAlignment }> = [
+const toBookingWidgetProvider = (value: unknown): BookingWidgetProviderId =>
+  isBookingWidgetProviderId(value) ? value : BOOKING_WIDGET_PROVIDERS[0];
+
+const BOOKING_WIDGET_ALIGNMENT_OPTIONS: Array<{ label: string; value: BlogBookingWidgetAlignment }> = [
   {label: "Left", value: "left"},
   {label: "Center", value: "center"},
   {label: "Right", value: "right"},
@@ -535,12 +549,6 @@ const clampEmbedWidth = (width: number) =>
 const clampEmbedHeight = (height: number) =>
   Math.min(EMBED_MAX_HEIGHT, Math.max(EMBED_MIN_HEIGHT, height));
 
-const clampTuritopWidth = (width: number) =>
-  Math.min(TURITOP_MAX_WIDTH, Math.max(TURITOP_MIN_WIDTH, width));
-
-const clampTuritopHeight = (height: number) =>
-  Math.min(TURITOP_MAX_HEIGHT, Math.max(TURITOP_MIN_HEIGHT, height));
-
 const getEmbedWidthFromAttrs = (attrs: Record<string, unknown>) => {
   if (typeof attrs.customWidth === "number" && Number.isFinite(attrs.customWidth)) {
     return clampEmbedWidth(attrs.customWidth);
@@ -579,84 +587,6 @@ const getEmbedHeightFromAttrs = (attrs: Record<string, unknown>) => {
   }
 
   return null;
-};
-
-const getTuritopWidthFromAttrs = (attrs: Record<string, unknown>) => {
-  if (typeof attrs.customWidth === "number" && Number.isFinite(attrs.customWidth)) {
-    return clampTuritopWidth(attrs.customWidth);
-  }
-
-  if (typeof attrs.customWidth === "string") {
-    const parsed = Number.parseFloat(attrs.customWidth);
-    if (!Number.isNaN(parsed)) {
-      return clampTuritopWidth(parsed);
-    }
-  }
-
-  const widthFromStyle = extractWidthFromStyle(
-    typeof attrs.style === "string" ? attrs.style : null,
-  );
-  if (widthFromStyle?.endsWith("px")) {
-    const parsed = Number.parseFloat(widthFromStyle);
-    if (!Number.isNaN(parsed)) {
-      return clampTuritopWidth(parsed);
-    }
-  }
-
-  return null;
-};
-
-const getTuritopHeightFromAttrs = (attrs: Record<string, unknown>) => {
-  if (typeof attrs.customHeight === "number" && Number.isFinite(attrs.customHeight)) {
-    return clampTuritopHeight(attrs.customHeight);
-  }
-
-  if (typeof attrs.customHeight === "string") {
-    const parsed = Number.parseFloat(attrs.customHeight);
-    if (!Number.isNaN(parsed)) {
-      return clampTuritopHeight(parsed);
-    }
-  }
-
-  return null;
-};
-
-const getTuritopContainerStyle = (
-  alignment: TuritopAlignment,
-  customWidth?: number | null,
-  customHeight?: number | null,
-): CSSProperties => {
-  const style: CSSProperties = {
-    background: "#fff",
-    border: "1px solid #eadfce",
-    borderRadius: "1rem",
-    display: "block",
-    height: `${ customHeight ?? TURITOP_DEFAULT_HEIGHT }px`,
-    marginBottom: "1.5rem",
-    marginTop: "1.5rem",
-    maxWidth: "100%",
-    overflowX: "hidden",
-    overflowY: "auto",
-    width: `${ customWidth ?? TURITOP_DEFAULT_WIDTH }px`,
-    WebkitOverflowScrolling: "touch",
-  };
-
-  if (alignment === "left") {
-    style.float = "left";
-    style.marginRight = "1.5rem";
-    return style;
-  }
-
-  if (alignment === "right") {
-    style.float = "right";
-    style.marginLeft = "1.5rem";
-    return style;
-  }
-
-  style.display = "flow-root";
-  style.marginLeft = "auto";
-  style.marginRight = "auto";
-  return style;
 };
 
 const getVideoContainerStyle = (
@@ -699,15 +629,6 @@ const getVideoContainerStyle = (
   style.marginRight = "auto";
   return style;
 };
-
-const styleObjectToString = (style: CSSProperties) =>
-  Object.entries(style)
-    .filter((entry): entry is [string, string | number] => entry[1] !== undefined && entry[1] !== null)
-    .map(([key, value]) => {
-      const cssKey = key.replace(/[A-Z]/g, (character) => `-${ character.toLowerCase() }`);
-      return `${ cssKey }:${ value }`;
-    })
-    .join(";");
 
 const buildVideoEmbedSrc = (provider: SupportedVideoProvider, videoId: string) => {
   if (!videoId) {
@@ -1849,7 +1770,7 @@ function BlogClearNodeView({
   );
 }
 
-function BlogTuritopWidgetNodeView({
+function BlogBookingWidgetNodeView({
                                      editor,
                                      getPos,
                                      node,
@@ -1857,13 +1778,10 @@ function BlogTuritopWidgetNodeView({
                                      updateAttributes,
                                    }: NodeViewProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [alignment, setAlignment] = useState<TuritopAlignment>(
-    typeof node.attrs.alignment === "string" && (node.attrs.alignment === "left" || node.attrs.alignment === "right")
-      ? node.attrs.alignment
-      : "center",
-  );
+  const [alignment, setAlignment] = useState(toBlogBookingWidgetAlignment(node.attrs.alignment));
+  const [provider, setProvider] = useState(toBookingWidgetProvider(node.attrs.provider));
   const [language, setLanguage] = useState(typeof node.attrs.language === "string" ? node.attrs.language : "");
-  const [service, setService] = useState(typeof node.attrs.service === "string" ? node.attrs.service : "");
+  const [productId, setProductId] = useState(typeof node.attrs.productId === "string" ? node.attrs.productId : "");
   const [dragWidth, setDragWidth] = useState<number | null>(null);
   const [dragHeight, setDragHeight] = useState<number | null>(null);
   const [isResizing, setIsResizing] = useState(false);
@@ -1927,8 +1845,8 @@ function BlogTuritopWidgetNodeView({
         return;
       }
 
-      setDragWidth(clampTuritopWidth(session.startWidth + event.clientX - session.startX));
-      setDragHeight(clampTuritopHeight(session.startHeight + event.clientY - session.startY));
+      setDragWidth(clampBlogBookingWidgetWidth(session.startWidth + event.clientX - session.startX));
+      setDragHeight(clampBlogBookingWidgetHeight(session.startHeight + event.clientY - session.startY));
     };
 
     const handleTouchMove = (event: TouchEvent) => {
@@ -1939,8 +1857,8 @@ function BlogTuritopWidgetNodeView({
       }
 
       event.preventDefault();
-      setDragWidth(clampTuritopWidth(session.startWidth + touch.clientX - session.startX));
-      setDragHeight(clampTuritopHeight(session.startHeight + touch.clientY - session.startY));
+      setDragWidth(clampBlogBookingWidgetWidth(session.startWidth + touch.clientX - session.startX));
+      setDragHeight(clampBlogBookingWidgetHeight(session.startHeight + touch.clientY - session.startY));
     };
 
     const finishResize = (clientX?: number, clientY?: number) => {
@@ -1950,10 +1868,10 @@ function BlogTuritopWidgetNodeView({
       }
 
       const nextWidth = typeof clientX === "number"
-        ? clampTuritopWidth(session.startWidth + clientX - session.startX)
+        ? clampBlogBookingWidgetWidth(session.startWidth + clientX - session.startX)
         : (dragWidth ?? session.startWidth);
       const nextHeight = typeof clientY === "number"
-        ? clampTuritopHeight(session.startHeight + clientY - session.startY)
+        ? clampBlogBookingWidgetHeight(session.startHeight + clientY - session.startY)
         : (dragHeight ?? session.startHeight);
 
       updateAttributes({
@@ -2009,34 +1927,34 @@ function BlogTuritopWidgetNodeView({
       editor.chain().focus().setNodeSelection(position).run();
     }
 
-    setAlignment(
-      typeof node.attrs.alignment === "string" && (node.attrs.alignment === "left" || node.attrs.alignment === "right")
-        ? node.attrs.alignment
-        : "center",
-    );
+    setAlignment(toBlogBookingWidgetAlignment(node.attrs.alignment));
+    setProvider(toBookingWidgetProvider(node.attrs.provider));
     setLanguage(typeof node.attrs.language === "string" ? node.attrs.language : "");
-    setService(typeof node.attrs.service === "string" ? node.attrs.service : "");
+    setProductId(typeof node.attrs.productId === "string" ? node.attrs.productId : "");
     setIsMenuOpen(true);
   };
 
   const saveSettings = () => {
     updateAttributes({
       alignment,
-      embed: TURITOP_EMBED_MODE,
       language: language.trim(),
-      service: service.trim(),
+      productId: productId.trim(),
+      provider,
     });
     setIsMenuOpen(false);
   };
 
+  const currentProvider = toBookingWidgetProvider(node.attrs.provider);
   const currentLanguage = typeof node.attrs.language === "string" ? node.attrs.language : "";
-  const currentService = typeof node.attrs.service === "string" ? node.attrs.service : "";
-  const currentAlignment: TuritopAlignment =
-    typeof node.attrs.alignment === "string" && (node.attrs.alignment === "left" || node.attrs.alignment === "right")
-      ? node.attrs.alignment
-      : "center";
-  const persistedWidth = getTuritopWidthFromAttrs(node.attrs as Record<string, unknown>) ?? TURITOP_DEFAULT_WIDTH;
-  const persistedHeight = getTuritopHeightFromAttrs(node.attrs as Record<string, unknown>) ?? TURITOP_DEFAULT_HEIGHT;
+  const currentProductId = typeof node.attrs.productId === "string" ? node.attrs.productId : "";
+  const currentAlignment = toBlogBookingWidgetAlignment(node.attrs.alignment);
+  const persistedWidth = typeof node.attrs.customWidth === "number"
+    ? clampBlogBookingWidgetWidth(node.attrs.customWidth)
+    : BLOG_BOOKING_WIDGET_DEFAULT_WIDTH;
+  const persistedHeight = typeof node.attrs.customHeight === "number"
+    ? clampBlogBookingWidgetHeight(node.attrs.customHeight)
+    : BLOG_BOOKING_WIDGET_DEFAULT_HEIGHT;
+  const productIdLabel = BOOKING_WIDGET_PROVIDER_INFO[provider].productIdLabel;
   const activeWidth = dragWidth ?? persistedWidth;
   const activeHeight = dragHeight ?? persistedHeight;
 
@@ -2048,23 +1966,13 @@ function BlogTuritopWidgetNodeView({
 
     host.innerHTML = "";
 
-    if (!currentService || !currentLanguage) {
+    const adapter = BOOKING_WIDGET_ADAPTERS[currentProvider];
+    if (!currentProductId || !currentLanguage || !adapter.isConfigured()) {
       return;
     }
 
-    mountTuritopWidgets([
-      {
-        container: host,
-        embed: TURITOP_EMBED_MODE,
-        language: currentLanguage,
-        service: currentService,
-      },
-    ]);
-
-    return () => {
-      unmountTuritopWidgets([host]);
-    };
-  }, [currentLanguage, currentService]);
+    return adapter.mount({ container: host, language: currentLanguage, productId: currentProductId });
+  }, [currentLanguage, currentProductId, currentProvider]);
 
   const startResize = (clientX: number, clientY: number) => {
     const position = typeof getPos === "function" ? getPos() : null;
@@ -2109,14 +2017,14 @@ function BlogTuritopWidgetNodeView({
         "group/embed relative shadow-sm",
         selected ? "ring-2 ring-[#d9c3a2] ring-offset-2 ring-offset-white" : "",
       ) }
-      data-blog-turitop="true"
+      data-blog-booking-widget="true"
       data-alignment={ currentAlignment }
-      data-embed={ TURITOP_EMBED_MODE }
       data-lang={ currentLanguage }
-      data-service={ currentService }
+      data-product-id={ currentProductId }
+      data-provider={ currentProvider }
       contentEditable={ false }
       style={ {
-        ...getTuritopContainerStyle(currentAlignment, activeWidth, activeHeight),
+        ...getBlogBookingWidgetStyle(currentAlignment, activeWidth, activeHeight),
         position: "relative",
       } }
     >
@@ -2124,7 +2032,7 @@ function BlogTuritopWidgetNodeView({
         type="button"
         size="icon-xs"
         variant="outline"
-        aria-label="Turitop widget settings"
+        aria-label="Booking widget settings"
         className="absolute right-3 top-3 z-30 opacity-100 shadow-sm transition md:opacity-0 md:group-hover/embed:opacity-100 md:group-focus-within/embed:opacity-100"
         onMouseDown={ (event) => event.preventDefault() }
         onClick={ openMenu }
@@ -2137,7 +2045,7 @@ function BlogTuritopWidgetNodeView({
           className="absolute inset-x-3 top-3 z-20 rounded-[var(--wt-radius-sm)] border border-[#eadfce] bg-white/95 p-3 shadow-sm backdrop-blur">
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-1">
-              { TURITOP_ALIGNMENT_OPTIONS.map((option) => (
+              { BOOKING_WIDGET_ALIGNMENT_OPTIONS.map((option) => (
                 <Button
                   key={ option.value }
                   type="button"
@@ -2151,11 +2059,26 @@ function BlogTuritopWidgetNodeView({
               )) }
             </div>
             <div className="space-y-1">
-              <label className={fieldLabelClassName}>Service</label>
+              <label className={fieldLabelClassName}>Widget</label>
+              <select
+                value={ provider }
+                onChange={ (event) => setProvider(toBookingWidgetProvider(event.target.value)) }
+                onMouseDown={ (event) => event.stopPropagation() }
+                className={ controlClassName }
+              >
+                { BOOKING_WIDGET_PROVIDERS.map((option) => (
+                  <option key={ option } value={ option }>
+                    { BOOKING_WIDGET_PROVIDER_INFO[option].label }
+                  </option>
+                )) }
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className={fieldLabelClassName}>{ productIdLabel }</label>
               <Input
-                value={ service }
-                onChange={ (event) => setService(event.target.value) }
-                placeholder="P1"
+                value={ productId }
+                onChange={ (event) => setProductId(event.target.value) }
+                placeholder={ BOOKING_WIDGET_PROVIDER_INFO[provider].productIdPlaceholder }
                 onMouseDown={ (event) => event.stopPropagation() }
               />
             </div>
@@ -2168,14 +2091,13 @@ function BlogTuritopWidgetNodeView({
                 onMouseDown={ (event) => event.stopPropagation() }
               />
             </div>
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-xs text-[#8b7862]">Embed mode: { TURITOP_EMBED_MODE }</p>
+            <div className="flex items-center justify-end gap-3">
               <Button
                 type="button"
                 size="xs"
                 onMouseDown={ (event) => event.preventDefault() }
                 onClick={ saveSettings }
-                disabled={ !service.trim() || !language.trim() }
+                disabled={ !productId.trim() || !language.trim() }
               >
                 Save
               </Button>
@@ -2184,7 +2106,7 @@ function BlogTuritopWidgetNodeView({
         </div>
       ) : null }
 
-      { currentService && currentLanguage ? (
+      { currentProductId && currentLanguage ? (
         <div
           ref={ widgetHostRef }
           className="h-full min-h-24 w-full"
@@ -2192,7 +2114,7 @@ function BlogTuritopWidgetNodeView({
       ) : (
         <div
           className="flex h-full min-h-24 w-full items-center justify-center rounded-[var(--wt-radius-sm)] border border-dashed border-[#d6c7a5] bg-white/70 px-4 text-sm text-[#8b7862]">
-          <span>Set service and language to render the Turitop calendar here.</span>
+          <span>Set { BOOKING_WIDGET_PROVIDER_INFO[currentProvider].productIdLabel.toLowerCase() } and language to render the calendar here.</span>
         </div>
       ) }
 
@@ -3064,87 +2986,73 @@ const BlogEmbed = Node.create({
   },
 });
 
-const BlogTuritopWidget = Node.create({
-  name: "blogTuritopWidget",
+const BlogBookingWidget = Node.create({
+  name: "blogBookingWidget",
   group: "block",
   atom: true,
   selectable: true,
   draggable: false,
   addAttributes() {
+    const readFields = (element: HTMLElement) =>
+      readBlogBookingWidgetFields((name) => element.getAttribute(name));
+
     return {
       alignment: {
         default: "center",
-        parseHTML: (element) => {
-          const value = element.getAttribute("data-alignment");
-          return value === "left" || value === "right" ? value : "center";
-        },
+        parseHTML: (element) => readFields(element).alignment,
         renderHTML: () => ({}),
       },
       customHeight: {
         default: null,
-        parseHTML: (element) => {
-          const value = Number.parseFloat(element.getAttribute("data-custom-height") ?? "");
-          return Number.isNaN(value) ? null : clampTuritopHeight(value);
-        },
+        parseHTML: (element) => readFields(element).customHeight,
         renderHTML: () => ({}),
       },
       customWidth: {
         default: null,
-        parseHTML: (element) => {
-          const value = Number.parseFloat(element.getAttribute("data-custom-width") ?? "");
-          return Number.isNaN(value) ? null : clampTuritopWidth(value);
-        },
-        renderHTML: () => ({}),
-      },
-      embed: {
-        default: TURITOP_EMBED_MODE,
-        parseHTML: (element) => element.getAttribute("data-embed") ?? TURITOP_EMBED_MODE,
+        parseHTML: (element) => readFields(element).customWidth,
         renderHTML: () => ({}),
       },
       language: {
         default: "",
-        parseHTML: (element) => element.getAttribute("data-lang") ?? "",
+        parseHTML: (element) => readFields(element).language,
         renderHTML: () => ({}),
       },
-      service: {
+      productId: {
         default: "",
-        parseHTML: (element) => element.getAttribute("data-service") ?? "",
+        parseHTML: (element) => readFields(element).productId,
+        renderHTML: () => ({}),
+      },
+      provider: {
+        default: BOOKING_WIDGET_PROVIDERS[0],
+        parseHTML: (element) => toBookingWidgetProvider(readFields(element).provider),
         renderHTML: () => ({}),
       },
     };
   },
   parseHTML() {
-    return [{tag: "div[data-blog-turitop=\"true\"]"}];
+    return [
+      {tag: "div[data-blog-booking-widget=\"true\"]"},
+      // Posts saved before the block named its provider; saving them again
+      // writes the markup above.
+      {tag: "div[data-blog-turitop=\"true\"]"},
+    ];
   },
   addNodeView() {
-    return ReactNodeViewRenderer(BlogTuritopWidgetNodeView);
+    return ReactNodeViewRenderer(BlogBookingWidgetNodeView);
   },
   renderHTML({HTMLAttributes, node}) {
     const attrs = node.attrs as Record<string, unknown>;
-    const alignment: TuritopAlignment =
-      typeof attrs.alignment === "string" && (attrs.alignment === "left" || attrs.alignment === "right")
-        ? attrs.alignment
-        : "center";
-    const embed = typeof attrs.embed === "string" && attrs.embed.trim()
-      ? attrs.embed.trim()
-      : TURITOP_EMBED_MODE;
-    const customHeight = getTuritopHeightFromAttrs(attrs);
-    const customWidth = getTuritopWidthFromAttrs(attrs);
-    const language = typeof attrs.language === "string" ? attrs.language.trim() : "";
-    const service = typeof attrs.service === "string" ? attrs.service.trim() : "";
 
     return [
       "div",
-      mergeAttributes(HTMLAttributes, {
-        "data-blog-turitop": "true",
-        "data-alignment": alignment,
-        "data-custom-height": customHeight ?? "",
-        "data-custom-width": customWidth ?? "",
-        "data-embed": embed,
-        "data-lang": language,
-        "data-service": service,
-        style: styleObjectToString(getTuritopContainerStyle(alignment, customWidth, customHeight)),
-      }),
+      mergeAttributes(HTMLAttributes, getBlogBookingWidgetAttributes({
+        alignment: toBlogBookingWidgetAlignment(attrs.alignment),
+        customHeight: typeof attrs.customHeight === "number" ? clampBlogBookingWidgetHeight(attrs.customHeight) : null,
+        customWidth: typeof attrs.customWidth === "number" ? clampBlogBookingWidgetWidth(attrs.customWidth) : null,
+        language: typeof attrs.language === "string" ? attrs.language.trim() : "",
+        productId: typeof attrs.productId === "string" ? attrs.productId.trim() : "",
+        provider: toBookingWidgetProvider(attrs.provider),
+      })),
     ];
   },
 });
@@ -3482,7 +3390,7 @@ const editorExtensions = [
   }),
   BlogVideo,
   BlogEmbed,
-  BlogTuritopWidget,
+  BlogBookingWidget,
   BlogLinkCard,
   BlogTourCard,
   BlogClear,
@@ -3591,14 +3499,17 @@ export const TiptapHtmlEditor = forwardRef<
                               value,
                             }, ref) {
   const [isEmbedDialogOpen, setIsEmbedDialogOpen] = useState(false);
-  const [isTuritopDialogOpen, setIsTuritopDialogOpen] = useState(false);
+  const [isBookingWidgetDialogOpen, setIsBookingWidgetDialogOpen] = useState(false);
   const [isTourCardDialogOpen, setIsTourCardDialogOpen] = useState(false);
   const [embedUrlInput, setEmbedUrlInput] = useState("");
   const [embedDialogError, setEmbedDialogError] = useState<string | null>(null);
-  const [turitopDialogError, setTuritopDialogError] = useState<string | null>(null);
+  const [bookingWidgetDialogError, setBookingWidgetDialogError] = useState<string | null>(null);
   const [tourCardDialogError, setTourCardDialogError] = useState<string | null>(null);
-  const [turitopLanguageInput, setTuritopLanguageInput] = useState("es");
-  const [turitopServiceInput, setTuritopServiceInput] = useState("");
+  const [bookingWidgetProviderInput, setBookingWidgetProviderInput] = useState<BookingWidgetProviderId>(
+    BOOKING_WIDGET_PROVIDERS[0],
+  );
+  const [bookingWidgetLanguageInput, setBookingWidgetLanguageInput] = useState("es");
+  const [bookingWidgetProductIdInput, setBookingWidgetProductIdInput] = useState("");
   const [tourCardSlugInput, setTourCardSlugInput] = useState("");
   const [, setToolbarVersion] = useState(0);
   const editor = useEditor({
@@ -3608,7 +3519,7 @@ export const TiptapHtmlEditor = forwardRef<
     editorProps: {
       attributes: {
         class:
-          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [display:flow-root] after:block after:clear-both after:content-[''] [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--wt-rule-strong)] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[var(--wt-rule-strong)] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-turitop=\"true\"]]:shadow-sm overflow-visible",
+          "min-h-64 rounded-b-[1.25rem] px-4 py-4 text-sm leading-7 text-[#21343b] outline-none [display:flow-root] after:block after:clear-both after:content-[''] [&_blockquote]:border-l-4 [&_blockquote]:border-[var(--wt-rule-strong)] [&_blockquote]:pl-4 [&_blockquote]:italic [&_h2]:mt-6 [&_h2]:text-2xl [&_h2]:font-semibold [&_h3]:mt-5 [&_h3]:text-xl [&_h3]:font-semibold [&_hr]:my-6 [&_hr]:border-[var(--wt-rule-strong)] [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mt-4 [&_p:first-child]:mt-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mt-2 [&_[data-blog-video=\"true\"]]:shadow-sm [&_[data-blog-embed=\"true\"]]:shadow-sm [&_[data-blog-link-card=\"true\"]]:shadow-sm [&_[data-blog-booking-widget=\"true\"]]:shadow-sm overflow-visible",
       },
     },
     onUpdate: ({editor: nextEditor}) => {
@@ -3811,38 +3722,39 @@ export const TiptapHtmlEditor = forwardRef<
     }
   };
 
-  const handleTuritopDialogOpenChange = (nextOpen: boolean) => {
-    setIsTuritopDialogOpen(nextOpen);
+  const handleBookingWidgetDialogOpenChange = (nextOpen: boolean) => {
+    setIsBookingWidgetDialogOpen(nextOpen);
 
     if (!nextOpen) {
-      setTuritopDialogError(null);
-      setTuritopLanguageInput("es");
-      setTuritopServiceInput("");
+      setBookingWidgetDialogError(null);
+      setBookingWidgetProviderInput(BOOKING_WIDGET_PROVIDERS[0]);
+      setBookingWidgetLanguageInput("es");
+      setBookingWidgetProductIdInput("");
     }
   };
 
-  const submitTuritopWidget = () => {
+  const submitBookingWidget = () => {
     if (!editor) {
       return;
     }
 
-    const service = turitopServiceInput.trim();
-    const language = turitopLanguageInput.trim();
+    const productId = bookingWidgetProductIdInput.trim();
+    const language = bookingWidgetLanguageInput.trim();
 
-    if (!service || !language) {
-      const message = "Service and language are required.";
-      setTuritopDialogError(message);
+    if (!productId || !language) {
+      const message = `${ BOOKING_WIDGET_PROVIDER_INFO[bookingWidgetProviderInput].productIdLabel } and language are required.`;
+      setBookingWidgetDialogError(message);
       onError?.(message);
       return;
     }
 
     editor.chain().focus().insertContent([
       {
-        type: "blogTuritopWidget",
+        type: "blogBookingWidget",
         attrs: {
-          embed: TURITOP_EMBED_MODE,
           language,
-          service,
+          productId,
+          provider: bookingWidgetProviderInput,
         },
       },
       {
@@ -3850,7 +3762,7 @@ export const TiptapHtmlEditor = forwardRef<
       },
     ]).run();
 
-    handleTuritopDialogOpenChange(false);
+    handleBookingWidgetDialogOpenChange(false);
   };
 
   const handleTourCardDialogOpenChange = (nextOpen: boolean) => {
@@ -4033,9 +3945,9 @@ export const TiptapHtmlEditor = forwardRef<
         />
         <ToolbarButton
           icon={ CalendarDays }
-          label="Turitop"
+          label="Booking"
           disabled={ !editor }
-          onClick={ () => handleTuritopDialogOpenChange(true) }
+          onClick={ () => handleBookingWidgetDialogOpenChange(true) }
         />
         <ToolbarButton
           icon={ MapPinned }
@@ -4097,72 +4009,85 @@ export const TiptapHtmlEditor = forwardRef<
         </DialogContent>
       </Dialog>
 
-      <Dialog open={ isTuritopDialogOpen } onOpenChange={ handleTuritopDialogOpenChange }>
+      <Dialog open={ isBookingWidgetDialogOpen } onOpenChange={ handleBookingWidgetDialogOpenChange }>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Insert Turitop Calendar</DialogTitle>
+            <DialogTitle>Insert Booking Calendar</DialogTitle>
             <DialogDescription>
-              Add a Turitop calendar widget placeholder to the post. The live calendar is mounted on the public blog
-              page.
+              Add a booking calendar placeholder to the post. The live calendar is mounted on the public blog page.
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-3">
             <div className="space-y-2">
-              <label htmlFor="blog-turitop-service" className={fieldLabelClassName}>
-                Service
+              <label htmlFor="blog-booking-widget-provider" className={fieldLabelClassName}>
+                Widget
+              </label>
+              <select
+                id="blog-booking-widget-provider"
+                value={ bookingWidgetProviderInput }
+                onChange={ (event) => setBookingWidgetProviderInput(toBookingWidgetProvider(event.target.value)) }
+                className={ controlClassName }
+              >
+                { BOOKING_WIDGET_PROVIDERS.map((provider) => (
+                  <option key={ provider } value={ provider }>
+                    { BOOKING_WIDGET_PROVIDER_INFO[provider].label }
+                  </option>
+                )) }
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="blog-booking-widget-product-id" className={fieldLabelClassName}>
+                { BOOKING_WIDGET_PROVIDER_INFO[bookingWidgetProviderInput].productIdLabel }
               </label>
               <Input
-                id="blog-turitop-service"
-                value={ turitopServiceInput }
+                id="blog-booking-widget-product-id"
+                value={ bookingWidgetProductIdInput }
                 onChange={ (event) => {
-                  setTuritopServiceInput(event.target.value);
-                  if (turitopDialogError) {
-                    setTuritopDialogError(null);
+                  setBookingWidgetProductIdInput(event.target.value);
+                  if (bookingWidgetDialogError) {
+                    setBookingWidgetDialogError(null);
                   }
                 } }
-                placeholder="P1"
+                placeholder={ BOOKING_WIDGET_PROVIDER_INFO[bookingWidgetProviderInput].productIdPlaceholder }
                 autoFocus
               />
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="blog-turitop-language" className={fieldLabelClassName}>
+              <label htmlFor="blog-booking-widget-language" className={fieldLabelClassName}>
                 Language
               </label>
               <Input
-                id="blog-turitop-language"
-                value={ turitopLanguageInput }
+                id="blog-booking-widget-language"
+                value={ bookingWidgetLanguageInput }
                 onChange={ (event) => {
-                  setTuritopLanguageInput(event.target.value);
-                  if (turitopDialogError) {
-                    setTuritopDialogError(null);
+                  setBookingWidgetLanguageInput(event.target.value);
+                  if (bookingWidgetDialogError) {
+                    setBookingWidgetDialogError(null);
                   }
                 } }
                 placeholder="es"
                 onKeyDown={ (event) => {
                   if (event.key === "Enter") {
                     event.preventDefault();
-                    submitTuritopWidget();
+                    submitBookingWidget();
                   }
                 } }
               />
             </div>
 
-            <div className="rounded-[var(--wt-radius-sm)] border border-[var(--wt-rule-strong)] bg-[var(--wt-surface)] px-4 py-3 text-sm text-[var(--wt-ink-muted)]">
-              Embed mode: <span className="font-medium text-[var(--wt-ink)]">{ TURITOP_EMBED_MODE }</span>
-            </div>
-
-            { turitopDialogError ? (
-              <p className="text-sm text-[var(--wt-danger)]">{ turitopDialogError }</p>
+            { bookingWidgetDialogError ? (
+              <p className="text-sm text-[var(--wt-danger)]">{ bookingWidgetDialogError }</p>
             ) : null }
           </div>
 
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={ () => handleTuritopDialogOpenChange(false) }>
+            <Button type="button" variant="outline" onClick={ () => handleBookingWidgetDialogOpenChange(false) }>
               Cancel
             </Button>
-            <Button type="button" onClick={ submitTuritopWidget } disabled={ !editor }>
+            <Button type="button" onClick={ submitBookingWidget } disabled={ !editor }>
               Insert Calendar
             </Button>
           </DialogFooter>
