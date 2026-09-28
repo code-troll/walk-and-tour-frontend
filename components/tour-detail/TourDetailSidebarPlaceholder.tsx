@@ -34,6 +34,7 @@ export default function TourDetailSidebarPlaceholder({
           className="my-4 md:my-0"
           provider={ booking?.provider }
           productId={ booking?.productId }
+          settings={ booking?.settings }
           language={ language }
           fallback={ (
             <TourDetailSidebarFallback

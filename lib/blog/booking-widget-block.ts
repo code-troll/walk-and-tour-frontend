@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { styleObjectToString } from "@/lib/blog/inline-style";
-import { isBookingWidgetProviderId, type BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
+import { BLOG_BOOKING_WIDGET_PROVIDERS, type BookingWidgetProviderId } from "@/lib/booking-widgets/providers";
 
 // A booking widget placed in a blog post. The post HTML stores it as an empty
 // div whose data attributes say what to mount; the calendar itself is loaded
@@ -66,16 +66,17 @@ export const readBlogBookingWidgetFields = (getAttribute: AttributeReader): Blog
   };
 };
 
-// Null unless the block names a provider this build knows, a product id and a
+// Null unless the block names a provider a post can place, a product id and a
 // language, which is what mounting a widget needs.
 export const readBlogBookingWidgetBlock = (getAttribute: AttributeReader): BlogBookingWidgetBlock | null => {
   const fields = readBlogBookingWidgetFields(getAttribute);
 
-  if (!isBookingWidgetProviderId(fields.provider) || !fields.productId || !fields.language) {
+  const provider = BLOG_BOOKING_WIDGET_PROVIDERS.find((option) => option === fields.provider);
+  if (!provider || !fields.productId || !fields.language) {
     return null;
   }
 
-  return { ...fields, provider: fields.provider };
+  return { ...fields, provider };
 };
 
 // Serialised into the stored article, so changing a value here changes

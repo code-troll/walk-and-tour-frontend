@@ -97,7 +97,7 @@ function HtmlSegment({
       container.style.overflowY = "auto";
       container.style.setProperty("-webkit-overflow-scrolling", "touch");
 
-      return [adapter.mount({ container, language: block.language, productId: block.productId })];
+      return [adapter.mount({ container, language: block.language, productId: block.productId, settings: {} })];
     });
 
     return () => {
